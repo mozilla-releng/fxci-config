@@ -1,0 +1,334 @@
+# This file contains configuration for each of the repositories containing the
+# Gecko source tree.
+#
+# Repositories are also known as projects (mostly within the
+# taskgraph-generation code) and as branches (although they are not Mercurial
+# branches).
+#
+# Structure
+# ---------
+#
+# Each project is keyed by its "alias", a short, slash-free name for the project.
+#
+# The value is an object describing the project with the following keys:
+#
+# - `repo` -- the https repository URL
+# - `repo_type` -- always `hg` (for later expansion)
+# - `access` -- the name of the group with access to this repository; typically `scm_level_{1,2,3}`.
+# - `trust_domain` -- separation within an access level of projects with different organizations
+# - `features` -- features that should be enabled for this project, as an object with boolean
+#                 values, defaulting to false
+#   - `buildbot` -- Buildbot builders configured for the branch
+#   - `taskcluster-docker-routes-v1` -- index namespaces of the form `docker.images.v1.<project>.*`
+#   - `taskcluster-docker-routes-v2` -- index namespaces of the form `docker.images.v2.level-<level>.*`
+#   - `taskcluster-cron` -- tasks defined in `.cron.yml` can run for this project
+#   - `taskcluster-push` -- decision tasks run for pushes to this project's repository
+---
+ash:
+  repo: https://hg.mozilla.org/projects/ash
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+mozilla-release:
+  repo: https://hg.mozilla.org/releases/mozilla-release
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+mozilla-esr52:
+  repo: https://hg.mozilla.org/releases/mozilla-esr52
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+comm-esr52:
+  repo: https://hg.mozilla.org/releases/comm-esr52
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: comm
+  features:
+    taskcluster-cron: false
+    taskcluster-push: false
+oak:
+  repo: https://hg.mozilla.org/projects/oak
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+pine:
+  repo: https://hg.mozilla.org/projects/pine
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+mozilla-beta:
+  repo: https://hg.mozilla.org/releases/mozilla-beta
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+comm-beta:
+  repo: https://hg.mozilla.org/releases/comm-beta
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: comm
+  features:
+    taskcluster-cron: false
+    taskcluster-push: false
+mozilla-inbound:
+  repo: https://hg.mozilla.org/integration/mozilla-inbound
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    is-trunk: true
+    taskcluster-cron: true
+    taskcluster-push: true
+mozilla-central:
+  repo: https://hg.mozilla.org/mozilla-central
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    is-trunk: true
+    taskcluster-cron: true
+    taskcluster-push: true
+comm-central:
+  repo: https://hg.mozilla.org/comm-central
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: comm
+  features:
+    taskcluster-cron: false
+    taskcluster-push: true
+alder:
+  repo: https://hg.mozilla.org/projects/alder
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+cedar:
+  repo: https://hg.mozilla.org/projects/cedar
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+holly:
+  repo: https://hg.mozilla.org/projects/holly
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+birch:
+  repo: https://hg.mozilla.org/projects/birch
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+cypress:
+  repo: https://hg.mozilla.org/projects/cypress
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: comm
+  features:
+    taskcluster-cron: true
+    taskcluster-push: true
+ux:
+  repo: https://hg.mozilla.org/projects/ux
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: false
+    taskcluster-push: false
+elm:
+  repo: https://hg.mozilla.org/projects/elm
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+graphics:
+  repo: https://hg.mozilla.org/projects/graphics
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+try:
+  repo: https://hg.mozilla.org/try
+  repo_type: hg
+  access: scm_level_1
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: false
+    taskcluster-push: true
+stylo-try:
+  repo: https://hg.mozilla.org/incubator/stylo-try
+  repo_type: hg
+  access: scm_level_1
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: false
+    taskcluster-push: true
+try-comm-central:
+  repo: https://hg.mozilla.org/try-comm-central
+  repo_type: hg
+  access: scm_level_1
+  trust_domain: comm
+  features:
+    taskcluster-cron: false
+    taskcluster-push: true
+larch:
+  repo: https://hg.mozilla.org/projects/larch
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+maple:
+  repo: https://hg.mozilla.org/projects/maple
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+fig:
+  repo: https://hg.mozilla.org/projects/fig
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+gum:
+  repo: https://hg.mozilla.org/projects/gum
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+jamun:
+  repo: https://hg.mozilla.org/projects/jamun
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
+autoland:
+  repo: https://hg.mozilla.org/integration/autoland
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    is-trunk: true
+    taskcluster-cron: true
+    taskcluster-push: true
+stylo:
+  repo: https://hg.mozilla.org/incubator/stylo
+  repo_type: hg
+  access: scm_level_2
+  trust_domain: gecko
+  features:
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: false
+    taskcluster-push: true
+
