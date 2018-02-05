@@ -33,7 +33,7 @@ ash:
     buildbot: true
     taskcluster-docker-routes-v1: true
     taskcluster-docker-routes-v2: true
-    taskcluster-cron: true
+    taskcluster-cron: false
     taskcluster-push: true
 mozilla-release:
   repo: https://hg.mozilla.org/releases/mozilla-release
@@ -55,7 +55,7 @@ mozilla-esr52:
     buildbot: true
     taskcluster-docker-routes-v1: true
     taskcluster-docker-routes-v2: true
-    taskcluster-cron: true
+    taskcluster-cron: false
     taskcluster-push: true
 comm-esr52:
   repo: https://hg.mozilla.org/releases/comm-esr52
@@ -147,7 +147,7 @@ alder:
     buildbot: true
     taskcluster-docker-routes-v1: true
     taskcluster-docker-routes-v2: true
-    taskcluster-cron: true
+    taskcluster-cron: false
     taskcluster-push: true
 cedar:
   repo: https://hg.mozilla.org/projects/cedar
@@ -188,7 +188,7 @@ cypress:
   access: scm_level_2
   trust_domain: comm
   features:
-    taskcluster-cron: true
+    taskcluster-cron: false
     taskcluster-push: true
 ux:
   repo: https://hg.mozilla.org/projects/ux
@@ -262,7 +262,7 @@ larch:
     buildbot: true
     taskcluster-docker-routes-v1: true
     taskcluster-docker-routes-v2: true
-    taskcluster-cron: true
+    taskcluster-cron: false
     taskcluster-push: true
 maple:
   repo: https://hg.mozilla.org/projects/maple
@@ -284,7 +284,7 @@ fig:
     buildbot: true
     taskcluster-docker-routes-v1: true
     taskcluster-docker-routes-v2: true
-    taskcluster-cron: true
+    taskcluster-cron: false
     taskcluster-push: true
 gum:
   repo: https://hg.mozilla.org/projects/gum
@@ -295,7 +295,7 @@ gum:
     buildbot: true
     taskcluster-docker-routes-v1: true
     taskcluster-docker-routes-v2: true
-    taskcluster-cron: true
+    taskcluster-cron: false
     taskcluster-push: true
 jamun:
   repo: https://hg.mozilla.org/projects/jamun
