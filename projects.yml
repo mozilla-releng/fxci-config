@@ -23,6 +23,9 @@
 #   - `taskcluster-docker-routes-v2` -- index namespaces of the form `docker.images.v2.level-<level>.*`
 #   - `taskcluster-cron` -- tasks defined in `.cron.yml` can run for this project
 #   - `taskcluster-push` -- decision tasks run for pushes to this project's repository
+# - `extra_tc_scopes` -- additional taskcluster scopes required by this project; this is generally
+#   useful when scopes are removed from more recent repositories but required for historical repositories
+#   such as ESRs
 ---
 ash:
   repo: https://hg.mozilla.org/projects/ash
@@ -57,6 +60,14 @@ mozilla-esr52:
     taskcluster-docker-routes-v2: true
     taskcluster-cron: false
     taskcluster-push: true
+  extra_tc_scopes:
+	- 'docker-worker:cache:build-macosx64-st-an-workspace'
+	- 'docker-worker:cache:build-macosx64-workspace'
+	- 'docker-worker:cache:build-mozilla-esr52*'
+	- 'docker-worker:cache:tc-vcs'
+	- 'docker-worker:cache:tc-vcs-public-sources'
+	- 'queue:rerun-task'
+	- 'queue:route:index.gecko.v1.mozilla-esr52.*'
 comm-esr52:
   repo: https://hg.mozilla.org/releases/comm-esr52
   repo_type: hg
