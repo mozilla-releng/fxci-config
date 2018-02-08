@@ -61,13 +61,13 @@ mozilla-esr52:
     taskcluster-cron: false
     taskcluster-push: true
   extra_tc_scopes:
-	- 'docker-worker:cache:build-macosx64-st-an-workspace'
-	- 'docker-worker:cache:build-macosx64-workspace'
-	- 'docker-worker:cache:build-mozilla-esr52*'
-	- 'docker-worker:cache:tc-vcs'
-	- 'docker-worker:cache:tc-vcs-public-sources'
-	- 'queue:rerun-task'
-	- 'queue:route:index.gecko.v1.mozilla-esr52.*'
+    - 'docker-worker:cache:build-macosx64-st-an-workspace'
+    - 'docker-worker:cache:build-macosx64-workspace'
+    - 'docker-worker:cache:build-mozilla-esr52*'
+    - 'docker-worker:cache:tc-vcs'
+    - 'docker-worker:cache:tc-vcs-public-sources'
+    - 'queue:rerun-task'
+    - 'queue:route:index.gecko.v1.mozilla-esr52.*'
 comm-esr52:
   repo: https://hg.mozilla.org/releases/comm-esr52
   repo_type: hg
