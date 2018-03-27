@@ -16,6 +16,8 @@
 # - `repo_type` -- always `hg` (for later expansion)
 # - `access` -- the name of the group with access to this repository; typically `scm_level_{1,2,3}`.
 # - `trust_domain` -- separation within an access level of projects with different organizations
+# - 'gecko_repo' -- the corresponding root repository, for repositories that are usually checked
+#                   out as sub-repositories (i.e. for comm-central dervied respositories)
 # - `features` -- features that should be enabled for this project, as an object with boolean
 #                 values, defaulting to false
 #   - `buildbot` -- Buildbot builders configured for the branch
@@ -114,9 +116,10 @@ comm-beta:
   repo_type: hg
   access: scm_level_3
   trust_domain: comm
+  gecko_repo: https://hg.mozilla.org/releases/mozilla-beta
   features:
     taskcluster-cron: false
-    taskcluster-push: false
+    taskcluster-push: true
 mozilla-inbound:
   repo: https://hg.mozilla.org/integration/mozilla-inbound
   repo_type: hg
@@ -146,8 +149,9 @@ comm-central:
   repo_type: hg
   access: scm_level_3
   trust_domain: comm
+  gecko_repo: https://hg.mozilla.org/mozilla-central
   features:
-    taskcluster-cron: false
+    taskcluster-cron: true
     taskcluster-push: true
 alder:
   repo: https://hg.mozilla.org/projects/alder
