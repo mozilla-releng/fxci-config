@@ -21,6 +21,8 @@
 # - `features` -- features that should be enabled for this project, as an object with boolean
 #                 values, defaulting to false
 #   - `buildbot` -- Buildbot builders configured for the branch
+#   - 'is-trunk' -- Branches containing 'landed' code destined for nightly builds. These branches have a shared index
+#       that can be referenced by the tip revision on any push.
 #   - `taskcluster-docker-routes-v1` -- index namespaces of the form `docker.images.v1.<project>.*`
 #   - `taskcluster-docker-routes-v2` -- index namespaces of the form `docker.images.v2.level-<level>.*`
 #   - `taskcluster-cron` -- tasks defined in `.cron.yml` can run for this project
@@ -153,6 +155,7 @@ comm-central:
   features:
     taskcluster-cron: true
     taskcluster-push: true
+    is-trunk: true
 alder:
   repo: https://hg.mozilla.org/projects/alder
   repo_type: hg
