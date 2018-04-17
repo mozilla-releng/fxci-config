@@ -72,6 +72,15 @@ mozilla-esr52:
     - 'docker-worker:cache:tc-vcs-public-sources'
     - 'queue:rerun-task'
     - 'queue:route:index.gecko.v1.mozilla-esr52.*'
+mozilla-esr60:
+  repo: https://hg.mozilla.org/releases/mozilla-esr60
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
 comm-esr52:
   repo: https://hg.mozilla.org/releases/comm-esr52
   repo_type: hg
@@ -349,4 +358,3 @@ stylo:
     taskcluster-docker-routes-v2: true
     taskcluster-cron: false
     taskcluster-push: true
-
