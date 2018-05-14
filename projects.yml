@@ -89,6 +89,14 @@ comm-esr52:
   features:
     taskcluster-cron: false
     taskcluster-push: false
+comm-esr60:
+  repo: https://hg.mozilla.org/releases/comm-esr60
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: comm
+  features:
+    taskcluster-cron: false
+    taskcluster-push: true
 oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
