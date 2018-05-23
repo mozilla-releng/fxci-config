@@ -1,0 +1,80 @@
+# This is the template for the task definition for cron task hooks.  Its job is
+# to run a `mach cron` in a decision-task image; that command will take care of
+# the details.
+#
+# This is parsed with JSON-e.  The context values are;
+#  - level -- SCM level
+#  - hookGroupId / hookId -- hook identifiers
+#  - repo_env -- repository-related env vars
+#  - checkout_options -- list of options to run-task to check out the repo
+#  - project_repo -- repository URL
+#  - alias -- project alias
+#  - mach_cron_options -- mach options (as a string)
+#  - trim_whitespace(..) -- trim newlines and extra whitespace in a command string
+#
+# Note that aside from the task times as noted below, the JSON-e rendering performed
+# when the hook is fired does not supply any additional information.
+
+provisionerId: aws-provisioner-v1
+workerType: gecko-${level}-decision
+schedulerId: gecko-level-${level}
+
+# The "$fromNow" options here are escaped so that they are processed by the hooks service's
+# JSON-e rendering when the hook is fired.
+deadline: {$$fromNow: '1 hour'}
+expires: {$$fromNow: '7 days'}
+routes:
+  - 'notify.email.taskcluster-notifications@mozilla.com.on-exception'
+  - 'notify.email.taskcluster-notifications@mozilla.com.on-failed'
+scopes:
+  - assume:hook-id:${hookGroupId}/${hookId}
+payload:
+    # this should be a fairly recent decision task image
+    image: 'taskcluster/decision:2.0.0@sha256:4039fd878e5700b326d4a636e28c595c053fbcb53909c1db84ad1f513cf644ef'
+    env:
+      $merge:
+        - {$eval: repo_env}
+        - HG_STORE_PATH: '/builds/worker/checkouts/hg-store'
+          TASKCLUSTER_CACHES: '/builds/worker/checkouts'
+    cache:
+        level-${level}-checkouts: '/builds/worker/checkouts'
+    features:
+      taskclusterProxy: true
+      chainOfTrust: true
+    maxRunTime: 1800
+    command:
+        $flatten:
+            - '/builds/worker/bin/run-task'
+            - {$eval: checkout_options}
+            - '--'
+            - 'bash'
+            - '-cx'
+
+            # Note:
+            #   --head-repository is actually the repoistory that gets passed into the decision task
+            #   --base-repository and --head-ref are ignored in post-esr60 branches
+            - $let:
+                command: |
+                    cd /builds/worker/checkouts/gecko &&
+                    ln -s /builds/worker/artifacts artifacts &&
+                    ./mach --log-no-times taskgraph cron
+                        --base-repository=$GECKO_BASE_REPOSITORY
+                        --head-repository=${project_repo}
+                        --head-ref=$GECKO_HEAD_REF
+                        --project=${alias}
+                        --level=${level}
+                        ${mach_cron_options}
+              in: "${trim_whitespace(command)}"
+    artifacts:
+      public:
+        type: 'directory'
+        path: '/builds/worker/artifacts'
+metadata:
+    owner: 'mozilla-taskcluster-maintenance@mozilla.com'
+    source: https://tools.taskcluster.net/hooks/#${hookGroupId}/${hookId}
+    description: See https://tools.taskcluster.net/hooks/#${hookGroupId}/${hookId}
+    name: Cron task for ${project_repo}
+priority: 'normal'
+retries: 5
+tags: {}
+extra: {}
