@@ -97,6 +97,18 @@ comm-esr60:
   features:
     taskcluster-cron: false
     taskcluster-push: true
+  extra_tc_scopes:
+    - project:comm:thunderbird:releng:balrog:server:release
+    - project:comm:thunderbird:releng:beetmover:bucket:release
+    - project:comm:thunderbird:releng:bouncer:server:production
+    - project:comm:thunderbird:releng:ship-it:production
+    - project:comm:thunderbird:releng:signing:cert:release-signing
+    - queue:create-task:highest:scriptworker-prov-v1/tb-balrog-v1
+    - queue:create-task:highest:scriptworker-prov-v1/tb-beetmover-v1
+    - queue:create-task:highest:scriptworker-prov-v1/tb-bouncer-v1
+    - queue:create-task:highest:scriptworker-prov-v1/tb-shipit-v1
+    - queue:create-task:highest:scriptworker-prov-v1/tb-signing-v1
+    - queue:create-task:highest:scriptworker-prov-v1/tb-treescript-comm-v1
 oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
@@ -139,6 +151,18 @@ comm-beta:
   features:
     taskcluster-cron: false
     taskcluster-push: true
+  extra_tc_scopes:
+    - project:comm:thunderbird:releng:balrog:server:beta
+    - project:comm:thunderbird:releng:beetmover:bucket:release
+    - project:comm:thunderbird:releng:bouncer:server:production
+    - project:comm:thunderbird:releng:ship-it:production
+    - project:comm:thunderbird:releng:signing:cert:release-signing
+    - queue:create-task:highest:scriptworker-prov-v1/tb-balrog-v1
+    - queue:create-task:highest:scriptworker-prov-v1/tb-beetmover-v1
+    - queue:create-task:highest:scriptworker-prov-v1/tb-bouncer-v1
+    - queue:create-task:highest:scriptworker-prov-v1/tb-shipit-v1
+    - queue:create-task:highest:scriptworker-prov-v1/tb-signing-v1
+    - queue:create-task:highest:scriptworker-prov-v1/tb-treescript-comm-v1
 mozilla-inbound:
   repo: https://hg.mozilla.org/integration/mozilla-inbound
   repo_type: hg
