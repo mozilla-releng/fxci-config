@@ -1,5 +1,4 @@
-# This file contains configuration for each of the repositories containing the
-# Gecko source tree.
+# This file contains configuration for each of the repositories related to Firefox CI.
 #
 # Repositories are also known as projects (mostly within the
 # taskgraph-generation code) and as branches (although they are not Mercurial
@@ -16,8 +15,7 @@
 # - `repo_type` -- always `hg` (for later expansion)
 # - `access` -- the name of the group with access to this repository; typically `scm_level_{1,2,3}`.
 # - `trust_domain` -- separation within an access level of projects with different organizations
-# - 'gecko_repo' -- the corresponding root repository, for repositories that are usually checked
-#                   out as sub-repositories (i.e. for comm-central dervied respositories)
+# - `parent_repo` -- for projects like comm where the repo is checked out within a "parent" repo
 # - 'is_try' -- if present and true, this is a "try" repo, meaning that users typically push new heads
 #               and expect customized task graphs; other repos follow a more typical model of each new
 #               push adding more commits to the previous head.
@@ -150,7 +148,7 @@ comm-beta:
   repo_type: hg
   access: scm_level_3
   trust_domain: comm
-  gecko_repo: https://hg.mozilla.org/releases/mozilla-beta
+  parent_repo: https://hg.mozilla.org/releases/mozilla-beta
   features:
     taskcluster-cron: false
     taskcluster-push: true
@@ -195,7 +193,7 @@ comm-central:
   repo_type: hg
   access: scm_level_3
   trust_domain: comm
-  gecko_repo: https://hg.mozilla.org/mozilla-central
+  parent_repo: https://hg.mozilla.org/mozilla-central
   features:
     taskcluster-cron: true
     taskcluster-push: true
