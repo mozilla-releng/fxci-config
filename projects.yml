@@ -430,3 +430,10 @@ ci-admin:
   access: scm_level_3
   features:
     taskcluster-push: true
+
+version-control-tools:
+  repo: https://hg.mozilla.org/hgcustom/version-control-tools
+  repo_type: hg
+  access: scm_versioncontrol
+  features:
+    taskcluster-push: true
