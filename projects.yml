@@ -437,3 +437,5 @@ version-control-tools:
   access: scm_versioncontrol
   features:
     taskcluster-push: true
+  extra_tc_scopes:
+    - queue:create-task:aws-provisioner-v1/version-control-tools
