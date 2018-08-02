@@ -439,3 +439,5 @@ version-control-tools:
     taskcluster-push: true
   extra_tc_scopes:
     - queue:create-task:aws-provisioner-v1/version-control-tools
+    - queue:route:notify.irc-channel.*
+    - queue:route:tc-treeherder.v2.version-control-tools.*
