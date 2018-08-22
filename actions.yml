@@ -75,6 +75,37 @@
 
 - trust_domain: gecko
   level: 1
+  action_perm: retrigger-decision
+  groups: [releng, vpn_sheriff]
+
+- trust_domain: comm
+  level: 1
+  action_perm: retrigger-decision
+  groups: [releng, vpn_sheriff]
+
+- trust_domain: gecko
+  level: 2
+  action_perm: retrigger-decision
+  groups: [releng, vpn_sheriff]
+
+- trust_domain: comm
+  level: 2
+  action_perm: retrigger-decision
+  groups: [releng, vpn_sheriff]
+
+- trust_domain: gecko
+  level: 3
+  action_perm: retrigger-decision
+  groups: [releng, vpn_sheriff]
+
+- trust_domain: comm
+  level: 3
+  action_perm: retrigger-decision
+  groups: [releng, vpn_sheriff]
+
+
+- trust_domain: gecko
+  level: 1
   action_perm: cancel-all
   groups: [active_scm_level_1, active_scm_level_2, active_scm_level_3, releng, vpn_sheriff]
 
