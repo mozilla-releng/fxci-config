@@ -1,0 +1,847 @@
+# Grants of scopes to repos or user groups, or parts of projects
+#
+# Format:
+# - grant:
+#   - <scope>
+#   - ..
+#   to:
+#   - <grantee>
+#   - ..
+#
+# The `grant` property specifies the scopes to be granted.  Each will have {..}
+# parameters expanded with parameters from the grantees selected.
+#
+# ## Projects
+#
+# A grantee can either be a project or a user group.  A project looks like this:
+#
+# - projects:
+#     level: [2, 3]  # condition
+#     job: ["branch:default", "cron:*"] 
+#
+# The top-level property can be `projects` or `project`, whichever reads better.
+#
+# The conditions select matching projects from projects.yml.  Each specifies a
+# condition name and either a single value or an array of values.  For an array
+# of values, a project with any value in the array is matched.  The conditions
+# are AND'ed together.  Available conditions are:
+#
+# * access
+# * level (as derived from access)
+# * alias
+# * feature (projects with the given feature or for `!feature`, projects without)
+# * is_try (true/false)
+# * trust_domain
+# * job
+#
+# "job" is a little special: it is a list of the jobs on the matching projects
+# to which the grant applies.  These are suffixes to the `repo` roles,
+# defaulting to "*":
+#
+# * * (all jobs on the repo)
+# * branch:default (pushes to the repo)
+# * cron:<job> (cron jobs; kleene-* is allowed)
+# * action:<actionPerm> (action jobs; kleene-* is allowed)
+#
+# the following expansions of the granted scopes are performed:
+#
+# * {alias} (project alias)
+# * {level} (numeric level; not substituted if this repo has no numeric level)
+# * {trust_domain}
+#
+# ## User Groups
+#
+# A user group grantee looks like this:
+#
+# - group: <groupName>
+# or
+# - groups: [<group1>, <group2>, ..]
+#
+# The property name can be `group` or `groups`, whichever reads better.
+#
+# The resulting scopes are granted to role `project:releng:ci-group:<groupName>`.
+# It is then the responsibility of someone with elevated privileges to grant
+# `assume:project:releng:ci-group:<groupName>` to the appropriate access-control
+# group, hopefully with the same name.
+#
+# No expansions are available for user groups.
+
+##
+# scopes for all gecko-related projects
+
+- grant:
+  # routes to support indexing by product
+  - queue:route:index.{trust_domain}.v2.{alias}.*
+  - index:insert-task:{trust_domain}.v2.{alias}.*
+
+  # routes to support locating tasks that create specific versions of artifacts
+  # (toolchains, etc.)
+  - queue:route:index.{trust_domain}.cache.level-{level}.*
+  - index:insert-task:{trust_domain}.cache.level-{level}.*
+
+  # routes to support reporting to treeherder
+  - queue:route:tc-treeherder-stage.{alias}.*
+  - queue:route:tc-treeherder.{alias}.*
+  - queue:route:tc-treeherder-stage.v2.{alias}.*
+  - queue:route:tc-treeherder.v2.{alias}.*
+
+  # coalescing routes support dropping unnecessary tasks under loda
+  - queue:route:coalesce.v1.builds.{alias}.*  # deprecated - bug 1382204
+  - queue:route:coalesce.v1.{alias}.*
+
+  # index releases
+  - queue:route:index.releases.v1.{alias}.*
+  - index:insert-task:releases.v1.{alias}.*
+
+  # allow fetching secrets appropriate to this level
+  - secrets:get:project/releng/{trust_domain}/build/level-{level}/*
+  to:
+  - project:
+      feature: gecko-roles
+
+# moz-tree:level:1:*
+- grant:
+  - docker-worker:cache:level-1-*
+  - docker-worker:cache:tooltool-cache
+  - docker-worker:capability:device:loopbackAudio
+  - docker-worker:capability:device:loopbackVideo
+  - docker-worker:capability:privileged
+  - docker-worker:feature:allowPtrace
+  - docker-worker:image:quay.io/mozilla/builder:*
+  - docker-worker:image:quay.io/mozilla/decision:*
+  - docker-worker:image:taskcluster/builder:*
+  - docker-worker:image:taskcluster/tester:*
+  - docker-worker:image:taskclusterprivate/upload_symbols:*
+  - docker-worker:relengapi-proxy:tooltool.download.internal
+  - docker-worker:relengapi-proxy:tooltool.download.public
+  - generic-worker:cache:level-1-*
+  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win10-64/Administrators
+  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win7-32/Administrators
+  - generic-worker:run-as-administrator:aws-provisioner-v1/gecko-t-win10-64
+  - index:insert-task:docker.images.v2.level-1.*
+  - index:insert-task:garbage.*
+  - index:insert-task:gecko.cache.level-1.*
+  - notify:email:*
+  - project:releng:balrog:channel:*
+  - project:releng:balrog:server:dep
+  - project:releng:beetmover:action:*
+  - project:releng:beetmover:bucket:dep
+  - project:releng:beetmover:bucket:maven-staging
+  - project:releng:googleplay:dep
+  - project:releng:ship-it:staging
+  - project:releng:signing:cert:dep-signing
+  - project:releng:signing:format:*
+  - purge-cache:aws-provisioner-v1/*
+  - queue:cancel-task:gecko-level-1/*
+  - queue:create-task:aws-provisioner-v1/ami-test*
+  - queue:create-task:aws-provisioner-v1/android-api-*
+  - queue:create-task:aws-provisioner-v1/b2gbuild*
+  - queue:create-task:aws-provisioner-v1/b2gtest*
+  - queue:create-task:aws-provisioner-v1/balrog
+  - queue:create-task:aws-provisioner-v1/dbg-*
+  - queue:create-task:aws-provisioner-v1/desktop-test*
+  - queue:create-task:aws-provisioner-v1/flame-kk*
+  - queue:create-task:aws-provisioner-v1/gecko-1-*
+  - queue:create-task:aws-provisioner-v1/gecko-decision
+  - queue:create-task:aws-provisioner-v1/gecko-images
+  - queue:create-task:aws-provisioner-v1/gecko-misc
+  - queue:create-task:aws-provisioner-v1/gecko-symbol-upload
+  - queue:create-task:aws-provisioner-v1/gecko-t-*
+  - queue:create-task:aws-provisioner-v1/loan-1-*
+  - queue:create-task:aws-provisioner-v1/loan-t-*
+  - queue:create-task:aws-provisioner-v1/mulet-debug
+  - queue:create-task:aws-provisioner-v1/mulet-opt
+  - queue:create-task:aws-provisioner-v1/opt-*
+  - queue:create-task:aws-provisioner-v1/rustbuild
+  - queue:create-task:aws-provisioner-v1/spidermonkey
+  - queue:create-task:aws-provisioner-v1/symbol-upload
+  - queue:create-task:aws-provisioner-v1/taskcluster-images
+  - queue:create-task:buildbot-bridge/buildbot-bridge
+  - queue:create-task:dummy-test-provisioner/dummy-test-type
+  - queue:create-task:gecko-t-tc-worker/*
+  - queue:create-task:localprovisioner/*
+  - queue:create-task:low:scriptworker-prov-v1/balrog-dev
+  - queue:create-task:low:scriptworker-prov-v1/beetmoverworker-dev
+  - queue:create-task:medium:proj-autophone/*
+  - queue:create-task:medium:proj-awfy/*
+  - queue:create-task:null-provisioner/buildbot
+  - queue:create-task:null-provisioner/buildbot-try
+  - queue:create-task:packetnet/*
+  - queue:create-task:releng-hardware/*
+  - queue:create-task:scl3-puppet/os-x-10-10-gw
+  - queue:create-task:scl3-puppet/os-x-build-gw
+  - queue:create-task:tc-worker-provisioner/*
+  - queue:create-task:test-dummy-provisioner/*
+  - queue:create-task:low:aws-provisioner-v1/ami-test*
+  - queue:create-task:low:aws-provisioner-v1/android-api-*
+  - queue:create-task:low:aws-provisioner-v1/b2gbuild*
+  - queue:create-task:low:aws-provisioner-v1/b2gtest*
+  - queue:create-task:low:aws-provisioner-v1/balrog
+  - queue:create-task:low:aws-provisioner-v1/dbg-*
+  - queue:create-task:low:aws-provisioner-v1/desktop-test*
+  - queue:create-task:low:aws-provisioner-v1/flame-kk*
+  - queue:create-task:low:aws-provisioner-v1/gecko-1-*
+  - queue:create-task:low:aws-provisioner-v1/gecko-decision
+  - queue:create-task:low:aws-provisioner-v1/gecko-images
+  - queue:create-task:low:aws-provisioner-v1/gecko-misc
+  - queue:create-task:low:aws-provisioner-v1/gecko-symbol-upload
+  - queue:create-task:low:aws-provisioner-v1/gecko-t-*
+  - queue:create-task:low:aws-provisioner-v1/loan-1-*
+  - queue:create-task:low:aws-provisioner-v1/loan-t-*
+  - queue:create-task:low:aws-provisioner-v1/mulet-debug
+  - queue:create-task:low:aws-provisioner-v1/mulet-opt
+  - queue:create-task:low:aws-provisioner-v1/opt-*
+  - queue:create-task:low:aws-provisioner-v1/rustbuild
+  - queue:create-task:low:aws-provisioner-v1/spidermonkey
+  - queue:create-task:low:aws-provisioner-v1/symbol-upload
+  - queue:create-task:low:aws-provisioner-v1/taskcluster-images
+  - queue:create-task:low:buildbot-bridge/buildbot-bridge
+  - queue:create-task:low:dummy-test-provisioner/dummy-test-type
+  - queue:create-task:low:gecko-t-tc-worker/*
+  - queue:create-task:low:localprovisioner/*
+  - queue:create-task:low:manual-packet/tc-worker-qemu-v1
+  - queue:create-task:low:null-provisioner/buildbot
+  - queue:create-task:low:null-provisioner/buildbot-try
+  - queue:create-task:low:packetnet/*
+  - queue:create-task:low:releng-hardware/gecko-t-*
+  - queue:create-task:low:releng-hardware/my-talos
+  - queue:create-task:low:scl3-puppet/os-x-10-10-gw
+  - queue:create-task:low:scl3-puppet/os-x-build-gw
+  - queue:create-task:low:scriptworker-prov-v1/dep-pushapk
+  - queue:create-task:low:scriptworker-prov-v1/depsigning
+  - queue:create-task:low:scriptworker-prov-v1/shipit-dev
+  - queue:create-task:low:tc-worker-provisioner/*
+  - queue:create-task:low:test-dummy-provisioner/*
+  - queue:define-task:aws-provisioner-v1/build-c4-2xlarge
+  - queue:define-task:aws-provisioner-v1/taskcluster-images
+  - queue:define-task:aws-provisioner-v1/test-c4-2xlarge
+  - queue:define-task:dummy-test-provisioner/dummy-test-type
+  - queue:get-artifact:private/interactive/*
+  - queue:get-artifact:project/gecko/android-*
+  - queue:rerun-task:gecko-level-1/*
+  - queue:route:index.docker.images.v2.level-1.*
+  - queue:route:index.garbage.*
+  - queue:route:index.gecko.cache.level-1.*
+  - queue:route:project.releng.funsize.level-1.*
+  - queue:scheduler-id:gecko-level-1
+  - queue:route:notify.*
+  - scheduler:create-task-graph
+  - scheduler:extend-task-graph:*
+  - secrets:get:project/releng/gecko/build/level-1/*
+  - secrets:get:project/taskcluster/gecko/hgfingerprint
+  - worker:privileged:manual-packet/tc-worker-docker-v0
+  - queue:create-task:low:manual-packet/tc-worker-docker-v0
+  - worker:privileged:terraform-packet/tc-worker-docker-v1
+  - queue:create-task:low:terraform-packet/tc-worker-docker-v1
+  - worker:privileged:terraform-packet/tc-worker-docker-v1-*
+  - queue:create-task:low:terraform-packet/tc-worker-docker-v1-*
+  - worker:cache:level-1-*
+  - queue:create-task:medium:terraform-packet/tc-worker-docker-v1-*
+  - worker:relengapi-proxy:tooltool.download.internal
+  - worker:relengapi-proxy:tooltool.download.public
+  to:
+  - projects:
+      feature: gecko-roles
+      level: [1, 2, 3]
+
+# moz-tree:level:1:gecko
+- grant:
+  - assume:project:taskcluster:gecko:level-1-sccache-buckets
+  - assume:project:taskcluster:level-1-sccache-buckets
+  - generic-worker:allow-rdp:aws-provisioner-v1/gecko-1-b-win*
+  - generic-worker:allow-rdp:aws-provisioner-v1/gecko-t-win*
+  - project:releng:addons.mozilla.org:server:staging
+  - project:releng:balrog:action:*
+  - project:releng:beetmover:bucket:dep-partner
+  - project:releng:bouncer:action:submission
+  - project:releng:bouncer:server:staging
+  - project:releng:snapcraft:firefox:mock
+  - project:releng:treescript:action:*
+  - project:releng:treescript:action:tagging
+  - queue:create-task:low:aws-provisioner-v1/fp-gecko-*
+  - queue:create-task:low:manual-packet/tc-worker-docker-v1
+  - queue:create-task:low:scriptworker-prov-v1/addon-dev
+  - queue:create-task:low:scriptworker-prov-v1/balrog-dev
+  - queue:create-task:low:scriptworker-prov-v1/bouncer-dev
+  - queue:create-task:low:scriptworker-prov-v1/dep-pushsnap
+  - queue:create-task:low:scriptworker-prov-v1/signing-linux-dev
+  - queue:create-task:low:scriptworker-prov-v1/treescript-dev
+  - queue:create-task:low:scriptworker-prov-v1/treescript-v1
+  - queue:create-task:low:terraform-packet/*
+  - queue:get-artifact:releng/partner/*
+  to:
+  - projects:
+      feature: gecko-roles
+      level: [1, 2, 3]
+      trust_domain: gecko
+
+# moz-tree:level:1:comm
+- grant:
+  - assume:project:taskcluster:comm:level-1-sccache-buckets
+  - project:comm:thunderbird:releng:balrog:action:*
+  - project:comm:thunderbird:releng:balrog:server:dep
+  - project:comm:thunderbird:releng:beetmover:action:*
+  - project:comm:thunderbird:releng:beetmover:bucket:dep
+  - project:comm:thunderbird:releng:bouncer:action:*
+  - project:comm:thunderbird:releng:bouncer:server:staging
+  - project:comm:thunderbird:releng:ship-it:staging
+  - project:comm:thunderbird:releng:signing:cert:dep-signing
+  - project:comm:thunderbird:releng:signing:format:*
+  - project:comm:thunderbird:releng:treescript:action:push
+  - project:comm:thunderbird:releng:treescript:action:tagging
+  - project:comm:thunderbird:releng:treescript:action:version_bump
+  - queue:create-task:low:scriptworker-prov-v1/tb-balrog-dev
+  - queue:create-task:low:scriptworker-prov-v1/tb-beetmover-dev
+  - queue:create-task:low:scriptworker-prov-v1/tb-bouncer-dev
+  - queue:create-task:low:scriptworker-prov-v1/tb-depsigning
+  - queue:create-task:low:scriptworker-prov-v1/tb-shipit-dev
+  - queue:create-task:low:scriptworker-prov-v1/tb-treescript-comm-dev
+  - secrets:get:project/comm/thunderbird/releng/build/level-1/*
+  to:
+  - projects:
+      feature: gecko-roles
+      level: [1, 2, 3]
+      trust_domain: comm
+
+# moz-tree:level:2:*
+- grant:
+  - docker-worker:cache:level-2-*
+  - docker-worker:capability:device:phone
+  - docker-worker:image:taskclusterprivate/phone-builder:*
+  - docker-worker:image:taskclusterprivate/tester-device:*
+  - generic-worker:cache:level-2-*
+  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win7-32/Administrators
+  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win10-64/Administrators
+  - generic-worker:run-as-administrator:aws-provisioner-v1/gecko-t-win10-64
+  - index:insert-task:docker.images.v2.level-2.*
+  - index:insert-task:gecko.cache.level-2.*
+  - queue:cancel-task:gecko-level-2/*
+  - queue:create-task:aws-provisioner-v1/ami-test*
+  - queue:create-task:aws-provisioner-v1/android-api-*
+  - queue:create-task:aws-provisioner-v1/b2gbuild*
+  - queue:create-task:aws-provisioner-v1/b2gtest*
+  - queue:create-task:aws-provisioner-v1/balrog
+  - queue:create-task:aws-provisioner-v1/dbg-*
+  - queue:create-task:aws-provisioner-v1/desktop-test*
+  - queue:create-task:aws-provisioner-v1/flame-kk*
+  - queue:create-task:aws-provisioner-v1/gecko-1-*
+  - queue:create-task:aws-provisioner-v1/gecko-2-*
+  - queue:create-task:aws-provisioner-v1/gecko-decision
+  - queue:create-task:aws-provisioner-v1/gecko-images
+  - queue:create-task:aws-provisioner-v1/gecko-misc
+  - queue:create-task:aws-provisioner-v1/gecko-symbol-upload
+  - queue:create-task:aws-provisioner-v1/gecko-t-*
+  - queue:create-task:aws-provisioner-v1/loan-1-*
+  - queue:create-task:aws-provisioner-v1/loan-t-*
+  - queue:create-task:aws-provisioner-v1/mulet-debug
+  - queue:create-task:aws-provisioner-v1/mulet-opt
+  - queue:create-task:aws-provisioner-v1/opt-*
+  - queue:create-task:aws-provisioner-v1/rustbuild
+  - queue:create-task:aws-provisioner-v1/spidermonkey
+  - queue:create-task:aws-provisioner-v1/symbol-upload
+  - queue:create-task:aws-provisioner-v1/taskcluster-images
+  - queue:create-task:aws-provisioner-v1/testdroid-device
+  - queue:create-task:buildbot-bridge/buildbot-bridge
+  - queue:create-task:dummy-test-provisioner/dummy-test-type
+  - queue:create-task:gecko-t-tc-worker/*
+  - queue:create-task:localprovisioner/*
+  - queue:create-task:null-provisioner/buildbot
+  - queue:create-task:null-provisioner/buildbot-try
+  - queue:create-task:packetnet/*
+  - queue:create-task:releng-hardware/gecko-t-*
+  - queue:create-task:scl3-puppet/os-x-10-10-gw
+  - queue:create-task:scl3-puppet/os-x-build-gw
+  - queue:create-task:tc-worker-provisioner/*
+  - queue:create-task:test-dummy-provisioner/*
+  - queue:create-task:very-low:aws-provisioner-v1/ami-test*
+  - queue:create-task:very-low:aws-provisioner-v1/android-api-*
+  - queue:create-task:very-low:aws-provisioner-v1/b2gbuild*
+  - queue:create-task:very-low:aws-provisioner-v1/b2gtest*
+  - queue:create-task:very-low:aws-provisioner-v1/balrog
+  - queue:create-task:very-low:aws-provisioner-v1/dbg-*
+  - queue:create-task:very-low:aws-provisioner-v1/desktop-test*
+  - queue:create-task:very-low:aws-provisioner-v1/flame-kk*
+  - queue:create-task:very-low:aws-provisioner-v1/gecko-1-*
+  - queue:create-task:very-low:aws-provisioner-v1/gecko-2-*
+  - queue:create-task:very-low:aws-provisioner-v1/gecko-decision
+  - queue:create-task:very-low:aws-provisioner-v1/gecko-images
+  - queue:create-task:very-low:aws-provisioner-v1/gecko-misc
+  - queue:create-task:very-low:aws-provisioner-v1/gecko-symbol-upload
+  - queue:create-task:very-low:aws-provisioner-v1/gecko-t-*
+  - queue:create-task:very-low:aws-provisioner-v1/loan-1-*
+  - queue:create-task:very-low:aws-provisioner-v1/loan-t-*
+  - queue:create-task:very-low:aws-provisioner-v1/mulet-debug
+  - queue:create-task:very-low:aws-provisioner-v1/mulet-opt
+  - queue:create-task:very-low:aws-provisioner-v1/opt-*
+  - queue:create-task:very-low:aws-provisioner-v1/rustbuild
+  - queue:create-task:very-low:aws-provisioner-v1/spidermonkey
+  - queue:create-task:very-low:aws-provisioner-v1/symbol-upload
+  - queue:create-task:very-low:aws-provisioner-v1/taskcluster-images
+  - queue:create-task:very-low:aws-provisioner-v1/testdroid-device
+  - queue:create-task:very-low:buildbot-bridge/buildbot-bridge
+  - queue:create-task:very-low:dummy-test-provisioner/dummy-test-type
+  - queue:create-task:very-low:gecko-t-tc-worker/*
+  - queue:create-task:very-low:localprovisioner/*
+  - queue:create-task:very-low:null-provisioner/buildbot
+  - queue:create-task:very-low:null-provisioner/buildbot-try
+  - queue:create-task:very-low:packetnet/*
+  - queue:create-task:very-low:releng-hardware/gecko-t-*
+  - queue:create-task:very-low:scl3-puppet/os-x-10-10-gw
+  - queue:create-task:very-low:scl3-puppet/os-x-build-gw
+  - queue:create-task:very-low:tc-worker-provisioner/*
+  - queue:create-task:very-low:test-dummy-provisioner/*
+  - queue:route:index.docker.images.v2.level-2.*
+  - queue:route:index.gecko.cache.level-2.*
+  - queue:scheduler-id:gecko-level-2
+  - secrets:get:project/releng/gecko/build/level-2/*
+  - secrets:get:project/taskcluster/gecko/build/level-2/*
+  to:
+  - projects:
+      feature: gecko-roles
+      level: [2, 3]
+
+# moz-tree:level:2:gecko
+- grant:
+  - assume:project:taskcluster:gecko:level-2-sccache-buckets
+  - assume:project:taskcluster:level-2-sccache-buckets
+  - queue:rerun-task:gecko-level-2/*
+  to:
+  - projects:
+      feature: gecko-roles
+      level: [2, 3]
+      trust_domain: gecko
+
+# moz-tree:level:2:comm
+- grant:
+  - assume:project:taskcluster:comm:level-2-sccache-buckets
+  to:
+  - projects:
+      feature: gecko-roles
+      level: [2, 3]
+      trust_domain: comm
+
+# moz-tree:level:3:*
+- grant:
+  - auth:aws-s3:read-write:public-qemu-images/repository/hg.mozilla.org/mozilla-central/*
+  - docker-worker:cache:level-3-*
+  - docker-worker:feature:balrogStageVPNProxy
+  - docker-worker:feature:balrogVPNProxy
+  - docker-worker:image:taskclusterprivate/taskcluster-vpn-proxy:*
+  - generic-worker:cache:level-3-*
+  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win7-32/Administrators
+  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win10-64/Administrators
+  - generic-worker:run-as-administrator:aws-provisioner-v1/gecko-t-win10-64
+  - index:insert-task:docker.images.v2.level-3.*
+  - index:insert-task:gecko.cache.level-3.*
+  - project:releng:balrog:server:beta
+  - project:releng:balrog:server:release
+  - project:releng:balrog:server:esr
+  - project:releng:beetmover:bucket:release
+  - project:releng:ship-it:production
+  - project:releng:googleplay:beta
+  - queue:cancel-task:gecko-level-3/*
+  - queue:create-task:aws-provisioner-v1/ami-test*
+  - queue:create-task:aws-provisioner-v1/android-api-*
+  - queue:create-task:aws-provisioner-v1/b2gbuild*
+  - queue:create-task:aws-provisioner-v1/b2gtest*
+  - queue:create-task:aws-provisioner-v1/balrog
+  - queue:create-task:aws-provisioner-v1/dbg-*
+  - queue:create-task:aws-provisioner-v1/desktop-test*
+  - queue:create-task:aws-provisioner-v1/flame-kk*
+  - queue:create-task:aws-provisioner-v1/gecko-1-*
+  - queue:create-task:aws-provisioner-v1/gecko-2-*
+  - queue:create-task:aws-provisioner-v1/gecko-3-*
+  - queue:create-task:aws-provisioner-v1/gecko-decision
+  - queue:create-task:aws-provisioner-v1/gecko-images
+  - queue:create-task:aws-provisioner-v1/gecko-misc
+  - queue:create-task:aws-provisioner-v1/gecko-symbol-upload
+  - queue:create-task:aws-provisioner-v1/gecko-t-*
+  - queue:create-task:aws-provisioner-v1/loan-1-*
+  - queue:create-task:aws-provisioner-v1/loan-t-*
+  - queue:create-task:aws-provisioner-v1/mulet-debug
+  - queue:create-task:aws-provisioner-v1/mulet-opt
+  - queue:create-task:aws-provisioner-v1/opt-*
+  - queue:create-task:aws-provisioner-v1/rustbuild
+  - queue:create-task:aws-provisioner-v1/spidermonkey
+  - queue:create-task:aws-provisioner-v1/symbol-upload
+  - queue:create-task:aws-provisioner-v1/taskcluster-images
+  - queue:create-task:aws-provisioner-v1/testdroid-device
+  - queue:create-task:buildbot-bridge/buildbot-bridge
+  - queue:create-task:dummy-test-provisioner/dummy-test-type
+  - queue:create-task:gecko-t-tc-worker/*
+  - queue:create-task:highest:aws-provisioner-v1/ami-test*
+  - queue:create-task:highest:aws-provisioner-v1/android-api-*
+  - queue:create-task:highest:aws-provisioner-v1/b2gbuild*
+  - queue:create-task:highest:aws-provisioner-v1/b2gtest*
+  - queue:create-task:highest:aws-provisioner-v1/balrog
+  - queue:create-task:highest:aws-provisioner-v1/dbg-*
+  - queue:create-task:highest:aws-provisioner-v1/desktop-test*
+  - queue:create-task:highest:aws-provisioner-v1/flame-kk*
+  - queue:create-task:highest:aws-provisioner-v1/gecko-1-*
+  - queue:create-task:highest:aws-provisioner-v1/gecko-2-*
+  - queue:create-task:highest:aws-provisioner-v1/gecko-3-*
+  - queue:create-task:highest:aws-provisioner-v1/gecko-decision
+  - queue:create-task:highest:aws-provisioner-v1/gecko-images
+  - queue:create-task:highest:aws-provisioner-v1/gecko-misc
+  - queue:create-task:highest:aws-provisioner-v1/gecko-symbol-upload
+  - queue:create-task:highest:aws-provisioner-v1/gecko-t-*
+  - queue:create-task:highest:aws-provisioner-v1/loan-1-*
+  - queue:create-task:highest:aws-provisioner-v1/loan-t-*
+  - queue:create-task:highest:aws-provisioner-v1/mulet-debug
+  - queue:create-task:highest:aws-provisioner-v1/mulet-opt
+  - queue:create-task:highest:aws-provisioner-v1/opt-*
+  - queue:create-task:highest:aws-provisioner-v1/rustbuild
+  - queue:create-task:highest:aws-provisioner-v1/spidermonkey
+  - queue:create-task:highest:aws-provisioner-v1/symbol-upload
+  - queue:create-task:highest:aws-provisioner-v1/taskcluster-images
+  - queue:create-task:highest:aws-provisioner-v1/testdroid-device
+  - queue:create-task:highest:buildbot-bridge/buildbot-bridge
+  - queue:create-task:highest:dummy-test-provisioner/dummy-test-type
+  - queue:create-task:highest:gecko-t-tc-worker/*
+  - queue:create-task:highest:localprovisioner/*
+  - queue:create-task:highest:null-provisioner/buildbot
+  - queue:create-task:highest:null-provisioner/buildbot-try
+  - queue:create-task:highest:null-provisioner/human-breakpoint
+  - queue:create-task:highest:packetnet/*
+  - queue:create-task:highest:releng-hardware/gecko-t-*
+  - queue:create-task:highest:scl3-puppet/os-x-10-10-gw
+  - queue:create-task:highest:scl3-puppet/os-x-build-gw
+  - queue:create-task:highest:scriptworker-prov-v1/dep-pushapk
+  - queue:create-task:highest:scriptworker-prov-v1/pushapk-v1
+  - queue:create-task:highest:scriptworker-prov-v1/depsigning
+  - queue:create-task:highest:scriptworker-prov-v1/dummy-worker-transpar
+  - queue:create-task:highest:scriptworker-prov-v1/signing-linux-dev
+  - queue:create-task:highest:tc-worker-provisioner/*
+  - queue:create-task:highest:test-dummy-provisioner/*
+  - queue:create-task:localprovisioner/*
+  - queue:create-task:null-provisioner/buildbot
+  - queue:create-task:null-provisioner/buildbot-try
+  - queue:create-task:packetnet/*
+  - queue:create-task:releng-hardware/gecko-t-*
+  - queue:create-task:scl3-puppet/os-x-10-10-gw
+  - queue:create-task:scl3-puppet/os-x-build-gw
+  - queue:create-task:tc-worker-provisioner/*
+  - queue:create-task:test-dummy-provisioner/*
+  - queue:get-artifact:private/docker-worker/*
+  - queue:route:index.docker.images.v2.level-3.*
+  - queue:route:index.gecko.cache.level-3.*
+  - queue:scheduler-id:gecko-level-3
+  - secrets:get:project/releng/gecko/build/level-3/*
+  - secrets:get:project/releng/snapcraft/firefox/edge
+  - secrets:get:project/taskcluster/gecko/build/level-3/*
+  to:
+  - projects:
+      feature: gecko-roles
+      level: [3]
+
+# moz-tree:level:3:gecko
+- grant:
+  - assume:project:taskcluster:gecko:level-3-sccache-buckets
+  - assume:project:taskcluster:level-3-sccache-buckets
+  - auth:aws-s3:read-write:tc-gp-private-1d-us-east-1/releng/mbsdiff-cache/
+  - project:releng:addons.mozilla.org:server:production
+  - project:releng:beetmover:action:push-to-maven
+  - project:releng:beetmover:action:push-to-partner
+  - project:releng:beetmover:bucket:maven-production
+  - project:releng:beetmover:bucket:partner
+  - project:releng:bouncer:action:aliases
+  - project:releng:bouncer:action:locations
+  - project:releng:bouncer:action:submission
+  - project:releng:bouncer:server:production
+  - project:releng:bouncer:server:staging
+  - project:releng:googleplay:release
+  - project:releng:ship-it:action:mark-as-shipped
+  - project:releng:ship-it:action:mark-as-started
+  - project:releng:ship-it:action:submit-mar-manifest
+  - project:releng:ship-it:server:production
+  - project:releng:ship-it:server:staging
+  - project:releng:signing:cert:nightly-signing
+  - project:releng:signing:cert:release-signing
+  - project:releng:snapcraft:firefox:beta
+  - project:releng:snapcraft:firefox:candidate
+  - project:releng:snapcraft:firefox:esr
+  - queue:create-task:highest:aws-provisioner-v1/taskcluster-generic
+  - queue:create-task:highest:proj-autophone/*
+  - queue:create-task:highest:scriptworker-prov-v1/addon-v1
+  - queue:create-task:highest:scriptworker-prov-v1/balrogworker-v1
+  - queue:create-task:highest:scriptworker-prov-v1/beetmoverworker-v1
+  - queue:create-task:highest:scriptworker-prov-v1/bouncer-dev
+  - queue:create-task:highest:scriptworker-prov-v1/bouncer-v1
+  - queue:create-task:highest:scriptworker-prov-v1/pushsnap-v1
+  - queue:create-task:highest:scriptworker-prov-v1/shipit-v1
+  - queue:create-task:highest:scriptworker-prov-v1/signing-linux-v1
+  - queue:create-task:highest:scriptworker-prov-v1/treescript-v1
+  - queue:create-task:highest:terraform-packet/gecko-t-*
+  - queue:rerun-task:gecko-level-3/*
+  - queue:route:index.gecko.heavyprofile.*
+  - queue:route:notify.email.release+tcstaging@mozilla.com.
+  - queue:route:notify.email.release-automation-notifications@mozilla.com.*
+  - queue:route:tc-treeherder.v2.*
+  - secrets:get:project/releng/snapcraft/firefox/candidate
+  to:
+  - projects:
+      feature: gecko-roles
+      level: [3]
+      trust_domain: gecko
+
+# moz-tree:level:3:comm
+- grant:
+  - assume:project:taskcluster:comm:level-3-sccache-buckets
+  - queue:create-task:highest:scriptworker-prov-v1/tb-balrog-dev
+  - queue:create-task:highest:scriptworker-prov-v1/tb-beetmover-dev
+  - queue:create-task:highest:scriptworker-prov-v1/tb-depsigning
+  - secrets:get:project/comm/thunderbird/releng/build/level-3/*
+  to:
+  - projects:
+      feature: gecko-roles
+      level: [3]
+      trust_domain: comm
+
+##
+# project-specific scopes (for esr's to hang onto their old scopes)
+
+- grant:
+  - docker-worker:cache:build-macosx64-st-an-workspace
+  - docker-worker:cache:build-macosx64-workspace
+  - docker-worker:cache:build-mozilla-esr52*
+  - docker-worker:cache:tc-vcs
+  - docker-worker:cache:tc-vcs-public-sources
+  - queue:rerun-task
+  - queue:route:index.gecko.v1.mozilla-esr52.*
+  to:
+  - project:
+      alias: mozilla-esr52
+
+- grant:
+  - project:comm:thunderbird:releng:balrog:server:release
+  - project:comm:thunderbird:releng:beetmover:bucket:release
+  - project:comm:thunderbird:releng:bouncer:server:production
+  - project:comm:thunderbird:releng:ship-it:production
+  - project:comm:thunderbird:releng:signing:cert:release-signing
+  - queue:create-task:highest:scriptworker-prov-v1/tb-balrog-v1
+  - queue:create-task:highest:scriptworker-prov-v1/tb-beetmover-v1
+  - queue:create-task:highest:scriptworker-prov-v1/tb-bouncer-v1
+  - queue:create-task:highest:scriptworker-prov-v1/tb-shipit-v1
+  - queue:create-task:highest:scriptworker-prov-v1/tb-signing-v1
+  - queue:create-task:highest:scriptworker-prov-v1/tb-treescript-comm-v1
+  to:
+  - project:
+      alias: comm-esr60
+
+- grant:
+  - project:comm:thunderbird:releng:balrog:server:beta
+  - project:comm:thunderbird:releng:beetmover:bucket:release
+  - project:comm:thunderbird:releng:bouncer:server:production
+  - project:comm:thunderbird:releng:ship-it:production
+  - project:comm:thunderbird:releng:signing:cert:release-signing
+  - queue:create-task:highest:scriptworker-prov-v1/tb-balrog-v1
+  - queue:create-task:highest:scriptworker-prov-v1/tb-beetmover-v1
+  - queue:create-task:highest:scriptworker-prov-v1/tb-bouncer-v1
+  - queue:create-task:highest:scriptworker-prov-v1/tb-shipit-v1
+  - queue:create-task:highest:scriptworker-prov-v1/tb-signing-v1
+  - queue:create-task:highest:scriptworker-prov-v1/tb-treescript-comm-v1
+  to:
+  - project:
+      alias: comm-beta
+
+- grant:
+  - docker-worker:feature:allowPtrace
+  - queue:create-task:aws-provisioner-v1/hg-worker
+  - queue:create-task:aws-provisioner-v1/nss-win2012r2
+  - queue:create-task:localprovisioner/nss-aarch64
+  - queue:create-task:localprovisioner/nss-macos-10-12
+  - queue:create-task:localprovisioner/nss-rpi
+  - queue:route:index.docker.images.v1.nss.*
+  - queue:route:tc-treeherder-stage.nss.*
+  - queue:route:tc-treeherder-stage.v2.nss.*
+  - queue:route:tc-treeherder.nss.*
+  - queue:route:tc-treeherder.v2.nss.*
+  - scheduler:create-task-graph
+  - scheduler:extend-task-graph:*
+  to:
+  - project:
+      alias: nss
+
+- grant:
+  - docker-worker:feature:allowPtrace
+  - queue:create-task:aws-provisioner-v1/ami-test-win2012r2
+  - queue:create-task:aws-provisioner-v1/gecko-1-b-win*
+  - queue:create-task:aws-provisioner-v1/hg-worker
+  - queue:create-task:aws-provisioner-v1/nss-*
+  - queue:create-task:aws-provisioner-v1/win2012r2
+  - queue:create-task:localprovisioner/nss-aarch64
+  - queue:create-task:localprovisioner/nss-macos-10-12
+  - queue:route:index.docker.images.v1.nss-try.*
+  - queue:route:tc-treeherder-stage.nss-try.*
+  - queue:route:tc-treeherder-stage.v2.nss-try.*
+  - queue:route:tc-treeherder.nss-try.*
+  - queue:route:tc-treeherder.v2.nss-try.*
+  - scheduler:create-task-graph
+  - scheduler:extend-task-graph:*
+  to:
+  - project:
+      alias: nss-try
+
+##
+# Non-gecko tree projects
+
+- grant:
+  - queue:create-task:aws-provisioner-v1/version-control-tools
+  - queue:route:notify.irc-channel.*
+  - queue:route:tc-treeherder.v2.version-control-tools.*
+  to:
+  - project:
+      alias: version-control-tools
+
+##
+# feature-specific roles
+
+- grant:
+  - index:insert-task:buildbot.branches.{alias}.*
+  - index:insert-task:buildbot.revisions.*
+  - project:releng:buildbot-bridge:builder-name:release-{alias}-*
+  - project:releng:buildbot-bridge:builder-name:release-{alias}_*
+  - queue:route:index.buildbot.branches.{alias}.*
+  - queue:route:index.buildbot.revisions.*
+  to:
+  - project:
+      feature: buildbot
+
+- grant:
+  - queue:route:index.{trust_domain}.v2.trunk.revision.*
+  to:
+  - project:
+      feature: is-trunk
+
+- grant:
+  - queue:route:index.docker.images.v1.{alias}.*
+  - index:insert-task:docker.images.v1.{alias}.*
+  to:
+  - project:
+      feature: taskcluster-docker-routes-v1
+
+- grant:
+  - queue:route:index.docker.images.v2.level-{level}.*
+  to:
+  - project:
+      feature: taskcluster-docker-routes-v2
+
+##
+# delegate cron:nightly-* to hand-managed nightly roles
+
+- grant:
+  - assume:project:releng:nightly:level-{level}:{alias}
+  to:
+  - project:
+      feature: taskcluster-cron
+      trust_domain: gecko
+      job: cron:nightly-*
+
+- grant:
+  - assume:project:comm:thunderbird:comm:releng:nightly:level-{level}:{alias}
+  to:
+  - project:
+      feature: taskcluster-cron
+      trust_domain: comm
+      job: cron:nightly-*
+
+##
+# hook scopes
+
+# this scope is included in the decision task's .scopes, and indicates which
+# in-tree action hooks may be triggered for the taskgroup. We use this to limit
+# the actions on a taskgraph to those at the appropriate level, preventing
+# someone with level-3 access from being tricked into running a level-3 hook on
+# a level-1 (try) push.
+- grant:
+  - in-tree:hook-action:project-{trust_domain}/in-tree-action-{level}-*
+  to:
+  - project:
+      feature: gecko-actions
+      job: branch:default
+
+- grant:
+  - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
+  - hooks:trigger-hook:project-comm/in-tree-action-1-generic/*
+  to:
+  - groups:
+    - active_scm_level_1
+    - active_scm_level_2
+    - active_scm_level_3
+
+- grant:
+  - hooks:trigger-hook:project-gecko/in-tree-action-2-generic/*
+  - hooks:trigger-hook:project-comm/in-tree-action-2-generic/*
+  to:
+  - groups:
+    - active_scm_level_2
+    - active_scm_level_3
+
+- grant:
+  - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
+  - hooks:trigger-hook:project-comm/in-tree-action-3-generic/*
+  to:
+  - groups:
+    - active_scm_level_3
+
+# retriggering a decision requires a lot of scopes, so only sheriffs
+# and releng can do it
+- grant:
+  - hooks:trigger-hook:project-gecko/in-tree-action-1-retrigger-decision/*
+  - hooks:trigger-hook:project-comm/in-tree-action-1-retrigger-decision/*
+  - hooks:trigger-hook:project-gecko/in-tree-action-2-retrigger-decision/*
+  - hooks:trigger-hook:project-comm/in-tree-action-2-retrigger-decision/*
+  - hooks:trigger-hook:project-gecko/in-tree-action-3-retrigger-decision/*
+  - hooks:trigger-hook:project-comm/in-tree-action-3-retrigger-decision/*
+  to:
+  - groups:
+    - releng
+    - vpn_sheriff
+
+- grant:
+  - hooks:trigger-hook:project-gecko/in-tree-action-1-purge-caches/*
+  - hooks:trigger-hook:project-comm/in-tree-action-1-purge-caches/*
+  - hooks:trigger-hook:project-gecko/in-tree-action-2-purge-caches/*
+  - hooks:trigger-hook:project-comm/in-tree-action-2-purge-caches/*
+  - hooks:trigger-hook:project-gecko/in-tree-action-3-purge-caches/*
+  - hooks:trigger-hook:project-comm/in-tree-action-3-purge-caches/*
+  to:
+  - groups:
+    - releng
+    - vpn_sheriff
+
+# pretty much anyone can cancel-all at level 1 or 2, while only releng/sheriff
+# can do so at level 3
+- grant:
+  - hooks:trigger-hook:project-gecko/in-tree-action-1-cancel-all/*
+  - hooks:trigger-hook:project-comm/in-tree-action-1-cancel-all/*
+  - hooks:trigger-hook:project-gecko/in-tree-action-2-cancel-all/*
+  - hooks:trigger-hook:project-comm/in-tree-action-2-cancel-all/*
+  to:
+  - groups:
+    - active_scm_level_1
+    - active_scm_level_2
+    - active_scm_level_3
+    - releng
+    - vpn_sheriff
+
+- grant:
+  - hooks:trigger-hook:project-gecko/in-tree-action-3-cancel-all/*
+  - hooks:trigger-hook:project-comm/in-tree-action-3-cancel-all/*
+  to:
+  - groups:
+    - releng
+    - vpn_sheriff
+
+# release promotion is only available to relman/releng
+- grant:
+  - hooks:trigger-hook:project-gecko/in-tree-action-1-release-promotion/*
+  - hooks:trigger-hook:project-comm/in-tree-action-1-release-promotion/*
+  - hooks:trigger-hook:project-gecko/in-tree-action-2-release-promotion/*
+  - hooks:trigger-hook:project-comm/in-tree-action-2-release-promotion/*
+  - hooks:trigger-hook:project-gecko/in-tree-action-3-release-promotion/*
+  - hooks:trigger-hook:project-comm/in-tree-action-3-release-promotion/*
+  to:
+  - groups:
+    - releng
+    - vpn_releasemgt
