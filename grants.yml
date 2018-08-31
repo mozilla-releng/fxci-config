@@ -253,6 +253,7 @@
   - project:releng:addons.mozilla.org:server:staging
   - project:releng:balrog:action:*
   - project:releng:beetmover:bucket:dep-partner
+  - project:releng:bouncer:action:aliases
   - project:releng:bouncer:action:submission
   - project:releng:bouncer:server:staging
   - project:releng:snapcraft:firefox:mock
@@ -545,7 +546,6 @@
   - project:releng:beetmover:bucket:maven-production
   - project:releng:beetmover:bucket:partner
   - project:releng:bouncer:action:aliases
-  - project:releng:bouncer:action:locations
   - project:releng:bouncer:action:submission
   - project:releng:bouncer:server:production
   - project:releng:bouncer:server:staging
