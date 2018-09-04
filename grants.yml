@@ -256,6 +256,8 @@
   - project:releng:bouncer:action:aliases
   - project:releng:bouncer:action:submission
   - project:releng:bouncer:server:staging
+  - project:releng:ship-it:action:mark-as-shipped
+  - project:releng:ship-it:action:mark-as-started
   - project:releng:snapcraft:firefox:mock
   - project:releng:treescript:action:*
   - project:releng:treescript:action:tagging
@@ -552,7 +554,6 @@
   - project:releng:googleplay:release
   - project:releng:ship-it:action:mark-as-shipped
   - project:releng:ship-it:action:mark-as-started
-  - project:releng:ship-it:action:submit-mar-manifest
   - project:releng:ship-it:server:production
   - project:releng:ship-it:server:staging
   - project:releng:signing:cert:nightly-signing
