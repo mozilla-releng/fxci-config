@@ -690,6 +690,20 @@
   - project:
       alias: version-control-tools
 
+- grant:
+  - queue:create-task:high:aws-provisioner-v1/gecko-misc
+  - queue:route:tc-treeherder.v2.ci-admin.*
+  to:
+  - project:
+      alias: ci-admin
+
+- grant:
+  - queue:create-task:high:aws-provisioner-v1/gecko-misc
+  - queue:route:tc-treeherder.v2.ci-configuration.*
+  to:
+  - project:
+      alias: ci-configuration
+
 ##
 # feature-specific roles
 
