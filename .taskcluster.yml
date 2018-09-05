@@ -8,9 +8,13 @@ tasks:
         python setup.py develop &&
         ci-admin check --ci-configuration-revision ${push.revision}
   each(cfg):
+    taskGroupId: "${as_slugid('taskGroup')}"
+    taskId: "${as_slugid(cfg.name)}"
     provisionerId: aws-provisioner-v1
     workerType: gecko-misc
+    created: {$fromNow: ''}
     deadline: {$fromNow: '1 day'}
+    expires: {$fromNow: '14 days'}
     payload:
       image: 'python:3.6'
       command:
@@ -22,6 +26,7 @@ tasks:
             pip install -r requirements.txt &&
             ${cfg.commandSuffix}
       maxRunTime: 3600
+    scopes: []
     extra:
       treeherder:
         symbol: "${cfg.symbol}"
