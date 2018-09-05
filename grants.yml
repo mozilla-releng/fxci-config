@@ -253,8 +253,7 @@
   - project:releng:addons.mozilla.org:server:staging
   - project:releng:balrog:action:*
   - project:releng:beetmover:bucket:dep-partner
-  - project:releng:bouncer:action:aliases
-  - project:releng:bouncer:action:submission
+  - project:releng:bouncer:action:*
   - project:releng:bouncer:server:staging
   - project:releng:ship-it:action:mark-as-shipped
   - project:releng:ship-it:action:mark-as-started
@@ -547,10 +546,7 @@
   - project:releng:beetmover:action:push-to-partner
   - project:releng:beetmover:bucket:maven-production
   - project:releng:beetmover:bucket:partner
-  - project:releng:bouncer:action:aliases
-  - project:releng:bouncer:action:submission
   - project:releng:bouncer:server:production
-  - project:releng:bouncer:server:staging
   - project:releng:googleplay:release
   - project:releng:ship-it:action:mark-as-shipped
   - project:releng:ship-it:action:mark-as-started
