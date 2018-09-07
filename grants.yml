@@ -128,7 +128,7 @@
   - project:releng:beetmover:bucket:dep
   - project:releng:beetmover:bucket:maven-staging
   - project:releng:googleplay:dep
-  - project:releng:ship-it:staging
+  - project:releng:ship-it:server:staging
   - project:releng:signing:cert:dep-signing
   - project:releng:signing:format:*
   - purge-cache:aws-provisioner-v1/*
