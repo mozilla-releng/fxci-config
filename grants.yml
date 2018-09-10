@@ -47,6 +47,7 @@
 #
 # * {alias} (project alias)
 # * {level} (numeric level; not substituted if this repo has no numeric level)
+# * {hgmo_path} (path within hg.mozilla.org, if repo is on that host)
 # * {trust_domain}
 #
 # ## User Groups
@@ -788,6 +789,8 @@
       feature: gecko-actions
       job: branch:default
 
+# control who can run generic actions: basically anyone at the project's
+# level or higher.
 - grant:
   - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
   - hooks:trigger-hook:project-comm/in-tree-action-1-generic/*
@@ -826,6 +829,18 @@
     - releng
     - vpn_sheriff
 
+# In addition to the default scopes, retriggering a decision task requires
+# the scopes of a decision task.  These differ per project, so we use some
+# substitution to generate the correct values
+- grant:
+  - assume:repo:hg.mozilla.org/{hgmo_path}:branch:default
+  - in-tree:hook-action:project-gecko/in-tree-action-{level}-*
+  to:
+  - projects:
+      feature: gecko-actions
+      job: action:retrigger-decision
+
+# Similarly with purging caches
 - grant:
   - hooks:trigger-hook:project-gecko/in-tree-action-1-purge-caches/*
   - hooks:trigger-hook:project-comm/in-tree-action-1-purge-caches/*
