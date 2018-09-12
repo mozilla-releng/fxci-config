@@ -8,8 +8,9 @@
 # that do not require special scopes and which can be triggered by all users
 # at the given scm level; or the name of the action for anything else.
 #
-# The `groups` property defines the LDAP groups which have access to trigger
-# the action.
+# The optional `input_schema` property gives the schema for the `user.input`
+# portion of the hook's triggerPayload.  If not specified, the default is to
+# allow anything in that field.
 
 - trust_domain: gecko
   level: 1
