@@ -598,13 +598,13 @@
 # access to test workers; all levels have acces to the same workers, but
 # at different priorities
 - grant:
-  - queue:create-task:low:gce/gecko-t-linux
+  - queue:create-task:low:gce/gecko-t-linux*
   to:
   - projects:
       feature: gecko-roles
       level: [1, 2]
 - grant:
-  - queue:create-task:highest:gce/gecko-t-linux
+  - queue:create-task:highest:gce/gecko-t-linux*
   to:
   - projects:
       feature: gecko-roles
