@@ -112,7 +112,6 @@
   - docker-worker:image:quay.io/mozilla/decision:*
   - docker-worker:image:taskcluster/builder:*
   - docker-worker:image:taskcluster/tester:*
-  - docker-worker:image:taskclusterprivate/upload_symbols:*
   - docker-worker:relengapi-proxy:tooltool.download.internal
   - docker-worker:relengapi-proxy:tooltool.download.public
   - generic-worker:cache:level-1-*
