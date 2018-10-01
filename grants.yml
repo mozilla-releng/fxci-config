@@ -887,3 +887,33 @@
   - groups:
     - releng
     - vpn_releasemgt
+
+# tooltool.mozilla-releng.net and tokens.mozilla-releng.net scopes
+
+- grant:
+  - project:releng:services/tokens/api/usr/view/my
+  - project:releng:services/tokens/api/usr/issue
+  - project:releng:services/tokens/api/usr/revoke/my
+  - project:releng:services/tokens/api/tmp/issue
+  - project:releng:services/tooltool/api/download/public
+  to:
+  - groups:
+    - active_scm_level_1
+    - active_scm_level_2
+    - active_scm_level_3
+    - team_moco
+    - vpn_tooltooleditor
+
+- grant:
+  - project:releng:services/tooltool/api/download/internal
+  - project:releng:services/tooltool/api/download/public
+  to:
+    groups:
+    - team_moco
+
+- grant:
+  - project:releng:services/tooltool/api/upload/internal
+  - project:releng:services/tooltool/api/upload/public
+  to:
+    groups:
+    - vpn_tooltooleditor
