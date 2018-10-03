@@ -286,6 +286,8 @@
   - project:comm:thunderbird:releng:beetmover:bucket:dep
   - project:comm:thunderbird:releng:bouncer:action:*
   - project:comm:thunderbird:releng:bouncer:server:staging
+  - project:comm:thunderbird:releng:ship-it:action:mark-as-shipped
+  - project:comm:thunderbird:releng:ship-it:action:mark-as-started
   - project:comm:thunderbird:releng:ship-it:staging
   - project:comm:thunderbird:releng:signing:cert:dep-signing
   - project:comm:thunderbird:releng:signing:format:*
