@@ -908,12 +908,12 @@
   - project:releng:services/tooltool/api/download/internal
   - project:releng:services/tooltool/api/download/public
   to:
-    groups:
+  - groups:
     - team_moco
 
 - grant:
   - project:releng:services/tooltool/api/upload/internal
   - project:releng:services/tooltool/api/upload/public
   to:
-    groups:
+  - groups:
     - vpn_tooltooleditor
