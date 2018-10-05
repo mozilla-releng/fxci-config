@@ -919,3 +919,10 @@
   to:
   - groups:
     - vpn_tooltooleditor
+
+- grant:
+  - secrets:get:project/comm/*
+  - secrets:set:project/comm/*
+  to:
+  - groups: thunderbird-releng
+
