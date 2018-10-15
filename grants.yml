@@ -922,3 +922,11 @@
   to:
   - groups: thunderbird-releng
 
+# Allow releng to manage repo:hg.mozilla.org/* roles.
+- grant:
+  - auth:create-role:repo:hg.mozilla.org/*
+  - auth:update-role:repo:hg.mozilla.org/*
+  - auth:delete-role:repo:hg.mozilla.org/*
+  to:
+  - group: releng
+
