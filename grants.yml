@@ -567,6 +567,7 @@
   - queue:create-task:highest:scriptworker-prov-v1/bouncer-dev
   - queue:create-task:highest:scriptworker-prov-v1/bouncer-v1
   - queue:create-task:highest:scriptworker-prov-v1/pushsnap-v1
+  - queue:create-task:highest:scriptworker-prov-v1/shipit-dev
   - queue:create-task:highest:scriptworker-prov-v1/shipit-v1
   - queue:create-task:highest:scriptworker-prov-v1/signing-linux-v1
   - queue:create-task:highest:scriptworker-prov-v1/treescript-v1
