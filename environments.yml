@@ -1,0 +1,26 @@
+# This file contains configuration for each of the environments in which
+# ci-admin/ci-configuration apply.
+#
+# Structure
+# ---------
+#
+# Each environment, keyed by its name, must have a rootUrl.  The credentials
+# are checked against that rootUrl to ensure that it is being applied in the
+# right place.
+#
+# Each environment can also have `modify_resources`, a list of modifications to
+# make to the generated resources.  Such modifications are defined in ci-admin,
+# and exist to help configure minor differences between environments, such as
+# to prevent a staging environment from carrying a full production workload.
+---
+production:
+    root_url: https://taskcluster.net
+    # no modifications in production, please!
+
+staging:
+    root_url: https://taskcluster-staging.net
+    modify_resources:
+      # we do not want hooks to trigger on a schedule in staging, as that adds
+      # lots of load (e.g., building nightlies).  They can be triggered
+      # manually if needed for testing.
+      - remove_hook_schedules
