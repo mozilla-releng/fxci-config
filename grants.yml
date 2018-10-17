@@ -930,3 +930,11 @@
   to:
   - group: releng
 
+# releng services hooks
+- grant:
+  - hooks:trigger-hook:project-releng/services-production-*
+  - hooks:trigger-hook:project-releng/services-staging-*
+  - hooks:trigger-hook:project-releng/services-testing-*
+  to:
+  - groups:
+    - vpn_releasemgt
