@@ -938,3 +938,10 @@
   to:
   - groups:
     - vpn_releasemgt
+
+# Allow releng and in particular ciduty to terminate workers
+- grant:
+  - ec2-manager:manage-resources:gecko-*
+  to:
+  - groups:
+    - releng
