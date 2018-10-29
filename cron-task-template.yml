@@ -30,7 +30,7 @@ scopes:
   - assume:hook-id:${hookGroupId}/${hookId}
 payload:
     # this should be a fairly recent decision task image
-    image: 'taskcluster/decision:2.0.0@sha256:4039fd878e5700b326d4a636e28c595c053fbcb53909c1db84ad1f513cf644ef'
+    image: 'taskcluster/decision:2.1.0@sha256:6db3b697d7a3c7aba440d72f04199331b872111cefff57206b8b8b1d53230360'
     env:
       $merge:
         - {$eval: repo_env}
