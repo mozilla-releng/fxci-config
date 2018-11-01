@@ -99,7 +99,7 @@ comm-esr60:
   features:
     gecko-roles: true
     gecko-actions: true
-    taskcluster-cron: true
+    taskcluster-cron: false
     taskcluster-push: true
 oak:
   repo: https://hg.mozilla.org/projects/oak
@@ -149,7 +149,7 @@ comm-beta:
   features:
     gecko-roles: true
     gecko-actions: true
-    taskcluster-cron: true
+    taskcluster-cron: false
     taskcluster-push: true
 mozilla-inbound:
   repo: https://hg.mozilla.org/integration/mozilla-inbound
@@ -188,7 +188,7 @@ comm-central:
   features:
     gecko-roles: true
     gecko-actions: true
-    taskcluster-cron: true
+    taskcluster-cron: false
     taskcluster-push: true
     is-trunk: true
 cedar:
