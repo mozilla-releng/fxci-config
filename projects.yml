@@ -188,7 +188,7 @@ comm-central:
   features:
     gecko-roles: true
     gecko-actions: true
-    taskcluster-cron: false
+    taskcluster-cron: true
     taskcluster-push: true
     is-trunk: true
 cedar:
