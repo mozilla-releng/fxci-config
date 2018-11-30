@@ -37,7 +37,7 @@ payload:
         - HG_STORE_PATH: '/builds/worker/checkouts/hg-store'
           TASKCLUSTER_CACHES: '/builds/worker/checkouts'
     cache:
-        level-${level}-checkouts: '/builds/worker/checkouts'
+        level-${level}-checkouts-sparse-v2: '/builds/worker/checkouts'
     features:
       taskclusterProxy: true
       chainOfTrust: true
@@ -46,6 +46,7 @@ payload:
         $flatten:
             - '/builds/worker/bin/run-task'
             - {$eval: checkout_options}
+            - '--sparse-profile=build/sparse-profiles/taskgraph'
             - '--'
             - 'bash'
             - '-cx'
