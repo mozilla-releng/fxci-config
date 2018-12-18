@@ -36,6 +36,7 @@ payload:
         - {$eval: repo_env}
         - HG_STORE_PATH: '/builds/worker/checkouts/hg-store'
           TASKCLUSTER_CACHES: '/builds/worker/checkouts'
+          TASKCLUSTER_ROOT_URL: '${taskcluster_root_url}'
     cache:
         level-${level}-checkouts-sparse-v2: '/builds/worker/checkouts'
     features:
