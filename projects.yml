@@ -200,7 +200,7 @@ cedar:
     gecko-roles: true
     gecko-actions: true
     taskcluster-cron: false
-    taskcluster-push: false
+    taskcluster-push: true
 birch:
   repo: https://hg.mozilla.org/projects/birch
   repo_type: hg
