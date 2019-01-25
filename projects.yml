@@ -194,13 +194,16 @@ comm-central:
 cedar:
   repo: https://hg.mozilla.org/projects/cedar
   repo_type: hg
-  access: scm_level_2
+  access: scm_level_3
   trust_domain: gecko
   features:
     gecko-roles: true
     gecko-actions: true
-    taskcluster-cron: false
-    taskcluster-push: false
+    buildbot: true
+    taskcluster-docker-routes-v1: true
+    taskcluster-docker-routes-v2: true
+    taskcluster-cron: true
+    taskcluster-push: true
 birch:
   repo: https://hg.mozilla.org/projects/birch
   repo_type: hg
