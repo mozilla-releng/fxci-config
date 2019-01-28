@@ -109,10 +109,7 @@ oak:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
-    taskcluster-cron: true
+    taskcluster-cron: false
     taskcluster-push: true
 pine:
   repo: https://hg.mozilla.org/projects/pine

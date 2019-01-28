@@ -655,6 +655,13 @@
       alias: [comm-esr60, comm-beta]
 
 - grant:
+  - project:releng:beetmover:bucket:nightly
+  - project:releng:balrog:server:nightly
+  to:
+  - project:
+      alias: oak
+
+- grant:
   - docker-worker:feature:allowPtrace
   - queue:create-task:aws-provisioner-v1/hg-worker
   - queue:create-task:aws-provisioner-v1/nss-win2012r2
