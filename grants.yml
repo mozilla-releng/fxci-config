@@ -209,7 +209,7 @@
   - queue:create-task:low:scl3-puppet/os-x-build-gw
   - queue:create-task:low:scriptworker-prov-v1/dep-pushapk
   - queue:create-task:low:scriptworker-prov-v1/depsigning
-  - queue:create-task:low:scriptworker-prov-v1/shipit-dev
+  - queue:create-task:low:scriptworker-prov-v1/shipit-dev*
   - queue:create-task:low:tc-worker-provisioner/*
   - queue:create-task:low:test-dummy-provisioner/*
   - queue:define-task:aws-provisioner-v1/build-c4-2xlarge
@@ -298,7 +298,7 @@
   - queue:create-task:low:scriptworker-prov-v1/tb-beetmover-dev
   - queue:create-task:low:scriptworker-prov-v1/tb-bouncer-dev
   - queue:create-task:low:scriptworker-prov-v1/tb-depsigning
-  - queue:create-task:low:scriptworker-prov-v1/tb-shipit-dev
+  - queue:create-task:low:scriptworker-prov-v1/tb-shipit-dev*
   - queue:create-task:low:scriptworker-prov-v1/tb-treescript-comm-dev
   - secrets:get:project/comm/thunderbird/releng/build/level-1/*
   to:
@@ -567,7 +567,7 @@
   - queue:create-task:highest:scriptworker-prov-v1/bouncer-dev
   - queue:create-task:highest:scriptworker-prov-v1/bouncer-v1
   - queue:create-task:highest:scriptworker-prov-v1/pushsnap-v1
-  - queue:create-task:highest:scriptworker-prov-v1/shipit-dev
+  - queue:create-task:highest:scriptworker-prov-v1/shipit-dev*
   - queue:create-task:highest:scriptworker-prov-v1/shipit-v1
   - queue:create-task:highest:scriptworker-prov-v1/signing-linux-v1
   - queue:create-task:highest:scriptworker-prov-v1/treescript-v1
