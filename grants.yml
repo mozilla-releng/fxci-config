@@ -697,6 +697,12 @@
 
 # Note that this most duplicates the `gecko-roles` feature above
 - grant:
+  # This is public
+  - secrets:get:project/taskcluster/gecko/hgfingerprint
+
+  # Allow a sensible scheduler-id
+  - queue:scheduler-id:{trust_domain}-level-{level}
+
   # routes to support indexing by product
   - queue:route:index.{trust_domain}.v2.{alias}.*
   - index:insert-task:{trust_domain}.v2.{alias}.*
@@ -708,6 +714,10 @@
 
   # allow fetching secrets appropriate to this level
   - secrets:get:project/releng/{trust_domain}/build/level-{level}/*
+
+  # allow using worker caches appropriate to this trust domain and level
+  - docker-worker:cache:{trust_domain}-level-{level}-*
+  - generic-worker:cache:{trust_domain}-level-{level}-*
   to:
   - project:
       feature: trust-domain-scopes
@@ -746,7 +756,6 @@
       alias: ci-configuration
 
 - grant:
-  - queue:scheduler-id:-
   - queue:create-task:low:aws-provisioner-v1/gecko-decision
   - queue:create-task:low:aws-provisioner-v1/gecko-misc
   - queue:create-task:low:aws-provisioner-v1/gecko-{level}-images
