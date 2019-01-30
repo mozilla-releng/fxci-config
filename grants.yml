@@ -617,18 +617,6 @@
 # project-specific scopes (for esr's to hang onto their old scopes)
 
 - grant:
-  - docker-worker:cache:build-macosx64-st-an-workspace
-  - docker-worker:cache:build-macosx64-workspace
-  - docker-worker:cache:build-mozilla-esr52*
-  - docker-worker:cache:tc-vcs
-  - docker-worker:cache:tc-vcs-public-sources
-  - queue:rerun-task
-  - queue:route:index.gecko.v1.mozilla-esr52.*
-  to:
-  - project:
-      alias: mozilla-esr52
-
-- grant:
   - project:comm:thunderbird:releng:balrog:server:release
   to:
   - project:

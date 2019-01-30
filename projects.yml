@@ -65,13 +65,8 @@ mozilla-esr52:
   access: scm_level_3
   trust_domain: gecko
   features:
-    gecko-roles: true
-    gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: false
-    taskcluster-push: true
+    taskcluster-push: false
 mozilla-esr60:
   repo: https://hg.mozilla.org/releases/mozilla-esr60
   repo_type: hg
