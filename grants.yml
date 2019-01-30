@@ -70,6 +70,7 @@
 ##
 # scopes for all gecko-related projects
 
+# Note that this most duplicates the `trust-domain-scopes` and `treeherder-reporting` features below
 - grant:
   # routes to support indexing by product
   - queue:route:index.{trust_domain}.v2.{alias}.*
@@ -669,10 +670,6 @@
   - queue:create-task:localprovisioner/nss-macos-10-12
   - queue:create-task:localprovisioner/nss-rpi
   - queue:route:index.docker.images.v1.nss.*
-  - queue:route:tc-treeherder-stage.nss.*
-  - queue:route:tc-treeherder-stage.v2.nss.*
-  - queue:route:tc-treeherder.nss.*
-  - queue:route:tc-treeherder.v2.nss.*
   - scheduler:create-task-graph
   - scheduler:extend-task-graph:*
   to:
@@ -689,10 +686,6 @@
   - queue:create-task:localprovisioner/nss-aarch64
   - queue:create-task:localprovisioner/nss-macos-10-12
   - queue:route:index.docker.images.v1.nss-try.*
-  - queue:route:tc-treeherder-stage.nss-try.*
-  - queue:route:tc-treeherder-stage.v2.nss-try.*
-  - queue:route:tc-treeherder.nss-try.*
-  - queue:route:tc-treeherder.v2.nss-try.*
   - scheduler:create-task-graph
   - scheduler:extend-task-graph:*
   to:
@@ -701,6 +694,34 @@
 
 ##
 # Non-gecko tree projects
+
+# Note that this most duplicates the `gecko-roles` feature above
+- grant:
+  # routes to support indexing by product
+  - queue:route:index.{trust_domain}.v2.{alias}.*
+  - index:insert-task:{trust_domain}.v2.{alias}.*
+
+  # routes to support locating tasks that create specific versions of artifacts
+  # (toolchains, etc.)
+  - queue:route:index.{trust_domain}.cache.level-{level}.*
+  - index:insert-task:{trust_domain}.cache.level-{level}.*
+
+  # allow fetching secrets appropriate to this level
+  - secrets:get:project/releng/{trust_domain}/build/level-{level}/*
+  to:
+  - project:
+      feature: trust-domain-scopes
+
+- grant:
+  # routes to support reporting to treeherder
+  - queue:route:tc-treeherder-stage.{alias}.*
+  - queue:route:tc-treeherder.{alias}.*
+  - queue:route:tc-treeherder-stage.v2.{alias}.*
+  - queue:route:tc-treeherder.v2.{alias}.*
+  to:
+  - project:
+      feature: treeherder-reporting
+
 
 - grant:
   - queue:create-task:aws-provisioner-v1/version-control-tools
@@ -712,7 +733,6 @@
 
 - grant:
   - queue:create-task:high:aws-provisioner-v1/gecko-misc
-  - queue:route:tc-treeherder.v2.ci-admin.*
   - queue:scheduler-id:-
   to:
   - project:
@@ -720,11 +740,19 @@
 
 - grant:
   - queue:create-task:high:aws-provisioner-v1/gecko-misc
-  - queue:route:tc-treeherder.v2.ci-configuration.*
   - queue:scheduler-id:-
   to:
   - project:
       alias: ci-configuration
+
+- grant:
+  - queue:scheduler-id:-
+  - queue:create-task:low:aws-provisioner-v1/gecko-decision
+  - queue:create-task:low:aws-provisioner-v1/gecko-misc
+  - queue:create-task:low:aws-provisioner-v1/gecko-{level}-images
+  to:
+  - project:
+      trust_domain: taskgraph
 
 ##
 # feature-specific roles

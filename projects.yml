@@ -30,6 +30,8 @@
 #   - `taskcluster-push` -- decision tasks run for pushes to this project's repository
 #   - `gecko-roles` -- this repository should have gecko-related roles assigned (for users, actions, cron, etc.)
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
+#   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
+#   - `treeherder-reporting` -- this repository reports results to treeherder
 ---
 ash:
   repo: https://hg.mozilla.org/projects/ash
@@ -366,6 +368,7 @@ nss:
   trust_domain: nss
   features:
     taskcluster-push: true
+    treeherder-reporting: true
 
 nss-try:
   repo: https://hg.mozilla.org/projects/nss-try
@@ -374,6 +377,7 @@ nss-try:
   trust_domain: nss
   features:
     taskcluster-push: true
+    treeherder-reporting: true
 
 ci-configuration:
   repo: https://hg.mozilla.org/build/ci-configuration
@@ -381,6 +385,7 @@ ci-configuration:
   access: scm_level_3
   features:
     taskcluster-push: true
+    treeherder-reporting: true
 
 ci-admin:
   repo: https://hg.mozilla.org/build/ci-admin
@@ -388,6 +393,28 @@ ci-admin:
   access: scm_level_3
   features:
     taskcluster-push: true
+    treeherder-reporting: true
+
+taskgraph:
+  repo: https://hg.mozilla.org/ci/taskgraph
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: taskgraph
+  features:
+    taskcluster-push: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
+
+taskgraph-try:
+  repo: https://hg.mozilla.org/ci/taskgraph-try
+  repo_type: hg
+  access: scm_level_1
+  trust_domain: taskgraph
+  features:
+    taskcluster-push: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
+    is_try: true
 
 version-control-tools:
   repo: https://hg.mozilla.org/hgcustom/version-control-tools
