@@ -655,8 +655,9 @@
 # This is using a worker-group intened for testing generic-worker itself.
 - grant:
   - queue:create-task:low:test-provisioner/bitbar
-  project:
-      alias: queue:create-task:low:test-provisioner/bitbar
+  to:
+  - project:
+      alias: try
 
 - grant:
   - docker-worker:feature:allowPtrace
