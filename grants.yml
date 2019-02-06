@@ -659,6 +659,9 @@
   - project:
       alias: try
 
+##
+# Non-gecko tree projects
+
 - grant:
   - docker-worker:feature:allowPtrace
   - queue:create-task:aws-provisioner-v1/hg-worker
@@ -688,9 +691,6 @@
   to:
   - project:
       alias: nss-try
-
-##
-# Non-gecko tree projects
 
 # Note that this most duplicates the `gecko-roles` feature above
 - grant:

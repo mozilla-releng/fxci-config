@@ -375,7 +375,7 @@ nss-try:
     treeherder-reporting: true
 
 ci-configuration:
-  repo: https://hg.mozilla.org/build/ci-configuration
+  repo: https://hg.mozilla.org/ci/ci-configuration
   repo_type: hg
   access: scm_level_3
   features:
@@ -383,7 +383,7 @@ ci-configuration:
     treeherder-reporting: true
 
 ci-admin:
-  repo: https://hg.mozilla.org/build/ci-admin
+  repo: https://hg.mozilla.org/ci/ci-admin
   repo_type: hg
   access: scm_level_3
   features:
