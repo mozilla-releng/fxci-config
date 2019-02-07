@@ -378,16 +378,40 @@ ci-configuration:
   repo: https://hg.mozilla.org/ci/ci-configuration
   repo_type: hg
   access: scm_level_3
+  trust_domain: ci
   features:
     taskcluster-push: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
+
+ci-configuration-try:
+  repo: https://hg.mozilla.org/ci/ci-configuration-try
+  repo_type: hg
+  access: scm_level_1
+  trust_domain: ci
+  features:
+    taskcluster-push: true
+    trust-domain-scopes: true
     treeherder-reporting: true
 
 ci-admin:
   repo: https://hg.mozilla.org/ci/ci-admin
   repo_type: hg
   access: scm_level_3
+  trust_domain: ci
   features:
     taskcluster-push: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
+
+ci-admin-try:
+  repo: https://hg.mozilla.org/ci/ci-admin-try
+  repo_type: hg
+  access: scm_level_1
+  trust_domain: ci
+  features:
+    taskcluster-push: true
+    trust-domain-scopes: true
     treeherder-reporting: true
 
 taskgraph:
