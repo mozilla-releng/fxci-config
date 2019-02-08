@@ -739,34 +739,12 @@
       alias: version-control-tools
 
 - grant:
-  - queue:create-task:high:aws-provisioner-v1/gecko-misc
-  - queue:scheduler-id:-
-  to:
-  - project:
-      alias: ci-admin
-
-- grant:
-  - queue:create-task:high:aws-provisioner-v1/gecko-misc
-  - queue:scheduler-id:-
-  to:
-  - project:
-      alias: ci-configuration
-
-- grant:
   - queue:create-task:low:aws-provisioner-v1/gecko-{level}-decision
   - queue:create-task:low:aws-provisioner-v1/gecko-misc
   - queue:create-task:low:aws-provisioner-v1/gecko-{level}-images
   to:
   - project:
-      trust_domain: ci
-
-- grant:
-  - queue:create-task:low:aws-provisioner-v1/gecko-{level}-decision
-  - queue:create-task:low:aws-provisioner-v1/gecko-misc
-  - queue:create-task:low:aws-provisioner-v1/gecko-{level}-images
-  to:
-  - project:
-      trust_domain: taskgraph
+      trust_domain: [taskgraph, ci]
 
 ##
 # feature-specific roles
