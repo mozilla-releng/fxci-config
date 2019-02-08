@@ -116,9 +116,6 @@
   - docker-worker:relengapi-proxy:tooltool.download.internal
   - docker-worker:relengapi-proxy:tooltool.download.public
   - generic-worker:cache:level-1-*
-  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win10-64/Administrators
-  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win7-32/Administrators
-  - generic-worker:run-as-administrator:aws-provisioner-v1/gecko-t-win10-64
   - index:insert-task:docker.images.v2.level-1.*
   - index:insert-task:garbage.*
   - index:insert-task:gecko.cache.level-1.*
@@ -251,6 +248,9 @@
   - assume:project:taskcluster:level-1-sccache-buckets
   - generic-worker:allow-rdp:aws-provisioner-v1/gecko-1-b-win*
   - generic-worker:allow-rdp:aws-provisioner-v1/gecko-t-win*
+  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win7-32/Administrators
+  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win10-64/Administrators
+  - generic-worker:run-as-administrator:aws-provisioner-v1/gecko-t-win10-64
   - project:releng:addons.mozilla.org:server:staging
   - project:releng:balrog:action:*
   - project:releng:beetmover:bucket:dep-partner
@@ -315,9 +315,6 @@
   - docker-worker:image:taskclusterprivate/phone-builder:*
   - docker-worker:image:taskclusterprivate/tester-device:*
   - generic-worker:cache:level-2-*
-  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win7-32/Administrators
-  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win10-64/Administrators
-  - generic-worker:run-as-administrator:aws-provisioner-v1/gecko-t-win10-64
   - index:insert-task:docker.images.v2.level-2.*
   - index:insert-task:gecko.cache.level-2.*
   - queue:cancel-task:gecko-level-2/*
@@ -433,9 +430,6 @@
   - docker-worker:feature:balrogVPNProxy
   - docker-worker:image:taskclusterprivate/taskcluster-vpn-proxy:*
   - generic-worker:cache:level-3-*
-  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win7-32/Administrators
-  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win10-64/Administrators
-  - generic-worker:run-as-administrator:aws-provisioner-v1/gecko-t-win10-64
   - index:insert-task:docker.images.v2.level-3.*
   - index:insert-task:gecko.cache.level-3.*
   - project:releng:balrog:server:beta
