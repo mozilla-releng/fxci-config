@@ -1,17 +1,23 @@
+---
 version: 1
 tasks:
   $map:
     - name: ci-admin check run
       symbol: check
       description: "Run `ci-admin check` to validate the latest changes"
-      commandSuffix:  >-
+      commandSuffix: >-
         python setup.py develop &&
-        ci-admin check --ci-configuration-revision ${push.revision}
+        ci-admin check
+        --environment production
+        --ci-configuration-repository "${repository.url}"
+        --ci-configuration-revision "${push.revision}"
   each(cfg):
     taskGroupId: "${as_slugid('taskGroup')}"
     taskId: "${as_slugid(cfg.name)}"
+    schedulerId: 'ci-level-${repository.level}'
     provisionerId: aws-provisioner-v1
     workerType: gecko-misc
+    priority: low
     created: {$fromNow: ''}
     deadline: {$fromNow: '1 day'}
     expires: {$fromNow: '14 days'}
@@ -35,7 +41,7 @@ tasks:
           platform: "on-push"
         productName: ci-admin
     routes:
-      - "tc-treeherder.v2.ci-configuration.${push.revision}.${push.pushlog_id}"
+      - "tc-treeherder.v2.${repository.project}.${push.revision}.${push.pushlog_id}"
     metadata:
       name: "${cfg.name}"
       description: "${cfg.description}"
