@@ -316,7 +316,7 @@ maple:
 jamun:
   repo: https://hg.mozilla.org/projects/jamun
   repo_type: hg
-  access: scm_level_3
+  access: scm_level_2
   trust_domain: gecko
   features:
     gecko-roles: true
