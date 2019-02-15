@@ -750,34 +750,10 @@
 # feature-specific roles
 
 - grant:
-  - index:insert-task:buildbot.branches.{alias}.*
-  - index:insert-task:buildbot.revisions.*
-  - project:releng:buildbot-bridge:builder-name:release-{alias}-*
-  - project:releng:buildbot-bridge:builder-name:release-{alias}_*
-  - queue:route:index.buildbot.branches.{alias}.*
-  - queue:route:index.buildbot.revisions.*
-  to:
-  - project:
-      feature: buildbot
-
-- grant:
   - queue:route:index.{trust_domain}.v2.trunk.revision.*
   to:
   - project:
       feature: is-trunk
-
-- grant:
-  - queue:route:index.docker.images.v1.{alias}.*
-  - index:insert-task:docker.images.v1.{alias}.*
-  to:
-  - project:
-      feature: taskcluster-docker-routes-v1
-
-- grant:
-  - queue:route:index.docker.images.v2.level-{level}.*
-  to:
-  - project:
-      feature: taskcluster-docker-routes-v2
 
 ##
 # delegate cron:nightly-* to hand-managed nightly roles

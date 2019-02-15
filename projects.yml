@@ -21,11 +21,8 @@
 #               push adding more commits to the previous head.
 # - `features` -- features that should be enabled for this project, as an object with boolean
 #                 values, defaulting to false
-#   - `buildbot` -- Buildbot builders configured for the branch
 #   - 'is-trunk' -- Branches containing 'landed' code destined for nightly builds. These branches have a shared index
 #       that can be referenced by the tip revision on any push.
-#   - `taskcluster-docker-routes-v1` -- index namespaces of the form `docker.images.v1.<project>.*`
-#   - `taskcluster-docker-routes-v2` -- index namespaces of the form `docker.images.v2.level-<level>.*`
 #   - `taskcluster-cron` -- tasks defined in `.cron.yml` can run for this project (gecko/comm repos only)
 #   - `taskcluster-push` -- decision tasks run for pushes to this project's repository
 #   - `gecko-roles` -- this repository should have gecko-related roles assigned (for users, actions, cron, etc.)
@@ -41,9 +38,6 @@ ash:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: false
     taskcluster-push: true
 mozilla-release:
@@ -54,9 +48,6 @@ mozilla-release:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: true
     taskcluster-push: true
 mozilla-esr52:
@@ -75,7 +66,6 @@ mozilla-esr60:
   features:
     gecko-roles: true
     gecko-actions: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: true
     taskcluster-push: true
 comm-esr52:
@@ -116,9 +106,6 @@ pine:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: true
     taskcluster-push: true
 mozilla-beta:
@@ -129,9 +116,6 @@ mozilla-beta:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: true
     taskcluster-push: true
 comm-beta:
@@ -153,9 +137,6 @@ mozilla-inbound:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     is-trunk: true
     taskcluster-cron: true
     taskcluster-push: true
@@ -167,9 +148,6 @@ mozilla-central:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     is-trunk: true
     taskcluster-cron: true
     taskcluster-push: true
@@ -203,9 +181,6 @@ birch:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: true
     taskcluster-push: true
 cypress:
@@ -236,9 +211,6 @@ elm:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: true
     taskcluster-push: true
 graphics:
@@ -260,9 +232,6 @@ try:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: false
     taskcluster-push: true
 stylo-try:
@@ -274,9 +243,6 @@ stylo-try:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: false
     taskcluster-push: true
 try-comm-central:
@@ -308,9 +274,6 @@ maple:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: true
     taskcluster-push: true
 jamun:
@@ -321,9 +284,6 @@ jamun:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: true
     taskcluster-push: true
 autoland:
@@ -334,9 +294,6 @@ autoland:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     is-trunk: true
     taskcluster-cron: true
     taskcluster-push: true
@@ -348,9 +305,6 @@ stylo:
   features:
     gecko-roles: true
     gecko-actions: true
-    buildbot: true
-    taskcluster-docker-routes-v1: true
-    taskcluster-docker-routes-v2: true
     taskcluster-cron: false
     taskcluster-push: true
 
