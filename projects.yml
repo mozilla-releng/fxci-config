@@ -54,14 +54,6 @@ mozilla-release:
     treeherder-reporting: true
     taskcluster-cron: true
     taskcluster-push: true
-mozilla-esr52:
-  repo: https://hg.mozilla.org/releases/mozilla-esr52
-  repo_type: hg
-  access: scm_level_3
-  trust_domain: gecko
-  features:
-    taskcluster-cron: false
-    taskcluster-push: false
 mozilla-esr60:
   repo: https://hg.mozilla.org/releases/mozilla-esr60
   repo_type: hg
@@ -74,18 +66,6 @@ mozilla-esr60:
     treeherder-reporting: true
     taskcluster-cron: true
     taskcluster-push: true
-comm-esr52:
-  repo: https://hg.mozilla.org/releases/comm-esr52
-  repo_type: hg
-  access: scm_level_3
-  trust_domain: comm
-  features:
-    gecko-roles: true
-    gecko-actions: true
-    trust-domain-scopes: true
-    treeherder-reporting: true
-    taskcluster-cron: false
-    taskcluster-push: false
 comm-esr60:
   repo: https://hg.mozilla.org/releases/comm-esr60
   repo_type: hg
