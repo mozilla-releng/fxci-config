@@ -74,8 +74,7 @@
   # Historically, comm-* branches used the gecko scheduler
   - queue:scheduler-id:gecko-level-{level}
 
-  # coalescing routes support dropping unnecessary tasks under loda
-  - queue:route:coalesce.v1.builds.{alias}.*  # deprecated - bug 1382204
+  # coalescing routes support dropping unnecessary tasks under load
   - queue:route:coalesce.v1.{alias}.*
 
   # index releases
