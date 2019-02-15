@@ -77,10 +77,6 @@
   # coalescing routes support dropping unnecessary tasks under load
   - queue:route:coalesce.v1.{alias}.*
 
-  # index releases
-  - queue:route:index.releases.v1.{alias}.*
-  - index:insert-task:releases.v1.{alias}.*
-
   # allow fetching secrets appropriate to this level
   - secrets:get:project/releng/{trust_domain}/build/level-{level}/*
 
