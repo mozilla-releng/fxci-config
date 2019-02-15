@@ -38,6 +38,8 @@ ash:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: true
 mozilla-release:
@@ -48,6 +50,8 @@ mozilla-release:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: true
     taskcluster-push: true
 mozilla-esr52:
@@ -66,6 +70,8 @@ mozilla-esr60:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: true
     taskcluster-push: true
 comm-esr52:
@@ -76,6 +82,8 @@ comm-esr52:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: false
 comm-esr60:
@@ -86,6 +94,8 @@ comm-esr60:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: true
 oak:
@@ -96,6 +106,8 @@ oak:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: true
 pine:
@@ -106,6 +118,8 @@ pine:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: true
     taskcluster-push: true
 mozilla-beta:
@@ -116,6 +130,8 @@ mozilla-beta:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: true
     taskcluster-push: true
 comm-beta:
@@ -127,6 +143,8 @@ comm-beta:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: true
 mozilla-inbound:
@@ -137,6 +155,8 @@ mozilla-inbound:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     is-trunk: true
     taskcluster-cron: true
     taskcluster-push: true
@@ -148,6 +168,8 @@ mozilla-central:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     is-trunk: true
     taskcluster-cron: true
     taskcluster-push: true
@@ -160,6 +182,8 @@ comm-central:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: true
     taskcluster-push: true
     is-trunk: true
@@ -171,6 +195,8 @@ cedar:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: true
 birch:
@@ -181,6 +207,8 @@ birch:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: true
     taskcluster-push: true
 cypress:
@@ -191,6 +219,8 @@ cypress:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: false
 ux:
@@ -201,6 +231,8 @@ ux:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: false
 elm:
@@ -211,6 +243,8 @@ elm:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: true
     taskcluster-push: true
 graphics:
@@ -221,6 +255,8 @@ graphics:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: false
 try:
@@ -232,6 +268,8 @@ try:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: true
 stylo-try:
@@ -243,6 +281,8 @@ stylo-try:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: true
 try-comm-central:
@@ -254,6 +294,8 @@ try-comm-central:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: true
 larch:
@@ -264,6 +306,8 @@ larch:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: true
 maple:
@@ -274,6 +318,8 @@ maple:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: true
     taskcluster-push: true
 jamun:
@@ -284,6 +330,8 @@ jamun:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: true
     taskcluster-push: true
 autoland:
@@ -294,6 +342,8 @@ autoland:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     is-trunk: true
     taskcluster-cron: true
     taskcluster-push: true
@@ -305,6 +355,8 @@ stylo:
   features:
     gecko-roles: true
     gecko-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: true
 

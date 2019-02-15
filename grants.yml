@@ -70,22 +70,9 @@
 ##
 # scopes for all gecko-related projects
 
-# Note that this most duplicates the `trust-domain-scopes` and `treeherder-reporting` features below
 - grant:
-  # routes to support indexing by product
-  - queue:route:index.{trust_domain}.v2.{alias}.*
-  - index:insert-task:{trust_domain}.v2.{alias}.*
-
-  # routes to support locating tasks that create specific versions of artifacts
-  # (toolchains, etc.)
-  - queue:route:index.{trust_domain}.cache.level-{level}.*
-  - index:insert-task:{trust_domain}.cache.level-{level}.*
-
-  # routes to support reporting to treeherder
-  - queue:route:tc-treeherder-stage.{alias}.*
-  - queue:route:tc-treeherder.{alias}.*
-  - queue:route:tc-treeherder-stage.v2.{alias}.*
-  - queue:route:tc-treeherder.v2.{alias}.*
+  # Historically, comm-* branches used the gecko scheduler
+  - queue:scheduler-id:gecko-level-{level}
 
   # coalescing routes support dropping unnecessary tasks under loda
   - queue:route:coalesce.v1.builds.{alias}.*  # deprecated - bug 1382204
@@ -97,13 +84,19 @@
 
   # allow fetching secrets appropriate to this level
   - secrets:get:project/releng/{trust_domain}/build/level-{level}/*
+
+  # Historically, gecko projects used unprefixed caches
+  - docker-worker:cache:level-{level}-*
+  - generic-worker:cache:level-{level}-*
+
+  # Provide access to sccache buckets
+  - assume:project:taskcluster:{trust_domain}:level-{level}-sccache-buckets
   to:
   - project:
       feature: gecko-roles
 
 # moz-tree:level:1:*
 - grant:
-  - docker-worker:cache:level-1-*
   - docker-worker:cache:tooltool-cache
   - docker-worker:capability:device:loopbackAudio
   - docker-worker:capability:device:loopbackVideo
@@ -115,10 +108,7 @@
   - docker-worker:image:taskcluster/tester:*
   - docker-worker:relengapi-proxy:tooltool.download.internal
   - docker-worker:relengapi-proxy:tooltool.download.public
-  - generic-worker:cache:level-1-*
-  - index:insert-task:docker.images.v2.level-1.*
   - index:insert-task:garbage.*
-  - index:insert-task:gecko.cache.level-1.*
   - notify:email:*
   - project:releng:balrog:channel:*
   - project:releng:balrog:server:dep
@@ -221,7 +211,6 @@
   - queue:route:index.garbage.*
   - queue:route:index.gecko.cache.level-1.*
   - queue:route:project.releng.funsize.level-1.*
-  - queue:scheduler-id:gecko-level-1
   - queue:route:notify.*
   - scheduler:create-task-graph
   - scheduler:extend-task-graph:*
@@ -233,7 +222,6 @@
   - queue:create-task:low:terraform-packet/tc-worker-docker-v1
   - worker:privileged:terraform-packet/tc-worker-docker-v1-*
   - queue:create-task:low:terraform-packet/tc-worker-docker-v1-*
-  - worker:cache:level-1-*
   - queue:create-task:medium:terraform-packet/tc-worker-docker-v1-*
   - worker:relengapi-proxy:tooltool.download.internal
   - worker:relengapi-proxy:tooltool.download.public
@@ -244,8 +232,6 @@
 
 # moz-tree:level:1:gecko
 - grant:
-  - assume:project:taskcluster:gecko:level-1-sccache-buckets
-  - assume:project:taskcluster:level-1-sccache-buckets
   - generic-worker:allow-rdp:aws-provisioner-v1/gecko-1-b-win*
   - generic-worker:allow-rdp:aws-provisioner-v1/gecko-t-win*
   - generic-worker:os-group:aws-provisioner-v1/gecko-t-win7-32/Administrators
@@ -282,7 +268,6 @@
 
 # moz-tree:level:1:comm
 - grant:
-  - assume:project:taskcluster:comm:level-1-sccache-buckets
   - project:comm:thunderbird:releng:balrog:action:*
   - project:comm:thunderbird:releng:balrog:server:dep
   - project:comm:thunderbird:releng:beetmover:action:*
@@ -312,13 +297,9 @@
 
 # moz-tree:level:2:*
 - grant:
-  - docker-worker:cache:level-2-*
   - docker-worker:capability:device:phone
   - docker-worker:image:taskclusterprivate/phone-builder:*
   - docker-worker:image:taskclusterprivate/tester-device:*
-  - generic-worker:cache:level-2-*
-  - index:insert-task:docker.images.v2.level-2.*
-  - index:insert-task:gecko.cache.level-2.*
   - queue:cancel-task:gecko-level-2/*
   - queue:create-task:aws-provisioner-v1/ami-test*
   - queue:create-task:aws-provisioner-v1/android-api-*
@@ -396,7 +377,6 @@
   - queue:create-task:very-low:test-dummy-provisioner/*
   - queue:route:index.docker.images.v2.level-2.*
   - queue:route:index.gecko.cache.level-2.*
-  - queue:scheduler-id:gecko-level-2
   - secrets:get:project/releng/gecko/build/level-2/*
   - secrets:get:project/taskcluster/gecko/build/level-2/*
   to:
@@ -406,8 +386,6 @@
 
 # moz-tree:level:2:gecko
 - grant:
-  - assume:project:taskcluster:gecko:level-2-sccache-buckets
-  - assume:project:taskcluster:level-2-sccache-buckets
   - queue:rerun-task:gecko-level-2/*
   to:
   - projects:
@@ -415,25 +393,12 @@
       level: [2, 3]
       trust_domain: gecko
 
-# moz-tree:level:2:comm
-- grant:
-  - assume:project:taskcluster:comm:level-2-sccache-buckets
-  to:
-  - projects:
-      feature: gecko-roles
-      level: [2, 3]
-      trust_domain: comm
-
 # moz-tree:level:3:*
 - grant:
   - auth:aws-s3:read-write:public-qemu-images/repository/hg.mozilla.org/mozilla-central/*
-  - docker-worker:cache:level-3-*
   - docker-worker:feature:balrogStageVPNProxy
   - docker-worker:feature:balrogVPNProxy
   - docker-worker:image:taskclusterprivate/taskcluster-vpn-proxy:*
-  - generic-worker:cache:level-3-*
-  - index:insert-task:docker.images.v2.level-3.*
-  - index:insert-task:gecko.cache.level-3.*
   - project:releng:balrog:server:beta
   - project:releng:balrog:server:release
   - project:releng:balrog:server:esr
@@ -526,7 +491,6 @@
   - queue:get-artifact:private/docker-worker/*
   - queue:route:index.docker.images.v2.level-3.*
   - queue:route:index.gecko.cache.level-3.*
-  - queue:scheduler-id:gecko-level-3
   - secrets:get:project/releng/gecko/build/level-3/*
   - secrets:get:project/releng/snapcraft/firefox/edge
   - secrets:get:project/taskcluster/gecko/build/level-3/*
@@ -537,8 +501,6 @@
 
 # moz-tree:level:3:gecko
 - grant:
-  - assume:project:taskcluster:gecko:level-3-sccache-buckets
-  - assume:project:taskcluster:level-3-sccache-buckets
   - auth:aws-s3:read-write:tc-gp-private-1d-us-east-1/releng/mbsdiff-cache/
   - project:releng:addons.mozilla.org:server:production
   - project:releng:beetmover:action:push-to-maven
@@ -583,7 +545,6 @@
 
 # moz-tree:level:3:comm
 - grant:
-  - assume:project:taskcluster:comm:level-3-sccache-buckets
   - queue:create-task:highest:scriptworker-prov-v1/tb-balrog-dev
   - queue:create-task:highest:scriptworker-prov-v1/tb-beetmover-dev
   - queue:create-task:highest:scriptworker-prov-v1/tb-depsigning
@@ -692,7 +653,6 @@
   - project:
       alias: nss-try
 
-# Note that this most duplicates the `gecko-roles` feature above
 - grant:
   # This is public
   - secrets:get:project/taskcluster/gecko/hgfingerprint
