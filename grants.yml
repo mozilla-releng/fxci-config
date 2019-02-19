@@ -541,6 +541,14 @@
       level: [3]
       trust_domain: comm
 
+# access to build workers; each level has access to its own set of workers
+# and priority is not important since workers are shared between repositories
+- grant:
+  - queue:create-task:highest:gce/gecko-{level}-*
+  to: 
+  - projects:
+      feature: gecko-roles
+
 # access to test workers; all levels have acces to the same workers, but
 # at different priorities
 - grant:
