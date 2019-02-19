@@ -90,6 +90,15 @@
   - project:
       feature: gecko-roles
 
+# access to openh264 artifacts; necessary for symbol upload and signing when
+# building new openh264 binaries
+- grant:
+  - queue:get-artifact:private/openh264/*
+  to:
+  - projects:
+      feature: gecko-roles
+      trust_domain: gecko
+
 # moz-tree:level:1:*
 - grant:
   - docker-worker:cache:tooltool-cache
