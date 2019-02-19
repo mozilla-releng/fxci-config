@@ -184,6 +184,7 @@
   - queue:create-task:low:aws-provisioner-v1/spidermonkey
   - queue:create-task:low:aws-provisioner-v1/symbol-upload
   - queue:create-task:low:aws-provisioner-v1/taskcluster-images
+  - queue:create-task:low:bitbar/gecko-t-*
   - queue:create-task:low:dummy-test-provisioner/dummy-test-type
   - queue:create-task:low:gecko-t-tc-worker/*
   - queue:create-task:low:localprovisioner/*
@@ -452,6 +453,7 @@
   - queue:create-task:highest:aws-provisioner-v1/symbol-upload
   - queue:create-task:highest:aws-provisioner-v1/taskcluster-images
   - queue:create-task:highest:aws-provisioner-v1/testdroid-device
+  - queue:create-task:highest:bitbar/gecko-t-*
   - queue:create-task:highest:dummy-test-provisioner/dummy-test-type
   - queue:create-task:highest:gecko-t-tc-worker/*
   - queue:create-task:highest:localprovisioner/*
@@ -902,3 +904,19 @@
   to:
   - groups:
     - releng
+
+
+# Allow bitbar to manage bitbar workers
+- grant:
+  - assume:worker-type:bitbar/*
+  - queue:worker-id:bitbar-*
+  - auth:create-client:bitbar/*
+  - auth:delete-client:bitbar/*
+  - auth:disable-client:bitbar/*
+  - auth:enable-client:bitbar/*
+  - auth:reset-access-token:bitbar/*
+  - auth:update-client:bitbar/*
+  to:
+  - groups:
+    - bitbar
+
