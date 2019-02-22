@@ -124,7 +124,6 @@
   - project:releng:signing:cert:dep-signing
   - project:releng:signing:format:*
   - purge-cache:aws-provisioner-v1/*
-  - queue:cancel-task:gecko-level-1/*
   - queue:create-task:aws-provisioner-v1/ami-test*
   - queue:create-task:aws-provisioner-v1/android-api-*
   - queue:create-task:aws-provisioner-v1/b2gbuild*
@@ -299,7 +298,6 @@
   - docker-worker:capability:device:phone
   - docker-worker:image:taskclusterprivate/phone-builder:*
   - docker-worker:image:taskclusterprivate/tester-device:*
-  - queue:cancel-task:gecko-level-2/*
   - queue:create-task:aws-provisioner-v1/ami-test*
   - queue:create-task:aws-provisioner-v1/android-api-*
   - queue:create-task:aws-provisioner-v1/b2gbuild*
@@ -398,7 +396,6 @@
   - project:releng:beetmover:bucket:release
   - project:releng:ship-it:production
   - project:releng:googleplay:beta
-  - queue:cancel-task:gecko-level-3/*
   - queue:create-task:aws-provisioner-v1/ami-test*
   - queue:create-task:aws-provisioner-v1/android-api-*
   - queue:create-task:aws-provisioner-v1/b2gbuild*
@@ -655,6 +652,8 @@
 
   # Allow a sensible scheduler-id
   - queue:scheduler-id:{trust_domain}-level-{level}
+  # Allows cancelling tasks with that scheduler-id
+  - queue:cancel-task:{trust_domain}-level-{level}/*
 
   # routes to support indexing by product
   - queue:route:index.{trust_domain}.v2.{alias}.*
