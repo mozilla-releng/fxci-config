@@ -601,9 +601,8 @@
       alias: oak
 
 - grant:
-  # Bug 1527644: Add scopes for Code Review bot in CI
-  - secrets:get:project/relman/codereview/*
-  - index:insert-task:project.relman.codereview.*
+  # Bug 1530376: Add scopes for Code Review bot in CI
+  - queue:route:project.relman.codereview.*
   to:
   - project:
       alias: try
