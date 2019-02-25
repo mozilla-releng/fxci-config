@@ -604,11 +604,6 @@
   # Bug 1527644: Add scopes for Code Review bot in CI
   - secrets:get:project/relman/codereview/*
   - index:insert-task:project.relman.codereview.*
-
-  # Bug 1520867: Add temporary scope for testing bitbar win64-aarch64 worker.
-  # If this works, we should change the worker-type to something more permanent.
-  # This is using a worker-group intened for testing generic-worker itself.
-  - queue:create-task:low:test-provisioner/bitbar
   to:
   - project:
       alias: try
