@@ -17,7 +17,7 @@
 #
 # - projects:
 #     level: [2, 3]  # condition
-#     job: ["branch:default", "cron:*"] 
+#     job: ["branch:default", "cron:*"]
 #
 # The top-level property can be `projects` or `project`, whichever reads better.
 #
@@ -204,7 +204,6 @@
   - queue:define-task:dummy-test-provisioner/dummy-test-type
   - queue:get-artifact:private/interactive/*
   - queue:get-artifact:project/gecko/android-*
-  - queue:rerun-task:gecko-level-1/*
   - queue:route:index.docker.images.v2.level-1.*
   - queue:route:index.garbage.*
   - queue:route:index.gecko.cache.level-1.*
@@ -375,15 +374,6 @@
       feature: gecko-roles
       level: [2, 3]
 
-# moz-tree:level:2:gecko
-- grant:
-  - queue:rerun-task:gecko-level-2/*
-  to:
-  - projects:
-      feature: gecko-roles
-      level: [2, 3]
-      trust_domain: gecko
-
 # moz-tree:level:3:*
 - grant:
   - auth:aws-s3:read-write:public-qemu-images/repository/hg.mozilla.org/mozilla-central/*
@@ -516,7 +506,6 @@
   - queue:create-task:highest:scriptworker-prov-v1/signing-linux-v1
   - queue:create-task:highest:scriptworker-prov-v1/treescript-v1
   - queue:create-task:highest:terraform-packet/gecko-t-*
-  - queue:rerun-task:gecko-level-3/*
   - queue:route:index.gecko.heavyprofile.*
   - queue:route:notify.email.release+tcstaging@mozilla.com.
   - queue:route:notify.email.release-automation-notifications@mozilla.com.*
@@ -544,7 +533,7 @@
 # and priority is not important since workers are shared between repositories
 - grant:
   - queue:create-task:highest:gce/gecko-{level}-*
-  to: 
+  to:
   - projects:
       feature: gecko-roles
 
@@ -648,6 +637,8 @@
   - queue:scheduler-id:{trust_domain}-level-{level}
   # Allows cancelling tasks with that scheduler-id
   - queue:cancel-task:{trust_domain}-level-{level}/*
+  # Allow reruning tasks with that scheduler-id
+  - queue:rerun-task:{trust_domain}-level-{level}/*
 
   # routes to support indexing by product
   - queue:route:index.{trust_domain}.v2.{alias}.*
