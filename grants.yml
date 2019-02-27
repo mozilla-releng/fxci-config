@@ -924,6 +924,8 @@
   - queue:get-artifact:project/gecko/android-sdk/*
   # Allow acess to API keys
   - secrets:get:project/releng/gecko/build/level-1/*
+  # Allow access to public tooltool artifacts
+  - docker-worker:relengapi-proxy:tooltool.download.public
   to:
   - groups:
     - mozillaonline
