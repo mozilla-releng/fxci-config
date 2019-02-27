@@ -925,3 +925,11 @@
   to:
   - groups:
     - mozillaonline
+
+- grant:
+  # Grant cloudops the ability to manage product-details secrets (Bug 1527571)
+  - secrets:get:repo:github.com/mozilla-releng/product-details*
+  - secrets:set:repo:github.com/mozilla-releng/product-details*
+  to:
+  - groups:
+    - cloudops
