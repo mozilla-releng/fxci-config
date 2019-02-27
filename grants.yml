@@ -906,11 +906,13 @@
 
 # Allow MozillaOnline to create builds
 # See https://bugzilla.mozilla.org/show_bug.cgi?id=1515990
+# This should also grant 
+#   assume:project-admin:mozillaonline
+# but that currently creates a dependency cylce (Bug 1531166) so
+# that scope is granted directly, along side this one.
 - grant:
   # This is public
   - secrets:get:project/taskcluster/gecko/hgfingerprint
-  # Allow managing namespaced taskcluster scopes and roles
-  - assume:project-admin:mozillaonline
   # Allow access to dedicated worker-types
   - queue:create-task:highest:aws-provisioner-v1/mozillaonline-1-b-android
   - queue:create-task:highest:aws-provisioner-v1/mozillaonline-3-b-android
