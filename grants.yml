@@ -904,3 +904,24 @@
   - groups:
     - bitbar
 
+# Allow MozillaOnline to create builds
+# See https://bugzilla.mozilla.org/show_bug.cgi?id=1515990
+- grant:
+  # This is public
+  - secrets:get:project/taskcluster/gecko/hgfingerprint
+  # Allow managing namespaced taskcluster scopes and roles
+  - assume:project-admin:mozillaonline
+  # Allow access to dedicated worker-types
+  - queue:create-task:highest:aws-provisioner-v1/mozillaonline-1-b-android
+  - queue:create-task:highest:aws-provisioner-v1/mozillaonline-3-b-android
+  # Allow acceess scopes worker caches
+  - docker-worker:cache:mozillaonline-level-1-*
+  - docker-worker:cache:mozillaonline-level-3-*
+  # Allow access to pacakged android sdk's from mozilla-central
+  - queue:get-artifact:project/gecko/android-ndk/*
+  - queue:get-artifact:project/gecko/android-sdk/*
+  # Allow acess to API keys
+  - secrets:get:project/releng/gecko/build/level-1/*
+  to:
+  - groups:
+    - mozillaonline
