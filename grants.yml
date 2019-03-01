@@ -155,7 +155,6 @@
   - queue:create-task:medium:proj-autophone/*
   - queue:create-task:medium:proj-awfy/*
   - queue:create-task:packetnet/*
-  - queue:create-task:releng-hardware/*
   - queue:create-task:scl3-puppet/os-x-10-10-gw
   - queue:create-task:scl3-puppet/os-x-build-gw
   - queue:create-task:tc-worker-provisioner/*
@@ -326,7 +325,6 @@
   - queue:create-task:gecko-t-tc-worker/*
   - queue:create-task:localprovisioner/*
   - queue:create-task:packetnet/*
-  - queue:create-task:releng-hardware/gecko-t-*
   - queue:create-task:scl3-puppet/os-x-10-10-gw
   - queue:create-task:scl3-puppet/os-x-build-gw
   - queue:create-task:tc-worker-provisioner/*
@@ -458,7 +456,6 @@
   - queue:create-task:highest:test-dummy-provisioner/*
   - queue:create-task:localprovisioner/*
   - queue:create-task:packetnet/*
-  - queue:create-task:releng-hardware/gecko-t-*
   - queue:create-task:scl3-puppet/os-x-10-10-gw
   - queue:create-task:scl3-puppet/os-x-build-gw
   - queue:create-task:tc-worker-provisioner/*
@@ -495,6 +492,7 @@
   - project:releng:snapcraft:firefox:esr
   - queue:create-task:highest:aws-provisioner-v1/taskcluster-generic
   - queue:create-task:highest:proj-autophone/*
+  - queue:create-task:highest:releng-hardware/gecko-3-*
   - queue:create-task:highest:scriptworker-prov-v1/addon-v1
   - queue:create-task:highest:scriptworker-prov-v1/balrogworker-v1
   - queue:create-task:highest:scriptworker-prov-v1/beetmoverworker-v1
