@@ -914,8 +914,8 @@
   # This is public
   - secrets:get:project/taskcluster/gecko/hgfingerprint
   # Allow access to dedicated worker-types
-  - queue:create-task:highest:aws-provisioner-v1/mozillaonline-1-b-android
-  - queue:create-task:highest:aws-provisioner-v1/mozillaonline-3-b-android
+  - queue:create-task:highest:aws-provisioner-v1/mozillaonline-1-*
+  - queue:create-task:highest:aws-provisioner-v1/mozillaonline-3-*
   # Allow acceess scopes worker caches
   - docker-worker:cache:mozillaonline-level-1-*
   - docker-worker:cache:mozillaonline-level-3-*
