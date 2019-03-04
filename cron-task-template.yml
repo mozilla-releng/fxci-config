@@ -11,6 +11,7 @@
 #  - alias -- project alias
 #  - mach_cron_options -- mach options (as a string)
 #  - trim_whitespace(..) -- trim newlines and extra whitespace in a command string
+#  - taskcluster_root_url -- the rootUrl for this TC deployment
 #
 # Note that aside from the task times as noted below, the JSON-e rendering performed
 # when the hook is fired does not supply any additional information.

@@ -1,0 +1,63 @@
+# This is the template for the task definition for hg push hooks.  Its job is
+# to run a decision task for the given revision of the given repository.
+#
+# This is rendered with JSON-e to create a JSON-e task template in a hook,
+# meaning that the content of this file is rendered *twice* with JSON-e.  The
+# context values for the first rendering are;
+#
+#  - level -- SCM level
+#  - trust_domain -- project's trust domain
+#  - hookGroupId / hookId -- hook identifiers
+#  - project_repo -- repository URL
+#  - project_hgmo_path -- path portion of the repository URL
+#  - alias -- project alias
+#
+# Uses of `$${..}` and `$$..: ..` are intended to occur in the second rendering.
+# The context for the second rendering is that provided by the hooks service in response
+# to a Pulse message from exchange/hgpushes/v2 or a triggerHook call with the same payload
+
+provisionerId: aws-provisioner-v1
+workerType: hg-push
+schedulerId: ${trust_domain}-level-${level}
+
+# The "$fromNow" options here are escaped so that they are processed by the hooks service's
+# JSON-e rendering when the hook is fired.
+deadline: {$$fromNow: '20 minutes'}
+expires: {$$fromNow: '3 days'}
+scopes:
+  - assume:repo:hg.mozilla.org/${project_hgmo_path}:branch:default
+payload:
+    # built by pushes to the ci-admin repository
+    image:
+      type: indexed-image
+      path: public/image.tar.zst
+      namespace: index.ci.cache.level-3.docker-images.v2.hg-push.hash.5d88330fd2c4308906720c592564199812354b443448d0bac5e3bdcb28168999
+    env:
+        # pass along the hook payload, which is the Pulse message from hg (v2)
+        # https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications
+        PULSE_MESSAGE: {$$json: {$$eval: 'payload'}}
+        # hard-coded values that can't be changed by the hook payload
+        REPO_URL: "${project_repo}"
+        PROJECT: "${alias}"
+        LEVEL: "${level}"
+    features:
+        taskclusterProxy: true
+
+    # If this task does not succeed immediately, something is probably wrong.  We want to avoid a storm of
+    # decision tasks when that problem is resolved, so we are conservative with the time it can possibly retry
+    maxRunTime: 600
+metadata:
+  $$let:
+    description:
+      $$if: 'firedBy == "triggerHook"'
+      then: 'Fired by triggerHook call from $${clientId}'
+      else: 'Fired by $${firedBy}'
+  in:
+    owner: 'mozilla-taskcluster-maintenance@mozilla.com'
+    source: https://tools.taskcluster.net/hooks/${hookGroupId}/${hookId}
+    description: "$${description}"
+    name: On-Push task for ${project_repo}
+priority: 'highest'
+retries: 5
+tags: {}
+extra: {}

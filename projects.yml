@@ -29,6 +29,7 @@
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
+#   - `taskcluster-push-via-hook` -- (temporary) the 'taskcluster-push' feature should be implemented with hooks
 ---
 ash:
   repo: https://hg.mozilla.org/projects/ash
@@ -366,7 +367,8 @@ ci-configuration:
   access: scm_level_3
   trust_domain: ci
   features:
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -376,7 +378,8 @@ ci-configuration-try:
   access: scm_level_1
   trust_domain: ci
   features:
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -386,7 +389,8 @@ ci-admin:
   access: scm_level_3
   trust_domain: ci
   features:
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -396,7 +400,8 @@ ci-admin-try:
   access: scm_level_1
   trust_domain: ci
   features:
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -406,7 +411,8 @@ taskgraph:
   access: scm_level_3
   trust_domain: taskgraph
   features:
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -416,7 +422,8 @@ taskgraph-try:
   access: scm_level_1
   trust_domain: taskgraph
   features:
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
     trust-domain-scopes: true
     treeherder-reporting: true
     is_try: true
