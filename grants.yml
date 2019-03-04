@@ -86,16 +86,31 @@
 
   # Provide access to sccache buckets
   - assume:project:taskcluster:{trust_domain}:level-{level}-sccache-buckets
+
+  # access to workers; all levels have access to the same workers, but at
+  # different priorities and levels
+  - queue:create-task:{priority}:aws-provisioner-v1/gecko-misc
+  - queue:create-task:{priority}:aws-provisioner-v1/gecko-t-*
+  - queue:create-task:{priority}:aws-provisioner-v1/gecko-{level}-*
+  - queue:create-task:{priority}:releng-hardware/gecko-t-*
   to:
   - project:
       feature: gecko-roles
 
-# access to openh264 artifacts; necessary for symbol upload and signing when
-# building new openh264 binaries
 - grant:
+  # access to workers; all levels have access to the same workers, but at
+  # different priorities and levels
+  - queue:create-task:{priority}:bitbar/gecko-t-*
+  - queue:create-task:{priority}:gce/gecko-t-*
+  - queue:create-task:{priority}:gce/gecko-{level}-*
+  - queue:create-task:{priority}:releng-hardware/gecko-{level}-*
+  - queue:create-task:{priority}:terraform-packet/gecko-t-*
+
+  # access to openh264 artifacts; necessary for symbol upload and signing when
+  # building new openh264 binaries
   - queue:get-artifact:private/openh264/*
   to:
-  - projects:
+  - project:
       feature: gecko-roles
       trust_domain: gecko
 
@@ -132,9 +147,6 @@
   - queue:create-task:aws-provisioner-v1/dbg-*
   - queue:create-task:aws-provisioner-v1/desktop-test*
   - queue:create-task:aws-provisioner-v1/flame-kk*
-  - queue:create-task:aws-provisioner-v1/gecko-1-*
-  - queue:create-task:aws-provisioner-v1/gecko-misc
-  - queue:create-task:aws-provisioner-v1/gecko-t-*
   - queue:create-task:aws-provisioner-v1/loan-1-*
   - queue:create-task:aws-provisioner-v1/loan-t-*
   - queue:create-task:aws-provisioner-v1/mulet-debug
@@ -162,9 +174,6 @@
   - queue:create-task:low:aws-provisioner-v1/dbg-*
   - queue:create-task:low:aws-provisioner-v1/desktop-test*
   - queue:create-task:low:aws-provisioner-v1/flame-kk*
-  - queue:create-task:low:aws-provisioner-v1/gecko-1-*
-  - queue:create-task:low:aws-provisioner-v1/gecko-misc
-  - queue:create-task:low:aws-provisioner-v1/gecko-t-*
   - queue:create-task:low:aws-provisioner-v1/loan-1-*
   - queue:create-task:low:aws-provisioner-v1/loan-t-*
   - queue:create-task:low:aws-provisioner-v1/mulet-debug
@@ -179,7 +188,6 @@
   - queue:create-task:low:localprovisioner/*
   - queue:create-task:low:manual-packet/tc-worker-qemu-v1
   - queue:create-task:low:packetnet/*
-  - queue:create-task:low:releng-hardware/gecko-t-*
   - queue:create-task:low:releng-hardware/my-talos
   - queue:create-task:low:scriptworker-prov-v1/dep-pushapk
   - queue:create-task:low:scriptworker-prov-v1/depsigning
@@ -283,10 +291,6 @@
   - queue:create-task:aws-provisioner-v1/dbg-*
   - queue:create-task:aws-provisioner-v1/desktop-test*
   - queue:create-task:aws-provisioner-v1/flame-kk*
-  - queue:create-task:aws-provisioner-v1/gecko-1-*
-  - queue:create-task:aws-provisioner-v1/gecko-2-*
-  - queue:create-task:aws-provisioner-v1/gecko-misc
-  - queue:create-task:aws-provisioner-v1/gecko-t-*
   - queue:create-task:aws-provisioner-v1/loan-1-*
   - queue:create-task:aws-provisioner-v1/loan-t-*
   - queue:create-task:aws-provisioner-v1/mulet-debug
@@ -311,10 +315,6 @@
   - queue:create-task:very-low:aws-provisioner-v1/dbg-*
   - queue:create-task:very-low:aws-provisioner-v1/desktop-test*
   - queue:create-task:very-low:aws-provisioner-v1/flame-kk*
-  - queue:create-task:very-low:aws-provisioner-v1/gecko-1-*
-  - queue:create-task:very-low:aws-provisioner-v1/gecko-2-*
-  - queue:create-task:very-low:aws-provisioner-v1/gecko-misc
-  - queue:create-task:very-low:aws-provisioner-v1/gecko-t-*
   - queue:create-task:very-low:aws-provisioner-v1/loan-1-*
   - queue:create-task:very-low:aws-provisioner-v1/loan-t-*
   - queue:create-task:very-low:aws-provisioner-v1/mulet-debug
@@ -329,7 +329,6 @@
   - queue:create-task:very-low:gecko-t-tc-worker/*
   - queue:create-task:very-low:localprovisioner/*
   - queue:create-task:very-low:packetnet/*
-  - queue:create-task:very-low:releng-hardware/gecko-t-*
   - queue:create-task:very-low:tc-worker-provisioner/*
   - queue:create-task:very-low:test-dummy-provisioner/*
   - secrets:get:project/taskcluster/gecko/build/level-2/*
@@ -358,11 +357,6 @@
   - queue:create-task:aws-provisioner-v1/dbg-*
   - queue:create-task:aws-provisioner-v1/desktop-test*
   - queue:create-task:aws-provisioner-v1/flame-kk*
-  - queue:create-task:aws-provisioner-v1/gecko-1-*
-  - queue:create-task:aws-provisioner-v1/gecko-2-*
-  - queue:create-task:aws-provisioner-v1/gecko-3-*
-  - queue:create-task:aws-provisioner-v1/gecko-misc
-  - queue:create-task:aws-provisioner-v1/gecko-t-*
   - queue:create-task:aws-provisioner-v1/loan-1-*
   - queue:create-task:aws-provisioner-v1/loan-t-*
   - queue:create-task:aws-provisioner-v1/mulet-debug
@@ -383,11 +377,6 @@
   - queue:create-task:highest:aws-provisioner-v1/dbg-*
   - queue:create-task:highest:aws-provisioner-v1/desktop-test*
   - queue:create-task:highest:aws-provisioner-v1/flame-kk*
-  - queue:create-task:highest:aws-provisioner-v1/gecko-1-*
-  - queue:create-task:highest:aws-provisioner-v1/gecko-2-*
-  - queue:create-task:highest:aws-provisioner-v1/gecko-3-*
-  - queue:create-task:highest:aws-provisioner-v1/gecko-misc
-  - queue:create-task:highest:aws-provisioner-v1/gecko-t-*
   - queue:create-task:highest:aws-provisioner-v1/loan-1-*
   - queue:create-task:highest:aws-provisioner-v1/loan-t-*
   - queue:create-task:highest:aws-provisioner-v1/mulet-debug
@@ -398,13 +387,11 @@
   - queue:create-task:highest:aws-provisioner-v1/symbol-upload
   - queue:create-task:highest:aws-provisioner-v1/taskcluster-images
   - queue:create-task:highest:aws-provisioner-v1/testdroid-device
-  - queue:create-task:highest:bitbar/gecko-t-*
   - queue:create-task:highest:dummy-test-provisioner/dummy-test-type
   - queue:create-task:highest:gecko-t-tc-worker/*
   - queue:create-task:highest:localprovisioner/*
   - queue:create-task:highest:null-provisioner/human-breakpoint
   - queue:create-task:highest:packetnet/*
-  - queue:create-task:highest:releng-hardware/gecko-t-*
   - queue:create-task:highest:scriptworker-prov-v1/dep-pushapk
   - queue:create-task:highest:scriptworker-prov-v1/pushapk-v1
   - queue:create-task:highest:scriptworker-prov-v1/depsigning
@@ -445,7 +432,6 @@
   - project:releng:snapcraft:firefox:esr
   - queue:create-task:highest:aws-provisioner-v1/taskcluster-generic
   - queue:create-task:highest:proj-autophone/*
-  - queue:create-task:highest:releng-hardware/gecko-3-*
   - queue:create-task:highest:scriptworker-prov-v1/addon-v1
   - queue:create-task:highest:scriptworker-prov-v1/balrogworker-v1
   - queue:create-task:highest:scriptworker-prov-v1/beetmoverworker-v1
@@ -456,7 +442,6 @@
   - queue:create-task:highest:scriptworker-prov-v1/shipit-v1
   - queue:create-task:highest:scriptworker-prov-v1/signing-linux-v1
   - queue:create-task:highest:scriptworker-prov-v1/treescript-v1
-  - queue:create-task:highest:terraform-packet/gecko-t-*
   - queue:route:index.gecko.heavyprofile.*
   - queue:route:notify.email.release+tcstaging@mozilla.com.
   - queue:route:notify.email.release-automation-notifications@mozilla.com.*
@@ -478,29 +463,6 @@
       feature: gecko-roles
       level: [3]
       trust_domain: comm
-
-# access to build workers; each level has access to its own set of workers
-# and priority is not important since workers are shared between repositories
-- grant:
-  - queue:create-task:highest:gce/gecko-{level}-*
-  to:
-  - projects:
-      feature: gecko-roles
-
-# access to test workers; all levels have acces to the same workers, but
-# at different priorities
-- grant:
-  - queue:create-task:low:gce/gecko-t-linux*
-  to:
-  - projects:
-      feature: gecko-roles
-      level: [1, 2]
-- grant:
-  - queue:create-task:highest:gce/gecko-t-linux*
-  to:
-  - projects:
-      feature: gecko-roles
-      level: 3
 
 ##
 # project-specific scopes (for esr's to hang onto their old scopes)
