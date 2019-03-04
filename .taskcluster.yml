@@ -12,8 +12,8 @@ tasks:
         --ci-configuration-repository "${repository.url}"
         --ci-configuration-revision "${push.revision}"
   each(cfg):
-    taskGroupId: "${as_slugid('taskGroup')}"
-    taskId: "${as_slugid(cfg.name)}"
+    taskGroupId: "${ownTaskId}"
+    taskId: "${ownTaskId}"
     schedulerId: 'ci-level-${repository.level}'
     provisionerId: aws-provisioner-v1
     workerType: gecko-misc
