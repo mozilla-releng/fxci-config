@@ -190,8 +190,6 @@
   - queue:get-artifact:project/gecko/android-*
   - queue:route:index.garbage.*
   - queue:route:notify.*
-  - scheduler:create-task-graph
-  - scheduler:extend-task-graph:*
   - secrets:get:project/taskcluster/gecko/hgfingerprint
   - worker:privileged:manual-packet/tc-worker-docker-v0
   - queue:create-task:low:manual-packet/tc-worker-docker-v0
@@ -559,8 +557,6 @@
   - queue:create-task:localprovisioner/nss-macos-10-12
   - queue:create-task:localprovisioner/nss-rpi
   - queue:route:index.docker.images.v1.nss.*
-  - scheduler:create-task-graph
-  - scheduler:extend-task-graph:*
   to:
   - project:
       alias: nss
@@ -575,8 +571,6 @@
   - queue:create-task:localprovisioner/nss-aarch64
   - queue:create-task:localprovisioner/nss-macos-10-12
   - queue:route:index.docker.images.v1.nss-try.*
-  - scheduler:create-task-graph
-  - scheduler:extend-task-graph:*
   to:
   - project:
       alias: nss-try
