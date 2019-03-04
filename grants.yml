@@ -188,9 +188,7 @@
   - queue:create-task:low:test-dummy-provisioner/*
   - queue:get-artifact:private/interactive/*
   - queue:get-artifact:project/gecko/android-*
-  - queue:route:index.docker.images.v2.level-1.*
   - queue:route:index.garbage.*
-  - queue:route:project.releng.funsize.level-1.*
   - queue:route:notify.*
   - scheduler:create-task-graph
   - scheduler:extend-task-graph:*
@@ -336,7 +334,6 @@
   - queue:create-task:very-low:releng-hardware/gecko-t-*
   - queue:create-task:very-low:tc-worker-provisioner/*
   - queue:create-task:very-low:test-dummy-provisioner/*
-  - queue:route:index.docker.images.v2.level-2.*
   - secrets:get:project/taskcluster/gecko/build/level-2/*
   to:
   - projects:
@@ -422,7 +419,6 @@
   - queue:create-task:tc-worker-provisioner/*
   - queue:create-task:test-dummy-provisioner/*
   - queue:get-artifact:private/docker-worker/*
-  - queue:route:index.docker.images.v2.level-3.*
   - secrets:get:project/releng/snapcraft/firefox/edge
   - secrets:get:project/taskcluster/gecko/build/level-3/*
   to:
