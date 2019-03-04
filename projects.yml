@@ -434,3 +434,23 @@ version-control-tools:
   access: scm_versioncontrol
   features:
     taskcluster-push: true
+
+# Bug 1532453: Add user repositories for experimenting with taskgraph and mobile
+tomprince-android-components:
+  repo: https://hg.mozilla.org/users/mozilla_hocat.ca/android-components
+  repo_type: hg
+  access: scm_level_1
+  trust_domain: garbage
+  features:
+    taskcluster-push-via-hooks: true
+    trust-domain-scopes: true
+
+# Bug 1532453: Add user repositories for experimenting with taskgraph and mobile
+tomprince-reference-browser:
+  repo: https://hg.mozilla.org/users/mozilla_hocat.ca/reference-browser
+  repo_type: hg
+  access: scm_level_1
+  trust_domain: garbage
+  features:
+    taskcluster-push-via-hooks: true
+    trust-domain-scopes: true

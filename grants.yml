@@ -845,3 +845,12 @@
   to:
   - groups:
     - cloudops
+
+# Bug 1532453: Add user repositories for experimenting with taskgraph and mobile
+- grant:
+  - queue:create-task:low:aws-provisioner-v1/mobile-1-*
+  to:
+  - projects:
+      alias:
+      - tomprince-reference-browser
+      - tomprince-android-components
