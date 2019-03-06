@@ -12,8 +12,9 @@
 # The value is an object describing the project with the following keys:
 #
 # - `repo` -- the https repository URL
-# - `repo_type` -- always `hg` (for later expansion)
+# - `repo_type` -- `hg` or `git` so far (for later expansion)
 # - `access` -- the name of the group with access to this repository; typically `scm_level_{1,2,3}`.
+# - `level` -- the level access to this repository; typically `{1,2,3}`.
 # - `trust_domain` -- separation within an access level of projects with different organizations
 # - `parent_repo` -- for projects like comm where the repo is checked out within a "parent" repo
 # - 'is_try' -- if present and true, this is a "try" repo, meaning that users typically push new heads
@@ -26,6 +27,10 @@
 #   - `taskcluster-cron` -- tasks defined in `.cron.yml` can run for this project (gecko/comm repos only)
 #   - `taskcluster-push` -- decision tasks run for pushes to this project's repository
 #   - `gecko-roles` -- this repository should have gecko-related roles assigned (for users, actions, cron, etc.)
+#   - `mobile-roles` -- this repository should have mobile-related roles assigned (for users, actions, cron, etc.)
+#   - `mobile-beetmover-phase` -- this repository should have beetmover related scopes associated
+#   - `mobile-sign-phase` -- this repository should have sign related scopes associated
+#   - `mobile-pushapk-phase` -- this repository should have pushapk related scopes associated
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
@@ -453,3 +458,26 @@ tomprince-reference-browser:
   features:
     taskcluster-push-via-hooks: true
     trust-domain-scopes: true
+
+# mobile Github repositories
+android-components:
+  repo: https://github.com/mozilla-mobile/android-components
+  repo_type: git
+  level: 3
+  features:
+    mobile-roles: true
+    mobile-beetmover-phase: true
+
+reference-browser:
+  repo: https://github.com/mozilla-mobile/reference-browser/
+  repo_type: git
+  level: 3
+  features:
+    mobile-roles: true
+
+fenix:
+  repo: https://github.com/mozilla-mobile/fenix/
+  repo_type: git
+  level: 3
+  features:
+    mobile-roles: true

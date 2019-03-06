@@ -9,7 +9,7 @@
 #  - trust_domain -- project's trust domain
 #  - hookGroupId / hookId -- hook identifiers
 #  - project_repo -- repository URL
-#  - project_hgmo_path -- path portion of the repository URL
+#  - project_repo_path -- path portion of the repository URL
 #  - alias -- project alias
 #
 # Uses of `$${..}` and `$$..: ..` are intended to occur in the second rendering.
@@ -25,7 +25,7 @@ schedulerId: ${trust_domain}-level-${level}
 deadline: {$$fromNow: '20 minutes'}
 expires: {$$fromNow: '3 days'}
 scopes:
-  - assume:repo:hg.mozilla.org/${project_hgmo_path}:branch:default
+  - assume:repo:hg.mozilla.org/${project_repo_path}:branch:default
 payload:
     # built by pushes to the ci-admin repository
     image:

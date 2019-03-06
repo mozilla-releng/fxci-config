@@ -27,7 +27,7 @@
 # are AND'ed together.  Available conditions are:
 #
 # * access
-# * level (as derived from access)
+# * level (as derived from access or directly specified)
 # * alias
 # * feature (projects with the given feature or for `!feature`, projects without)
 # * is_try (true/false)
@@ -47,7 +47,7 @@
 #
 # * {alias} (project alias)
 # * {level} (numeric level; not substituted if this repo has no numeric level)
-# * {hgmo_path} (path within hg.mozilla.org, if repo is on that host)
+# * {repo_path} (path within repository (e.g. hg.mozilla.org or github.com, if repo is on that host)
 # * {trust_domain}
 #
 # ## User Groups
@@ -604,6 +604,82 @@
       feature: is-trunk
 
 ##
+# mobile-specific roles
+#
+# We refer to level 1 as the staging/development workflow for a given project
+# (e.g. pull/requests and staging-triggered releases) while level 3 defines the
+# production releases (Github-based releases or triggered via hooks)
+#
+# Mind yourself of globstar roles such as the following that could potentially
+# grant even more scopes to certain roles in an automatic way
+# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla-mobile%2F*
+# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2F*
+
+# mobile:level:X:*
+- grant:
+  - assume:project:taskcluster:mozilla-github-repository
+  - queue:create-task:highest:aws-provisioner-v1/mobile-{level}-*
+  - docker-worker:cache:{alias}-level-{level}
+  - queue:route:index.project.mobile.{alias}.cache.level-{level}.*
+  to:
+  - project:
+      feature: mobile-roles
+      job: ["pull-request", "branch:*", "branch:master", "release"]
+
+# mobile:level:3:*
+- grant:
+  - project:mobile:{alias}:releng:beetmover:action:push-to-maven
+  - project:mobile:{alias}:releng:beetmover:bucket:maven-production
+  - queue:create-task:highest:scriptworker-prov-v1/mobile-beetmover-v1
+  to:
+  - project:
+      feature: mobile-beetmover-phase
+      job: ["release"]
+
+# mobile:level:3:*
+- grant:
+  - project:mobile:{alias}:releng:signing:cert:release-signing
+  - project:mobile:{alias}:releng:signing:format:autograph_apk
+  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
+  to:
+  - project:
+      feature: mobile-sign-phase
+      job: ["release"]
+
+# mobile:level:3:*
+- grant:
+  - project:mobile:{alias}:releng:googleplay:product:{alias}
+  - queue:create-task:highest:scriptworker-prov-v1/mobile-pushapk-v1
+  to:
+  - project:
+      feature: mobile-pushapk-phase
+      job: ["release"]
+
+# android-components specific scopes
+- grant:
+  - secrets:get:project/mobile/android-components/public-tokens
+  to:
+  - project:
+      alias: android-components
+      job: ["pull-request", "branch:*", "branch:master"]
+
+# fenix specific scopes
+- grant:
+  - queue:route:index.project.fenix.android.preview-builds
+  - secrets:get:project/fenix/preview-key-store
+  to:
+  - project:
+      alias: fenix
+      job: ["pull-request"]
+
+- grant:
+  - secrets:get:project/fenix/sentry
+  to:
+  - project:
+      alias: fenix
+      job: ["pull-request", "release"]
+
+##
 # delegate cron:nightly-* to hand-managed nightly roles
 
 - grant:
@@ -681,7 +757,7 @@
 # the scopes of a decision task.  These differ per project, so we use some
 # substitution to generate the correct values
 - grant:
-  - assume:repo:hg.mozilla.org/{hgmo_path}:branch:default
+  - assume:repo:hg.mozilla.org/{repo_path}:branch:default
   - in-tree:hook-action:project-gecko/in-tree-action-{level}-*
   to:
   - projects:
@@ -814,7 +890,7 @@
 
 # Allow MozillaOnline to create builds
 # See https://bugzilla.mozilla.org/show_bug.cgi?id=1515990
-# This should also grant 
+# This should also grant
 #   assume:project-admin:mozillaonline
 # but that currently creates a dependency cylce (Bug 1531166) so
 # that scope is granted directly, along side this one.
