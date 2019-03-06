@@ -319,7 +319,8 @@ jamun:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 autoland:
   repo: https://hg.mozilla.org/integration/autoland
   repo_type: hg
@@ -427,7 +428,8 @@ taskgraph-try:
   access: scm_level_1
   trust_domain: taskgraph
   features:
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
     trust-domain-scopes: true
     treeherder-reporting: true
     is_try: true
