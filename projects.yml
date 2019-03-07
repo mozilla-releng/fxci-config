@@ -333,7 +333,8 @@ autoland:
     treeherder-reporting: true
     is-trunk: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 stylo:
   repo: https://hg.mozilla.org/incubator/stylo
   repo_type: hg
