@@ -476,6 +476,7 @@ reference-browser:
   level: 3
   features:
     mobile-roles: true
+    treeherder-reporting: true
 
 fenix:
   repo: https://github.com/mozilla-mobile/fenix/
@@ -483,3 +484,4 @@ fenix:
   level: 3
   features:
     mobile-roles: true
+    treeherder-reporting: true
