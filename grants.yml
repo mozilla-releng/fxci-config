@@ -672,13 +672,6 @@
       alias: fenix
       job: ["pull-request"]
 
-- grant:
-  - secrets:get:project/fenix/sentry
-  to:
-  - project:
-      alias: fenix
-      job: ["pull-request", "release"]
-
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
 
