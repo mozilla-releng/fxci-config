@@ -47,7 +47,8 @@ ash:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 mozilla-release:
   repo: https://hg.mozilla.org/releases/mozilla-release
   repo_type: hg
@@ -95,7 +96,8 @@ oak:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 pine:
   repo: https://hg.mozilla.org/projects/pine
   repo_type: hg
@@ -107,7 +109,8 @@ pine:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 mozilla-beta:
   repo: https://hg.mozilla.org/releases/mozilla-beta
   repo_type: hg
@@ -145,7 +148,8 @@ mozilla-inbound:
     treeherder-reporting: true
     is-trunk: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 mozilla-central:
   repo: https://hg.mozilla.org/mozilla-central
   repo_type: hg
@@ -158,7 +162,8 @@ mozilla-central:
     treeherder-reporting: true
     is-trunk: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 comm-central:
   repo: https://hg.mozilla.org/comm-central
   repo_type: hg
@@ -184,7 +189,8 @@ cedar:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 birch:
   repo: https://hg.mozilla.org/projects/birch
   repo_type: hg
@@ -196,7 +202,8 @@ birch:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 cypress:
   repo: https://hg.mozilla.org/projects/cypress
   repo_type: hg
@@ -232,7 +239,8 @@ elm:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 graphics:
   repo: https://hg.mozilla.org/projects/graphics
   repo_type: hg
@@ -295,7 +303,8 @@ larch:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 maple:
   repo: https://hg.mozilla.org/projects/maple
   repo_type: hg
@@ -307,7 +316,8 @@ maple:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 jamun:
   repo: https://hg.mozilla.org/projects/jamun
   repo_type: hg
