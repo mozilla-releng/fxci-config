@@ -60,7 +60,8 @@ mozilla-release:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 mozilla-esr60:
   repo: https://hg.mozilla.org/releases/mozilla-esr60
   repo_type: hg
@@ -72,7 +73,8 @@ mozilla-esr60:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 comm-esr60:
   repo: https://hg.mozilla.org/releases/comm-esr60
   repo_type: hg
@@ -122,7 +124,8 @@ mozilla-beta:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 comm-beta:
   repo: https://hg.mozilla.org/releases/comm-beta
   repo_type: hg
@@ -176,7 +179,8 @@ comm-central:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
     is-trunk: true
 cedar:
   repo: https://hg.mozilla.org/projects/cedar
