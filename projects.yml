@@ -454,7 +454,8 @@ version-control-tools:
   repo_type: hg
   access: scm_versioncontrol
   features:
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 
 # Bug 1532453: Add user repositories for experimenting with taskgraph and mobile
 tomprince-android-components:
