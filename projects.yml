@@ -282,7 +282,7 @@ stylo-try:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: true
+    taskcluster-push: false
 try-comm-central:
   repo: https://hg.mozilla.org/try-comm-central
   repo_type: hg
@@ -360,7 +360,7 @@ stylo:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: true
+    taskcluster-push: false
 
 # non-gecko repositories
 
