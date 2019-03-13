@@ -626,6 +626,16 @@
       feature: mobile-roles
       job: ["pull-request", "branch:*", "branch:master", "release"]
 
+
+- grant:
+  - assume:project:taskcluster:mozilla-github-repository
+  - queue:create-task:highest:aws-provisioner-v1/mobile-{level}-*
+  to:
+  - project:
+      feature: mobile-roles-forks
+      # We don't want pull requests on forks
+      job: ["branch:*"]
+
 # mobile:level:3:*
 - grant:
   - project:mobile:{alias}:releng:beetmover:action:push-to-maven
@@ -923,3 +933,25 @@
       alias:
       - tomprince-reference-browser
       - tomprince-android-components
+
+
+# Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
+- grant:
+  -  secrets:get:project/mobile/reference-browser/firebase
+  -  secrets:get:project/mobile/reference-browser/nimbledroid
+  to:
+  - projects:
+      alias:
+      - kglazko-reference-browser
+      - rpappalax-reference-browser
+      job: ["branch:*"]
+
+
+# Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
+- grant:
+  -  secrets:get:project/mobile/android-components/firebase
+  to:
+  - projects:
+      alias:
+      - rpappalax-android-components
+      job: ["branch:*"]

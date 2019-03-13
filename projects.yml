@@ -489,3 +489,28 @@ fenix:
   features:
     mobile-roles: true
     treeherder-reporting: true
+
+
+# Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
+kglazko-reference-browser:
+  repo: https://github.com/kglazko/reference-browser/
+  repo_type: git
+  level: 1
+  features:
+    mobile-roles-forks: true
+
+# Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
+rpappalax-reference-browser:
+  repo: https://github.com/rpappalax/reference-browser/
+  repo_type: git
+  level: 1
+  features:
+    mobile-roles-forks: true
+
+# Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
+rpappalax-android-components:
+  repo: https://github.com/rpappalax/android-components
+  repo_type: git
+  level: 1
+  features:
+    mobile-roles-forks: true
