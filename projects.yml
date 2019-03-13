@@ -270,19 +270,6 @@ try:
     treeherder-reporting: true
     taskcluster-cron: false
     taskcluster-push: true
-stylo-try:
-  repo: https://hg.mozilla.org/incubator/stylo-try
-  repo_type: hg
-  access: scm_level_1
-  trust_domain: gecko
-  is_try: true
-  features:
-    gecko-roles: true
-    gecko-actions: true
-    trust-domain-scopes: true
-    treeherder-reporting: true
-    taskcluster-cron: false
-    taskcluster-push: false
 try-comm-central:
   repo: https://hg.mozilla.org/try-comm-central
   repo_type: hg
@@ -354,13 +341,14 @@ stylo:
   repo_type: hg
   access: scm_level_2
   trust_domain: gecko
-  features:
-    gecko-roles: true
-    gecko-actions: true
-    trust-domain-scopes: true
-    treeherder-reporting: true
-    taskcluster-cron: false
-    taskcluster-push: false
+  features: {}
+stylo-try:
+  repo: https://hg.mozilla.org/incubator/stylo-try
+  repo_type: hg
+  access: scm_level_1
+  trust_domain: gecko
+  is_try: true
+  features: {}
 
 # non-gecko repositories
 
