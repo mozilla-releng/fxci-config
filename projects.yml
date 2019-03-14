@@ -272,7 +272,8 @@ try:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 try-comm-central:
   repo: https://hg.mozilla.org/try-comm-central
   repo_type: hg
@@ -361,7 +362,8 @@ nss:
   access: scm_nss
   trust_domain: nss
   features:
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
     treeherder-reporting: true
 
 nss-try:
@@ -370,7 +372,8 @@ nss-try:
   access: scm_level_1
   trust_domain: nss
   features:
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
     treeherder-reporting: true
 
 ci-configuration:
