@@ -28,6 +28,7 @@
 #   - `taskcluster-push` -- decision tasks run for pushes to this project's repository
 #   - `gecko-roles` -- this repository should have gecko-related roles assigned (for users, actions, cron, etc.)
 #   - `mobile-roles` -- this repository should have mobile-related roles assigned (for users, actions, cron, etc.)
+#   - `mobile-roles-forks` -- this fork should have some (restricted) mobile roles assigned
 #   - `mobile-beetmover-phase` -- this repository should have beetmover related scopes associated
 #   - `mobile-sign-phase` -- this repository should have sign related scopes associated
 #   - `mobile-pushapk-phase` -- this repository should have pushapk related scopes associated
@@ -35,6 +36,8 @@
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
 #   - `taskcluster-push-via-hook` -- (temporary) the 'taskcluster-push' feature should be implemented with hooks
+#   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
+
 ---
 ash:
   repo: https://hg.mozilla.org/projects/ash
@@ -479,6 +482,7 @@ reference-browser:
   repo_type: git
   level: 3
   features:
+    autophone: true
     mobile-roles: true
     treeherder-reporting: true
 

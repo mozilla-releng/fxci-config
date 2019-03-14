@@ -682,6 +682,17 @@
       alias: fenix
       job: ["pull-request"]
 
+# Autophone to run performance testing
+- grant:
+  - queue:create-task:lowest:proj-autophone/gecko-t-ap-perf-p2
+  - queue:create-task:lowest:proj-autophone/gecko-t-ap-perf-g5
+  to:
+  - project:
+      feature: autophone
+      # TODO remove pull-request access once Raptor is landed in master
+      job: ["pull-request", "branch:master"]
+
+
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
 
