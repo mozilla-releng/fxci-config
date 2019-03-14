@@ -364,6 +364,7 @@ nss:
   features:
     taskcluster-push: false
     taskcluster-push-via-hooks: true
+    trust-domain-scopes: true
     treeherder-reporting: true
 
 nss-try:
@@ -374,6 +375,7 @@ nss-try:
   features:
     taskcluster-push: false
     taskcluster-push-via-hooks: true
+    trust-domain-scopes: true
     treeherder-reporting: true
 
 ci-configuration:
