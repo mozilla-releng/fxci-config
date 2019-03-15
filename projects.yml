@@ -35,7 +35,6 @@
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
-#   - `taskcluster-push-via-hook` -- (temporary) the 'taskcluster-push' feature should be implemented with hooks
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
 
 ---
@@ -50,8 +49,7 @@ ash:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 mozilla-release:
   repo: https://hg.mozilla.org/releases/mozilla-release
   repo_type: hg
@@ -63,8 +61,7 @@ mozilla-release:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 mozilla-esr60:
   repo: https://hg.mozilla.org/releases/mozilla-esr60
   repo_type: hg
@@ -76,8 +73,7 @@ mozilla-esr60:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 comm-esr60:
   repo: https://hg.mozilla.org/releases/comm-esr60
   repo_type: hg
@@ -89,8 +85,7 @@ comm-esr60:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
@@ -102,8 +97,7 @@ oak:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 pine:
   repo: https://hg.mozilla.org/projects/pine
   repo_type: hg
@@ -115,8 +109,7 @@ pine:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 mozilla-beta:
   repo: https://hg.mozilla.org/releases/mozilla-beta
   repo_type: hg
@@ -128,8 +121,7 @@ mozilla-beta:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 comm-beta:
   repo: https://hg.mozilla.org/releases/comm-beta
   repo_type: hg
@@ -142,8 +134,7 @@ comm-beta:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 mozilla-inbound:
   repo: https://hg.mozilla.org/integration/mozilla-inbound
   repo_type: hg
@@ -156,8 +147,7 @@ mozilla-inbound:
     treeherder-reporting: true
     is-trunk: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 mozilla-central:
   repo: https://hg.mozilla.org/mozilla-central
   repo_type: hg
@@ -170,8 +160,7 @@ mozilla-central:
     treeherder-reporting: true
     is-trunk: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 comm-central:
   repo: https://hg.mozilla.org/comm-central
   repo_type: hg
@@ -184,8 +173,7 @@ comm-central:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
     is-trunk: true
 cedar:
   repo: https://hg.mozilla.org/projects/cedar
@@ -198,8 +186,7 @@ cedar:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 birch:
   repo: https://hg.mozilla.org/projects/birch
   repo_type: hg
@@ -211,8 +198,7 @@ birch:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 cypress:
   repo: https://hg.mozilla.org/projects/cypress
   repo_type: hg
@@ -248,8 +234,7 @@ elm:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 graphics:
   repo: https://hg.mozilla.org/projects/graphics
   repo_type: hg
@@ -274,8 +259,7 @@ try:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 try-comm-central:
   repo: https://hg.mozilla.org/try-comm-central
   repo_type: hg
@@ -288,8 +272,7 @@ try-comm-central:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 larch:
   repo: https://hg.mozilla.org/projects/larch
   repo_type: hg
@@ -301,8 +284,7 @@ larch:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 maple:
   repo: https://hg.mozilla.org/projects/maple
   repo_type: hg
@@ -314,8 +296,7 @@ maple:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 jamun:
   repo: https://hg.mozilla.org/projects/jamun
   repo_type: hg
@@ -327,8 +308,7 @@ jamun:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 autoland:
   repo: https://hg.mozilla.org/integration/autoland
   repo_type: hg
@@ -341,8 +321,7 @@ autoland:
     treeherder-reporting: true
     is-trunk: true
     taskcluster-cron: true
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 stylo:
   repo: https://hg.mozilla.org/incubator/stylo
   repo_type: hg
@@ -365,8 +344,7 @@ nss:
   access: scm_nss
   trust_domain: nss
   features:
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -376,8 +354,7 @@ nss-try:
   access: scm_level_1
   trust_domain: nss
   features:
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -387,8 +364,7 @@ ci-configuration:
   access: scm_level_3
   trust_domain: ci
   features:
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -398,8 +374,7 @@ ci-configuration-try:
   access: scm_level_1
   trust_domain: ci
   features:
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -409,8 +384,7 @@ ci-admin:
   access: scm_level_3
   trust_domain: ci
   features:
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -420,8 +394,7 @@ ci-admin-try:
   access: scm_level_1
   trust_domain: ci
   features:
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -431,8 +404,7 @@ taskgraph:
   access: scm_level_3
   trust_domain: taskgraph
   features:
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -442,8 +414,7 @@ taskgraph-try:
   access: scm_level_1
   trust_domain: taskgraph
   features:
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
     is_try: true
@@ -453,8 +424,7 @@ version-control-tools:
   repo_type: hg
   access: scm_versioncontrol
   features:
-    taskcluster-push: false
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
 
 # Bug 1532453: Add user repositories for experimenting with taskgraph and mobile
 tomprince-android-components:
@@ -463,7 +433,7 @@ tomprince-android-components:
   access: scm_level_1
   trust_domain: garbage
   features:
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
     trust-domain-scopes: true
 
 # Bug 1532453: Add user repositories for experimenting with taskgraph and mobile
@@ -473,7 +443,7 @@ tomprince-reference-browser:
   access: scm_level_1
   trust_domain: garbage
   features:
-    taskcluster-push-via-hooks: true
+    taskcluster-push: true
     trust-domain-scopes: true
 
 # mobile Github repositories
