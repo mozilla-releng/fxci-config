@@ -629,7 +629,15 @@
 
 - grant:
   - assume:project:taskcluster:mozilla-github-repository
+  # We temporarilly allow all priorities, while we sort them out
   - queue:create-task:highest:aws-provisioner-v1/mobile-{level}-*
+  - queue:create-task:very-high:aws-provisioner-v1/mobile-{level}-*
+  - queue:create-task:high:aws-provisioner-v1/mobile-{level}-*
+  - queue:create-task:medium:aws-provisioner-v1/mobile-{level}-*
+  - queue:create-task:low:aws-provisioner-v1/mobile-{level}-*
+  - queue:create-task:very-low:aws-provisioner-v1/mobile-{level}-*
+  - queue:create-task:lowest:aws-provisioner-v1/mobile-{level}-*
+  - queue:create-task:normal:aws-provisioner-v1/mobile-{level}-*
   to:
   - project:
       feature: mobile-roles-forks
@@ -948,8 +956,8 @@
 
 # Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
 - grant:
-  -  secrets:get:project/mobile/reference-browser/firebase
-  -  secrets:get:project/mobile/reference-browser/nimbledroid
+  - secrets:get:project/mobile/reference-browser/firebase
+  - secrets:get:project/mobile/reference-browser/nimbledroid
   to:
   - projects:
       alias:
@@ -960,7 +968,8 @@
 
 # Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
 - grant:
-  -  secrets:get:project/mobile/android-components/firebase
+  - secrets:get:project/mobile/android-components/firebase
+  - secrets:get:project/mobile/android-components/public-tokens
   to:
   - projects:
       alias:
