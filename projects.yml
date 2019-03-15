@@ -288,7 +288,8 @@ try-comm-central:
     trust-domain-scopes: true
     treeherder-reporting: true
     taskcluster-cron: false
-    taskcluster-push: true
+    taskcluster-push: false
+    taskcluster-push-via-hooks: true
 larch:
   repo: https://hg.mozilla.org/projects/larch
   repo_type: hg
