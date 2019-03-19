@@ -22,7 +22,7 @@ schedulerId: ${trust_domain}-level-${level}
 
 # The "$fromNow" options here are escaped so that they are processed by the hooks service's
 # JSON-e rendering when the hook is fired.
-deadline: {$$fromNow: '20 minutes'}
+deadline: {$$fromNow: '30 minutes'}
 expires: {$$fromNow: '3 days'}
 scopes:
   - assume:repo:hg.mozilla.org/${project_repo_path}:branch:default
