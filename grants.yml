@@ -970,3 +970,14 @@
       alias:
       - rpappalax-android-components
       job: ["branch:*"]
+
+
+# Bug 1534463: allow `vpn_hg_admin` group to access Mercurial related secrets
+- grant:
+  - secrets:set:project/taskcluster/gecko/hgfingerprint
+  - secrets:set:project/taskcluster/gecko/hgmointernal
+  - secrets:get:project/taskcluster/gecko/hgfingerprint
+  - secrets:get:project/taskcluster/gecko/hgmointernal
+  to:
+  - groups:
+    - vpn_hg_admin
