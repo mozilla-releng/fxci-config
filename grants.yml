@@ -199,6 +199,7 @@
   - queue:route:index.garbage.*
   - queue:route:notify.*
   - secrets:get:project/taskcluster/gecko/hgfingerprint
+  - secrets:get:project/taskcluster/gecko/hgmointernal
   - worker:privileged:manual-packet/tc-worker-docker-v0
   - queue:create-task:low:manual-packet/tc-worker-docker-v0
   - worker:privileged:terraform-packet/tc-worker-docker-v1
@@ -538,8 +539,9 @@
       alias: nss-try
 
 - grant:
-  # This is public
+  # These are public
   - secrets:get:project/taskcluster/gecko/hgfingerprint
+  - secrets:get:project/taskcluster/gecko/hgmointernal
 
   # Allow a sensible scheduler-id
   - queue:scheduler-id:{trust_domain}-level-{level}
@@ -909,8 +911,9 @@
 # but that currently creates a dependency cylce (Bug 1531166) so
 # that scope is granted directly, along side this one.
 - grant:
-  # This is public
+  # These are public
   - secrets:get:project/taskcluster/gecko/hgfingerprint
+  - secrets:get:project/taskcluster/gecko/hgmointernal
   # Allow access to dedicated worker-types
   - queue:create-task:highest:aws-provisioner-v1/mozillaonline-1-*
   - queue:create-task:highest:aws-provisioner-v1/mozillaonline-3-*
