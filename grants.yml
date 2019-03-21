@@ -629,15 +629,7 @@
 
 - grant:
   - assume:project:taskcluster:mozilla-github-repository
-  # We temporarilly allow all priorities, while we sort them out
   - queue:create-task:highest:aws-provisioner-v1/mobile-{level}-*
-  - queue:create-task:very-high:aws-provisioner-v1/mobile-{level}-*
-  - queue:create-task:high:aws-provisioner-v1/mobile-{level}-*
-  - queue:create-task:medium:aws-provisioner-v1/mobile-{level}-*
-  - queue:create-task:low:aws-provisioner-v1/mobile-{level}-*
-  - queue:create-task:very-low:aws-provisioner-v1/mobile-{level}-*
-  - queue:create-task:lowest:aws-provisioner-v1/mobile-{level}-*
-  - queue:create-task:normal:aws-provisioner-v1/mobile-{level}-*
   to:
   - project:
       feature: mobile-roles-forks
