@@ -204,25 +204,13 @@ cypress:
   repo_type: hg
   access: scm_level_2
   trust_domain: comm
-  features:
-    gecko-roles: true
-    gecko-actions: true
-    trust-domain-scopes: true
-    treeherder-reporting: true
-    taskcluster-cron: false
-    taskcluster-push: false
+  features: {}
 ux:
   repo: https://hg.mozilla.org/projects/ux
   repo_type: hg
   access: scm_level_3
   trust_domain: gecko
-  features:
-    gecko-roles: true
-    gecko-actions: true
-    trust-domain-scopes: true
-    treeherder-reporting: true
-    taskcluster-cron: false
-    taskcluster-push: false
+  features: {}
 elm:
   repo: https://hg.mozilla.org/projects/elm
   repo_type: hg
@@ -240,13 +228,7 @@ graphics:
   repo_type: hg
   access: scm_level_2
   trust_domain: gecko
-  features:
-    gecko-roles: true
-    gecko-actions: true
-    trust-domain-scopes: true
-    treeherder-reporting: true
-    taskcluster-cron: false
-    taskcluster-push: false
+  features: {}
 try:
   repo: https://hg.mozilla.org/try
   repo_type: hg
