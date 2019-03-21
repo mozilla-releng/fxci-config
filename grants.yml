@@ -200,15 +200,10 @@
   - queue:route:notify.*
   - secrets:get:project/taskcluster/gecko/hgfingerprint
   - secrets:get:project/taskcluster/gecko/hgmointernal
-  - worker:privileged:manual-packet/tc-worker-docker-v0
   - queue:create-task:low:manual-packet/tc-worker-docker-v0
-  - worker:privileged:terraform-packet/tc-worker-docker-v1
   - queue:create-task:low:terraform-packet/tc-worker-docker-v1
-  - worker:privileged:terraform-packet/tc-worker-docker-v1-*
   - queue:create-task:low:terraform-packet/tc-worker-docker-v1-*
   - queue:create-task:medium:terraform-packet/tc-worker-docker-v1-*
-  - worker:relengapi-proxy:tooltool.download.internal
-  - worker:relengapi-proxy:tooltool.download.public
   to:
   - projects:
       feature: gecko-roles
