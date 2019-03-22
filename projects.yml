@@ -312,7 +312,7 @@ jamun:
 autoland:
   repo: https://hg.mozilla.org/integration/autoland
   repo_type: hg
-  access: scm_autoland
+  access: scm_level_3
   trust_domain: gecko
   features:
     gecko-roles: true
