@@ -951,6 +951,7 @@
   to:
   - projects:
       alias:
+      - reference-browser
       - kglazko-reference-browser
       - rpappalax-reference-browser
       job: ["branch:*"]
@@ -963,6 +964,7 @@
   to:
   - projects:
       alias:
+      - android-components
       - rpappalax-android-components
       job: ["branch:*"]
 
