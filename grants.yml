@@ -504,6 +504,12 @@
   - project:
       alias: try
 
+- grant:
+  - queue:route:project.relman.CoverityOnTry
+  to:
+  - project:
+      alias: try
+
 ##
 # Non-gecko tree projects
 
