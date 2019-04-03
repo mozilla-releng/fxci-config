@@ -500,12 +500,8 @@
 - grant:
   # Bug 1530376: Add scopes for Code Review bot in CI
   - queue:route:project.relman.codereview.*
-  to:
-  - project:
-      alias: try
-
-- grant:
-  - queue:route:project.relman.CoverityOnTry
+  # Bug 1527818: Coverity configuration is stored in this secret
+  - secrets:get:project/relman/coverity
   to:
   - project:
       alias: try
