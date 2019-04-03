@@ -625,6 +625,12 @@
       feature: mobile-roles
       job: ["pull-request", "branch:*", "branch:master", "release"]
 
+- grant:
+  - queue:route:index.project.mobile.{alias}.branch.master.*
+  to:
+  - project:
+      feature: mobile-roles
+      job: ["branch:master"]
 
 - grant:
   - assume:project:taskcluster:mozilla-github-repository
