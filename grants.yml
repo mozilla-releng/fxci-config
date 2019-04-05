@@ -191,6 +191,7 @@
   - queue:create-task:low:releng-hardware/my-talos
   - queue:create-task:low:scriptworker-prov-v1/dep-pushapk
   - queue:create-task:low:scriptworker-prov-v1/depsigning
+  - queue:create-task:low:scriptworker-prov-v1/dep-iscript
   - queue:create-task:low:scriptworker-prov-v1/shipit-dev*
   - queue:create-task:low:tc-worker-provisioner/*
   - queue:create-task:low:test-dummy-provisioner/*
