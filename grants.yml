@@ -239,6 +239,8 @@
   - queue:create-task:low:scriptworker-prov-v1/treescript-v1
   - queue:create-task:low:terraform-packet/*
   - queue:get-artifact:releng/partner/*
+  # Bug 1527818: Coverity configuration is stored in this secret
+  - secrets:get:project/relman/coverity
   to:
   - projects:
       feature: gecko-roles
@@ -500,8 +502,6 @@
 - grant:
   # Bug 1530376: Add scopes for Code Review bot in CI
   - queue:route:project.relman.codereview.*
-  # Bug 1527818: Coverity configuration is stored in this secret
-  - secrets:get:project/relman/coverity
   to:
   - project:
       alias: try
