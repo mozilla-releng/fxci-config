@@ -693,18 +693,25 @@
       job: ["branch:master"]
 
 # fenix specific scopes
-# TODO: Once bug 1519493 is completed, we will be able to assign staging vs
-# production scopes to various sub-roles. Until then, this is a temp solution
 - grant:
-  - project:mobile:fenix:releng:signing:cert:dep-signing
-  - project:mobile:fenix:releng:signing:format:autograph_apk
-  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
   - queue:route:index.project.fenix.android.preview-builds
   - secrets:get:project/fenix/preview-key-store
   to:
   - project:
       alias: fenix
       job: ["pull-request"]
+
+
+# TODO: Once bug 1519493 is completed, we will be able to assign staging vs
+# production scopes to various sub-roles. Until then, this is a temp solution
+- grant:
+  - project:mobile:fenix:releng:signing:cert:dep-signing
+  - project:mobile:fenix:releng:signing:format:autograph_apk
+  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
+  to:
+  - project:
+      alias: fenix
+      job: ["branch:master"]
 
 # Autophone to run performance testing
 - grant:
