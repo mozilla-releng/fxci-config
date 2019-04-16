@@ -24,3 +24,6 @@ staging:
       # lots of load (e.g., building nightlies).  They can be triggered
       # manually if needed for testing.
       - remove_hook_schedules
+      # similarly, we do not want to bind hooks to exchanges, as those exchanges
+      # likely do not exist here
+      - remove_hook_bindings
