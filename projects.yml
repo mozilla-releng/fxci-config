@@ -451,6 +451,7 @@ fenix:
   repo_type: git
   level: 3
   features:
+    autophone: true
     mobile-roles: true
     treeherder-reporting: true
 

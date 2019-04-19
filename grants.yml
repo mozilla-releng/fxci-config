@@ -690,19 +690,21 @@
       job: ["pull-request", "branch:*", "branch:master"]
 
 
-# reference-browser specific scopes
 # TODO: Once bug 1519493 is completed, we will be able to assign staging vs
 # production scopes to various sub-roles. Until then, this is a temp solution
 - grant:
-  - project:mobile:reference-browser:releng:signing:cert:dep-signing
-  - project:mobile:reference-browser:releng:signing:format:autograph_apk_reference_browser
-  - queue:create-task:scriptworker-prov-v1/mobile-signing-dep-v1
+  - project:mobile:{alias}:releng:signing:cert:dep-signing
+  # TODO Refactor the following 2 scopes into one. The second one is the fenix one.
+  # Thanks to the {alias} prefix, reference-browser can't sign APKs with the Fenix key,
+  # nor the other way around.
+  - project:mobile:{alias}:releng:signing:format:autograph_apk_reference_browser
+  - project:mobile:{alias}:releng:signing:format:autograph_apk
   - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
   - queue:create-task:highest:proj-autophone/gecko-t-ap-perf-g5
   - queue:create-task:highest:proj-autophone/gecko-t-ap-perf-p2
   to:
   - project:
-      alias: reference-browser
+      feature: autophone
       # PRs are temporarily allowed to test the integration of Raptor
       job: ["branch:master", "pull-request"]
 
@@ -726,17 +728,6 @@
   - project:
       alias: fenix
       job: ["branch:master"]
-
-# Autophone to run performance testing
-- grant:
-  - queue:create-task:lowest:proj-autophone/gecko-t-ap-perf-p2
-  - queue:create-task:lowest:proj-autophone/gecko-t-ap-perf-g5
-  to:
-  - project:
-      feature: autophone
-      # TODO remove pull-request access once Raptor is landed in master
-      job: ["pull-request", "branch:master"]
-
 
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
