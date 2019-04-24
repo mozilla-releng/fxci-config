@@ -638,6 +638,7 @@
 
 - grant:
   - queue:route:index.project.mobile.{alias}.branch.master.*
+  - queue:route:index.project.mobile.{alias}.v2.branch.master.*
   to:
   - project:
       feature: mobile-roles
