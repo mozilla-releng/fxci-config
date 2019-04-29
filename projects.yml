@@ -30,8 +30,12 @@
 #   - `mobile-roles` -- this repository should have mobile-related roles assigned (for users, actions, cron, etc.)
 #   - `mobile-roles-forks` -- this fork should have some (restricted) mobile roles assigned
 #   - `mobile-beetmover-phase` -- this repository should have beetmover related scopes associated
+#   - `mobile-beetmover-stage-phase` -- this repository should have beetmover staging related scopes associated
+#   - `mobile-beetmover-snapshot-phase` -- this repository should have beetmover snapshot production related scopes associated
 #   - `mobile-sign-phase` -- this repository should have sign related scopes associated
+#   - `mobile-sign-stage-phase` -- this repository should have sign related staging scopes associated
 #   - `mobile-pushapk-phase` -- this repository should have pushapk related scopes associated
+#   - `mobile-pushapk-stage-phase` -- this repository should have pushapk staging related scopes associated
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
@@ -436,6 +440,7 @@ android-components:
   features:
     mobile-roles: true
     mobile-beetmover-phase: true
+    mobile-beetmover-snapshot-phase: true
 
 reference-browser:
   repo: https://github.com/mozilla-mobile/reference-browser/
@@ -444,6 +449,10 @@ reference-browser:
   features:
     autophone: true
     mobile-roles: true
+    mobile-sign-phase: true
+    mobile-pushapk-phase: true
+    mobile-sign-stage-phase: true
+    mobile-pushapk-stage-phase: true
     treeherder-reporting: true
 
 fenix:
@@ -453,6 +462,10 @@ fenix:
   features:
     autophone: true
     mobile-roles: true
+    mobile-sign-phase: true
+    mobile-pushapk-phase: true
+    mobile-sign-stage-phase: true
+    mobile-pushapk-stage-phase: true
     treeherder-reporting: true
 
 

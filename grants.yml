@@ -637,6 +637,26 @@
       job: ["pull-request", "branch:*", "branch:master", "release"]
 
 - grant:
+  - queue:create-task:highest:aws-provisioner-v1/mobile-3-*
+  - queue:route:statuses
+  - queue:scheduler-id:focus-nightly-sched
+  - queue:create-task:highest:aws-provisioner-v1/github-worker
+  to:
+  - project:
+      feature: mobile-roles
+      job: ["cron:nightly"]
+
+- grant:
+  - queue:create-task:highest:aws-provisioner-v1/mobile-1-*
+  - queue:route:statuses
+  - queue:scheduler-id:focus-nightly-sched
+  - queue:create-task:highest:aws-provisioner-v1/github-worker
+  to:
+  - project:
+      feature: mobile-roles
+      job: ["cron:nightly-staging"]
+
+- grant:
   - queue:route:index.project.mobile.{alias}.branch.master.*
   - queue:route:index.project.mobile.{alias}.v2.branch.master.*
   to:
@@ -653,7 +673,6 @@
       # We don't want pull requests on forks
       job: ["branch:*"]
 
-# mobile:level:3:*
 - grant:
   - project:mobile:{alias}:releng:beetmover:action:push-to-maven
   - project:mobile:{alias}:releng:beetmover:bucket:maven-production
@@ -663,24 +682,51 @@
       feature: mobile-beetmover-phase
       job: ["release"]
 
-# mobile:level:3:*
+- grant:
+  - project:mobile:{alias}:releng:beetmover:action:push-to-maven
+  - project:mobile:{alias}:releng:beetmover:bucket:maven-snapshot-production
+  - queue:create-task:highest:scriptworker-prov-v1/mobile-beetmover-v1
+  to:
+  - project:
+      feature: mobile-beetmover-snapshot-phase
+      job: ["cron:nightly"]
+
 - grant:
   - project:mobile:{alias}:releng:signing:cert:release-signing
   - project:mobile:{alias}:releng:signing:format:autograph_apk
   - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
+  - queue:route:index.project.mobile.{alias}.signed-nightly.*
   to:
   - project:
       feature: mobile-sign-phase
-      job: ["release"]
+      job: ["release", "cron:nightly"]
 
-# mobile:level:3:*
 - grant:
   - project:mobile:{alias}:releng:googleplay:product:{alias}
   - queue:create-task:highest:scriptworker-prov-v1/mobile-pushapk-v1
   to:
   - project:
       feature: mobile-pushapk-phase
-      job: ["release"]
+      job: ["release", "cron:nightly"]
+
+- grant:
+  - project:mobile:{alias}:releng:signing:cert:dep-signing
+  # TODO: retire this once `fenix` has dedicated format too
+  - project:mobile:{alias}:releng:signing:format:autograph_apk
+  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
+  - queue:route:index.project.mobile.{alias}.staging-signed-nightly.*
+  to:
+  - project:
+      feature: mobile-sign-stage-phase
+      job: ["cron:nightly-staging"]
+
+- grant:
+  - project:mobile:{alias}:releng:googleplay:product:{alias}:dep
+  - queue:create-task:highest:scriptworker-prov-v1/mobile-pushapk-dep-v1
+  to:
+  - project:
+      feature: mobile-pushapk-stage-phase
+      job: ["cron:nightly-staging"]
 
 # android-components specific scopes
 - grant:
@@ -718,7 +764,6 @@
       alias: fenix
       job: ["pull-request"]
 
-
 # TODO: Once bug 1519493 is completed, we will be able to assign staging vs
 # production scopes to various sub-roles. Until then, this is a temp solution
 - grant:
@@ -729,6 +774,75 @@
   - project:
       alias: fenix
       job: ["branch:master"]
+
+# TODO: this is temporarily until we move this to Github releases. This was added
+# to support Fenix beta releases in their first iterations
+- grant:
+  - project:mobile:fenix:releng:signing:cert:*
+  - queue:route:index.project.mobile.fenix.v2.*
+  - secrets:get:project/mobile/fenix/beta/sentry
+  - secrets:get:project/mobile/fenix/beta/leanplum
+  - secrets:get:project/mobile/fenix/beta/adjust
+  to:
+  - project:
+      alias: fenix
+      job: ["release"]
+
+# TODO: at some point we should move out the beta related scopes from the nightly hook
+- grant:
+  - project:mobile:fenix:releng:signing:format:autograph_apk_fenix
+  - project:mobile:fenix:releng:googleplay:product:fenix:beta
+  - project:mobile:fenix:releng:signing:cert:beta-signing
+  # FIXME: to be removed later on as it's a duplicate with `product:fenix` counterpart
+  - project:mobile:fenix:releng:googleplay:product:fenix:nightly
+  # FIXME: to be removed later on as it's a duplicate with `cert:release-signing` counterpart
+  - project:mobile:fenix:releng:signing:cert:nightly-signing
+  - queue:route:index.project.mobile.fenix.v2.beta.*
+  - secrets:get:project/mobile/fenix/adjust
+  - secrets:get:project/mobile/fenix/leanplum
+  - secrets:get:project/mobile/fenix/sentry
+  - secrets:get:project/mobile/fenix/beta/sentry
+  - secrets:get:project/mobile/fenix/beta/leanplum
+  - secrets:get:project/mobile/fenix/beta/adjust
+  - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
+  to:
+  - project:
+      alias: fenix
+      job: ["cron:nightly"]
+
+- grant:
+  - project:mobile:fenix:releng:signing:format:autograph_apk_fenix
+  - queue:route:index.project.mobile.fenix.v2.staging.*
+  - secrets:get:garbage/staging/project/mobile/fenix/adjust
+  - secrets:get:garbage/staging/project/mobile/fenix/leanplum
+  - secrets:get:garbage/staging/project/mobile/fenix/sentry
+  to:
+  - project:
+      alias: fenix
+      job: ["cron:nightly-staging"]
+
+# reference-browser specific scopes
+- grant:
+  - project:mobile:reference-browser:releng:signing:format:autograph_apk_reference_browser
+  - queue:route:index.project.mobile.reference-browser.nightly.*
+  - queue:route:index.project.mobile.reference-browser.signed-nightly.*
+  - secrets:get:project/mobile/reference-browser/nimbledroid
+  - secrets:get:project/mobile/reference-browser/sentry
+  - queue:route:notify.email.android-components-team@mozilla.com.on-failed
+  to:
+  - project:
+      alias: reference-browser
+      job: ["cron:nightly"]
+
+- grant:
+  - project:mobile:reference-browser:releng:signing:format:autograph_apk_reference_browser
+  - secrets:get:garbage/staging/project/mobile/reference-browser/nimbledroid
+  - secrets:get:garbage/staging/project/mobile/reference-browser/sentry
+  - secrets:get:project/mobile/reference-browser/nimbledroid
+  to:
+  - project:
+      alias: reference-browser
+      job: ["cron:nightly-staging"]
 
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
