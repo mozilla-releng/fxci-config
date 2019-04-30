@@ -629,7 +629,6 @@
 - grant:
   - assume:project:taskcluster:mozilla-github-repository
   - queue:create-task:highest:aws-provisioner-v1/mobile-{level}-*
-  - docker-worker:cache:{alias}-level-{level}
   - queue:route:index.project.mobile.{alias}.cache.level-{level}.*
   to:
   - project:
