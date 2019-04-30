@@ -68,6 +68,10 @@ payload:
                         --level=${level}
                         ${mach_cron_options}
               in: "${trim_whitespace(command)}"
+    # run-task exist with status 72 if the caches are corrupt;
+    # indicating the worker caches should be purged and the task retried.
+    retry-exit-status: [72]
+    purge-caches-exit-status: [72]
     artifacts:
       public:
         type: 'directory'
