@@ -454,6 +454,7 @@
   - queue:create-task:highest:scriptworker-prov-v1/tb-balrog-dev
   - queue:create-task:highest:scriptworker-prov-v1/tb-beetmover-dev
   - queue:create-task:highest:scriptworker-prov-v1/tb-depsigning
+  - queue:create-task:highest:scriptworker-prov-v1/tb-signing-v1
   - secrets:get:project/comm/thunderbird/releng/build/level-3/*
   to:
   - projects:
