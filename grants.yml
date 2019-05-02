@@ -916,7 +916,7 @@
   to:
   - groups:
     - releng
-    - vpn_sheriff
+    - sheriff
 
 # In addition to the default scopes, retriggering a decision task requires
 # the scopes of a decision task.  These differ per project, so we use some
@@ -940,7 +940,7 @@
   to:
   - groups:
     - releng
-    - vpn_sheriff
+    - sheriff
 
 # pretty much anyone can cancel-all at level 1 or 2, while only releng/sheriff
 # can do so at level 3
@@ -955,7 +955,7 @@
     - active_scm_level_2
     - active_scm_level_3
     - releng
-    - vpn_sheriff
+    - sheriff
 
 - grant:
   - hooks:trigger-hook:project-gecko/in-tree-action-3-cancel-all/*
@@ -963,7 +963,7 @@
   to:
   - groups:
     - releng
-    - vpn_sheriff
+    - sheriff
 
 # release promotion is only available to relman/releng
 - grant:
@@ -992,7 +992,7 @@
     - active_scm_level_2
     - active_scm_level_3
     - team_moco
-    - vpn_tooltooleditor
+    - tooltooleditor
 
 - grant:
   - project:releng:services/tooltool/api/download/internal
@@ -1006,7 +1006,7 @@
   - project:releng:services/tooltool/api/upload/public
   to:
   - groups:
-    - vpn_tooltooleditor
+    - tooltooleditor
 
 - grant:
   - secrets:get:project/comm/*
