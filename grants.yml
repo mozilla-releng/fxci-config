@@ -702,6 +702,7 @@
   - project:mobile:{alias}:releng:signing:format:autograph_apk
   - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
   - queue:route:index.project.mobile.{alias}.signed-nightly.*
+  - queue:route:index.project.mobile.{alias}.v2.nightly.*
   to:
   - project:
       feature: mobile-sign-phase
@@ -721,6 +722,7 @@
   - project:mobile:{alias}:releng:signing:format:autograph_apk
   - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
   - queue:route:index.project.mobile.{alias}.staging-signed-nightly.*
+  - queue:route:index.project.mobile.{alias}.v2.staging.*
   to:
   - project:
       feature: mobile-sign-stage-phase
