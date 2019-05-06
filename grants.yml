@@ -478,6 +478,12 @@
       alias: comm-beta
 
 - grant:
+  - project:comm:thunderbird:releng:signing:cert:nightly-signing
+  to:
+  - project:
+      alias: comm-central
+
+- grant:
   - project:comm:thunderbird:releng:beetmover:bucket:release
   - project:comm:thunderbird:releng:bouncer:server:production
   - project:comm:thunderbird:releng:ship-it:server:production
