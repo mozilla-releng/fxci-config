@@ -621,6 +621,15 @@
       feature: is-trunk
 
 ##
+# xpi-signing roles
+- grant:
+  - assume:project:taskcluster:mozilla-github-repository
+  - queue:create-task:low:aws-provisioner-v1/mobile-1-*
+  to:
+  - project:
+      alias: aki-xpitest-manifest
+
+##
 # mobile-specific roles
 #
 # We refer to level 1 as the staging/development workflow for a given project

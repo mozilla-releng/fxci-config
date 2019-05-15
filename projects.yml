@@ -432,6 +432,16 @@ tomprince-reference-browser:
     taskcluster-push: true
     trust-domain-scopes: true
 
+# Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
+aki-xpitest-manifest:
+  repo: https://github.com/escapewindow/xpitest-manifest
+  repo_type: git
+  trust_domain: garbage
+  level: 1
+  features:
+    trust-domain-scopes: true
+    xpi-signing-roles: true
+
 # mobile Github repositories
 android-components:
   repo: https://github.com/mozilla-mobile/android-components
