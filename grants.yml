@@ -1141,6 +1141,16 @@
       - rpappalax-android-components
       job: ["branch:*"]
 
+# Bug 1553096 - Temporary solution so QA can run their test suites before their patches are merged in master
+- grant:
+  - secrets:get:project/mobile/fenix/firebase
+  to:
+  - projects:
+      alias:
+      - fenix
+      - rpappalax-fenix
+      job: ["branch:*"]
+
 
 # Bug 1534463: allow `vpn_hg_admin` group to access Mercurial related secrets
 - grant:

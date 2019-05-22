@@ -502,3 +502,11 @@ rpappalax-android-components:
   level: 1
   features:
     mobile-roles-forks: true
+
+# Bug 1553096 - Temporary solution so QA can run their test suites before their patches are merged in master
+rpappalax-fenix:
+  repo: https://github.com/rpappalax/fenix
+  repo_type: git
+  level: 1
+  features:
+    mobile-roles-forks: true
