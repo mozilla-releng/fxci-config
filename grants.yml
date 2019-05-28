@@ -237,7 +237,6 @@
   - queue:create-task:low:scriptworker-prov-v1/dep-pushsnap
   - queue:create-task:low:scriptworker-prov-v1/signing-linux-dev
   - queue:create-task:low:scriptworker-prov-v1/treescript-dev
-  - queue:create-task:low:scriptworker-prov-v1/treescript-v1
   - queue:create-task:low:terraform-packet/*
   - queue:get-artifact:releng/partner/*
   to:
