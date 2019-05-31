@@ -881,6 +881,14 @@
       trust_domain: comm
       job: cron:nightly-*
 
+- grant:
+  - project:releng:beetmover:bucket:maven-production
+  - project:releng:beetmover:action:push-to-maven
+  to:
+  - project:
+      alias: mozilla-beta
+      job: cron:ship-geckoview
+
 ##
 # hook scopes
 
