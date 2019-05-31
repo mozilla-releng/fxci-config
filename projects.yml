@@ -412,26 +412,6 @@ version-control-tools:
   features:
     taskcluster-push: true
 
-# Bug 1532453: Add user repositories for experimenting with taskgraph and mobile
-tomprince-android-components:
-  repo: https://hg.mozilla.org/users/mozilla_hocat.ca/android-components
-  repo_type: hg
-  access: scm_level_1
-  trust_domain: garbage
-  features:
-    taskcluster-push: true
-    trust-domain-scopes: true
-
-# Bug 1532453: Add user repositories for experimenting with taskgraph and mobile
-tomprince-reference-browser:
-  repo: https://hg.mozilla.org/users/mozilla_hocat.ca/reference-browser
-  repo_type: hg
-  access: scm_level_1
-  trust_domain: garbage
-  features:
-    taskcluster-push: true
-    trust-domain-scopes: true
-
 # Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
 aki-xpitest-manifest:
   repo: https://github.com/escapewindow/xpitest-manifest
