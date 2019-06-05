@@ -548,6 +548,7 @@
   - queue:create-task:localprovisioner/nss-aarch64
   - queue:create-task:localprovisioner/nss-macos-10-12
   - queue:route:index.docker.images.v1.nss-try.*
+  - secrets:get:project/relman/coverity-nss
   to:
   - project:
       alias: nss-try
