@@ -794,14 +794,11 @@
       alias: fenix
       job: ["branch:master"]
 
-# TODO: this is temporarily until we move this to Github releases. This was added
-# to support Fenix beta releases in their first iterations
 - grant:
   - project:mobile:fenix:releng:signing:cert:*
   - queue:route:index.project.mobile.fenix.v2.*
-  - secrets:get:project/mobile/fenix/beta/sentry
-  - secrets:get:project/mobile/fenix/beta/leanplum
-  - secrets:get:project/mobile/fenix/beta/adjust
+  - secrets:get:project/mobile/fenix/beta
+  - secrets:get:project/mobile/fenix/production
   to:
   - project:
       alias: fenix
@@ -810,20 +807,16 @@
 # TODO: at some point we should move out the beta related scopes from the nightly hook
 - grant:
   - project:mobile:fenix:releng:signing:format:autograph_apk_fenix
-  - project:mobile:fenix:releng:googleplay:product:fenix:beta
-  - project:mobile:fenix:releng:signing:cert:beta-signing
   # FIXME: to be removed later on as it's a duplicate with `product:fenix` counterpart
   - project:mobile:fenix:releng:googleplay:product:fenix:nightly
   # FIXME: to be removed later on as it's a duplicate with `cert:release-signing` counterpart
   - project:mobile:fenix:releng:signing:cert:nightly-signing
   - queue:route:index.project.mobile.fenix.v2.beta.*
-  - secrets:get:project/mobile/fenix/adjust
-  - secrets:get:project/mobile/fenix/leanplum
-  - secrets:get:project/mobile/fenix/sentry
-  - secrets:get:project/mobile/fenix/beta/sentry
-  - secrets:get:project/mobile/fenix/beta/leanplum
-  - secrets:get:project/mobile/fenix/beta/adjust
+  - secrets:get:project/mobile/fenix/nightly
   - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
+  
+  # FIXME: For legacy reasons, Fenix Nightly is being deployed to the Fenix Production app, and requires Production scopes
+  - project:mobile:fenix:releng:signing:cert:production-signing
   to:
   - project:
       alias: fenix
@@ -832,9 +825,7 @@
 - grant:
   - project:mobile:fenix:releng:signing:format:autograph_apk_fenix
   - queue:route:index.project.mobile.fenix.v2.staging.*
-  - secrets:get:garbage/staging/project/mobile/fenix/adjust
-  - secrets:get:garbage/staging/project/mobile/fenix/leanplum
-  - secrets:get:garbage/staging/project/mobile/fenix/sentry
+  - secrets:get:garbage/staging/project/mobile/fenix
   to:
   - project:
       alias: fenix
