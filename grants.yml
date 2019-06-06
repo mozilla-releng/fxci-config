@@ -127,6 +127,8 @@
   - docker-worker:image:taskcluster/tester:*
   - docker-worker:relengapi-proxy:tooltool.download.internal
   - docker-worker:relengapi-proxy:tooltool.download.public
+  - project:releng:services/tooltool/api/download/internal
+  - project:releng:services/tooltool/api/download/public
   - index:insert-task:garbage.*
   - notify:email:*
   - project:releng:balrog:channel:*
@@ -1094,6 +1096,7 @@
   - secrets:get:project/releng/gecko/build/level-1/*
   # Allow access to public tooltool artifacts
   - docker-worker:relengapi-proxy:tooltool.download.public
+  - project:releng:services/tooltool/api/download/public
   to:
   - groups:
     - mozillaonline
