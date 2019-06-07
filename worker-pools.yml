@@ -1,0 +1,3191 @@
+# This file contains definitions for the worker pools related to Firefox CI.
+#
+# Each worker pool is named by its <provisionerId>/<workerType> pair, each with
+# the following structure (matching that for taskcluster-worker-manager):
+#
+# - `description` -- description of this workerType
+# - `owner` -- owner of this workerType
+# - `email_on_error` -- if true, email the owner on provisioning errors
+# - `provider_id` -- the worker-manager provider for this worker pool
+# - `config` -- the configuration for this worker pool, specific to the provider type
+#
+# The `legacy-aws-provisioner-v1` provisionerId is a special case, and results
+# in configuration of the deprecated but still-in-production aws-provisioner
+# application.  The `config` is fed almost exactly to that service, but with
+# the `region` property of each availabilityZone determined automatically.
+# `minCapacity` and `scalingRatio` defualt to 0, and instances' `capacity` and
+# `utility` both default to 1.  Empty collections such as `userData` are omitted.
+# Unused fields such as maxPrice or canUseOndemand are also omitted.
+#
+# A top-level `image` property in the config will be interpreted by ci-admin and 
+# translated into a region[..].launchSpec.ImageId value based on worker-pools.yml.
+aws-provisioner-v1/android-api-15:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 1000
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c4.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    - instanceType: m4.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/balrog:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 100
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: m3.2xlarge
+    - instanceType: c3.2xlarge
+    - instanceType: r3.2xlarge
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/dbg-linux32:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 25
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: r3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    - instanceType: c3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    - instanceType: m3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/dbg-linux64:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 100
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: r3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    - instanceType: c3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    - instanceType: m3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/dbg-macosx64:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 20
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/desktop-test:
+  description: old maxCapacity = 4000
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 4000
+    scalingRatio: 0.4
+    userData:
+      dockerConfig: {allowPrivileged: false}
+    instanceTypes:
+    - instanceType: m1.medium
+      userData: {billingCycleInterval: 7200, diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/desktop-test-large:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 1500
+    scalingRatio: 0.3
+    userData:
+      dockerConfig: {allowPrivileged: false}
+    instanceTypes:
+    - instanceType: m3.large
+      userData:
+        billingCycleInterval: 7200
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/desktop-test-xlarge:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 2500
+    scalingRatio: 0
+    userData:
+      dockerConfig: {allowPrivileged: false}
+    instanceTypes:
+    - instanceType: m3.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/fp-gecko-3-b-linux:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-v201807261248-hvm-builder-trusted
+    minCapacity: 1
+    maxCapacity: 300
+    scalingRatio: 0
+    userData:
+      dockerConfig: {allowPrivileged: true}
+    instanceTypes:
+    - instanceType: c5d.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.3
+    - instanceType: m5d.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.2
+    - instanceType: c5.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c4.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-7aca300a]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-5ce02b3a]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-a0d6beda]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-1-b-android:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 1000
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-1-b-linux:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 1000
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5d.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-1-b-linux-large:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5d.9xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5d.12xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.3
+    - instanceType: m5.12xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m4.10xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c5.9xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c4.8xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-1-b-linux-xlarge:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5d.18xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5d.24xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.3
+    - instanceType: m5.24xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m4.16xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5.18xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-1-b-macosx64:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 50
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
+    regions:
+    - region: us-east-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-1-decision:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 5
+    maxCapacity: 40
+    scalingRatio: 0
+    userData: {billingCycleInterval: 21600}
+    instanceTypes:
+    - instanceType: c5d.xlarge
+      capacity: 2
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.xlarge
+      capacity: 2
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    - instanceType: c5.xlarge
+      capacity: 2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-1-images:
+  description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
+    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 30
+    scalingRatio: 0
+    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instanceTypes:
+    - instanceType: c5d.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    - instanceType: c5.xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-2-b-android:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 1000
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+      utility: 0.9
+    regions:
+    - region: us-east-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-2-b-linux:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 1000
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5d.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-2-b-linux-large:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5d.9xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5d.12xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.3
+    - instanceType: m5.12xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c5.9xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.10xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c4.8xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-2-b-linux-xlarge:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5d.18xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5d.24xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.3
+    - instanceType: m5.24xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m4.16xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5.18xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-2-b-macosx64:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 50
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-2-decision:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 20
+    scalingRatio: 0
+    userData: {billingCycleInterval: 21600}
+    instanceTypes:
+    - instanceType: c5d.xlarge
+      capacity: 2
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.xlarge
+      capacity: 2
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.3
+    - instanceType: c5.xlarge
+      capacity: 2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-2-images:
+  description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
+    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 30
+    scalingRatio: 0
+    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instanceTypes:
+    - instanceType: c5d.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.3
+    - instanceType: c5.xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-3-b-android:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 100
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c4.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
+    regions:
+    - region: us-east-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-7aca300a]
+    - region: us-west-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-5ce02b3a]
+    - region: us-west-2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-a0d6beda]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-3-b-linux:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 1000
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5d.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 2
+    - instanceType: m4.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c4.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-7aca300a]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-5ce02b3a]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-a0d6beda]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-3-b-linux-large:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5d.9xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5d.12xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.3
+    - instanceType: m5.12xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c5.9xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.10xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c4.8xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-7aca300a]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-5ce02b3a]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-a0d6beda]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-3-b-linux-xlarge:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5d.18xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5d.24xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.3
+    - instanceType: m5.24xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m4.16xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5.18xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-3-b-macosx64:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 50
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
+    regions:
+    - region: us-east-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-7aca300a]
+    - region: us-west-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-5ce02b3a]
+    - region: us-west-2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-a0d6beda]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-3-decision:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    minCapacity: 5
+    maxCapacity: 20
+    scalingRatio: 0
+    userData: {billingCycleInterval: 21600}
+    instanceTypes:
+    - instanceType: c5d.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    - instanceType: c5.xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-7aca300a]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-5ce02b3a]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-a0d6beda]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-3-images:
+  description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
+    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    minCapacity: 1
+    maxCapacity: 30
+    scalingRatio: 0
+    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instanceTypes:
+    - instanceType: c5d.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    - instanceType: c5.xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-7aca300a]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-5ce02b3a]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-a0d6beda]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-3-t-linux-xlarge:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 10
+    scalingRatio: 0
+    userData:
+      dockerConfig: {allowPrivileged: false}
+    instanceTypes:
+    - instanceType: m3.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-misc:
+  description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
+    SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
+    (total 80GB, 9GB per task).
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 32
+    scalingRatio: 0
+    userData: {billingCycleInterval: 21600}
+    instanceTypes:
+    - instanceType: r3.xlarge
+      capacity: 8
+      userData:
+        capacityManagement: {diskspaceThreshold: 9000000000}
+    - instanceType: m3.xlarge
+      capacity: 8
+      userData:
+        capacityManagement: {diskspaceThreshold: 9000000000}
+    - instanceType: c3.xlarge
+      capacity: 8
+      userData:
+        capacityManagement: {diskspaceThreshold: 9000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-t-linux-large:
+  description: ''
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 3500
+    scalingRatio: 0.1
+    userData:
+      dockerConfig: {allowPrivileged: false}
+    instanceTypes:
+    - instanceType: m3.large
+      userData:
+        billingCycleInterval: 7200
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/gecko-t-linux-xlarge:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 3500
+    scalingRatio: 0
+    userData:
+      dockerConfig: {allowPrivileged: false}
+    instanceTypes:
+    - instanceType: m3.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/github-worker:
+  description: Default type for tasks run by tc-github
+  owner: tools-taskcluster@mozilla.com
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 100
+    scalingRatio: 0
+    launchSpec:
+      SecurityGroups: [docker-worker]
+    userData: {dindImage: 'taskcluster/dind-service:v4.0'}
+    instanceTypes:
+    - instanceType: r3.xlarge
+      userData: {restrictCPU: true}
+    - instanceType: m3.xlarge
+      userData: {restrictCPU: true}
+    - instanceType: c3.xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    regions:
+    - region: us-east-1
+    - region: us-west-1
+    - region: us-west-2
+aws-provisioner-v1/hg-worker:
+  description: Worker type that can be used for hg related pushes.  This is similar
+    to the github-worker worker type uses for taskcluser-github related tasks.
+  owner: Greg Arndt <garndt@mozilla.com>
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 250
+    scalingRatio: 0
+    launchSpec:
+      SecurityGroups: [docker-worker]
+    instanceTypes:
+    - instanceType: r4.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        billingCycleInterval: 14400
+        capacityManagement: {diskspaceThreshold: 20000000000}
+        restrictCPU: false
+    - instanceType: m5.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        billingCycleInterval: 14400
+        capacityManagement: {diskspaceThreshold: 20000000000}
+        restrictCPU: false
+    - instanceType: c4.8xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        billingCycleInterval: 14400
+        capacityManagement: {diskspaceThreshold: 20000000000}
+        restrictCPU: false
+    regions:
+    - region: us-east-1
+    - region: us-west-1
+    - region: us-west-2
+aws-provisioner-v1/mobile-1-b-andrcmp:
+  description: General-purpose worker for projects by android components team (to
+    build and release a very large suite of Kotlin components)
+  owner: tools-taskcluster@mozilla.com
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 500
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5.9xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+        restrictCPU: false
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/mobile-1-b-fenix:
+  description: Level 1 build workers for https://github.com/mozilla-mobile/fenix
+  owner: tools-taskcluster@mozilla.com
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 50
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: r3.2xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    - instanceType: m3.2xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    - instanceType: c3.2xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/mobile-1-b-ref-browser:
+  description: Level 1 build workers for https://github.com/mozilla-mobile/reference-browser
+  owner: tools-taskcluster@mozilla.com
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 50
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: r3.xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    - instanceType: m3.xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    - instanceType: c3.xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/mobile-1-decision:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 100
+    scalingRatio: 0
+    userData: {billingCycleInterval: 21600}
+    instanceTypes:
+    - instanceType: m5d.large
+      capacity: 2
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/mobile-1-images:
+  description: 'Builds docker images for mobile projects; NOTE: capacity set to 1
+    instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 30
+    scalingRatio: 0
+    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instanceTypes:
+    - instanceType: c5.9xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+        restrictCPU: false
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/mobile-3-b-andrcmp:
+  description: General-purpose worker for projects by android components team (to
+    build and release a very large suite of Kotlin components)
+  owner: tools-taskcluster@mozilla.com
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    minCapacity: 1
+    maxCapacity: 500
+    scalingRatio: 0
+    launchSpec:
+      SecurityGroups: [docker-worker]
+    instanceTypes:
+    - instanceType: c5.9xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+        restrictCPU: false
+    regions:
+    - region: us-east-1
+    - region: us-west-1
+    - region: us-west-2
+aws-provisioner-v1/mobile-3-b-fenix:
+  description: Level 3 build workers for https://github.com/mozilla-mobile/fenix
+  owner: tools-taskcluster@mozilla.com
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    minCapacity: 1
+    maxCapacity: 50
+    scalingRatio: 0
+    launchSpec:
+      SecurityGroups: [docker-worker]
+    instanceTypes:
+    - instanceType: r3.xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    - instanceType: m3.xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    - instanceType: c3.xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    regions:
+    - region: us-east-1
+    - region: us-west-1
+    - region: us-west-2
+aws-provisioner-v1/mobile-3-b-ref-browser:
+  description: Level 3 build workers for https://github.com/mozilla-mobile/reference-browser
+  owner: tools-taskcluster@mozilla.com
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    minCapacity: 1
+    maxCapacity: 50
+    scalingRatio: 0
+    launchSpec:
+      SecurityGroups: [docker-worker]
+    instanceTypes:
+    - instanceType: r3.xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    - instanceType: m3.xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    - instanceType: c3.xlarge
+      capacity: 2
+      userData: {restrictCPU: true}
+    regions:
+    - region: us-east-1
+    - region: us-west-1
+    - region: us-west-2
+aws-provisioner-v1/mobile-3-decision:
+  description: Worker for Mobile automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    minCapacity: 1
+    maxCapacity: 10
+    scalingRatio: 0
+    userData: {billingCycleInterval: 21600}
+    instanceTypes:
+    - instanceType: m5d.large
+      capacity: 2
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-7aca300a]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-5ce02b3a]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-a0d6beda]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/mobile-3-images:
+  description: 'Builds docker images for mobile projects; NOTE: capacity set to 1
+    instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    minCapacity: 1
+    maxCapacity: 30
+    scalingRatio: 0
+    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instanceTypes:
+    - instanceType: c5.9xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+    - region: us-west-1
+    - region: us-west-2
+aws-provisioner-v1/mozillaonline-1-b-linux:
+  description: Worker for MozillaOnline automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/mozillaonline-3-b-linux:
+  description: Worker for MozillaOnline automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: m5.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/mulet-debug:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 200
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c3.2xlarge
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/mulet-opt:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 100
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c3.2xlarge
+    - instanceType: r3.2xlarge
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/opt-linux32:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 20
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: r3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.2xlarge
+    - instanceType: m3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/opt-linux64:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 100
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: r3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m3.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/opt-macosx64:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 50
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/rustbuild:
+  description: '** WRITE THIS**'
+  owner: '** WRITE THIS **'
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 20
+    scalingRatio: 0
+    launchSpec:
+      SecurityGroups: [docker-worker]
+    instanceTypes:
+    - instanceType: r3.2xlarge
+    regions:
+    - region: us-east-1
+    - region: us-west-1
+    - region: us-west-2
+aws-provisioner-v1/spidermonkey:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 70
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: r3.2xlarge
+    - instanceType: c3.2xlarge
+    - instanceType: m3.2xlarge
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/symbol-upload:
+  description: Worker for Firefox automation
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 24
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: m5.large
+      capacity: 4
+      userData: {restrictCPU: true}
+    - instanceType: m3.xlarge
+      capacity: 4
+      userData: {restrictCPU: true}
+    - instanceType: c3.xlarge
+      capacity: 4
+      userData: {restrictCPU: true}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/taskcluster-generic:
+  description: Generic bucket for tasks like backups and such.
+  owner: tools-taskcluster@mozilla.com
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    scalingRatio: 0
+    launchSpec:
+      SecurityGroups: [docker-worker]
+    userData: {dindImage: 'taskcluster/dind-service:v4.0'}
+    instanceTypes:
+    - instanceType: m3.large
+      userData: {restrictCPU: true}
+    regions:
+    - region: us-east-1
+    - region: us-west-1
+    - region: us-west-2
+aws-provisioner-v1/taskcluster-images:
+  description: '** WRITE THIS**'
+  owner: '** WRITE THIS **'
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 300
+    scalingRatio: 0
+    launchSpec:
+      SecurityGroups: [docker-worker]
+    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instanceTypes:
+    - instanceType: r3.xlarge
+      capacity: 2
+    - instanceType: m3.xlarge
+      capacity: 2
+    - instanceType: c3.xlarge
+      capacity: 2
+    regions:
+    - region: us-east-1
+    - region: us-west-1
+    - region: us-west-2
+aws-provisioner-v1/version-control-tools:
+  description: Testing for https://hg.mozilla.org/hgcustom/version-control-tools
+  owner: gps@mozilla.com
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-v201807261248-hvm-builder
+    maxCapacity: 5
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: c5d.2xlarge
+    regions:
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+
