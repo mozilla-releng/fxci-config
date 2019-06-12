@@ -2221,7 +2221,7 @@ aws-provisioner-v1/mobile-1-b-andrcmp:
   provider_id: legacy-aws-provisioner-v1
   config:
     image: docker-worker-hvm-builder-current
-    minCapacity: 1
+    minCapacity: 0
     maxCapacity: 500
     scalingRatio: 0
     instanceTypes:
@@ -2273,7 +2273,7 @@ aws-provisioner-v1/mobile-1-b-fenix:
   provider_id: legacy-aws-provisioner-v1
   config:
     image: docker-worker-hvm-builder-current
-    minCapacity: 1
+    minCapacity: 0
     maxCapacity: 50
     scalingRatio: 0
     instanceTypes:
@@ -2326,7 +2326,7 @@ aws-provisioner-v1/mobile-1-b-ref-browser:
   provider_id: legacy-aws-provisioner-v1
   config:
     image: docker-worker-hvm-builder-current
-    minCapacity: 1
+    minCapacity: 0
     maxCapacity: 50
     scalingRatio: 0
     instanceTypes:
@@ -2430,7 +2430,7 @@ aws-provisioner-v1/mobile-1-images:
   provider_id: legacy-aws-provisioner-v1
   config:
     image: docker-worker-hvm-builder-current
-    minCapacity: 1
+    minCapacity: 0
     maxCapacity: 30
     scalingRatio: 0
     userData: {dindImage: 'taskcluster/dind-service:v4.1'}
@@ -2484,7 +2484,7 @@ aws-provisioner-v1/mobile-3-b-andrcmp:
   provider_id: legacy-aws-provisioner-v1
   config:
     image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 1
+    minCapacity: 0
     maxCapacity: 500
     scalingRatio: 0
     launchSpec:
@@ -2509,7 +2509,7 @@ aws-provisioner-v1/mobile-3-b-fenix:
   provider_id: legacy-aws-provisioner-v1
   config:
     image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 1
+    minCapacity: 0
     maxCapacity: 50
     scalingRatio: 0
     launchSpec:
@@ -2535,7 +2535,7 @@ aws-provisioner-v1/mobile-3-b-ref-browser:
   provider_id: legacy-aws-provisioner-v1
   config:
     image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 1
+    minCapacity: 0
     maxCapacity: 50
     scalingRatio: 0
     launchSpec:
@@ -2612,7 +2612,7 @@ aws-provisioner-v1/mobile-3-images:
   provider_id: legacy-aws-provisioner-v1
   config:
     image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 1
+    minCapacity: 0
     maxCapacity: 30
     scalingRatio: 0
     userData: {dindImage: 'taskcluster/dind-service:v4.1'}
