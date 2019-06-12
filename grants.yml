@@ -193,7 +193,6 @@
   - queue:create-task:low:releng-hardware/my-talos
   - queue:create-task:low:scriptworker-prov-v1/dep-pushapk
   - queue:create-task:low:scriptworker-prov-v1/depsigning
-  - queue:create-task:low:scriptworker-prov-v1/dep-iscript
   - queue:create-task:low:scriptworker-prov-v1/shipit-dev*
   - queue:create-task:low:tc-worker-provisioner/*
   - queue:create-task:low:test-dummy-provisioner/*
@@ -238,6 +237,8 @@
   - queue:create-task:low:scriptworker-prov-v1/bouncer-dev
   - queue:create-task:low:scriptworker-prov-v1/dep-pushsnap
   - queue:create-task:low:scriptworker-prov-v1/signing-linux-dev
+  - queue:create-task:low:scriptworker-prov-v1/dep-iscript
+  - queue:create-task:low:scriptworker-prov-v1/signing-mac-v1
   - queue:create-task:low:scriptworker-prov-v1/treescript-dev
   - queue:create-task:low:terraform-packet/*
   - queue:get-artifact:releng/partner/*
@@ -269,6 +270,7 @@
   - queue:create-task:low:scriptworker-prov-v1/tb-depsigning
   - queue:create-task:low:scriptworker-prov-v1/tb-shipit-dev*
   - queue:create-task:low:scriptworker-prov-v1/tb-treescript-comm-dev
+  - queue:create-task:low:scriptworker-prov-v1/tb-signing-mac-v1
   - secrets:get:project/comm/thunderbird/releng/build/level-1/*
   to:
   - projects:
@@ -440,6 +442,7 @@
   - queue:create-task:highest:scriptworker-prov-v1/shipit-v1
   - queue:create-task:highest:scriptworker-prov-v1/signing-linux-v1
   - queue:create-task:highest:scriptworker-prov-v1/treescript-v1
+  - queue:create-task:highest:scriptworker-prov-v1/signing-mac-v1
   - queue:route:index.gecko.heavyprofile.*
   - queue:route:notify.email.release+tcstaging@mozilla.com.
   - queue:route:notify.email.release-automation-notifications@mozilla.com.*
@@ -456,6 +459,7 @@
   - queue:create-task:highest:scriptworker-prov-v1/tb-beetmover-dev
   - queue:create-task:highest:scriptworker-prov-v1/tb-depsigning
   - queue:create-task:highest:scriptworker-prov-v1/tb-signing-v1
+  - queue:create-task:highest:scriptworker-prov-v1/tb-signing-mac-v1
   - secrets:get:project/comm/thunderbird/releng/build/level-3/*
   to:
   - projects:
