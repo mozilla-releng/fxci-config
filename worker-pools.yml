@@ -2225,7 +2225,7 @@ aws-provisioner-v1/mobile-1-b-andrcmp:
     maxCapacity: 500
     scalingRatio: 0
     instanceTypes:
-    - instanceType: c5.9xlarge
+    - instanceType: c5d.4xlarge
       launchSpec:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
@@ -2490,7 +2490,7 @@ aws-provisioner-v1/mobile-3-b-andrcmp:
     launchSpec:
       SecurityGroups: [docker-worker]
     instanceTypes:
-    - instanceType: c5.9xlarge
+    - instanceType: c5d.4xlarge
       launchSpec:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
