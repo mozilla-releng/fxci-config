@@ -438,7 +438,7 @@ aws-provisioner-v1/fp-gecko-3-b-linux:
   email_on_error: false
   provider_id: legacy-aws-provisioner-v1
   config:
-    image: docker-worker-v201807261248-hvm-builder-trusted
+    image: docker-worker-hvm-builder-current
     minCapacity: 1
     maxCapacity: 300
     scalingRatio: 0
