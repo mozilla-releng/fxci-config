@@ -114,9 +114,14 @@
       feature: gecko-roles
       trust_domain: gecko
 
+# moz-tree roles include the basic scopes available to version-control trees at
+# each of the three Mozilla source-code management levels.  They are useful as
+# shorthand to configure `repo:*` roles.  While most scopes are still contained
+# in these grants, prefer to add new grants as separate stanzas in this file,
+# and remove scopes from these grants.
+
 # moz-tree:level:1:*
 - grant:
-  - docker-worker:cache:tooltool-cache
   - docker-worker:capability:device:loopbackAudio
   - docker-worker:capability:device:loopbackVideo
   - docker-worker:capability:privileged
@@ -125,10 +130,6 @@
   - docker-worker:image:quay.io/mozilla/decision:*
   - docker-worker:image:taskcluster/builder:*
   - docker-worker:image:taskcluster/tester:*
-  - docker-worker:relengapi-proxy:tooltool.download.internal
-  - docker-worker:relengapi-proxy:tooltool.download.public
-  - project:releng:services/tooltool/api/download/internal
-  - project:releng:services/tooltool/api/download/public
   - index:insert-task:garbage.*
   - notify:email:*
   - project:releng:balrog:channel:*
@@ -466,6 +467,21 @@
       feature: gecko-roles
       level: [3]
       trust_domain: comm
+
+# tooltool downloads
+- grant:
+  - docker-worker:relengapi-proxy:tooltool.download.internal
+  - docker-worker:relengapi-proxy:tooltool.download.public
+  - project:releng:services/tooltool/api/download/internal
+  - project:releng:services/tooltool/api/download/public
+  # This cache contains cached downloads from tooltool.  Since tooltool is
+  # content-addressible, and verifies hashes on files in the cache, there is no
+  # risk of cache poisoning or collisions.
+  - docker-worker:cache:tooltool-cache
+  to:
+  - projects:
+      feature: gecko-roles
+      level: [1, 2, 3]
 
 ##
 # project-specific scopes (for esr's to hang onto their old scopes)
