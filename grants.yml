@@ -199,7 +199,6 @@
   - project:releng:snapcraft:firefox:mock
   - project:releng:treescript:action:*
   - project:releng:treescript:action:tagging
-  - queue:create-task:low:aws-provisioner-v1/fp-gecko-*
   - queue:create-task:low:manual-packet/tc-worker-docker-v1
   - queue:create-task:low:scriptworker-prov-v1/addon-dev
   - queue:create-task:low:scriptworker-prov-v1/balrog-dev
