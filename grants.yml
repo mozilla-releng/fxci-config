@@ -205,8 +205,8 @@
   - queue:create-task:low:scriptworker-prov-v1/bouncer-dev
   - queue:create-task:low:scriptworker-prov-v1/dep-pushsnap
   - queue:create-task:low:scriptworker-prov-v1/signing-linux-dev
-  - queue:create-task:low:scriptworker-prov-v1/dep-iscript
-  - queue:create-task:low:scriptworker-prov-v1/signing-mac-v1
+  - queue:create-task:low:scriptworker-prov-v1/signing-mac-dev
+  - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1
   - queue:create-task:low:scriptworker-prov-v1/treescript-dev
   - queue:create-task:low:terraform-packet/*
   - queue:get-artifact:releng/partner/*
@@ -238,7 +238,7 @@
   - queue:create-task:low:scriptworker-prov-v1/tb-depsigning
   - queue:create-task:low:scriptworker-prov-v1/tb-shipit-dev*
   - queue:create-task:low:scriptworker-prov-v1/tb-treescript-comm-dev
-  - queue:create-task:low:scriptworker-prov-v1/tb-signing-mac-v1
+  - queue:create-task:low:scriptworker-prov-v1/tb-depsigning-mac-v1
   - secrets:get:project/comm/thunderbird/releng/build/level-1/*
   to:
   - projects:
