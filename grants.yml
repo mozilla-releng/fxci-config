@@ -294,7 +294,6 @@
   - queue:create-task:highest:packetnet/*
   - queue:create-task:highest:scriptworker-prov-v1/dep-pushapk
   - queue:create-task:highest:scriptworker-prov-v1/pushapk-v1
-  - queue:create-task:highest:scriptworker-prov-v1/depsigning
   - queue:create-task:highest:scriptworker-prov-v1/dummy-worker-transpar
   - queue:create-task:highest:scriptworker-prov-v1/signing-linux-dev
   - queue:create-task:highest:tc-worker-provisioner/*
@@ -337,6 +336,8 @@
   - queue:create-task:highest:scriptworker-prov-v1/beetmoverworker-v1
   - queue:create-task:highest:scriptworker-prov-v1/bouncer-dev
   - queue:create-task:highest:scriptworker-prov-v1/bouncer-v1
+  - queue:create-task:highest:scriptworker-prov-v1/depsigning
+  - queue:create-task:highest:scriptworker-prov-v1/depsigning-mac-v1
   - queue:create-task:highest:scriptworker-prov-v1/pushsnap-v1
   - queue:create-task:highest:scriptworker-prov-v1/shipit-dev*
   - queue:create-task:highest:scriptworker-prov-v1/shipit-v1
