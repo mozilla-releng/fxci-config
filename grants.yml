@@ -161,7 +161,6 @@
   - queue:create-task:low:packetnet/*
   - queue:create-task:low:releng-hardware/my-talos
   - queue:create-task:low:scriptworker-prov-v1/dep-pushapk
-  - queue:create-task:low:scriptworker-prov-v1/depsigning
   - queue:create-task:low:scriptworker-prov-v1/shipit-dev*
   - queue:create-task:low:tc-worker-provisioner/*
   - queue:create-task:low:test-dummy-provisioner/*
@@ -206,6 +205,7 @@
   - queue:create-task:low:scriptworker-prov-v1/dep-pushsnap
   - queue:create-task:low:scriptworker-prov-v1/signing-linux-dev
   - queue:create-task:low:scriptworker-prov-v1/signing-mac-dev
+  - queue:create-task:low:scriptworker-prov-v1/depsigning
   - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1
   - queue:create-task:low:scriptworker-prov-v1/treescript-dev
   - queue:create-task:low:terraform-packet/*
@@ -359,6 +359,7 @@
   - queue:create-task:highest:scriptworker-prov-v1/tb-balrog-dev
   - queue:create-task:highest:scriptworker-prov-v1/tb-beetmover-dev
   - queue:create-task:highest:scriptworker-prov-v1/tb-depsigning
+  - queue:create-task:highest:scriptworker-prov-v1/tb-depsigning-mac-v1
   - queue:create-task:highest:scriptworker-prov-v1/tb-signing-v1
   - queue:create-task:highest:scriptworker-prov-v1/tb-signing-mac-v1
   - secrets:get:project/comm/thunderbird/releng/build/level-3/*
