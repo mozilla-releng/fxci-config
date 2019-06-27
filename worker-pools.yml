@@ -2310,7 +2310,7 @@ aws-provisioner-v1/version-control-tools:
   email_on_error: false
   provider_id: legacy-aws-provisioner-v1
   config:
-    image: docker-worker-v201807261248-hvm-builder
+    image: docker-worker-hvm-builder-current
     maxCapacity: 5
     scalingRatio: 0
     instanceTypes:
