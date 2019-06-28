@@ -554,6 +554,39 @@
       alias: aki-xpitest-manifest
 
 ##
+# mozilla roles - application-services specific roles
+#
+# Mind yourself of globstar roles such as the following that could potentially
+# grant even more scopes to certain roles in an automatic way
+# > https://tools.taskcluster.net/auth/roles/repo%3A*
+# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2F*
+# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla%2F*
+
+- grant:
+  - assume:project:taskcluster:mozilla-github-repository
+  - docker-worker:taskcluster-proxy:tooltool.download.internal
+  - project:releng:services/tooltool/api/download/internal
+  - queue:route:index.project.application-services.*
+  - queue:create-task:highest:aws-provisioner-v1/application-services-r
+  - docker-worker:cache:application-services-*
+  to:
+  - project:
+      alias: application-services
+      job: ["pull-request", "branch:master", "release"]
+
+- grant:
+  - project:mozilla:{alias}:releng:beetmover:action:push-to-maven
+  - project:mozilla:{alias}:releng:beetmover:bucket:maven-production
+  - queue:create-task:highest:scriptworker-prov-v1/appsv-beetmover-v1
+  - secrets:get:project/application-services/gradle-plugin-publish
+  - secrets:get:project/application-services/publish
+  - secrets:get:project/application-services/symbols-token
+  to:
+  - project:
+      alias: application-services
+      job: ["release"]
+
+##
 # mobile-specific roles
 #
 # We refer to level 1 as the staging/development workflow for a given project
@@ -562,8 +595,9 @@
 #
 # Mind yourself of globstar roles such as the following that could potentially
 # grant even more scopes to certain roles in an automatic way
-# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla-mobile%2F*
+# > https://tools.taskcluster.net/auth/roles/repo%3A*
 # > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2F*
+# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla-mobile%2F*
 
 # mobile:level:X:*
 - grant:
@@ -738,7 +772,7 @@
   - queue:route:index.project.mobile.fenix.v2.beta.*
   - secrets:get:project/mobile/fenix/nightly
   - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
-  
+
   # FIXME: For legacy reasons, Fenix Nightly is being deployed to the Fenix Production app, and requires Production scopes
   - project:mobile:fenix:releng:signing:cert:production-signing
   to:
