@@ -841,6 +841,17 @@
       job: cron:ship-geckoview
 
 ##
+# Administrative Scopes
+
+- grant:
+  # Allow sherrifs to quarantine gecko related workers
+  - queue:quarantine-worker:aws-provisioner-v1/gecko-*
+  - queue:quarantine-worker:bitbar/gecko-*
+  to:
+  - groups:
+    - sheriff
+
+##
 # hook scopes
 
 # this scope is included in the decision task's .scopes, and indicates which
