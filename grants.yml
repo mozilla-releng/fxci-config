@@ -847,6 +847,13 @@
   # Allow sherrifs to quarantine gecko related workers
   - queue:quarantine-worker:aws-provisioner-v1/gecko-*
   - queue:quarantine-worker:bitbar/gecko-*
+  # Allow sherrifs to rerun and cancel tasks level 2/3 gecko tasks
+  # Allows cancelling tasks with that scheduler-id
+  - queue:cancel-task:gecko-level-2/*
+  - queue:cancel-task:gecko-level-3/*
+  # Allow reruning tasks with that scheduler-id
+  - queue:rerun-task:gecko-level-2/*
+  - queue:rerun-task:gecko-level-3/*
   to:
   - groups:
     - sheriff
