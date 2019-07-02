@@ -1659,13 +1659,8 @@ aws-provisioner-v1/github-worker:
       SecurityGroups: [docker-worker]
     userData: {dindImage: 'taskcluster/dind-service:v4.0'}
     instanceTypes:
-    - instanceType: r3.xlarge
-      userData: {restrictCPU: true}
-    - instanceType: m3.xlarge
-      userData: {restrictCPU: true}
-    - instanceType: c3.xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
+    - instanceType: m5d.xlarge
+      capacity: 1
     regions:
     - region: us-east-1
     - region: us-west-1
