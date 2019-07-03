@@ -578,7 +578,9 @@
 - grant:
   - project:mozilla:{alias}:releng:beetmover:action:push-to-maven
   - project:mozilla:{alias}:releng:beetmover:bucket:maven-production
+  - project:mozilla:{alias}:releng:signing:cert:release-signing
   - queue:create-task:highest:scriptworker-prov-v1/appsv-beetmover-v1
+  - queue:create-task:scriptworker-prov-v1/appsv-signing-v1
   - secrets:get:project/application-services/gradle-plugin-publish
   - secrets:get:project/application-services/publish
   - secrets:get:project/application-services/symbols-token
