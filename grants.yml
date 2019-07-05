@@ -434,6 +434,8 @@
   # Bug 1527818: Coverity license is stored in this secret
   # It should not be widely available
   - secrets:get:project/relman/coverity-license
+  # Bug 1523321: Token for mirroring webrender to github
+  - secrets:get:project/webrender-ci/wrupdater-github-token
   to:
   - project:
       alias: mozilla-central
