@@ -2270,8 +2270,8 @@ aws-provisioner-v1/taskcluster-generic:
       SecurityGroups: [docker-worker]
     userData: {dindImage: 'taskcluster/dind-service:v4.0'}
     instanceTypes:
-    - instanceType: m3.large
-      userData: {restrictCPU: true}
+    - instanceType: m5d.xlarge
+      capacity: 1
     regions:
     - region: us-east-1
     - region: us-west-1
