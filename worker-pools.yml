@@ -1679,6 +1679,15 @@ aws-provisioner-v1/hg-worker:
     launchSpec:
       SecurityGroups: [docker-worker]
     instanceTypes:
+    - instanceType: r5.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        billingCycleInterval: 14400
+        capacityManagement: {diskspaceThreshold: 20000000000}
+        restrictCPU: false
     - instanceType: r4.4xlarge
       launchSpec:
         BlockDeviceMappings:
@@ -1689,6 +1698,15 @@ aws-provisioner-v1/hg-worker:
         capacityManagement: {diskspaceThreshold: 20000000000}
         restrictCPU: false
     - instanceType: m5.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        billingCycleInterval: 14400
+        capacityManagement: {diskspaceThreshold: 20000000000}
+        restrictCPU: false
+    - instanceType: c5.9xlarge
       launchSpec:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
