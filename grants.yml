@@ -165,7 +165,6 @@
   - queue:create-task:low:scriptworker-prov-v1/shipit-dev*
   - queue:create-task:low:tc-worker-provisioner/*
   - queue:create-task:low:test-dummy-provisioner/*
-  - queue:get-artifact:private/interactive/*
   - queue:get-artifact:project/gecko/android-*
   - queue:route:index.garbage.*
   - queue:route:notify.*
@@ -303,7 +302,6 @@
   - queue:create-task:packetnet/*
   - queue:create-task:tc-worker-provisioner/*
   - queue:create-task:test-dummy-provisioner/*
-  - queue:get-artifact:private/docker-worker/*
   - secrets:get:project/releng/snapcraft/firefox/edge
   - secrets:get:project/taskcluster/gecko/build/level-3/*
   to:
@@ -861,6 +859,14 @@
   to:
   - groups:
     - sheriff
+
+- grant:
+  # Allow people with level-3 access to access interactive tasks
+  - queue:get-artifact:private/interactive/*
+  - queue:get-artifact:private/docker-worker/*
+  to:
+  - groups:
+    - active_scm_level_3
 
 ##
 # hook scopes
