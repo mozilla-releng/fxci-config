@@ -841,7 +841,10 @@
   - project:releng:beetmover:action:push-to-maven
   to:
   - project:
-      alias: mozilla-beta
+      alias:
+        - mozilla-central
+        - mozilla-beta
+        - mozilla-release
       job: cron:ship-geckoview
 
 ##
