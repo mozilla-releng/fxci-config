@@ -390,7 +390,7 @@
   - project:comm:thunderbird:releng:balrog:server:release
   to:
   - project:
-      alias: comm-esr60
+      alias: [comm-esr60, comm-esr68]
 
 - grant:
   - project:comm:thunderbird:releng:balrog:server:beta
@@ -417,7 +417,7 @@
   - queue:create-task:highest:scriptworker-prov-v1/tb-treescript-comm-v1
   to:
   - project:
-      alias: [comm-esr60, comm-beta]
+      alias: [comm-esr60, comm-esr68, comm-beta]
 
 - grant:
   - project:releng:beetmover:bucket:nightly
