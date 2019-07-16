@@ -817,6 +817,36 @@
       alias: reference-browser
       job: ["cron:nightly-staging"]
 
+# These are the `trust-domain-scopes`. We can't (yet) use that feature directly,
+# since it doesn't handle making `pull-request` jobs level-1.
+- grant:
+  # Allow a sensible scheduler-id
+  - queue:scheduler-id:{trust_domain}-level-{level}
+  # Allows cancelling tasks with that scheduler-id
+  - queue:cancel-task:{trust_domain}-level-{level}/*
+  # Allow reruning tasks with that scheduler-id
+  - queue:rerun-task:{trust_domain}-level-{level}/*
+
+  # routes to support indexing by product
+  - queue:route:index.{trust_domain}.v2.{alias}.*
+  - index:insert-task:{trust_domain}.v2.{alias}.*
+
+  # routes to support locating tasks that create specific versions of artifacts
+  # (toolchains, etc.)
+  - queue:route:index.{trust_domain}.cache.level-{level}.*
+  - index:insert-task:{trust_domain}.cache.level-{level}.*
+
+  # allow fetching secrets appropriate to this level
+  - secrets:get:project/releng/{trust_domain}/build/level-{level}/*
+
+  # allow using worker caches appropriate to this trust domain and level
+  - docker-worker:cache:{trust_domain}-level-{level}-*
+  - generic-worker:cache:{trust_domain}-level-{level}-*
+  to:
+  - project:
+      alias: reference-browser
+      job: ["pull-request"]
+
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
 

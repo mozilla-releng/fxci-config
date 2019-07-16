@@ -459,6 +459,7 @@ android-components:
 
 reference-browser:
   repo: https://github.com/mozilla-mobile/reference-browser/
+  trust_domain: mobile
   repo_type: git
   level: 3
   features:
