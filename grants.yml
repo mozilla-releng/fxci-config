@@ -903,6 +903,17 @@
   - groups:
     - active_scm_level_3
 
+- grant:
+  # Additional permissions for thunderbird-releng on comm level 3 tasks
+  # Allow cancel
+  - queue:cancel-task:comm-level-3/*
+  # Allow rerun
+  - queue:rerun-task:comm-level-3/*
+  to:
+  - groups:
+    - thunderbird-releng
+
+
 ##
 # hook scopes
 
@@ -1004,6 +1015,13 @@
   - groups:
     - releng
     - sheriff
+
+# Thunderbird releng can only cancel-all on comm trees
+- grant:
+  - hooks:trigger-hook:project-comm/in-tree-action-3-cancel-all/*
+  to:
+  - groups:
+    - thunderbird-releng
 
 # release promotion is only available to relman/releng
 - grant:
