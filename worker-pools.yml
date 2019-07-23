@@ -17,7 +17,7 @@
 # `utility` both default to 1.  Empty collections such as `userData` are omitted.
 # Unused fields such as maxPrice or canUseOndemand are also omitted.
 #
-# A top-level `image` property in the config will be interpreted by ci-admin and 
+# A top-level `image` property in the config will be interpreted by ci-admin and
 # translated into a region[..].launchSpec.ImageId value based on worker-pools.yml.
 aws-provisioner-v1/gecko-1-b-android:
   description: Worker for Firefox automation
@@ -2143,6 +2143,322 @@ aws-provisioner-v1/mobile-3-images:
     - region: us-east-1
     - region: us-west-1
     - region: us-west-2
+aws-provisioner-v1/app-services-1-decision:
+  description: Worker for rust projects by Application Services team
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 30
+    scalingRatio: 0
+    userData: {billingCycleInterval: 21600}
+    instanceTypes:
+    - instanceType: m5d.large
+      capacity: 1
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/app-services-1-images:
+  description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
+    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 30
+    scalingRatio: 0
+    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instanceTypes:
+    - instanceType: c5d.xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/app-services-3-decision:
+  description: Worker for rust projects by Application Services team
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    minCapacity: 1
+    maxCapacity: 10
+    scalingRatio: 0
+    userData: {billingCycleInterval: 21600}
+    instanceTypes:
+    - instanceType: m5d.large
+      capacity: 1
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-7aca300a]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-5ce02b3a]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-a0d6beda]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/app-services-3-images:
+  description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
+    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    minCapacity: 0
+    maxCapacity: 30
+    scalingRatio: 0
+    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instanceTypes:
+    - instanceType: c5d.xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-7aca300a]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-5ce02b3a]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-a0d6beda]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/app-services-1-b-linux:
+  description: Worker for rust projects by Application Services team
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 2
+    maxCapacity: 100
+    scalingRatio: 0
+    instanceTypes:
+      # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
+    - instanceType: c5d.4xlarge
+      capacity: 1
+      utility: 2
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+        restrictCPU: false
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/app-services-3-b-linux:
+  description: Worker for rust projects by Application Services team
+  owner: Firefox CI
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 2
+    maxCapacity: 100
+    scalingRatio: 0
+    instanceTypes:
+      # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
+    - instanceType: c5d.4xlarge
+      capacity: 1
+      utility: 1
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+        restrictCPU: false
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-7aca300a]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-5ce02b3a]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-a0d6beda]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
 aws-provisioner-v1/mozillaonline-1-b-linux:
   description: Worker for MozillaOnline automation
   owner: Firefox CI
