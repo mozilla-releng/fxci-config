@@ -568,8 +568,6 @@
   - docker-worker:taskcluster-proxy:tooltool.download.internal
   - project:releng:services/tooltool/api/download/internal
   - queue:route:index.project.application-services.*
-    # TODO: to remove once 1563328 is fixed
-  - queue:create-task:highest:aws-provisioner-v1/application-services-r
   - queue:create-task:highest:aws-provisioner-v1/app-services-{level}-*
   - docker-worker:cache:application-services-*
   to:
