@@ -2410,7 +2410,7 @@ aws-provisioner-v1/app-services-3-b-linux:
   email_on_error: false
   provider_id: legacy-aws-provisioner-v1
   config:
-    image: docker-worker-hvm-builder-current
+    image: docker-worker-hvm-builder-trusted-current
     minCapacity: 2
     maxCapacity: 100
     scalingRatio: 0
