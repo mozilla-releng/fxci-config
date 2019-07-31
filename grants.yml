@@ -884,6 +884,9 @@
   # Allow sherrifs to quarantine gecko related workers
   - queue:quarantine-worker:aws-provisioner-v1/gecko-*
   - queue:quarantine-worker:bitbar/gecko-*
+  - queue:quarantine-worker:proj-autophone/gecko-*
+  - queue:quarantine-worker:releng-hardware/gecko-*
+  - queue:quarantine-worker:terraform-packet/gecko-linux
   # Allow sherrifs to rerun and cancel tasks level 2/3 gecko tasks
   # Allows cancelling tasks with that scheduler-id
   - queue:cancel-task:gecko-level-2/*
