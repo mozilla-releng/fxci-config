@@ -607,10 +607,15 @@
   - assume:project:taskcluster:mozilla-github-repository
   - queue:create-task:highest:aws-provisioner-v1/mobile-{level}-*
   - queue:route:index.project.mobile.{alias}.cache.level-{level}.*
+  - project:mobile:{alias}:releng:signing:cert:dep-signing
+  - project:mobile:{alias}:releng:signing:format:*
+  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
+  - queue:route:index.project.mobile.{alias}.staging-signed-nightly.*
+  - queue:route:index.project.mobile.{alias}.v2.staging.*
   to:
   - project:
       feature: mobile-roles
-      job: ["pull-request", "branch:*", "branch:master", "release"]
+      job: ["pull-request", "branch:*", "branch:master", "release", "cron:*"]
 
 - grant:
   - queue:create-task:highest:aws-provisioner-v1/mobile-3-*
@@ -669,7 +674,6 @@
 
 - grant:
   - project:mobile:{alias}:releng:signing:cert:release-signing
-  - project:mobile:{alias}:releng:signing:format:autograph_apk
   - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
   - queue:route:index.project.mobile.{alias}.signed-nightly.*
   - queue:route:index.project.mobile.{alias}.v2.nightly.*
@@ -685,18 +689,6 @@
   - project:
       feature: mobile-pushapk-phase
       job: ["release", "cron:nightly"]
-
-- grant:
-  - project:mobile:{alias}:releng:signing:cert:dep-signing
-  # TODO: retire this once `fenix` has dedicated format too
-  - project:mobile:{alias}:releng:signing:format:autograph_apk
-  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
-  - queue:route:index.project.mobile.{alias}.staging-signed-nightly.*
-  - queue:route:index.project.mobile.{alias}.v2.staging.*
-  to:
-  - project:
-      feature: mobile-sign-stage-phase
-      job: ["cron:nightly-staging"]
 
 - grant:
   - project:mobile:{alias}:releng:googleplay:product:{alias}:dep
@@ -722,8 +714,6 @@
   # TODO Refactor the following 2 scopes into one. The second one is the fenix one.
   # Thanks to the {alias} prefix, reference-browser can't sign APKs with the Fenix key,
   # nor the other way around.
-  - project:mobile:{alias}:releng:signing:format:autograph_apk_reference_browser
-  - project:mobile:{alias}:releng:signing:format:autograph_apk
   - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
   - queue:create-task:highest:proj-autophone/gecko-t-ap-perf-g5
   - queue:create-task:highest:proj-autophone/gecko-t-ap-perf-p2
@@ -748,7 +738,6 @@
 # production scopes to various sub-roles. Until then, this is a temp solution
 - grant:
   - project:mobile:fenix:releng:signing:cert:dep-signing
-  - project:mobile:fenix:releng:signing:format:autograph_apk
   - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
   to:
   - project:
@@ -767,7 +756,6 @@
 
 # TODO: at some point we should move out the beta related scopes from the nightly hook
 - grant:
-  - project:mobile:fenix:releng:signing:format:autograph_apk_fenix
   # FIXME: to be removed later on as it's a duplicate with `product:fenix` counterpart
   - project:mobile:fenix:releng:googleplay:product:fenix:nightly
   # FIXME: to be removed later on as it's a duplicate with `cert:release-signing` counterpart
@@ -786,7 +774,6 @@
       job: ["cron:nightly"]
 
 - grant:
-  - project:mobile:fenix:releng:signing:format:autograph_apk_fenix
   - queue:route:index.project.mobile.fenix.v2.staging.*
   - secrets:get:garbage/staging/project/mobile/fenix
   to:
@@ -796,7 +783,6 @@
 
 # reference-browser specific scopes
 - grant:
-  - project:mobile:reference-browser:releng:signing:format:autograph_apk_reference_browser
   - queue:route:index.project.mobile.reference-browser.nightly.*
   - queue:route:index.project.mobile.reference-browser.signed-nightly.*
   - secrets:get:project/mobile/reference-browser/nimbledroid
@@ -808,7 +794,6 @@
       job: ["cron:nightly"]
 
 - grant:
-  - project:mobile:reference-browser:releng:signing:format:autograph_apk_reference_browser
   - secrets:get:garbage/staging/project/mobile/reference-browser/nimbledroid
   - secrets:get:garbage/staging/project/mobile/reference-browser/sentry
   - secrets:get:project/mobile/reference-browser/nimbledroid

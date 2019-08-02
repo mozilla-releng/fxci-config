@@ -33,7 +33,6 @@
 #   - `mobile-beetmover-stage-phase` -- this https://github.com/mozilla-mobile repository should have beetmover staging related scopes associated
 #   - `mobile-beetmover-snapshot-phase` -- this https://github.com/mozilla-mobile repository should have beetmover snapshot production related scopes associated
 #   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
-#   - `mobile-sign-stage-phase` -- this https://github.com/mozilla-mobile repository should have sign related staging scopes associated
 #   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
 #   - `mobile-pushapk-stage-phase` -- this https://github.com/mozilla-mobile repository should have pushapk staging related scopes associated
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
@@ -467,7 +466,6 @@ reference-browser:
     mobile-roles: true
     mobile-sign-phase: true
     mobile-pushapk-phase: true
-    mobile-sign-stage-phase: true
     mobile-pushapk-stage-phase: true
     treeherder-reporting: true
 
@@ -480,7 +478,6 @@ fenix:
     mobile-roles: true
     mobile-sign-phase: true
     mobile-pushapk-phase: true
-    mobile-sign-stage-phase: true
     mobile-pushapk-stage-phase: true
     treeherder-reporting: true
 
