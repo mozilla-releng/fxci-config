@@ -765,6 +765,7 @@
   - secrets:get:project/mobile/fenix/nightly
   # FIXME: remove nightlyLegacy scope when the "nightly" track of "org.mozilla.fenix" is discontinued
   - secrets:get:project/mobile/fenix/nightlyLegacy
+  - secrets:get:project/mobile/fenix/nimbledroid
   - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
 
   # FIXME: For legacy reasons, Fenix Nightly is being deployed to the Fenix Production app, and requires Production scopes
