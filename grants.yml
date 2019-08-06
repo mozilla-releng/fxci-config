@@ -612,6 +612,7 @@
   - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
   - queue:route:index.project.mobile.{alias}.staging-signed-nightly.*
   - queue:route:index.project.mobile.{alias}.v2.staging.*
+  - queue:route:index.project.mobile.{alias}.v3.staging.*
   to:
   - project:
       feature: mobile-roles
