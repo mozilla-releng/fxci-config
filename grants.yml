@@ -730,7 +730,6 @@
 # fenix specific scopes
 - grant:
   - queue:route:index.project.fenix.android.preview-builds
-  - secrets:get:project/fenix/preview-key-store
   to:
   - project:
       alias: fenix
