@@ -1554,7 +1554,11 @@ aws-provisioner-v1/gecko-t-linux-large:
     userData:
       dockerConfig: {allowPrivileged: false}
     instanceTypes:
-    - instanceType: m3.large
+    - instanceType: m5.large
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
       userData:
         billingCycleInterval: 7200
         capacityManagement: {diskspaceThreshold: 20000000000}
