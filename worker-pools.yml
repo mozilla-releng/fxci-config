@@ -37,6 +37,12 @@ aws-provisioner-v1/gecko-1-b-android:
       userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
     regions:
     - region: us-east-1
       launchSpec:
@@ -302,6 +308,13 @@ aws-provisioner-v1/gecko-1-b-macosx64:
       userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
     regions:
     - region: us-east-1
       launchSpec:
@@ -486,6 +499,13 @@ aws-provisioner-v1/gecko-2-b-android:
       userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+      utility: 0.9
     regions:
     - region: us-east-1
       launchSpec:
@@ -752,6 +772,12 @@ aws-provisioner-v1/gecko-2-b-macosx64:
       userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
     regions:
     - region: us-east-1
       launchSpec:
@@ -935,6 +961,13 @@ aws-provisioner-v1/gecko-3-b-android:
       userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.1
+    - instanceType: c4.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.2xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
     regions:
     - region: us-east-1
       launchSpec:
@@ -1002,7 +1035,21 @@ aws-provisioner-v1/gecko-3-b-linux:
       userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 2
+    - instanceType: m4.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: m5.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c4.4xlarge
       launchSpec:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
@@ -1216,6 +1263,13 @@ aws-provisioner-v1/gecko-3-b-macosx64:
       userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.1
+    - instanceType: c4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m4.4xlarge
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 0.9
     regions:
     - region: us-east-1
       launchSpec:
