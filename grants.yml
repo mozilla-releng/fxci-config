@@ -194,6 +194,7 @@
   - project:releng:beetmover:bucket:dep-partner
   - project:releng:bouncer:action:*
   - project:releng:bouncer:server:staging
+  - project:releng:bouncer:server:staging_nazgul
   - project:releng:ship-it:action:mark-as-shipped
   - project:releng:ship-it:action:mark-as-started
   - project:releng:snapcraft:firefox:mock
