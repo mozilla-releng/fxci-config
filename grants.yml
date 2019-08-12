@@ -733,6 +733,7 @@
 - grant:
   - queue:route:index.project.fenix.android.preview-builds
   - secrets:get:project/mobile/fenix/pr
+  - github:create-comment:mozilla-mobile/fenix
   to:
   - project:
       alias: fenix
