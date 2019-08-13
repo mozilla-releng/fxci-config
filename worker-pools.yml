@@ -1492,7 +1492,7 @@ aws-provisioner-v1/gecko-misc:
   email_on_error: false
   provider_id: legacy-aws-provisioner-v1
   config:
-    image: docker-worker-v201904181936-hvm-builder
+    image: docker-worker-hvm-builder-current
     maxCapacity: 32
     scalingRatio: 0
     userData: {billingCycleInterval: 21600}
