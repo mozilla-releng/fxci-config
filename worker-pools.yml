@@ -1796,15 +1796,9 @@ aws-provisioner-v1/mobile-1-b-fenix:
     maxCapacity: 50
     scalingRatio: 0
     instanceTypes:
-    - instanceType: r3.2xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
-    - instanceType: m3.2xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
-    - instanceType: c3.2xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
+    - instanceType: m5d.xlarge
+      capacity: 1
+      userData: {}
     regions:
     - region: us-east-1
       launchSpec:
@@ -1849,15 +1843,9 @@ aws-provisioner-v1/mobile-1-b-ref-browser:
     maxCapacity: 50
     scalingRatio: 0
     instanceTypes:
-    - instanceType: r3.xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
-    - instanceType: m3.xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
-    - instanceType: c3.xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
+    - instanceType: m5d.xlarge
+      capacity: 1
+      userData: {}
     regions:
     - region: us-east-1
       launchSpec:
@@ -2034,15 +2022,9 @@ aws-provisioner-v1/mobile-3-b-fenix:
     launchSpec:
       SecurityGroups: [docker-worker]
     instanceTypes:
-    - instanceType: r3.xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
-    - instanceType: m3.xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
-    - instanceType: c3.xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
+    - instanceType: m5d.xlarge
+      capacity: 1
+      userData: {}
     regions:
     - region: us-east-1
     - region: us-west-1
@@ -2060,15 +2042,9 @@ aws-provisioner-v1/mobile-3-b-ref-browser:
     launchSpec:
       SecurityGroups: [docker-worker]
     instanceTypes:
-    - instanceType: r3.xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
-    - instanceType: m3.xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
-    - instanceType: c3.xlarge
-      capacity: 2
-      userData: {restrictCPU: true}
+    - instanceType: m5d.xlarge
+      capacity: 1
+      userData: {}
     regions:
     - region: us-east-1
     - region: us-west-1
