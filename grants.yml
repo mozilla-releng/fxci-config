@@ -611,6 +611,7 @@
 - grant:
   - assume:project:taskcluster:mozilla-github-repository
   - queue:create-task:highest:aws-provisioner-v1/mobile-{level}-*
+  - queue:create-task:{priority}:built-in/*
   - queue:route:index.project.mobile.{alias}.cache.level-{level}.*
   - project:mobile:{alias}:releng:signing:cert:dep-signing
   - project:mobile:{alias}:releng:signing:format:*
