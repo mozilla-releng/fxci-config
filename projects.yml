@@ -457,7 +457,7 @@ android-components:
     mobile-beetmover-snapshot-phase: true
 
 reference-browser:
-  repo: https://github.com/mozilla-mobile/reference-browser/
+  repo: https://github.com/mozilla-mobile/reference-browser
   trust_domain: mobile
   repo_type: git
   level: 3
@@ -470,7 +470,7 @@ reference-browser:
     treeherder-reporting: true
 
 fenix:
-  repo: https://github.com/mozilla-mobile/fenix/
+  repo: https://github.com/mozilla-mobile/fenix
   repo_type: git
   level: 3
   features:
