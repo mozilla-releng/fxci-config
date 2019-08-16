@@ -467,6 +467,7 @@ reference-browser:
     mobile-sign-phase: true
     mobile-pushapk-phase: true
     mobile-pushapk-stage-phase: true
+    taskgraph-cron: true
     treeherder-reporting: true
 
 fenix:
