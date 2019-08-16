@@ -25,7 +25,7 @@ schedulerId: ${trust_domain}-level-${level}
 deadline: {$$fromNow: '30 minutes'}
 expires: {$$fromNow: '3 days'}
 scopes:
-  - assume:repo:hg.mozilla.org/${project_repo_path}:branch:default
+  - assume:${project_role_prefix}:branch:default
 payload:
     # built by pushes to the ci-admin repository
     image:
