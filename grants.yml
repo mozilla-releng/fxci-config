@@ -855,7 +855,7 @@
   - assume:project:releng:nightly:level-{level}:{alias}
   to:
   - project:
-      feature: taskcluster-cron
+      feature: gecko-cron
       trust_domain: gecko
       job: cron:nightly-*
 
@@ -863,7 +863,7 @@
   - assume:project:comm:thunderbird:comm:releng:nightly:level-{level}:{alias}
   to:
   - project:
-      feature: taskcluster-cron
+      feature: gecko-cron
       trust_domain: comm
       job: cron:nightly-*
 
