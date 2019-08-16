@@ -481,6 +481,12 @@ fenix:
     mobile-pushapk-stage-phase: true
     treeherder-reporting: true
 
+focus-android:
+  repo: https://github.com/mozilla-mobile/focus-android
+  repo_type: git
+  level: 3
+  features: {}
+
 # mozilla Github repositories
 application-services:
   repo: https://github.com/mozilla/application-services/

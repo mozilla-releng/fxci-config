@@ -848,6 +848,34 @@
       alias: reference-browser
       job: ["pull-request"]
 
+# focus-android scopes
+- grant:
+    - queue:route:notify.irc-channel.#android-ci.on-any
+    - secrets:get:project/focus/firebase
+    - secrets:get:project/focus/nimbledroid
+  to:
+  - project:
+      alias: focus-android
+      job: ["branch:*"]
+
+- grant:
+    - project:mobile:focus:releng:googleplay:product:focus
+    - project:mobile:focus:releng:signing:cert:release-signing
+    - project:mobile:focus:releng:signing:format:autograph_focus
+    - project:mobile:focus:releng:signing:format:focus-jar
+    - queue:create-task:highest:aws-provisioner-v1/gecko-focus
+    - queue:create-task:highest:scriptworker-prov-v1/mobile-pushapk-v1
+    - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
+    - queue:route:index.project.mobile.focus.release.latest
+    - secrets:get:project/focus/firebase
+    - secrets:get:project/focus/nimbledroid
+    - secrets:get:project/focus/tokens
+  to:
+  - project:
+      alias: focus-android
+      job: ["release"]
+
+
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
 
