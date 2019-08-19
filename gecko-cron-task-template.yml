@@ -9,7 +9,7 @@
 #  - checkout_options -- list of options to run-task to check out the repo
 #  - project_repo -- repository URL
 #  - alias -- project alias
-#  - mach_cron_options -- mach options (as a string)
+#  - cron_options -- cron options (as a string)
 #  - trim_whitespace(..) -- trim newlines and extra whitespace in a command string
 #  - taskcluster_root_url -- the rootUrl for this TC deployment
 #
@@ -18,7 +18,7 @@
 
 provisionerId: aws-provisioner-v1
 workerType: gecko-${level}-decision
-schedulerId: gecko-level-${level}
+schedulerId: ${trust_domain}-level-${level}
 
 # The "$fromNow" options here are escaped so that they are processed by the hooks service's
 # JSON-e rendering when the hook is fired.
@@ -68,7 +68,7 @@ payload:
                         --head-ref=$GECKO_HEAD_REF
                         --project=${alias}
                         --level=${level}
-                        ${mach_cron_options}
+                        ${cron_options}
               in: "${trim_whitespace(command)}"
     # run-task exist with status 72 if the caches are corrupt;
     # indicating the worker caches should be purged and the task retried.

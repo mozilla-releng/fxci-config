@@ -36,6 +36,7 @@
 #   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
 #   - `mobile-pushapk-stage-phase` -- this https://github.com/mozilla-mobile repository should have pushapk staging related scopes associated
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
+#   - 'taskgraph-cron' -- tasks defined in `.cron.yml` can run for this project (non-gecko/comm taskgraph repos only)
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"

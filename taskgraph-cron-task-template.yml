@@ -1,0 +1,93 @@
+# This is the template for the task definition for cron task hooks.  Its job is
+# to run a `mach cron` in a decision-task image; that command will take care of
+# the details.
+#
+# This is parsed with JSON-e.  The context values are;
+#  - level -- SCM level
+#  - hookGroupId / hookId -- hook identifiers
+#  - repo_env -- repository-related env vars
+#  - checkout_options -- list of options to run-task to check out the repo
+#  - project_repo -- repository URL
+#  - alias -- project alias
+#  - mach_cron_options -- mach options (as a string)
+#  - trim_whitespace(..) -- trim newlines and extra whitespace in a command string
+#  - taskcluster_root_url -- the rootUrl for this TC deployment
+#
+# Note that aside from the task times as noted below, the JSON-e rendering performed
+# when the hook is fired does not supply any additional information.
+
+provisionerId: aws-provisioner-v1
+workerType: ${trust_domain}-${level}-decision
+schedulerId: ${trust_domain}-level-${level}
+
+# The "$fromNow" options here are escaped so that they are processed by the hooks service's
+# JSON-e rendering when the hook is fired.
+deadline: {$$fromNow: '1 hour'}
+expires: {$$fromNow: '7 days'}
+routes:
+  - "notify.email.ciduty+failedcron@mozilla.com.on-failed"
+  - "notify.email.ciduty+exceptioncron@mozilla.com.on-exception"
+  - "notify.email.sheriffs+failedcron@mozilla.org.on-failed"
+  - "notify.email.sheriffs+exceptioncron@mozilla.org.on-exception"
+scopes:
+  - assume:hook-id:${hookGroupId}/${hookId}
+payload:
+    image: 
+        type: indexed-image
+        namespace: taskgraph.cache.level-3.docker-images.v2.decision.latest
+        path: public/image.tar.zst
+    env:
+      $merge:
+        - {$eval: repo_env}
+        - HG_STORE_PATH: '/builds/worker/checkouts/hg-store'
+          TASKGRAPH_HEAD_REPOSITORY: https://hg.mozilla.org/ci/taskgraph
+          TASKGRAPH_HEAD_REF: default
+          TASKGRAPH_REPOSITORY_TYPE: hg
+          REPOSITORIES: {$json: {vcs: "Project", taskgraph: "Taskgraph"}}
+          TASKCLUSTER_CACHES: '/builds/worker/checkouts'
+          TASKCLUSTER_ROOT_URL: '${taskcluster_root_url}'
+    cache:
+        ${trust_domain}-level-${level}-checkouts-sparse-v2: '/builds/worker/checkouts'
+    features:
+      taskclusterProxy: true
+      chainOfTrust: true
+    maxRunTime: 1800
+    command:
+        $flatten:
+            - 'run-task'
+            - '--vcs-checkout=/builds/worker/checkouts/src'
+            - '--taskgraph-checkout=/builds/worker/checkouts/taskgraph'
+            - '--task-cwd=/builds/worker/checkouts/src'
+            - '--'
+            - 'bash'
+            - '-cx'
+            - $let:
+                command: |
+                    PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph &&
+                    ln -s /builds/worker/artifacts artifacts &&
+                    ~/.local/bin/taskgraph cron
+                        --head-repository=${project_repo}
+                        --head-ref="$VCS_HEAD_REF"
+                        --repository-type="$VCS_REPOSITORY_TYPE"
+                        --project=${alias}
+                        --level=${level}
+                        --root=.
+                        ${cron_options}
+              in: "${trim_whitespace(command)}"
+    # run-task exist with status 72 if the caches are corrupt;
+    # indicating the worker caches should be purged and the task retried.
+    retry-exit-status: [72]
+    purge-caches-exit-status: [72]
+    artifacts:
+      public:
+        type: 'directory'
+        path: '/builds/worker/artifacts'
+metadata:
+    owner: 'mozilla-taskcluster-maintenance@mozilla.com'
+    source: https://tools.taskcluster.net/hooks/#${hookGroupId}/${hookId}
+    description: See https://tools.taskcluster.net/hooks/#${hookGroupId}/${hookId}
+    name: Cron task for ${project_repo}
+priority: 'normal'
+retries: 5
+tags: {}
+extra: {}
