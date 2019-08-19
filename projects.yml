@@ -470,6 +470,7 @@ reference-browser:
     mobile-pushapk-stage-phase: true
     taskgraph-cron: true
     treeherder-reporting: true
+  cron_targets: [nightly, raptor]
 
 fenix:
   repo: https://github.com/mozilla-mobile/fenix
