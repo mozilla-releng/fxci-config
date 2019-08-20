@@ -1550,7 +1550,7 @@ aws-provisioner-v1/gecko-t-linux-large:
   config:
     image: docker-worker-hvm-builder-current
     maxCapacity: 3500
-    scalingRatio: 0.1
+    scalingRatio: 0
     userData:
       dockerConfig: {allowPrivileged: false}
     instanceTypes:
