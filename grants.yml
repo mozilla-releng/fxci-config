@@ -810,8 +810,8 @@
       job: ["pull-request", "branch:*", "branch:master", "release", "cron:*"]
 
 - grant:
-  - queue:route:index.project.mobile.reference-browser.nightly.*
-  - queue:route:index.project.mobile.reference-browser.signed-nightly.*
+  - queue:route:index.project.mobile.reference-browser.v3.nightly.*
+  - queue:route:index.project.mobile.reference-browser.v3.signed-nightly.*
   - secrets:get:project/mobile/reference-browser/nimbledroid
   - secrets:get:project/mobile/reference-browser/sentry
   - queue:route:notify.email.android-components-team@mozilla.com.on-failed
