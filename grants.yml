@@ -714,6 +714,13 @@
       alias: android-components
       job: ["pull-request", "branch:*", "branch:master"]
 
+- grant:
+  - secrets:get:project/mobile/android-components/firebase
+  to:
+  - projects:
+      alias: android-components
+      job: ["branch:*"]
+
 
 # TODO: Once bug 1519493 is completed, we will be able to assign staging vs
 # production scopes to various sub-roles. Until then, this is a temp solution
@@ -745,6 +752,8 @@
 
 - grant:
   - secrets:get:project/mobile/fenix/public-tokens
+  # Fenix PRs are now restricted to collaborators, so exposing firebase is safe-enough
+  - secrets:get:project/mobile/fenix/firebase
   to:
   - project:
       alias: fenix
@@ -1170,31 +1179,7 @@
       alias:
       - reference-browser
       - kglazko-reference-browser
-      - rpappalax-reference-browser
       job: ["branch:*"]
-
-
-# Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
-- grant:
-  - secrets:get:project/mobile/android-components/firebase
-  - secrets:get:project/mobile/android-components/public-tokens
-  to:
-  - projects:
-      alias:
-      - android-components
-      - rpappalax-android-components
-      job: ["branch:*"]
-
-# Bug 1553096 - Temporary solution so QA can run their test suites before their patches are merged in master
-- grant:
-  - secrets:get:project/mobile/fenix/firebase
-  to:
-  - projects:
-      alias:
-      - fenix
-      - rpappalax-fenix
-      job: ["branch:*"]
-
 
 # Bug 1534463: allow `vpn_hg_admin` group to access Mercurial related secrets
 - grant:
