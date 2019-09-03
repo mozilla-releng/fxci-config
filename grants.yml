@@ -96,6 +96,7 @@
   - queue:create-task:{priority}:releng-hardware/gecko-t-*
   - queue:create-task:{priority}:built-in/*
   - queue:create-task:{priority}:scriptworker-k8s/{trust_domain}-{level}-*
+  - queue:create-task:{priority}:scriptworker-k8s/{trust_domain}-t-*
   to:
   - project:
       feature: gecko-roles
