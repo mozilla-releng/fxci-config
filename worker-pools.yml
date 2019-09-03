@@ -2581,4 +2581,28 @@ aws-provisioner-v1/version-control-tools:
       launchSpec: {SubnetId: subnet-2eaaba67}
     - availabilityZone: us-west-2c
       launchSpec: {SubnetId: subnet-540a9f0f}
-
+gecko-t-tc-worker/wcosta-build-tests:
+  description: Testing builds in google cloud
+  owner: bstack@mozilla.com
+  email_on_error: true
+  provider_id: google
+  config:
+    maxCapacity: 5
+    minCapacity: 1
+    capacityPerInstance: 1
+    machineType: "custom-32-29440"
+    regions:
+      - us-east1
+    scheduling:
+      onHostMaintenance: terminate
+    userData: {}
+    disks:
+      - type: PERSISTENT
+        boot: true
+        autoDelete: true
+        initializeParams:
+          sourceImage: global/images/docker-worker-app-1567544187
+          diskSizeGb: 50
+    networkInterfaces:
+      - accessConfigs:
+          - type: ONE_TO_ONE_NAT
