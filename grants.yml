@@ -788,8 +788,10 @@
   - project:mobile:fenix:releng:signing:cert:nightly-signing
   - queue:route:index.project.mobile.fenix.v2.beta.*
   - secrets:get:project/mobile/fenix/nightly
-  # FIXME: remove nightlyLegacy scope when the "nightly" track of "org.mozilla.fenix" is discontinued
+  # FIXME: remove "nightlyLegacy" scope when this issue is fixed: https://github.com/mozilla-mobile/fenix/issues/4873
   - secrets:get:project/mobile/fenix/nightlyLegacy
+  # FIXME: remove nightly-legacy scope when the "nightly" track of "org.mozilla.fenix" is discontinued
+  - secrets:get:project/mobile/fenix/nightly-legacy
   - secrets:get:project/mobile/fenix/nimbledroid
   - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
 
