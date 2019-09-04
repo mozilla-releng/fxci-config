@@ -2601,7 +2601,7 @@ gecko-t-tc-worker/wcosta-build-tests:
         boot: true
         autoDelete: true
         initializeParams:
-          sourceImage: global/images/docker-worker-app-1567544187
+          sourceImage: global/images/taskcluster-worker-googlecompute-2019-09-04t12-02-03z
           diskSizeGb: 50
     networkInterfaces:
       - accessConfigs:
