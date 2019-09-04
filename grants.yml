@@ -792,6 +792,7 @@
   - secrets:get:project/mobile/fenix/nightlyLegacy
   # FIXME: remove nightly-legacy scope when the "nightly" track of "org.mozilla.fenix" is discontinued
   - secrets:get:project/mobile/fenix/nightly-legacy
+  - secrets:get:project/mobile/fenix/fennec-production
   - secrets:get:project/mobile/fenix/nimbledroid
   - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
 
