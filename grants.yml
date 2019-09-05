@@ -806,6 +806,10 @@
 
   # FIXME: For legacy reasons, Fenix Nightly is being deployed to the Fenix Production app, and requires Production scopes
   - project:mobile:fenix:releng:signing:cert:production-signing
+
+  # XXX We want Fenix to replace Fennec release at some point
+  - project:mobile:fenix:releng:signing:cert:fennec-production-signing
+  - queue:route:index.project.mobile.fenix.v2.fennec-production.*
   to:
   - project:
       alias: fenix
