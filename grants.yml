@@ -742,6 +742,14 @@
       # PRs are temporarily allowed to test the integration of Raptor
       job: ["branch:master", "pull-request"]
 
+
+- grant:
+  - queue:route:index.project.mobile.reference-browser.v3.raptor.*
+  to:
+  - project:
+      feature: autophone
+      job: ["branch:master"]
+
 # fenix specific scopes
 - grant:
   - queue:route:index.project.fenix.android.preview-builds
