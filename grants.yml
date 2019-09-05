@@ -627,6 +627,13 @@
       job: ["pull-request", "branch:*", "branch:master", "release", "cron:*"]
 
 - grant:
+  - queue:route:index.project.mobile.{alias}.v3.debug.*
+  to:
+  - project:
+      feature: mobile-roles
+      job: ["branch:master", "release", "cron:*"]
+
+- grant:
   - queue:create-task:highest:aws-provisioner-v1/mobile-3-*
   - queue:route:statuses
   - queue:scheduler-id:focus-nightly-sched
