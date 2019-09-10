@@ -31,11 +31,11 @@ aws-provisioner-v1/gecko-1-b-android:
     instanceTypes:
     - instanceType: c5.4xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m5.4xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     regions:
     - region: us-east-1
@@ -95,7 +95,7 @@ aws-provisioner-v1/gecko-1-b-linux:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
     regions:
     - region: us-east-1
       launchSpec:
@@ -141,10 +141,10 @@ aws-provisioner-v1/gecko-1-b-linux-large:
     instanceTypes:
     - instanceType: c5d.9xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
     - instanceType: m5d.12xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.3
     - instanceType: m5.12xlarge
       launchSpec:
@@ -152,7 +152,7 @@ aws-provisioner-v1/gecko-1-b-linux-large:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m4.10xlarge
       launchSpec:
@@ -160,7 +160,7 @@ aws-provisioner-v1/gecko-1-b-linux-large:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: c5.9xlarge
       launchSpec:
@@ -168,14 +168,14 @@ aws-provisioner-v1/gecko-1-b-linux-large:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
     - instanceType: c4.8xlarge
       launchSpec:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 0.9
     regions:
     - region: us-east-1
@@ -222,11 +222,11 @@ aws-provisioner-v1/gecko-1-b-linux-xlarge:
     instanceTypes:
     - instanceType: c5d.18xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m5d.24xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.3
     - instanceType: m5.24xlarge
       launchSpec:
@@ -234,7 +234,7 @@ aws-provisioner-v1/gecko-1-b-linux-xlarge:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m4.16xlarge
       launchSpec:
@@ -242,14 +242,14 @@ aws-provisioner-v1/gecko-1-b-linux-xlarge:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
     - instanceType: c5.18xlarge
       launchSpec:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 0.9
     regions:
     - region: us-east-1
@@ -296,11 +296,11 @@ aws-provisioner-v1/gecko-1-b-macosx64:
     instanceTypes:
     - instanceType: c5.4xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m5.4xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     regions:
     - region: us-east-1
@@ -480,11 +480,11 @@ aws-provisioner-v1/gecko-2-b-android:
     instanceTypes:
     - instanceType: c5.4xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m5.4xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     regions:
     - region: us-east-1
@@ -544,7 +544,7 @@ aws-provisioner-v1/gecko-2-b-linux:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
     regions:
     - region: us-east-1
       launchSpec:
@@ -590,11 +590,11 @@ aws-provisioner-v1/gecko-2-b-linux-large:
     instanceTypes:
     - instanceType: c5d.9xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m5d.12xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.3
     - instanceType: m5.12xlarge
       launchSpec:
@@ -610,14 +610,14 @@ aws-provisioner-v1/gecko-2-b-linux-large:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
     - instanceType: m4.10xlarge
       launchSpec:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: c4.8xlarge
       launchSpec:
@@ -625,7 +625,7 @@ aws-provisioner-v1/gecko-2-b-linux-large:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 0.9
     regions:
     - region: us-east-1
@@ -672,11 +672,11 @@ aws-provisioner-v1/gecko-2-b-linux-xlarge:
     instanceTypes:
     - instanceType: c5d.18xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m5d.24xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.3
     - instanceType: m5.24xlarge
       launchSpec:
@@ -746,7 +746,7 @@ aws-provisioner-v1/gecko-2-b-macosx64:
     instanceTypes:
     - instanceType: c5.4xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m5.4xlarge
       userData:
@@ -929,11 +929,11 @@ aws-provisioner-v1/gecko-3-b-android:
     instanceTypes:
     - instanceType: c5.4xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m5.4xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     regions:
     - region: us-east-1
@@ -993,14 +993,14 @@ aws-provisioner-v1/gecko-3-b-linux:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
     - instanceType: c5d.4xlarge
       launchSpec:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 2
     - instanceType: m5.4xlarge
       launchSpec:
@@ -1054,11 +1054,11 @@ aws-provisioner-v1/gecko-3-b-linux-large:
     instanceTypes:
     - instanceType: c5d.9xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m5d.12xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.3
     - instanceType: m5.12xlarge
       launchSpec:
@@ -1066,7 +1066,7 @@ aws-provisioner-v1/gecko-3-b-linux-large:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: c5.9xlarge
       launchSpec:
@@ -1074,14 +1074,14 @@ aws-provisioner-v1/gecko-3-b-linux-large:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
     - instanceType: m4.10xlarge
       launchSpec:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: c4.8xlarge
       launchSpec:
@@ -1089,7 +1089,7 @@ aws-provisioner-v1/gecko-3-b-linux-large:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 0.9
     regions:
     - region: us-east-1
@@ -1136,11 +1136,11 @@ aws-provisioner-v1/gecko-3-b-linux-xlarge:
     instanceTypes:
     - instanceType: c5d.18xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m5d.24xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.3
     - instanceType: m5.24xlarge
       launchSpec:
@@ -1148,7 +1148,7 @@ aws-provisioner-v1/gecko-3-b-linux-xlarge:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m4.16xlarge
       launchSpec:
@@ -1156,14 +1156,14 @@ aws-provisioner-v1/gecko-3-b-linux-xlarge:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
     - instanceType: c5.18xlarge
       launchSpec:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 0.9
     regions:
     - region: us-east-1
@@ -1210,11 +1210,11 @@ aws-provisioner-v1/gecko-3-b-macosx64:
     instanceTypes:
     - instanceType: c5.4xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     - instanceType: m5.4xlarge
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 1.1
     regions:
     - region: us-east-1
