@@ -496,6 +496,20 @@ application-services:
   repo_type: git
   level: 3
 
+# L10n repositories
+android-l10n-tooling:
+  repo: https://github.com/mozilla-l10n/android-l10n-tooling
+  repo_type: git
+  level: 3
+  trust_domain: l10n
+
+# For testing
+tp-android-l10n-tooling:
+  repo: https://github.com/tp-tc/android-l10n-tooling
+  repo_type: git
+  level: 1
+  trust_domain: l10n
+
 # Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
 kglazko-reference-browser:
   repo: https://github.com/kglazko/reference-browser/

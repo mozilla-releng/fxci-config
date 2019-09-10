@@ -889,6 +889,33 @@
       job: ["release"]
 
 
+# L10n repositories
+
+- grant:
+  - queue:create-task:highest:aws-provisioner-v1/l10n-{level}-*
+  - queue:create-task:{priority}:built-in/*
+  - queue:route:index.{trust_domain}.{alias}.cache.level-{level}.*
+  - queue:scheduler-id:{trust_domain}-level-{level}
+  - docker-worker:cache:{trust_domain}-level-{level}-*
+  - generic-worker:cache:{trust_domain}-level-{level}-*
+  - queue:route:notify.email.*
+  - queue:route:checks
+  to:
+  - project:
+      alias:
+      - android-l10n-tooling
+      - tp-android-l10n-tooling
+      job: ["pull-request", "branch:*", "cron:*"]
+
+- grant:
+  - secrets:get:l10n/level-{level}/*
+  to:
+  - project:
+      alias:
+      - android-l10n-tooling
+      - tp-android-l10n-tooling
+      job: ["branch:*", "cron:*"]
+
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
 
