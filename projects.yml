@@ -35,6 +35,7 @@
 #   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
 #   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
 #   - `mobile-pushapk-stage-phase` -- this https://github.com/mozilla-mobile repository should have pushapk staging related scopes associated
+#   - `mobile-taskgraph` -- this https://github.com/mozilla-mobile repository has started using taskgraph
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - 'taskgraph-cron' -- tasks defined in `.cron.yml` can run for this project (non-gecko/comm taskgraph repos only)
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
@@ -468,12 +469,14 @@ reference-browser:
     mobile-sign-phase: true
     mobile-pushapk-phase: true
     mobile-pushapk-stage-phase: true
+    mobile-taskgraph: true
     taskgraph-cron: true
     treeherder-reporting: true
   cron_targets: [nightly, raptor]
 
 fenix:
   repo: https://github.com/mozilla-mobile/fenix
+  trust_domain: mobile
   repo_type: git
   level: 3
   features:
@@ -482,6 +485,7 @@ fenix:
     mobile-sign-phase: true
     mobile-pushapk-phase: true
     mobile-pushapk-stage-phase: true
+    mobile-taskgraph: true
     treeherder-reporting: true
 
 focus-android:

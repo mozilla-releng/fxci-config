@@ -838,7 +838,7 @@
   - generic-worker:cache:{trust_domain}-level-{level}-*
   to:
   - project:
-      alias: reference-browser
+      feature: mobile-taskgraph
       job: ["pull-request", "branch:*", "branch:master", "release", "cron:*"]
 
 - grant:
