@@ -486,6 +486,7 @@ fenix:
     mobile-pushapk-phase: true
     mobile-pushapk-stage-phase: true
     mobile-taskgraph: true
+    taskgraph-cron: true
     treeherder-reporting: true
   cron_targets: [nightly, raptor]
 
