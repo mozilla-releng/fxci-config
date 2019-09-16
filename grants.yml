@@ -830,7 +830,6 @@
       alias: fenix
       job: ["cron:nightly-staging"]
 
-# reference-browser specific scopes
 - grant:
   - queue:scheduler-id:{trust_domain}-level-{level}
   # allow using worker caches appropriate to this trust domain and level
@@ -841,6 +840,7 @@
       feature: mobile-taskgraph
       job: ["pull-request", "branch:*", "branch:master", "release", "cron:*"]
 
+# reference-browser specific scopes
 - grant:
   - queue:route:index.project.mobile.reference-browser.v3.nightly.*
   - queue:route:index.project.mobile.reference-browser.v3.signed-nightly.*

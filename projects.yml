@@ -487,6 +487,7 @@ fenix:
     mobile-pushapk-stage-phase: true
     mobile-taskgraph: true
     treeherder-reporting: true
+  cron_targets: [nightly, raptor]
 
 focus-android:
   repo: https://github.com/mozilla-mobile/focus-android
