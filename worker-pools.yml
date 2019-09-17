@@ -2844,3 +2844,42 @@ aws-provisioner-v1/l10n-3-images:
       launchSpec: {SubnetId: subnet-2eaaba67}
     - availabilityZone: us-west-2c
       launchSpec: {SubnetId: subnet-540a9f0f}
+pmoore-test/win2012r2:
+  description: Same as aws-provisioner-v1/win2012r2 but for GCP
+  owner: pmoore@mozilla.com
+  email_on_error: true
+  provider_id: google
+  config:
+    capacityPerInstance: 1
+    disks:
+    - autoDelete: true
+      boot: true
+      initializeParams:
+        diskSizeGb: 50
+        sourceImage: projects/pmoore-dev/global/images/win2012r2-r4cljd3r5w1a4b0ymy9a
+      type: PERSISTENT
+    machineType: custom-32-29440
+    maxCapacity: 5
+    minCapacity: 1
+    networkInterfaces:
+    - accessConfigs:
+      - type: ONE_TO_ONE_NAT
+    regions:
+    - us-east1
+    scheduling:
+      onHostMaintenance: terminate
+    userData: {}
+    workerConfig:
+      genericWorker:
+        config:
+          deploymentId: VAD_hBnJTj2v1fQWWDne9w
+          ed25519SigningKeyLocation: C:\generic-worker\generic-worker-ed25519-signing-key.key
+          livelogExecutable: C:\generic-worker\livelog.exe
+          sentryProject: generic-worker
+          taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+          workerTypeMetadata:
+            machine-setup:
+              maintainer: pmoore@mozilla.com
+              script: https://raw.githubusercontent.com/taskcluster/generic-worker/e52a800ddd2e2eaaeec2026e44a9e07b77ab8b88/worker_types/win2012r2/userdata
+          wstAudience: taskcluster-net
+          wstServerURL: https://websocktunnel.tasks.build
