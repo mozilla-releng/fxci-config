@@ -747,15 +747,16 @@
   - project:
       feature: autophone
       # PRs are temporarily allowed to test the integration of Raptor
-      job: ["branch:master", "pull-request"]
+      job: ["branch:master", "cron:raptor", "pull-request"]
 
 
 - grant:
-  - queue:route:index.project.mobile.reference-browser.v3.raptor.*
+  - queue:route:index.project.mobile.{alias}.v3.raptor.*
+  - queue:route:index.project.mobile.{alias}.v2.performance-test.*
   to:
   - project:
       feature: autophone
-      job: ["branch:master"]
+      job: ["branch:master", "cron:raptor"]
 
 # fenix specific scopes
 - grant:
