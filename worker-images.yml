@@ -12,6 +12,13 @@
 docker-worker-hvm-builder-current: docker-worker-v201909112001-hvm-builder
 docker-worker-hvm-builder-trusted-current: docker-worker-v201909112001-hvm-builder-trusted
 
+# monopacker test AMIs
+monopacker-docker-worker-aws-current: docker_worker_aws-amazon-ebs-2019-09-18T16-42-49Z
+docker_worker_aws-amazon-ebs-2019-09-18T16-42-49Z:
+  ec2:
+    us-west-2: ami-03832a447954c4ace
+
+# production docker-worker AMIs
 docker-worker-v201802270910-hvm-builder-trusted:
   ec2:
     us-east-1: ami-2283685f
@@ -307,4 +314,3 @@ docker-worker-v201909112001-hvm-builder:
     us-east-1: ami-061ff244264a5f2c0
     us-west-1: ami-0ef396dc1606a51e5
     us-west-2: ami-025c0935ffaeb8063
-
