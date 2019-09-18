@@ -2847,7 +2847,7 @@ aws-provisioner-v1/l10n-3-images:
 aws-provisioner-v1/gecko-1-monopacker-test-aws:
   description: Monopacker test worker for Firefox automation
   owner: mcrabill@mozilla.com
-  email_on_error: true
+  email_on_error: false
   provider_id: legacy-aws-provisioner-v1
   config:
     image: monopacker-docker-worker-aws-current
@@ -2873,7 +2873,6 @@ aws-provisioner-v1/gecko-1-monopacker-test-aws:
         launchSpec: { SubnetId: subnet-2eaaba67 }
       - availabilityZone: us-west-2c
         launchSpec: { SubnetId: subnet-540a9f0f }
-  workerConfig: {}
 monopacker-test/gecko-1-monopacker-test-gcp:
   description: Same as aws-provisioner-v1/win2012r2 but for GCP
   owner: mcrabill@mozilla.com
