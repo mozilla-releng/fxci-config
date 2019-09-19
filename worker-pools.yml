@@ -2899,8 +2899,8 @@ monopacker-test/gecko-1-monopacker-test-gcp:
     scheduling:
       onHostMaintenance: terminate
     userData: {}
-pmoore-test/win2012r2:
-  description: Same as aws-provisioner-v1/win2012r2 but for GCP
+pmoore-test/gwci-linux:
+  description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/gwci-linux but for GCP'
   owner: pmoore@mozilla.com
   email_on_error: true
   provider_id: google
@@ -2911,7 +2911,51 @@ pmoore-test/win2012r2:
       boot: true
       initializeParams:
         diskSizeGb: 50
-        sourceImage: projects/pmoore-dev/global/images/win2012r2-r4cljd3r5w1a4b0ymy9a
+        sourceImage: projects/pmoore-dev/global/images/gwci-linux-r4cljd3r5w1a4b0ymy9a
+      type: PERSISTENT
+    displayDevice:
+      enableDisplay: true
+    machineType: custom-32-29440
+    maxCapacity: 5
+    minCapacity: 1
+    networkInterfaces:
+    - accessConfigs:
+      - type: ONE_TO_ONE_NAT
+    regions:
+    - us-east1
+    scheduling:
+      onHostMaintenance: terminate
+    userData: {}
+    workerConfig:
+      genericWorker:
+        config:
+          deploymentId: Jlwgl50PSkujt5d7kIKctA
+          ed25519SigningKeyLocation: "/etc/generic-worker/ed25519_key"
+          livelogExecutable: "/usr/local/bin/livelog"
+          runTasksAsCurrentUser: true
+          shutdownMachineOnInternalError: false
+          taskclusterProxyExecutable: "/usr/local/bin/taskcluster-proxy"
+          taskclusterProxyPort: 8080
+          tasksDir: "/home"
+          workerTypeMetadata:
+            machine-setup:
+              maintainer: pmoore@mozilla.com
+              script: https://raw.githubusercontent.com/taskcluster/generic-worker/4458a2fc07483e29434f4e3c0926d59997e990fa/worker_types/gwci-linux/userdata
+          wstAudience: taskcluster-net
+          wstServerURL: https://websocktunnel.tasks.build
+pmoore-test/win2012r2:
+  description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/win2012r2 but for GCP'
+  owner: pmoore@mozilla.com
+  email_on_error: true
+  provider_id: google
+  config:
+    capacityPerInstance: 1
+    disks:
+    - autoDelete: true
+      boot: true
+      initializeParams:
+        diskSizeGb: 50
+        sourceImage: projects/pmoore-dev/global/images/win2012r2-xgx5flu31uwmbabyzg68
       type: PERSISTENT
     machineType: custom-32-29440
     maxCapacity: 5
@@ -2927,7 +2971,7 @@ pmoore-test/win2012r2:
     workerConfig:
       genericWorker:
         config:
-          deploymentId: VAD_hBnJTj2v1fQWWDne9w
+          deploymentId: UuZe9LfdTOih_45V_sRFuw
           ed25519SigningKeyLocation: C:\generic-worker\generic-worker-ed25519-signing-key.key
           livelogExecutable: C:\generic-worker\livelog.exe
           sentryProject: generic-worker
@@ -2935,7 +2979,7 @@ pmoore-test/win2012r2:
           workerTypeMetadata:
             machine-setup:
               maintainer: pmoore@mozilla.com
-              script: https://raw.githubusercontent.com/taskcluster/generic-worker/e52a800ddd2e2eaaeec2026e44a9e07b77ab8b88/worker_types/win2012r2/userdata
+              script: https://raw.githubusercontent.com/taskcluster/generic-worker/82d1085847dacedf8bb3a160bbbbf6368d35834f/worker_types/win2012r2/userdata
           wstAudience: taskcluster-net
           wstServerURL: https://websocktunnel.tasks.build
 gecko-1/win2012-gamma:
