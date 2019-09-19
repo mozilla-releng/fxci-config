@@ -2888,7 +2888,7 @@ monopacker-test/gecko-1-monopacker-test-gcp:
         initializeParams:
           diskSizeGb: 50
           # in taskcluster-imaging
-          sourceImage: docker-worker-gcp-googlecompute-2019-09-18t17-19-36z
+          sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-18t17-19-36z
         type: PERSISTENT
     machineType: custom-32-29440
     networkInterfaces:
