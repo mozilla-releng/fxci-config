@@ -2911,7 +2911,7 @@ pmoore-test/gwci-linux:
       boot: true
       initializeParams:
         diskSizeGb: 50
-        sourceImage: projects/pmoore-dev/global/images/gwci-linux-r4cljd3r5w1a4b0ymy9a
+        sourceImage: projects/pmoore-dev/global/images/gwci-linux-ajwcfoqu45kyf1fu6mfj
       type: PERSISTENT
     displayDevice:
       enableDisplay: true
@@ -2929,7 +2929,7 @@ pmoore-test/gwci-linux:
     workerConfig:
       genericWorker:
         config:
-          deploymentId: Jlwgl50PSkujt5d7kIKctA
+          deploymentId: dxmGKDRZQp-750fzeJt41w
           ed25519SigningKeyLocation: "/etc/generic-worker/ed25519_key"
           livelogExecutable: "/usr/local/bin/livelog"
           runTasksAsCurrentUser: true
@@ -2940,7 +2940,7 @@ pmoore-test/gwci-linux:
           workerTypeMetadata:
             machine-setup:
               maintainer: pmoore@mozilla.com
-              script: https://raw.githubusercontent.com/taskcluster/generic-worker/4458a2fc07483e29434f4e3c0926d59997e990fa/worker_types/gwci-linux/userdata
+              script: https://raw.githubusercontent.com/taskcluster/generic-worker/82d1085847dacedf8bb3a160bbbbf6368d35834f/worker_types/gwci-linux/userdata
           wstAudience: taskcluster-net
           wstServerURL: https://websocktunnel.tasks.build
 pmoore-test/win2012r2:
