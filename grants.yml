@@ -97,6 +97,8 @@
   - queue:create-task:{priority}:built-in/*
   - queue:create-task:{priority}:scriptworker-k8s/{trust_domain}-{level}-*
   - queue:create-task:{priority}:scriptworker-k8s/{trust_domain}-t-*
+  - queue:create-task:{priority}:gecko-{level}/*
+  - queue:create-task:{priority}:gecko-t/*
   to:
   - project:
       feature: gecko-roles
@@ -107,6 +109,8 @@
   - queue:create-task:{priority}:bitbar/gecko-t-*
   - queue:create-task:{priority}:gce/gecko-t-*
   - queue:create-task:{priority}:gce/gecko-{level}-*
+  - queue:create-task:{priority}:gecko-{level}/*
+  - queue:create-task:{priority}:gecko-t/*
   - queue:create-task:{priority}:releng-hardware/gecko-{level}-*
   - queue:create-task:{priority}:terraform-packet/gecko-t-*
 
@@ -186,6 +190,8 @@
 - grant:
   - generic-worker:allow-rdp:aws-provisioner-v1/gecko-1-b-win*
   - generic-worker:allow-rdp:aws-provisioner-v1/gecko-t-win*
+  - generic-worker:allow-rdp:gecko-1/win*
+  - generic-worker:allow-rdp:gecko-t/win*
   - generic-worker:os-group:aws-provisioner-v1/gecko-t-win7-32/Administrators
   - generic-worker:os-group:aws-provisioner-v1/gecko-t-win10-64/Administrators
   - generic-worker:os-group:aws-provisioner-v1/gecko-t-win10-64-alpha/Administrators
@@ -476,6 +482,7 @@
   - queue:create-task:aws-provisioner-v1/hg-worker
   - queue:create-task:aws-provisioner-v1/nss-*
   - queue:create-task:aws-provisioner-v1/win2012r2
+  - queue:create-task:gecko-1/win*
   - queue:create-task:localprovisioner/nss-aarch64
   - queue:create-task:localprovisioner/nss-macos-10-12
   - queue:route:index.docker.images.v1.nss-try.*
@@ -954,6 +961,9 @@
   # Allow sherrifs to quarantine gecko related workers
   - queue:quarantine-worker:aws-provisioner-v1/gecko-*
   - queue:quarantine-worker:bitbar/gecko-*
+  - queue:quarantine-worker:gecko-1/*
+  - queue:quarantine-worker:gecko-3/*
+  - queue:quarantine-worker:gecko-t/*
   - queue:quarantine-worker:proj-autophone/gecko-*
   - queue:quarantine-worker:releng-hardware/gecko-*
   - queue:quarantine-worker:terraform-packet/gecko-*

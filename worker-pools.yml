@@ -2938,3 +2938,107 @@ pmoore-test/win2012r2:
               script: https://raw.githubusercontent.com/taskcluster/generic-worker/e52a800ddd2e2eaaeec2026e44a9e07b77ab8b88/worker_types/win2012r2/userdata
           wstAudience: taskcluster-net
           wstServerURL: https://websocktunnel.tasks.build
+gecko-1/win2012-gamma:
+  description: gecko builder for scm level 1 on gcp
+  owner: relops@mozilla.com
+  email_on_error: true
+  provider_id: gecko-1
+  config:
+    capacityPerInstance: 1
+    disks:
+    - autoDelete: true
+      boot: true
+      initializeParams:
+        diskSizeGb: 50
+        sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+      type: PERSISTENT
+    - autoDelete: true
+      initializeParams:
+        diskSizeGb: 120
+      type: PERSISTENT
+    machineType: n1-highcpu-32
+    maxCapacity: 16
+    minCapacity: 0
+    networkInterfaces:
+    - accessConfigs:
+      - type: ONE_TO_ONE_NAT
+    regions:
+    - us-central1
+    - us-east1
+    - us-east4
+    - us-west1
+    scheduling:
+      onHostMaintenance: terminate
+    userData: {}
+    workerConfig:
+      genericWorker:
+        config:
+          deploymentId: gamma
+          ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+          livelogExecutable: C:\generic-worker\livelog.exe
+          sentryProject: generic-worker
+          taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+          workerTypeMetadata:
+            machine-setup:
+              maintainer: relops@mozilla.com
+              source: https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma
+          wstAudience: taskcluster-net
+          wstServerURL: https://websocktunnel.tasks.build
+      openCloudConfig:
+        workerType: gecko-1-b-win2012-gamma
+        source:
+          Organisation: mozilla-releng
+          Repository: OpenCloudConfig
+          Revision: gamma
+gecko-3/win2012-gamma:
+  description: gecko builder for scm level 3 on gcp
+  owner: relops@mozilla.com
+  email_on_error: true
+  provider_id: gecko-3
+  config:
+    capacityPerInstance: 1
+    disks:
+    - autoDelete: true
+      boot: true
+      initializeParams:
+        diskSizeGb: 50
+        sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+      type: PERSISTENT
+    - autoDelete: true
+      initializeParams:
+        diskSizeGb: 120
+      type: PERSISTENT
+    machineType: n1-highcpu-32
+    maxCapacity: 16
+    minCapacity: 0
+    networkInterfaces:
+    - accessConfigs:
+      - type: ONE_TO_ONE_NAT
+    regions:
+    - us-central1
+    - us-east1
+    - us-east4
+    - us-west1
+    scheduling:
+      onHostMaintenance: terminate
+    userData: {}
+    workerConfig:
+      genericWorker:
+        config:
+          deploymentId: gamma
+          ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+          livelogExecutable: C:\generic-worker\livelog.exe
+          sentryProject: generic-worker
+          taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+          workerTypeMetadata:
+            machine-setup:
+              maintainer: relops@mozilla.com
+              source: https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma
+          wstAudience: taskcluster-net
+          wstServerURL: https://websocktunnel.tasks.build
+      openCloudConfig:
+        workerType: gecko-3-b-win2012-gamma
+        source:
+          Organisation: mozilla-releng
+          Repository: OpenCloudConfig
+          Revision: gamma
