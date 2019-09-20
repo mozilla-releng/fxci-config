@@ -2873,7 +2873,7 @@ aws-provisioner-v1/gecko-1-monopacker-test-aws:
         launchSpec: { SubnetId: subnet-2eaaba67 }
       - availabilityZone: us-west-2c
         launchSpec: { SubnetId: subnet-540a9f0f }
-monopacker-test/gecko-1-monopacker-test-gcp:
+monopacker/gecko-1-test-gcp:
   description: Same as aws-provisioner-v1/win2012r2 but for GCP
   owner: mcrabill@mozilla.com
   email_on_error: true
