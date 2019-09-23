@@ -3017,11 +3017,24 @@ gecko-1/win2012-gamma:
     workerConfig:
       genericWorker:
         config:
+          cachesDir: Z:\caches
+          cleanUpTaskDirs: true
           deploymentId: gamma
+          disableReboots: true
+          downloadsDir: Z:\downloads
           ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+          idleTimeoutSecs: 3600
           livelogExecutable: C:\generic-worker\livelog.exe
+          numberOfTasksToRun: 0
+          requiredDiskSpaceMegabytes: 10240
+          runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+          runTasksAsCurrentUser: false
           sentryProject: generic-worker
+          shutdownMachineOnIdle: false
+          shutdownMachineOnInternalError: true
           taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+          taskclusterProxyPort: 80
+          tasksDir: Z:\
           workerTypeMetadata:
             machine-setup:
               maintainer: relops@mozilla.com
@@ -3069,11 +3082,24 @@ gecko-3/win2012-gamma:
     workerConfig:
       genericWorker:
         config:
+          cachesDir: Z:\caches
+          cleanUpTaskDirs: true
           deploymentId: gamma
+          disableReboots: true
+          downloadsDir: Z:\downloads
           ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+          idleTimeoutSecs: 3600
           livelogExecutable: C:\generic-worker\livelog.exe
+          numberOfTasksToRun: 0
+          requiredDiskSpaceMegabytes: 10240
+          runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+          runTasksAsCurrentUser: false
           sentryProject: generic-worker
+          shutdownMachineOnIdle: false
+          shutdownMachineOnInternalError: true
           taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+          taskclusterProxyPort: 80
+          tasksDir: Z:\
           workerTypeMetadata:
             machine-setup:
               maintainer: relops@mozilla.com
