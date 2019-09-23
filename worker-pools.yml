@@ -3106,6 +3106,34 @@ pmoore-test/gwci-linux:
               script: https://raw.githubusercontent.com/taskcluster/generic-worker/82d1085847dacedf8bb3a160bbbbf6368d35834f/worker_types/gwci-linux/userdata
           wstAudience: taskcluster-net
           wstServerURL: https://websocktunnel.tasks.build
+taskcluster-imaging/taskcluster-imaging-ci:
+  description: A worker to test making images for workers
+  owner: bstack@mozilla.com
+  email_on_error: true
+  provider_id: taskcluster-imaging
+  config:
+    minCapacity: 0
+    maxCapacity: 4
+    capacityPerInstance: 1
+    disks:
+      - autoDelete: true
+        boot: true
+        initializeParams:
+          diskSizeGb: 50
+          # in taskcluster-imaging
+          sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-18t17-19-36z
+        type: PERSISTENT
+    machineType: n2-standard-8
+    networkInterfaces:
+      - accessConfigs:
+          - type: ONE_TO_ONE_NAT
+    regions:
+      - us-west1
+    scheduling:
+      onHostMaintenance: terminate
+    workerConfig:
+      shutdown:
+        enabled: true
 pmoore-test/win2012r2:
   description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/win2012r2 but for GCP'
   owner: pmoore@mozilla.com
