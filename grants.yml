@@ -924,6 +924,36 @@
       - tp-android-l10n-tooling
       job: ["branch:*", "cron:*"]
 
+
+# MPD001
+
+- grant:
+  - queue:create-task:highest:aws-provisioner-v1/{trust_domain}-{level}-*
+  - queue:create-task:{priority}:built-in/*
+  - queue:route:index.{trust_domain}.cache.level-{level}.*
+  - queue:scheduler-id:{trust_domain}-level-{level}
+  - docker-worker:cache:{trust_domain}-level-{level}-*
+  - generic-worker:cache:{trust_domain}-level-{level}-*
+  - queue:route:notify.email.*
+  - queue:route:checks
+  # Temporary secret for cloning; this should be renamed
+  - secrets:get:project/releng/callek/mpd001-deploykey
+  to:
+  - project:
+      alias:
+      - mpd001
+      job: ["pull-request", "branch:*", "cron:*"]
+
+- grant:
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
+  to:
+  - project:
+      alias:
+      - mpd001
+      # Only enable this for master and pull-requests, so that in-repo branches
+      # don't get access to scriptworkers.
+      job: ["branch:master", "pull-request"]
+
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
 

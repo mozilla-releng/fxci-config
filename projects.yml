@@ -516,6 +516,13 @@ tp-android-l10n-tooling:
   level: 1
   trust_domain: l10n
 
+# MPD 001
+mpd001:
+  repo: https://github.com/mozilla-services/guardian-vpn
+  repo_type: git
+  level: 3
+  trust_domain: mpd001
+
 # Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
 kglazko-reference-browser:
   repo: https://github.com/kglazko/reference-browser/
