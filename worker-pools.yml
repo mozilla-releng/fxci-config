@@ -2982,6 +2982,48 @@ pmoore-test/win2012r2:
               script: https://raw.githubusercontent.com/taskcluster/generic-worker/82d1085847dacedf8bb3a160bbbbf6368d35834f/worker_types/win2012r2/userdata
           wstAudience: taskcluster-net
           wstServerURL: https://websocktunnel.tasks.build
+pmoore-test/win2012r2-cu:
+  description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/win2012r2-cu but for GCP'
+  owner: pmoore@mozilla.com
+  email_on_error: true
+  provider_id: google
+  config:
+    capacityPerInstance: 1
+    disks:
+    - autoDelete: true
+      boot: true
+      initializeParams:
+        diskSizeGb: 50
+        sourceImage: projects/pmoore-dev/global/images/win2012r2-xgx5flu31uwmbabyzg68
+      type: PERSISTENT
+    machineType: custom-32-29440
+    maxCapacity: 5
+    minCapacity: 1
+    networkInterfaces:
+    - accessConfigs:
+      - type: ONE_TO_ONE_NAT
+    regions:
+    - us-east1
+    scheduling:
+      onHostMaintenance: terminate
+    userData: {}
+    workerConfig:
+      genericWorker:
+        config:
+          checkForNewDeploymentEverySecs: 120
+          deploymentId: GGkMWP2iTf-Uo2o3EUfQMA
+          ed25519SigningKeyLocation: C:\generic-worker\generic-worker-ed25519-signing-key.key
+          idleTimeoutSecs: 28800
+          livelogExecutable: C:\generic-worker\livelog.exe
+          runTasksAsCurrentUser: true
+          sentryProject: generic-worker
+          shutdownMachineOnInternalError: false
+          workerTypeMetadata:
+            machine-setup:
+              maintainer: pmoore@mozilla.com
+              script: https://raw.githubusercontent.com/taskcluster/generic-worker/e52a800ddd2e2eaaeec2026e44a9e07b77ab8b88/worker_types/win2012r2-cu/userdata
+          wstAudience: taskcluster-net
+          wstServerURL: https://websocktunnel.tasks.build
 gecko-1/win2012-gamma:
   description: gecko builder for scm level 1 on gcp
   owner: relops@mozilla.com
