@@ -3051,7 +3051,7 @@ monopacker/gecko-1-test-gcp:
         initializeParams:
           diskSizeGb: 50
           # in taskcluster-imaging
-          sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-18t17-19-36z
+          sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
         type: PERSISTENT
     machineType: custom-32-29440
     networkInterfaces:
@@ -3121,7 +3121,7 @@ taskcluster-imaging/taskcluster-imaging-ci:
         initializeParams:
           diskSizeGb: 50
           # in taskcluster-imaging
-          sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-18t17-19-36z
+          sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
         type: PERSISTENT
     machineType: n2-standard-8
     networkInterfaces:
@@ -3415,3 +3415,63 @@ gecko-3/win2012-gamma:
           Organisation: mozilla-releng
           Repository: OpenCloudConfig
           Revision: gamma
+gce/gecko-3-b-linux:
+  description: Worker for Firefox automation.
+  owner: bstack@mozilla.com # Temporary until we move this to a real team
+  email_on_error: true
+  provider_id: gecko-3
+  config:
+    minCapacity: 0
+    maxCapacity: 20
+    capacityPerInstance: 1
+    disks:
+      - autoDelete: true
+        boot: true
+        initializeParams:
+          diskSizeGb: 100
+          # in taskcluster-imaging
+          sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
+        type: PERSISTENT
+    machineType: custom-32-29440
+    networkInterfaces:
+      - accessConfigs:
+          - type: ONE_TO_ONE_NAT
+    regions:
+      - us-west1
+      - us-east1
+      - us-east4
+    scheduling:
+      onHostMaintenance: terminate
+    workerConfig:
+      shutdown:
+        enabled: true
+gce/gecko-1-b-linux:
+  description: Worker for Firefox automation.
+  owner: bstack@mozilla.com # Temporary until we move this to a real team
+  email_on_error: true
+  provider_id: gecko-1
+  config:
+    minCapacity: 0
+    maxCapacity: 20
+    capacityPerInstance: 1
+    disks:
+      - autoDelete: true
+        boot: true
+        initializeParams:
+          diskSizeGb: 100
+          # in taskcluster-imaging
+          sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
+        type: PERSISTENT
+    machineType: custom-32-29440
+    networkInterfaces:
+      - accessConfigs:
+          - type: ONE_TO_ONE_NAT
+    regions:
+      - us-west1
+      - us-east1
+      - us-east4
+    scheduling:
+      onHostMaintenance: terminate
+    workerConfig:
+      shutdown:
+        enabled: true
