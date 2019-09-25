@@ -450,13 +450,18 @@ aki-xpitest-manifest:
 # mobile Github repositories
 android-components:
   repo: https://github.com/mozilla-mobile/android-components
+  trust_domain: mobile
   repo_type: git
   level: 3
   features:
     mobile-roles: true
     mobile-sign-phase: true
+    mobile-taskgraph: true
     mobile-beetmover-phase: true
     mobile-beetmover-snapshot-phase: true
+    taskgraph-cron: true
+    treeherder-reporting: true
+  cron_targets: [snapshot]
 
 reference-browser:
   repo: https://github.com/mozilla-mobile/reference-browser
