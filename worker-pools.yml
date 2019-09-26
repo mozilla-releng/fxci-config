@@ -3123,7 +3123,7 @@ taskcluster-imaging/taskcluster-imaging-ci:
           # in taskcluster-imaging
           sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
         type: PERSISTENT
-    machineType: n2-standard-8
+    machineType: n1-standard-8
     networkInterfaces:
       - accessConfigs:
           - type: ONE_TO_ONE_NAT
