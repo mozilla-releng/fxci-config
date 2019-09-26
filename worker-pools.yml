@@ -3079,8 +3079,8 @@ pmoore-test/gwci-linux:
     displayDevice:
       enableDisplay: true
     machineType: custom-32-29440
-    maxCapacity: 5
-    minCapacity: 1
+    maxCapacity: 10
+    minCapacity: 0
     networkInterfaces:
     - accessConfigs:
       - type: ONE_TO_ONE_NAT
@@ -3149,8 +3149,8 @@ pmoore-test/win2012r2:
         sourceImage: projects/pmoore-dev/global/images/win2012r2-rzuhq8vonqvbsgvhdqsd
       type: PERSISTENT
     machineType: custom-32-29440
-    maxCapacity: 5
-    minCapacity: 1
+    maxCapacity: 10
+    minCapacity: 0
     networkInterfaces:
     - accessConfigs:
       - type: ONE_TO_ONE_NAT
@@ -3188,8 +3188,8 @@ pmoore-test/win2012r2-cu:
         sourceImage: projects/pmoore-dev/global/images/win2012r2-cu-pnvli6jrztigrd3e7hml
       type: PERSISTENT
     machineType: custom-32-29440
-    maxCapacity: 5
-    minCapacity: 1
+    maxCapacity: 10
+    minCapacity: 0
     networkInterfaces:
     - accessConfigs:
       - type: ONE_TO_ONE_NAT
