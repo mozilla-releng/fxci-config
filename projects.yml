@@ -437,16 +437,6 @@ version-control-tools:
   features:
     hg-push: true
 
-# Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
-aki-xpitest-manifest:
-  repo: https://github.com/escapewindow/xpitest-manifest
-  repo_type: git
-  trust_domain: garbage
-  level: 1
-  features:
-    trust-domain-scopes: true
-    xpi-signing-roles: true
-
 # mobile Github repositories
 android-components:
   repo: https://github.com/mozilla-mobile/android-components
@@ -526,6 +516,17 @@ mpd001:
   repo_type: git
   level: 3
   trust_domain: mpd001
+
+# Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
+aki-xpi-manifest:
+  repo: https://github.com/escapewindow/xpi-manifest
+  repo_type: git
+  trust_domain: xpi
+  level: 1
+  features:
+    trust-domain-scopes: true
+    xpi-signing-roles: true
+
 
 # Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
 kglazko-reference-browser:

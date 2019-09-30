@@ -560,15 +560,6 @@
       feature: is-trunk
 
 ##
-# xpi-signing roles
-- grant:
-  - assume:project:taskcluster:mozilla-github-repository
-  - queue:create-task:low:aws-provisioner-v1/mobile-1-*
-  to:
-  - project:
-      alias: aki-xpitest-manifest
-
-##
 # mozilla roles - application-services specific roles
 #
 # Mind yourself of globstar roles such as the following that could potentially
@@ -958,6 +949,33 @@
   - project:
       alias:
       - mpd001
+      # Only enable this for master and pull-requests, so that in-repo branches
+      # don't get access to scriptworkers.
+      job: ["branch:master", "pull-request"]
+
+# XPI
+
+- grant:
+  - queue:create-task:highest:aws-provisioner-v1/{trust_domain}-{level}-*
+  - queue:create-task:{priority}:built-in/*
+  - queue:route:index.{trust_domain}.cache.level-{level}.*
+  - queue:scheduler-id:{trust_domain}-level-{level}
+  - docker-worker:cache:{trust_domain}-level-{level}-*
+  - queue:route:notify.email.*
+  - queue:route:checks
+  to:
+  - project:
+      alias:
+      - aki-xpi-manifest
+      job: ["pull-request", "branch:*", "cron:*"]
+
+- grant:
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
+  - project:mozilla:{alias}:releng:signing:cert:dep-signing
+  to:
+  - project:
+      alias:
+      - aki-xpi-manifest
       # Only enable this for master and pull-requests, so that in-repo branches
       # don't get access to scriptworkers.
       job: ["branch:master", "pull-request"]
