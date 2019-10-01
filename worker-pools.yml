@@ -3475,3 +3475,67 @@ gce/gecko-1-b-linux:
     workerConfig:
       shutdown:
         enabled: true
+aws-provisioner-v1/fp-gecko-1-gw-linux:
+  description: Prototype worker type for building flatpak on generic-worker on linux
+  owner: Mihai Tabara
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    instanceTypes:
+    - capacity: 1
+      instanceType: m3.2xlarge
+      launchSpec: {}
+      scopes: []
+      secrets: {}
+      userData: {}
+      utility: 1
+    launchSpec:
+      SecurityGroups:
+      - ssh-only
+      - rdp-only
+    maxCapacity: 5
+    maxPrice: 8
+    minCapacity: 0
+    minPrice: 8
+    owner: Taskcluster
+    regions:
+    - launchSpec:
+        ImageId: ami-01ef13821f78d81b0
+      region: us-east-1
+      scopes: []
+      secrets: {}
+      userData: {}
+    - launchSpec:
+        ImageId: ami-008c6f8970746e5b1
+      region: us-west-1
+      scopes: []
+      secrets: {}
+      userData: {}
+    - launchSpec:
+        ImageId: ami-09d6d805528cf3fd6
+      region: us-west-2
+      scopes: []
+      secrets: {}
+      userData: {}
+    scalingRatio: 0
+    scopes:
+    - assume:worker-type:aws-provisioner-v1/fp-gecko-1-gw-linux
+    - assume:worker-id:*
+    secrets: {}
+    userData:
+      genericWorker:
+        config:
+          deploymentId: Jlwgl50PSkujt5d7kIKctA
+          ed25519SigningKeyLocation: "/etc/generic-worker/ed25519_key"
+          livelogExecutable: "/usr/local/bin/livelog"
+          runTasksAsCurrentUser: true
+          shutdownMachineOnInternalError: false
+          taskclusterProxyExecutable: "/usr/local/bin/taskcluster-proxy"
+          taskclusterProxyPort: 8080
+          tasksDir: "/home"
+          workerTypeMetadata:
+            machine-setup:
+              maintainer: mtabara@mozilla.com
+              script: https://raw.githubusercontent.com/taskcluster/generic-worker/4458a2fc07483e29434f4e3c0926d59997e990fa/worker_types/fp-gecko-1-gw-linux
+          wstAudience: taskcluster-net
+          wstServerURL: https://websocktunnel.tasks.build
