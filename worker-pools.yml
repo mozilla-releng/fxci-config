@@ -3280,6 +3280,146 @@ gecko-1/win2012-gamma:
           Organisation: mozilla-releng
           Repository: OpenCloudConfig
           Revision: gamma
+gecko-1/win2019-gamma:
+  description: gecko wsl builder for scm level 1 on gcp
+  owner: relops@mozilla.com
+  email_on_error: true
+  provider_id: gecko-1
+  config:
+    capacityPerInstance: 1
+    disks:
+    - autoDelete: true
+      boot: true
+      initializeParams:
+        diskSizeGb: 50
+        sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
+      type: PERSISTENT
+    - autoDelete: true
+      initializeParams:
+        diskSizeGb: 120
+      type: PERSISTENT
+    machineType: n1-highcpu-32
+    maxCapacity: 16
+    minCapacity: 0
+    networkInterfaces:
+    - accessConfigs:
+      - type: ONE_TO_ONE_NAT
+    regions:
+    - asia-east1
+    - asia-northeast1
+    - asia-southeast1
+    - europe-west1
+    - europe-west4
+    - us-central1
+    - us-east1
+    - us-east4
+    - us-west1
+    scheduling:
+      onHostMaintenance: terminate
+    userData: {}
+    workerConfig:
+      genericWorker:
+        config:
+          cachesDir: Z:\caches
+          cleanUpTaskDirs: true
+          deploymentId: gamma
+          disableReboots: true
+          downloadsDir: Z:\downloads
+          ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+          idleTimeoutSecs: 3600
+          livelogExecutable: C:\generic-worker\livelog.exe
+          numberOfTasksToRun: 0
+          requiredDiskSpaceMegabytes: 10240
+          runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+          runTasksAsCurrentUser: false
+          sentryProject: generic-worker
+          shutdownMachineOnIdle: false
+          shutdownMachineOnInternalError: true
+          taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+          taskclusterProxyPort: 80
+          tasksDir: Z:\
+          workerTypeMetadata:
+            machine-setup:
+              maintainer: relops@mozilla.com
+              source: https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma
+          wstAudience: taskcluster-net
+          wstServerURL: https://websocktunnel.tasks.build
+      openCloudConfig:
+        workerType: gecko-1-b-win2019-gamma
+        source:
+          Organisation: mozilla-releng
+          Repository: OpenCloudConfig
+          Revision: gamma
+sandbox-1/win2012-gamma:
+  description: experimental byol gecko builder for scm level 1 on gcp
+  owner: relops@mozilla.com
+  email_on_error: true
+  provider_id: sandbox-1
+  config:
+    capacityPerInstance: 1
+    disks:
+    - autoDelete: true
+      boot: true
+      initializeParams:
+        diskSizeGb: 50
+        sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
+      type: PERSISTENT
+    - autoDelete: true
+      initializeParams:
+        diskSizeGb: 120
+      type: PERSISTENT
+    machineType: n1-highcpu-32
+    maxCapacity: 16
+    minCapacity: 0
+    networkInterfaces:
+    - accessConfigs:
+      - type: ONE_TO_ONE_NAT
+    regions:
+    - asia-east1
+    - asia-northeast1
+    - asia-southeast1
+    - europe-west1
+    - europe-west4
+    - us-central1
+    - us-east1
+    - us-east4
+    - us-west1
+    scheduling:
+      onHostMaintenance: terminate
+    userData: {}
+    workerConfig:
+      genericWorker:
+        config:
+          cachesDir: Z:\caches
+          cleanUpTaskDirs: true
+          deploymentId: gamma
+          disableReboots: true
+          downloadsDir: Z:\downloads
+          ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+          idleTimeoutSecs: 3600
+          livelogExecutable: C:\generic-worker\livelog.exe
+          numberOfTasksToRun: 0
+          requiredDiskSpaceMegabytes: 10240
+          runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+          runTasksAsCurrentUser: false
+          sentryProject: generic-worker
+          shutdownMachineOnIdle: false
+          shutdownMachineOnInternalError: true
+          taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+          taskclusterProxyPort: 80
+          tasksDir: Z:\
+          workerTypeMetadata:
+            machine-setup:
+              maintainer: relops@mozilla.com
+              source: https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma
+          wstAudience: taskcluster-net
+          wstServerURL: https://websocktunnel.tasks.build
+      openCloudConfig:
+        workerType: gecko-1-b-win2012-gamma
+        source:
+          Organisation: mozilla-releng
+          Repository: OpenCloudConfig
+          Revision: gamma
 sandbox-1/win2016-gamma:
   description: relops gcp image builder
   owner: relops@mozilla.com
