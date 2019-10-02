@@ -455,7 +455,6 @@ android-components:
   level: 3
   features:
     mobile-roles: true
-    mobile-sign-phase: true
     mobile-taskgraph: true
     mobile-beetmover-phase: true
     mobile-beetmover-snapshot-phase: true

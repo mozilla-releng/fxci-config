@@ -693,7 +693,7 @@
   to:
   - project:
       feature: mobile-beetmover-snapshot-phase
-      job: ["cron:nightly"]
+      job: ["cron:snapshot"]
 
 - grant:
   - project:mobile:{alias}:releng:signing:cert:release-signing
@@ -704,6 +704,14 @@
   - project:
       feature: mobile-sign-phase
       job: ["release", "cron:nightly"]
+
+- grant:
+  - project:mobile:{alias}:releng:signing:cert:release-signing
+  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
+  to:
+  - project:
+      alias: android-components
+      job: ["release", "cron:snapshot"]
 
 - grant:
   - project:mobile:{alias}:releng:googleplay:product:{alias}
