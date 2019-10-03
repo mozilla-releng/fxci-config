@@ -2662,6 +2662,7 @@ gecko-t-tc-worker/wcosta-build-tests:
       - us-east1
     scheduling:
       onHostMaintenance: terminate
+      automaticRestart: false
     userData: {}
     disks:
       - type: PERSISTENT
@@ -3061,6 +3062,7 @@ monopacker/gecko-1-test-gcp:
       - us-west1
     scheduling:
       onHostMaintenance: terminate
+      automaticRestart: false
     userData: {}
 pmoore-test/gwci-linux:
   description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/gwci-linux but for GCP'
@@ -3088,6 +3090,7 @@ pmoore-test/gwci-linux:
     - us-east1
     scheduling:
       onHostMaintenance: terminate
+      automaticRestart: false
     userData: {}
     workerConfig:
       genericWorker:
@@ -3131,6 +3134,7 @@ taskcluster-imaging/taskcluster-imaging-ci:
       - us-west1
     scheduling:
       onHostMaintenance: terminate
+      automaticRestart: false
     workerConfig:
       shutdown:
         enabled: true
@@ -3158,6 +3162,7 @@ pmoore-test/win2012r2:
     - us-east1
     scheduling:
       onHostMaintenance: terminate
+      automaticRestart: false
     userData: {}
     workerConfig:
       genericWorker:
@@ -3197,6 +3202,7 @@ pmoore-test/win2012r2-cu:
     - us-east1
     scheduling:
       onHostMaintenance: terminate
+      automaticRestart: false
     userData: {}
     workerConfig:
       genericWorker:
@@ -3246,6 +3252,7 @@ gecko-1/win2012-gamma:
     - us-west1
     scheduling:
       onHostMaintenance: terminate
+      automaticRestart: false
     userData: {}
     workerConfig:
       genericWorker:
@@ -3316,6 +3323,7 @@ gecko-1/win2019-gamma:
     - us-west1
     scheduling:
       onHostMaintenance: terminate
+      automaticRestart: false
     userData: {}
     workerConfig:
       genericWorker:
@@ -3386,6 +3394,7 @@ sandbox-1/win2012-gamma:
     - us-west1
     scheduling:
       onHostMaintenance: terminate
+      automaticRestart: false
     userData: {}
     workerConfig:
       genericWorker:
@@ -3582,6 +3591,7 @@ gce/gecko-3-b-linux:
       - us-east4
     scheduling:
       onHostMaintenance: terminate
+      automaticRestart: false
     workerConfig:
       shutdown:
         enabled: true
@@ -3612,6 +3622,7 @@ gce/gecko-1-b-linux:
       - us-east4
     scheduling:
       onHostMaintenance: terminate
+      automaticRestart: false
     workerConfig:
       shutdown:
         enabled: true
