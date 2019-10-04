@@ -3934,7 +3934,7 @@ gce/gecko-1-b-linux:
   email_on_error: true
   provider_id: gecko-1
   config:
-    minCapacity: 0
+    minCapacity: 50
     maxCapacity: 50
     capacityPerInstance: 1
     disks:
