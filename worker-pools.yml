@@ -3941,18 +3941,21 @@ gce/gecko-1-b-linux:
       - autoDelete: true
         boot: true
         initializeParams:
-          diskSizeGb: 100
+          diskSizeGb: 10
           # in taskcluster-imaging
           sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
         type: PERSISTENT
+      - autoDelete: true
+        initializeParams:
+          diskType: zones/us-east1-b/diskTypes/local-ssd
+        type: SCRATCH
+        interface": NVME
     machineType: custom-32-36864
     networkInterfaces:
       - accessConfigs:
           - type: ONE_TO_ONE_NAT
     regions:
-      - us-west1
       - us-east1
-      - us-east4
     scheduling:
       onHostMaintenance: terminate
       automaticRestart: false
