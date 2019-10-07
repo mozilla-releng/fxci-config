@@ -3949,7 +3949,7 @@ gce/gecko-1-b-linux:
         initializeParams:
           diskType: zones/us-east1-b/diskTypes/local-ssd
         type: SCRATCH
-        interface": NVME
+        interface: NVME
     machineType: custom-32-36864
     networkInterfaces:
       - accessConfigs:
