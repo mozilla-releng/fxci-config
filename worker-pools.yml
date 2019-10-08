@@ -3943,7 +3943,7 @@ gce/gecko-1-b-linux:
         initializeParams:
           diskSizeGb: 10
           # in taskcluster-imaging
-          sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-10-07t20-08-23z
+          sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-10-08t02-31-36z
         type: PERSISTENT
       - autoDelete: true
         initializeParams:
