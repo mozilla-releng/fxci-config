@@ -502,6 +502,25 @@ android-l10n-tooling:
   repo_type: git
   level: 3
   trust_domain: l10n
+  features:
+    taskgraph-cron: true
+  cron_targets:
+  - target: update-l10n
+    bindings:
+      - exchange: exchange/taskcluster-github/v1/push
+        routing_key_pattern: primary.mozilla-mobile.fenix
+      - exchange: exchange/taskcluster-github/v1/push
+        routing_key_pattern: primary.mozilla-mobile.android-components
+      - exchange: exchange/taskcluster-github/v1/push
+        routing_key_pattern: primary.mozilla-mobile.firefox-tv
+      - exchange: exchange/taskcluster-github/v1/push
+        routing_key_pattern: primary.mozilla-lockwise.lockwise-android
+      - exchange: exchange/taskcluster-github/v1/push
+        routing_key_pattern: primary.MozillaReality.FirefoxReality
+  - target: update-projects
+    bindings:
+      - exchange: exchange/taskcluster-github/v1/push
+        routing_key_pattern: primary.mozilla-l10n.android-l10n
 
 # For testing
 tp-android-l10n-tooling:
