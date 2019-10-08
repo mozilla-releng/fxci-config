@@ -2674,6 +2674,56 @@ gecko-t-tc-worker/wcosta-build-tests:
     networkInterfaces:
       - accessConfigs:
           - type: ONE_TO_ONE_NAT
+aws-provisioner-v1/l10n-1-decision:
+  description: Worker for l10n decision tasks
+  owner: release@mozilla.com
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: m5d.large
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
 aws-provisioner-v1/l10n-1-linux:
   description: General-purpose worker for l10n automation
   owner: release@mozilla.com
@@ -2758,6 +2808,56 @@ aws-provisioner-v1/l10n-1-images:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - region: us-east-1
+      launchSpec:
+        SecurityGroupIds: [sg-12cd3762]
+    - region: us-west-1
+      launchSpec:
+        SecurityGroupIds: [sg-caed26ac]
+    - region: us-west-2
+      launchSpec:
+        SecurityGroupIds: [sg-2728435d]
+    availabilityZones:
+    - availabilityZone: us-east-1a
+      launchSpec: {SubnetId: subnet-566e060c}
+    - availabilityZone: us-east-1b
+      launchSpec: {SubnetId: subnet-f2c93496}
+    - availabilityZone: us-east-1c
+      launchSpec: {SubnetId: subnet-c52454e9}
+    - availabilityZone: us-east-1d
+      launchSpec: {SubnetId: subnet-e7e6ccaf}
+    - availabilityZone: us-east-1e
+      launchSpec: {SubnetId: subnet-deb5a8e2}
+    - availabilityZone: us-east-1f
+      launchSpec: {SubnetId: subnet-7f720d73}
+    - availabilityZone: us-west-1b
+      launchSpec: {SubnetId: subnet-7641632e}
+    - availabilityZone: us-west-1c
+      launchSpec: {SubnetId: subnet-48a9b82c}
+    - availabilityZone: us-west-2a
+      launchSpec: {SubnetId: subnet-d948b6bf}
+    - availabilityZone: us-west-2b
+      launchSpec: {SubnetId: subnet-2eaaba67}
+    - availabilityZone: us-west-2c
+      launchSpec: {SubnetId: subnet-540a9f0f}
+aws-provisioner-v1/l10n-3-decision:
+  description: Worker for l10n decision tasks
+  owner: release@mozilla.com
+  email_on_error: false
+  provider_id: legacy-aws-provisioner-v1
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    scalingRatio: 0
+    instanceTypes:
+    - instanceType: m5d.large
+      userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
       userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
     regions:
