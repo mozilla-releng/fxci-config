@@ -993,27 +993,32 @@
 - grant:
   - queue:create-task:highest:aws-provisioner-v1/{trust_domain}-{level}-*
   - queue:create-task:{priority}:built-in/*
-  - queue:route:index.{trust_domain}.cache.level-{level}.*
+  - queue:route:index.{trust_domain}.xpi-manifest.cache.level-{level}.*
+  - queue:route:index.{trust_domain}.v2.xpi-manifest.*
   - queue:scheduler-id:{trust_domain}-level-{level}
   - docker-worker:cache:{trust_domain}-level-{level}-*
   - queue:route:notify.email.*
   - queue:route:checks
+  - queue:route:tc-treeherder.v2.xpi-manifest.*
+  - secrets:get:project/xpi/xpi-github-clone-ssh
   to:
   - project:
       alias:
       - aki-xpi-manifest
-      job: ["pull-request", "branch:*", "cron:*"]
+      job: ["pull-request", "branch:*", "cron:*", "action"]
 
 - grant:
-  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
-  - project:mozilla:{alias}:releng:signing:cert:dep-signing
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+  - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-3-*
+  - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-t-*
+  - project:xpi:releng:signing:cert:release-signing
   to:
   - project:
       alias:
       - aki-xpi-manifest
       # Only enable this for master and pull-requests, so that in-repo branches
       # don't get access to scriptworkers.
-      job: ["branch:master", "pull-request"]
+      job: ["branch:master", "pull-request", "action"]
 
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
