@@ -911,7 +911,6 @@
   - project:
       alias:
       - android-l10n-tooling
-      - tp-android-l10n-tooling
       job: ["pull-request", "branch:*", "cron:*"]
 
 - grant:
@@ -920,7 +919,6 @@
   - project:
       alias:
       - android-l10n-tooling
-      - tp-android-l10n-tooling
       job: ["branch:*", "cron:*"]
 
 

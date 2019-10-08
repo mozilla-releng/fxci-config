@@ -522,13 +522,6 @@ android-l10n-tooling:
       - exchange: exchange/taskcluster-github/v1/push
         routing_key_pattern: primary.mozilla-l10n.android-l10n
 
-# For testing
-tp-android-l10n-tooling:
-  repo: https://github.com/tp-tc/android-l10n-tooling
-  repo_type: git
-  level: 1
-  trust_domain: l10n
-
 # MPD 001
 mpd001:
   repo: https://github.com/mozilla-services/guardian-vpn
