@@ -9958,6 +9958,7 @@ gce/gecko-1-b-linux:
       - region: us-east1
         zone: us-east1-b
         capacityPerInstance: 1
+        minCpuPlatform: "Intel Skylake"
         disks:
           - autoDelete: true
             boot: true
@@ -9982,6 +9983,7 @@ gce/gecko-1-b-linux:
       - region: us-east1
         zone: us-east1-c
         capacityPerInstance: 1
+        minCpuPlatform: "Intel Skylake"
         disks:
           - autoDelete: true
             boot: true
@@ -10006,6 +10008,7 @@ gce/gecko-1-b-linux:
       - region: us-east1
         zone: us-east1-d
         capacityPerInstance: 1
+        minCpuPlatform: "Intel Skylake"
         disks:
           - autoDelete: true
             boot: true
