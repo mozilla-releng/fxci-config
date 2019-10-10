@@ -9952,7 +9952,7 @@ gce/gecko-1-b-linux:
   email_on_error: true
   provider_id: gecko-1
   config:
-    minCapacity: 50
+    minCapacity: 25
     maxCapacity: 50
     launchConfigs:
       - region: us-central1
@@ -9980,6 +9980,7 @@ gce/gecko-1-b-linux:
         workerConfig:
           shutdown:
             enabled: true
+            afterIdleSeconds: 3600
       - region: us-central1
         zone: us-central1-b
         capacityPerInstance: 1
@@ -10005,6 +10006,7 @@ gce/gecko-1-b-linux:
         workerConfig:
           shutdown:
             enabled: true
+            afterIdleSeconds: 3600
       - region: us-central1
         zone: us-central1-c
         capacityPerInstance: 1
@@ -10030,6 +10032,7 @@ gce/gecko-1-b-linux:
         workerConfig:
           shutdown:
             enabled: true
+            afterIdleSeconds: 3600
       - region: us-central1
         zone: us-central1-f
         capacityPerInstance: 1
@@ -10055,3 +10058,4 @@ gce/gecko-1-b-linux:
         workerConfig:
           shutdown:
             enabled: true
+            afterIdleSeconds: 3600
