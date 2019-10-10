@@ -9955,8 +9955,8 @@ gce/gecko-1-b-linux:
     minCapacity: 50
     maxCapacity: 50
     launchConfigs:
-      - region: us-east1
-        zone: us-east1-b
+      - region: us-central1
+        zone: us-central1-a
         capacityPerInstance: 1
         minCpuPlatform: "Intel Skylake"
         disks:
@@ -9968,10 +9968,10 @@ gce/gecko-1-b-linux:
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-east1-b/diskTypes/local-ssd
+              diskType: zones/us-central1-a/diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
-        machineType: zones/us-east1-b/machineTypes/custom-32-36864
+        machineType: zones/us-central1-a/machineTypes/custom-32-36864
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
@@ -9980,8 +9980,8 @@ gce/gecko-1-b-linux:
         workerConfig:
           shutdown:
             enabled: true
-      - region: us-east1
-        zone: us-east1-c
+      - region: us-central1
+        zone: us-central1-b
         capacityPerInstance: 1
         minCpuPlatform: "Intel Skylake"
         disks:
@@ -9993,10 +9993,10 @@ gce/gecko-1-b-linux:
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-east1-c/diskTypes/local-ssd
+              diskType: zones/us-central1-b/diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
-        machineType: zones/us-east1-c/machineTypes/custom-32-36864
+        machineType: zones/us-central1-b/machineTypes/custom-32-36864
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
@@ -10005,8 +10005,8 @@ gce/gecko-1-b-linux:
         workerConfig:
           shutdown:
             enabled: true
-      - region: us-east1
-        zone: us-east1-d
+      - region: us-central1
+        zone: us-central1-c
         capacityPerInstance: 1
         minCpuPlatform: "Intel Skylake"
         disks:
@@ -10018,10 +10018,35 @@ gce/gecko-1-b-linux:
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-east1-d/diskTypes/local-ssd
+              diskType: zones/us-central1-c/diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
-        machineType: zones/us-east1-d/machineTypes/custom-32-36864
+        machineType: zones/us-central1-c/machineTypes/custom-32-36864
+        networkInterfaces:
+          - accessConfigs:
+              - type: ONE_TO_ONE_NAT
+        scheduling:
+          onHostMaintenance: terminate
+        workerConfig:
+          shutdown:
+            enabled: true
+      - region: us-central1
+        zone: us-central1-f
+        capacityPerInstance: 1
+        minCpuPlatform: "Intel Skylake"
+        disks:
+          - autoDelete: true
+            boot: true
+            initializeParams:
+              diskSizeGb: 10
+              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-10-08t02-31-36z
+            type: PERSISTENT
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-f/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+        machineType: zones/us-central1-f/machineTypes/custom-32-36864
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
