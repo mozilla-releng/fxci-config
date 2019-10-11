@@ -3908,16 +3908,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -3961,16 +3968,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4014,16 +4028,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4067,16 +4088,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-f/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4120,16 +4148,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4173,16 +4208,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4226,16 +4268,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-d/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4279,16 +4328,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4332,16 +4388,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4385,16 +4448,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4438,16 +4508,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4491,16 +4568,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4544,16 +4628,23 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4606,16 +4697,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-east1-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-east1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4659,16 +4757,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-east1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-east1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4712,16 +4817,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-east1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-east1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4765,16 +4877,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-northeast1-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-northeast1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/asia-northeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4818,16 +4937,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-northeast1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-northeast1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/asia-northeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4871,16 +4997,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-northeast1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-northeast1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/asia-northeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4924,16 +5057,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-southeast1-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-southeast1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/asia-southeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -4977,16 +5117,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-southeast1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-southeast1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/asia-southeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5030,16 +5177,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-southeast1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-southeast1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/asia-southeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5083,16 +5237,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/europe-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5136,16 +5297,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/europe-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5189,16 +5357,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west1-d/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west1-d/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-d/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/europe-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5242,16 +5417,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west4-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west4-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/europe-west4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5295,16 +5477,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west4-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west4-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/europe-west4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5348,16 +5537,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west4-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west4-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/europe-west4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5401,16 +5597,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5454,16 +5657,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5507,16 +5717,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5560,16 +5777,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-f/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5613,16 +5837,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5666,16 +5897,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5719,16 +5957,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-d/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5772,16 +6017,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5825,16 +6077,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5878,16 +6137,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5931,16 +6197,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -5984,16 +6257,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6037,16 +6317,23 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-prod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6099,16 +6386,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-east1-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-east1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6152,16 +6446,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-east1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-east1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6205,16 +6506,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-east1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-east1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6258,16 +6566,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-northeast1-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-northeast1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-northeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6311,16 +6626,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-northeast1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-northeast1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-northeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6364,16 +6686,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-northeast1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-northeast1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-northeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6417,16 +6746,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-southeast1-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-southeast1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-southeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6470,16 +6806,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-southeast1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-southeast1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-southeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6523,16 +6866,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/asia-southeast1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/asia-southeast1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-southeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6576,16 +6926,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6629,16 +6986,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6682,16 +7046,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west1-d/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west1-d/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-d/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6735,16 +7106,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west4-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west4-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6788,16 +7166,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west4-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west4-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6841,16 +7226,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/europe-west4-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/europe-west4-/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6894,16 +7286,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -6947,16 +7346,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7000,16 +7406,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7053,16 +7466,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-f/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7106,16 +7526,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7159,16 +7586,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7212,16 +7646,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-d/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7265,16 +7706,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7318,16 +7766,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7371,16 +7826,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7424,16 +7886,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7477,16 +7946,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7530,16 +8006,23 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
+              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7599,9 +8082,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/asia-east1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7652,9 +8140,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/asia-east1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7705,9 +8198,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/asia-east1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7758,9 +8256,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/asia-northeast1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-northeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7811,9 +8314,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/asia-northeast1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-northeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7864,9 +8372,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/asia-northeast1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-northeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7917,9 +8430,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/asia-southeast1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-southeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -7970,9 +8488,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/asia-southeast1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-southeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8023,9 +8546,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/asia-southeast1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-southeast1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8076,9 +8604,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/europe-west1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8129,9 +8662,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/europe-west1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8182,9 +8720,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/europe-west1-d/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8235,9 +8778,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/europe-west4-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8288,9 +8836,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/europe-west4-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8341,9 +8894,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/europe-west4-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/europe-west4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8394,9 +8952,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-central1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8447,9 +9010,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-central1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8500,9 +9068,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-central1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8553,9 +9126,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-central1-f/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8606,9 +9184,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-east1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8659,9 +9242,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-east1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8712,9 +9300,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-east1-d/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8765,9 +9358,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-east4-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8818,9 +9416,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-east4-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8871,9 +9474,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-east4-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8924,9 +9532,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-west1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -8977,9 +9590,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-west1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9030,9 +9648,14 @@ sandbox-1/win2016-gamma:
               diskSizeGb: 120
             type: PERSISTENT
         machineType: zones/us-west1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier1-nonprod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9085,16 +9708,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9138,16 +9768,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9191,16 +9828,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9244,16 +9888,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-f/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9297,16 +9948,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9350,16 +10008,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9403,16 +10068,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-d/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9456,16 +10128,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9509,16 +10188,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9562,16 +10248,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-east4/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9615,16 +10308,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-a/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9668,16 +10368,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-b/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
@@ -9721,16 +10428,23 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              sourceImage: projects/windows-cloud/global/images/family/windows-2012-r2
+              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
+              sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
+              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-c/machineTypes/n1-highcpu-32
+        metadata:
+          items:
+            - key: windows-startup-script-url
+              value: 'gs://open-cloud-config/gcloud-startup.ps1'
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+            subnetwork: projects/fx-workers-tier3-prod/regions/us-west1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
         workerConfig:
