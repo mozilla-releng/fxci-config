@@ -3908,13 +3908,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -3968,13 +3968,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -4028,13 +4028,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -4088,13 +4088,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-f/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-f/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-f/machineTypes/n1-highcpu-32
         metadata:
@@ -4148,13 +4148,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -4208,13 +4208,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -4268,13 +4268,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-d/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-d/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-d/machineTypes/n1-highcpu-32
         metadata:
@@ -4328,13 +4328,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-a/machineTypes/n1-highcpu-32
         metadata:
@@ -4388,13 +4388,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-b/machineTypes/n1-highcpu-32
         metadata:
@@ -4448,13 +4448,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-c/machineTypes/n1-highcpu-32
         metadata:
@@ -4508,13 +4508,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -4568,13 +4568,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -4628,13 +4628,13 @@ gecko-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -4697,13 +4697,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-east1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-east1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -4757,13 +4757,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -4817,13 +4817,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -4877,13 +4877,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-northeast1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-northeast1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -4937,13 +4937,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-northeast1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-northeast1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -4997,13 +4997,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-northeast1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-northeast1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -5057,13 +5057,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-southeast1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-southeast1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -5117,13 +5117,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-southeast1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-southeast1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -5177,13 +5177,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-southeast1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-southeast1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -5237,13 +5237,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -5297,13 +5297,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -5357,13 +5357,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-d/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-d/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-d/machineTypes/n1-highcpu-32
         metadata:
@@ -5417,13 +5417,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-a/machineTypes/n1-highcpu-32
         metadata:
@@ -5477,13 +5477,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-b/machineTypes/n1-highcpu-32
         metadata:
@@ -5537,13 +5537,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west4-c/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west4-c/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-c/machineTypes/n1-highcpu-32
         metadata:
@@ -5597,13 +5597,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -5657,13 +5657,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -5717,13 +5717,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -5777,13 +5777,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-f/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-f/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-f/machineTypes/n1-highcpu-32
         metadata:
@@ -5837,13 +5837,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -5897,13 +5897,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -5957,13 +5957,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-d/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-d/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-d/machineTypes/n1-highcpu-32
         metadata:
@@ -6017,13 +6017,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-a/machineTypes/n1-highcpu-32
         metadata:
@@ -6077,13 +6077,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-b/machineTypes/n1-highcpu-32
         metadata:
@@ -6137,13 +6137,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-c/machineTypes/n1-highcpu-32
         metadata:
@@ -6197,13 +6197,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -6257,13 +6257,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -6317,13 +6317,13 @@ gecko-1/win2019-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2019
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -6386,13 +6386,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-east1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-east1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -6446,13 +6446,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -6506,13 +6506,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-east1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-east1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -6566,13 +6566,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-northeast1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-northeast1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -6626,13 +6626,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-northeast1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-northeast1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -6686,13 +6686,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-northeast1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-northeast1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-northeast1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-northeast1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -6746,13 +6746,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-southeast1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-southeast1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -6806,13 +6806,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-southeast1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-southeast1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -6866,13 +6866,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/asia-southeast1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/asia-southeast1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/asia-southeast1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/asia-southeast1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -6926,13 +6926,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -6986,13 +6986,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -7046,13 +7046,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-d/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west1-d/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west1-d/machineTypes/n1-highcpu-32
         metadata:
@@ -7106,13 +7106,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-a/machineTypes/n1-highcpu-32
         metadata:
@@ -7166,13 +7166,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-b/machineTypes/n1-highcpu-32
         metadata:
@@ -7226,13 +7226,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/europe-west4-c/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/europe-west4-/diskTypes/diskType/pd-ssd
+              diskType: zones/europe-west4-/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/europe-west4-c/machineTypes/n1-highcpu-32
         metadata:
@@ -7286,13 +7286,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -7346,13 +7346,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -7406,13 +7406,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -7466,13 +7466,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-f/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-f/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-f/machineTypes/n1-highcpu-32
         metadata:
@@ -7526,13 +7526,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -7586,13 +7586,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -7646,13 +7646,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-d/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-d/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-d/machineTypes/n1-highcpu-32
         metadata:
@@ -7706,13 +7706,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-a/machineTypes/n1-highcpu-32
         metadata:
@@ -7766,13 +7766,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-b/machineTypes/n1-highcpu-32
         metadata:
@@ -7826,13 +7826,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-c/machineTypes/n1-highcpu-32
         metadata:
@@ -7886,13 +7886,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -7946,13 +7946,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -8006,13 +8006,13 @@ sandbox-1/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -9708,13 +9708,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -9768,13 +9768,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -9828,13 +9828,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -9888,13 +9888,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-f/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-central1-f/diskTypes/diskType/pd-ssd
+              diskType: zones/us-central1-f/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-central1-f/machineTypes/n1-highcpu-32
         metadata:
@@ -9948,13 +9948,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -10008,13 +10008,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-c/machineTypes/n1-highcpu-32
         metadata:
@@ -10068,13 +10068,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-d/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east1-d/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east1-d/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east1-d/machineTypes/n1-highcpu-32
         metadata:
@@ -10128,13 +10128,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-a/machineTypes/n1-highcpu-32
         metadata:
@@ -10188,13 +10188,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-b/machineTypes/n1-highcpu-32
         metadata:
@@ -10248,13 +10248,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-east4-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-east4-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-east4-c/machineTypes/n1-highcpu-32
         metadata:
@@ -10308,13 +10308,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-a/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-a/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-a/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-a/machineTypes/n1-highcpu-32
         metadata:
@@ -10368,13 +10368,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-b/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-b/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-b/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-b/machineTypes/n1-highcpu-32
         metadata:
@@ -10428,13 +10428,13 @@ gecko-3/win2012-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-server-2012r2
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
               diskSizeGb: 120
-              diskType: zones/us-west1-c/diskTypes/diskType/pd-ssd
+              diskType: zones/us-west1-c/diskTypes/pd-ssd
             type: PERSISTENT
         machineType: zones/us-west1-c/machineTypes/n1-highcpu-32
         metadata:
