@@ -991,33 +991,24 @@
 # XPI
 
 - grant:
-  - queue:create-task:highest:aws-provisioner-v1/{trust_domain}-{level}-*
-  - queue:create-task:{priority}:built-in/*
-  - queue:route:index.{trust_domain}.xpi-manifest.cache.level-{level}.*
-  - queue:route:index.{trust_domain}.v2.xpi-manifest.*
-  - queue:scheduler-id:{trust_domain}-level-{level}
-  - docker-worker:cache:{trust_domain}-level-{level}-*
-  - queue:route:notify.email.*
-  - queue:route:checks
-  - queue:route:tc-treeherder.v2.xpi-manifest.*
-  - secrets:get:project/xpi/xpi-github-clone-ssh
-  to:
-  - project:
-      alias:
-      - aki-xpi-manifest
-      job: ["pull-request", "branch:*", "cron:*", "action"]
-
-- grant:
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-t-*
+  - project:xpi:releng:signing:cert:dep-signing
   - project:xpi:releng:signing:cert:release-signing
+  - queue:create-task:highest:xpi-{level}/*
+  - queue:create-task:highest:xpi-t/*
+  - queue:create-task:highest:aws-provisioner-v1/{trust_domain}-t-*
+  - queue:create-task:highest:aws-provisioner-v1/{trust_domain}-{level}-*
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+  - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
+  - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-t-*
   to:
   - project:
       alias:
-      - aki-xpi-manifest
-      # Only enable this for master and pull-requests, so that in-repo branches
-      # don't get access to scriptworkers.
-      job: ["branch:master", "action"]
+      - xpi-manifest
+      # Only enable this for master and actions.
+      job: ["branch:master", "action:*"]
 
 - grant:
   - hooks:trigger-hook:project-xpi/in-tree-action-1-*
@@ -1025,6 +1016,35 @@
   to:
   - groups:
     - releng
+
+- grant:
+  # access to workers; all levels have access to the same workers, but at
+  # different priorities and levels
+  - queue:route:index.{trust_domain}.xpi-manifest.cache.level-{level}.*
+  - queue:route:index.{trust_domain}.v2.{alias}.*
+  - queue:route:checks
+  - queue:route:notify.email.*
+  - queue:route:tc-treeherder.v2.{alias}.*
+  - queue:create-task:{priority}:built-in/*
+  - queue:create-task:{priority}:xpi-{level}/*
+  - queue:create-task:{priority}:xpi-t/*
+  - queue:create-task:{priority}:aws-provisioner-v1/{trust_domain}-t-*
+  - queue:create-task:{priority}:aws-provisioner-v1/{trust_domain}-{level}-*
+  - queue:getArtifact:xpi/*
+  - queue:scheduler-id:{trust_domain}-level-{level}
+  - docker-worker:cache:{trust_domain}-level-{level}-*
+  - secrets:get:project/xpi/xpi-github-clone-ssh
+  to:
+  - project:
+      feature: xpi-roles
+      job: ["pull-request", "branch:*", "cron:*", "action:*"]
+
+- grant:
+  - in-tree:hook-action:project-{trust_domain}/in-tree-action-{level}-*
+  to:
+  - project:
+      feature: taskgraph-actions
+      job: branch:master
 
 ##
 # delegate cron:nightly-* to hand-managed nightly roles

@@ -29,6 +29,7 @@
 #   - `gecko-roles` -- this repository should have gecko-related roles assigned (for users, actions, cron, etc.)
 #   - `mobile-roles` -- this repository should have https://github.com/mozilla-mobile roles assigned (for users, actions, cron, etc.)
 #   - `mobile-roles-forks` -- this fork should have some (restricted) https://github.com/mozilla-mobile roles assigned
+#   - `xpi-roles` -- this repository should have xpi roles assigned (for users, actions, cron, etc.)
 #   - `mobile-beetmover-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `mobile-beetmover-stage-phase` -- this https://github.com/mozilla-mobile repository should have beetmover staging related scopes associated
 #   - `mobile-beetmover-snapshot-phase` -- this https://github.com/mozilla-mobile repository should have beetmover snapshot production related scopes associated
@@ -530,16 +531,17 @@ mpd001:
   trust_domain: mpd001
 
 # Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
-aki-xpi-manifest:
+xpi-manifest:
   repo: https://github.com/escapewindow/xpi-manifest
   repo_type: git
   trust_domain: xpi
   level: 1
   features:
     trust-domain-scopes: true
-    xpi-signing-roles: true
+    xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
+    treeherder-reporting: true
 
 
 # Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
