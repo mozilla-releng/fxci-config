@@ -1019,6 +1019,13 @@
       # don't get access to scriptworkers.
       job: ["branch:master", "action"]
 
+- grant:
+  - hooks:trigger-hook:project-xpi/in-tree-action-1-*
+  - hooks:trigger-hook:project-xpi/in-tree-action-3-*
+  to:
+  - groups:
+    - releng
+
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
 
