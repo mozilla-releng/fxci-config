@@ -2102,38 +2102,22 @@ aws-provisioner-v1/mozillaonline-1-b-linux:
     maxCapacity: 10
     scalingRatio: 0
     instanceTypes:
-    - instanceType: c5.4xlarge
+    - instanceType: c5d.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.1
-    - instanceType: m5.4xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.1
-    - instanceType: c4.4xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 20000000000}
-    - instanceType: m4.4xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 20000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
     regions:
     - region: us-east-1
       launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         SecurityGroupIds: [sg-12cd3762]
     - region: us-west-1
       launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         SecurityGroupIds: [sg-caed26ac]
     - region: us-west-2
       launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         SecurityGroupIds: [sg-2728435d]
     availabilityZones:
     - availabilityZone: us-east-1a
@@ -2168,38 +2152,22 @@ aws-provisioner-v1/mozillaonline-3-b-linux:
     maxCapacity: 10
     scalingRatio: 0
     instanceTypes:
-    - instanceType: c5.4xlarge
+    - instanceType: c5d.4xlarge
+      launchSpec:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.1
-    - instanceType: m5.4xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.1
-    - instanceType: c4.4xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 20000000000}
-    - instanceType: m4.4xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 20000000000}
+        capacityManagement: {diskspaceThreshold: 50000000000}
     regions:
     - region: us-east-1
       launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         SecurityGroupIds: [sg-12cd3762]
     - region: us-west-1
       launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         SecurityGroupIds: [sg-caed26ac]
     - region: us-west-2
       launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         SecurityGroupIds: [sg-2728435d]
     availabilityZones:
     - availabilityZone: us-east-1a
