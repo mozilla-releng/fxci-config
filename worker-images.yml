@@ -326,3 +326,11 @@ docker-worker-v201909302015-hvm-builder:
     us-east-1: ami-01b7c8be957597c05
     us-west-1: ami-0aa98a764dc943464
     us-west-2: ami-0a6d90c9d398491a3
+
+
+# Flatpak test images:
+flatpack-gecko-generic-worker-v1:
+  ec2:
+    us-east-1: ami-01ef13821f78d81b0
+    us-west-1: ami-008c6f8970746e5b1
+    us-west-2: ami-09d6d805528cf3fd6
