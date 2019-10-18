@@ -508,6 +508,10 @@
   - queue:route:index.{trust_domain}.v2.{alias}.*
   - index:insert-task:{trust_domain}.v2.{alias}.*
 
+  # Allow creating tasks on workers associated to the trust-domain
+  - queue:create-task:{priority}:{trust_domain}-{level}/*
+  - queue:create-task:{priority}:{trust_domain}-t/*
+
   # routes to support locating tasks that create specific versions of artifacts
   # (toolchains, etc.)
   - queue:route:index.{trust_domain}.cache.level-{level}.*
