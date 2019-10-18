@@ -22,7 +22,13 @@
 
 worker-defaults:
     by-provider:
-        legacy-aws-provisioner-v1:
+        aws|legacy-aws-provisioner-v1:
+            # worker-config is ignored by legacy-aws-provisioner-v1
+            worker-config:
+                # Note: this config is currently docker-worker only
+                shutdown:
+                    enabled: true
+                    afterIdleSeconds: 900
             availability-zones:
                 by-region:
                     us-east-1:
