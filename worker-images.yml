@@ -15,6 +15,7 @@ docker_worker_aws-amazon-ebs-2019-09-18T16-42-49Z:
   legacy-aws-provisioner-v1:
     us-west-2: ami-03832a447954c4ace
 
+
 # production docker-worker AMIs
 docker-worker-v201802270910-hvm-builder-trusted:
   legacy-aws-provisioner-v1:
@@ -323,6 +324,11 @@ docker-worker-v201909302015-hvm-builder:
     us-east-1: ami-01b7c8be957597c05
     us-west-1: ami-0aa98a764dc943464
     us-west-2: ami-0a6d90c9d398491a3
+  aws:
+    eu-central-1: ami-058993f91452e39f6
+    us-east-1: ami-09f6f72509d742502
+    us-west-1: ami-087991f6d2383cd2b
+    us-west-2: ami-09c88d0779d181691
 
 
 # Flatpak test images:
