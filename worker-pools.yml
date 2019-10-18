@@ -71,6 +71,33 @@ worker-defaults:
                             "us-west-1": ["sg-5ce02b3a"]
                             "us-west-2": ["sg-a0d6beda"]
 
+infra/hg-push:
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 40
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 30000000000
+    - instanceType: c5d.large
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 30000000000
+    - instanceType: c5.large
+      capacityPerInstance: 2
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 aws-provisioner-v1/gecko-1-b-linux:
   description: Worker for Firefox automation
   owner: Firefox CI
