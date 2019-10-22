@@ -543,6 +543,18 @@ xpi-manifest:
     taskgraph-cron: true
     treeherder-reporting: true
 
+test-xpi-public:
+  repo: https://github.com/escapewindow/test-xpi-public
+  repo_type: git
+  trust_domain: xpi
+  level: 1
+  features:
+    trust-domain-scopes: true
+    xpi-roles: true
+    taskgraph-actions: true
+    taskgraph-cron: true
+    treeherder-reporting: true
+
 
 # Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
 kglazko-reference-browser:
