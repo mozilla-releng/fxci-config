@@ -476,6 +476,27 @@ aws-provisioner-v1/gecko-2-b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
+gecko-2/b-linux:
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 1000
+    instance_types:
+    - instanceType: c5d.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
 aws-provisioner-v1/gecko-2-b-linux-large:
   description: Worker for Firefox automation
   owner: Firefox CI
@@ -529,6 +550,51 @@ aws-provisioner-v1/gecko-2-b-linux-large:
     - us-east-1
     - us-west-1
     - us-west-2
+gecko-2/b-linux-large:
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instance_types:
+    - instanceType: c5d.9xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m5d.12xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m5.12xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m4.10xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: c5.9xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: c4.8xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
 aws-provisioner-v1/gecko-2-b-linux-xlarge:
   description: Worker for Firefox automation
   owner: Firefox CI
@@ -574,6 +640,52 @@ aws-provisioner-v1/gecko-2-b-linux-xlarge:
     - us-east-1
     - us-west-1
     - us-west-2
+gecko-2/b-linux-xlarge:
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instance_types:
+    - instanceType: c5d.18xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+      utility: 1.1
+    - instanceType: m5d.24xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+      utility: 1.3
+    - instanceType: m5.24xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+      utility: 1.1
+    - instanceType: m4.16xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: c5.18xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+      utility: 0.9
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
 aws-provisioner-v1/gecko-2-decision:
   description: Worker for Firefox automation
   owner: Firefox CI
@@ -608,6 +720,36 @@ aws-provisioner-v1/gecko-2-decision:
     - us-east-1
     - us-west-1
     - us-west-2
+gecko-2/decision:
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 20
+    worker-config: {billingCycleInterval: 21600}
+    instance_types:
+    - instanceType: c5d.xlarge
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.xlarge
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    - instanceType: c5.xlarge
+      capacityPerInstance: 2
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
 aws-provisioner-v1/gecko-2-images:
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -634,6 +776,37 @@ aws-provisioner-v1/gecko-2-images:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
+gecko-2/images:
+  description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
+    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 30
+    scalingRatio: 0
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
+    regions: [us-east-1, us-west-1, us-west-2]
+    instance_types:
+    - instanceType: c5d.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5d.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5.xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
     regions:
     - us-east-1
