@@ -6,8 +6,8 @@
 #
 # Aliases can be defined by a simple string; this is useful for "current" images
 
-docker-worker-hvm-builder-current: docker-worker-v201909302015-hvm-builder
-docker-worker-hvm-builder-trusted-current: docker-worker-v201909302015-hvm-builder-trusted
+docker-worker-hvm-builder-current: docker-worker-v201910231323-hvm-builder
+docker-worker-hvm-builder-trusted-current: docker-worker-v201910231323-hvm-builder-trusted
 
 # monopacker test AMIs
 monopacker-docker-worker-aws-current: docker_worker_aws-amazon-ebs-2019-09-18T16-42-49Z
