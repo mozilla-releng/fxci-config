@@ -1533,29 +1533,6 @@ aws-provisioner-v1/taskcluster-generic:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/taskcluster-images:
-  description: '** WRITE THIS**'
-  owner: '** WRITE THIS **'
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    maxCapacity: 300
-    scalingRatio: 0
-    launchSpec:
-      SecurityGroups: [docker-worker]
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    instanceTypes:
-    - instanceType: r3.xlarge
-      capacity: 2
-    - instanceType: m3.xlarge
-      capacity: 2
-    - instanceType: c3.xlarge
-      capacity: 2
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 aws-provisioner-v1/version-control-tools:
   description: Testing for https://hg.mozilla.org/hgcustom/version-control-tools
   owner: gps@mozilla.com
