@@ -331,25 +331,25 @@ docker-worker-v201909302015-hvm-builder:
     us-west-2: ami-09c88d0779d181691
 docker-worker-v201910231323-hvm-builder-trusted:
   legacy-aws-provisioner-v1:
-    eu-central-1: ami-09982076c94c3bdea,
-    us-east-1: ami-074b66b0f1d405bfb,
-    us-west-1: ami-0059756f4a183b628,
+    eu-central-1: ami-09982076c94c3bdea
+    us-east-1: ami-074b66b0f1d405bfb
+    us-west-1: ami-0059756f4a183b628
     us-west-2: ami-03737e81dddb3eca9
   aws:
-    eu-central-1: ami-04e6a610a901f838e,
-    us-east-1: ami-06ecdf5b0d39fd1d3,
-    us-west-1: ami-0094ac4ee041f24e7,
+    eu-central-1: ami-04e6a610a901f838e
+    us-east-1: ami-06ecdf5b0d39fd1d3
+    us-west-1: ami-0094ac4ee041f24e7
     us-west-2: ami-0a99e89a874cf97c1
 docker-worker-v201910231323-hvm-builder:
   legacy-aws-provisioner-v1:
-    eu-central-1: ami-052e8981fff064917,
-    us-east-1: ami-03e4fe412fca3da4f,
-    us-west-1: ami-0bbf3da8234d6fd46,
+    eu-central-1: ami-052e8981fff064917
+    us-east-1: ami-03e4fe412fca3da4f
+    us-west-1: ami-0bbf3da8234d6fd46
     us-west-2: ami-0f771f51c01ef4581
   aws:
-    eu-central-1: ami-0b124c91920205b15,
-    us-east-1: ami-02a87fa1f6a4d9d2c,
-    us-west-1: ami-05bf92a940dae090d,
+    eu-central-1: ami-0b124c91920205b15
+    us-east-1: ami-02a87fa1f6a4d9d2c
+    us-west-1: ami-05bf92a940dae090d
     us-west-2: ami-03f808b14ea0e3d4a
 
 
