@@ -2343,116 +2343,34 @@ pmoore-test/gwci-linux:
   description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/gwci-linux but for GCP'
   owner: pmoore@mozilla.com
   email_on_error: true
-  provider_id: google
+  provider_id: aws
   config:
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
+    instance_types:
+    - instanceType: c4.2xlarge
+      worker-config:
+        genericWorker:
+          config:
+            deploymentId: KSjGK16ySI-A7Cs-DGAnLg
+            ed25519SigningKeyLocation: "/etc/generic-worker/ed25519_key"
+            livelogExecutable: "/usr/local/bin/livelog"
+            runTasksAsCurrentUser: true
+            shutdownMachineOnInternalError: false
+            taskclusterProxyExecutable: "/usr/local/bin/taskcluster-proxy"
+            taskclusterProxyPort: 8080
+            tasksDir: "/home"
+            workerTypeMetadata:
+              machine-setup:
+                maintainer: pmoore@mozilla.com
+                script: https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh
+            wstAudience: taskcluster-net
+            wstServerURL: https://websocktunnel.tasks.build
     minCapacity: 0
     maxCapacity: 10
-    launchConfigs:
-      - region: us-east1
-        zone: us-east1-b
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 50
-              sourceImage: projects/pmoore-dev/global/images/gwci-linux-ajwcfoqu45kyf1fu6mfj
-            type: PERSISTENT
-        displayDevice:
-          enableDisplay: true
-        machineType: zones/us-east1-b/machineTypes/custom-32-29440
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          genericWorker:
-            config:
-              deploymentId: dxmGKDRZQp-750fzeJt41w
-              ed25519SigningKeyLocation: /etc/generic-worker/ed25519_key
-              livelogExecutable: /usr/local/bin/livelog
-              runTasksAsCurrentUser: true
-              shutdownMachineOnInternalError: false
-              taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
-              taskclusterProxyPort: 8080
-              tasksDir: /home
-              workerTypeMetadata:
-                machine-setup:
-                  maintainer: pmoore@mozilla.com
-                  script: 'https://raw.githubusercontent.com/taskcluster/generic-worker/82d1085847dacedf8bb3a160bbbbf6368d35834f/worker_types/gwci-linux/userdata'
-              wstAudience: taskcluster-net
-              wstServerURL: 'https://websocktunnel.tasks.build'
-      - region: us-east1
-        zone: us-east1-c
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 50
-              sourceImage: projects/pmoore-dev/global/images/gwci-linux-ajwcfoqu45kyf1fu6mfj
-            type: PERSISTENT
-        displayDevice:
-          enableDisplay: true
-        machineType: zones/us-east1-c/machineTypes/custom-32-29440
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          genericWorker:
-            config:
-              deploymentId: dxmGKDRZQp-750fzeJt41w
-              ed25519SigningKeyLocation: /etc/generic-worker/ed25519_key
-              livelogExecutable: /usr/local/bin/livelog
-              runTasksAsCurrentUser: true
-              shutdownMachineOnInternalError: false
-              taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
-              taskclusterProxyPort: 8080
-              tasksDir: /home
-              workerTypeMetadata:
-                machine-setup:
-                  maintainer: pmoore@mozilla.com
-                  script: 'https://raw.githubusercontent.com/taskcluster/generic-worker/82d1085847dacedf8bb3a160bbbbf6368d35834f/worker_types/gwci-linux/userdata'
-              wstAudience: taskcluster-net
-              wstServerURL: 'https://websocktunnel.tasks.build'
-      - region: us-east1
-        zone: us-east1-d
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 50
-              sourceImage: projects/pmoore-dev/global/images/gwci-linux-ajwcfoqu45kyf1fu6mfj
-            type: PERSISTENT
-        displayDevice:
-          enableDisplay: true
-        machineType: zones/us-east1-d/machineTypes/custom-32-29440
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          genericWorker:
-            config:
-              deploymentId: dxmGKDRZQp-750fzeJt41w
-              ed25519SigningKeyLocation: /etc/generic-worker/ed25519_key
-              livelogExecutable: /usr/local/bin/livelog
-              runTasksAsCurrentUser: true
-              shutdownMachineOnInternalError: false
-              taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
-              taskclusterProxyPort: 8080
-              tasksDir: /home
-              workerTypeMetadata:
-                machine-setup:
-                  maintainer: pmoore@mozilla.com
-                  script: 'https://raw.githubusercontent.com/taskcluster/generic-worker/82d1085847dacedf8bb3a160bbbbf6368d35834f/worker_types/gwci-linux/userdata'
-              wstAudience: taskcluster-net
-              wstServerURL: 'https://websocktunnel.tasks.build'
+    image: gwci-linux
 taskcluster-imaging/taskcluster-imaging-ci:
   description: A worker to test making images for workers
   owner: bstack@mozilla.com

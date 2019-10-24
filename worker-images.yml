@@ -359,3 +359,11 @@ flatpack-gecko-generic-worker-v1:
     us-east-1: ami-01ef13821f78d81b0
     us-west-1: ami-008c6f8970746e5b1
     us-west-2: ami-09d6d805528cf3fd6
+
+
+# generic-worker images
+gwci-linux:
+  aws:
+    us-east-1: ami-000f78733862c228b
+    us-west-1: ami-0d2bc4a97a0aaa9d3
+    us-west-2: ami-00e7eeb8d7449b1ce
