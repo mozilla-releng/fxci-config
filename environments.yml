@@ -16,6 +16,50 @@
 production:
     root_url: https://taskcluster.net
     # no modifications in production, please!
+    modify_resources: []
+    aws_config:
+        availability-zones:
+            by-region:
+                us-east-1:
+                    - "us-east-1a"
+                    - "us-east-1b"
+                    - "us-east-1c"
+                    - "us-east-1d"
+                    - "us-east-1e"
+                    - "us-east-1f"
+                us-west-1:
+                    - "us-west-1b"
+                    - "us-west-1c"
+                us-west-2:
+                    - "us-west-2a"
+                    - "us-west-2b"
+                    - "us-west-2c"
+        subnet-id:
+            by-availability-zone:
+                us-east-1a: "subnet-566e060c"
+                us-east-1b: "subnet-f2c93496"
+                us-east-1c: "subnet-c52454e9"
+                us-east-1d: "subnet-e7e6ccaf"
+                us-east-1e: "subnet-deb5a8e2"
+                us-east-1f: "subnet-7f720d73"
+                us-west-1b: "subnet-7641632e"
+                us-west-1c: "subnet-48a9b82c"
+                us-west-2a: "subnet-d948b6bf"
+                us-west-2b: "subnet-2eaaba67"
+                us-west-2c: "subnet-540a9f0f"
+        security-groups:
+            by-level:
+                default:
+                    by-region:
+                        "us-east-1": ["sg-12cd3762"]
+                        "us-west-1": ["sg-caed26ac"]
+                        "us-west-2": ["sg-2728435d"]
+                "3":
+                    by-region:
+                        "us-east-1": ["sg-7aca300a"]
+                        "us-west-1": ["sg-5ce02b3a"]
+                        "us-west-2": ["sg-a0d6beda"]
+
 
 staging:
     root_url: https://stage.taskcluster.nonprod.cloudops.mozgcp.net/
@@ -27,3 +71,45 @@ staging:
       # similarly, we do not want to bind hooks to exchanges, as those exchanges
       # likely do not exist here
       - remove_hook_bindings
+    aws_config:
+        availability-zones:
+            by-region:
+                us-east-1:
+                    - "us-east-1a"
+                    - "us-east-1b"
+                    - "us-east-1c"
+                    - "us-east-1d"
+                    - "us-east-1e"
+                    - "us-east-1f"
+                us-west-1:
+                    - "us-west-1a"
+                    - "us-west-1b"
+                us-west-2:
+                    - "us-west-2a"
+                    - "us-west-2b"
+                    - "us-west-2c"
+        subnet-id:
+            by-availability-zone:
+                us-east-1a: subnet-0c938056fff37f311
+                us-east-1b: subnet-00d682e89c23d7a86
+                us-east-1c: subnet-006eff582598db077
+                us-east-1d: subnet-01454cff97aa89f34
+                us-east-1e: subnet-04003ab20f583059b
+                us-east-1f: subnet-0d8c0e26a6194119c
+                us-west-1a: subnet-0a30116fa0be3bc99
+                us-west-1b: subnet-01aac9d0ea7efdbc4
+                us-west-2a: subnet-06b091438ea962936
+                us-west-2b: subnet-00927443142f01ddf
+                us-west-2c: subnet-0ab2f88a3fa4ab7a0
+        security-groups:
+            by-level:
+                default:
+                    by-region:
+                        "us-east-1": ["sg-01738525fc9991bd0"]
+                        "us-west-1": ["sg-0f52b4554cfc115e7"]
+                        "us-west-2": ["sg-07ca8c96f1574d42b"]
+                "3":
+                    by-region:
+                        "us-east-1": ["sg-7aca300a"]
+                        "us-west-1": ["sg-5ce02b3a"]
+                        "us-west-2": ["sg-a0d6beda"]
