@@ -1089,6 +1089,8 @@
   - queue:quarantine-worker:proj-autophone/gecko-*
   - queue:quarantine-worker:releng-hardware/gecko-*
   - queue:quarantine-worker:terraform-packet/gecko-*
+  # Allow sherrifs to terminate gecko related workers
+  - worker-manager:remove-worker:gecko-*
   # Allow sherrifs to rerun and cancel tasks level 2/3 gecko tasks
   # Allows cancelling tasks with that scheduler-id
   - queue:cancel-task:gecko-level-2/*
