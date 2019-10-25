@@ -18,7 +18,7 @@ production:
     # no modifications in production, please!
 
 staging:
-    root_url: https://taskcluster-staging.net
+    root_url: https://stage.taskcluster.nonprod.cloudops.mozgcp.net/
     modify_resources:
       # we do not want hooks to trigger on a schedule in staging, as that adds
       # lots of load (e.g., building nightlies).  They can be triggered
