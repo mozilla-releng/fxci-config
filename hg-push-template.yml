@@ -16,7 +16,7 @@
 # The context for the second rendering is that provided by the hooks service in response
 # to a Pulse message from exchange/hgpushes/v2 or a triggerHook call with the same payload
 
-provisionerId: infra
+provisionerId: aws-provisioner-v1
 workerType: hg-push
 schedulerId: ${trust_domain}-level-${level}
 
