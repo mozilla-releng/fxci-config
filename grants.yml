@@ -939,6 +939,7 @@
   - queue:route:checks
   - queue:get-artifact:project/mpd001/*
   - project:mpd001:releng:signing:format:sha2signcode
+  - project:mpd001:releng:signing:format:autograph_authenticode
   # Temporary until windows workers use mpd001
   - queue:create-task:highest:aws-provisioner-v1/mpd-{level}-*
   # Temporary secret for cloning; this should be renamed
