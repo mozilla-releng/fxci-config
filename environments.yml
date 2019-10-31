@@ -13,7 +13,7 @@
 # and exist to help configure minor differences between environments, such as
 # to prevent a staging environment from carrying a full production workload.
 ---
-production:
+legacy:
     root_url: https://taskcluster.net
     # no modifications in production, please!
     modify_resources: []
