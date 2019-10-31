@@ -113,3 +113,57 @@ staging:
                         "us-east-1": ["sg-7aca300a"]
                         "us-west-1": ["sg-5ce02b3a"]
                         "us-west-2": ["sg-a0d6beda"]
+
+firefoxci:
+    root_url: https://firefox-ci-tc.services.mozilla.com/
+    # no modifications in production, please!
+    modify_resources: []
+    aws_config:
+        availability-zones:
+            by-region:
+                us-east-1:
+                    - "us-east-1a"
+                    - "us-east-1b"
+                    - "us-east-1c"
+                    - "us-east-1d"
+                    - "us-east-1e"
+                    - "us-east-1f"
+                us-west-1:
+                    - "us-west-1b"
+                    - "us-west-1c"
+                us-west-2:
+                    - "us-west-2a"
+                    - "us-west-2b"
+                    - "us-west-2c"
+                eu-central-1:
+                    - eu-central-1a
+                    - eu-central-1b
+                    - eu-central-1c
+        subnet-id:
+            by-availability-zone:
+                us-east-1a: "subnet-566e060c"
+                us-east-1b: "subnet-f2c93496"
+                us-east-1c: "subnet-c52454e9"
+                us-east-1d: "subnet-e7e6ccaf"
+                us-east-1e: "subnet-deb5a8e2"
+                us-east-1f: "subnet-7f720d73"
+                us-west-1b: "subnet-7641632e"
+                us-west-1c: "subnet-48a9b82c"
+                us-west-2a: "subnet-d948b6bf"
+                us-west-2b: "subnet-2eaaba67"
+                us-west-2c: "subnet-540a9f0f"
+                eu-central-1a: subnet-935645fb
+                eu-central-1b: subnet-6988da13
+                eu-central-1c: subnet-114d525b
+        security-groups:
+            by-level:
+                default:
+                    by-region:
+                        "us-east-1": ["sg-12cd3762"]
+                        "us-west-1": ["sg-caed26ac"]
+                        "us-west-2": ["sg-2728435d"]
+                "3":
+                    by-region:
+                        "us-east-1": ["sg-7aca300a"]
+                        "us-west-1": ["sg-5ce02b3a"]
+                        "us-west-2": ["sg-a0d6beda"]
