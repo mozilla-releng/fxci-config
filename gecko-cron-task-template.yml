@@ -55,17 +55,12 @@ payload:
             - 'bash'
             - '-cx'
 
-            # Note:
-            #   --head-repository is actually the repoistory that gets passed into the decision task
-            #   --base-repository and --head-ref are ignored in post-esr60 branches
             - $let:
                 command: |
                     cd /builds/worker/checkouts/gecko &&
                     ln -s /builds/worker/artifacts artifacts &&
                     ./mach --log-no-times taskgraph cron
-                        --base-repository=$GECKO_BASE_REPOSITORY
                         --head-repository=${project_repo}
-                        --head-ref=$GECKO_HEAD_REF
                         --project=${alias}
                         --level=${level}
                         ${cron_options}
