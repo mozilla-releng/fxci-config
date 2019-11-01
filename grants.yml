@@ -1356,6 +1356,15 @@
     - cloudops
 
 
+# Grant mobile the ability to manually run nightly Fenix builds
+- grant:
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/snapshot
+  to:
+  - groups:
+    - mobile_releases
+
+
 # Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
 - grant:
   - secrets:get:project/mobile/reference-browser/firebase
