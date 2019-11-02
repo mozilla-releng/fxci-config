@@ -1414,3 +1414,46 @@
   to:
   - roles:
     - mozilla-group:mobile_releases
+
+# These grants are directly to the mozilla-group roles as they need
+# are the root of available scopes.
+- grant:
+  - assume:github-admin:*
+  - assume:hook-id:*
+  - assume:login-identity:*
+  - assume:moz-tree:*
+  - assume:mozillians-group:*
+  - assume:mozillians-user:*
+  - assume:project-admin:*
+  - assume:project:*
+  - assume:repo:*
+  - assume:worker-pool:*
+  - assume:worker-type:*
+  - auth:*
+  - docker-worker:*
+  - generic-worker:*
+  - github:*
+  - hooks:*
+  - in-tree:*
+  - index:*
+  - notify:*
+  - project:*
+  - purge-cache:*
+  - queue:*
+  - scheduler:*
+  - secrets:*
+  - worker-manager:*
+  - worker:*
+  to:
+  - roles:
+    - mozilla-group:team_relops
+    - mozilla-group:releng
+
+- grant:
+  - aws-provisioner:*
+  to:
+  - roles:
+    - mozilla-group:team_relops
+    - mozilla-group:releng
+  environments:
+    - legacy
