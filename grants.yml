@@ -1314,13 +1314,6 @@
   - groups:
     - vpn_releasemgt
 
-# Allow releng and in particular ciduty to terminate workers
-- grant:
-  - ec2-manager:manage-resources:gecko-*
-  to:
-  - groups:
-    - releng
-
 
 # Allow bitbar to manage bitbar workers
 - grant:
@@ -1451,6 +1444,7 @@
 
 - grant:
   - aws-provisioner:*
+  - ec2-manager:*
   to:
   - roles:
     - mozilla-group:team_relops
