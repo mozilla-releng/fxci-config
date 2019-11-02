@@ -68,6 +68,8 @@ mozilla-release:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron_targets:
+    - ship-geckoview
 mozilla-esr68:
   repo: https://hg.mozilla.org/releases/mozilla-esr68
   repo_type: hg
@@ -140,6 +142,8 @@ mozilla-beta:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron_targets:
+    - ship-geckoview
 comm-beta:
   repo: https://hg.mozilla.org/releases/comm-beta
   repo_type: hg
@@ -179,6 +183,13 @@ mozilla-central:
     is-trunk: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron_targets:
+    - nightly-desktop
+    - nightly-desktop-osx
+    - nightly-desktop-win32
+    - nightly-desktop-win64
+    - nightly-desktop-win64-aarch64
+    - ship-geckoview
 comm-central:
   repo: https://hg.mozilla.org/comm-central
   repo_type: hg
@@ -217,6 +228,8 @@ birch:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron_targets:
+    - nightly-desktop
 cypress:
   repo: https://hg.mozilla.org/projects/cypress
   repo_type: hg
