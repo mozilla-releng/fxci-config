@@ -61,9 +61,9 @@
 # The property name can be `group` or `groups`, whichever reads better.
 #
 # The resulting scopes are granted to role `project:releng:ci-group:<groupName>`.
-# It is then the responsibility of someone with elevated privileges to grant
-# `assume:project:releng:ci-group:<groupName>` to the appropriate access-control
-# group, hopefully with the same name.
+# Then `assume:project:releng:ci-group:<groupName>` to the appropriate access-control
+# role, hopefully with the same name. This indirection exists because `mozilla-group`
+# role changes need access to the cluster's root crendentials.
 #
 # No expansions are available for user groups.
 
@@ -1377,6 +1377,9 @@
 - grant:
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/snapshot
+  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
+  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-release/ship-geckoview
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
   to:
   - groups:
     - mobile_releases
@@ -1402,3 +1405,12 @@
   to:
   - groups:
     - vpn_hg_admin
+
+# Mappings from `mozilla-group`s to `project-releng:ci-group`s
+# This indirection exists because modifying `mozilla-group`s requires
+# access to the root credentials.
+- grant:
+  - assume:project:releng:ci-group:mobile_releases
+  to:
+  - roles:
+    - mozilla-group:mobile_releases
