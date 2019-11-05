@@ -502,6 +502,12 @@ application-services:
   level: 3
 
 # mozilla-releng Github repositories
+k8s-autoscale:
+  repo: https://github.com/mozilla-releng/k8s-autoscale
+  repo_type: git
+  trust_domain: releng
+  level: 3
+
 product-details:
   repo: https://github.com/mozilla-releng/product-details
   repo_type: git
