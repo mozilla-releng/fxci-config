@@ -82,6 +82,8 @@ mozilla-esr68:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron_targets:
+    - nightly-android
 comm-esr68:
   repo: https://hg.mozilla.org/releases/comm-esr68
   repo_type: hg
@@ -204,6 +206,8 @@ comm-central:
     is-trunk: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron_targets:
+    - nightly-desktop
 cedar:
   repo: https://hg.mozilla.org/projects/cedar
   repo_type: hg
