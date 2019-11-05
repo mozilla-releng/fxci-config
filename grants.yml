@@ -975,6 +975,7 @@
     - project:mobile:focus:releng:signing:cert:release-signing
     - project:mobile:focus:releng:signing:format:autograph_focus
     - project:mobile:focus:releng:signing:format:focus-jar
+    - queue:scheduler-id:taskcluster-github
     - queue:create-task:highest:aws-provisioner-v1/gecko-focus
     - queue:create-task:highest:scriptworker-prov-v1/mobile-pushapk-v1
     - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
