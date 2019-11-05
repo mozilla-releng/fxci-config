@@ -1109,16 +1109,31 @@
   - queue:quarantine-worker:terraform-packet/gecko-*
   # Allow sherrifs to terminate gecko related workers
   - worker-manager:remove-worker:gecko-*
-  # Allow sherrifs to rerun and cancel tasks level 2/3 gecko tasks
+  # Allow sherrifs to rerun and cancel gecko tasks
   # Allows cancelling tasks with that scheduler-id
-  - queue:cancel-task:gecko-level-2/*
-  - queue:cancel-task:gecko-level-3/*
-  # Allow reruning tasks with that scheduler-id
-  - queue:rerun-task:gecko-level-2/*
-  - queue:rerun-task:gecko-level-3/*
+  - queue:cancel-task:gecko-level-*
+  - queue:rerun-task:gecko-level-*
+  # Allow managing treestatus
+  - assume:project:releng:treestatus/admin
+  # Allow triggering nightlies and geckoview
+  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
+  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-release/ship-geckoview
+  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-esr68/nightly-*
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-central/nightly-*
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
   to:
   - groups:
     - sheriff
+
+- grant:
+  - aws-provisioner:manage-worker-type:gecko-*
+  - ec2-manager:manage-instances:*
+  - ec2-manager:manage-resources:*
+  to:
+  - groups:
+    - sheriff
+  environments:
+    - legacy
 
 - grant:
   # Allow people with level-3 access to access interactive tasks
@@ -1407,6 +1422,11 @@
   to:
   - roles:
     - mozilla-group:mobile_releases
+- grant:
+  - assume:project:releng:ci-group:sherrifs
+  to:
+  - roles:
+    - mozilla-group:sherrifs
 
 # These grants are directly to the mozilla-group roles as they need
 # are the root of available scopes.
