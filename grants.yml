@@ -581,7 +581,7 @@
       feature: is-trunk
 
 ##
-# mozilla roles - application-services specific roles
+# mozilla roles
 #
 # Mind yourself of globstar roles such as the following that could potentially
 # grant even more scopes to certain roles in an automatic way
@@ -589,6 +589,7 @@
 # > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2F*
 # > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla%2F*
 
+# - application-services specific roles
 - grant:
   - assume:project:taskcluster:mozilla-github-repository
   - docker-worker:taskcluster-proxy:tooltool.download.internal
@@ -614,6 +615,23 @@
   - project:
       alias: application-services
       job: ["release"]
+
+##
+# mozilla-releng roles
+#
+# Mind yourself of globstar roles such as the following that could potentially
+# grant even more scopes to certain roles in an automatic way
+# > https://tools.taskcluster.net/auth/roles/repo%3A*
+# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2F*
+# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla-releng%2F*
+
+# - scriptworker-scripts specific roles
+- grant:
+  - secrets:get:project/releng/scriptworker-scripts/deploy
+  to:
+  - projects:
+      alias: scriptworker-scripts
+      job: ["branch:production*", "branch:dev*"]
 
 ##
 # mobile-specific roles

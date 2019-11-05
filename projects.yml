@@ -501,6 +501,13 @@ application-services:
   repo_type: git
   level: 3
 
+# mozilla-releng Github repositories
+scriptworker-scripts:
+  repo: https://github.com/mozilla-releng/scriptworker-scripts
+  repo_type: git
+  trust_domain: releng
+  level: 3
+
 # L10n repositories
 android-l10n-tooling:
   repo: https://github.com/mozilla-l10n/android-l10n-tooling
