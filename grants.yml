@@ -1029,13 +1029,6 @@
       job: ["branch:master", "action:*"]
 
 - grant:
-  - hooks:trigger-hook:project-xpi/in-tree-action-1-*
-  - hooks:trigger-hook:project-xpi/in-tree-action-3-*
-  to:
-  - groups:
-    - releng
-
-- grant:
   # access to workers; all levels have access to the same workers, but at
   # different priorities and levels
   - queue:route:index.{trust_domain}.xpi-manifest.cache.level-{level}.*
@@ -1206,7 +1199,6 @@
   - hooks:trigger-hook:project-comm/in-tree-action-3-retrigger-decision/*
   to:
   - groups:
-    - releng
     - sheriff
 
 # In addition to the default scopes, retriggering a decision task requires
@@ -1230,7 +1222,6 @@
   - hooks:trigger-hook:project-comm/in-tree-action-3-purge-caches/*
   to:
   - groups:
-    - releng
     - sheriff
 
 # pretty much anyone can cancel-all at level 1 or 2, while only releng/sheriff
@@ -1245,7 +1236,6 @@
     - active_scm_level_1
     - active_scm_level_2
     - active_scm_level_3
-    - releng
     - sheriff
 
 - grant:
@@ -1253,7 +1243,6 @@
   - hooks:trigger-hook:project-comm/in-tree-action-3-cancel-all/*
   to:
   - groups:
-    - releng
     - sheriff
 
 # Thunderbird releng can only cancel-all on comm trees
@@ -1273,7 +1262,6 @@
   - hooks:trigger-hook:project-comm/in-tree-action-3-release-promotion/*
   to:
   - groups:
-    - releng
     - vpn_releasemgt
 
 # tooltool.mozilla-releng.net and tokens.mozilla-releng.net scopes
@@ -1311,14 +1299,6 @@
   - secrets:set:project/comm/*
   to:
   - groups: thunderbird-releng
-
-# Allow releng to manage repo:hg.mozilla.org/* roles.
-- grant:
-  - auth:create-role:repo:hg.mozilla.org/*
-  - auth:update-role:repo:hg.mozilla.org/*
-  - auth:delete-role:repo:hg.mozilla.org/*
-  to:
-  - group: releng
 
 # releng services hooks
 - grant:
