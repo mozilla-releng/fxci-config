@@ -916,9 +916,23 @@
       alias: focus-android
       job: ["release"]
 
+# firefox-tv specific scopes
+- grant:
+  - secrets:get:project/mobile/firefox-tv/tokens
+  to:
+  - project:
+      alias: firefox-tv
+      job: ["branch:*", "pull-request", "release"]
+
+- grant:
+  - notify:email:firefox-tv@mozilla.com
+  - project:mobile:firefox-tv:releng:signing:cert:production-signing
+  to:
+  - project:
+      alias: firefox-tv
+      job: ["release"]
 
 # L10n repositories
-
 - grant:
   - queue:create-task:highest:aws-provisioner-v1/l10n-{level}-*
   - queue:create-task:{priority}:built-in/*
