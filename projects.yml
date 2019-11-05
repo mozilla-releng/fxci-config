@@ -536,6 +536,12 @@ tooltool:
   trust_domain: releng
   level: 3
 
+balrog:
+  repo: https://github.com/mozilla/balrog
+  repo_type: git
+  trust_domain: releng
+  level: 3
+
 # L10n repositories
 android-l10n-tooling:
   repo: https://github.com/mozilla-l10n/android-l10n-tooling
