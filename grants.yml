@@ -671,6 +671,21 @@
       alias: shipit
       job: ["branch:testing", "branch:staging", "branch:production"]
 
+# - tooltool specific roles
+- grant:
+  - secrets:get:project/releng/tooltool/ci
+  to:
+  - projects:
+      alias: tooltool
+      job: ["branch:*", "pull-request"]
+
+- grant:
+  - secrets:get:project/releng/tooltool/deploy
+  to:
+  - projects:
+      alias: tooltool
+      job: ["branch:*"]
+
 ##
 # mobile-specific roles
 #
