@@ -2261,6 +2261,35 @@ aws-provisioner-v1/xpi-1-decision:
     - us-east-1
     - us-west-1
     - us-west-2
+xpi-1/decision:
+  description: Worker for XPI automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    worker-config: {billingCycleInterval: 21600}
+    instance_types:
+    - instanceType: c5d.xlarge
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.xlarge
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    - instanceType: c5.xlarge
+      capacityPerInstance: 2
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
 aws-provisioner-v1/xpi-3-decision:
   description: Decision worker for xpi automation
   owner: release@mozilla.com
@@ -2277,6 +2306,56 @@ aws-provisioner-v1/xpi-3-decision:
       userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.4
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
+xpi-3/decision:
+  description: Worker for XPI automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 10
+    worker-config: {billingCycleInterval: 21600}
+    instance_types:
+    - instanceType: c5d.xlarge
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.xlarge
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    - instanceType: c5.xlarge
+      capacityPerInstance: 2
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+xpi-1/b-linux:
+  description: Worker for XPI automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    instance_types:
+    - instanceType: c5d.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
     regions:
     - us-east-1
     - us-west-1
@@ -2339,6 +2418,51 @@ aws-provisioner-v1/xpi-3-b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
+xpi-3/b-linux-large:
+  description: Worker for XPI automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 10
+    level: "3"
+    regions: [us-east-1, us-west-1, us-west-2]
+    instance_types:
+    - instanceType: c5d.9xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m5d.12xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m5.12xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: c5.9xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m4.10xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: c4.8xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
 aws-provisioner-v1/xpi-1-images:
   description: 'Builds docker images for XPI; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -2366,6 +2490,35 @@ aws-provisioner-v1/xpi-1-images:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
+xpi-1/images:
+  description: 'Builds docker images for XPI; NOTE: capacity set to 1 instead of
+    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
+    regions: [us-east-1, us-west-1, us-west-2]
+    instance_types:
+    - instanceType: c5d.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5d.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5.xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
     regions:
     - us-east-1
@@ -2404,6 +2557,32 @@ aws-provisioner-v1/xpi-3-images:
     - us-east-1
     - us-west-1
     - us-west-2
+xpi-3/images:
+  description: 'Builds docker images for xpi; NOTE: capacity set to 1 instead of
+    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    minCapacity: 0
+    maxCapacity: 10
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
+    regions: [us-east-1, us-west-1, us-west-2]
+    instance_types:
+    - instanceType: c5d.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5d.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5.xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
 aws-provisioner-v1/gecko-1-monopacker-test-aws:
   description: Monopacker test worker for Firefox automation
   owner: mcrabill@mozilla.com
