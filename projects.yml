@@ -502,6 +502,12 @@ application-services:
   level: 3
 
 # mozilla-releng Github repositories
+product-details:
+  repo: https://github.com/mozilla-releng/product-details
+  repo_type: git
+  trust_domain: releng
+  level: 3
+
 scriptworker-scripts:
   repo: https://github.com/mozilla-releng/scriptworker-scripts
   repo_type: git

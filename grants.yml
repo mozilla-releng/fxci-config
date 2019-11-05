@@ -625,6 +625,28 @@
 # > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2F*
 # > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla-releng%2F*
 
+# - product-details specific roles
+- grant:
+  - secrets:get:repo:github.com/mozilla-releng/product-details:branch:production
+  to:
+  - projects:
+      alias: product-details
+      job: ["branch:production"]
+
+- grant:
+  - secrets:get:repo:github.com/mozilla-releng/product-details:branch:staging
+  to:
+  - projects:
+      alias: product-details
+      job: ["branch:staging"]
+
+- grant:
+  - secrets:get:repo:github.com/mozilla-releng/product-details:branch:testing
+  to:
+  - projects:
+      alias: product-details
+      job: ["branch:testing"]
+
 # - scriptworker-scripts specific roles
 - grant:
   - secrets:get:project/releng/scriptworker-scripts/deploy
