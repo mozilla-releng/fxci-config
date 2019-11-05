@@ -242,18 +242,6 @@ ux:
   access: scm_level_3
   trust_domain: gecko
   features: {}
-elm:
-  repo: https://hg.mozilla.org/projects/elm
-  repo_type: hg
-  access: scm_level_2
-  trust_domain: gecko
-  features:
-    gecko-actions: true
-    gecko-cron: true
-    gecko-roles: true
-    hg-push: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
 graphics:
   repo: https://hg.mozilla.org/projects/graphics
   repo_type: hg
