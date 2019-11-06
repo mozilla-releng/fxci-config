@@ -1415,6 +1415,35 @@ aws-provisioner-v1/gecko-misc:
     - us-east-1
     - us-west-1
     - us-west-2
+gecko-t/misc:
+  description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
+    SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
+    (total 80GB, 9GB per task).
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 32
+    scalingRatio: 0
+    userData: {billingCycleInterval: 21600}
+    instance_types:
+    - instanceType: r3.xlarge
+      capacity: 8
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 9000000000}
+    - instanceType: m3.xlarge
+      capacity: 8
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 9000000000}
+    - instanceType: c3.xlarge
+      capacity: 8
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 9000000000}
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
 gecko-1/b-win2012:
   description: ''
   owner: release+tc-workers@mozilla.com
