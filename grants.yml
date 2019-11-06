@@ -1455,13 +1455,22 @@
     - cloudops
 
 
-# Grant mobile the ability to manually run nightly Fenix builds
 - grant:
+  # Grant mobile the ability to manually start release automation
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/snapshot
   - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
   - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-release/ship-geckoview
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
+  to:
+  - groups:
+    - mobile_releases
+
+
+- grant:
+  # Grant mobile the ability to see and modify their secrets
+  - secrets:get:project/mobile/*
+  - secrets:set:project/mobile/*
   to:
   - groups:
     - mobile_releases
