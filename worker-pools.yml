@@ -30,6 +30,29 @@ worker-defaults:
                         shutdown:
                             enabled: true
                             afterIdleSeconds: 900
+                    generic-worker/windows:
+                        genericWorker:
+                            config:
+                               "cachesDir": "Z:\\caches"
+                               "cleanUpTaskDirs": true
+                               "deploymentId": "f37dd7ee1cae"
+                               "disableReboots": true
+                               "downloadsDir": "Z:\\downloads"
+                               "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
+                               "idleTimeoutSecs": 900
+                               "livelogExecutable": "C:\\generic-worker\\livelog.exe"
+                               "livelogPUTPort": 60022
+                               "numberOfTasksToRun": 0
+                               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd"
+                               "runTasksAsCurrentUser": false
+                               "sentryProject": "generic-worker"
+                               "shutdownMachineOnIdle": false
+                               "shutdownMachineOnInternalError": true
+                               "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
+                               "taskclusterProxyPort": 80
+                               "tasksDir": "Z:\\"
+                               "wstAudience": "taskcluster-net"
+                               "wstServerURL": "https://websocktunnel.tasks.build"
 
 infra/hg-push:
   description: Worker for firefox-ci automation.
@@ -1392,6 +1415,159 @@ aws-provisioner-v1/gecko-misc:
     - us-east-1
     - us-west-1
     - us-west-2
+gecko-1/b-win2012:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-b-win2012-current
+    maxCapacity: 512
+    additional-user-data:
+      workerType: gecko-1-b-win2012
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+      - instanceType: c4.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      - instanceType: c5.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+gecko-3/b-win2012:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-b-win2012-trusted-current
+    maxCapacity: 600
+    additional-user-data:
+      workerType: gecko-3-b-win2012
+    regions: [us-east-1, us-west-1, us-west-2]
+    security: trusted
+    implementation: generic-worker/windows
+    instance_types:
+      - instanceType: c4.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      - instanceType: c5.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+gecko-t/t-win10-64:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-t-win10-64-current
+    maxCapacity: 1024
+    scalingRatio: 0
+    additional-user-data:
+      workerType: gecko-t-win10-64
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+    - instanceType: c5.2xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        - DeviceName: xvdf
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData: {}
+gecko-t/t-win10-64-gpu-s:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-t-win10-64-gpu-current
+    maxCapacity: 512
+    additional-user-data:
+      workerType: gecko-t-win10-64-gpu
+    regions: [us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+     - capacity: 1
+       instanceType: g3s.xlarge
+       launchSpec:
+         BlockDeviceMappings:
+         - DeviceName: /dev/xvda
+           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+         - DeviceName: xvdf
+           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+gecko-t/t-win7-32:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-t-win7-32-current
+    maxCapacity: 1024
+    additional-user-data:
+      workerType: gecko-t-win7-32
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+    - instanceType: c4.2xlarge
+      capacity: 1
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs: {VolumeType: gp2, VolumeSize: 30, DeleteOnTermination: true}
+        - DeviceName: /dev/sdb
+          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
+        - DeviceName: /dev/sdc
+          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
+gecko-t/t-win7-32-gpu:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-t-win7-32-gpu-current
+    maxCapacity: 600
+    additional-user-data:
+      workerType: gecko-t-win7-32-gpu
+    regions: [us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+    - instanceType: g2.2xlarge
+      capacity: 1
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs: {VolumeType: gp2, VolumeSize: 30, DeleteOnTermination: true}
+        - DeviceName: /dev/sdb
+          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
+        - DeviceName: /dev/sdc
+          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
 aws-provisioner-v1/gecko-t-linux-large:
   description: ''
   owner: Firefox CI

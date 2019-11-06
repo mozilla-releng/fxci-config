@@ -9,6 +9,13 @@
 docker-worker-hvm-builder-current: docker-worker-v201910231323-hvm-builder
 docker-worker-hvm-builder-trusted-current: docker-worker-v201910231323-hvm-builder-trusted
 
+occ-b-win2012-current: occ-b-win2012-pre
+occ-b-win2012-trusted-current: occ-b-win2012-trusted-pre
+occ-t-win10-64-current: occ-t-win10-64-pre
+occ-t-win10-64-gpu-current: occ-t-win10-64-gpu-pre
+occ-t-win7-32-current: occ-t-win7-32-pre
+occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-pre
+
 # monopacker test AMIs
 monopacker-docker-worker-aws-current: docker_worker_aws-amazon-ebs-2019-09-18T16-42-49Z
 docker_worker_aws-amazon-ebs-2019-09-18T16-42-49Z:
@@ -367,3 +374,64 @@ gwci-linux:
     us-east-1: ami-000f78733862c228b
     us-west-1: ami-0d2bc4a97a0aaa9d3
     us-west-2: ami-00e7eeb8d7449b1ce
+occ-b-win2012-pre:
+  legacy-aws-provisioner-v1:
+    eu-central-1: ami-0ea4281515c1694d6
+    us-east-1: ami-06f0a71f5043a32a6
+    us-west-1: ami-0f60c98f2480844df
+    us-west-2: ami-08766522e4f058dba
+  aws:
+    eu-central-1: ami-0ea4281515c1694d6
+    us-east-1: ami-06f0a71f5043a32a6
+    us-west-1: ami-0f60c98f2480844df
+    us-west-2: ami-08766522e4f058dba
+occ-b-win2012-trusted-pre:
+  legacy-aws-provisioner-v1:
+    us-east-1: ami-0cead3a65f8db9b35
+    us-west-1: ami-093f078f632dd65f1
+    us-west-2: ami-08d29be36b85571d8
+  aws:
+    us-east-1: ami-0cead3a65f8db9b35
+    us-west-1: ami-093f078f632dd65f1
+    us-west-2: ami-08d29be36b85571d8
+occ-t-win10-64-pre:
+  legacy-aws-provisioner-v1:
+    eu-central-1: ami-09e1aa7e1f48539c1
+    us-east-1: ami-0c7fbac545e94f4c4
+    us-west-1: ami-0b14e1e3b5665f447
+    us-west-2: ami-05d629b4a0589d79a
+  aws:
+    eu-central-1: ami-09e1aa7e1f48539c1
+    us-east-1: ami-0c7fbac545e94f4c4
+    us-west-1: ami-0b14e1e3b5665f447
+    us-west-2: ami-05d629b4a0589d79a
+occ-t-win10-64-gpu-pre:
+  legacy-aws-provisioner-v1:
+    us-east-1: ami-00a197e562cbfa8e7
+    us-west-1: ami-0a942c9204789dbfa
+    us-west-2: ami-0f789e9bee426b47a
+  aws:
+    us-east-1: ami-00a197e562cbfa8e7
+    us-west-1: ami-0a942c9204789dbfa
+    us-west-2: ami-0f789e9bee426b47a
+occ-t-win7-32-pre:
+  legacy-aws-provisioner-v1:
+    eu-central-1: ami-023422045b5233177
+    us-east-1: ami-0c0208f672c8cda55
+    us-west-1: ami-08e087e85ba09f929
+    us-west-2: ami-07e0e8cc311e35b8d
+  aws:
+    eu-central-1: ami-023422045b5233177
+    us-east-1: ami-0c0208f672c8cda55
+    us-west-1: ami-08e087e85ba09f929
+    us-west-2: ami-07e0e8cc311e35b8d
+occ-t-win7-32-gpu-pre:
+  legacy-aws-provisioner-v1:
+    us-east-1: ami-08b7d279b7444681b
+    us-west-1: ami-0d943d137b0a78d5d
+    us-west-2: ami-0003e4e80ff09fd52
+  aws:
+    us-east-1: ami-08b7d279b7444681b
+    us-west-1: ami-0d943d137b0a78d5d
+    us-west-2: ami-0003e4e80ff09fd52
+

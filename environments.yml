@@ -34,6 +34,10 @@ legacy:
                     - "us-west-2a"
                     - "us-west-2b"
                     - "us-west-2c"
+                eu-central-1:
+                    - eu-central-1a
+                    - eu-central-1b
+                    - eu-central-1c
         subnet-id:
             by-availability-zone:
                 us-east-1a: "subnet-566e060c"
@@ -47,6 +51,9 @@ legacy:
                 us-west-2a: "subnet-d948b6bf"
                 us-west-2b: "subnet-2eaaba67"
                 us-west-2c: "subnet-540a9f0f"
+                eu-central-1a: subnet-935645fb
+                eu-central-1b: subnet-6988da13
+                eu-central-1c: subnet-114d525b
         security-groups:
             by-security:
                 untrusted:
@@ -54,6 +61,12 @@ legacy:
                         "us-east-1": ["sg-12cd3762"]
                         "us-west-1": ["sg-caed26ac"]
                         "us-west-2": ["sg-2728435d"]
+                windows-untrusted:
+                    by-region:
+                        "us-east-1": ["sg-0dc9337d", "sg-27d72d57"]
+                        "us-west-1": ["sg-5be3283d", "sg-fee02b98"]
+                        "us-west-2": ["sg-09d6be73", "sg-3bd7bf41"]
+                        "eu-central-1": ["sg-c03e0eab", "sg-e43d0d8f"]
                 trusted:
                     by-region:
                         "us-east-1": ["sg-7aca300a"]
@@ -162,6 +175,12 @@ firefoxci:
                         "us-east-1": ["sg-12cd3762"]
                         "us-west-1": ["sg-caed26ac"]
                         "us-west-2": ["sg-2728435d"]
+                windows-untrusted:
+                    by-region:
+                        "us-east-1": ["sg-0dc9337d", "sg-27d72d57"]
+                        "us-west-1": ["sg-5be3283d", "sg-fee02b98"]
+                        "us-west-2": ["sg-09d6be73", "sg-3bd7bf41"]
+                        "eu-central-1": ["sg-c03e0eab", "sg-e43d0d8f"]
                 trusted:
                     by-region:
                         "us-east-1": ["sg-7aca300a"]
