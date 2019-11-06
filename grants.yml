@@ -1436,6 +1436,12 @@
   # Allow access to public tooltool artifacts
   - docker-worker:relengapi-proxy:tooltool.download.public
   - project:releng:services/tooltool/api/download/public
+  # Allow a sensible scheduler-id
+  - queue:scheduler-id:mozillaonline-*
+  # Allows cancelling tasks with that scheduler-id
+  - queue:cancel-task:mozillaonline-*
+  # Allow reruning tasks with that scheduler-id
+  - queue:rerun-task:mozillaonline-*
   to:
   - groups:
     - mozillaonline
