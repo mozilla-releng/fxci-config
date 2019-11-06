@@ -1396,6 +1396,41 @@ aws-provisioner-v1/hg-worker:
     - us-east-1
     - us-west-1
     - us-west-2
+nss-1/linux:
+  description: Worker type that can be used for nss related pushes.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 50
+    scalingRatio: 0
+    instance_types:
+    - instanceType: m5d.xlarge
+      capacity: 1
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
+nss-3/linux:
+  description: Worker type that can be used for nss related pushes.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 50
+    scalingRatio: 0
+    level: "3"
+    instance_types:
+    - instanceType: m5d.xlarge
+      capacity: 1
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
 aws-provisioner-v1/mobile-1-b-andrcmp:
   description: General-purpose worker for projects by android components team (to
     build and release a very large suite of Kotlin components)
