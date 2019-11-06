@@ -6,8 +6,8 @@
 #
 # Aliases can be defined by a simple string; this is useful for "current" images
 
-docker-worker-hvm-builder-current: docker-worker-v201911051510-hvm-builder
-docker-worker-hvm-builder-trusted-current: docker-worker-v201911051510-hvm-builder-trusted
+docker-worker-hvm-builder-current: docker-worker-v201910231323-hvm-builder
+docker-worker-hvm-builder-trusted-current: docker-worker-v201910231323-hvm-builder-trusted
 
 # monopacker test AMIs
 monopacker-docker-worker-aws-current: docker_worker_aws-amazon-ebs-2019-09-18T16-42-49Z
@@ -351,28 +351,6 @@ docker-worker-v201910231323-hvm-builder:
     us-east-1: ami-02a87fa1f6a4d9d2c
     us-west-1: ami-05bf92a940dae090d
     us-west-2: ami-03f808b14ea0e3d4a
-docker-worker-v201911051510-hvm-builder:
-  legacy-aws-provisioner-v1:
-    eu-central-1: ami-0bf5de23779e04e54
-    us-east-1: ami-087998d87dec5e58b
-    us-west-1: ami-005043999b054c5d2
-    us-west-2: ami-088b36064f3a58adf
-  aws:
-    eu-central-1: ami-0ec2ed61832d5b71b
-    us-east-1: ami-0369f31592015a351
-    us-west-1: ami-0915d3eeeb5ae0ed2
-    us-west-2: ami-05d591c7b8f7784ca
-docker-worker-v201911051510-hvm-builder-trusted:
-  legacy-aws-provisioner-v1:
-    eu-central-1: ami-0ccd1afd71453f302
-    us-east-1: ami-0db8a3aac92476d05
-    us-west-1: ami-053af82b7fbda5730
-    us-west-2: ami-0d11d698940eb9fff
-  aws:
-    eu-central-1: ami-0ec2ed61832d5b71b
-    us-east-1: ami-0369f31592015a351
-    us-west-1: ami-0915d3eeeb5ae0ed2
-    us-west-2: ami-05d591c7b8f7784ca
 
 
 # Flatpak test images:
