@@ -25,10 +25,11 @@ worker-defaults:
         aws|legacy-aws-provisioner-v1:
             # worker-config is ignored by legacy-aws-provisioner-v1
             worker-config:
-                # Note: this config is currently docker-worker only
-                shutdown:
-                    enabled: true
-                    afterIdleSeconds: 900
+                by-implementation:
+                    docker-worker:
+                        shutdown:
+                            enabled: true
+                            afterIdleSeconds: 900
 
 infra/hg-push:
   description: Worker for firefox-ci automation.
@@ -862,7 +863,7 @@ aws-provisioner-v1/gecko-3-b-linux:
     image: docker-worker-hvm-builder-trusted-current
     maxCapacity: 1000
     scalingRatio: 0
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: c5.4xlarge
       launchSpec:
@@ -898,7 +899,7 @@ gecko-3/b-linux:
   config:
     image: docker-worker-hvm-builder-trusted-current
     maxCapacity: 1000
-    level: "3"
+    security: trusted
     regions: [us-east-1, us-west-1, us-west-2]
     instance_types:
     - instanceType: c5.4xlarge
@@ -931,7 +932,7 @@ comm-3/b-linux:
   config:
     image: docker-worker-hvm-builder-trusted-current
     maxCapacity: 1000
-    level: "3"
+    security: trusted
     regions: [us-east-1, us-west-1, us-west-2]
     instance_types:
     - instanceType: c5.4xlarge
@@ -965,7 +966,7 @@ aws-provisioner-v1/gecko-3-b-linux-large:
     image: docker-worker-hvm-builder-trusted-current
     maxCapacity: 10
     scalingRatio: 0
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: c5d.9xlarge
       userData:
@@ -1019,7 +1020,7 @@ gecko-3/b-linux-large:
     image: docker-worker-hvm-builder-trusted-current
     maxCapacity: 10
     scalingRatio: 0
-    level: "3"
+    security: trusted
     regions: [us-east-1, us-west-1, us-west-2]
     instance_types:
     - instanceType: c5d.9xlarge
@@ -1065,7 +1066,7 @@ aws-provisioner-v1/gecko-3-b-linux-xlarge:
     image: docker-worker-hvm-builder-trusted-current
     maxCapacity: 10
     scalingRatio: 0
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: c5d.18xlarge
       userData:
@@ -1111,7 +1112,7 @@ gecko-3/b-linux-xlarge:
     image: docker-worker-hvm-builder-trusted-current
     maxCapacity: 10
     scalingRatio: 0
-    level: "3"
+    security: trusted
     regions: [us-east-1, us-west-1, us-west-2]
     instance_types:
     - instanceType: c5d.18xlarge
@@ -1152,7 +1153,7 @@ aws-provisioner-v1/gecko-3-decision:
     maxCapacity: 20
     scalingRatio: 0
     userData: {billingCycleInterval: 21600}
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: c5d.xlarge
       userData:
@@ -1245,7 +1246,7 @@ aws-provisioner-v1/gecko-3-images:
     maxCapacity: 30
     scalingRatio: 0
     userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: c5d.xlarge
       userData:
@@ -1331,7 +1332,7 @@ aws-provisioner-v1/gecko-3-t-linux-xlarge:
     scalingRatio: 0
     userData:
       dockerConfig: {allowPrivileged: false}
-    level: "3"
+      security: trusted
     instanceTypes:
     - instanceType: m3.xlarge
       userData:
@@ -1351,9 +1352,9 @@ gecko-3/t-linux-xlarge:
   config:
     image: docker-worker-hvm-builder-trusted-current
     maxCapacity: 10
+    security: trusted
     worker-config:
       dockerConfig: {allowPrivileged: false}
-    level: "3"
     regions: [us-east-1, us-west-1, us-west-2]
     instance_types:
     - instanceType: m3.xlarge
@@ -1640,7 +1641,7 @@ nss-3/linux:
     minCapacity: 0
     maxCapacity: 50
     scalingRatio: 0
-    level: "3"
+    security: trusted
     instance_types:
     - instanceType: m5d.xlarge
       capacity: 1
@@ -1893,7 +1894,7 @@ mobile-3/b-linux-large:
     minCapacity: 0
     maxCapacity: 500
     scalingRatio: 0
-    level: "3"
+    security: trusted
     instance_types:
     - instanceType: c5d.4xlarge
       launchConfig:
@@ -1936,7 +1937,7 @@ mobile-3/b-linux:
     minCapacity: 0
     maxCapacity: 50
     scalingRatio: 0
-    level: "3"
+    security: trusted
     instance_types:
     - instanceType: m5d.xlarge
       capacity: 1
@@ -1995,7 +1996,7 @@ aws-provisioner-v1/mobile-3-decision:
     maxCapacity: 10
     scalingRatio: 0
     userData: {billingCycleInterval: 21600}
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: m5d.large
       capacity: 2
@@ -2016,7 +2017,7 @@ mobile-3/decision:
     minCapacity: 1
     maxCapacity: 100
     scalingRatio: 0
-    level: "3"
+    security: trusted
     instance_types:
     - instanceType: m5d.large
       capacity: 2
@@ -2038,7 +2039,7 @@ aws-provisioner-v1/mobile-3-images:
     maxCapacity: 30
     scalingRatio: 0
     userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: c5.9xlarge
       launchSpec:
@@ -2063,7 +2064,7 @@ mobile-3/images:
     maxCapacity: 30
     scalingRatio: 0
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
-    level: "3"
+    security: trusted
     instance_types:
     - instanceType: c5.9xlarge
       launchConfig:
@@ -2133,7 +2134,7 @@ aws-provisioner-v1/app-services-3-decision:
     maxCapacity: 10
     scalingRatio: 0
     userData: {billingCycleInterval: 21600}
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: m5d.large
       capacity: 1
@@ -2156,7 +2157,7 @@ aws-provisioner-v1/app-services-3-images:
     maxCapacity: 30
     scalingRatio: 0
     userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: c5d.xlarge
       launchSpec:
@@ -2205,7 +2206,7 @@ aws-provisioner-v1/app-services-3-b-linux:
     minCapacity: 2
     maxCapacity: 100
     scalingRatio: 0
-    level: "3"
+    security: trusted
     instanceTypes:
       # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
     - instanceType: c5d.4xlarge
@@ -2552,7 +2553,7 @@ aws-provisioner-v1/xpi-3-decision:
     minCapacity: 0
     maxCapacity: 10
     scalingRatio: 0
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: m5d.large
       userData:
@@ -2642,7 +2643,7 @@ aws-provisioner-v1/xpi-3-b-linux:
     image: docker-worker-hvm-builder-trusted-current
     maxCapacity: 10
     scalingRatio: 0
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: c5.4xlarge
       launchSpec:
@@ -2678,7 +2679,7 @@ xpi-3/b-linux-large:
   config:
     image: docker-worker-hvm-builder-trusted-current
     maxCapacity: 10
-    level: "3"
+    security: trusted
     regions: [us-east-1, us-west-1, us-west-2]
     instance_types:
     - instanceType: c5d.9xlarge
@@ -2788,7 +2789,7 @@ aws-provisioner-v1/xpi-3-images:
     maxCapacity: 10
     scalingRatio: 0
     userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    level: "3"
+    security: trusted
     instanceTypes:
     - instanceType: c5d.xlarge
       userData:

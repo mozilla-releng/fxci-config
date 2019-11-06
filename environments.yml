@@ -48,13 +48,13 @@ legacy:
                 us-west-2b: "subnet-2eaaba67"
                 us-west-2c: "subnet-540a9f0f"
         security-groups:
-            by-level:
-                default:
+            by-security:
+                untrusted:
                     by-region:
                         "us-east-1": ["sg-12cd3762"]
                         "us-west-1": ["sg-caed26ac"]
                         "us-west-2": ["sg-2728435d"]
-                "3":
+                trusted:
                     by-region:
                         "us-east-1": ["sg-7aca300a"]
                         "us-west-1": ["sg-5ce02b3a"]
@@ -102,13 +102,13 @@ staging:
                 us-west-2b: subnet-00927443142f01ddf
                 us-west-2c: subnet-0ab2f88a3fa4ab7a0
         security-groups:
-            by-level:
-                default:
+            by-security:
+                untrusted:
                     by-region:
                         "us-east-1": ["sg-01738525fc9991bd0"]
                         "us-west-1": ["sg-0f52b4554cfc115e7"]
                         "us-west-2": ["sg-07ca8c96f1574d42b"]
-                "3":
+                trusted:
                     by-region:
                         "us-east-1": ["sg-7aca300a"]
                         "us-west-1": ["sg-5ce02b3a"]
@@ -156,13 +156,13 @@ firefoxci:
                 eu-central-1b: subnet-6988da13
                 eu-central-1c: subnet-114d525b
         security-groups:
-            by-level:
-                default:
+            by-security:
+                untrusted:
                     by-region:
                         "us-east-1": ["sg-12cd3762"]
                         "us-west-1": ["sg-caed26ac"]
                         "us-west-2": ["sg-2728435d"]
-                "3":
+                trusted:
                     by-region:
                         "us-east-1": ["sg-7aca300a"]
                         "us-west-1": ["sg-5ce02b3a"]
