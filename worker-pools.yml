@@ -53,6 +53,18 @@ worker-defaults:
                                "tasksDir": "Z:\\"
                                "wstAudience": "taskcluster-net"
                                "wstServerURL": "https://websocktunnel.tasks.build"
+                    generic-worker/windows-nss:
+                        genericWorker:
+                            config:
+                                "checkForNewDeploymentEverySecs": 120
+                                "cleanUpTaskDirs": true
+                                "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key"
+                                "livelogExecutable": "C:\\generic-worker\\livelog.exe"
+                                "sentryProject": "generic-worker"
+                                "shutdownMachineOnInternalError": false
+                                "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
+                                "wstAudience": "taskcluster-net"
+                                "wstServerURL": "https://websocktunnel.tasks.build"
 
 infra/hg-push:
   description: Worker for firefox-ci automation.
@@ -1961,6 +1973,38 @@ nss-3/linux:
     - us-east-1
     - us-west-1
     - us-west-2
+nss-1/win2012r2:
+  description: Worker type that can be used for nss related pushes.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: nss-win2012r2-current
+    maxCapacity: 10
+    additional-user-data:
+      workerType: gecko-1-b-win2012
+    regions: [us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows-nss
+    instance_types:
+      - instanceType: m5d.2xlarge
+        capacity: 1
+nss-3/win2012r2:
+  description: Worker type that can be used for nss related pushes.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: nss-win2012r2-current
+    maxCapacity: 10
+    additional-user-data:
+      workerType: gecko-1-b-win2012
+    regions: [us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows-nss
+    instance_types:
+      - instanceType: m5d.2xlarge
+        capacity: 1
 aws-provisioner-v1/mobile-1-b-andrcmp:
   description: General-purpose worker for projects by android components team (to
     build and release a very large suite of Kotlin components)

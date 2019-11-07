@@ -16,6 +16,8 @@ occ-t-win10-64-gpu-s-current: occ-t-win10-64-gpu-s-pre
 occ-t-win7-32-current: occ-t-win7-32-pre
 occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-pre
 
+nss-win2012r2-current: nss-win2012r2-pre
+
 # monopacker test AMIs
 monopacker-docker-worker-aws-current: docker_worker_aws-amazon-ebs-2019-09-18T16-42-49Z
 docker_worker_aws-amazon-ebs-2019-09-18T16-42-49Z:
@@ -457,3 +459,8 @@ occ-t-win7-32-gpu-pre:
     us-west-1: ami-0d943d137b0a78d5d
     us-west-2: ami-0003e4e80ff09fd52
 
+nss-win2012r2-pre:
+  aws:
+    us-east-1: ami-00711ead51d83d62b
+    us-west-1: ami-0d05851ab254517de
+    us-west-2: ami-02f981615a8102d24
