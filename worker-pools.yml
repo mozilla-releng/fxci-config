@@ -1597,6 +1597,113 @@ gecko-t/t-win7-32-gpu:
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
         - DeviceName: /dev/sdc
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
+comm-1/b-win2012:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-b-win2012-current
+    maxCapacity: 512
+    additional-user-data:
+      workerType: gecko-1-b-win2012
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+      - instanceType: c4.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      - instanceType: c5.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+comm-3/b-win2012:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-b-win2012-trusted-current
+    maxCapacity: 600
+    additional-user-data:
+      workerType: gecko-3-b-win2012
+    regions: [us-east-1, us-west-1, us-west-2]
+    security: trusted
+    implementation: generic-worker/windows
+    instance_types:
+      - instanceType: c4.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      - instanceType: c5.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+comm-t/t-win10-64:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-t-win10-64-current
+    maxCapacity: 1024
+    scalingRatio: 0
+    additional-user-data:
+      workerType: gecko-t-win10-64
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+    - instanceType: c5.2xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        - DeviceName: xvdf
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      userData: {}
+comm-t/t-win7-32:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-t-win7-32-current
+    maxCapacity: 1024
+    additional-user-data:
+      workerType: gecko-t-win7-32
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+    - instanceType: c4.2xlarge
+      capacity: 1
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs: {VolumeType: gp2, VolumeSize: 30, DeleteOnTermination: true}
+        - DeviceName: /dev/sdb
+          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
+        - DeviceName: /dev/sdc
+          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
 aws-provisioner-v1/gecko-t-linux-large:
   description: ''
   owner: Firefox CI
