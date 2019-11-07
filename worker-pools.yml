@@ -1533,17 +1533,17 @@ gecko-t/t-win10-64-gpu-s:
   email_on_error: false
   provider_id: aws
   config:
-    image: occ-t-win10-64-gpu-current
+    image: occ-t-win10-64-gpu-s-current
     maxCapacity: 512
     additional-user-data:
-      workerType: gecko-t-win10-64-gpu
+      workerType: gecko-t-win10-64-gpu-s
     regions: [us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
     implementation: generic-worker/windows
     instance_types:
      - capacity: 1
        instanceType: g3s.xlarge
-       launchSpec:
+       launchConfig:
          BlockDeviceMappings:
          - DeviceName: /dev/xvda
            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}

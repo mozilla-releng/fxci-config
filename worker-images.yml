@@ -12,7 +12,7 @@ docker-worker-hvm-builder-trusted-current: docker-worker-v201911061915-hvm-build
 occ-b-win2012-current: occ-b-win2012-pre
 occ-b-win2012-trusted-current: occ-b-win2012-trusted-pre
 occ-t-win10-64-current: occ-t-win10-64-pre
-occ-t-win10-64-gpu-current: occ-t-win10-64-gpu-pre
+occ-t-win10-64-gpu-s-current: occ-t-win10-64-gpu-s-pre
 occ-t-win7-32-current: occ-t-win7-32-pre
 occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-pre
 
@@ -427,15 +427,15 @@ occ-t-win10-64-pre:
     us-east-1: ami-0c7fbac545e94f4c4
     us-west-1: ami-0b14e1e3b5665f447
     us-west-2: ami-05d629b4a0589d79a
-occ-t-win10-64-gpu-pre:
+occ-t-win10-64-gpu-s-pre:
   legacy-aws-provisioner-v1:
-    us-east-1: ami-00a197e562cbfa8e7
-    us-west-1: ami-0a942c9204789dbfa
-    us-west-2: ami-0f789e9bee426b47a
+    us-east-1: ami-09fcb7d01a8cb362f
+    us-west-1: ami-08d135989870fe173
+    us-west-2: ami-00f44353bc695991a
   aws:
-    us-east-1: ami-00a197e562cbfa8e7
-    us-west-1: ami-0a942c9204789dbfa
-    us-west-2: ami-0f789e9bee426b47a
+    us-east-1: ami-09fcb7d01a8cb362f
+    us-west-1: ami-08d135989870fe173
+    us-west-2: ami-00f44353bc695991a
 occ-t-win7-32-pre:
   legacy-aws-provisioner-v1:
     eu-central-1: ami-023422045b5233177
