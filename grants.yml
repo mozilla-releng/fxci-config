@@ -679,6 +679,130 @@
       alias: k8s-autoscale
       job: ["branch:master", "branch:production"]
 
+# - occ specific roles
+- grant:
+  - queue:route:index.project.releng.opencloudconfig.v1.revision.*
+  to:
+  - project:
+      alias: occ
+      job: ["branch:*", "pull-request"]
+
+- grant:
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:updatetooltoolrepo
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:updateworkertype
+  to:
+  - project:
+      alias: occ
+      job: ["branch:alpha", "branch:beta", "branch:master"]
+
+- grant:
+  - aws-provisioner:manage-worker-type:gecko-1-b-win2012-alpha
+  - aws-provisioner:manage-worker-type:gecko-1-b-win2016-alpha
+  - aws-provisioner:manage-worker-type:gecko-t-win10-64-alpha
+  - aws-provisioner:manage-worker-type:gecko-t-win10-64-gpu-a
+  - aws-provisioner:manage-worker-type:gecko-t-win7-32-alpha
+  - aws-provisioner:manage-worker-type:gecko-t-win7-32-gpu-a
+  to:
+  - project:
+      alias: occ
+      job: ["branch:alpha"]
+  environments:
+    - legacy
+
+- grant:
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:cot-gecko-1-b-win2012-alpha
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2012-alpha
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2016-alpha
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-alpha
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-gpu-a
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-alpha
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-gpu-a
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2012-alpha
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2016-alpha
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-alpha
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-gpu-a
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-alpha
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-gpu-a
+  to:
+  - project:
+      alias: occ
+      job: ["branch:alpha"]
+
+- grant:
+  - aws-provisioner:manage-worker-type:gecko-1-b-win2012-beta
+  - aws-provisioner:manage-worker-type:gecko-1-b-win2016-beta
+  - aws-provisioner:manage-worker-type:gecko-t-win10-64-beta
+  - aws-provisioner:manage-worker-type:gecko-t-win10-64-gpu-b
+  - aws-provisioner:manage-worker-type:gecko-t-win7-32-beta
+  - aws-provisioner:manage-worker-type:gecko-t-win7-32-gpu-b
+  to:
+  - project:
+      alias: occ
+      job: ["branch:alpha"]
+  environments:
+    - legacy
+
+- grant:
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:cot-gecko-1-b-win2012-beta
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2012-beta
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2016-beta
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-beta
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-gpu-b
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-beta
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-gpu-b
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2012-beta
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2016-beta
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-beta
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-gpu-b
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-beta
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-gpu-b
+  to:
+  - project:
+      alias: occ
+      job: ["branch:beta"]
+
+- grant:
+  - aws-provisioner:manage-worker-type:gecko-1-b-win*
+  - aws-provisioner:manage-worker-type:gecko-2-b-win*
+  - aws-provisioner:manage-worker-type:gecko-3-b-win*
+  - aws-provisioner:manage-worker-type:gecko-t-win*
+  - aws-provisioner:manage-worker-type:mpd-1-b-win*
+  - aws-provisioner:manage-worker-type:mpd-3-b-win*
+  - aws-provisioner:manage-worker-type:mpd001-1-b-win*
+  - aws-provisioner:manage-worker-type:mpd001-3-b-win*
+  - aws-provisioner:manage-worker-type:relops*
+  to:
+  - project:
+      alias: occ
+      job: ["branch:alpha"]
+  environments:
+    - legacy
+
+- grant:
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:cot-*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-2-b-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-3-b-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mpd-1-b-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mpd-3-b-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mpd001-1-b-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mpd001-3-b-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:relops*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-2-b-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-3-b-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mpd-1-b-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mpd-3-b-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mpd001-1-b-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mpd001-3-b-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:relops*
+  to:
+  - project:
+      alias: occ
+      job: ["branch:master"]
+
 # - product-details specific roles
 - grant:
   - secrets:get:repo:github.com/mozilla-releng/product-details:branch:production
