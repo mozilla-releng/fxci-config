@@ -757,7 +757,7 @@
   to:
   - project:
       alias: occ
-      job: ["branch:alpha"]
+      job: ["branch:beta"]
   environments:
     - legacy
 
@@ -793,7 +793,7 @@
   to:
   - project:
       alias: occ
-      job: ["branch:alpha"]
+      job: ["branch:master"]
   environments:
     - legacy
 
