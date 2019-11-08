@@ -1875,6 +1875,60 @@ aws-provisioner-v1/github-worker:
     - us-east-1
     - us-west-1
     - us-west-2
+releng-1/linux:
+  description: Releng github worker
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 100
+    scalingRatio: 0
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
+    instance_types:
+    - instanceType: m5d.xlarge
+      capacity: 1
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
+releng-3/linux:
+  description: Releng github worker
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    minCapacity: 0
+    maxCapacity: 100
+    scalingRatio: 0
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
+    instance_types:
+    - instanceType: m5d.xlarge
+      capacity: 1
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
+releng-t/linux:
+  description: Releng github worker
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 100
+    scalingRatio: 0
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
+    instance_types:
+    - instanceType: m5d.xlarge
+      capacity: 1
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
 aws-provisioner-v1/hg-worker:
   description: Worker type that can be used for hg related pushes.  This is similar
     to the github-worker worker type uses for taskcluser-github related tasks.
