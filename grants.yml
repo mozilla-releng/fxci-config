@@ -659,7 +659,26 @@
 # grant even more scopes to certain roles in an automatic way
 # > https://tools.taskcluster.net/auth/roles/repo%3A*
 # > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2F*
-# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla-releng%2F*
+
+# Grant these for all releng repos on github
+# comparable with legacies use with https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla-releng%2F*
+# which was assume:project:taskcluster:mozilla-github-repository
+- grant:
+  -  notify:email:*
+  -  notify:irc-channel:*
+  -  notify:irc-user:*
+  -  queue:create-task:aws-provisioner-v1/github-worker
+  -  queue:create-task:aws-provisioner-v1/github-worker-windows
+  -  queue:create-task:aws-provisioner-v1/win2012r2
+  -  queue:route:garbage.*
+  -  queue:route:index.garbage.*
+  -  queue:route:notify.email.*
+  -  queue:route:notify.irc-channel.*
+  -  queue:route:notify.irc-user.*
+  -  queue:scheduler-id:taskcluster-github
+  to:
+  - project:
+      trust_domain: releng
 
 # - build-puppet has no custom roles.
 
