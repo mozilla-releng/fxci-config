@@ -562,6 +562,7 @@
 
 - grant:
   - queue:create-task:aws-provisioner-v1/version-control-tools
+  - queue:create-task:{priority}:hg-t/*
   - queue:route:notify.irc-channel.*
   - queue:route:tc-treeherder.v2.version-control-tools.*
   to:

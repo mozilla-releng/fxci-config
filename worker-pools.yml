@@ -2653,6 +2653,24 @@ aws-provisioner-v1/version-control-tools:
     - instanceType: c5d.2xlarge
     regions:
     - us-west-2
+hg-t/linux:
+  description: Testing for https://hg.mozilla.org/hgcustom/version-control-tools
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    scalingRatio: 0
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
+    instance_types:
+    - instanceType: c5d.2xlarge
+      capacity: 1
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
 aws-provisioner-v1/l10n-1-decision:
   description: Worker for l10n decision tasks
   owner: release@mozilla.com
