@@ -1531,6 +1531,27 @@
   - groups:
     - vpn_hg_admin
 
+
+- grant:
+  - auth:create-client:project/packet/docker-worker
+  - auth:create-client:project/nss-nspr/*
+  - auth:sentry:docker-worker
+  - auth:statsum:docker-worker
+  - queue:claim-work:terraform-packet/*
+  - queue:claim-work:localprovisioner/nss*
+  - queue:worker-id:*
+  - secrets:get:worker-pool:terraform-packet/*
+  - secrets:get:worker-type:terraform-packet/*
+  - secrets:get:project/taskcluster/docker-worker/certificate-key
+  - secrets:set:project/taskcluster/docker-worker/certificate-key
+  - secrets:get:worker-pool:localprovisioner/nss*
+  - secrets:get:worker-type:localprovisioner/nss*
+  - assume:worker-type:localprovisioner/nss*
+  to:
+  - roles:
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mcrabill
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|wcosta
+
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
 # access to the root credentials.
