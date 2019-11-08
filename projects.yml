@@ -604,6 +604,7 @@ aki-xpi-manifest:
     trust-domain-scopes: true
     xpi-roles: true
     taskgraph-actions: true
+    taskgraph-cron: true
     treeherder-reporting: true
 
 test-xpi-public:
