@@ -3027,7 +3027,7 @@ aws-provisioner-v1/xpi-3-b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
-xpi-3/b-linux-large:
+xpi-3/b-linux:
   description: Worker for XPI automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false

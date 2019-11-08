@@ -584,6 +584,18 @@ mpd001:
 
 # Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
 xpi-manifest:
+  repo: https://github.com/mozilla-extensions/xpi-manifest
+  repo_type: git
+  trust_domain: xpi
+  level: 3
+  features:
+    trust-domain-scopes: true
+    xpi-roles: true
+    taskgraph-actions: true
+    taskgraph-cron: true
+    treeherder-reporting: true
+
+aki-xpi-manifest:
   repo: https://github.com/escapewindow/xpi-manifest
   repo_type: git
   trust_domain: xpi
@@ -592,7 +604,6 @@ xpi-manifest:
     trust-domain-scopes: true
     xpi-roles: true
     taskgraph-actions: true
-    taskgraph-cron: true
     treeherder-reporting: true
 
 test-xpi-public:
@@ -603,8 +614,6 @@ test-xpi-public:
   features:
     trust-domain-scopes: true
     xpi-roles: true
-    taskgraph-actions: true
-    taskgraph-cron: true
     treeherder-reporting: true
 
 
