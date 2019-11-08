@@ -96,18 +96,6 @@ comm-esr68:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
-comm-esr60:
-  repo: https://hg.mozilla.org/releases/comm-esr60
-  repo_type: hg
-  access: scm_level_3
-  trust_domain: comm
-  features:
-    gecko-actions: true
-    gecko-cron: false
-    gecko-roles: true
-    hg-push: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
 oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
