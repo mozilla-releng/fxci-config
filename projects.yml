@@ -512,6 +512,12 @@ k8s-autoscale:
   trust_domain: releng
   level: 3
 
+mapper:
+  repo: https://github.com/mozilla-releng/mapper
+  repo_type: git
+  trust_domain: releng
+  level: 3
+
 product-details:
   repo: https://github.com/mozilla-releng/product-details
   repo_type: git
@@ -532,6 +538,12 @@ shipit:
 
 tooltool:
   repo: https://github.com/mozilla-releng/tooltool
+  repo_type: git
+  trust_domain: releng
+  level: 3
+
+treestatus:
+  repo: https://github.com/mozilla-releng/treestatus
   repo_type: git
   trust_domain: releng
   level: 3
