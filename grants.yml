@@ -733,7 +733,6 @@
 - grant:
   - queue:create-task:highest:aws-provisioner-v1/mobile-3-*
   - queue:route:statuses
-  - queue:scheduler-id:focus-nightly-sched
   - queue:create-task:highest:aws-provisioner-v1/github-worker
   to:
   - project:
@@ -743,7 +742,6 @@
 - grant:
   - queue:create-task:highest:aws-provisioner-v1/mobile-1-*
   - queue:route:statuses
-  - queue:scheduler-id:focus-nightly-sched
   - queue:create-task:highest:aws-provisioner-v1/github-worker
   to:
   - project:
@@ -982,10 +980,6 @@
     - project:mobile:focus:releng:signing:cert:release-signing
     - project:mobile:focus:releng:signing:format:autograph_focus
     - project:mobile:focus:releng:signing:format:focus-jar
-    - queue:scheduler-id:taskcluster-github
-    - queue:create-task:highest:aws-provisioner-v1/gecko-focus
-    - queue:create-task:highest:scriptworker-prov-v1/mobile-pushapk-v1
-    - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
     - queue:route:index.project.mobile.focus.release.latest
     - secrets:get:project/focus/firebase
     - secrets:get:project/focus/nimbledroid
