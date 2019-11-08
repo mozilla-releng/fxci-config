@@ -84,6 +84,13 @@ staging:
       # similarly, we do not want to bind hooks to exchanges, as those exchanges
       # likely do not exist here
       - remove_hook_bindings
+      # Remove minimum capacity of all worker-types, since staging clusters
+      # do not have enough load to justify always-on workers.
+      - remove_worker_min_capacity
+      # Remove gcp-provider workers from firefox-ci cluster,
+      # since all the currently used non-aws providers
+      # don't exist in firefox-ci.
+      - remove_gcp_workers
     aws_config:
         availability-zones:
             by-region:
@@ -130,7 +137,11 @@ staging:
 firefoxci:
     root_url: https://firefox-ci-tc.services.mozilla.com/
     # no modifications in production, please!
-    modify_resources: []
+    modify_resources:
+      # Remove gcp-provider workers from firefox-ci cluster,
+      # since all the currently used non-aws providers
+      # don't exist in firefox-ci.
+      - remove_gcp_workers
     aws_config:
         availability-zones:
             by-region:
