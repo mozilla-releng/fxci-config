@@ -85,3 +85,95 @@ project-relman/code-coverage-cron-testing:
   trigger_schema:
     type: object
     additionalProperties: true
+
+project-relman/code-review-testing:
+  name: Code review hook (testing)
+  description: Automatically create code review publication tasks
+  owner: babadie@mozilla.com
+  email_on_error: true
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository
+    - hooks:trigger-hook:project-releng/services-testing-*
+    - index:insert-task:project.releng.services.project.testing.static_analysis_bot.*
+    - index:insert-task:project.releng.services.tasks.*
+    - index:insert-task:project.relman.tasks.*
+    - index:insert-task:project.relman.testing.code-review.*
+    - notify:email:*
+    - queue:create-task:aws-provisioner-v1/releng-svc
+    - queue:create-task:aws-provisioner-v1/relman-svc
+    - queue:route:index.project.releng.services.project.testing.static_analysis_bot.*
+    - queue:route:index.project.relman.testing.code-review.*
+    - queue:route:notify.email.*
+    - queue:scheduler-id:-
+    - secrets:get:project/relman/code-review/runtime-testing
+  template_file: hooks/project-relman/code-review-testing.yml
+  bindings:
+    - exchange: exchange/taskcluster-queue/v1/task-completed
+      routing_key_pattern: route.project.relman.codereview.v1.try_ending
+  trigger_schema:
+    type: object
+    additionalProperties: true
+
+project-relman/code-review-production:
+  name: Code review hook (production)
+  description: Automatically create code review publication tasks
+  owner: babadie@mozilla.com
+  email_on_error: true
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository
+    - hooks:trigger-hook:project-releng/services-production-*
+    - index:insert-task:project.releng.services.project.production.static_analysis_bot.*
+    - index:insert-task:project.releng.services.tasks.*
+    - index:insert-task:project.relman.production.code-review.*
+    - index:insert-task:project.relman.tasks.*
+    - notify:email:*
+    - queue:create-task:aws-provisioner-v1/releng-svc
+    - queue:create-task:aws-provisioner-v1/relman-svc
+    - queue:route:index.project.releng.services.project.production.static_analysis_bot.*
+    - queue:route:index.project.relman.production.code-review.*
+    - queue:route:notify.email.*
+    - queue:scheduler-id:-
+    - secrets:get:project/relman/code-review/runtime-production
+  template_file: hooks/project-relman/code-review-production.yml
+  bindings:
+    - exchange: exchange/taskcluster-queue/v1/task-completed
+      routing_key_pattern: route.project.relman.codereview.v1.try_ending
+  trigger_schema:
+    type: object
+    additionalProperties: true
+
+project-relman/bugzilla-dashboard-backend-production:
+  name: Bugzilla dashboard data generation (production)
+  description: Regularly create bugzilla dashboard datasets
+  owner: babadie@mozilla.com
+  email_on_error: true
+  schedule:
+    - '0 0 */6 * * *'
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository
+    - index:insert-task:project.relman.production.bugzilla-dashboard.*
+    - queue:create-task:aws-provisioner-v1/relman-svc
+    - queue:route:index.project.relman.production.bugzilla-dashboard.*
+    - queue:scheduler-id:-
+  template_file: hooks/project-relman/bugzilla-dashboard-backend-production.yml
+  trigger_schema:
+    type: object
+    additionalProperties: true
+
+project-relman/bugzilla-dashboard-backend-testing:
+  name: Bugzilla dashboard data generation (testing)
+  description: Regularly create bugzilla dashboard datasets
+  owner: babadie@mozilla.com
+  email_on_error: true
+  schedule:
+    - '0 0 */6 * * *'
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository
+    - index:insert-task:project.relman.testing.bugzilla-dashboard.*
+    - queue:create-task:aws-provisioner-v1/relman-svc
+    - queue:route:index.project.relman.testing.bugzilla-dashboard.*
+    - queue:scheduler-id:-
+  template_file: hooks/project-relman/bugzilla-dashboard-backend-testing.yml
+  trigger_schema:
+    type: object
+    additionalProperties: true

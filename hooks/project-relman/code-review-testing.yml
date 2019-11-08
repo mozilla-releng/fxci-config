@@ -1,0 +1,55 @@
+created:
+  $fromNow: 0 seconds
+deadline:
+  $fromNow: 2 hours
+expires:
+  $fromNow: 1 month
+extra: {}
+metadata:
+  description: Publish issues detected in remote tasks
+  name: Code review publication (testing)
+  owner: babadie@mozilla.com
+  source: 'https://github.com/mozilla/code-review'
+payload:
+  artifacts:
+    public/results:
+      path: /tmp/results
+      type: directory
+  cache: {}
+  capabilities: {}
+  command:
+    - code-review-bot
+    - '--taskcluster-secret'
+    - project/relman/code-review/runtime-testing
+  env:
+    $merge:
+      - $if: firedBy == 'triggerHook'
+        else: {}
+        then:
+          $eval: payload
+      - $if: firedBy == 'pulseMessage'
+        else: {}
+        then:
+          TRY_RUN_ID:
+            $eval: payload.runId
+          TRY_TASK_GROUP_ID:
+            $eval: payload.status.taskGroupId
+          TRY_TASK_ID:
+            $eval: payload.status.taskId
+  features:
+    taskclusterProxy: true
+  image: 'mozilla/code-review:7f44878d1e9ab972ad40f29438dfe3391885e292'
+  maxRunTime: 7200
+priority: normal
+provisionerId: aws-provisioner-v1
+retries: 3
+routes:
+  - index.project.relman.testing.code-review.latest
+schedulerId: '-'
+scopes:
+  - 'secrets:get:project/relman/code-review/runtime-testing'
+  - 'index:insert-task:project.relman.testing.code-review.*'
+  - 'index:insert-task:project.relman.tasks.*'
+  - 'notify:email:*'
+tags: {}
+workerType: relman-svc

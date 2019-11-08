@@ -1,0 +1,35 @@
+created:
+  $fromNow: 0 seconds
+deadline:
+  $fromNow: 2 hours
+expires:
+  $fromNow: 1 month
+extra: {}
+metadata:
+  description: Build datasets for bugzilla dashboard
+  name: Bugzilla dashboard data generation (production)
+  owner: babadie@mozilla.com
+  source: 'https://github.com/mozilla/bugzilla-dashboard-backend'
+payload:
+  artifacts:
+    project/relman/bugzilla-dashboard:
+      path: /output
+      type: directory
+  cache: {}
+  capabilities: {}
+  env:
+    BZD_OUTPUT_PATH: /output
+  features:
+    taskclusterProxy: true
+  image: 'babadie/bugzilla-dashboard-backend:da7ef0cb0b5200c7bfea384b23e6bed2d0b815ca'
+  maxRunTime: 7200
+priority: normal
+provisionerId: aws-provisioner-v1
+retries: 3
+routes:
+  - index.project.relman.production.bugzilla-dashboard.latest
+schedulerId: '-'
+scopes:
+  - 'index:insert-task:project.relman.production.bugzilla-dashboard.*'
+tags: {}
+workerType: relman-svc
