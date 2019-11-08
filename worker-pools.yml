@@ -10515,6 +10515,125 @@ taskgraph-1/decision:
     instance_types:
     - instanceType: m5d.large
       capacityPerInstance: 1
+project-relman/releng-svc-memory:
+  description: Release management workers
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 1
+    maxCapacity: 100
+    instance_types:
+    - instanceType: r5.large
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+    - instanceType: r5d.large
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+    - instanceType: r5a.large
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+    - instanceType: r5ad.large
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+    - instanceType: z1d.large
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+    - instanceType: m5.xlarge
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+    - instanceType: m5a.xlarge
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+    - instanceType: m5d.xlarge
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+    - instanceType: m5ad.xlarge
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+    - instanceType: m4.xlarge
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+    - instanceType: c5.2xlarge
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+    - instanceType: c5d.2xlarge
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
 taskgraph-3/decision:
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com

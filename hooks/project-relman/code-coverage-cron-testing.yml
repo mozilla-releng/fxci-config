@@ -1,0 +1,45 @@
+created: {$fromNow: 0 seconds}
+deadline: {$fromNow: 4 hours}
+expires: {$fromNow: 1 month}
+provisionerId: project-relman
+workerType: releng-svc-memory
+metadata:
+  description: ''
+  name: Code Coverage aggregation task - cron (testing)
+  owner: mcastelluccio@mozilla.com
+  source: https://github.com/mozilla/code-coverage
+payload:
+  artifacts:
+    public/chunk_mapping.tar.xz:
+      path: "/chunk_mapping.tar.xz"
+      type: file
+    public/per_chunk_mapping.tar.xz:
+      path: "/per_chunk_mapping.tar.xz"
+      type: file
+    public/zero_coverage_report.json:
+      path: "/zero_coverage_report.json"
+      type: file
+  cache:
+    code-coverage-bot-testing: "/cache"
+  capabilities: {}
+  command:
+  - code-coverage-cron
+  - "--taskcluster-secret"
+  - project/relman/code-coverage/runtime-testing
+  - "--cache-root"
+  - "/cache"
+  - "--working-dir"
+  - "/build"
+  env: {}
+  features:
+    taskclusterProxy: true
+  image: mozilla/code-coverage:bot-e9eaaaf5d8a2fbfe6e6f11905fd92f105a338ffb
+  maxRunTime: 14400
+priority: normal
+retries: 5
+schedulerId: "-"
+scopes:
+- secrets:get:project/relman/code-coverage/runtime-testing
+- docker-worker:cache:code-coverage-bot-testing
+- index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
+- index:insert-task:project.relman.code-coverage.testing.cron.*

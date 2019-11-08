@@ -1,0 +1,83 @@
+project-relman/code-coverage-repo-production:
+  name: Code coverage hook (production)
+  description: Automatically build code coverage reports
+  owner: mcastelluccio@mozilla.com
+  email_on_error: true
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository
+    - docker-worker:cache:code-coverage-bot-production
+    - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
+    - index:insert-task:project.relman.code-coverage.production.repo.*
+    - notify:email:*
+    - queue:create-task:aws-provisioner-v1/releng-svc-memory
+    - queue:create-task:aws-provisioner-v1/relman-svc-memory
+    - queue:route:notify.email.*
+    - queue:scheduler-id:-
+    - secrets:get:project/relman/code-coverage/runtime-production
+  template_file: hooks/project-relman/code-coverage-repo-production.yml
+  trigger_schema:
+    type: object
+    additionalProperties: true
+
+project-relman/code-coverage-repo-testing:
+  name: Code coverage hook (testing)
+  description: Automatically build code coverage reports
+  owner: mcastelluccio@mozilla.com
+  email_on_error: true
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository
+    - docker-worker:cache:code-coverage-bot-testing
+    - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
+    - index:insert-task:project.relman.code-coverage.testing.repo.*
+    - notify:email:*
+    - queue:create-task:aws-provisioner-v1/releng-svc-memory
+    - queue:create-task:aws-provisioner-v1/relman-svc-memory
+    - queue:route:notify.email.*
+    - queue:scheduler-id:-
+    - secrets:get:project/relman/code-coverage/runtime-testing
+  template_file: hooks/project-relman/code-coverage-repo-testing.yml
+  trigger_schema:
+    type: object
+    additionalProperties: true
+
+project-relman/code-coverage-cron-production:
+  name: Code coverage hook (production)
+  description: Automatically build code coverage reports
+  owner: mcastelluccio@mozilla.com
+  email_on_error: true
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository
+    - docker-worker:cache:code-coverage-bot-production
+    - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
+    - index:insert-task:project.relman.code-coverage.production.cron.*
+    - notify:email:*
+    - queue:create-task:aws-provisioner-v1/releng-svc-memory
+    - queue:create-task:aws-provisioner-v1/relman-svc-memory
+    - queue:route:notify.email.*
+    - queue:scheduler-id:-
+    - secrets:get:project/relman/code-coverage/runtime-production
+  template_file: hooks/project-relman/code-coverage-cron-production.yml
+  trigger_schema:
+    type: object
+    additionalProperties: true
+
+project-relman/code-coverage-cron-testing:
+  name: Code coverage hook (testing)
+  description: Automatically build code coverage reports
+  owner: mcastelluccio@mozilla.com
+  email_on_error: true
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository
+    - docker-worker:cache:code-coverage-bot-testing
+    - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
+    - index:insert-task:project.relman.code-coverage.testing.cron.*
+    - notify:email:*
+    - queue:create-task:aws-provisioner-v1/releng-svc-memory
+    - queue:create-task:aws-provisioner-v1/relman-svc-memory
+    - queue:route:notify.email.*
+    - queue:scheduler-id:-
+    - secrets:get:project/relman/code-coverage/runtime-testing
+  template_file: hooks/project-relman/code-coverage-cron-testing.yml
+  trigger_schema:
+    type: object
+    additionalProperties: true

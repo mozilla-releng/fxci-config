@@ -1,0 +1,49 @@
+$merge:
+- $if: "'taskGroupId' in payload"
+  then:
+    taskGroupId: {$eval: payload.taskGroupId}
+  else: {}
+- created: {$fromNow: 0 seconds}
+  deadline: {$fromNow: 4 hours}
+  expires: {$fromNow: 1 month}
+  provisionerId: project-relman
+  workerType: releng-svc-memory
+  metadata:
+    description: ''
+    name:
+      $if: "'taskName' in payload"
+      then: {$eval: payload.taskName}
+      else: Code Coverage aggregation task - repo (testing)
+    owner: mcastelluccio@mozilla.com
+    source: https://github.com/mozilla/code-coverage
+  payload:
+    artifacts:
+      public/code-coverage-report.json:
+        expires: {$fromNow: 2 weeks}
+        path: "/build/ccov-reports/all.all.json"
+        type: file
+    cache:
+      code-coverage-bot-testing: "/cache"
+    capabilities: {}
+    command:
+    - "code-coverage-repo"
+    - "--taskcluster-secret"
+    - "project/relman/code-coverage/runtime-testing"
+    - "--cache-root"
+    - "/cache"
+    - "--working-dir"
+    - "/build"
+    env:
+      $eval: payload
+    features:
+      taskclusterProxy: true
+    image: mozilla/code-coverage:bot-e9eaaaf5d8a2fbfe6e6f11905fd92f105a338ffb
+    maxRunTime: 14400
+  priority: normal
+  retries: 5
+  schedulerId: "-"
+  scopes:
+  - secrets:get:project/relman/code-coverage/runtime-testing
+  - notify:email:*
+  - docker-worker:cache:code-coverage-bot-testing
+  - index:insert-task:project.relman.code-coverage.testing.repo.*
