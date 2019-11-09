@@ -1413,7 +1413,7 @@
 # Administrative Scopes
 
 - grant:
-  # Allow sherrifs to quarantine gecko related workers
+  # Allow sheriffs to quarantine gecko related workers
   - queue:quarantine-worker:aws-provisioner-v1/gecko-*
   - queue:quarantine-worker:bitbar/gecko-*
   - queue:quarantine-worker:gecko-1/*
@@ -1422,9 +1422,9 @@
   - queue:quarantine-worker:proj-autophone/gecko-*
   - queue:quarantine-worker:releng-hardware/gecko-*
   - queue:quarantine-worker:terraform-packet/gecko-*
-  # Allow sherrifs to terminate gecko related workers
+  # Allow sheriffs to terminate gecko related workers
   - worker-manager:remove-worker:gecko-*
-  # Allow sherrifs to rerun and cancel gecko tasks
+  # Allow sheriffs to rerun and cancel gecko tasks
   # Allows cancelling tasks with that scheduler-id
   - queue:cancel-task:gecko-level-*
   - queue:rerun-task:gecko-level-*
@@ -1761,10 +1761,10 @@
   - roles:
     - mozilla-group:mobile_releases
 - grant:
-  - assume:project:releng:ci-group:sherrif
+  - assume:project:releng:ci-group:sheriff
   to:
   - roles:
-    - mozilla-group:sherrif
+    - mozilla-group:sheriff
 
 # These grants are directly to the mozilla-group roles as they need
 # are the root of available scopes.
