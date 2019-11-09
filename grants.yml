@@ -89,7 +89,7 @@
   - queue:worker-id:*
   - secrets:get:worker-type:<..>
   - secrets:get:worker-pool:<..>
-  - auth:websocktunnel-token:taskcluster-net/*
+  - auth:websocktunnel-token:firefoxcitc/*
   to:
   - roles:
     - worker-type:*

@@ -51,8 +51,8 @@ worker-defaults:
                                "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
                                "taskclusterProxyPort": 80
                                "tasksDir": "Z:\\"
-                               "wstAudience": "taskcluster-net"
-                               "wstServerURL": "https://websocktunnel.tasks.build"
+                               "wstAudience": "firefoxcitc"
+                               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
                     generic-worker/windows-nss:
                         genericWorker:
                             config:
@@ -63,8 +63,8 @@ worker-defaults:
                                 "sentryProject": "generic-worker"
                                 "shutdownMachineOnInternalError": false
                                 "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
-                                "wstAudience": "taskcluster-net"
-                                "wstServerURL": "https://websocktunnel.tasks.build"
+                                "wstAudience": "firefoxcitc"
+                                "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
 
 infra/hg-push:
   description: Worker for firefox-ci automation.
