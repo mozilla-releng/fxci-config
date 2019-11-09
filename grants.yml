@@ -509,6 +509,8 @@
   - queue:create-task:localprovisioner/nss-macos-10-12
   - queue:create-task:localprovisioner/nss-rpi
   - queue:route:index.docker.images.v1.nss.*
+  - project:releng:services/tooltool/api/download/internal
+  - project:releng:services/tooltool/api/download/public
   to:
   - project:
       alias: nss
