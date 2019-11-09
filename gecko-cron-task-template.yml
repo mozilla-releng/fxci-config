@@ -16,8 +16,8 @@
 # Note that aside from the task times as noted below, the JSON-e rendering performed
 # when the hook is fired does not supply any additional information.
 
-provisionerId: aws-provisioner-v1
-workerType: gecko-${level}-decision
+provisionerId: ${trust_domain}-${level}
+workerType: decision
 schedulerId: ${trust_domain}-level-${level}
 
 # The "$fromNow" options here are escaped so that they are processed by the hooks service's
