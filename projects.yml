@@ -632,7 +632,6 @@ xpi-manifest:
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
-    treeherder-reporting: true
 
 aki-xpi-manifest:
   repo: https://github.com/escapewindow/xpi-manifest
@@ -644,7 +643,6 @@ aki-xpi-manifest:
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
-    treeherder-reporting: true
 
 test-xpi-public:
   repo: https://github.com/escapewindow/test-xpi-public
@@ -654,4 +652,3 @@ test-xpi-public:
   features:
     trust-domain-scopes: true
     xpi-roles: true
-    treeherder-reporting: true
