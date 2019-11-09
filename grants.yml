@@ -1759,10 +1759,10 @@
   - roles:
     - mozilla-group:mobile_releases
 - grant:
-  - assume:project:releng:ci-group:sherrifs
+  - assume:project:releng:ci-group:sherrif
   to:
   - roles:
-    - mozilla-group:sherrifs
+    - mozilla-group:sherrif
 
 # These grants are directly to the mozilla-group roles as they need
 # are the root of available scopes.
