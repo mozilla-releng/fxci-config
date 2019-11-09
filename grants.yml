@@ -84,6 +84,22 @@
   - roles:
     - login-identity:*
 
+- grant:
+  - queue:claim-work:<..>
+  - queue:worker-id:*
+  - secrets:get:worker-type:<..>
+  - secrets:get:worker-pool:<..>
+  - auth:websocktunnel-token:taskcluster-net/*
+  to:
+  - roles:
+    - worker-type:*
+
+- grant:
+  - auth:sentry:generic-worker
+  to:
+  - roles:
+    - worker-type:releng-hardware/*
+
 ##
 # scopes for all gecko-related projects
 
