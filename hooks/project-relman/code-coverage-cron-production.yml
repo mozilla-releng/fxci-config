@@ -2,7 +2,7 @@ created: {$fromNow: 0 seconds}
 deadline: {$fromNow: 4 hours}
 expires: {$fromNow: 1 month}
 provisionerId: project-relman
-workerType: releng-svc-memory
+workerType: relman-svc-memory
 metadata:
   description: ''
   name: Code Coverage aggregation task - cron (production)

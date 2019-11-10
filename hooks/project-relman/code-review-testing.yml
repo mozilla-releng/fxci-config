@@ -41,7 +41,7 @@ payload:
   image: 'mozilla/code-review:7f44878d1e9ab972ad40f29438dfe3391885e292'
   maxRunTime: 7200
 priority: normal
-provisionerId: aws-provisioner-v1
+provisionerId: project-relman
 retries: 3
 routes:
   - index.project.relman.testing.code-review.latest

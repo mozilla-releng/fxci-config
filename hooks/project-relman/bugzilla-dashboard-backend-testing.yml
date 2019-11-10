@@ -24,7 +24,7 @@ payload:
   image: 'mozilla/bugzilla-dashboard:backend-38e8a17dff6af878b2b070318a85e3f65e24c668'
   maxRunTime: 7200
 priority: normal
-provisionerId: aws-provisioner-v1
+provisionerId: project-relman
 retries: 3
 routes:
   - index.project.relman.testing.bugzilla-dashboard.latest

@@ -9,8 +9,7 @@ project-relman/code-coverage-repo-production:
     - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.production.repo.*
     - notify:email:*
-    - queue:create-task:aws-provisioner-v1/releng-svc-memory
-    - queue:create-task:aws-provisioner-v1/relman-svc-memory
+    - queue:create-task:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-production
@@ -30,8 +29,7 @@ project-relman/code-coverage-repo-testing:
     - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.testing.repo.*
     - notify:email:*
-    - queue:create-task:aws-provisioner-v1/releng-svc-memory
-    - queue:create-task:aws-provisioner-v1/relman-svc-memory
+    - queue:create-task:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-testing
@@ -53,8 +51,7 @@ project-relman/code-coverage-cron-production:
     - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.production.cron.*
     - notify:email:*
-    - queue:create-task:aws-provisioner-v1/releng-svc-memory
-    - queue:create-task:aws-provisioner-v1/relman-svc-memory
+    - queue:create-task:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-production
@@ -76,8 +73,7 @@ project-relman/code-coverage-cron-testing:
     - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.testing.cron.*
     - notify:email:*
-    - queue:create-task:aws-provisioner-v1/releng-svc-memory
-    - queue:create-task:aws-provisioner-v1/relman-svc-memory
+    - queue:create-task:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-testing
@@ -99,8 +95,7 @@ project-relman/code-review-testing:
     - index:insert-task:project.relman.tasks.*
     - index:insert-task:project.relman.testing.code-review.*
     - notify:email:*
-    - queue:create-task:aws-provisioner-v1/releng-svc
-    - queue:create-task:aws-provisioner-v1/relman-svc
+    - queue:create-task:project-relman/relman-svc
     - queue:route:index.project.releng.services.project.testing.static_analysis_bot.*
     - queue:route:index.project.relman.testing.code-review.*
     - queue:route:notify.email.*
@@ -127,8 +122,7 @@ project-relman/code-review-production:
     - index:insert-task:project.relman.production.code-review.*
     - index:insert-task:project.relman.tasks.*
     - notify:email:*
-    - queue:create-task:aws-provisioner-v1/releng-svc
-    - queue:create-task:aws-provisioner-v1/relman-svc
+    - queue:create-task:project-relman/relman-svc
     - queue:route:index.project.releng.services.project.production.static_analysis_bot.*
     - queue:route:index.project.relman.production.code-review.*
     - queue:route:notify.email.*
@@ -152,7 +146,7 @@ project-relman/bugzilla-dashboard-backend-production:
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.production.bugzilla-dashboard.*
-    - queue:create-task:aws-provisioner-v1/relman-svc
+    - queue:create-task:project-relman/relman-svc
     - queue:route:index.project.relman.production.bugzilla-dashboard.*
     - queue:scheduler-id:-
   template_file: hooks/project-relman/bugzilla-dashboard-backend-production.yml
@@ -170,7 +164,7 @@ project-relman/bugzilla-dashboard-backend-testing:
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.testing.bugzilla-dashboard.*
-    - queue:create-task:aws-provisioner-v1/relman-svc
+    - queue:create-task:project-relman/relman-svc
     - queue:route:index.project.relman.testing.bugzilla-dashboard.*
     - queue:scheduler-id:-
   template_file: hooks/project-relman/bugzilla-dashboard-backend-testing.yml
