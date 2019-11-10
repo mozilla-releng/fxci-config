@@ -1463,7 +1463,7 @@
   - queue:cancel-task:gecko-level-*
   - queue:rerun-task:gecko-level-*
   # Allow managing treestatus
-  - assume:project:releng:treestatus/admin
+  - project:releng:services/treestatus/*
   # Allow triggering nightlies and geckoview
   - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
   - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-release/ship-geckoview
