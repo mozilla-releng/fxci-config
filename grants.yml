@@ -1169,6 +1169,7 @@
       job: ["cron:nightly-staging"]
 
 - grant:
+  - queue:route:checks
   - queue:scheduler-id:{trust_domain}-level-{level}
   # allow using worker caches appropriate to this trust domain and level
   - docker-worker:cache:{trust_domain}-level-{level}-*
