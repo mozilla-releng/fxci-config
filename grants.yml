@@ -623,8 +623,6 @@
   - docker-worker:taskcluster-proxy:tooltool.download.internal
   - project:releng:services/tooltool/api/download/internal
   - queue:route:index.project.application-services.*
-  - queue:create-task:highest:aws-provisioner-v1/app-services-{level}-*
-  - docker-worker:cache:application-services-*
   to:
   - project:
       alias: application-services
@@ -634,8 +632,6 @@
   - project:mozilla:{alias}:releng:beetmover:action:push-to-maven
   - project:mozilla:{alias}:releng:beetmover:bucket:maven-production
   - project:mozilla:{alias}:releng:signing:cert:release-signing
-  - queue:create-task:highest:scriptworker-prov-v1/appsv-beetmover-v1
-  - queue:create-task:scriptworker-prov-v1/appsv-signing-v1
   - secrets:get:project/application-services/gradle-plugin-publish
   - secrets:get:project/application-services/publish
   - secrets:get:project/application-services/symbols-token

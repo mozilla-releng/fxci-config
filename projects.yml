@@ -493,6 +493,9 @@ application-services:
   repo: https://github.com/mozilla/application-services/
   repo_type: git
   level: 3
+  trust_domain: application-services
+  features:
+    mobile-taskgraph: true
 
 # mozilla-releng Github repositories
 k8s-autoscale:
