@@ -3041,166 +3041,153 @@ hg-t/linux:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/l10n-1-decision:
+l10n-1/decision:
+  description: Worker for L10n decision tasks
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    scalingRatio: 0
+    worker-config: {billingCycleInterval: 21600}
+    - instanceType: m5d.xlarge
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+l10n-1/linux:
+  description: General-purpose worker for l10n automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    scalingRatio: 0
+    instance_types:
+    - instanceType: c5d.large
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.large
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    - instanceType: c5.large
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+l10n-1/images:
+  description: General-purpose worker for l10n automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    scalingRatio: 0
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instance_types:
+    - instanceType: c5d.large
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.large
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    - instanceType: c5.large
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+l10n-3/decision:
   description: Worker for l10n decision tasks
-  owner: release@mozilla.com
+  owner: release+tc-workers@mozilla.com
   email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
+  provider_id: aws
   config:
+    regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 10
     scalingRatio: 0
-    instanceTypes:
+    instance_types:
     - instanceType: m5d.large
-      userData:
+      worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.4
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/l10n-1-linux:
+l10n-3/linux:
   description: General-purpose worker for l10n automation
-  owner: release@mozilla.com
+  owner: release+tc-workers@mozilla.com
   email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
+  provider_id: aws
   config:
+    regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 10
     scalingRatio: 0
-    instanceTypes:
+    instance_types:
     - instanceType: c5d.large
-      userData:
+      worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.5
     - instanceType: m5d.large
-      userData:
+      worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.4
     - instanceType: c5.large
-      launchSpec:
+      launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
+      worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
     regions:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/l10n-1-images:
+l10n-3/images:
   description: General-purpose worker for l10n automation
-  owner: release@mozilla.com
+  owner: release+tc-workers@mozilla.com
   email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
+  provider_id: aws
   config:
+    regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 10
     scalingRatio: 0
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    instanceTypes:
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instance_types:
     - instanceType: c5d.large
-      userData:
+      worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.5
     - instanceType: m5d.large
-      userData:
+      worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.4
     - instanceType: c5.large
-      launchSpec:
+      launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
+      worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/l10n-3-decision:
-  description: Worker for l10n decision tasks
-  owner: release@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: m5d.large
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/l10n-3-linux:
-  description: General-purpose worker for l10n automation
-  owner: release@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: c5d.large
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.large
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.large
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/l10n-3-images:
-  description: General-purpose worker for l10n automation
-  owner: release@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    scalingRatio: 0
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    instanceTypes:
-    - instanceType: c5d.large
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.large
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.large
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 aws-provisioner-v1/mpd001-1-decision:
   description: General-purpose worker for mpd001 automation
   owner: release@mozilla.com

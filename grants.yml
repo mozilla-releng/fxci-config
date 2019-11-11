@@ -1242,7 +1242,7 @@
 
 # L10n repositories
 - grant:
-  - queue:create-task:highest:aws-provisioner-v1/l10n-{level}-*
+  - queue:create-task:highest:l10n-{level}/*
   - queue:create-task:{priority}:built-in/*
   - queue:route:index.{trust_domain}.{alias}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
