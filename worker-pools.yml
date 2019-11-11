@@ -3052,7 +3052,7 @@ l10n-1/decision:
     minCapacity: 0
     maxCapacity: 10
     scalingRatio: 0
-    worker-config: {billingCycleInterval: 21600}
+    worker-config:
     - instanceType: m5d.xlarge
       capacityPerInstance: 2
       worker-config:
