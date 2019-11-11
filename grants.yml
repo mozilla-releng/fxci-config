@@ -1172,8 +1172,8 @@
   # allow using worker caches appropriate to this trust domain and level
   - docker-worker:cache:{trust_domain}-level-{level}-*
   - generic-worker:cache:{trust_domain}-level-{level}-*
-  - queue:create-task:scriptworker-k8s/{trust_domain}-{level}-*
-  - queue:create-task:scriptworker-k8s/{trust_domain}-t-*
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   to:
   - project:
       feature: mobile-taskgraph
