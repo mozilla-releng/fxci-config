@@ -1425,6 +1425,9 @@
 
 - grant:
   - assume:project:comm:thunderbird:comm:releng:nightly:level-{level}:{alias}
+  - project:comm:thunderbird:releng:balrog:server:nightly
+  - project:comm:thunderbird:releng:beetmover:bucket:nightly
+  - project:comm:thunderbird:releng:signing:cert:nightly-signing
   to:
   - project:
       feature: gecko-cron
