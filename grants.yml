@@ -1692,8 +1692,8 @@
   - secrets:get:project/taskcluster/gecko/hgfingerprint
   - secrets:get:project/taskcluster/gecko/hgmointernal
   # Allow access to dedicated worker-types
-  - queue:create-task:highest:aws-provisioner-v1/mozillaonline-1-*
-  - queue:create-task:highest:aws-provisioner-v1/mozillaonline-3-*
+  - queue:create-task:highest:mozillaonline-1/*
+  - queue:create-task:highest:mozillaonline-3/*
   # Allow acceess scopes worker caches
   - docker-worker:cache:mozillaonline-level-1-*
   - docker-worker:cache:mozillaonline-level-3-*
@@ -1800,6 +1800,11 @@
   to:
   - roles:
     - mozilla-group:sheriff
+- grant:
+  - assume:project:releng:ci-group:mozillaonline
+  to:
+  - roles:
+    - mozillians-group:fennec-china-build
 
 # These grants are directly to the mozilla-group roles as they need
 # are the root of available scopes.

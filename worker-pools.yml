@@ -2949,43 +2949,43 @@ app-services-3/b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/mozillaonline-1-b-linux:
+mozillaonline-1/b-linux:
   description: Worker for MozillaOnline automation
-  owner: Firefox CI
+  owner: release+tc-workers@mozilla.com
   email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
+  provider_id: aws
   config:
     image: docker-worker-hvm-builder-current
     maxCapacity: 10
     scalingRatio: 0
-    instanceTypes:
+    instance_types:
     - instanceType: c5d.4xlarge
-      launchSpec:
+      launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
+      worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
     regions:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/mozillaonline-3-b-linux:
+mozillaonline-3/b-linux:
   description: Worker for MozillaOnline automation
-  owner: Firefox CI
+  owner: release+tc-workers@mozilla.com
   email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
+  provider_id: aws
   config:
     image: docker-worker-hvm-builder-current
     maxCapacity: 10
     scalingRatio: 0
-    instanceTypes:
+    instance_types:
     - instanceType: c5d.4xlarge
-      launchSpec:
+      launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
+      worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
     regions:
     - us-east-1
