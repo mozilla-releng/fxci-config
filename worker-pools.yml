@@ -253,6 +253,51 @@ gecko-1/b-linux-large:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
+comm-1/b-linux-large:
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instance_types:
+    - instanceType: c5d.9xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m5d.12xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m5.12xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m4.10xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: c5.9xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: c4.8xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
 aws-provisioner-v1/gecko-1-b-linux-xlarge:
   description: Worker for Firefox automation
   owner: Firefox CI
@@ -344,6 +389,48 @@ gecko-1/b-linux-xlarge:
     - us-east-1
     - us-west-1
     - us-west-2
+comm-1/b-linux-xlarge:
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    scalingRatio: 0
+    instance_types:
+    - instanceType: c5d.18xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+      utility: 1.1
+    - instanceType: m5d.24xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+      utility: 1.3
+    - instanceType: m5.24xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+      utility: 1.1
+    - instanceType: m4.16xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: c5.18xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+      utility: 0.9
 aws-provisioner-v1/gecko-1-decision:
   description: Worker for Firefox automation
   owner: Firefox CI
@@ -1092,6 +1179,52 @@ gecko-3/b-linux-large:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
+comm-3/b-linux-large:
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 10
+    scalingRatio: 0
+    security: trusted
+    regions: [us-east-1, us-west-1, us-west-2]
+    instance_types:
+    - instanceType: c5d.9xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m5d.12xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m5.12xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: c5.9xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m4.10xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: c4.8xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
 aws-provisioner-v1/gecko-3-b-linux-xlarge:
   description: Worker for Firefox automation
   owner: Firefox CI
@@ -1139,6 +1272,45 @@ aws-provisioner-v1/gecko-3-b-linux-xlarge:
     - us-west-1
     - us-west-2
 gecko-3/b-linux-xlarge:
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 10
+    scalingRatio: 0
+    security: trusted
+    regions: [us-east-1, us-west-1, us-west-2]
+    instance_types:
+    - instanceType: c5d.18xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m5d.24xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m5.24xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: m4.16xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+    - instanceType: c5.18xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 50000000000}
+comm-3/b-linux-xlarge:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -9583,7 +9755,7 @@ sandbox-1/win2016-gamma:
             boot: true
             initializeParams:
               diskSizeGb: 50
-              
+
               diskType: zones/us-west1-c/diskTypes/pd-ssd
               sourceImage: projects/image-builder-242310/global/images/family/windows-2016
             type: PERSISTENT
