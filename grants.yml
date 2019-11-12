@@ -619,9 +619,11 @@
 - grant:
   - assume:project:taskcluster:mozilla-github-repository
   - docker-worker:taskcluster-proxy:tooltool.download.internal
+  - docker-worker:cache:application-services-*
   - project:releng:services/tooltool/api/download/internal
   - queue:route:index.project.application-services.*
   - queue:create-task:highest:app-services-{level}/*
+  - queue:route:notify.email.*
   to:
   - project:
       alias: application-services
