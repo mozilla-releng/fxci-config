@@ -123,9 +123,6 @@
 
   # access to workers; all levels have access to the same workers, but at
   # different priorities and levels
-  - queue:create-task:{priority}:aws-provisioner-v1/gecko-misc
-  - queue:create-task:{priority}:aws-provisioner-v1/gecko-t-*
-  - queue:create-task:{priority}:aws-provisioner-v1/gecko-{level}-*
   - queue:create-task:{priority}:releng-hardware/gecko-t-*
   - queue:create-task:{priority}:built-in/*
   - queue:create-task:{priority}:scriptworker-k8s/{trust_domain}-{level}-*
@@ -182,10 +179,9 @@
   - project:releng:ship-it:server:staging
   - project:releng:signing:cert:dep-signing
   - project:releng:signing:format:*
-  - purge-cache:aws-provisioner-v1/*
-  - queue:create-task:aws-provisioner-v1/ami-test*
+  - purge-cache:{trust_domain}-{level}/*
+  - purge-cache:{trust_domain}-t/*
   - queue:create-task:dummy-test-provisioner/dummy-test-type
-  - queue:create-task:gecko-t-tc-worker/*
   - queue:create-task:localprovisioner/*
   - queue:create-task:low:scriptworker-prov-v1/balrog-dev
   - queue:create-task:low:scriptworker-prov-v1/beetmoverworker-dev
@@ -194,7 +190,6 @@
   - queue:create-task:packetnet/*
   - queue:create-task:tc-worker-provisioner/*
   - queue:create-task:test-dummy-provisioner/*
-  - queue:create-task:low:aws-provisioner-v1/ami-test*
   - queue:create-task:low:bitbar/gecko-t-*
   - queue:create-task:low:dummy-test-provisioner/dummy-test-type
   - queue:create-task:low:localprovisioner/*
@@ -221,18 +216,11 @@
 
 # moz-tree:level:1:gecko
 - grant:
-  - generic-worker:allow-rdp:aws-provisioner-v1/gecko-1-b-win*
-  - generic-worker:allow-rdp:aws-provisioner-v1/gecko-t-win*
   - generic-worker:allow-rdp:gecko-1/win*
   - generic-worker:allow-rdp:gecko-t/win*
-  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win7-32/Administrators
-  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win10-64/Administrators
-  - generic-worker:os-group:aws-provisioner-v1/gecko-t-win10-64-alpha/Administrators
   - generic-worker:os-group:gecko-t/t-win7-32/Administrators
   - generic-worker:os-group:gecko-t/t-win10-64/Administrators
   - generic-worker:os-group:gecko-t/t-win10-64-alpha/Administrators
-  - generic-worker:run-as-administrator:aws-provisioner-v1/gecko-t-win10-64
-  - generic-worker:run-as-administrator:aws-provisioner-v1/gecko-t-win10-64-alpha
   - generic-worker:run-as-administrator:gecko-t/t-win10-64
   - generic-worker:run-as-administrator:gecko-t/t-win10-64-alpha
   - project:releng:addons.mozilla.org:server:staging
@@ -300,14 +288,12 @@
   - docker-worker:capability:device:phone
   - docker-worker:image:taskclusterprivate/phone-builder:*
   - docker-worker:image:taskclusterprivate/tester-device:*
-  - queue:create-task:aws-provisioner-v1/ami-test*
   - queue:create-task:dummy-test-provisioner/dummy-test-type
   - queue:create-task:gecko-t-tc-worker/*
   - queue:create-task:localprovisioner/*
   - queue:create-task:packetnet/*
   - queue:create-task:tc-worker-provisioner/*
   - queue:create-task:test-dummy-provisioner/*
-  - queue:create-task:very-low:aws-provisioner-v1/ami-test*
   - queue:create-task:very-low:dummy-test-provisioner/dummy-test-type
   - queue:create-task:very-low:gecko-t-tc-worker/*
   - queue:create-task:very-low:localprovisioner/*
@@ -332,10 +318,8 @@
   - project:releng:beetmover:bucket:release
   - project:releng:ship-it:production
   - project:releng:googleplay:beta
-  - queue:create-task:aws-provisioner-v1/ami-test*
   - queue:create-task:dummy-test-provisioner/dummy-test-type
   - queue:create-task:gecko-t-tc-worker/*
-  - queue:create-task:highest:aws-provisioner-v1/ami-test*
   - queue:create-task:highest:dummy-test-provisioner/dummy-test-type
   - queue:create-task:highest:gecko-t-tc-worker/*
   - queue:create-task:highest:localprovisioner/*
@@ -378,7 +362,6 @@
   - project:releng:snapcraft:firefox:beta
   - project:releng:snapcraft:firefox:candidate
   - project:releng:snapcraft:firefox:esr
-  - queue:create-task:highest:aws-provisioner-v1/taskcluster-generic
   - queue:create-task:highest:proj-autophone/*
   - queue:create-task:highest:scriptworker-prov-v1/addon-v1
   - queue:create-task:highest:scriptworker-prov-v1/balrogworker-v1
@@ -503,8 +486,6 @@
 
 - grant:
   - docker-worker:feature:allowPtrace
-  - queue:create-task:aws-provisioner-v1/hg-worker
-  - queue:create-task:aws-provisioner-v1/nss-win2012r2
   - queue:create-task:localprovisioner/nss-aarch64
   - queue:create-task:localprovisioner/nss-macos-10-12
   - queue:create-task:localprovisioner/nss-rpi
@@ -517,11 +498,6 @@
 
 - grant:
   - docker-worker:feature:allowPtrace
-  - queue:create-task:aws-provisioner-v1/ami-test-win2012r2
-  - queue:create-task:aws-provisioner-v1/gecko-1-b-win*
-  - queue:create-task:aws-provisioner-v1/hg-worker
-  - queue:create-task:aws-provisioner-v1/nss-*
-  - queue:create-task:aws-provisioner-v1/win2012r2
   - queue:create-task:gecko-1/win*
   - queue:create-task:localprovisioner/nss-aarch64
   - queue:create-task:localprovisioner/nss-macos-10-12
@@ -581,7 +557,6 @@
 
 
 - grant:
-  - queue:create-task:aws-provisioner-v1/version-control-tools
   - queue:create-task:{priority}:hg-t/*
   - queue:route:notify.irc-channel.*
   - queue:route:tc-treeherder.v2.version-control-tools.*
@@ -686,9 +661,6 @@
   -  notify:email:*
   -  notify:irc-channel:*
   -  notify:irc-user:*
-  -  queue:create-task:aws-provisioner-v1/github-worker
-  -  queue:create-task:aws-provisioner-v1/github-worker-windows
-  -  queue:create-task:aws-provisioner-v1/win2012r2
   -  queue:route:garbage.*
   -  queue:route:index.garbage.*
   -  queue:route:notify.email.*
@@ -940,7 +912,6 @@
 # mobile:level:X:*
 - grant:
   - assume:project:taskcluster:mozilla-github-repository
-  - queue:create-task:highest:aws-provisioner-v1/mobile-{level}-*
   - queue:create-task:highest:mobile-{level}/*
   - queue:create-task:highest:mobile-t/*
   - queue:create-task:{priority}:built-in/*
@@ -964,18 +935,14 @@
       job: ["branch:master", "release", "cron:*"]
 
 - grant:
-  - queue:create-task:highest:aws-provisioner-v1/mobile-3-*
   - queue:route:statuses
-  - queue:create-task:highest:aws-provisioner-v1/github-worker
   to:
   - project:
       feature: mobile-roles
       job: ["cron:nightly"]
 
 - grant:
-  - queue:create-task:highest:aws-provisioner-v1/mobile-1-*
   - queue:route:statuses
-  - queue:create-task:highest:aws-provisioner-v1/github-worker
   to:
   - project:
       feature: mobile-roles
@@ -991,7 +958,6 @@
 
 - grant:
   - assume:project:taskcluster:mozilla-github-repository
-  - queue:create-task:highest:aws-provisioner-v1/mobile-{level}-*
   to:
   - project:
       feature: mobile-roles-forks
@@ -1269,7 +1235,6 @@
 # MPD001
 
 - grant:
-  - queue:create-task:highest:aws-provisioner-v1/{trust_domain}-{level}-*
   - queue:create-task:{priority}:built-in/*
   - queue:route:index.{trust_domain}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
@@ -1280,12 +1245,9 @@
   - queue:get-artifact:project/mpd001/*
   - project:mpd001:releng:signing:format:sha2signcode
   - project:mpd001:releng:signing:format:autograph_authenticode
-  # Temporary until windows workers use mpd001
-  - queue:create-task:highest:aws-provisioner-v1/mpd-{level}-*
   # Temporary secret for cloning; this should be renamed
   - secrets:get:project/releng/callek/mpd001-deploykey
   # Create level-1 scopes explicitly
-  - queue:create-task:highest:aws-provisioner-v1/{trust_domain}-1-*
   - queue:route:index.{trust_domain}.cache.level-1.*
   - queue:scheduler-id:{trust_domain}-level-1
   - docker-worker:cache:{trust_domain}-level-1-*
@@ -1338,8 +1300,6 @@
   - project:xpi:releng:signing:cert:release-signing
   - queue:create-task:highest:xpi-{level}/*
   - queue:create-task:highest:xpi-t/*
-  - queue:create-task:highest:aws-provisioner-v1/{trust_domain}-t-*
-  - queue:create-task:highest:aws-provisioner-v1/{trust_domain}-{level}-*
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
@@ -1365,8 +1325,6 @@
   - queue:create-task:{priority}:built-in/*
   - queue:create-task:{priority}:xpi-{level}/*
   - queue:create-task:{priority}:xpi-t/*
-  - queue:create-task:{priority}:aws-provisioner-v1/{trust_domain}-t-*
-  - queue:create-task:{priority}:aws-provisioner-v1/{trust_domain}-{level}-*
   - queue:getArtifact:xpi/*
   - queue:scheduler-id:{trust_domain}-level-{level}
   - docker-worker:cache:{trust_domain}-level-{level}-*
@@ -1440,7 +1398,6 @@
 
 - grant:
   # Allow sheriffs to quarantine gecko related workers
-  - queue:quarantine-worker:aws-provisioner-v1/gecko-*
   - queue:quarantine-worker:bitbar/gecko-*
   - queue:quarantine-worker:gecko-1/*
   - queue:quarantine-worker:gecko-3/*
@@ -1465,16 +1422,6 @@
   to:
   - groups:
     - sheriff
-
-- grant:
-  - aws-provisioner:manage-worker-type:gecko-*
-  - ec2-manager:manage-instances:*
-  - ec2-manager:manage-resources:*
-  to:
-  - groups:
-    - sheriff
-  environments:
-    - legacy
 
 - grant:
   # Allow people with level-3 access to access interactive tasks
@@ -1830,13 +1777,3 @@
   - roles:
     - mozilla-group:team_relops
     - mozilla-group:releng
-
-- grant:
-  - aws-provisioner:*
-  - ec2-manager:*
-  to:
-  - roles:
-    - mozilla-group:team_relops
-    - mozilla-group:releng
-  environments:
-    - legacy
