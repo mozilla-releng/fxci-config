@@ -541,7 +541,7 @@ treestatus:
   level: 3
 
 balrog:
-  repo: https://github.com/mozilla/balrog
+  repo: https://github.com/mozilla-releng/balrog
   repo_type: git
   trust_domain: releng
   level: 3
