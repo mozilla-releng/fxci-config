@@ -621,6 +621,7 @@
   - docker-worker:taskcluster-proxy:tooltool.download.internal
   - project:releng:services/tooltool/api/download/internal
   - queue:route:index.project.application-services.*
+  - queue:create-task:highest:app-services-{level}/*
   to:
   - project:
       alias: application-services
