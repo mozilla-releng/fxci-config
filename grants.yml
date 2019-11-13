@@ -1300,6 +1300,7 @@
 
 - grant:
   - queue:create-task:{priority}:built-in/*
+  - queue:create-task:{priority}:mpd001-{level}/*
   - queue:route:index.{trust_domain}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
   - docker-worker:cache:{trust_domain}-level-{level}-*
@@ -1312,6 +1313,7 @@
   # Temporary secret for cloning; this should be renamed
   - secrets:get:project/releng/callek/mpd001-deploykey
   # Create level-1 scopes explicitly
+  - queue:create-task:{priority}:mpd001-1/*
   - queue:route:index.{trust_domain}.cache.level-1.*
   - queue:scheduler-id:{trust_domain}-level-1
   - docker-worker:cache:{trust_domain}-level-1-*

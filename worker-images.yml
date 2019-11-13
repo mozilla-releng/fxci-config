@@ -15,6 +15,8 @@ occ-t-win10-64-current: occ-t-win10-64-pre
 occ-t-win10-64-gpu-s-current: occ-t-win10-64-gpu-s-pre
 occ-t-win7-32-current: occ-t-win7-32-pre
 occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-pre
+#occ-mpd001-b-win2012-current: occ-mpd-b-win2012-pre
+occ-mpd001-b-win2012-trusted-current: occ-mpd-b-win2012-trusted-pre
 
 nss-win2012r2-current: nss-win2012r2-pre
 
@@ -458,6 +460,17 @@ occ-t-win7-32-gpu-pre:
     us-east-1: ami-08b7d279b7444681b
     us-west-1: ami-0d943d137b0a78d5d
     us-west-2: ami-0003e4e80ff09fd52
+#occ-mpd-b-win2012-pre:
+#  aws:
+#    # XXX need untrusted ami's
+#    us-east-1: <>
+#    us-west-1: <>
+#    us-west-2: <>
+occ-mpd-b-win2012-trusted-pre:
+  aws:
+    us-east-1: ami-00ac1326739b7ea83
+    us-west-1: ami-05fc1054896b9c36f
+    us-west-2: ami-01f384dec7ba738af
 
 nss-win2012r2-pre:
   aws:

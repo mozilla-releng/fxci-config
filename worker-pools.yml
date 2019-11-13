@@ -3191,17 +3191,17 @@ l10n-3/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-aws-provisioner-v1/mpd001-1-decision:
-  description: General-purpose worker for mpd001 automation
-  owner: release@mozilla.com
+mpd001-1/decision:
+  description: Worker for mpd001 Decision Tasks
+  owner: release+tc-workers@mozilla.com
   email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
+  provider_id: aws
   config:
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 10
     scalingRatio: 0
-    instanceTypes:
+    instance_types:
     - instanceType: m5d.large
       userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
@@ -3210,17 +3210,17 @@ aws-provisioner-v1/mpd001-1-decision:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/mpd001-3-decision:
-  description:  worker for mpd001 automation
-  owner: release@mozilla.com
+mpd001-3/decision:
+  description:  Worker for mpd001 Decision Tasks
+  owner: release+tc-workers@mozilla.com
   email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
+  provider_id: aws
   config:
     image: docker-worker-hvm-builder-trusted-current
     minCapacity: 0
     maxCapacity: 10
     scalingRatio: 0
-    instanceTypes:
+    instance_types:
     - instanceType: m5d.large
       userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
@@ -3229,6 +3229,67 @@ aws-provisioner-v1/mpd001-3-decision:
     - us-east-1
     - us-west-1
     - us-west-2
+#mpd001-1/b-win2012:
+#  description: ''
+#  owner: release+tc-workers@mozilla.com
+#  email_on_error: false
+#  provider_id: aws
+#  config:
+#    # XXX Need untrusted image
+#    image: occ-mpd001-b-win2012-current
+#    maxCapacity: 6
+#    additional-user-data:
+#      workerType: mpd-1-b-win2012
+#    regions: [us-east-1, us-west-1, us-west-2]
+#    security: windows-untrusted
+#    implementation: generic-worker/windows
+#    instance_types:
+#      - instanceType: c4.4xlarge
+#        capacity: 1
+#        launchConfig:
+#          BlockDeviceMappings:
+#          - DeviceName: /dev/sda1
+#            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+#          - DeviceName: /dev/sdb
+#            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+#      - instanceType: c5.4xlarge
+#        capacity: 1
+#        launchConfig:
+#          BlockDeviceMappings:
+#          - DeviceName: /dev/sda1
+#            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+#          - DeviceName: /dev/sdb
+#            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+mpd001-3/b-win2012:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-mpd001-b-win2012-trusted-current
+    maxCapacity: 6
+    additional-user-data:
+      workerType: mpd-3-b-win2012
+    regions: [us-east-1, us-west-1, us-west-2]
+    security: trusted
+    implementation: generic-worker/windows
+    instance_types:
+      - instanceType: c4.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      - instanceType: c5.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 aws-provisioner-v1/xpi-1-decision:
   description: Decision worker for xpi automation
   owner: release@mozilla.com
