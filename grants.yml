@@ -1682,6 +1682,30 @@
   - groups:
     - mobile_releases
 
+# Code Coverage runtime roles
+# Project https://github.com/mozilla/code-coverage
+# The Heroku apps can:
+# - trigger the code coverage repo hook
+# - read their configuration in secrets
+# - send report emails to admins
+- grant:
+  - notify:email:*
+  to:
+  - roles:
+    - project:relman:code-coverage/runtime/testing
+    - project:relman:code-coverage/runtime/production
+- grant:
+  - hooks:trigger-hook:project-relman/code-coverage-repo-testing
+  - secrets:get:project/relman/code-coverage/runtime-testing
+  to:
+  - roles:
+    - project:relman:code-coverage/runtime/testing
+- grant:
+  - hooks:trigger-hook:project-relman/code-coverage-repo-production
+  - secrets:get:project/relman/code-coverage/runtime-production
+  to:
+  - roles:
+    - project:relman:code-coverage/runtime/production
 
 # Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
 - grant:
