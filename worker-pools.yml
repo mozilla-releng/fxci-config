@@ -1702,6 +1702,10 @@ gecko-t/t-win10-64:
     regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
     implementation: generic-worker/windows
+    worker-config:
+      genericWorker:
+        config:
+          idleTimeoutSecs: 90
     instance_types:
     - instanceType: c5.2xlarge
       launchConfig:
@@ -1710,7 +1714,6 @@ gecko-t/t-win10-64:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         - DeviceName: xvdf
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData: {}
 gecko-t/t-win10-64-gpu-s:
   description: ''
   owner: release+tc-workers@mozilla.com
