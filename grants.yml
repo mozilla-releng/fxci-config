@@ -1148,6 +1148,14 @@
 
 # reference-browser specific scopes
 - grant:
+  - secrets:get:project/mobile/reference-browser/firebase
+  to:
+  - projects:
+      alias:
+      - reference-browser
+      job: ["branch:*", "cron:nightly"]
+
+- grant:
   - queue:route:index.project.mobile.reference-browser.v3.nightly.*
   - queue:route:index.project.mobile.reference-browser.v3.signed-nightly.*
   - secrets:get:project/mobile/reference-browser/nimbledroid
@@ -1706,17 +1714,6 @@
   to:
   - roles:
     - project:relman:code-coverage/runtime/production
-
-# Bug 1533791 - Temporary solution so QA can run their test suites before their patches are merged in master
-- grant:
-  - secrets:get:project/mobile/reference-browser/firebase
-  - secrets:get:project/mobile/reference-browser/nimbledroid
-  to:
-  - projects:
-      alias:
-      - reference-browser
-      - kglazko-reference-browser
-      job: ["branch:*"]
 
 # Bug 1534463: allow `vpn_hg_admin` group to access Mercurial related secrets
 - grant:
