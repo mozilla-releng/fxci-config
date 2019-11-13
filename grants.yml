@@ -1704,6 +1704,27 @@
   - groups:
     - vpn_hg_admin
 
+# Code Review runtime roles
+# Project https://github.com/mozilla/code-review
+# The Heroku apps can:
+# - read their configuration in secrets
+# - send report emails to admins
+- grant:
+  - notify:email:*
+  to:
+  - roles:
+    - project:relman:code-review/runtime/testing
+    - project:relman:code-review/runtime/production
+- grant:
+  - secrets:get:project/relman/code-review/runtime-testing
+  to:
+  - roles:
+    - project:relman:code-review/runtime/testing
+- grant:
+  - secrets:get:project/relman/code-review/runtime-production
+  to:
+  - roles:
+    - project:relman:code-review/runtime/production
 
 - grant:
   - auth:create-client:project/packet/docker-worker
