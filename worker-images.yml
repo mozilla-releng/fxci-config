@@ -6,8 +6,8 @@
 #
 # Aliases can be defined by a simple string; this is useful for "current" images
 
-docker-worker-hvm-builder-current: docker-worker-v201911061915-hvm-builder
-docker-worker-hvm-builder-trusted-current: docker-worker-v201911061915-hvm-builder-trusted
+docker-worker-hvm-builder-current: docker-worker-v201911141441-hvm-builder
+docker-worker-hvm-builder-trusted-current: docker-worker-v201911141441-hvm-builder-trusted
 
 occ-b-win2012-current: occ-b-win2012-pre
 occ-b-win2012-trusted-current: occ-b-win2012-trusted-pre
@@ -384,6 +384,28 @@ docker-worker-v201911061915-hvm-builder-trusted:
     us-east-1: ami-05a99577d53966d18
     us-west-1: ami-03e36157e9715181b
     us-west-2: ami-04f8c1146b2c66c6d
+docker-worker-v201911141441-hvm-builder:
+  legacy-aws-provisioner-v1:
+    eu-central-1: ami-0c635e4b9306cb440
+    us-east-1: ami-05726e1b226d21dbe
+    us-west-1: ami-02b37fe810d2f723f
+    us-west-2: ami-0a5e575ebc911a0c6
+  aws:
+    eu-central-1: ami-00e8bd2e0ef11bc1d
+    us-east-1: ami-0ad7b98255befdcbf
+    us-west-1: ami-0ee7ee2a00fafe982
+    us-west-2: ami-06d68591fefdc678b
+docker-worker-v201911141441-hvm-builder-trusted:
+  legacy-aws-provisioner-v1:
+    eu-central-1: ami-00f17b6775752115b
+    us-east-1: ami-02523923b58b49c6d
+    us-west-1: ami-0c580421e0ed9066c
+    us-west-2: ami-0d719cb931d972299
+  aws:
+    eu-central-1: ami-07a263166b10fa0fe
+    us-east-1: ami-09d71961846d47b9d
+    us-west-1: ami-05e408a7a90055227
+    us-west-2: ami-03536ec528c871abb
 
 
 # Flatpak test images:
