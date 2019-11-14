@@ -30,7 +30,7 @@ routes:
 scopes:
   - assume:hook-id:${hookGroupId}/${hookId}
 payload:
-    image: 
+    image:
         type: indexed-image
         namespace: taskgraph.cache.level-3.docker-images.v2.decision.latest
         path: public/image.tar.zst
@@ -42,10 +42,7 @@ payload:
           TASKGRAPH_HEAD_REF: default
           TASKGRAPH_REPOSITORY_TYPE: hg
           REPOSITORIES: {$json: {vcs: "Project", taskgraph: "Taskgraph"}}
-          TASKCLUSTER_CACHES: '/builds/worker/checkouts'
           TASKCLUSTER_ROOT_URL: '${taskcluster_root_url}'
-    cache:
-        ${trust_domain}-level-${level}-checkouts-sparse-v2: '/builds/worker/checkouts'
     features:
       taskclusterProxy: true
       chainOfTrust: true
@@ -75,7 +72,6 @@ payload:
     # run-task exist with status 72 if the caches are corrupt;
     # indicating the worker caches should be purged and the task retried.
     retry-exit-status: [72]
-    purge-caches-exit-status: [72]
     artifacts:
       public:
         type: 'directory'
