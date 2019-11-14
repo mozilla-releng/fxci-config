@@ -1843,6 +1843,11 @@
   to:
   - roles:
     - mozillians-group:fennec-china-build
+- grant:
+  - assume:project:releng:ci-group:vpn_hg_admin
+  to:
+  - roles:
+    - mozilla-group:vpn_hg_admin
 
 # These grants are directly to the mozilla-group roles as they need
 # are the root of available scopes.
