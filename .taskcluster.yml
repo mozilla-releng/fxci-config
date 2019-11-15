@@ -15,8 +15,8 @@ tasks:
     taskGroupId: "${ownTaskId}"
     taskId: "${ownTaskId}"
     schedulerId: 'ci-level-${repository.level}'
-    provisionerId: aws-provisioner-v1
-    workerType: gecko-misc
+    provisionerId: ci-t
+    workerType: linux
     priority: low
     created: {$fromNow: ''}
     deadline: {$fromNow: '1 day'}
