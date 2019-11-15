@@ -1166,6 +1166,10 @@ comm-1/b-win2012:
     regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
     implementation: generic-worker/windows
+    worker-config:
+      genericWorker:
+        config:
+          idleTimeoutSecs: 90
     instance_types:
       - instanceType: c4.4xlarge
         capacity: 1
