@@ -1736,6 +1736,7 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/gv-update-release
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/snapshot
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
