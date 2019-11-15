@@ -9516,19 +9516,6 @@ gce/gecko-1-b-linux:
           shutdown:
             enabled: true
             afterIdleSeconds: 3600
-taskgraph-1/decision:
-  description: Worker for firefox-ci automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    instance_types:
-    - instanceType: m5d.large
-      capacityPerInstance: 1
 project-relman/relman-svc:
   description: Release management workers
   owner: release+tc-workers@mozilla.com
@@ -9668,6 +9655,19 @@ project-relman/relman-svc-memory:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+taskgraph-1/decision:
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
 taskgraph-3/decision:
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
@@ -9710,6 +9710,73 @@ taskgraph-3/images:
     - instanceType: m5d.large
       capacityPerInstance: 1
 taskgraph-t/linux:
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+ci-1/decision:
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+ci-3/decision:
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+ci-1/images:
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+ci-3/images:
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+ci-t/linux:
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
