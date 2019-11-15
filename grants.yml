@@ -1485,6 +1485,7 @@
   - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-esr68/nightly-*
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/nightly-*
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
+  - queue:rerun-task:mobile-level-*
   to:
   - groups:
     - sheriff
