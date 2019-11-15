@@ -197,7 +197,7 @@ project-releng/cron-task-mozilla-mobile-android-components/api-docs-update:
     additionalProperties: false
 
 # was project-mobile/android-components-geckoview-update-beta
-project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-beta:
+project-releng/cron-task-mozilla-mobile-android-components/gv-update-beta:
   name: "Android Components - GeckoView Update (Beta)"
   description: >-
     Updating GeckoView Beta dependency.
@@ -217,7 +217,7 @@ project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-beta
     additionalProperties: false
 
 # was project-mobile/android-components-geckoview-update-nightly
-project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-nightly:
+project-releng/cron-task-mozilla-mobile-android-components/gv-update-nightly:
   name: "Android Components - GeckoView Update (Nightly)"
   description: >-
     Updating GeckoView Nightly dependency.
@@ -237,7 +237,7 @@ project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-nigh
     additionalProperties: false
 
 # was project-mobile/android-components-geckoview-update-release
-project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-release:
+project-releng/cron-task-mozilla-mobile-android-components/gv-update-release:
   name: "Android Components - GeckoView Update (Release)"
   description: >-
     Updating GeckoView Release dependency.
@@ -257,7 +257,7 @@ project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-rele
     additionalProperties: false
 
 # was project-mobile/android-components-publicsuffixlist-update
-project-releng/cron-task-mozilla-mobile-android-components/publicsuffixlist-update:
+project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update:
   name: "Android Components - Public Suffix List Update"
   description: >-
     Hook for updating the Public Suffix List automatically.
