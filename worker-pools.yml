@@ -3239,7 +3239,7 @@ mpd001-3/decision:
 #    image: occ-mpd001-b-win2012-current
 #    maxCapacity: 6
 #    additional-user-data:
-#      workerType: mpd-1-b-win2012
+#      workerType: mpd001-1-b-win2012
 #    regions: [us-east-1, us-west-1, us-west-2]
 #    security: windows-untrusted
 #    implementation: generic-worker/windows
@@ -3269,7 +3269,7 @@ mpd001-3/b-win2012:
     image: occ-mpd001-b-win2012-trusted-current
     maxCapacity: 6
     additional-user-data:
-      workerType: mpd-3-b-win2012
+      workerType: mpd001-3-b-win2012
     regions: [us-east-1, us-west-1, us-west-2]
     security: trusted
     implementation: generic-worker/windows
