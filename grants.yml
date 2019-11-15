@@ -1499,6 +1499,13 @@
     - active_scm_level_3
 
 - grant:
+  # Allow triggering thunderbird nightlies
+  - hooks:trigger-hook:project-releng/cron-task-comm-central/nightly-*
+  to:
+  - groups:
+    - thunderbird-sheriff
+
+- grant:
   # Additional permissions for thunderbird-releng on comm level 3 tasks
   # Allow cancel
   - queue:cancel-task:comm-level-3/*
@@ -1856,6 +1863,20 @@
   to:
   - roles:
     - mozilla-group:vpn_hg_admin
+- grant:
+  - assume:project:releng:ci-group:thunderbird-sheriff
+  to:
+  - roles:
+    # Jorg K (https://bugzilla.mozilla.org/show_bug.cgi?id=1459478)
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mozilla23456789
+    # Geoff Lankow (https://bugzilla.mozilla.org/show_bug.cgi?id=1520433)
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|geoff
+- grant:
+  - assume:project:releng:ci-group:thunderbird-releng
+  to:
+  - roles:
+    # Rob Lemley [:rjl] (https://bugzilla.mozilla.org/show_bug.cgi?id=1496783)
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|thunderbird
 
 # These grants are directly to the mozilla-group roles as they need
 # are the root of available scopes.
