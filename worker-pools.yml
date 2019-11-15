@@ -9,21 +9,12 @@
 # - `provider_id` -- the worker-manager provider for this worker pool
 # - `config` -- the configuration for this worker pool, specific to the provider type
 #
-# The `legacy-aws-provisioner-v1` provisionerId is a special case, and results
-# in configuration of the deprecated but still-in-production aws-provisioner
-# application.  The `config` is fed almost exactly to that service, but with
-# the `region` property of each availabilityZone determined automatically.
-# `minCapacity` and `scalingRatio` defualt to 0, and instances' `capacity` and
-# `utility` both default to 1.  Empty collections such as `userData` are omitted.
-# Unused fields such as maxPrice or canUseOndemand are also omitted.
-#
 # A top-level `image` property in the config will be interpreted by ci-admin and
 # translated into a region[..].launchSpec.ImageId value based on worker-pools.yml.
 
 worker-defaults:
     by-provider:
-        aws|legacy-aws-provisioner-v1:
-            # worker-config is ignored by legacy-aws-provisioner-v1
+        aws:
             worker-config:
                 by-implementation:
                     docker-worker:
@@ -93,27 +84,6 @@ infra/hg-push:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-aws-provisioner-v1/gecko-1-b-linux:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 1000
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: c5d.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-1/b-linux:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -152,58 +122,6 @@ comm-1/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/gecko-1-b-linux-large:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: c5d.9xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-    - instanceType: m5d.12xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.3
-    - instanceType: m5.12xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: m4.10xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: c5.9xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-    - instanceType: c4.8xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 0.9
     regions:
     - us-east-1
     - us-west-1
@@ -298,51 +216,6 @@ comm-1/b-linux-large:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
-aws-provisioner-v1/gecko-1-b-linux-xlarge:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: c5d.18xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: m5d.24xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.3
-    - instanceType: m5.24xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: m4.16xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-    - instanceType: c5.18xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 0.9
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-1/b-linux-xlarge:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -431,40 +304,6 @@ comm-1/b-linux-xlarge:
       worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
       utility: 0.9
-aws-provisioner-v1/gecko-1-decision:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 5
-    maxCapacity: 40
-    scalingRatio: 0
-    userData: {billingCycleInterval: 21600}
-    instanceTypes:
-    - instanceType: c5d.xlarge
-      capacity: 2
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      capacity: 2
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      capacity: 2
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-1/decision:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -525,38 +364,6 @@ comm-1/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-aws-provisioner-v1/gecko-1-images:
-  description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
-    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 1
-    maxCapacity: 30
-    scalingRatio: 0
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    instanceTypes:
-    - instanceType: c5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-1/images:
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -619,27 +426,6 @@ comm-1/images:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/gecko-2-b-linux:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 1000
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: c5d.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-2/b-linux:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -657,59 +443,6 @@ gecko-2/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/gecko-2-b-linux-large:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: c5d.9xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: m5d.12xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.3
-    - instanceType: m5.12xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.1
-    - instanceType: c5.9xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-    - instanceType: m4.10xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: c4.8xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 0.9
     regions:
     - us-east-1
     - us-west-1
@@ -759,51 +492,6 @@ gecko-2/b-linux-large:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
-aws-provisioner-v1/gecko-2-b-linux-xlarge:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: c5d.18xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: m5d.24xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.3
-    - instanceType: m5.24xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.1
-    - instanceType: m4.16xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c5.18xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 0.9
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-2/b-linux-xlarge:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -850,40 +538,6 @@ gecko-2/b-linux-xlarge:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/gecko-2-decision:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 1
-    maxCapacity: 20
-    scalingRatio: 0
-    userData: {billingCycleInterval: 21600}
-    instanceTypes:
-    - instanceType: c5d.xlarge
-      capacity: 2
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      capacity: 2
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.3
-    - instanceType: c5.xlarge
-      capacity: 2
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-2/decision:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -914,37 +568,6 @@ gecko-2/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-aws-provisioner-v1/gecko-2-images:
-  description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
-    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 30
-    scalingRatio: 0
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    instanceTypes:
-    - instanceType: c5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.3
-    - instanceType: c5.xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-2/images:
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -971,43 +594,6 @@ gecko-2/images:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/gecko-3-b-linux:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    maxCapacity: 1000
-    scalingRatio: 0
-    security: trusted
-    instanceTypes:
-    - instanceType: c5.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-    - instanceType: c5d.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 2
-    - instanceType: m5.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
     regions:
     - us-east-1
@@ -1079,60 +665,6 @@ comm-3/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-aws-provisioner-v1/gecko-3-b-linux-large:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    maxCapacity: 10
-    scalingRatio: 0
-    security: trusted
-    instanceTypes:
-    - instanceType: c5d.9xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: m5d.12xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.3
-    - instanceType: m5.12xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: c5.9xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-    - instanceType: m4.10xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: c4.8xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 0.9
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-3/b-linux-large:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -1225,52 +757,6 @@ comm-3/b-linux-large:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
-aws-provisioner-v1/gecko-3-b-linux-xlarge:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    maxCapacity: 10
-    scalingRatio: 0
-    security: trusted
-    instanceTypes:
-    - instanceType: c5d.18xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: m5d.24xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.3
-    - instanceType: m5.24xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 1.1
-    - instanceType: m4.16xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-    - instanceType: c5.18xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 0.9
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-3/b-linux-xlarge:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -1349,38 +835,6 @@ comm-3/b-linux-xlarge:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
-aws-provisioner-v1/gecko-3-decision:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 5
-    maxCapacity: 20
-    scalingRatio: 0
-    userData: {billingCycleInterval: 21600}
-    security: trusted
-    instanceTypes:
-    - instanceType: c5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-3/decision:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -1441,39 +895,6 @@ comm-3/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-aws-provisioner-v1/gecko-3-images:
-  description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
-    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 1
-    maxCapacity: 30
-    scalingRatio: 0
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    security: trusted
-    instanceTypes:
-    - instanceType: c5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-3/images:
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -1528,29 +949,6 @@ comm-3/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-aws-provisioner-v1/gecko-3-t-linux-xlarge:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    maxCapacity: 10
-    scalingRatio: 0
-    userData:
-      dockerConfig: {allowPrivileged: false}
-      security: trusted
-    instanceTypes:
-    - instanceType: m3.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-3/t-linux-xlarge:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -1570,35 +968,6 @@ gecko-3/t-linux-xlarge:
     - instanceType: c3.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-aws-provisioner-v1/gecko-misc:
-  description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
-    SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
-    (total 80GB, 9GB per task).
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 32
-    scalingRatio: 0
-    userData: {billingCycleInterval: 21600}
-    instanceTypes:
-    - instanceType: r3.xlarge
-      capacity: 8
-      userData:
-        capacityManagement: {diskspaceThreshold: 9000000000}
-    - instanceType: m3.xlarge
-      capacity: 8
-      userData:
-        capacityManagement: {diskspaceThreshold: 9000000000}
-    - instanceType: c3.xlarge
-      capacity: 8
-      userData:
-        capacityManagement: {diskspaceThreshold: 9000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-t/misc:
   description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
     SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
@@ -1891,30 +1260,6 @@ comm-t/t-win7-32:
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
         - DeviceName: /dev/sdc
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
-aws-provisioner-v1/gecko-t-linux-large:
-  description: ''
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 3500
-    scalingRatio: 0
-    userData:
-      dockerConfig: {allowPrivileged: false}
-    instanceTypes:
-    - instanceType: m5.large
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
-      userData:
-        billingCycleInterval: 7200
-        capacityManagement: {diskspaceThreshold: 20000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-t/t-linux-large:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -1955,31 +1300,6 @@ comm-t/t-linux-large:
       worker-config:
         billingCycleInterval: 7200
         capacityManagement: {diskspaceThreshold: 20000000000}
-aws-provisioner-v1/gecko-t-linux-xlarge:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 3500
-    scalingRatio: 0
-    userData:
-      dockerConfig: {allowPrivileged: false}
-    instanceTypes:
-    - instanceType: m3.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.2xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 gecko-t/t-linux-xlarge:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -2026,26 +1346,6 @@ comm-t/t-linux-xlarge:
     - instanceType: c3.2xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/github-worker:
-  description: Default type for tasks run by tc-github
-  owner: tools-taskcluster@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 1
-    maxCapacity: 100
-    scalingRatio: 0
-    launchSpec:
-      SecurityGroups: [docker-worker]
-    userData: {dindImage: 'taskcluster/dind-service:v4.0'}
-    instanceTypes:
-    - instanceType: m5d.xlarge
-      capacity: 1
     regions:
     - us-east-1
     - us-west-1
@@ -2100,69 +1400,6 @@ releng-t/linux:
     instance_types:
     - instanceType: m5d.xlarge
       capacity: 1
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/hg-worker:
-  description: Worker type that can be used for hg related pushes.  This is similar
-    to the github-worker worker type uses for taskcluser-github related tasks.
-  owner: Greg Arndt <garndt@mozilla.com>
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 1
-    maxCapacity: 250
-    scalingRatio: 0
-    launchSpec:
-      SecurityGroups: [docker-worker]
-    instanceTypes:
-    - instanceType: r5.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        billingCycleInterval: 14400
-        capacityManagement: {diskspaceThreshold: 20000000000}
-        restrictCPU: false
-    - instanceType: r4.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        billingCycleInterval: 14400
-        capacityManagement: {diskspaceThreshold: 20000000000}
-        restrictCPU: false
-    - instanceType: m5.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        billingCycleInterval: 14400
-        capacityManagement: {diskspaceThreshold: 20000000000}
-        restrictCPU: false
-    - instanceType: c5.9xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        billingCycleInterval: 14400
-        capacityManagement: {diskspaceThreshold: 20000000000}
-        restrictCPU: false
-    - instanceType: c4.8xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        billingCycleInterval: 14400
-        capacityManagement: {diskspaceThreshold: 20000000000}
-        restrictCPU: false
     regions:
     - us-east-1
     - us-west-1
@@ -2234,30 +1471,6 @@ nss-3/win2012r2:
     instance_types:
       - instanceType: m5d.2xlarge
         capacity: 1
-aws-provisioner-v1/mobile-1-b-andrcmp:
-  description: General-purpose worker for projects by android components team (to
-    build and release a very large suite of Kotlin components)
-  owner: tools-taskcluster@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 500
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: c5d.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-        restrictCPU: false
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 mobile-1/b-linux-large:
   description: General-purpose worker for projects by android components team (to
     build and release a very large suite of Kotlin components)
@@ -2281,24 +1494,6 @@ mobile-1/b-linux-large:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/mobile-1-b-fenix:
-  description: Level 1 build workers for https://github.com/mozilla-mobile/fenix
-  owner: tools-taskcluster@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 50
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: m5d.xlarge
-      capacity: 1
-      userData: {}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 mobile-1/b-linux:
   description: Level 1 build workers for mobile projects
   owner: release+tc-workers@mozilla.com
@@ -2312,63 +1507,6 @@ mobile-1/b-linux:
     instance_types:
     - instanceType: m5d.xlarge
       capacity: 1
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/mobile-1-b-firefox-tv:
-  description: Level 1 build workers for https://github.com/mozilla-mobile/firefox-tv
-  owner: tools-taskcluster@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 50
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: m5d.xlarge
-      capacity: 1
-      userData: {}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/mobile-1-b-ref-browser:
-  description: Level 1 build workers for https://github.com/mozilla-mobile/reference-browser
-  owner: tools-taskcluster@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 50
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: m5d.xlarge
-      capacity: 1
-      userData: {}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/mobile-1-decision:
-  description: Worker for Firefox automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 1
-    maxCapacity: 100
-    scalingRatio: 0
-    userData: {billingCycleInterval: 21600}
-    instanceTypes:
-    - instanceType: m5d.large
-      capacity: 2
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
     regions:
     - us-east-1
     - us-west-1
@@ -2392,31 +1530,6 @@ mobile-1/decision:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/mobile-1-images:
-  description: 'Builds docker images for mobile projects; NOTE: capacity set to 1
-    instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 30
-    scalingRatio: 0
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    instanceTypes:
-    - instanceType: c5.9xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-        restrictCPU: false
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 mobile-1/images:
   description: 'Builds docker images for mobile projects; NOTE: capacity set to 1
     instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -2436,32 +1549,6 @@ mobile-1/images:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-        restrictCPU: false
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/mobile-3-b-andrcmp:
-  description: General-purpose worker for projects by android components team (to
-    build and release a very large suite of Kotlin components)
-  owner: tools-taskcluster@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 0
-    maxCapacity: 500
-    scalingRatio: 0
-    launchSpec:
-      SecurityGroups: [docker-worker]
-    instanceTypes:
-    - instanceType: c5d.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
         restrictCPU: false
     regions:
@@ -2492,26 +1579,6 @@ mobile-3/b-linux-large:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/mobile-3-b-fenix:
-  description: Level 3 build workers for https://github.com/mozilla-mobile/fenix
-  owner: tools-taskcluster@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 0
-    maxCapacity: 50
-    scalingRatio: 0
-    launchSpec:
-      SecurityGroups: [docker-worker]
-    instanceTypes:
-    - instanceType: m5d.xlarge
-      capacity: 1
-      userData: {}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 mobile-3/b-linux:
   description: Level 1 build workers for mobile projects
   owner: release+tc-workers@mozilla.com
@@ -2526,68 +1593,6 @@ mobile-3/b-linux:
     instance_types:
     - instanceType: m5d.xlarge
       capacity: 1
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/mobile-3-b-firefox-tv:
-  description: Level 3 build workers for https://github.com/mozilla-mobile/firefox-tv
-  owner: tools-taskcluster@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 0
-    maxCapacity: 50
-    scalingRatio: 0
-    launchSpec:
-      SecurityGroups: [docker-worker]
-    instanceTypes:
-    - instanceType: m5d.xlarge
-      capacity: 1
-      userData: {}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/mobile-3-b-ref-browser:
-  description: Level 3 build workers for https://github.com/mozilla-mobile/reference-browser
-  owner: tools-taskcluster@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 0
-    maxCapacity: 50
-    scalingRatio: 0
-    launchSpec:
-      SecurityGroups: [docker-worker]
-    instanceTypes:
-    - instanceType: m5d.xlarge
-      capacity: 1
-      userData: {}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/mobile-3-decision:
-  description: Worker for Mobile automation
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 1
-    maxCapacity: 10
-    scalingRatio: 0
-    userData: {billingCycleInterval: 21600}
-    security: trusted
-    instanceTypes:
-    - instanceType: m5d.large
-      capacity: 2
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
     regions:
     - us-east-1
     - us-west-1
@@ -2607,31 +1612,6 @@ mobile-3/decision:
     - instanceType: m5d.large
       capacity: 2
       worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/mobile-3-images:
-  description: 'Builds docker images for mobile projects; NOTE: capacity set to 1
-    instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 0
-    maxCapacity: 30
-    scalingRatio: 0
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    security: trusted
-    instanceTypes:
-    - instanceType: c5.9xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
     regions:
     - us-east-1
@@ -2657,151 +1637,6 @@ mobile-3/images:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-        restrictCPU: false
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/app-services-1-decision:
-  description: Worker for rust projects by Application Services team
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 1
-    maxCapacity: 30
-    scalingRatio: 0
-    userData: {billingCycleInterval: 21600}
-    instanceTypes:
-    - instanceType: m5d.large
-      capacity: 1
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/app-services-1-images:
-  description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
-    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 30
-    scalingRatio: 0
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    instanceTypes:
-    - instanceType: c5d.xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/app-services-3-decision:
-  description: Worker for rust projects by Application Services team
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 1
-    maxCapacity: 10
-    scalingRatio: 0
-    userData: {billingCycleInterval: 21600}
-    security: trusted
-    instanceTypes:
-    - instanceType: m5d.large
-      capacity: 1
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/app-services-3-images:
-  description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
-    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 0
-    maxCapacity: 30
-    scalingRatio: 0
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    security: trusted
-    instanceTypes:
-    - instanceType: c5d.xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/app-services-1-b-linux:
-  description: Worker for rust projects by Application Services team
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 2
-    maxCapacity: 100
-    scalingRatio: 0
-    instanceTypes:
-      # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
-    - instanceType: c5d.4xlarge
-      capacity: 1
-      utility: 2
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-        restrictCPU: false
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/app-services-3-b-linux:
-  description: Worker for rust projects by Application Services team
-  owner: Firefox CI
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 2
-    maxCapacity: 100
-    scalingRatio: 0
-    security: trusted
-    instanceTypes:
-      # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
-    - instanceType: c5d.4xlarge
-      capacity: 1
-      utility: 1
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
         restrictCPU: false
     regions:
@@ -2993,38 +1828,6 @@ mozillaonline-3/b-linux:
     regions:
     - us-east-1
     - us-west-1
-    - us-west-2
-aws-provisioner-v1/taskcluster-generic:
-  description: Generic bucket for tasks like backups and such.
-  owner: tools-taskcluster@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    scalingRatio: 0
-    launchSpec:
-      SecurityGroups: [docker-worker]
-    userData: {dindImage: 'taskcluster/dind-service:v4.0'}
-    instanceTypes:
-    - instanceType: m5d.xlarge
-      capacity: 1
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/version-control-tools:
-  description: Testing for https://hg.mozilla.org/hgcustom/version-control-tools
-  owner: gps@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 5
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: c5d.2xlarge
-    regions:
     - us-west-2
 hg-t/linux:
   description: Testing for https://hg.mozilla.org/hgcustom/version-control-tools
@@ -3290,25 +2093,6 @@ mpd001-3/b-win2012:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-aws-provisioner-v1/xpi-1-decision:
-  description: Decision worker for xpi automation
-  owner: release@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: m5d.large
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 xpi-1/decision:
   description: Worker for XPI automation
   owner: release+tc-workers@mozilla.com
@@ -3338,26 +2122,6 @@ xpi-1/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-aws-provisioner-v1/xpi-3-decision:
-  description: Decision worker for xpi automation
-  owner: release@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 0
-    maxCapacity: 10
-    scalingRatio: 0
-    security: trusted
-    instanceTypes:
-    - instanceType: m5d.large
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 xpi-3/decision:
   description: Worker for XPI automation
   owner: release+tc-workers@mozilla.com
@@ -3408,64 +2172,6 @@ xpi-1/b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
-aws-provisioner-v1/xpi-1-b-linux:
-  description: Worker for XPI automation
-  owner: release@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    scalingRatio: 0
-    instanceTypes:
-    - instanceType: c5d.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/xpi-3-b-linux:
-  description: Worker for XPI automation
-  owner: release@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    maxCapacity: 10
-    scalingRatio: 0
-    security: trusted
-    instanceTypes:
-    - instanceType: c5.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-    - instanceType: c5d.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 50000000000}
-      utility: 2
-    - instanceType: m5.4xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 xpi-3/b-linux:
   description: Worker for XPI automation
   owner: release+tc-workers@mozilla.com
@@ -3511,38 +2217,6 @@ xpi-3/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 50000000000}
-aws-provisioner-v1/xpi-1-images:
-  description: 'Builds docker images for XPI; NOTE: capacity set to 1 instead of
-    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
-  owner: release@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 1
-    maxCapacity: 10
-    scalingRatio: 0
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    instanceTypes:
-    - instanceType: c5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 xpi-1/images:
   description: 'Builds docker images for XPI; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -3567,39 +2241,6 @@ xpi-1/images:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-aws-provisioner-v1/xpi-3-images:
-  description: 'Builds docker images for xpi; NOTE: capacity set to 1 instead of
-    3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
-  owner: release@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 1
-    maxCapacity: 10
-    scalingRatio: 0
-    userData: {dindImage: 'taskcluster/dind-service:v4.1'}
-    security: trusted
-    instanceTypes:
-    - instanceType: c5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      launchSpec:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      userData:
         capacityManagement: {diskspaceThreshold: 30000000000}
     regions:
     - us-east-1
@@ -3631,72 +2272,6 @@ xpi-3/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-aws-provisioner-v1/gecko-1-monopacker-test-aws:
-  description: Monopacker test worker for Firefox automation
-  owner: mcrabill@mozilla.com
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: monopacker-docker-worker-aws-current
-    maxCapacity: 1
-    scalingRatio: 0
-    instanceTypes:
-      - instanceType: c5.large
-        launchSpec:
-          BlockDeviceMappings:
-            - DeviceName: /dev/xvdb
-              Ebs:
-                { DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2 }
-        userData:
-          capacityManagement: { diskspaceThreshold: 50000000000 }
-    regions:
-      - us-west-2
-aws-provisioner-v1/fp-gecko-1-gw-linux:
-  description: Prototype worker type for building flatpak on generic-worker on linux
-  owner: Mihai Tabara
-  email_on_error: false
-  provider_id: legacy-aws-provisioner-v1
-  config:
-    image: flatpack-gecko-generic-worker-v1
-    instanceTypes:
-    - capacity: 1
-      instanceType: m3.2xlarge
-      utility: 1
-    launchSpec:
-      SecurityGroups:
-      - ssh-only
-      - rdp-only
-    maxCapacity: 5
-    maxPrice: 8
-    minCapacity: 0
-    minPrice: 8
-    owner: Taskcluster
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-    scalingRatio: 0
-    scopes:
-    - assume:worker-type:aws-provisioner-v1/fp-gecko-1-gw-linux
-    - assume:worker-id:*
-    secrets: {}
-    userData:
-      genericWorker:
-        config:
-          deploymentId: Jlwgl50PSkujt5d7kIKctA
-          ed25519SigningKeyLocation: "/etc/generic-worker/ed25519_key"
-          livelogExecutable: "/usr/local/bin/livelog"
-          runTasksAsCurrentUser: true
-          shutdownMachineOnInternalError: false
-          taskclusterProxyExecutable: "/usr/local/bin/taskcluster-proxy"
-          taskclusterProxyPort: 8080
-          tasksDir: "/home"
-          workerTypeMetadata:
-            machine-setup:
-              maintainer: mtabara@mozilla.com
-              script: https://raw.githubusercontent.com/taskcluster/generic-worker/4458a2fc07483e29434f4e3c0926d59997e990fa/worker_types/fp-gecko-1-gw-linux
-          wstAudience: taskcluster-net
-          wstServerURL: https://websocktunnel.tasks.build
 pmoore-test/gwci-linux:
   description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/gwci-linux but for GCP'
   owner: pmoore@mozilla.com
