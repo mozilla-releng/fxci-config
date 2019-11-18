@@ -36,7 +36,7 @@
 #   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
 #   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
 #   - `mobile-pushapk-stage-phase` -- this https://github.com/mozilla-mobile repository should have pushapk staging related scopes associated
-#   - `mobile-taskgraph` -- this https://github.com/mozilla-mobile repository has started using taskgraph
+#   - `github-taskgraph` -- this https://github.com/mozilla-mobile repository has started using taskgraph
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - 'taskgraph-cron' -- tasks defined in `.cron.yml` can run for this project (non-gecko/comm taskgraph repos only)
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
@@ -426,8 +426,8 @@ android-components:
   repo_type: git
   level: 3
   features:
+    github-taskgraph: true
     mobile-roles: true
-    mobile-taskgraph: true
     mobile-beetmover-phase: true
     mobile-beetmover-snapshot-phase: true
     taskgraph-cron: true
@@ -441,11 +441,11 @@ reference-browser:
   level: 3
   features:
     autophone: true
+    github-taskgraph: true
     mobile-roles: true
     mobile-sign-phase: true
     mobile-pushapk-phase: true
     mobile-pushapk-stage-phase: true
-    mobile-taskgraph: true
     taskgraph-cron: true
     treeherder-reporting: true
   cron_targets: [nightly, raptor]
@@ -457,11 +457,11 @@ fenix:
   level: 3
   features:
     autophone: true
+    github-taskgraph: true
     mobile-roles: true
     mobile-sign-phase: true
     mobile-pushapk-phase: true
     mobile-pushapk-stage-phase: true
-    mobile-taskgraph: true
     taskgraph-cron: true
     treeherder-reporting: true
   cron_targets: [nightly, raptor]
@@ -472,7 +472,7 @@ focus-android:
   repo_type: git
   level: 3
   features:
-    mobile-taskgraph: true
+    github-taskgraph: true
     mobile-roles: true
     mobile-sign-phase: true
     mobile-pushapk-phase: true
@@ -483,19 +483,19 @@ firefox-tv:
   repo_type: git
   level: 3
   features:
+    github-taskgraph: true
     mobile-roles: true
     mobile-sign-phase: true
     mobile-pushapk-phase: true
-    mobile-taskgraph: true
 
-# mozilla Github repositories
+# https://github.com/mozilla's repositories
 application-services:
   repo: https://github.com/mozilla/application-services/
   repo_type: git
   level: 3
   trust_domain: application-services
   features:
-    mobile-taskgraph: true
+    github-taskgraph: true
 
 # mozilla-releng Github repositories
 k8s-autoscale:

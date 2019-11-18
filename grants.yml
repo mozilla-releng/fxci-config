@@ -1198,7 +1198,7 @@
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   to:
   - project:
-      feature: mobile-taskgraph
+      feature: github-taskgraph
       job: ["pull-request", "branch:*", "branch:master", "release", "cron:*"]
 
 # reference-browser specific scopes
