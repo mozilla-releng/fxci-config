@@ -1203,7 +1203,7 @@
 
 # reference-browser specific scopes
 - grant:
-  - secrets:get:project/mobile/reference-browser/firebase
+  - secrets:get:project/mobile/reference-browser/nightly
   to:
   - projects:
       alias:
