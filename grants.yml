@@ -1788,6 +1788,16 @@
   - roles:
     - project:relman:code-coverage/runtime/production
 
+- grant:
+  - hooks:trigger-hook:project-relman/code-coverage-repo-testing
+  - hooks:trigger-hook:project-relman/code-coverage-cron-testing
+  - hooks:trigger-hook:project-relman/code-coverage-cron-production
+  - hooks:trigger-hook:project-relman/code-coverage-repo-production
+  to:
+  - roles:
+    - mozillians-group:code-coverage-developers
+
+
 # Bug 1534463: allow `vpn_hg_admin` group to access Mercurial related secrets
 - grant:
   - secrets:set:project/taskcluster/gecko/hgfingerprint
