@@ -24,8 +24,7 @@ metadata:
   owner: skaspari@mozilla.com
   source: https://hg.mozilla.org/ci/ci-configuration/file/tip/hooks/project-releng/cron-task-mozilla-mobile-focus-android/nightly-public.yml
 schedulerId: mobile-level-3
-routes:
-- notify.email.sebastian@mozilla.com.on-failed
+routes: []
 priority: normal
 retries: 5
 scopes:
