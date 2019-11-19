@@ -1262,6 +1262,13 @@
       alias: focus-android
       job: ["release"]
 
+- grant:
+    - queue:route:notify.email.firefox-focus@mozilla.com.on-failed
+  to:
+  - project:
+      alias: focus-android
+      job: ["cron:nightly"]
+
 # firefox-tv specific scopes
 - grant:
   - secrets:get:project/mobile/firefox-tv/tokens
