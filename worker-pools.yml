@@ -13,49 +13,47 @@
 # translated into a region[..].launchSpec.ImageId value based on worker-pools.yml.
 
 worker-defaults:
-    by-provider:
-        aws:
-            worker-config:
-                by-implementation:
-                    docker-worker:
-                        shutdown:
-                            enabled: true
-                            afterIdleSeconds: 900
-                    generic-worker/windows:
-                        genericWorker:
-                            config:
-                               "cachesDir": "Z:\\caches"
-                               "cleanUpTaskDirs": true
-                               "deploymentId": "f37dd7ee1cae"
-                               "disableReboots": true
-                               "downloadsDir": "Z:\\downloads"
-                               "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
-                               "idleTimeoutSecs": 900
-                               "livelogExecutable": "C:\\generic-worker\\livelog.exe"
-                               "livelogPUTPort": 60022
-                               "numberOfTasksToRun": 0
-                               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd"
-                               "runTasksAsCurrentUser": false
-                               "sentryProject": "generic-worker"
-                               "shutdownMachineOnIdle": false
-                               "shutdownMachineOnInternalError": true
-                               "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
-                               "taskclusterProxyPort": 80
-                               "tasksDir": "Z:\\"
-                               "wstAudience": "firefoxcitc"
-                               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
-                    generic-worker/windows-nss:
-                        genericWorker:
-                            config:
-                                "checkForNewDeploymentEverySecs": 120
-                                "cleanUpTaskDirs": true
-                                "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key"
-                                "livelogExecutable": "C:\\generic-worker\\livelog.exe"
-                                "sentryProject": "generic-worker"
-                                "shutdownMachineOnInternalError": false
-                                "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
-                                "wstAudience": "firefoxcitc"
-                                "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+    worker-config:
+        by-implementation:
+            docker-worker:
+                shutdown:
+                    enabled: true
+                    afterIdleSeconds: 900
+            generic-worker/windows:
+                genericWorker:
+                    config:
+                       "cachesDir": "Z:\\caches"
+                       "cleanUpTaskDirs": true
+                       "deploymentId": "f37dd7ee1cae"
+                       "disableReboots": true
+                       "downloadsDir": "Z:\\downloads"
+                       "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
+                       "idleTimeoutSecs": 900
+                       "livelogExecutable": "C:\\generic-worker\\livelog.exe"
+                       "livelogPUTPort": 60022
+                       "numberOfTasksToRun": 0
+                       "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd"
+                       "runTasksAsCurrentUser": false
+                       "sentryProject": "generic-worker"
+                       "shutdownMachineOnIdle": false
+                       "shutdownMachineOnInternalError": true
+                       "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
+                       "taskclusterProxyPort": 80
+                       "tasksDir": "Z:\\"
+                       "wstAudience": "firefoxcitc"
+                       "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+            generic-worker/windows-nss:
+                genericWorker:
+                    config:
+                        "checkForNewDeploymentEverySecs": 120
+                        "cleanUpTaskDirs": true
+                        "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key"
+                        "livelogExecutable": "C:\\generic-worker\\livelog.exe"
+                        "sentryProject": "generic-worker"
+                        "shutdownMachineOnInternalError": false
+                        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
+                        "wstAudience": "firefoxcitc"
+                        "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
 
 infra/hg-push:
   description: Worker for firefox-ci automation.
@@ -105,6 +103,68 @@ gecko-1/b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
+gecko-1/b-linux-gcp:
+  description: Worker for Firefox automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: fxci-level1-gcp
+  config:
+    minCapacity: 0
+    maxCapacity: 50
+    regions: [us-central1]
+    image: monopacker-docker-worker-current
+    instance_types:
+      - capacityPerInstance: 1
+        minCpuPlatform: "Intel Skylake"
+        disks:
+          - autoDelete: true
+            boot: true
+            initializeParams:
+              diskSizeGb: 10
+              sourceImage: '<image>'
+            type: PERSISTENT
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+        machine_type: custom-32-36864
+        networkInterfaces:
+          - accessConfigs:
+              - type: ONE_TO_ONE_NAT
+        scheduling:
+          onHostMaintenance: terminate
+gecko-3/b-linux-gcp:
+  description: Worker for Firefox automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: fxci-level3-gcp
+  config:
+    minCapacity: 0
+    maxCapacity: 50
+    regions: [us-central1]
+    image: monopacker-docker-worker-current
+    instance_types:
+      - capacityPerInstance: 1
+        minCpuPlatform: "Intel Skylake"
+        disks:
+          - autoDelete: true
+            boot: true
+            initializeParams:
+              diskSizeGb: 10
+              sourceImage: '<image>'
+            type: PERSISTENT
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+        machine_type: custom-32-36864
+        networkInterfaces:
+          - accessConfigs:
+              - type: ONE_TO_ONE_NAT
+        scheduling:
+          onHostMaintenance: terminate
 comm-1/b-linux:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -9227,299 +9287,6 @@ gecko-3/win2012-gamma:
               Organisation: mozilla-releng
               Repository: OpenCloudConfig
               Revision: gamma
-gce/gecko-3-b-linux:
-  description: Worker for Firefox automation.
-  owner: bstack@mozilla.com
-  email_on_error: true
-  provider_id: gecko-3
-  config:
-    minCapacity: 0
-    maxCapacity: 50
-    launchConfigs:
-      - region: us-west1
-        zone: us-west1-a
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 100
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-west1-a/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-      - region: us-west1
-        zone: us-west1-b
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 100
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-west1-b/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-      - region: us-west1
-        zone: us-west1-c
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 100
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-west1-c/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-      - region: us-east1
-        zone: us-east1-b
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 100
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-east1-b/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-      - region: us-east1
-        zone: us-east1-c
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 100
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-east1-c/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-      - region: us-east1
-        zone: us-east1-d
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 100
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-east1-d/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-      - region: us-east4
-        zone: us-east4-a
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 100
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-east4-a/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-      - region: us-east4
-        zone: us-east4-b
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 100
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-east4-b/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-      - region: us-east4
-        zone: us-east4-c
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 100
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-east4-c/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-gce/gecko-1-b-linux:
-  description: Worker for Firefox automation.
-  owner: bstack@mozilla.com
-  email_on_error: true
-  provider_id: gecko-1
-  config:
-    minCapacity: 25
-    maxCapacity: 50
-    launchConfigs:
-      - region: us-central1
-        zone: us-central1-a
-        capacityPerInstance: 1
-        minCpuPlatform: "Intel Skylake"
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 10
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-10-08t02-31-36z
-            type: PERSISTENT
-          - autoDelete: true
-            initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
-            type: SCRATCH
-            interface: NVME
-        machineType: zones/us-central1-a/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-            afterIdleSeconds: 3600
-      - region: us-central1
-        zone: us-central1-b
-        capacityPerInstance: 1
-        minCpuPlatform: "Intel Skylake"
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 10
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-10-08t02-31-36z
-            type: PERSISTENT
-          - autoDelete: true
-            initializeParams:
-              diskType: zones/us-central1-b/diskTypes/local-ssd
-            type: SCRATCH
-            interface: NVME
-        machineType: zones/us-central1-b/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-            afterIdleSeconds: 3600
-      - region: us-central1
-        zone: us-central1-c
-        capacityPerInstance: 1
-        minCpuPlatform: "Intel Skylake"
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 10
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-10-08t02-31-36z
-            type: PERSISTENT
-          - autoDelete: true
-            initializeParams:
-              diskType: zones/us-central1-c/diskTypes/local-ssd
-            type: SCRATCH
-            interface: NVME
-        machineType: zones/us-central1-c/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-            afterIdleSeconds: 3600
-      - region: us-central1
-        zone: us-central1-f
-        capacityPerInstance: 1
-        minCpuPlatform: "Intel Skylake"
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 10
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-10-08t02-31-36z
-            type: PERSISTENT
-          - autoDelete: true
-            initializeParams:
-              diskType: zones/us-central1-f/diskTypes/local-ssd
-            type: SCRATCH
-            interface: NVME
-        machineType: zones/us-central1-f/machineTypes/custom-32-36864
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-            afterIdleSeconds: 3600
 project-relman/relman-svc:
   description: Release management workers
   owner: release+tc-workers@mozilla.com

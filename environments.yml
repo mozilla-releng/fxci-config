@@ -30,6 +30,16 @@ staging:
       # since all the currently used non-aws providers
       # don't exist in firefox-ci.
       - remove_gcp_workers
+    worker_manager:
+        providers:
+            aws:
+                implementation: aws
+            fxci-level1-gcp:
+                implementation: google
+            fxci-level2-gcp:
+                implementation: google
+            fxci-level3-gcp:
+                implementation: google
     aws_config:
         availability-zones:
             by-region:
@@ -72,6 +82,10 @@ staging:
                         "us-east-1": ["sg-7aca300a"]
                         "us-west-1": ["sg-5ce02b3a"]
                         "us-west-2": ["sg-a0d6beda"]
+    google_config:
+        zones:
+            by-region:
+                us-central1: ['us-central1-a', 'us-central1-b','us-central1-c','us-central1-f']
 
 firefoxci:
     root_url: https://firefox-ci-tc.services.mozilla.com/
@@ -81,6 +95,16 @@ firefoxci:
       # since all the currently used non-aws providers
       # don't exist in firefox-ci.
       - remove_gcp_workers
+    worker_manager:
+        providers:
+            aws:
+                implementation: aws
+            fxci-level1-gcp:
+                implementation: google
+            fxci-level2-gcp:
+                implementation: google
+            fxci-level3-gcp:
+                implementation: google
     aws_config:
         availability-zones:
             by-region:
@@ -136,3 +160,7 @@ firefoxci:
                         "us-east-1": ["sg-7aca300a"]
                         "us-west-1": ["sg-5ce02b3a"]
                         "us-west-2": ["sg-a0d6beda"]
+    google_config:
+        zones:
+            by-region:
+                us-central1: ['us-central1-a', 'us-central1-b','us-central1-c','us-central1-f']
