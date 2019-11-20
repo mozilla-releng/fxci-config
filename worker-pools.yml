@@ -22,13 +22,13 @@ worker-defaults:
             generic-worker/windows:
                 genericWorker:
                     config:
+                       "idleTimeoutSecs": 90
                        "cachesDir": "Z:\\caches"
                        "cleanUpTaskDirs": true
                        "deploymentId": "f37dd7ee1cae"
                        "disableReboots": true
                        "downloadsDir": "Z:\\downloads"
                        "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
-                       "idleTimeoutSecs": 900
                        "livelogExecutable": "C:\\generic-worker\\livelog.exe"
                        "livelogPUTPort": 60022
                        "numberOfTasksToRun": 0
@@ -45,6 +45,7 @@ worker-defaults:
             generic-worker/windows-nss:
                 genericWorker:
                     config:
+                        "idleTimeoutSecs": 90
                         "checkForNewDeploymentEverySecs": 120
                         "cleanUpTaskDirs": true
                         "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key"
@@ -1131,10 +1132,6 @@ gecko-t/t-win10-64:
     regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
     implementation: generic-worker/windows
-    worker-config:
-      genericWorker:
-        config:
-          idleTimeoutSecs: 90
     instance_types:
     - instanceType: c5.2xlarge
       launchConfig:
@@ -1226,10 +1223,6 @@ comm-1/b-win2012:
     regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
     implementation: generic-worker/windows
-    worker-config:
-      genericWorker:
-        config:
-          idleTimeoutSecs: 90
     instance_types:
       - instanceType: c4.4xlarge
         capacity: 1
