@@ -2336,6 +2336,19 @@ xpi-3/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+gecko-t/t-linux-metal:
+  description: Monopacker metal workers for Firefox automation
+  owner: mcrabill@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: monopacker-docker-worker-current
+    minCapacity: 0
+    maxCapacity: 10
+    instance_types:
+    - instanceType: c5.metal
+      capacityPerInstance: 4
 pmoore-test/gwci-linux:
   description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/gwci-linux but for GCP'
   owner: pmoore@mozilla.com
@@ -2368,72 +2381,6 @@ pmoore-test/gwci-linux:
     minCapacity: 0
     maxCapacity: 10
     image: gwci-linux
-taskcluster-imaging/taskcluster-imaging-ci:
-  description: A worker to test making images for workers
-  owner: bstack@mozilla.com
-  email_on_error: true
-  provider_id: taskcluster-imaging
-  config:
-    minCapacity: 0
-    maxCapacity: 4
-    launchConfigs:
-      - region: us-west1
-        zone: us-west1-a
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 50
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-west1-a/machineTypes/n1-standard-8
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-      - region: us-west1
-        zone: us-west1-b
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 50
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-west1-b/machineTypes/n1-standard-8
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
-      - region: us-west1
-        zone: us-west1-c
-        capacityPerInstance: 1
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 50
-              sourceImage: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z
-            type: PERSISTENT
-        machineType: zones/us-west1-c/machineTypes/n1-standard-8
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-        workerConfig:
-          shutdown:
-            enabled: true
 pmoore-test/win2012r2:
   description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/win2012r2 but for GCP'
   owner: pmoore@mozilla.com
