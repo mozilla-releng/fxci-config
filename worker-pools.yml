@@ -2346,6 +2346,7 @@ gecko-t/t-linux-metal:
     image: monopacker-docker-worker-current
     minCapacity: 0
     maxCapacity: 10
+    spot: false
     instance_types:
     - instanceType: c5.metal
       capacityPerInstance: 4
