@@ -678,6 +678,14 @@
       alias: application-services
       job: ["release"]
 
+# - scriptworker specific roles
+- grant:
+  - secrets:get:repo:github.com/mozilla-releng/scriptworker:coveralls
+  to:
+  - project:
+      alias: scriptworker
+      job: ["pull-request", "branch:master"]
+
 # - balrog specific roles
 - grant:
   - secrets:get:repo:github.com/mozilla-releng/balrog:coveralls
