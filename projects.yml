@@ -546,6 +546,18 @@ balrog:
   trust_domain: releng
   level: 3
 
+taskhuddler:
+  repo: https://github.com/mozilla-releng/taskhuddler
+  repo_type: git
+  trust_domain: releng
+  level: 3
+
+scriptworker:
+  repo: https://github.com/mozilla-releng/scriptworker
+  repo_type: git
+  trust_domain: releng
+  level: 3
+
 # mozilla-releng Github repositories
 build-puppet:
   repo: https://github.com/mozilla-releng/build-puppet
