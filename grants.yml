@@ -1700,6 +1700,17 @@
     - vpn_releasemgt
 
 
+- grant:
+  # Grant everyone with Try access the schedulerId taskcluster-ui, so they can
+  # create tasks with the task-creator in the UI
+  - queue:scheduler-id:taskcluster-ui
+  to:
+  - groups:
+    - active_scm_level_1
+    - active_scm_level_2
+    - active_scm_level_3
+
+
 # Allow bitbar to manage bitbar workers
 - grant:
   - assume:worker-type:bitbar/*
