@@ -597,6 +597,12 @@ android-l10n-tooling:
       - exchange: exchange/taskcluster-github/v1/push
         routing_key_pattern: primary.mozilla-l10n.android-l10n
 
+elmo-taskcluster:
+  repo: https://github.com/mozilla-services/elmo-taskcluster
+  repo_type: git
+  level: 3
+  trust_domain: l10n
+
 # MPD 001
 mpd001:
   repo: https://github.com/mozilla-services/guardian-vpn
