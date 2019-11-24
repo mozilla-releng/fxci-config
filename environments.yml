@@ -82,6 +82,7 @@ staging:
                         "us-east-1": ["sg-7aca300a"]
                         "us-west-1": ["sg-5ce02b3a"]
                         "us-west-2": ["sg-a0d6beda"]
+        invalid_instances: []
     google_config:
         zones:
             by-region:
@@ -160,6 +161,13 @@ firefoxci:
                         "us-east-1": ["sg-7aca300a"]
                         "us-west-1": ["sg-5ce02b3a"]
                         "us-west-2": ["sg-a0d6beda"]
+        invalid-instances:
+            - zones: ["us-east-1e"]
+              families: ["m5", "m5a", "m5d", "c5", "c5d", "r5a", "z1d"]
+            - zones: ["us-east-1b", "us-east-1f"]
+              families: ["r3", "m3", "c3"]
+            - zones: ["us-east-1a", "us-east-1b", "us-east-1d", "us-east-1e"]
+              families: ["r5ad"]
     google_config:
         zones:
             by-region:
