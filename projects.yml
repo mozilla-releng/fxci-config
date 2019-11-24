@@ -600,9 +600,7 @@ android-l10n-tooling:
       - exchange: exchange/taskcluster-github/v1/push
         routing_key_pattern: primary.MozillaReality.FirefoxReality
   - target: update-projects
-    bindings:
-      - exchange: exchange/taskcluster-github/v1/push
-        routing_key_pattern: primary.mozilla-l10n.android-l10n
+    bindings: []
 
 elmo-taskcluster:
   repo: https://github.com/mozilla-services/elmo-taskcluster
