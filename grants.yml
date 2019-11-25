@@ -989,7 +989,7 @@
   to:
   - project:
       feature: mobile-roles
-      job: ["pull-request", "branch:*", "branch:master", "release", "cron:*"]
+      job: ["pull-request", "branch:*", "release", "cron:*"]
 
 - grant:
   - queue:route:index.project.mobile.{alias}.v3.debug.*
@@ -1067,7 +1067,7 @@
   to:
   - project:
       alias: android-components
-      job: ["pull-request", "branch:*", "branch:master"]
+      job: ["pull-request", "branch:*"]
 
 - grant:
   - secrets:get:project/mobile/android-components/firebase
@@ -1121,7 +1121,7 @@
   to:
   - project:
       alias: fenix
-      job: ["branch:master", "branch:*", "pull-request"]
+      job: ["branch:*", "pull-request"]
 
 - grant:
   - project:mobile:fenix:releng:signing:cert:*
@@ -1178,7 +1178,7 @@
   to:
   - project:
       feature: github-taskgraph
-      job: ["pull-request", "branch:*", "branch:master", "release", "cron:*"]
+      job: ["pull-request", "branch:*", "release", "cron:*"]
 
 - grant:
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
@@ -1186,7 +1186,7 @@
   to:
   - project:
       feature: scriptworker
-      job: ["pull-request", "branch:*", "branch:master", "release", "cron:*"]
+      job: ["pull-request", "branch:*", "release", "cron:*"]
 
 # reference-browser specific scopes
 - grant:
