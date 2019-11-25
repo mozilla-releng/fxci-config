@@ -13,6 +13,97 @@
 # and exist to help configure minor differences between environments, such as
 # to prevent a staging environment from carrying a full production workload.
 ---
+firefoxci:
+    root_url: https://firefox-ci-tc.services.mozilla.com
+    # no modifications in production, please!
+    modify_resources:
+      # Remove gcp-provider workers from firefox-ci cluster,
+      # since all the currently used non-aws providers
+      # don't exist in firefox-ci.
+      - remove_gcp_workers
+    worker_manager:
+        providers:
+            aws:
+                implementation: aws
+            fxci-level1-gcp:
+                implementation: google
+            fxci-level2-gcp:
+                implementation: google
+            fxci-level3-gcp:
+                implementation: google
+    aws_config:
+        availability-zones:
+            by-region:
+                us-east-1:
+                    - "us-east-1a"
+                    - "us-east-1b"
+                    - "us-east-1c"
+                    - "us-east-1d"
+                    - "us-east-1e"
+                    - "us-east-1f"
+                us-west-1:
+                    - "us-west-1b"
+                    - "us-west-1c"
+                us-west-2:
+                    - "us-west-2a"
+                    - "us-west-2b"
+                    - "us-west-2c"
+                eu-central-1:
+                    - eu-central-1a
+                    - eu-central-1b
+                    - eu-central-1c
+        subnet-id:
+            by-availability-zone:
+                us-east-1a: "subnet-566e060c"
+                us-east-1b: "subnet-f2c93496"
+                us-east-1c: "subnet-c52454e9"
+                us-east-1d: "subnet-e7e6ccaf"
+                us-east-1e: "subnet-deb5a8e2"
+                us-east-1f: "subnet-7f720d73"
+                us-west-1b: "subnet-7641632e"
+                us-west-1c: "subnet-48a9b82c"
+                us-west-2a: "subnet-d948b6bf"
+                us-west-2b: "subnet-2eaaba67"
+                us-west-2c: "subnet-540a9f0f"
+                eu-central-1a: subnet-935645fb
+                eu-central-1b: subnet-6988da13
+                eu-central-1c: subnet-114d525b
+        security-groups:
+            by-security:
+                untrusted:
+                    # docker-worker - gecko-workers
+                    by-region:
+                        "us-east-1": ["sg-12cd3762"]
+                        "us-west-1": ["sg-caed26ac"]
+                        "us-west-2": ["sg-2728435d"]
+                        "eu-central-1": ["sg-8b3d0de0"]
+                windows-untrusted:
+                    # livelog-direct - gecko-workers
+                    # rdp-only - gecko-workers
+                    by-region:
+                        "us-east-1": ["sg-0dc9337d", "sg-27d72d57"]
+                        "us-west-1": ["sg-5be3283d", "sg-fee02b98"]
+                        "us-west-2": ["sg-09d6be73", "sg-3bd7bf41"]
+                        "eu-central-1": ["sg-c03e0eab", "sg-e43d0d8f"]
+                trusted:
+                    # no-inbound - gecko-workers
+                    by-region:
+                        "us-east-1": ["sg-7aca300a"]
+                        "us-west-1": ["sg-5ce02b3a"]
+                        "us-west-2": ["sg-a0d6beda"]
+                        "eu-central-1": ["sg-e53d0d8e"]
+        invalid-instances:
+            - zones: ["us-east-1e"]
+              families: ["m5", "m5a", "m5d", "c5", "c5d", "r5a", "z1d"]
+            - zones: ["us-east-1b", "us-east-1f"]
+              families: ["r3", "m3", "c3"]
+            - zones: ["us-east-1a", "us-east-1b", "us-east-1d", "us-east-1e"]
+              families: ["r5ad"]
+    google_config:
+        zones:
+            by-region:
+                us-central1: ['us-central1-a', 'us-central1-b','us-central1-c','us-central1-f']
+
 staging:
     root_url: https://stage.taskcluster.nonprod.cloudops.mozgcp.net
     modify_resources:
@@ -102,97 +193,6 @@ staging:
                         "us-west-2": ["sg-042aa0d6570f103e7"]
                         "eu-central-1": ["sg-026d562d7bb83f005"]
         invalid_instances: []
-    google_config:
-        zones:
-            by-region:
-                us-central1: ['us-central1-a', 'us-central1-b','us-central1-c','us-central1-f']
-
-firefoxci:
-    root_url: https://firefox-ci-tc.services.mozilla.com
-    # no modifications in production, please!
-    modify_resources:
-      # Remove gcp-provider workers from firefox-ci cluster,
-      # since all the currently used non-aws providers
-      # don't exist in firefox-ci.
-      - remove_gcp_workers
-    worker_manager:
-        providers:
-            aws:
-                implementation: aws
-            fxci-level1-gcp:
-                implementation: google
-            fxci-level2-gcp:
-                implementation: google
-            fxci-level3-gcp:
-                implementation: google
-    aws_config:
-        availability-zones:
-            by-region:
-                us-east-1:
-                    - "us-east-1a"
-                    - "us-east-1b"
-                    - "us-east-1c"
-                    - "us-east-1d"
-                    - "us-east-1e"
-                    - "us-east-1f"
-                us-west-1:
-                    - "us-west-1b"
-                    - "us-west-1c"
-                us-west-2:
-                    - "us-west-2a"
-                    - "us-west-2b"
-                    - "us-west-2c"
-                eu-central-1:
-                    - eu-central-1a
-                    - eu-central-1b
-                    - eu-central-1c
-        subnet-id:
-            by-availability-zone:
-                us-east-1a: "subnet-566e060c"
-                us-east-1b: "subnet-f2c93496"
-                us-east-1c: "subnet-c52454e9"
-                us-east-1d: "subnet-e7e6ccaf"
-                us-east-1e: "subnet-deb5a8e2"
-                us-east-1f: "subnet-7f720d73"
-                us-west-1b: "subnet-7641632e"
-                us-west-1c: "subnet-48a9b82c"
-                us-west-2a: "subnet-d948b6bf"
-                us-west-2b: "subnet-2eaaba67"
-                us-west-2c: "subnet-540a9f0f"
-                eu-central-1a: subnet-935645fb
-                eu-central-1b: subnet-6988da13
-                eu-central-1c: subnet-114d525b
-        security-groups:
-            by-security:
-                untrusted:
-                    # docker-worker - gecko-workers
-                    by-region:
-                        "us-east-1": ["sg-12cd3762"]
-                        "us-west-1": ["sg-caed26ac"]
-                        "us-west-2": ["sg-2728435d"]
-                        "eu-central-1": ["sg-8b3d0de0"]
-                windows-untrusted:
-                    # livelog-direct - gecko-workers
-                    # rdp-only - gecko-workers
-                    by-region:
-                        "us-east-1": ["sg-0dc9337d", "sg-27d72d57"]
-                        "us-west-1": ["sg-5be3283d", "sg-fee02b98"]
-                        "us-west-2": ["sg-09d6be73", "sg-3bd7bf41"]
-                        "eu-central-1": ["sg-c03e0eab", "sg-e43d0d8f"]
-                trusted:
-                    # no-inbound - gecko-workers
-                    by-region:
-                        "us-east-1": ["sg-7aca300a"]
-                        "us-west-1": ["sg-5ce02b3a"]
-                        "us-west-2": ["sg-a0d6beda"]
-                        "eu-central-1": ["sg-e53d0d8e"]
-        invalid-instances:
-            - zones: ["us-east-1e"]
-              families: ["m5", "m5a", "m5d", "c5", "c5d", "r5a", "z1d"]
-            - zones: ["us-east-1b", "us-east-1f"]
-              families: ["r3", "m3", "c3"]
-            - zones: ["us-east-1a", "us-east-1b", "us-east-1d", "us-east-1e"]
-              families: ["r5ad"]
     google_config:
         zones:
             by-region:
