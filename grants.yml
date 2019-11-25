@@ -1027,14 +1027,6 @@
       job: ["branch:master"]
 
 - grant:
-  - assume:project:taskcluster:mozilla-github-repository
-  to:
-  - project:
-      feature: mobile-roles-forks
-      # We don't want pull requests on forks
-      job: ["branch:*"]
-
-- grant:
   - project:mobile:{alias}:releng:beetmover:action:push-to-maven
   - project:mobile:{alias}:releng:beetmover:bucket:maven-production
   - queue:create-task:highest:scriptworker-prov-v1/mobile-beetmover-v1

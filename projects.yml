@@ -28,7 +28,6 @@
 #   - `hg-push` -- decision tasks run for pushes to this hg project's repository
 #   - `gecko-roles` -- this repository should have gecko-related roles assigned (for users, actions, cron, etc.)
 #   - `mobile-roles` -- this repository should have https://github.com/mozilla-mobile roles assigned (for users, actions, cron, etc.)
-#   - `mobile-roles-forks` -- this fork should have some (restricted) https://github.com/mozilla-mobile roles assigned
 #   - `xpi-roles` -- this repository should have xpi roles assigned (for users, actions, cron, etc.)
 #   - `mobile-beetmover-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `mobile-beetmover-stage-phase` -- this https://github.com/mozilla-mobile repository should have beetmover staging related scopes associated
