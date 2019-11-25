@@ -31,7 +31,7 @@ payload:
     image:
       type: indexed-image
       path: public/image.tar.zst
-      namespace: ci.cache.level-3.docker-images.v2.hg-push.hash.5d88330fd2c4308906720c592564199812354b443448d0bac5e3bdcb28168999
+      namespace: ci.cache.level-3.docker-images.v2.hg-push.hash.f9a043020276e6d664f2428428e7ccf468345cf120def3b5e58f618166780fb9
     env:
         # pass along the hook payload, which is the Pulse message from hg (v2)
         # https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications
