@@ -2338,8 +2338,8 @@ gecko-t/t-linux-metal:
     regions: [us-east-1, us-west-1, us-west-2]
     image: monopacker-docker-worker-current
     minCapacity: 0
-    maxCapacity: 10
-    spot: false
+    maxCapacity: 0
+    spot: true
     instance_types:
     - instanceType: c5.metal
       capacityPerInstance: 4
