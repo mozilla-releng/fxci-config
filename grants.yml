@@ -647,7 +647,6 @@
 
 # - application-services specific roles
 - grant:
-  - assume:project:taskcluster:mozilla-github-repository
   - docker-worker:taskcluster-proxy:tooltool.download.internal
   - docker-worker:cache:application-services-*
   - project:releng:services/tooltool/api/download/internal
@@ -981,7 +980,6 @@
 
 # mobile:level:X:*
 - grant:
-  - assume:project:taskcluster:mozilla-github-repository
   - queue:create-task:highest:mobile-{level}/*
   - queue:create-task:highest:mobile-t/*
   - queue:create-task:{priority}:built-in/*
