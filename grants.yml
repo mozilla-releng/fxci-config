@@ -1001,20 +1001,6 @@
       job: ["branch:master", "release", "cron:*"]
 
 - grant:
-  - queue:route:statuses
-  to:
-  - project:
-      feature: mobile-roles
-      job: ["cron:nightly"]
-
-- grant:
-  - queue:route:statuses
-  to:
-  - project:
-      feature: mobile-roles
-      job: ["cron:nightly-staging"]
-
-- grant:
   - queue:route:index.project.mobile.{alias}.branch.master.*
   - queue:route:index.project.mobile.{alias}.v2.branch.master.*
   to:
