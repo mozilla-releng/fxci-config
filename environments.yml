@@ -14,7 +14,7 @@
 # to prevent a staging environment from carrying a full production workload.
 ---
 staging:
-    root_url: https://stage.taskcluster.nonprod.cloudops.mozgcp.net/
+    root_url: https://stage.taskcluster.nonprod.cloudops.mozgcp.net
     modify_resources:
       # we do not want hooks to trigger on a schedule in staging, as that adds
       # lots of load (e.g., building nightlies).  They can be triggered
@@ -89,7 +89,7 @@ staging:
                 us-central1: ['us-central1-a', 'us-central1-b','us-central1-c','us-central1-f']
 
 firefoxci:
-    root_url: https://firefox-ci-tc.services.mozilla.com/
+    root_url: https://firefox-ci-tc.services.mozilla.com
     # no modifications in production, please!
     modify_resources:
       # Remove gcp-provider workers from firefox-ci cluster,
