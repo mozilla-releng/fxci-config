@@ -988,7 +988,6 @@
   - queue:route:index.project.mobile.{alias}.cache.level-{level}.*
   - project:mobile:{alias}:releng:signing:cert:dep-signing
   - project:mobile:{alias}:releng:signing:format:*
-  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
   - queue:route:index.project.mobile.{alias}.staging-signed-nightly.*
   - queue:route:index.project.mobile.{alias}.v2.staging.*
   - queue:route:index.project.mobile.{alias}.v3.staging.*
@@ -1029,7 +1028,6 @@
 - grant:
   - project:mobile:{alias}:releng:beetmover:action:push-to-maven
   - project:mobile:{alias}:releng:beetmover:bucket:maven-production
-  - queue:create-task:highest:scriptworker-prov-v1/mobile-beetmover-v1
   to:
   - project:
       feature: mobile-beetmover-phase
@@ -1038,7 +1036,6 @@
 - grant:
   - project:mobile:{alias}:releng:beetmover:action:push-to-maven
   - project:mobile:{alias}:releng:beetmover:bucket:maven-snapshot-production
-  - queue:create-task:highest:scriptworker-prov-v1/mobile-beetmover-v1
   to:
   - project:
       feature: mobile-beetmover-snapshot-phase
@@ -1046,7 +1043,6 @@
 
 - grant:
   - project:mobile:{alias}:releng:signing:cert:release-signing
-  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
   - queue:route:index.project.mobile.{alias}.signed-nightly.*
   - queue:route:index.project.mobile.{alias}.v2.nightly.*
   to:
@@ -1056,7 +1052,6 @@
 
 - grant:
   - project:mobile:{alias}:releng:signing:cert:release-signing
-  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
   to:
   - project:
       alias: android-components
@@ -1064,7 +1059,6 @@
 
 - grant:
   - project:mobile:{alias}:releng:googleplay:product:{alias}
-  - queue:create-task:highest:scriptworker-prov-v1/mobile-pushapk-v1
   to:
   - project:
       feature: mobile-pushapk-phase
@@ -1072,7 +1066,6 @@
 
 - grant:
   - project:mobile:{alias}:releng:googleplay:product:{alias}:dep
-  - queue:create-task:highest:scriptworker-prov-v1/mobile-pushapk-dep-v1
   to:
   - project:
       feature: mobile-pushapk-stage-phase
@@ -1101,7 +1094,6 @@
   # TODO Refactor the following 2 scopes into one. The second one is the fenix one.
   # Thanks to the {alias} prefix, reference-browser can't sign APKs with the Fenix key,
   # nor the other way around.
-  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
   - queue:create-task:highest:proj-autophone/gecko-t-ap-perf-g5
   - queue:create-task:highest:proj-autophone/gecko-t-ap-perf-p2
   - queue:create-task:highest:proj-autophone/gecko-t-bitbar-gw-perf-g5
@@ -1144,7 +1136,6 @@
 # production scopes to various sub-roles. Until then, this is a temp solution
 - grant:
   - project:mobile:fenix:releng:signing:cert:dep-signing
-  - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
   to:
   - project:
       alias: fenix
