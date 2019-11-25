@@ -8,7 +8,7 @@ tasks:
       commandSuffix: >-
         python setup.py develop &&
         ci-admin check
-        --environment production
+        --environment firefoxci
         --ci-configuration-repository "${repository.url}"
         --ci-configuration-revision "${push.revision}"
   each(cfg):
@@ -29,7 +29,7 @@ tasks:
         - >-
             hg clone https://hg.mozilla.org/ci/ci-admin ci-admin &&
             cd ci-admin &&
-            pip install -r requirements.txt &&
+            pip install -r requirements/base.txt &&
             ${cfg.commandSuffix}
       maxRunTime: 3600
     scopes: []
