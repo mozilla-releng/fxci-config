@@ -986,9 +986,6 @@
   - queue:create-task:{priority}:built-in/*
   - project:mobile:{alias}:releng:signing:cert:dep-signing
   - project:mobile:{alias}:releng:signing:format:*
-  - queue:route:index.project.mobile.{alias}.staging-signed-nightly.*
-  - queue:route:index.project.mobile.{alias}.v2.staging.*
-  - queue:route:index.project.mobile.{alias}.v3.staging.*
   to:
   - project:
       feature: mobile-roles
@@ -1037,7 +1034,6 @@
 
 - grant:
   - project:mobile:{alias}:releng:signing:cert:release-signing
-  - queue:route:index.project.mobile.{alias}.signed-nightly.*
   - queue:route:index.project.mobile.{alias}.v2.nightly.*
   to:
   - project:
@@ -1101,6 +1097,7 @@
 
 
 - grant:
+  # XXX v3.raptor is used by reference-browser, v2.performance-test by fenix
   - queue:route:index.project.mobile.{alias}.v3.raptor.*
   - queue:route:index.project.mobile.{alias}.v2.performance-test.*
   to:
@@ -1202,7 +1199,6 @@
 
 - grant:
   - queue:route:index.project.mobile.reference-browser.v3.nightly.*
-  - queue:route:index.project.mobile.reference-browser.v3.signed-nightly.*
   - secrets:get:project/mobile/reference-browser/nimbledroid
   - secrets:get:project/mobile/reference-browser/sentry
   - queue:route:notify.email.android-components-team@mozilla.com.on-failed
