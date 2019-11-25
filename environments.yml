@@ -57,6 +57,10 @@ staging:
                     - "us-west-2a"
                     - "us-west-2b"
                     - "us-west-2c"
+                eu-central-1:
+                    - eu-central-1a
+                    - eu-central-1b
+                    - eu-central-1c
         subnet-id:
             by-availability-zone:
                 us-east-1a: subnet-0c938056fff37f311
@@ -70,18 +74,33 @@ staging:
                 us-west-2a: subnet-06b091438ea962936
                 us-west-2b: subnet-00927443142f01ddf
                 us-west-2c: subnet-0ab2f88a3fa4ab7a0
+                eu-central-1a: subnet-04d80721f2a2ef77d
+                eu-central-1b: subnet-0aff5b04441588586
+                eu-central-1c: subnet-051cbe370d97542ed
         security-groups:
             by-security:
                 untrusted:
+                    # docker-worker - gecko-workers
                     by-region:
                         "us-east-1": ["sg-01738525fc9991bd0"]
                         "us-west-1": ["sg-0f52b4554cfc115e7"]
                         "us-west-2": ["sg-07ca8c96f1574d42b"]
-                trusted:
+                        "eu-central-1": ["sg-0febd8c614542ba9c"]
+                windows-untrusted:
+                    # livelog-direct - gecko-workers
+                    # rdp-only - gecko-workers
                     by-region:
-                        "us-east-1": ["sg-7aca300a"]
-                        "us-west-1": ["sg-5ce02b3a"]
-                        "us-west-2": ["sg-a0d6beda"]
+                        "us-east-1": ["sg-06f0ef799985524a4", "sg-041e142d0ba63c7aa"]
+                        "us-west-1": ["sg-07ffff7a1ad3c4958", "sg-0c7efe44870028d78"]
+                        "us-west-2": ["sg-0588dee891c7069e7", "sg-073d8cda785e8f939"]
+                        "eu-central-1": ["sg-04a0ee6ff719528e9", "sg-095ad8255839a053c"]
+                trusted:
+                    # no-inbound - gecko-workers
+                    by-region:
+                        "us-east-1": ["sg-03ab72cd36e14ce66"]
+                        "us-west-1": ["sg-042aa0d6570f103e7"]
+                        "us-west-2": ["sg-042aa0d6570f103e7"]
+                        "eu-central-1": ["sg-026d562d7bb83f005"]
         invalid_instances: []
     google_config:
         zones:
@@ -146,21 +165,27 @@ firefoxci:
         security-groups:
             by-security:
                 untrusted:
+                    # docker-worker - gecko-workers
                     by-region:
                         "us-east-1": ["sg-12cd3762"]
                         "us-west-1": ["sg-caed26ac"]
                         "us-west-2": ["sg-2728435d"]
+                        "eu-central-1": ["sg-8b3d0de0"]
                 windows-untrusted:
+                    # livelog-direct - gecko-workers
+                    # rdp-only - gecko-workers
                     by-region:
                         "us-east-1": ["sg-0dc9337d", "sg-27d72d57"]
                         "us-west-1": ["sg-5be3283d", "sg-fee02b98"]
                         "us-west-2": ["sg-09d6be73", "sg-3bd7bf41"]
                         "eu-central-1": ["sg-c03e0eab", "sg-e43d0d8f"]
                 trusted:
+                    # no-inbound - gecko-workers
                     by-region:
                         "us-east-1": ["sg-7aca300a"]
                         "us-west-1": ["sg-5ce02b3a"]
                         "us-west-2": ["sg-a0d6beda"]
+                        "eu-central-1": ["sg-e53d0d8e"]
         invalid-instances:
             - zones: ["us-east-1e"]
               families: ["m5", "m5a", "m5d", "c5", "c5d", "r5a", "z1d"]
