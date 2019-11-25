@@ -29,9 +29,8 @@
 #   - `gecko-roles` -- this repository should have gecko-related roles assigned (for users, actions, cron, etc.)
 #   - `mobile-roles` -- this repository should have https://github.com/mozilla-mobile roles assigned (for users, actions, cron, etc.)
 #   - `xpi-roles` -- this repository should have xpi roles assigned (for users, actions, cron, etc.)
-#   - `mobile-beetmover-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
-#   - `mobile-beetmover-stage-phase` -- this https://github.com/mozilla-mobile repository should have beetmover staging related scopes associated
-#   - `mobile-beetmover-snapshot-phase` -- this https://github.com/mozilla-mobile repository should have beetmover snapshot production related scopes associated
+#   - `beetmover-maven-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
+#   - `beetmover-maven-snapshot-phase` -- this https://github.com/mozilla-mobile repository should have beetmover snapshot production related scopes associated
 #   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
 #   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
 #   - `mobile-pushapk-stage-phase` -- this https://github.com/mozilla-mobile repository should have pushapk staging related scopes associated
@@ -426,10 +425,10 @@ android-components:
   repo_type: git
   level: 3
   features:
+    beetmover-maven-phase: true
+    beetmover-maven-snapshot-phase: true
     github-taskgraph: true
     mobile-roles: true
-    mobile-beetmover-phase: true
-    mobile-beetmover-snapshot-phase: true
     scriptworker: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -500,6 +499,7 @@ application-services:
   level: 3
   trust_domain: application-services
   features:
+    beetmover-maven-phase: true
     github-taskgraph: true
     scriptworker: true
 

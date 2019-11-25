@@ -659,8 +659,6 @@
       job: ["pull-request", "branch:master", "release"]
 
 - grant:
-  - project:mozilla:{alias}:releng:beetmover:action:push-to-maven
-  - project:mozilla:{alias}:releng:beetmover:bucket:maven-production
   - project:mozilla:{alias}:releng:signing:cert:release-signing
   - secrets:get:project/application-services/gradle-plugin-publish
   - secrets:get:project/application-services/publish
@@ -672,6 +670,9 @@
   - queue:create-task:scriptworker-k8s/appservices-3-beetmover
   - queue:create-task:highest:scriptworker-k8s/appservices-3-signing
   - queue:create-task:highest:scriptworker-k8s/appservices-3-beetmover
+  # TODO Make these 2 scopes compliant with the `beetmover-maven-phase` feature.
+  - project:mozilla:application-services:releng:beetmover:action:push-to-maven
+  - project:mozilla:application-services:releng:beetmover:bucket:maven-production
   to:
   - project:
       alias: application-services
@@ -1009,19 +1010,29 @@
       job: ["branch:master"]
 
 - grant:
-  - project:mobile:{alias}:releng:beetmover:action:push-to-maven
-  - project:mobile:{alias}:releng:beetmover:bucket:maven-production
+  - project:{trust_domain}:{alias}:releng:beetmover:action:push-to-maven
   to:
   - project:
-      feature: mobile-beetmover-phase
+      feature: beetmover-maven-phase
+      job: ["release"]
+  - project:
+      feature: beetmover-maven-snapshot-phase
+      job: ["cron:snapshot"]
+
+- grant:
+  - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-production
+  to:
+  - project:
+      feature: beetmover-maven-phase
+      level: 3
       job: ["release"]
 
 - grant:
-  - project:mobile:{alias}:releng:beetmover:action:push-to-maven
-  - project:mobile:{alias}:releng:beetmover:bucket:maven-snapshot-production
+  - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-snapshot-production
   to:
   - project:
-      feature: mobile-beetmover-snapshot-phase
+      feature: beetmover-maven-snapshot-phase
+      level: 3
       job: ["cron:snapshot"]
 
 - grant:
