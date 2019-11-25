@@ -37,6 +37,7 @@
 #   - `mobile-pushapk-stage-phase` -- this https://github.com/mozilla-mobile repository should have pushapk staging related scopes associated
 #   - `github-taskgraph` -- this https://github.com/mozilla-mobile repository has started using taskgraph
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
+#   - 'scriptworker' -- this repository uses at least one scriptworker instance
 #   - 'taskgraph-cron' -- tasks defined in `.cron.yml` can run for this project (non-gecko/comm taskgraph repos only)
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
@@ -429,6 +430,7 @@ android-components:
     mobile-roles: true
     mobile-beetmover-phase: true
     mobile-beetmover-snapshot-phase: true
+    scriptworker: true
     taskgraph-cron: true
     treeherder-reporting: true
   cron_targets: [snapshot]
@@ -445,6 +447,7 @@ reference-browser:
     mobile-sign-phase: true
     mobile-pushapk-phase: true
     mobile-pushapk-stage-phase: true
+    scriptworker: true
     taskgraph-cron: true
     treeherder-reporting: true
   cron_targets: [nightly, raptor]
@@ -461,6 +464,7 @@ fenix:
     mobile-sign-phase: true
     mobile-pushapk-phase: true
     mobile-pushapk-stage-phase: true
+    scriptworker: true
     taskgraph-cron: true
     treeherder-reporting: true
   cron_targets: [nightly, raptor]
@@ -475,6 +479,7 @@ focus-android:
     mobile-roles: true
     mobile-sign-phase: true
     mobile-pushapk-phase: true
+    scriptworker: true
 
 firefox-tv:
   repo: https://github.com/mozilla-mobile/firefox-tv
@@ -486,6 +491,7 @@ firefox-tv:
     mobile-roles: true
     mobile-sign-phase: true
     mobile-pushapk-phase: true
+    scriptworker: true
 
 # https://github.com/mozilla's repositories
 application-services:
@@ -495,6 +501,7 @@ application-services:
   trust_domain: application-services
   features:
     github-taskgraph: true
+    scriptworker: true
 
 # mozilla-releng Github repositories
 k8s-autoscale:
@@ -577,6 +584,7 @@ android-l10n-tooling:
   level: 3
   trust_domain: l10n
   features:
+    github-taskgraph: true
     taskgraph-cron: true
   cron_targets:
   - target: update-l10n
