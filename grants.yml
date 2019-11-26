@@ -1815,6 +1815,7 @@
   - hooks:trigger-hook:project-relman/code-coverage-cron-production
   - hooks:trigger-hook:project-relman/code-coverage-repo-production
   - secrets:get:project/relman/code-coverage/*
+  - secrets:set:project/relman/code-coverage/*
   to:
   - roles:
     - mozillians-group:code-coverage-developers
@@ -1854,6 +1855,7 @@
 
 - grant:
   - secrets:get:project/relman/code-review/*
+  - secrets:set:project/relman/code-review/*
   to:
   - roles:
     - mozillians-group:code-review-developers
