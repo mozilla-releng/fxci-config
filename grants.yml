@@ -1230,16 +1230,21 @@
       job: ["branch:*"]
 
 - grant:
-    - queue:route:index.project.mobile.focus.release.latest
-    - secrets:get:project/focus/firebase
-    - secrets:get:project/focus/nimbledroid
     - secrets:get:project/focus/tokens
+  to:
+  - project:
+      alias: focus
+      job: ["release", "cron:nightly"]
+
+- grant:
+    - queue:route:index.project.mobile.focus.release.latest
   to:
   - project:
       alias: focus
       job: ["release"]
 
 - grant:
+    - queue:route:index.project.mobile.focus.nightly.latest
     - queue:route:notify.email.firefox-focus@mozilla.com.on-failed
   to:
   - project:
