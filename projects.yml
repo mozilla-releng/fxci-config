@@ -31,6 +31,7 @@
 #   - `xpi-roles` -- this repository should have xpi roles assigned (for users, actions, cron, etc.)
 #   - `beetmover-maven-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `beetmover-maven-snapshot-phase` -- this https://github.com/mozilla-mobile repository should have beetmover snapshot production related scopes associated
+#   - `mobile-firebase-testing` -- this https://github.com/mozilla-mobile repository has end-to-end testing involving devices hosted at Google's Firebase
 #   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
 #   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
 #   - `mobile-pushapk-stage-phase` -- this https://github.com/mozilla-mobile repository should have pushapk staging related scopes associated
@@ -429,6 +430,7 @@ android-components:
     beetmover-maven-snapshot-phase: true
     github-taskgraph: true
     mobile-roles: true
+    mobile-firebase-testing: true
     scriptworker: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -443,6 +445,7 @@ reference-browser:
     autophone: true
     github-taskgraph: true
     mobile-roles: true
+    mobile-firebase-testing: true
     mobile-sign-phase: true
     mobile-pushapk-phase: true
     mobile-pushapk-stage-phase: true
@@ -460,9 +463,10 @@ fenix:
     autophone: true
     github-taskgraph: true
     mobile-roles: true
-    mobile-sign-phase: true
+    mobile-firebase-testing: true
     mobile-pushapk-phase: true
     mobile-pushapk-stage-phase: true
+    mobile-sign-phase: true
     scriptworker: true
     taskgraph-cron: true
     treeherder-reporting: true
