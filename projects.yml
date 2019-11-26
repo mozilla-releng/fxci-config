@@ -84,6 +84,7 @@ mozilla-esr68:
     trust-domain-scopes: true
   cron_targets:
     - nightly-android
+    - l10n-bumper
 comm-esr68:
   repo: https://hg.mozilla.org/releases/comm-esr68
   repo_type: hg
@@ -134,6 +135,7 @@ mozilla-beta:
     trust-domain-scopes: true
   cron_targets:
     - ship-geckoview
+    - l10n-bumper
 comm-beta:
   repo: https://hg.mozilla.org/releases/comm-beta
   repo_type: hg
@@ -180,6 +182,7 @@ mozilla-central:
     - nightly-desktop-win64
     - nightly-desktop-win64-aarch64
     - ship-geckoview
+    - l10n-bumper
 comm-central:
   repo: https://hg.mozilla.org/comm-central
   repo_type: hg
