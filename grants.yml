@@ -986,13 +986,6 @@
       job: ["pull-request", "branch:*", "release", "cron:*"]
 
 - grant:
-  - queue:route:index.project.mobile.{alias}.v3.debug.*
-  to:
-  - project:
-      feature: mobile-roles
-      job: ["branch:master", "release", "cron:*"]
-
-- grant:
   - queue:route:index.project.mobile.{alias}.branch.master.*
   - queue:route:index.project.mobile.{alias}.v2.branch.master.*
   to:
