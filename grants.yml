@@ -1813,6 +1813,14 @@
   - roles:
     - mozillians-group:code-coverage-developers
 
+# Bugzilla dashboard runtime roles
+- grant:
+  - hooks:trigger-hook:project-relman/bugzilla-dashboard-backend-testing
+  - hooks:trigger-hook:project-relman/bugzilla-dashboard-backend-production
+  to:
+  - roles:
+    - mozillians-group:bugzilla-dashboard-developers
+
 
 # Bug 1534463: allow `vpn_hg_admin` group to access Mercurial related secrets
 - grant:
