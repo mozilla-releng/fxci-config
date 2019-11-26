@@ -16,6 +16,7 @@
 # The context for the second rendering is that provided by the hooks service in response
 # to a Pulse message from exchange/hgpushes/v2 or a triggerHook call with the same payload
 
+---
 provisionerId: infra
 workerType: hg-push
 schedulerId: ${trust_domain}-level-${level}
@@ -25,13 +26,13 @@ schedulerId: ${trust_domain}-level-${level}
 deadline: {$$fromNow: '30 minutes'}
 expires: {$$fromNow: '3 days'}
 scopes:
-  - assume:${project_role_prefix}:branch:default
+    - assume:${project_role_prefix}:branch:default
 payload:
     # built by pushes to the ci-admin repository
     image:
-      type: indexed-image
-      path: public/image.tar.zst
-      namespace: ci.cache.level-3.docker-images.v2.hg-push.hash.f9a043020276e6d664f2428428e7ccf468345cf120def3b5e58f618166780fb9
+        type: indexed-image
+        path: public/image.tar.zst
+        namespace: ci.cache.level-3.docker-images.v2.hg-push.hash.f9a043020276e6d664f2428428e7ccf468345cf120def3b5e58f618166780fb9
     env:
         # pass along the hook payload, which is the Pulse message from hg (v2)
         # https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications
@@ -47,16 +48,16 @@ payload:
     # decision tasks when that problem is resolved, so we are conservative with the time it can possibly retry
     maxRunTime: 600
 metadata:
-  $$let:
-    description:
-      $$if: 'firedBy == "triggerHook"'
-      then: 'Fired by triggerHook call from $${clientId}'
-      else: 'Fired by $${firedBy}'
-  in:
-    owner: 'mozilla-taskcluster-maintenance@mozilla.com'
-    source: https://tools.taskcluster.net/hooks/${hookGroupId}/${hookId}
-    description: "$${description}"
-    name: On-Push task for ${project_repo}
+    $$let:
+        description:
+            $$if: 'firedBy == "triggerHook"'
+            then: 'Fired by triggerHook call from $${clientId}'
+            else: 'Fired by $${firedBy}'
+    in:
+        owner: 'mozilla-taskcluster-maintenance@mozilla.com'
+        source: https://tools.taskcluster.net/hooks/${hookGroupId}/${hookId}
+        description: "$${description}"
+        name: On-Push task for ${project_repo}
 priority: 'highest'
 retries: 5
 tags: {}
