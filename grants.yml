@@ -1821,6 +1821,13 @@
   - roles:
     - mozillians-group:bugzilla-dashboard-developers
 
+# Grant access to project-relman private artifacts to all NDA people at Mozilla
+- grant:
+  - queue:get-artifact:project/relman/bugzilla-dashboard/*
+  to:
+  - roles:
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|*
+
 
 # Bug 1534463: allow `vpn_hg_admin` group to access Mercurial related secrets
 - grant:
