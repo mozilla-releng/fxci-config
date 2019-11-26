@@ -468,13 +468,12 @@ fenix:
     treeherder-reporting: true
   cron_targets: [nightly, raptor]
 
-focus-android:
+focus:
   repo: https://github.com/mozilla-mobile/focus-android
   trust_domain: mobile
   repo_type: git
   level: 3
   features:
-    github-taskgraph: true
     mobile-roles: true
     mobile-sign-phase: true
     mobile-pushapk-phase: true

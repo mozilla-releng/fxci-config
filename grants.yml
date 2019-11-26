@@ -978,6 +978,7 @@
   - queue:create-task:highest:mobile-{level}/*
   - queue:create-task:highest:mobile-t/*
   - queue:create-task:{priority}:built-in/*
+  - queue:scheduler-id:{trust_domain}-level-{level}
   - project:mobile:{alias}:releng:signing:cert:dep-signing
   - project:mobile:{alias}:releng:signing:format:*
   to:
@@ -1203,35 +1204,40 @@
       alias: reference-browser
       job: ["cron:nightly-staging"]
 
-# focus-android scopes
+# focus (android) scopes
 - grant:
-    - queue:scheduler-id:taskcluster-github
+  # It hasn't been migrated to taskgraph
+  - queue:scheduler-id:taskcluster-github
+  - queue:route:statuses
+  to:
+  - project:
+      alias: focus
+      job: ["branch:*", "cron:*", "pull-request", "release"]
+
+- grant:
     - queue:route:notify.irc-channel.#android-ci.on-any
     - secrets:get:project/focus/firebase
     - secrets:get:project/focus/nimbledroid
   to:
   - project:
-      alias: focus-android
+      alias: focus
       job: ["branch:*"]
 
 - grant:
-    - project:mobile:focus:releng:googleplay:product:focus
-    - project:mobile:focus:releng:signing:cert:release-signing
-    - project:mobile:focus:releng:signing:format:autograph_focus
     - queue:route:index.project.mobile.focus.release.latest
     - secrets:get:project/focus/firebase
     - secrets:get:project/focus/nimbledroid
     - secrets:get:project/focus/tokens
   to:
   - project:
-      alias: focus-android
+      alias: focus
       job: ["release"]
 
 - grant:
     - queue:route:notify.email.firefox-focus@mozilla.com.on-failed
   to:
   - project:
-      alias: focus-android
+      alias: focus
       job: ["cron:nightly"]
 
 # firefox-tv specific scopes
