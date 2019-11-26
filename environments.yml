@@ -192,7 +192,7 @@ staging:
                         "us-west-1": ["sg-042aa0d6570f103e7"]
                         "us-west-2": ["sg-042aa0d6570f103e7"]
                         "eu-central-1": ["sg-026d562d7bb83f005"]
-        invalid_instances: []
+        invalid-instances: []
     google_config:
         zones:
             by-region:
