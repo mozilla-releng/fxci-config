@@ -33,7 +33,7 @@ payload:
   env: {}
   features:
     taskclusterProxy: true
-  image: mozilla/code-coverage:bot-4b5313968429936adcc5a729946e875666408b68
+  image: mozilla/code-coverage:bot-37d2334c5631759153d470c23739565c0aad58e1
   maxRunTime: 14400
 priority: normal
 retries: 5
