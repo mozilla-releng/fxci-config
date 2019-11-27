@@ -9,7 +9,7 @@ project-relman/code-coverage-repo-production:
     - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.production.repo.*
     - notify:email:*
-    - queue:create-task:project-relman/relman-svc-memory
+    - queue:create-task:highest:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-production
@@ -29,7 +29,7 @@ project-relman/code-coverage-repo-testing:
     - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.testing.repo.*
     - notify:email:*
-    - queue:create-task:project-relman/relman-svc-memory
+    - queue:create-task:lowest:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-testing
@@ -51,7 +51,7 @@ project-relman/code-coverage-cron-production:
     - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.production.cron.*
     - notify:email:*
-    - queue:create-task:project-relman/relman-svc-memory
+    - queue:create-task:highest:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-production
@@ -73,7 +73,7 @@ project-relman/code-coverage-cron-testing:
     - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.testing.cron.*
     - notify:email:*
-    - queue:create-task:project-relman/relman-svc-memory
+    - queue:create-task:lowest:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-testing
@@ -95,7 +95,7 @@ project-relman/code-review-testing:
     - index:insert-task:project.relman.tasks.*
     - index:insert-task:project.relman.testing.code-review.*
     - notify:email:*
-    - queue:create-task:project-relman/relman-svc
+    - queue:create-task:lowest:project-relman/relman-svc
     - queue:route:index.project.releng.services.project.testing.static_analysis_bot.*
     - queue:route:index.project.relman.testing.code-review.*
     - queue:route:notify.email.*
@@ -122,7 +122,7 @@ project-relman/code-review-production:
     - index:insert-task:project.relman.production.code-review.*
     - index:insert-task:project.relman.tasks.*
     - notify:email:*
-    - queue:create-task:project-relman/relman-svc
+    - queue:create-task:highest:project-relman/relman-svc
     - queue:route:index.project.releng.services.project.production.static_analysis_bot.*
     - queue:route:index.project.relman.production.code-review.*
     - queue:route:notify.email.*
@@ -146,7 +146,7 @@ project-relman/bugzilla-dashboard-backend-production:
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.production.bugzilla-dashboard.*
-    - queue:create-task:project-relman/relman-svc
+    - queue:create-task:highest:project-relman/relman-svc
     - queue:route:index.project.relman.production.bugzilla-dashboard.*
     - queue:scheduler-id:-
   template_file: hooks/project-relman/bugzilla-dashboard-backend-production.yml
@@ -164,7 +164,7 @@ project-relman/bugzilla-dashboard-backend-testing:
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.testing.bugzilla-dashboard.*
-    - queue:create-task:project-relman/relman-svc
+    - queue:create-task:lowest:project-relman/relman-svc
     - queue:route:index.project.relman.testing.bugzilla-dashboard.*
     - queue:scheduler-id:-
   template_file: hooks/project-relman/bugzilla-dashboard-backend-testing.yml
@@ -188,7 +188,7 @@ project-releng/cron-task-mozilla-mobile-android-components/api-docs-update:
   schedule:
     - '0 0 12 * * *'
   scopes:
-    - queue:create-task:mobile-3/b-linux
+    - queue:create-task:lowest:mobile-3/b-linux
     - secrets:get:project/mobile/github
   template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/api-docs-update.yml
   trigger_schema:
@@ -208,7 +208,7 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-beta:
   schedule:
     - '0 0 14 * * *'
   scopes:
-    - queue:create-task:mobile-3/b-linux
+    - queue:create-task:lowest:mobile-3/b-linux
     - secrets:get:project/mobile/github
   template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-beta.yml
   trigger_schema:
@@ -228,7 +228,7 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-nightly:
   schedule:
     - '0 0 14 * * *'
   scopes:
-    - queue:create-task:mobile-3/b-linux
+    - queue:create-task:lowest:mobile-3/b-linux
     - secrets:get:project/mobile/github
   template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-nightly.yml
   trigger_schema:
@@ -248,7 +248,7 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-release:
   schedule:
     - '0 0 14 * * *'
   scopes:
-    - queue:create-task:mobile-3/b-linux
+    - queue:create-task:lowest:mobile-3/b-linux
     - secrets:get:project/mobile/github
   template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-release.yml
   trigger_schema:
@@ -268,7 +268,7 @@ project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update:
   schedule:
     - '0 0 14 * * *'
   scopes:
-    - queue:create-task:mobile-3/b-linux
+    - queue:create-task:lowest:mobile-3/b-linux
     - secrets:get:project/mobile/github
   template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/publicsuffixlist-update.yml
   trigger_schema:
