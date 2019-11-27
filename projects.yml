@@ -622,6 +622,7 @@ mpd001:
   trust_domain: mpd001
 
 # Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
+# repo:github.com/mozilla-extensions/* is configured in grants.yml, under the xpi-roles feature
 xpi-manifest:
   repo: https://github.com/mozilla-extensions/xpi-manifest
   repo_type: git
