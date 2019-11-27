@@ -978,6 +978,7 @@
   - queue:create-task:highest:mobile-{level}/*
   - queue:create-task:highest:mobile-t/*
   - queue:create-task:{priority}:built-in/*
+  - queue:route:index.project.mobile.{alias}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
   - project:mobile:{alias}:releng:signing:cert:dep-signing
   - project:mobile:{alias}:releng:signing:format:*
@@ -1163,12 +1164,11 @@
       job: ["cron:nightly-staging"]
 
 - grant:
-  - docker-worker:cache:{trust_domain}-level-{level}-*
-  - generic-worker:cache:{trust_domain}-level-{level}-*
   - queue:route:checks
-  - queue:route:index.project.{trust_domain}.{alias}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
   # allow using worker caches appropriate to this trust domain and level
+  - docker-worker:cache:{trust_domain}-level-{level}-*
+  - generic-worker:cache:{trust_domain}-level-{level}-*
   to:
   - project:
       feature: github-taskgraph
@@ -1266,8 +1266,7 @@
 - grant:
   - queue:create-task:highest:l10n-{level}/*
   - queue:create-task:{priority}:built-in/*
-  # TODO Use index provided by `github-taskgraph`
-  - queue:route:index.l10n.{alias}.cache.level-{level}.*
+  - queue:route:index.{trust_domain}.{alias}.cache.level-{level}.*
   - queue:route:notify.email.*
   to:
   - project:
@@ -1313,7 +1312,6 @@
 - grant:
   - queue:create-task:{priority}:built-in/*
   - queue:create-task:{priority}:mpd001-{level}/*
-  # TODO: Use index.project.{trust_domain} as given by github-taskgraph
   - queue:route:index.{trust_domain}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
   - docker-worker:cache:{trust_domain}-level-{level}-*
@@ -1327,7 +1325,6 @@
   - secrets:get:project/releng/callek/mpd001-deploykey
   # Create level-1 scopes explicitly
   - queue:create-task:{priority}:mpd001-1/*
-  # TODO: Use index.project.{trust_domain} as given by github-taskgraph
   - queue:route:index.{trust_domain}.cache.level-1.*
   - queue:scheduler-id:{trust_domain}-level-1
   - docker-worker:cache:{trust_domain}-level-1-*
@@ -1396,7 +1393,6 @@
 - grant:
   # access to workers; all levels have access to the same workers, but at
   # different priorities and levels
-  # TODO: Use index.project.{trust_domain} as given by github-taskgraph
   - queue:route:index.xpi.xpi-manifest.cache.level-1.*
   - queue:route:index.xpi.v2.*
   - queue:route:checks
