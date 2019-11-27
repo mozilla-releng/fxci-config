@@ -581,8 +581,6 @@
   # TODO Bug 1597329 - Remove these 4 scopes once the naming scheme is applied to the workers
   # Scopes are kind of duplicated because of this project doesn't use "assume:" scopes on the
   # decision task, yet.
-  - queue:create-task:scriptworker-k8s/appservices-3-signing
-  - queue:create-task:scriptworker-k8s/appservices-3-beetmover
   - queue:create-task:highest:scriptworker-k8s/appservices-3-signing
   - queue:create-task:highest:scriptworker-k8s/appservices-3-beetmover
   # TODO Make these 2 scopes compliant with the `beetmover-maven-phase` feature.
