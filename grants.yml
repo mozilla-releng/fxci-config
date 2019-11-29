@@ -1859,6 +1859,7 @@
 # - trigger the bot hook
 - grant:
   - notify:email:*
+  - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
   to:
   - roles:
     - project:relman:code-review/runtime/testing
