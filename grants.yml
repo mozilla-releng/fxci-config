@@ -286,6 +286,7 @@
   - project:releng:bouncer:server:staging-nazgul
   - project:releng:ship-it:action:mark-as-shipped
   - project:releng:ship-it:action:mark-as-started
+  - project:releng:ship-it:action:create-new-release
   - project:releng:snapcraft:firefox:mock
   - project:releng:treescript:action:*
   - project:releng:treescript:action:tagging
@@ -410,6 +411,7 @@
   - project:releng:googleplay:release
   - project:releng:ship-it:action:mark-as-shipped
   - project:releng:ship-it:action:mark-as-started
+  - project:releng:ship-it:action:create-new-release
   - project:releng:ship-it:server:production
   - project:releng:ship-it:server:staging
   - project:releng:signing:cert:nightly-signing
