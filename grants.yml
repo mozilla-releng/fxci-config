@@ -1854,6 +1854,7 @@
 # The Heroku apps can:
 # - read their configuration in secrets
 # - send report emails to admins
+# - trigger the bot hook
 - grant:
   - notify:email:*
   to:
@@ -1862,11 +1863,13 @@
     - project:relman:code-review/runtime/production
 - grant:
   - secrets:get:project/relman/code-review/runtime-testing
+  - hooks:trigger-hook:project-relman/code-review-testing
   to:
   - roles:
     - project:relman:code-review/runtime/testing
 - grant:
   - secrets:get:project/relman/code-review/runtime-production
+  - hooks:trigger-hook:project-relman/code-review-production
   to:
   - roles:
     - project:relman:code-review/runtime/production
