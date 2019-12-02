@@ -136,6 +136,7 @@ mozilla-beta:
   cron_targets:
     - ship-geckoview
     - l10n-bumper
+    - daily-releases
 comm-beta:
   repo: https://hg.mozilla.org/releases/comm-beta
   repo_type: hg
