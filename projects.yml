@@ -332,6 +332,18 @@ stylo-try:
   trust_domain: gecko
   is_try: true
   features: {}
+holly:
+  repo: https://hg.mozilla.org/projects/holly
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    gecko-actions: true
+    gecko-cron: false
+    gecko-roles: true
+    hg-push: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
 
 # non-gecko repositories
 
