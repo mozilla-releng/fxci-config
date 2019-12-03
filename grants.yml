@@ -1064,8 +1064,9 @@
   to:
   - project:
       # Fenix PRs are now restricted to collaborators, so exposing firebase is safe-enough
+      # Fenix also has a new Firebase test only on nightly.
       alias: fenix
-      job: ["pull-request"]
+      job: ["pull-request", "cron:nightly"]
 
 
 # android-components specific scopes
