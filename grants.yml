@@ -1025,11 +1025,19 @@
 
 - grant:
   - project:mobile:{alias}:releng:signing:cert:release-signing
+  to:
+  - project:
+      feature: mobile-sign-phase
+      level: 3
+      job: ["release", "cron:nightly"]
+
+- grant:
   - queue:route:index.project.mobile.{alias}.v2.nightly.*
   to:
   - project:
       feature: mobile-sign-phase
-      job: ["release", "cron:nightly"]
+      level: 3
+      job: ["cron:nightly"]
 
 - grant:
   - project:mobile:{alias}:releng:signing:cert:release-signing
@@ -1122,38 +1130,43 @@
       job: ["branch:*", "pull-request"]
 
 - grant:
-  - project:mobile:fenix:releng:signing:cert:*
-  - queue:route:index.project.mobile.fenix.v2.*
+  - project:mobile:fenix:releng:signing:cert:beta-signing
+  - project:mobile:fenix:releng:signing:cert:production-signing
+
+  - queue:route:index.project.mobile.fenix.v2.beta.*
+  - queue:route:index.project.mobile.fenix.v2.production.*
+
   - secrets:get:project/mobile/fenix/beta
   - secrets:get:project/mobile/fenix/production
+
   - secrets:get:project/mobile/fenix/nimbledroid
   to:
   - project:
       alias: fenix
       job: ["release"]
 
-# TODO: at some point we should move out the beta related scopes from the nightly hook
 - grant:
-  # FIXME: to be removed later on as it's a duplicate with `product:fenix` counterpart
-  - project:mobile:fenix:releng:googleplay:product:fenix:nightly
-  # FIXME: to be removed later on as it's a duplicate with `cert:release-signing` counterpart
   - project:mobile:fenix:releng:signing:cert:nightly-signing
-  - queue:route:index.project.mobile.fenix.v2.beta.*
+  # XXX Bug 1600104 - Fennec Nightly users will be moved to a Fenix build
+  # and then it will be discontinued.
+  - project:mobile:fenix:releng:signing:cert:fennec-nightly-signing
+
+  - queue:route:index.project.mobile.fenix.v2.nightly.*
+  - queue:route:index.project.mobile.fenix.v2.fennec-nightly.*
+
   - secrets:get:project/mobile/fenix/nightly
-  # FIXME: remove "nightlyLegacy" scope when this issue is fixed: https://github.com/mozilla-mobile/fenix/issues/4873
-  - secrets:get:project/mobile/fenix/nightlyLegacy
-  # FIXME: remove nightly-legacy scope when the "nightly" track of "org.mozilla.fenix" is discontinued
-  - secrets:get:project/mobile/fenix/nightly-legacy
-  - secrets:get:project/mobile/fenix/fennec-production
+  - secrets:get:project/mobile/fenix/fennec-nightly
   - secrets:get:project/mobile/fenix/nimbledroid
   - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
 
-  # FIXME: For legacy reasons, Fenix Nightly is being deployed to the Fenix Production app, and requires Production scopes
-  - project:mobile:fenix:releng:signing:cert:production-signing
-
-  # XXX We want Fenix to replace Fennec release at some point
+  # TODO Move the `fennec-beta` and `fennec-production` scope to the release section once
+  # data migration testing is done.
+  # XXX `fennec-production-signing` handles beta signing too.
   - project:mobile:fenix:releng:signing:cert:fennec-production-signing
+  - queue:route:index.project.mobile.fenix.v2.fennec-beta.*
   - queue:route:index.project.mobile.fenix.v2.fennec-production.*
+  - secrets:get:project/mobile/fenix/fennec-beta
+  - secrets:get:project/mobile/fenix/fennec-production
   to:
   - project:
       alias: fenix
