@@ -647,8 +647,8 @@ xpi-manifest:
     taskgraph-actions: true
     taskgraph-cron: true
 
-aki-xpi-manifest:
-  repo: https://github.com/escapewindow/xpi-manifest
+test-xpi-manifest:
+  repo: https://github.com/escapewindow/test-xpi-manifest
   repo_type: git
   trust_domain: xpi
   level: 1
