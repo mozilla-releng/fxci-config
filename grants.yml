@@ -1417,6 +1417,7 @@
   # different priorities and levels
   - queue:route:index.xpi.xpi-manifest.cache.level-1.*
   - queue:route:index.xpi.v2.*
+  - queue:route:index.xpi.cache.level-1.*
   - queue:route:checks
   - queue:route:notify.email.*
   - queue:create-task:low:built-in/*
