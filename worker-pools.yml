@@ -137,7 +137,6 @@ gecko-1/b-linux-gcp:
           onHostMaintenance: terminate
           automaticRestart: false
           preemptible: true
-    },
 gecko-3/b-linux-gcp:
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
