@@ -678,6 +678,7 @@
   to:
   - project:
       alias: application-services
+      level: 3
       job: ["release"]
 
 # - scriptworker specific roles
@@ -1053,6 +1054,7 @@
   to:
   - project:
       alias: android-components
+      level: 3
       job: ["release", "cron:snapshot"]
 
 - grant:
