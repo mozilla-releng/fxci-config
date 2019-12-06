@@ -661,7 +661,7 @@
       job: ["pull-request", "branch:master", "release"]
 
 - grant:
-  - project:mozilla:{alias}:releng:signing:cert:release-signing
+  - project:mozilla:application-services:releng:signing:cert:release-signing
   - secrets:get:project/application-services/gradle-plugin-publish
   - secrets:get:project/application-services/publish
   - secrets:get:project/application-services/symbols-token
@@ -980,10 +980,10 @@
   - queue:create-task:highest:mobile-{level}/*
   - queue:create-task:highest:mobile-t/*
   - queue:create-task:{priority}:built-in/*
-  - queue:route:index.project.mobile.{alias}.cache.level-{level}.*
+  - queue:route:index.project.mobile.{trust_project}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
-  - project:mobile:{alias}:releng:signing:cert:dep-signing
-  - project:mobile:{alias}:releng:signing:format:*
+  - project:mobile:{trust_project}:releng:signing:cert:dep-signing
+  - project:mobile:{trust_project}:releng:signing:format:*
   to:
   - project:
       feature: mobile-roles
@@ -1040,14 +1040,14 @@
       job: ["cron:nightly"]
 
 - grant:
-  - project:mobile:{alias}:releng:signing:cert:release-signing
+  - project:mobile:{trust_project}:releng:signing:cert:release-signing
   to:
   - project:
       alias: android-components
       job: ["release", "cron:snapshot"]
 
 - grant:
-  - project:mobile:{alias}:releng:googleplay:product:{alias}
+  - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}
   to:
   - project:
       feature: mobile-pushapk-phase
@@ -1055,7 +1055,7 @@
       job: ["release", "cron:nightly"]
 
 - grant:
-  - project:mobile:{alias}:releng:googleplay:product:{alias}:dep
+  - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}:dep
   to:
   - project:
       feature: mobile-pushapk-phase
@@ -1063,7 +1063,7 @@
       job: ["release", "cron:nightly"]
 
 - grant:
-  - secrets:get:project/mobile/{alias}/firebase
+  - secrets:get:project/mobile/{trust_project}/firebase
   to:
   - project:
       feature: mobile-firebase-testing
@@ -1095,7 +1095,7 @@
       job: ["branch:*"]
 
 - grant:
-  - project:mobile:{alias}:releng:signing:cert:dep-signing
+  - project:mobile:{trust_project}:releng:signing:cert:dep-signing
   - queue:create-task:highest:proj-autophone/gecko-t-ap-perf-g5
   - queue:create-task:highest:proj-autophone/gecko-t-ap-perf-p2
   - queue:create-task:highest:proj-autophone/gecko-t-bitbar-gw-perf-g5

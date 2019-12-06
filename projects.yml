@@ -438,6 +438,7 @@ version-control-tools:
 android-components:
   repo: https://github.com/mozilla-mobile/android-components
   trust_domain: mobile
+  trust_project: android-components
   repo_type: git
   level: 3
   features:
@@ -454,6 +455,7 @@ android-components:
 reference-browser:
   repo: https://github.com/mozilla-mobile/reference-browser
   trust_domain: mobile
+  trust_project: reference-browser
   repo_type: git
   level: 3
   features:
@@ -471,6 +473,7 @@ reference-browser:
 fenix:
   repo: https://github.com/mozilla-mobile/fenix
   trust_domain: mobile
+  trust_project: fenix
   repo_type: git
   level: 3
   features:
@@ -488,6 +491,7 @@ fenix:
 focus:
   repo: https://github.com/mozilla-mobile/focus-android
   trust_domain: mobile
+  trust_project: focus
   repo_type: git
   level: 3
   features:
@@ -499,6 +503,7 @@ focus:
 firefox-tv:
   repo: https://github.com/mozilla-mobile/firefox-tv
   trust_domain: mobile
+  trust_project: firefox-tv
   repo_type: git
   level: 3
   features:
@@ -515,7 +520,8 @@ application-services:
   level: 3
   trust_domain: application-services
   features:
-    beetmover-maven-phase: true
+    # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
+    # across projects.
     github-taskgraph: true
     scriptworker: true
 
