@@ -135,6 +135,9 @@ gecko-1/b-linux-gcp:
               - type: ONE_TO_ONE_NAT
         scheduling:
           onHostMaintenance: terminate
+          automaticRestart: false
+          preemptible: true
+    },
 gecko-3/b-linux-gcp:
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
@@ -166,6 +169,8 @@ gecko-3/b-linux-gcp:
               - type: ONE_TO_ONE_NAT
         scheduling:
           onHostMaintenance: terminate
+          automaticRestart: false
+          preemptible: true
 comm-1/b-linux:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -2618,6 +2623,8 @@ gecko-1/win2012-gamma:
             subnetwork: projects/fx-workers-tier1-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
+          automaticRestart: false
+          preemptible: true
         workerConfig:
           genericWorker:
             config:
@@ -3407,6 +3414,8 @@ gecko-1/win2019-gamma:
             subnetwork: projects/fx-workers-tier1-prod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
+          automaticRestart: false
+          preemptible: true
         workerConfig:
           genericWorker:
             config:
@@ -5096,6 +5105,8 @@ sandbox-1/win2012-gamma:
             subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
+          automaticRestart: false
+          preemptible: true
         workerConfig:
           genericWorker:
             config:
@@ -6785,6 +6796,8 @@ sandbox-1/win2016-gamma:
             subnetwork: projects/fx-workers-tier1-nonprod/regions/asia-east1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
+          automaticRestart: false
+          preemptible: true
         workerConfig:
           genericWorker:
             config:
@@ -8475,6 +8488,8 @@ gecko-3/win2012-gamma:
             subnetwork: projects/fx-workers-tier3-prod/regions/us-central1/subnetworks/default
         scheduling:
           onHostMaintenance: terminate
+          automaticRestart: false
+          preemptible: true
         workerConfig:
           genericWorker:
             config:
