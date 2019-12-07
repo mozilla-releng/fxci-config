@@ -133,10 +133,6 @@ gecko-1/b-linux-gcp:
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-          automaticRestart: false
-          preemptible: true
 gecko-3/b-linux-gcp:
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
@@ -166,10 +162,6 @@ gecko-3/b-linux-gcp:
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
-        scheduling:
-          onHostMaintenance: terminate
-          automaticRestart: false
-          preemptible: true
 comm-1/b-linux:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
