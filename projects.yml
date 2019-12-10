@@ -68,8 +68,8 @@ mozilla-release:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
-  cron_targets:
-    - ship-geckoview
+  cron:
+    targets: [ship-geckoview]
 mozilla-esr68:
   repo: https://hg.mozilla.org/releases/mozilla-esr68
   repo_type: hg
@@ -82,9 +82,8 @@ mozilla-esr68:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
-  cron_targets:
-    - nightly-android
-    - l10n-bumper
+  cron:
+    targets: [nightly-android, l10n-bumper]
 comm-esr68:
   repo: https://hg.mozilla.org/releases/comm-esr68
   repo_type: hg
@@ -133,10 +132,11 @@ mozilla-beta:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
-  cron_targets:
-    - ship-geckoview
-    - l10n-bumper
-    - daily-releases
+  cron:
+    targets:
+      - ship-geckoview
+      - l10n-bumper
+      - daily-releases
 comm-beta:
   repo: https://hg.mozilla.org/releases/comm-beta
   repo_type: hg
@@ -176,14 +176,15 @@ mozilla-central:
     is-trunk: true
     treeherder-reporting: true
     trust-domain-scopes: true
-  cron_targets:
-    - nightly-desktop
-    - nightly-desktop-osx
-    - nightly-desktop-win32
-    - nightly-desktop-win64
-    - nightly-desktop-win64-aarch64
-    - ship-geckoview
-    - l10n-bumper
+  cron:
+    targets:
+      - nightly-desktop
+      - nightly-desktop-osx
+      - nightly-desktop-win32
+      - nightly-desktop-win64
+      - nightly-desktop-win64-aarch64
+      - ship-geckoview
+      - l10n-bumper
 comm-central:
   repo: https://hg.mozilla.org/comm-central
   repo_type: hg
@@ -198,8 +199,8 @@ comm-central:
     is-trunk: true
     treeherder-reporting: true
     trust-domain-scopes: true
-  cron_targets:
-    - nightly-desktop
+  cron:
+    targets: [nightly-desktop]
 cedar:
   repo: https://hg.mozilla.org/projects/cedar
   repo_type: hg
@@ -224,8 +225,8 @@ birch:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
-  cron_targets:
-    - nightly-desktop
+  cron:
+    targets: [nightly-desktop]
 cypress:
   repo: https://hg.mozilla.org/projects/cypress
   repo_type: hg
@@ -345,6 +346,7 @@ holly:
     treeherder-reporting: true
     trust-domain-scopes: true
 
+
 # non-gecko repositories
 
 nss:
@@ -452,7 +454,8 @@ android-components:
     scriptworker: true
     taskgraph-cron: true
     treeherder-reporting: true
-  cron_targets: [snapshot]
+  cron:
+    targets: [snapshot]
 
 reference-browser:
   repo: https://github.com/mozilla-mobile/reference-browser
@@ -470,7 +473,8 @@ reference-browser:
     scriptworker: true
     taskgraph-cron: true
     treeherder-reporting: true
-  cron_targets: [nightly, raptor]
+  cron:
+    targets: [nightly, raptor]
 
 fenix:
   repo: https://github.com/mozilla-mobile/fenix
@@ -489,7 +493,8 @@ fenix:
     scriptworker: true
     taskgraph-cron: true
     treeherder-reporting: true
-  cron_targets: [nightly, raptor]
+  cron:
+    targets: [nightly, raptor]
 
 focus:
   repo: https://github.com/mozilla-mobile/focus-android
@@ -611,21 +616,22 @@ android-l10n-tooling:
   features:
     github-taskgraph: true
     taskgraph-cron: true
-  cron_targets:
-  - target: update-l10n
-    bindings:
-      - exchange: exchange/taskcluster-github/v1/push
-        routing_key_pattern: primary.mozilla-mobile.fenix
-      - exchange: exchange/taskcluster-github/v1/push
-        routing_key_pattern: primary.mozilla-mobile.android-components
-      - exchange: exchange/taskcluster-github/v1/push
-        routing_key_pattern: primary.mozilla-mobile.firefox-tv
-      - exchange: exchange/taskcluster-github/v1/push
-        routing_key_pattern: primary.mozilla-lockwise.lockwise-android
-      - exchange: exchange/taskcluster-github/v1/push
-        routing_key_pattern: primary.MozillaReality.FirefoxReality
-  - target: update-projects
-    bindings: []
+  cron:
+    targets:
+      - target: update-l10n
+        bindings:
+          - exchange: exchange/taskcluster-github/v1/push
+            routing_key_pattern: primary.mozilla-mobile.fenix
+          - exchange: exchange/taskcluster-github/v1/push
+            routing_key_pattern: primary.mozilla-mobile.android-components
+          - exchange: exchange/taskcluster-github/v1/push
+            routing_key_pattern: primary.mozilla-mobile.firefox-tv
+          - exchange: exchange/taskcluster-github/v1/push
+            routing_key_pattern: primary.mozilla-lockwise.lockwise-android
+          - exchange: exchange/taskcluster-github/v1/push
+            routing_key_pattern: primary.MozillaReality.FirefoxReality
+      - target: update-projects
+        bindings: []
 
 elmo-taskcluster:
   repo: https://github.com/mozilla-services/elmo-taskcluster

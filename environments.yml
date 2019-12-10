@@ -99,6 +99,25 @@ firefoxci:
         zones:
             by-region:
                 us-central1: ['us-central1-a', 'us-central1-b','us-central1-c','us-central1-f']
+    cron:
+      gecko:
+        hooks_owner: release+tc-hooks@mozilla.com
+        notify_emails:
+          - to_address: ciduty+failedcron@mozilla.com
+            on_event: on-failed
+          - to_address: ciduty+exceptioncron@mozilla.com
+            on_event: on-exception
+          - to_address: sheriffs+failedcron@mozilla.org
+            on_event: on-failed
+          - to_address: sheriffs+exceptioncron@mozilla.org
+            on_event: on-exception
+      taskgraph:
+        hooks_owner: release+tc-hooks@mozilla.com
+        notify_emails:
+          - to_address: release+failedcron@mozilla.com
+            on_event: on-failed
+          - to_address: release+exceptioncron@mozilla.com
+            on_event: on-exception
 
 staging:
     root_url: https://stage.taskcluster.nonprod.cloudops.mozgcp.net
