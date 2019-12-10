@@ -995,7 +995,16 @@
   to:
   - project:
       feature: mobile-roles
+      level: 3
       job: ["branch:master"]
+
+- grant:
+  # These tokens are considered public because they're available to Pull Requests. We need them
+  # there because we want coverage reports.
+  - secrets:get:project/mobile/{trust_project}/public-tokens
+  to:
+  - project:
+      feature: mobile-public-code-coverage
 
 - grant:
   - project:{trust_domain}:{alias}:releng:beetmover:action:push-to-maven
@@ -1080,13 +1089,6 @@
 
 
 # android-components specific scopes
-- grant:
-  - secrets:get:project/mobile/android-components/public-tokens
-  to:
-  - project:
-      alias: android-components
-      job: ["pull-request", "branch:*"]
-
 - grant:
   - secrets:get:project/mobile/android-components/firebase
   to:

@@ -32,6 +32,7 @@
 #   - `beetmover-maven-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `beetmover-maven-snapshot-phase` -- this https://github.com/mozilla-mobile repository should have beetmover snapshot production related scopes associated
 #   - `mobile-firebase-testing` -- this https://github.com/mozilla-mobile repository has end-to-end testing involving devices hosted at Google's Firebase
+#   - `mobile-public-code-coverage` -- this https://github.com/mozilla-mobile repository has code coverage enabled on PRs
 #   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
 #   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
 #   - `github-taskgraph` -- this https://github.com/mozilla-mobile repository has started using taskgraph
@@ -447,6 +448,7 @@ android-components:
     github-taskgraph: true
     mobile-roles: true
     mobile-firebase-testing: true
+    mobile-public-code-coverage: true
     scriptworker: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -481,6 +483,7 @@ fenix:
     github-taskgraph: true
     mobile-roles: true
     mobile-firebase-testing: true
+    mobile-public-code-coverage: true
     mobile-pushapk-phase: true
     mobile-sign-phase: true
     scriptworker: true
