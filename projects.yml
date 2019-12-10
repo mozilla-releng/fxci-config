@@ -496,6 +496,29 @@ fenix:
   cron:
     targets: [nightly, raptor]
 
+fenix-jlorenzo:
+  repo: https://github.com/JohanLorenzo/fenix
+  trust_domain: mobile
+  trust_project: fenix
+  repo_type: git
+  level: 1
+  features:
+    autophone: true
+    github-taskgraph: true
+    mobile-roles: true
+    mobile-firebase-testing: true
+    mobile-public-code-coverage: true
+    mobile-pushapk-phase: true
+    mobile-sign-phase: true
+    scriptworker: true
+    taskgraph-cron: true
+    taskgraph-actions: true
+  cron:
+    targets: [nightly, raptor]
+    hooks_owner: jlorenzo+tc@mozilla.com
+    notify_emails: []
+
+
 focus:
   repo: https://github.com/mozilla-mobile/focus-android
   trust_domain: mobile

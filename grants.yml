@@ -1123,6 +1123,7 @@
   to:
   - project:
       feature: autophone
+      level: 3
       job: ["branch:master", "cron:raptor"]
 
 # fenix specific scopes
