@@ -151,3 +151,7 @@
 - trust_domain: xpi
   level: 3
   action_perm: release-promotion
+
+- trust_domain: mobile
+  level: 1
+  action_perm: release-promotion
