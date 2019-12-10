@@ -1051,14 +1051,16 @@
   to:
   - project:
       feature: mobile-pushapk-phase
+      level: 3
       job: ["release", "cron:nightly"]
 
 - grant:
   - project:mobile:{alias}:releng:googleplay:product:{alias}:dep
   to:
   - project:
-      feature: mobile-pushapk-stage-phase
-      job: ["cron:nightly-staging"]
+      feature: mobile-pushapk-phase
+      level: 1
+      job: ["release", "cron:nightly"]
 
 - grant:
   - secrets:get:project/mobile/{alias}/firebase
@@ -1173,14 +1175,6 @@
       job: ["cron:nightly"]
 
 - grant:
-  - queue:route:index.project.mobile.fenix.v2.staging.*
-  - secrets:get:garbage/staging/project/mobile/fenix
-  to:
-  - project:
-      alias: fenix
-      job: ["cron:nightly-staging"]
-
-- grant:
   - queue:route:checks
   - queue:scheduler-id:{trust_domain}-level-{level}
   # allow using worker caches appropriate to this trust domain and level
@@ -1217,15 +1211,6 @@
   - project:
       alias: reference-browser
       job: ["cron:nightly"]
-
-- grant:
-  - secrets:get:garbage/staging/project/mobile/reference-browser/nimbledroid
-  - secrets:get:garbage/staging/project/mobile/reference-browser/sentry
-  - secrets:get:project/mobile/reference-browser/nimbledroid
-  to:
-  - project:
-      alias: reference-browser
-      job: ["cron:nightly-staging"]
 
 # focus (android) scopes
 - grant:
