@@ -1402,6 +1402,7 @@
   - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
   - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-t-*
   - queue:route:index.{trust_domain}.v2.xpi-manifest.*
+  - queue:route:index.xpi.cache.level-{level}.*
   to:
   - project:
       alias:
