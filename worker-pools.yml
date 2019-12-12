@@ -2332,13 +2332,13 @@ gecko-t/t-linux-metal:
   provider_id: aws
   config:
     regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-current
+    image: monopacker-docker-2019-12-10t15-38-04z
     minCapacity: 0
-    maxCapacity: 0
+    maxCapacity: 20
     spot: true
     instance_types:
-    - instanceType: c5.metal
-      capacityPerInstance: 4
+    - instanceType: c5d.metal
+      capacityPerInstance: 28
 pmoore-test/gwci-linux:
   description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/gwci-linux but for GCP'
   owner: pmoore@mozilla.com

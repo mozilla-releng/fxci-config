@@ -90,6 +90,17 @@ monopacker-docker-2019-11-18t20-32-23z:
     projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-11-18t20-32-23z
   fxci-levelt-gcp:
     projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-11-18t20-32-23z
+monopacker-docker-2019-12-10t15-38-04z:
+  aws:
+    us-east-1: ami-0fb60ab9eb4c5f9f4
+    us-west-1: ami-0425dbf84c2882e6c
+    us-west-2: ami-052c80194ddeefc3c
+  fxci-level1-gcp:
+    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-12-10t15-38-04z
+  fxci-level3-gcp:
+    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-12-10t15-38-04z
+  fxci-levelt-gcp:
+    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-12-10t15-38-04z
 
 # generic-worker images
 gwci-linux:
