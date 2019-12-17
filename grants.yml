@@ -104,11 +104,18 @@
 # scopes for all gecko-related projects
 
 - grant:
+  # Historically, comm-* branches used the gecko scheduler
+  - queue:scheduler-id:gecko-level-{level}
+
   # coalescing routes support dropping unnecessary tasks under load
   - queue:route:coalesce.v1.{alias}.*
 
   # allow fetching secrets appropriate to this level
   - secrets:get:project/releng/{trust_domain}/build/level-{level}/*
+
+  # Historically, gecko projects used unprefixed caches
+  - docker-worker:cache:level-{level}-*
+  - generic-worker:cache:level-{level}-*
 
   # Provide access to sccache buckets
   - assume:project:taskcluster:{trust_domain}:level-{level}-sccache-buckets
