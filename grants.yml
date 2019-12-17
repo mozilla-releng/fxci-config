@@ -1612,15 +1612,6 @@
   to:
   - groups: thunderbird-releng
 
-# releng services hooks
-- grant:
-  - hooks:trigger-hook:project-releng/services-production-*
-  - hooks:trigger-hook:project-releng/services-staging-*
-  - hooks:trigger-hook:project-releng/services-testing-*
-  to:
-  - groups:
-    - vpn_releasemgt
-
 
 - grant:
   # Grant everyone with Try access the schedulerId taskcluster-ui, so they can
