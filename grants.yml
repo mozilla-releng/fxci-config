@@ -686,20 +686,6 @@
       job: ["branch:alpha", "branch:beta", "branch:master"]
 
 - grant:
-  - aws-provisioner:manage-worker-type:gecko-1-b-win2012-alpha
-  - aws-provisioner:manage-worker-type:gecko-1-b-win2016-alpha
-  - aws-provisioner:manage-worker-type:gecko-t-win10-64-alpha
-  - aws-provisioner:manage-worker-type:gecko-t-win10-64-gpu-a
-  - aws-provisioner:manage-worker-type:gecko-t-win7-32-alpha
-  - aws-provisioner:manage-worker-type:gecko-t-win7-32-gpu-a
-  to:
-  - project:
-      alias: occ
-      job: ["branch:alpha"]
-  environments:
-    - legacy
-
-- grant:
   - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:cot-gecko-1-b-win2012-alpha
   - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2012-alpha
   - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2016-alpha
@@ -719,20 +705,6 @@
       job: ["branch:alpha"]
 
 - grant:
-  - aws-provisioner:manage-worker-type:gecko-1-b-win2012-beta
-  - aws-provisioner:manage-worker-type:gecko-1-b-win2016-beta
-  - aws-provisioner:manage-worker-type:gecko-t-win10-64-beta
-  - aws-provisioner:manage-worker-type:gecko-t-win10-64-gpu-b
-  - aws-provisioner:manage-worker-type:gecko-t-win7-32-beta
-  - aws-provisioner:manage-worker-type:gecko-t-win7-32-gpu-b
-  to:
-  - project:
-      alias: occ
-      job: ["branch:beta"]
-  environments:
-    - legacy
-
-- grant:
   - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:cot-gecko-1-b-win2012-beta
   - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2012-beta
   - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2016-beta
@@ -750,23 +722,6 @@
   - project:
       alias: occ
       job: ["branch:beta"]
-
-- grant:
-  - aws-provisioner:manage-worker-type:gecko-1-b-win*
-  - aws-provisioner:manage-worker-type:gecko-2-b-win*
-  - aws-provisioner:manage-worker-type:gecko-3-b-win*
-  - aws-provisioner:manage-worker-type:gecko-t-win*
-  - aws-provisioner:manage-worker-type:mpd-1-b-win*
-  - aws-provisioner:manage-worker-type:mpd-3-b-win*
-  - aws-provisioner:manage-worker-type:mpd001-1-b-win*
-  - aws-provisioner:manage-worker-type:mpd001-3-b-win*
-  - aws-provisioner:manage-worker-type:relops*
-  to:
-  - project:
-      alias: occ
-      job: ["branch:master"]
-  environments:
-    - legacy
 
 - grant:
   - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:cot-*
