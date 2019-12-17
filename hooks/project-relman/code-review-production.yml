@@ -38,7 +38,7 @@ payload:
             $eval: payload.status.taskId
   features:
     taskclusterProxy: true
-  image: 'mozilla/code-review:6817e9273742cc7ea63ba2b8b5b07b27bf6c9d9f'
+  image: 'mozilla/code-review:df0f758e5580f0653ff18022e8dbead3b03b6118'
   maxRunTime: 7200
 priority: normal
 provisionerId: project-relman
