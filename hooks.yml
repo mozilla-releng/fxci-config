@@ -90,13 +90,9 @@ project-relman/code-review-testing:
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - hooks:trigger-hook:project-releng/services-testing-*
-    - index:insert-task:project.releng.services.project.testing.static_analysis_bot.*
-    - index:insert-task:project.releng.services.tasks.*
-    - index:insert-task:project.relman.tasks.*
     - index:insert-task:project.relman.testing.code-review.*
     - notify:email:*
     - queue:create-task:lowest:project-relman/relman-svc
-    - queue:route:index.project.releng.services.project.testing.static_analysis_bot.*
     - queue:route:index.project.relman.testing.code-review.*
     - queue:route:notify.email.*
     - queue:scheduler-id:-
@@ -117,13 +113,9 @@ project-relman/code-review-production:
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - hooks:trigger-hook:project-releng/services-production-*
-    - index:insert-task:project.releng.services.project.production.static_analysis_bot.*
-    - index:insert-task:project.releng.services.tasks.*
     - index:insert-task:project.relman.production.code-review.*
-    - index:insert-task:project.relman.tasks.*
     - notify:email:*
     - queue:create-task:highest:project-relman/relman-svc
-    - queue:route:index.project.releng.services.project.production.static_analysis_bot.*
     - queue:route:index.project.relman.production.code-review.*
     - queue:route:notify.email.*
     - queue:scheduler-id:-

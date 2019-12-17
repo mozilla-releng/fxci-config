@@ -49,7 +49,6 @@ schedulerId: '-'
 scopes:
   - 'secrets:get:project/relman/code-review/runtime-production'
   - 'index:insert-task:project.relman.production.code-review.*'
-  - 'index:insert-task:project.relman.tasks.*'
   - 'notify:email:*'
 tags: {}
 workerType: relman-svc
