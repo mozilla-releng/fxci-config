@@ -447,6 +447,8 @@
   - secrets:get:project/relman/coverity-license
   # Bug 1523321: Token for mirroring webrender to github
   - secrets:get:project/webrender-ci/wrupdater-github-token
+  # Bug 1604686: Token for gfx github sync.
+  - secrets:get:gecko/gfx-github-sync/token
   to:
   - project:
       alias: mozilla-central
@@ -1865,3 +1867,14 @@
   - roles:
     - mozilla-group:team_relops
     - mozilla-group:releng
+
+# Bug 1604686: Token for gfx github sync, ability to set and get
+- grant:
+  - secrets:get:project/webrender-ci/wrupdater-github-token
+  - secrets:set:project/webrender-ci/wrupdater-github-token
+  - secrets:get:gecko/gfx-github-sync/token
+  - secrets:set:gecko/gfx-github-sync/token
+  to:
+  - roles:
+    - mozillians-group:webrender-ci
+  
