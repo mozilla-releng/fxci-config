@@ -9,7 +9,7 @@ project-relman/code-coverage-repo-production:
     - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.production.repo.*
     - notify:email:*
-    - queue:create-task:highest:project-relman/relman-svc-memory
+    - queue:create-task:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-production
@@ -29,7 +29,7 @@ project-relman/code-coverage-repo-testing:
     - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.testing.repo.*
     - notify:email:*
-    - queue:create-task:lowest:project-relman/relman-svc-memory
+    - queue:create-task:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-testing
@@ -51,7 +51,7 @@ project-relman/code-coverage-cron-production:
     - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.production.cron.*
     - notify:email:*
-    - queue:create-task:highest:project-relman/relman-svc-memory
+    - queue:create-task:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-production
@@ -73,7 +73,7 @@ project-relman/code-coverage-cron-testing:
     - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.testing.cron.*
     - notify:email:*
-    - queue:create-task:lowest:project-relman/relman-svc-memory
+    - queue:create-task:project-relman/relman-svc-memory
     - queue:route:notify.email.*
     - queue:scheduler-id:-
     - secrets:get:project/relman/code-coverage/runtime-testing
@@ -92,7 +92,8 @@ project-relman/code-review-testing:
     - hooks:trigger-hook:project-releng/services-testing-*
     - index:insert-task:project.relman.testing.code-review.*
     - notify:email:*
-    - queue:create-task:lowest:project-relman/relman-svc
+    - queue:create-task:project-relman/relman-svc
+    - queue:route:index.project.releng.services.project.testing.static_analysis_bot.*
     - queue:route:index.project.relman.testing.code-review.*
     - queue:route:notify.email.*
     - queue:scheduler-id:-
@@ -115,7 +116,8 @@ project-relman/code-review-production:
     - hooks:trigger-hook:project-releng/services-production-*
     - index:insert-task:project.relman.production.code-review.*
     - notify:email:*
-    - queue:create-task:highest:project-relman/relman-svc
+    - queue:create-task:project-relman/relman-svc
+    - queue:route:index.project.releng.services.project.production.static_analysis_bot.*
     - queue:route:index.project.relman.production.code-review.*
     - queue:route:notify.email.*
     - queue:scheduler-id:-
@@ -138,7 +140,7 @@ project-relman/bugzilla-dashboard-backend-production:
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.production.bugzilla-dashboard.*
-    - queue:create-task:highest:project-relman/relman-svc
+    - queue:create-task:project-relman/relman-svc
     - queue:route:index.project.relman.production.bugzilla-dashboard.*
     - queue:scheduler-id:-
   template_file: hooks/project-relman/bugzilla-dashboard-backend-production.yml
@@ -156,7 +158,7 @@ project-relman/bugzilla-dashboard-backend-testing:
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.testing.bugzilla-dashboard.*
-    - queue:create-task:lowest:project-relman/relman-svc
+    - queue:create-task:project-relman/relman-svc
     - queue:route:index.project.relman.testing.bugzilla-dashboard.*
     - queue:scheduler-id:-
   template_file: hooks/project-relman/bugzilla-dashboard-backend-testing.yml
@@ -173,14 +175,14 @@ project-releng/cron-task-mozilla-mobile-android-components/api-docs-update:
   name: "Android Components - API docs Update"
   description: >-
     Hook for updating the API docs automatically.
-    
+
     Managed from ci-configuration's hooks.yml for now.
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
     - '0 0 12 * * *'
   scopes:
-    - queue:create-task:lowest:mobile-3/b-linux
+    - queue:create-task:mobile-3/b-linux
     - secrets:get:project/mobile/github
   template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/api-docs-update.yml
   trigger_schema:
@@ -193,14 +195,14 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-beta:
   name: "Android Components - GeckoView Update (Beta)"
   description: >-
     Updating GeckoView Beta dependency.
-    
+
     Managed from ci-configuration's hooks.yml for now.
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
     - '0 0 14 * * *'
   scopes:
-    - queue:create-task:lowest:mobile-3/b-linux
+    - queue:create-task:mobile-3/b-linux
     - secrets:get:project/mobile/github
   template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-beta.yml
   trigger_schema:
@@ -213,14 +215,14 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-nightly:
   name: "Android Components - GeckoView Update (Nightly)"
   description: >-
     Updating GeckoView Nightly dependency.
-    
+
     Managed from ci-configuration's hooks.yml for now.
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
     - '0 0 14 * * *'
   scopes:
-    - queue:create-task:lowest:mobile-3/b-linux
+    - queue:create-task:mobile-3/b-linux
     - secrets:get:project/mobile/github
   template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-nightly.yml
   trigger_schema:
@@ -233,14 +235,14 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-release:
   name: "Android Components - GeckoView Update (Release)"
   description: >-
     Updating GeckoView Release dependency.
-    
+
     Managed from ci-configuration's hooks.yml for now.
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
     - '0 0 14 * * *'
   scopes:
-    - queue:create-task:lowest:mobile-3/b-linux
+    - queue:create-task:mobile-3/b-linux
     - secrets:get:project/mobile/github
   template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-release.yml
   trigger_schema:
@@ -253,14 +255,14 @@ project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update:
   name: "Android Components - Public Suffix List Update"
   description: >-
     Hook for updating the Public Suffix List automatically.
-    
+
     Managed from ci-configuration's hooks.yml for now.
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
     - '0 0 14 * * *'
   scopes:
-    - queue:create-task:lowest:mobile-3/b-linux
+    - queue:create-task:mobile-3/b-linux
     - secrets:get:project/mobile/github
   template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/publicsuffixlist-update.yml
   trigger_schema:
@@ -274,7 +276,7 @@ project-releng/cron-task-mozilla-mobile-focus-android/nightly-public:
   description: >-
     Public Nightly builds of Focus/Klar. Automatically signed and uploaded to "nightly" track of Google
     Play. https://github.com/mozilla-mobile/focus-android/wiki/Release-tracks
-    
+
     Managed from ci-configuration's hooks.yml for now.
   owner: skaspari@mozilla.com
   email_on_error: true
