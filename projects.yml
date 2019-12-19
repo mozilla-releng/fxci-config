@@ -530,6 +530,7 @@ focus:
     mobile-sign-phase: true
     mobile-pushapk-phase: true
     scriptworker: true
+    taskgraph-cron: true
 
 firefox-tv:
   repo: https://github.com/mozilla-mobile/firefox-tv
@@ -555,6 +556,7 @@ application-services:
     # across projects.
     github-taskgraph: true
     scriptworker: true
+    taskgraph-cron: true
 
 # mozilla-releng Github repositories
 k8s-autoscale:

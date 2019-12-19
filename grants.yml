@@ -865,7 +865,6 @@
   to:
   - project:
       feature: mobile-roles
-      job: ["pull-request", "branch:*", "release", "cron:*"]
 
 - grant:
   - queue:route:index.project.mobile.{alias}.branch.master.*
@@ -1073,7 +1072,6 @@
   to:
   - project:
       feature: github-taskgraph
-      job: ["pull-request", "branch:*", "release", "cron:*"]
 
 - grant:
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
@@ -1877,4 +1875,3 @@
   to:
   - roles:
     - mozillians-group:webrender-ci
-  
