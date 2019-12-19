@@ -550,7 +550,7 @@ application-services:
   repo: https://github.com/mozilla/application-services/
   repo_type: git
   level: 3
-  trust_domain: application-services
+  trust_domain: app-services
   features:
     # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
     # across projects.

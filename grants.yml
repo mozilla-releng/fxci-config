@@ -574,6 +574,7 @@
 # - application-services specific roles
 - grant:
   - docker-worker:taskcluster-proxy:tooltool.download.internal
+  # This docker worker cache is still used by the old decision task
   - docker-worker:cache:application-services-*
   - project:releng:services/tooltool/api/download/internal
   - queue:route:index.project.application-services.*
@@ -582,7 +583,6 @@
   to:
   - project:
       alias: application-services
-      job: ["pull-request", "branch:master", "release"]
 
 - grant:
   - project:mozilla:application-services:releng:signing:cert:release-signing
