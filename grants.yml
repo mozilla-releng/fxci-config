@@ -867,13 +867,12 @@
       feature: mobile-roles
 
 - grant:
-  - queue:route:index.project.mobile.{alias}.branch.master.*
-  - queue:route:index.project.mobile.{alias}.v2.branch.master.*
+  - queue:route:index.project.mobile.{alias}.v2.branch.<..>.*
   to:
   - project:
       feature: mobile-roles
       level: 3
-      job: ["branch:master"]
+      job: ["branch:*"]
 
 - grant:
   # These tokens are considered public because they're available to Pull Requests. We need them
@@ -1062,6 +1061,14 @@
   - project:
       alias: fenix
       job: ["cron:nightly"]
+
+# TODO Bug 1601928: Stop using the garbage namespace once the {alias}/{project} story is defined
+- grant:
+  - queue:route:index.garbage.project.mobile.fenix.v2.branch.<..>.*
+  to:
+  - project:
+      alias: fenix-jlorenzo
+      job: ["branch:*"]
 
 - grant:
   - queue:route:checks
