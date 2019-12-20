@@ -874,6 +874,15 @@
       level: 3
       job: ["branch:*"]
 
+# Cron jobs aren't covered by the role defined above
+- grant:
+  - queue:route:index.project.mobile.{alias}.v2.branch.master.*
+  to:
+  - project:
+      feature: mobile-roles
+      level: 3
+      job: ["cron:*"]
+
 - grant:
   # These tokens are considered public because they're available to Pull Requests. We need them
   # there because we want coverage reports.
