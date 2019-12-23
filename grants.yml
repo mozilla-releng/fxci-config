@@ -1559,18 +1559,13 @@
 # tooltool.mozilla-releng.net and tokens.mozilla-releng.net scopes
 
 - grant:
-  - project:releng:services/tokens/api/usr/view/my
-  - project:releng:services/tokens/api/usr/issue
-  - project:releng:services/tokens/api/usr/revoke/my
-  - project:releng:services/tokens/api/tmp/issue
-  - project:releng:services/tooltool/api/download/public
+  - project:releng:services/tooltool/api/upload/public
   to:
   - groups:
     - active_scm_level_1
     - active_scm_level_2
     - active_scm_level_3
     - team_moco
-    - tooltooleditor
 
 - grant:
   - project:releng:services/tooltool/api/download/internal
@@ -1580,11 +1575,18 @@
     - team_moco
 
 - grant:
-  - project:releng:services/tooltool/api/upload/internal
+  - project:releng:services/tooltool/api/download/public
   - project:releng:services/tooltool/api/upload/public
   to:
   - groups:
-    - tooltooleditor
+    - tooltooleditor-public
+
+- grant:
+  - project:releng:services/tooltool/api/download/internal
+  - project:releng:services/tooltool/api/upload/internal
+  to:
+  - groups:
+    - tooltooleditor-public
 
 - grant:
   - secrets:get:project/comm/*
@@ -1823,6 +1825,16 @@
   to:
   - roles:
     - mozilla-group:sheriff
+- grant:
+  - assume:project:releng:ci-group:tooltooleditor-public
+  to:
+  - roles:
+    - mozilla-group:tooltooleditor-public
+- grant:
+  - assume:project:releng:ci-group:tooltooleditor-internal
+  to:
+  - roles:
+    - mozilla-group:tooltooleditor-internal
 - grant:
   - assume:project:releng:ci-group:mozillaonline
   to:
