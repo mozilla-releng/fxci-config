@@ -206,6 +206,8 @@
 - grant:
   # access to OSX testers
   - queue:create-task:{priority}:releng-hardware/gecko-t-osx-*
+  # gecko misc workers (used for index tasks)
+  - queue:create-task:{priority}:gecko-t/misc
   to:
   - project:
       feature: gecko-roles
