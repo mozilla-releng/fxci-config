@@ -104,9 +104,6 @@
 # scopes for all gecko-related projects
 
 - grant:
-  # Historically, comm-* branches used the gecko scheduler
-  - queue:scheduler-id:gecko-level-{level}
-
   # coalescing routes support dropping unnecessary tasks under load
   - queue:route:coalesce.v1.{alias}.*
 
