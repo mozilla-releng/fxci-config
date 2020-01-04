@@ -22,7 +22,7 @@ metadata:
   source: https://hg.mozilla.org/ci/ci-configuration/file/tip/hooks/project-releng/cron-task-mozilla-mobile-android-components/publicsuffixlist-update.yml
 schedulerId: mobile-level-3
 routes: []
-priority: normal
+priority: lowest
 retries: 5
 scopes:
 - secrets:get:project/mobile/github

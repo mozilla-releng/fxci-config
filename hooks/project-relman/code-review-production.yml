@@ -40,12 +40,12 @@ payload:
     taskclusterProxy: true
   image: 'mozilla/code-review:e1358829ff3c5586bf7ca2f2e0bcd0fcbe632e49'
   maxRunTime: 7200
-priority: normal
+priority: lowest
 provisionerId: project-relman
 retries: 3
 routes:
   - index.project.relman.production.code-review.latest
-schedulerId: '-'
+schedulerId: relman
 scopes:
   - 'secrets:get:project/relman/code-review/runtime-production'
   - 'index:insert-task:project.relman.production.code-review.*'

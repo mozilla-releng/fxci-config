@@ -23,12 +23,12 @@ payload:
     taskclusterProxy: true
   image: 'mozilla/bugzilla-dashboard:backend-38e8a17dff6af878b2b070318a85e3f65e24c668'
   maxRunTime: 7200
-priority: normal
+priority: lowest
 provisionerId: project-relman
 retries: 3
 routes:
   - index.project.relman.testing.bugzilla-dashboard.latest
-schedulerId: '-'
+schedulerId: relman
 scopes:
   - 'index:insert-task:project.relman.testing.bugzilla-dashboard.*'
 tags: {}

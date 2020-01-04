@@ -26,7 +26,7 @@ metadata:
 schedulerId: mobile-level-3
 routes:
   - notify.email.firefox-focus@mozilla.com.on-failed
-priority: normal
+priority: lowest
 retries: 5
 scopes:
 - assume:hook-id:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public

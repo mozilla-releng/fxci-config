@@ -35,9 +35,9 @@ payload:
     taskclusterProxy: true
   image: mozilla/code-coverage:bot-906b21ce862f058bbf4e95ec05330b65446a252e
   maxRunTime: 14400
-priority: normal
+priority: lowest
 retries: 5
-schedulerId: "-"
+schedulerId: relman
 scopes:
 - secrets:get:project/relman/code-coverage/runtime-testing
 - docker-worker:cache:code-coverage-bot-testing

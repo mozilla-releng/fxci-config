@@ -23,12 +23,12 @@ payload:
     taskclusterProxy: true
   image: 'babadie/bugzilla-dashboard-backend:da7ef0cb0b5200c7bfea384b23e6bed2d0b815ca'
   maxRunTime: 7200
-priority: normal
+priority: lowest
 provisionerId: project-relman
 retries: 3
 routes:
   - index.project.relman.production.bugzilla-dashboard.latest
-schedulerId: '-'
+schedulerId: relman
 scopes:
   - 'index:insert-task:project.relman.production.bugzilla-dashboard.*'
 tags: {}
