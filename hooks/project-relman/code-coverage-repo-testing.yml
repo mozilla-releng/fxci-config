@@ -37,7 +37,7 @@ $merge:
       $eval: payload
     features:
       taskclusterProxy: true
-    image: mozilla/code-coverage:bot-f9f50b9a2a9d59616b14a4a1a9771b0f5f42181c
+    image: mozilla/code-coverage:bot-f56f3cf95fba14de3312ae4e267fddd6bdadb387
     maxRunTime: 14400
   priority: normal
   retries: 5
