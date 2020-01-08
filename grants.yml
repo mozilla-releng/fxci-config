@@ -1752,7 +1752,7 @@
   - secrets:set:project/relman/coverity-nss
   to:
   - roles:
-    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bpostelnicu
+    - mozillians-group:code-review-developers
 
 # Bug 1534463: allow `vpn_hg_admin` group to access Mercurial related secrets
 - grant:
