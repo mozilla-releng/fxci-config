@@ -519,7 +519,7 @@ fenix-jlorenzo:
     notify_emails: []
 
 
-focus:
+focus-android:
   repo: https://github.com/mozilla-mobile/focus-android
   trust_domain: mobile
   trust_project: focus

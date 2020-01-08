@@ -869,7 +869,7 @@
       feature: mobile-roles
 
 - grant:
-  - queue:route:index.project.mobile.{alias}.v2.branch.<..>.*
+  - queue:route:index.project.mobile.{trust_project}.v2.branch.<..>.*
   to:
   - project:
       feature: mobile-roles
@@ -878,7 +878,7 @@
 
 # Cron jobs aren't covered by the role defined above
 - grant:
-  - queue:route:index.project.mobile.{alias}.v2.branch.master.*
+  - queue:route:index.project.mobile.{trust_project}.v2.branch.master.*
   to:
   - project:
       feature: mobile-roles
@@ -920,7 +920,7 @@
       job: ["cron:snapshot"]
 
 - grant:
-  - project:mobile:{alias}:releng:signing:cert:release-signing
+  - project:mobile:{trust_project}:releng:signing:cert:release-signing
   to:
   - project:
       feature: mobile-sign-phase
@@ -928,7 +928,7 @@
       job: ["release", "cron:nightly"]
 
 - grant:
-  - queue:route:index.project.mobile.{alias}.v2.nightly.*
+  - queue:route:index.project.mobile.{trust_project}.v2.nightly.*
   to:
   - project:
       feature: mobile-sign-phase
@@ -1125,7 +1125,7 @@
   - queue:route:statuses
   to:
   - project:
-      alias: focus
+      alias: focus-android
       job: ["branch:*", "cron:*", "pull-request", "release"]
 
 - grant:
@@ -1134,21 +1134,21 @@
     - secrets:get:project/focus/nimbledroid
   to:
   - project:
-      alias: focus
+      alias: focus-android
       job: ["branch:*"]
 
 - grant:
     - secrets:get:project/focus/tokens
   to:
   - project:
-      alias: focus
+      alias: focus-android
       job: ["release", "cron:nightly"]
 
 - grant:
     - queue:route:index.project.mobile.focus.release.latest
   to:
   - project:
-      alias: focus
+      alias: focus-android
       job: ["release"]
 
 - grant:
@@ -1156,7 +1156,7 @@
     - queue:route:notify.email.firefox-focus@mozilla.com.on-failed
   to:
   - project:
-      alias: focus
+      alias: focus-android
       job: ["cron:nightly"]
 
 # firefox-tv specific scopes
