@@ -1561,7 +1561,7 @@
 # tooltool.mozilla-releng.net and tokens.mozilla-releng.net scopes
 
 - grant:
-  - project:releng:services/tooltool/api/upload/public
+  - project:releng:services/tooltool/api/download/public
   to:
   - groups:
     - active_scm_level_1
