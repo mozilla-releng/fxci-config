@@ -1038,6 +1038,8 @@
   - secrets:get:project/mobile/fenix/production
 
   - secrets:get:project/mobile/fenix/nimbledroid
+
+  - project:releng:ship-it:action:mark-as-shipped
   to:
   - project:
       alias: fenix
