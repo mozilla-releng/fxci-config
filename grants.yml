@@ -111,10 +111,6 @@
   # allow fetching secrets appropriate to this level
   - secrets:get:project/releng/{trust_domain}/build/level-{level}/*
 
-  # Historically, gecko projects used unprefixed caches
-  - docker-worker:cache:level-{level}-*
-  - generic-worker:cache:level-{level}-*
-
   # Provide access to sccache buckets
   - assume:project:taskcluster:{trust_domain}:level-{level}-sccache-buckets
   - auth:gcp:access-token:sccache-3/tc-l{level}*
