@@ -1724,6 +1724,7 @@
   - hooks:trigger-hook:project-relman/code-coverage-repo-production
   - secrets:get:project/relman/code-coverage/*
   - secrets:set:project/relman/code-coverage/*
+  - queue:create-task:lowest:code-coverage/bot
   to:
   - roles:
     - mozillians-group:code-coverage-developers
@@ -1792,6 +1793,7 @@
 - grant:
   - secrets:get:project/relman/code-review/*
   - secrets:set:project/relman/code-review/*
+  - queue:create-task:lowest:code-review/bot
   to:
   - roles:
     - mozillians-group:code-review-developers
