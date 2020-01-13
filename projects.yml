@@ -83,7 +83,10 @@ mozilla-esr68:
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
-    targets: [nightly-android, l10n-bumper]
+    targets:
+      - nightly-android
+      - l10n-bumper
+      - daily-releases
 comm-esr68:
   repo: https://hg.mozilla.org/releases/comm-esr68
   repo_type: hg
