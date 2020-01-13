@@ -923,6 +923,10 @@
       feature: mobile-sign-phase
       level: 3
       job: ["release", "cron:nightly"]
+  - project:
+      feature: ["mobile-sign-phase", "taskgraph-actions"]
+      level: 3
+      job: ["action:release-promotion"]
 
 - grant:
   - queue:route:index.project.mobile.{trust_project}.v2.nightly.*
@@ -947,6 +951,10 @@
       feature: mobile-pushapk-phase
       level: 3
       job: ["release", "cron:nightly"]
+  - project:
+      feature: ["mobile-pushapk-phase", "taskgraph-actions"]
+      level: 3
+      job: ["action:release-promotion"]
 
 - grant:
   - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}:dep
@@ -955,6 +963,10 @@
       feature: mobile-pushapk-phase
       level: 1
       job: ["release", "cron:nightly"]
+  - project:
+      feature: ["mobile-pushapk-phase", "taskgraph-actions"]
+      level: 1
+      job: ["action:release-promotion"]
 
 - grant:
   - secrets:get:project/mobile/{trust_project}/firebase
@@ -1081,6 +1093,13 @@
       job: ["branch:*"]
 
 - grant:
+  - project:releng:ship-it:action:mark-as-shipped
+  to:
+  - project:
+      alias: fenix-jlorenzo
+      job: ["release", "action:release-promotion"]
+
+- grant:
   - queue:route:checks
   - queue:scheduler-id:{trust_domain}-level-{level}
   # allow using worker caches appropriate to this trust domain and level
@@ -1096,7 +1115,6 @@
   to:
   - project:
       feature: scriptworker
-      job: ["pull-request", "branch:*", "release", "cron:*"]
 
 # reference-browser specific scopes
 - grant:
