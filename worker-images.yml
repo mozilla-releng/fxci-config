@@ -9,7 +9,6 @@
 docker-worker-hvm-builder-current: docker-worker-v201912041449-hvm-builder
 docker-worker-hvm-builder-trusted-current: docker-worker-v201912041449-hvm-builder-trusted
 monopacker-docker-worker-current: monopacker-docker-2019-11-18t20-32-23z
-monopacker-docker-worker-trusted-current: monopacker-docker-worker-trusted-2020-01-10t21-13-32z
 
 occ-b-win2012-current: occ-b-win2012-pre
 occ-b-win2012-trusted-current: occ-b-win2012-trusted-pre
@@ -102,15 +101,6 @@ monopacker-docker-2019-12-10t15-38-04z:
     projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-12-10t15-38-04z
   fxci-levelt-gcp:
     projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-12-10t15-38-04z
-monopacker-docker-worker-trusted-2020-01-08t20-30-16z:
-  fxci-level3-gcp:
-    # uses old cot key, i.e. J+PAK...
-    docker-worker-gcp-l3-googlecompute-2020-01-08t20-30-16z
-monopacker-docker-worker-trusted-2020-01-10t21-13-32z:
-  fxci-level3-gcp:
-    # uses new cot key, i.e. tk/Sj...
-    docker-worker-gcp-trusted-googlecompute-2020-01-10t21-13-32z
-
 
 # generic-worker images
 gwci-linux:

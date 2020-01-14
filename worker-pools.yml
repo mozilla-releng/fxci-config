@@ -142,7 +142,7 @@ gecko-3/b-linux-gcp:
     minCapacity: 0
     maxCapacity: 50
     regions: [us-central1]
-    image: monopacker-docker-worker-trusted-current
+    image: monopacker-docker-worker-current
     instance_types:
       - capacityPerInstance: 1
         minCpuPlatform: "Intel Skylake"
