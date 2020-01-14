@@ -11,7 +11,7 @@
 #
 # A top-level `image` property in the config will be interpreted by ci-admin and
 # translated into a region[..].launchSpec.ImageId value based on worker-pools.yml.
-
+---
 worker-defaults:
     worker-config:
         by-implementation:
@@ -1759,7 +1759,7 @@ app-services-1/b-linux:
     maxCapacity: 100
     scalingRatio: 0
     instance_types:
-      # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
+    # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
     - instanceType: c5d.4xlarge
       capacity: 1
       utility: 2
@@ -1786,7 +1786,7 @@ app-services-3/b-linux:
     scalingRatio: 0
     security: trusted
     instance_types:
-      # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
+    # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
     - instanceType: c5d.4xlarge
       capacity: 1
       utility: 1
@@ -2023,7 +2023,7 @@ mpd001-1/decision:
     - us-west-1
     - us-west-2
 mpd001-3/decision:
-  description:  Worker for mpd001 Decision Tasks
+  description: Worker for mpd001 Decision Tasks
   owner: release+tc-workers@mozilla.com
   email_on_error: false
   provider_id: aws

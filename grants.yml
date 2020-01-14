@@ -66,6 +66,7 @@
 # role changes need access to the cluster's root crendentials.
 #
 # No expansions are available for user groups.
+---
 
 
 # Platform roles

@@ -1,3 +1,4 @@
+---
 created: {$fromNow: 0 seconds}
 deadline: {$fromNow: 4 hours}
 expires: {$fromNow: 1 month}
@@ -43,4 +44,3 @@ scopes:
 - docker-worker:cache:code-coverage-bot-production
 - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
 - index:insert-task:project.relman.code-coverage.production.cron.*
-

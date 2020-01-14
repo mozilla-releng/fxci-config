@@ -98,7 +98,7 @@ firefoxci:
     google_config:
         zones:
             by-region:
-                us-central1: ['us-central1-a', 'us-central1-b','us-central1-c','us-central1-f']
+                us-central1: ['us-central1-a', 'us-central1-b', 'us-central1-c', 'us-central1-f']
     cron:
       gecko:
         hooks_owner: release+tc-hooks@mozilla.com
@@ -207,4 +207,4 @@ staging:
     google_config:
         zones:
             by-region:
-                us-central1: ['us-central1-a', 'us-central1-b','us-central1-c','us-central1-f']
+                us-central1: ['us-central1-a', 'us-central1-b', 'us-central1-c', 'us-central1-f']

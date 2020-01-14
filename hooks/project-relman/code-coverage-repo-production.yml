@@ -1,3 +1,4 @@
+---
 $merge:
 - $if: "'taskGroupId' in payload"
   then:

@@ -11,6 +11,7 @@
 # The optional `input_schema` property gives the schema for the `user.input`
 # portion of the hook's triggerPayload.  If not specified, the default is to
 # allow anything in that field.
+---
 
 - trust_domain: gecko
   level: 1

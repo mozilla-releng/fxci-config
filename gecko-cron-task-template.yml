@@ -15,6 +15,7 @@
 #
 # Note that aside from the task times as noted below, the JSON-e rendering performed
 # when the hook is fired does not supply any additional information.
+---
 
 provisionerId: ${trust_domain}-${level}
 workerType: decision

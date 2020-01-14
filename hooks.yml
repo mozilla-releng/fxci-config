@@ -1,3 +1,4 @@
+---
 project-relman/code-coverage-repo-production:
   name: Code coverage hook (production)
   description: Automatically build code coverage reports
