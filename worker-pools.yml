@@ -83,7 +83,7 @@ infra/hg-push:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-gecko-1/b-linux:
+gecko-1/b-linux-aws:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -100,7 +100,7 @@ gecko-1/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-1/b-linux-gcp:
+gecko-1/b-linux:
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -129,7 +129,7 @@ gecko-1/b-linux-gcp:
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
-gecko-3/b-linux-gcp:
+gecko-3/b-linux:
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -624,7 +624,7 @@ gecko-2/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-3/b-linux:
+gecko-3/b-linux-aws:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
