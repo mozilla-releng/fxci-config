@@ -1752,14 +1752,18 @@
 - grant:
   - hooks:trigger-hook:project-relman/bugzilla-dashboard-backend-testing
   - hooks:trigger-hook:project-relman/bugzilla-dashboard-backend-production
+  - secrets:get:project/relman/bugzilla-dashboard/org
+  - secrets:set:project/relman/bugzilla-dashboard/org
   to:
   - roles:
     - mozillians-group:bugzilla-dashboard-developers
 
 # Grant access to Bugzilla dashboard's specific private artifacts such as
 # `product_component_data.json` to all Mozilla employees
+# Also grand access to the org payload as a secret
 - grant:
   - queue:get-artifact:project/relman/bugzilla-dashboard/*
+  - secrets:get:project/relman/bugzilla-dashboard/org
   to:
   - groups:
     - team_moco
