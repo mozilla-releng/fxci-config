@@ -83,7 +83,7 @@ infra/hg-push:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-gecko-1/b-linux-aws:
+gecko-1/b-linux:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -91,7 +91,7 @@ gecko-1/b-linux-aws:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
-    maxCapacity: 50
+    maxCapacity: 1000
     instance_types:
     - instanceType: c5d.4xlarge
       launchConfig:
@@ -100,14 +100,14 @@ gecko-1/b-linux-aws:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-1/b-linux:
+gecko-1/b-linux-gcp:
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
   provider_id: fxci-level1-gcp
   config:
     minCapacity: 0
-    maxCapacity: 1000
+    maxCapacity: 50
     regions: [us-central1]
     image: monopacker-docker-worker-current
     instance_types:
@@ -129,14 +129,14 @@ gecko-1/b-linux:
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
-gecko-3/b-linux:
+gecko-3/b-linux-gcp:
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
   provider_id: fxci-level3-gcp
   config:
     minCapacity: 0
-    maxCapacity: 1000
+    maxCapacity: 50
     regions: [us-central1]
     image: monopacker-docker-worker-trusted-current
     instance_types:
@@ -624,14 +624,14 @@ gecko-2/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-3/b-linux-aws:
+gecko-3/b-linux:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-trusted-current
-    maxCapacity: 50
+    maxCapacity: 1000
     security: trusted
     regions: [us-east-1, us-west-1, us-west-2]
     instance_types:
