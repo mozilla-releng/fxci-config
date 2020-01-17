@@ -150,6 +150,7 @@ project-relman/bugzilla-dashboard-backend-production:
     - queue:create-task:highest:project-relman/relman-svc
     - queue:route:index.project.relman.production.bugzilla-dashboard.*
     - queue:scheduler-id:relman
+    - secrets:get:project/relman/bugzilla-dashboard/runtime-production
   template_file: hooks/project-relman/bugzilla-dashboard-backend-production.yml
   trigger_schema:
     type: object
@@ -168,6 +169,7 @@ project-relman/bugzilla-dashboard-backend-testing:
     - queue:create-task:lowest:project-relman/relman-svc
     - queue:route:index.project.relman.testing.bugzilla-dashboard.*
     - queue:scheduler-id:relman
+    - secrets:get:project/relman/bugzilla-dashboard/runtime-testing
   template_file: hooks/project-relman/bugzilla-dashboard-backend-testing.yml
   trigger_schema:
     type: object

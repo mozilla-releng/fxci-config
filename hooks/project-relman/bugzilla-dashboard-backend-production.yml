@@ -20,6 +20,7 @@ payload:
   capabilities: {}
   env:
     BZD_OUTPUT_PATH: /output
+    TASKCLUSTER_SECRET: project/relman/bugzilla-dashboard/runtime-production
   features:
     taskclusterProxy: true
   image: 'babadie/bugzilla-dashboard-backend:da7ef0cb0b5200c7bfea384b23e6bed2d0b815ca'
@@ -32,5 +33,6 @@ routes:
 schedulerId: relman
 scopes:
   - 'index:insert-task:project.relman.production.bugzilla-dashboard.*'
+  - 'secrets:get:project/relman/bugzilla-dashboard/runtime-production'
 tags: {}
 workerType: relman-svc

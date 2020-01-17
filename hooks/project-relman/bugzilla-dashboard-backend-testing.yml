@@ -20,6 +20,7 @@ payload:
   capabilities: {}
   env:
     BZD_OUTPUT_PATH: /output
+    TASKCLUSTER_SECRET: project/relman/bugzilla-dashboard/runtime-testing
   features:
     taskclusterProxy: true
   image: 'mozilla/bugzilla-dashboard:backend-38e8a17dff6af878b2b070318a85e3f65e24c668'
@@ -32,5 +33,6 @@ routes:
 schedulerId: relman
 scopes:
   - 'index:insert-task:project.relman.testing.bugzilla-dashboard.*'
+  - 'secrets:get:project/relman/bugzilla-dashboard/runtime-testing'
 tags: {}
 workerType: relman-svc

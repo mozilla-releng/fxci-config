@@ -1752,8 +1752,8 @@
 - grant:
   - hooks:trigger-hook:project-relman/bugzilla-dashboard-backend-testing
   - hooks:trigger-hook:project-relman/bugzilla-dashboard-backend-production
-  - secrets:get:project/relman/bugzilla-dashboard/org
-  - secrets:set:project/relman/bugzilla-dashboard/org
+  - secrets:get:project/relman/bugzilla-dashboard/*
+  - secrets:set:project/relman/bugzilla-dashboard/*
   to:
   - roles:
     - mozillians-group:bugzilla-dashboard-developers
