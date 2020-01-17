@@ -1470,6 +1470,33 @@
   - groups:
     - thunderbird-releng
 
+- grant:
+  # permission to run Taskcluster's smoketests.
+  - auth:create-client:project/taskcluster/smoketest/*
+  - auth:create-role:project:taskcluster:smoketest:*
+  - auth:delete-client:project/taskcluster/smoketest/*
+  - auth:delete-role:project:taskcluster:smoketest:*
+  - auth:reset-access-token:project/taskcluster/smoketest/*
+  - auth:update-client:project/taskcluster/smoketest/*
+  - auth:update-role:project:taskcluster:smoketest:*
+  - project:taskcluster:smoketest:*
+  - purge-cache:built-in/succeed:smoketest-cache
+  - queue:create-task:highest:built-in/*
+  - queue:create-task:highest:built-in/fail
+  - queue:create-task:highest:built-in/succeed
+  - queue:route:index.project.taskcluster.smoketest.*
+  - queue:scheduler-id:smoketest
+  - secrets:get:project/taskcluster/smoketest/*
+  - secrets:set:project/taskcluster/smoketest/*
+  to:
+  - roles:
+    - project:taskcluster:smoketests
+
+- grant:
+  - assume:project:taskcluster:smoketests
+  to:
+  - groups:
+    - team_taskcluster
 
 ##
 # hook scopes
@@ -1885,6 +1912,11 @@
   to:
   - roles:
     - mozilla-group:sheriff
+- grant:
+  - assume:project:releng:ci-group:team_taskcluster
+  to:
+  - roles:
+    - mozilla-group:team_taskcluster
 - grant:
   - assume:project:releng:ci-group:tooltooleditor-public
   to:
