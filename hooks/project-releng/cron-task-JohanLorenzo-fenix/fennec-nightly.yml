@@ -1,0 +1,65 @@
+---
+# This job is a almost a copy of cron-task-mozilla-mobile-fenix/nightly-fenix
+# It's just a level-1 version of it
+provisionerId: mobile-1
+workerType: decision
+schedulerId: mobile-level-1
+deadline:
+  $fromNow: 1 hour
+expires:
+  $fromNow: 7 days
+routes: []
+scopes:
+  - 'assume:hook-id:project-releng/cron-task-JohanLorenzo-fenix/fennec-nightly'
+payload:
+  image:
+    type: indexed-image
+    namespace: taskgraph.cache.level-3.docker-images.v2.decision.latest
+    path: public/image.tar.zst
+  env:
+    VCS_HEAD_REPOSITORY: 'https://github.com/JohanLorenzo/fenix'
+    VCS_HEAD_REF: fennec/nightly
+    VCS_REPOSITORY_TYPE: git
+    HG_STORE_PATH: /builds/worker/checkouts/hg-store
+    TASKGRAPH_HEAD_REPOSITORY: 'https://hg.mozilla.org/ci/taskgraph'
+    TASKGRAPH_HEAD_REF: default
+    TASKGRAPH_REPOSITORY_TYPE: hg
+    REPOSITORIES: '{"taskgraph":"Taskgraph","vcs":"Project"}'
+    TASKCLUSTER_ROOT_URL: 'https://firefox-ci-tc.services.mozilla.com'
+  features:
+    taskclusterProxy: true
+    chainOfTrust: true
+  maxRunTime: 1800
+  command:
+    - run-task
+    - '--vcs-checkout=/builds/worker/checkouts/src'
+    - '--taskgraph-checkout=/builds/worker/checkouts/taskgraph'
+    - '--task-cwd=/builds/worker/checkouts/src'
+    - '--'
+    - bash
+    - '-cx'
+    - >-
+      PIP_IGNORE_INSTALLED=0 pip install --user
+      /builds/worker/checkouts/taskgraph && ln -s /builds/worker/artifacts
+      artifacts && ~/.local/bin/taskgraph cron
+      --head-repository=https://github.com/JohanLorenzo/fenix
+      --head-ref="$VCS_HEAD_REF" --repository-type="$VCS_REPOSITORY_TYPE"
+      --project=fenix --level=1 --root=. --force-run=fennec-nightly
+  retry-exit-status:
+    - 72
+  artifacts:
+    public:
+      type: directory
+      path: /builds/worker/artifacts
+metadata:
+  owner: mozilla-taskcluster-maintenance@mozilla.com
+  source: >-
+    https://tools.taskcluster.net/hooks/#project-releng/cron-task-JohanLorenzo-fenix/fennec-nightly
+  description: >-
+    See
+    https://tools.taskcluster.net/hooks/#project-releng/cron-task-JohanLorenzo-fenix/fennec-nightly
+  name: 'Cron task for https://github.com/JohanLorenzo/fenix'
+priority: normal
+retries: 5
+tags: {}
+extra: {}

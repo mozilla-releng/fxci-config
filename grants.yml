@@ -963,7 +963,7 @@
   - project:
       feature: mobile-pushapk-phase
       level: 1
-      job: ["release", "cron:nightly"]
+      job: ["release", "cron:*"]
   - project:
       feature: ["mobile-pushapk-phase", "taskgraph-actions"]
       level: 1
