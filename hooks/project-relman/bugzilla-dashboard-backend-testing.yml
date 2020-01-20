@@ -13,7 +13,7 @@ metadata:
   source: 'https://github.com/mozilla/bugzilla-dashboard-backend'
 payload:
   artifacts:
-    private/bugzilla-dashboard:
+    project/relman/bugzilla-dashboard:
       path: /output
       type: directory
   cache: {}
