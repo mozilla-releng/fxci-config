@@ -1085,6 +1085,18 @@
       alias: fenix
       job: ["cron:nightly"]
 
+- grant:
+  - project:mobile:fenix:releng:googleplay:product:fenix
+  - project:mobile:fenix:releng:signing:cert:fennec-nightly-signing
+  - queue:route:index.project.mobile.fenix.v2.branch.fennec/nightly.*
+  - queue:route:index.project.mobile.fenix.v2.fennec-nightly.*
+  - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
+  - secrets:get:project/mobile/fenix/fennec-nightly
+  to:
+  - project:
+      alias: fenix
+      job: ["cron:fennec-nightly"]
+
 # TODO Bug 1601928: Stop using the garbage namespace once the {alias}/{project} story is defined
 - grant:
   - queue:route:index.garbage.project.mobile.fenix.v2.branch.<..>.*

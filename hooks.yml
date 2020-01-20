@@ -313,7 +313,8 @@ project-releng/cron-task-mozilla-mobile-fenix/fennec-nightly:
   email_on_error: true
   schedule: []
   scopes:
-    - 'assume:repo:github.com/mozilla-mobile/fenix:cron:fennec-nightly'
+    - assume:repo:github.com/mozilla-mobile/fenix:cron:fennec-nightly
+    - queue:route:notify.email.*
   template_file: hooks/project-releng/cron-task-mozilla-mobile-fenix/fennec-nightly.yml
   trigger_schema:
     type: object
@@ -328,7 +329,7 @@ project-releng/cron-task-JohanLorenzo-fenix/fennec-nightly:
   email_on_error: true
   schedule: []
   scopes:
-    - 'assume:repo:github.com/JohanLorenzo/fenix:cron:fennec-nightly'
+    - assume:repo:github.com/JohanLorenzo/fenix:cron:fennec-nightly
   template_file: hooks/project-releng/cron-task-JohanLorenzo-fenix/fennec-nightly.yml
   trigger_schema:
     type: object
