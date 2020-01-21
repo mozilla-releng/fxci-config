@@ -454,6 +454,20 @@
       alias: mozilla-central
 
 - grant:
+  # Bug 1599870
+  - secrets:get:project/civet/github-deploy-key
+  - queue:get-artifact:project/civet/*
+  to:
+  - project:
+      alias:
+        - mozilla-central
+        # Holly is used for testing, see Bug 1599868
+        - holly
+      # Both repos are level 3, but this ensures that if holly is
+      # changed, these are not granted to a non-level 3 repo
+      level: 3
+
+- grant:
   # Bug 1530376: Add scopes for Code Review bot in CI
   - queue:route:project.relman.codereview.*
   # Bug 1541147: Coverity configuration is stored in this secret
