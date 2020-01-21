@@ -1729,6 +1729,14 @@
   - groups:
     - mobile_releases
 
+- grant:
+  # Grant security team access to secrets and artifats for civet
+  - secrets:get:project/civet/github-deploy-key
+  - queue:get-artifact:project/civet/*
+  to:
+  - groups:
+    - civet-sec-inf
+
 
 - grant:
   # Grant mobile the ability to see and modify their secrets
@@ -1871,6 +1879,11 @@
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
 # access to the root credentials.
+- grant:
+  - assume:project:releng:ci-group:civet-sec-inf
+  to:
+  - roles:
+    - mozillians-group:civet-sec-inf
 - grant:
   - assume:project:releng:ci-group:mobile_releases
   to:
