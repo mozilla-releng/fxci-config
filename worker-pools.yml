@@ -22,7 +22,7 @@ worker-defaults:
             generic-worker/windows:
                 genericWorker:
                     config:
-                       "idleTimeoutSecs": 900
+                       "idleTimeoutSecs": 90
                        "cachesDir": "Z:\\caches"
                        "cleanUpTaskDirs": true
                        "deploymentId": "f37dd7ee1cae"
