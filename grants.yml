@@ -169,6 +169,7 @@
   - auth:aws-s3:read-write:taskcluster-level-2-sccache-us-east-1/*
   - auth:aws-s3:read-write:taskcluster-level-2-sccache-us-west-1/*
   - auth:aws-s3:read-write:taskcluster-level-2-sccache-us-west-2/*
+  - auth:gcp:access-token:sccache-3/sccache-l2*
   to:
   - role:
       - project:taskcluster:gecko:level-2-sccache-buckets
@@ -178,6 +179,7 @@
   - auth:aws-s3:read-write:taskcluster-level-3-sccache-us-east-1/*
   - auth:aws-s3:read-write:taskcluster-level-3-sccache-us-west-1/*
   - auth:aws-s3:read-write:taskcluster-level-3-sccache-us-west-2/*
+  - auth:gcp:access-token:sccache-3/sccache-l3*
   to:
   - role:
       - project:taskcluster:gecko:level-3-sccache-buckets
