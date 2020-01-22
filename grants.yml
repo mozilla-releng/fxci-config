@@ -117,7 +117,7 @@
 
   # Provide access to sccache buckets
   - assume:project:taskcluster:{trust_domain}:level-{level}-sccache-buckets
-  - auth:gcp:access-token:sccache-3/tc-l{level}*
+  - auth:gcp:access-token:sccache-3/sccache-l{level}*
 
   # access to workers; all levels have access to the same workers, but at
   # different priorities and levels
@@ -169,6 +169,7 @@
   - auth:aws-s3:read-write:taskcluster-level-2-sccache-us-east-1/*
   - auth:aws-s3:read-write:taskcluster-level-2-sccache-us-west-1/*
   - auth:aws-s3:read-write:taskcluster-level-2-sccache-us-west-2/*
+  - auth:gcp:access-token:sccache-3/sccache-l2*
   to:
   - role:
       - project:taskcluster:gecko:level-2-sccache-buckets
@@ -178,6 +179,7 @@
   - auth:aws-s3:read-write:taskcluster-level-3-sccache-us-east-1/*
   - auth:aws-s3:read-write:taskcluster-level-3-sccache-us-west-1/*
   - auth:aws-s3:read-write:taskcluster-level-3-sccache-us-west-2/*
+  - auth:gcp:access-token:sccache-3/sccache-l3*
   to:
   - role:
       - project:taskcluster:gecko:level-3-sccache-buckets
