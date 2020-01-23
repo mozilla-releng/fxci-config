@@ -993,6 +993,25 @@ gecko-3/t-linux-xlarge:
     - instanceType: c3.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+gecko-t/t-linux-xlarge-source:
+  description: Worker for Firefox automation tests needing source checkouts.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-trusted-current
+    maxCapacity: 10
+    security: trusted
+    worker-config:
+      dockerConfig: {allowPrivileged: false}
+    regions: [us-east-1, us-west-1, us-west-2]
+    instance_types:
+    - instanceType: m3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
 gecko-t/misc:
   description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
     SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
@@ -1090,6 +1109,28 @@ gecko-t/t-win10-64:
   config:
     image: occ-t-win10-64-current
     maxCapacity: 1024
+    scalingRatio: 0
+    additional-user-data:
+      workerType: gecko-t-win10-64
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+    - instanceType: c5.2xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+        - DeviceName: xvdf
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+gecko-t/t-win10-64-srctest:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-t-win10-64-current
+    maxCapacity: 512
     scalingRatio: 0
     additional-user-data:
       workerType: gecko-t-win10-64
