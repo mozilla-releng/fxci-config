@@ -79,8 +79,8 @@ payload:
         path: '/builds/worker/artifacts'
 metadata:
     owner: 'mozilla-taskcluster-maintenance@mozilla.com'
-    source: https://tools.taskcluster.net/hooks/#${hookGroupId}/${hookId}
-    description: See https://tools.taskcluster.net/hooks/#${hookGroupId}/${hookId}
+    source: https://firefox-ci-tc.services.mozilla.com/hooks/#${hookGroupId}/${hookId}
+    description: See https://firefox-ci-tc.services.mozilla.com/hooks/#${hookGroupId}/${hookId}
     name: Cron task for ${project_repo}
 priority: 'normal'
 retries: 5

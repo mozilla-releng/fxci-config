@@ -581,11 +581,6 @@
 ##
 # mozilla roles
 #
-# Mind yourself of globstar roles such as the following that could potentially
-# grant even more scopes to certain roles in an automatic way
-# > https://tools.taskcluster.net/auth/roles/repo%3A*
-# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2F*
-# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla%2F*
 
 # - application-services specific roles
 - grant:
@@ -660,14 +655,8 @@
 ##
 # mozilla-releng roles
 #
-# Mind yourself of globstar roles such as the following that could potentially
-# grant even more scopes to certain roles in an automatic way
-# > https://tools.taskcluster.net/auth/roles/repo%3A*
-# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2F*
 
 # Grant these for all releng repos on github
-# comparable with legacies use with https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla-releng%2F*
-# which was assume:project:taskcluster:mozilla-github-repository
 - grant:
   - notify:email:*
   - notify:irc-channel:*
@@ -863,11 +852,6 @@
 # (e.g. pull/requests and staging-triggered releases) while level 3 defines the
 # production releases (Github-based releases or triggered via hooks)
 #
-# Mind yourself of globstar roles such as the following that could potentially
-# grant even more scopes to certain roles in an automatic way
-# > https://tools.taskcluster.net/auth/roles/repo%3A*
-# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2F*
-# > https://tools.taskcluster.net/auth/roles/repo%3Agithub.com%2Fmozilla-mobile%2F*
 
 # mobile:level:X:*
 - grant:

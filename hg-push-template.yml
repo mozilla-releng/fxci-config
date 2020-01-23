@@ -58,7 +58,7 @@ metadata:
             else: 'Fired by $${firedBy}'
     in:
         owner: 'mozilla-taskcluster-maintenance@mozilla.com'
-        source: https://tools.taskcluster.net/hooks/${hookGroupId}/${hookId}
+        source: https://firefox-ci-tc.services.mozilla.com/hooks/${hookGroupId}/${hookId}
         description: "$${description}"
         name: On-Push task for ${project_repo}
 priority: 'highest'
