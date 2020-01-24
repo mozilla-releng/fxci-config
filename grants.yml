@@ -1679,6 +1679,15 @@
   - groups:
     - bitbar
 
+# Bug 1610751 - allow Sheriffs to trigger on-demand Fenix Raptor tests against
+# the latest commit
+- grant:
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/raptor
+  to:
+  - groups:
+    - sheriff
+
+
 # Allow MozillaOnline to create builds
 # See https://bugzilla.mozilla.org/show_bug.cgi?id=1515990
 # This should also grant
