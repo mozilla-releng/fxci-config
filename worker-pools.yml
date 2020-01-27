@@ -999,9 +999,8 @@ gecko-t/t-linux-xlarge-source:
   email_on_error: false
   provider_id: aws
   config:
-    image: docker-worker-hvm-builder-trusted-current
+    image: docker-worker-hvm-builder-current
     maxCapacity: 10
-    security: trusted
     worker-config:
       dockerConfig: {allowPrivileged: false}
     regions: [us-east-1, us-west-1, us-west-2]
