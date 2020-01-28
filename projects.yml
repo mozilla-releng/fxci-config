@@ -399,6 +399,7 @@ ci-admin:
   trust_domain: ci
   features:
     hg-push: true
+    taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -409,6 +410,7 @@ ci-admin-try:
   trust_domain: ci
   features:
     hg-push: true
+    taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -419,6 +421,7 @@ taskgraph:
   trust_domain: taskgraph
   features:
     hg-push: true
+    taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
 
@@ -429,6 +432,7 @@ taskgraph-try:
   trust_domain: taskgraph
   features:
     hg-push: true
+    taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
     is_try: true
