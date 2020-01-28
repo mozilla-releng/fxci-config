@@ -813,7 +813,7 @@
   to:
   - projects:
       alias: shipit
-      job: ["branch:testing", "branch:staging", "branch:production"]
+      job: ["branch:testing", "branch:staging", "branch:production", "branch:dev"]
 
 # - tooltool specific roles
 - grant:
