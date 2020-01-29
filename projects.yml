@@ -92,9 +92,10 @@ comm-esr68:
   repo_type: hg
   access: scm_level_3
   trust_domain: comm
+  parent_repo: https://hg.mozilla.org/releases/mozilla-esr68
   features:
     gecko-actions: true
-    gecko-cron: false
+    gecko-cron: true
     gecko-roles: true
     hg-push: true
     treeherder-reporting: true
@@ -148,7 +149,7 @@ comm-beta:
   parent_repo: https://hg.mozilla.org/releases/mozilla-beta
   features:
     gecko-actions: true
-    gecko-cron: false
+    gecko-cron: true
     gecko-roles: true
     hg-push: true
     treeherder-reporting: true
