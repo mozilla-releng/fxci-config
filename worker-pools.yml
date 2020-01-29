@@ -113,6 +113,9 @@ gecko-1/b-linux-gcp:
     instance_types:
       - capacityPerInstance: 1
         minCpuPlatform: "Intel Skylake"
+        workerConfig:
+          task:
+            reclaimDivisor: 2
         disks:
           - autoDelete: true
             boot: true
@@ -142,6 +145,9 @@ gecko-3/b-linux-gcp:
     instance_types:
       - capacityPerInstance: 1
         minCpuPlatform: "Intel Skylake"
+        workerConfig:
+          task:
+            reclaimDivisor: 2
         disks:
           - autoDelete: true
             boot: true
