@@ -1359,6 +1359,23 @@
       feature: taskgraph-actions
       job: branch:master
 
+# Adhoc signing
+
+- grant:
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+  - project:adhoc:releng:signing:cert:dep-signing
+  - queue:create-task:highest:adhoc-{level}/*
+  - queue:create-task:highest:adhoc-t/*
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+  - queue:route:index.{trust_domain}.v2.adhoc-manifest.*
+  - queue:route:index.adhoc.cache.level-{level}.*
+  - queue:getArtifact:adhoc/*
+  to:
+  - project:
+      alias:
+      - mvp-adhoc
+      job: ["branch:*", "action:*", "pull-request", "action:*", "cron:*"]
+
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
 #

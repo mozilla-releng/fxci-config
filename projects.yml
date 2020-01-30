@@ -712,3 +712,13 @@ test-xpi-public:
   features:
     trust-domain-scopes: true
     xpi-roles: true
+
+# Bug 1594621: Create an adhoc signing repository
+mvp-adhoc:
+  repo: https://github.com/mozilla-releng/mvp-adhoc
+  repo_type: git
+  trust_domain: adhoc
+  level: 1
+  features:
+    trust-domain-scopes: true
+    taskgraph-actions: true

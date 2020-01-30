@@ -39,6 +39,12 @@
       - generic
       - release-promotion
 
+- trust_domain: adhoc
+  levels: [1, 3]
+  action_perms:
+      - generic
+      - release-promotion
+
 - trust_domain: mobile
   levels: [1, 3]
   action_perms:
