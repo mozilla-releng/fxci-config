@@ -2,8 +2,8 @@
 created: {$fromNow: 0 seconds}
 deadline: {$fromNow: 4 hours}
 expires: {$fromNow: 1 month}
-provisionerId: project-relman
-workerType: relman-svc-memory
+provisionerId: code-coverage
+workerType: bot
 metadata:
   description: ''
   name: Code Coverage aggregation task - cron (testing)

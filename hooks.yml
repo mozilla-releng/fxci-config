@@ -10,7 +10,6 @@ project-relman/code-coverage-repo-production:
     - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.production.repo.*
     - notify:email:*
-    - queue:create-task:highest:project-relman/relman-svc-memory
     - queue:create-task:highest:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
@@ -31,7 +30,6 @@ project-relman/code-coverage-repo-testing:
     - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.testing.repo.*
     - notify:email:*
-    - queue:create-task:lowest:project-relman/relman-svc-memory
     - queue:create-task:lowest:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
@@ -54,7 +52,6 @@ project-relman/code-coverage-cron-production:
     - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.production.cron.*
     - notify:email:*
-    - queue:create-task:highest:project-relman/relman-svc-memory
     - queue:create-task:highest:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
@@ -77,7 +74,6 @@ project-relman/code-coverage-cron-testing:
     - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.testing.cron.*
     - notify:email:*
-    - queue:create-task:lowest:project-relman/relman-svc-memory
     - queue:create-task:lowest:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
