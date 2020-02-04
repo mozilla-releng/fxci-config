@@ -10,7 +10,7 @@
 docker-worker-hvm-builder-current: docker-worker-v201912041449-hvm-builder
 docker-worker-hvm-builder-trusted-current: docker-worker-v201912041449-hvm-builder-trusted
 monopacker-docker-worker-current: monopacker-docker-worker-2020-02-03t19-23-00z
-monopacker-docker-worker-trusted-current: monopacker-docker-worker-2020-02-03t19-23-00z
+monopacker-docker-worker-trusted-current: monopacker-docker-worker-trusted-2020-02-04t16-30-23z
 
 occ-b-win2012-current: occ-b-win2012-pre
 occ-b-win2012-trusted-current: occ-b-win2012-trusted-pre
@@ -118,6 +118,9 @@ monopacker-docker-worker-2020-02-03t19-23-00z:
     projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-03t19-23-00z
   fxci-levelt-gcp:
     projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-03t19-23-00z
+monopacker-docker-worker-trusted-2020-02-04t16-30-23z:
+  fxci-level3-gcp:
+    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-04t16-30-23z
 
 
 # generic-worker images
