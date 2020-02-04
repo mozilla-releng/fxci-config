@@ -93,7 +93,6 @@ project-relman/code-review-testing:
     - hooks:trigger-hook:project-releng/services-testing-*
     - index:insert-task:project.relman.testing.code-review.*
     - notify:email:*
-    - queue:create-task:lowest:project-relman/relman-svc
     - queue:create-task:lowest:code-review/bot
     - queue:route:index.project.releng.services.project.testing.static_analysis_bot.*
     - queue:route:index.project.relman.testing.code-review.*
@@ -118,7 +117,6 @@ project-relman/code-review-production:
     - hooks:trigger-hook:project-releng/services-production-*
     - index:insert-task:project.relman.production.code-review.*
     - notify:email:*
-    - queue:create-task:highest:project-relman/relman-svc
     - queue:create-task:highest:code-review/bot
     - queue:route:index.project.releng.services.project.production.static_analysis_bot.*
     - queue:route:index.project.relman.production.code-review.*

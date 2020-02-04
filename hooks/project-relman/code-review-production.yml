@@ -42,7 +42,7 @@ payload:
   image: 'mozilla/code-review:01c304a231c7b9fc54e04694dff8872e162e437e'
   maxRunTime: 7200
 priority: lowest
-provisionerId: project-relman
+provisionerId: code-review
 retries: 3
 routes:
   - index.project.relman.production.code-review.latest
@@ -52,4 +52,4 @@ scopes:
   - 'index:insert-task:project.relman.production.code-review.*'
   - 'notify:email:*'
 tags: {}
-workerType: relman-svc
+workerType: bot
