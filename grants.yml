@@ -1468,6 +1468,8 @@
 - grant:
   # Allow triggering thunderbird nightlies
   - hooks:trigger-hook:project-releng/cron-task-comm-central/nightly-*
+  # Allow managing treestatus (This should be limited to comm- trees, see Bug 1613551)
+  - project:releng:services/treestatus/*
   to:
   - groups:
     - thunderbird-sheriff
