@@ -208,3 +208,10 @@ staging:
         zones:
             by-region:
                 us-central1: ['us-central1-a', 'us-central1-b', 'us-central1-c', 'us-central1-f']
+    cron:
+      gecko:
+        hooks_owner: release+tc-hooks-staging@mozilla.com
+        notify_emails: []
+      taskgraph:
+        hooks_owner: release+tc-hooks-staging@mozilla.com
+        notify_emails: []
