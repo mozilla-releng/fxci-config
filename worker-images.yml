@@ -120,7 +120,7 @@ monopacker-docker-worker-2020-02-03t19-23-00z:
     projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-03t19-23-00z
 monopacker-docker-worker-trusted-2020-02-04t16-30-23z:
   fxci-level3-gcp:
-    projects/fxci-production-level3-workers/global/images/docker-worker-gcp-googlecompute-2020-02-04t16-30-23z
+    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-04t16-30-23z
 
 
 # generic-worker images
