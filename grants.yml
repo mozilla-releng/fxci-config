@@ -1968,6 +1968,8 @@
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mozilla23456789
     # Geoff Lankow (https://bugzilla.mozilla.org/show_bug.cgi?id=1520433)
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|geoff
+    # Magnus Melin (https://bugzilla.mozilla.org/show_bug.cgi?id=1605714)
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mkmelin
 - grant:
   - assume:project:releng:ci-group:thunderbird-releng
   to:
