@@ -139,7 +139,7 @@ gecko-3/b-linux:
   provider_id: fxci-level3-gcp
   config:
     minCapacity: 0
-    maxCapacity: 100
+    maxCapacity: 1000
     regions: [us-central1]
     image: monopacker-docker-worker-trusted-current
     instance_types:
