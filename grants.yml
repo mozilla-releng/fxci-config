@@ -362,6 +362,7 @@
   - queue:create-task:highest:proj-autophone/*
   - queue:create-task:highest:scriptworker-prov-v1/depsigning-mac-v1
   - queue:create-task:highest:scriptworker-prov-v1/signing-mac-v1
+  - queue:create-task:highest:scriptworker-prov-v1/mac-notarization-poller
   - queue:route:index.gecko.heavyprofile.*
   - queue:route:notify.email.release+tcstaging@mozilla.com.
   - queue:route:notify.email.release-automation-notifications@mozilla.com.*
