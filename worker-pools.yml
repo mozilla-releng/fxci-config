@@ -128,7 +128,7 @@ gecko-1/b-linux:
               diskType: zones/us-central1-a/diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
-        machine_type: custom-32-36864
+        machine_type: custom-32-73728
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
@@ -160,7 +160,7 @@ gecko-3/b-linux:
               diskType: zones/us-central1-a/diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
-        machine_type: custom-32-36864
+        machine_type: custom-32-73728
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
