@@ -1083,15 +1083,31 @@
 
 - grant:
   - project:mobile:fenix:releng:googleplay:product:fenix
+  - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
+  to:
+  - project:
+      alias: fenix
+      job: ["cron:fennec-nightly", "cron:fennec-beta"]
+
+- grant:
   - project:mobile:fenix:releng:signing:cert:fennec-nightly-signing
   - queue:route:index.project.mobile.fenix.v2.branch.fennec/nightly.*
   - queue:route:index.project.mobile.fenix.v2.fennec-nightly.*
-  - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
   - secrets:get:project/mobile/fenix/fennec-nightly
   to:
   - project:
       alias: fenix
       job: ["cron:fennec-nightly"]
+
+- grant:
+  - project:mobile:fenix:releng:signing:cert:fennec-production-signing
+  - queue:route:index.project.mobile.fenix.v2.branch.fennec/beta.*
+  - queue:route:index.project.mobile.fenix.v2.fennec-beta.*
+  - secrets:get:project/mobile/fenix/fennec-beta
+  to:
+  - project:
+      alias: fenix
+      job: ["cron:fennec-beta"]
 
 # TODO Bug 1601928: Stop using the garbage namespace once the {alias}/{project} story is defined
 - grant:
@@ -1757,6 +1773,7 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/fennec-nightly
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/fennec-beta
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
   - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview

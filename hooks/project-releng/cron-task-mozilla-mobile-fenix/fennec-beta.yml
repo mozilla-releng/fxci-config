@@ -1,24 +1,26 @@
 ---
-# This job is a almost a copy of cron-task-mozilla-mobile-fenix/nightly-fenix
-# It's just a level-1 version of it
-provisionerId: mobile-1
+# This job is a almost a copy of https://firefox-ci-tc.services.mozilla.com/hooks/project-releng/cron-task-mozilla-mobile-fenix%2Fnightly
+# 2 things are changed, though: `VCS_HEAD_REF` and `--force-run=fennec-beta`
+provisionerId: mobile-3
 workerType: decision
-schedulerId: mobile-level-1
+schedulerId: mobile-level-3
 deadline:
   $fromNow: 1 hour
 expires:
   $fromNow: 7 days
-routes: []
+routes:
+  - notify.email.release+failedcron@mozilla.com.on-failed
+  - notify.email.release+exceptioncron@mozilla.com.on-exception
 scopes:
-  - 'assume:hook-id:project-releng/cron-task-JohanLorenzo-fenix/fennec-nightly'
+  - 'assume:hook-id:project-releng/cron-task-mozilla-mobile-fenix/fennec-beta'
 payload:
   image:
     type: indexed-image
     namespace: taskgraph.cache.level-3.docker-images.v2.decision.latest
     path: public/image.tar.zst
   env:
-    VCS_HEAD_REPOSITORY: 'https://github.com/JohanLorenzo/fenix'
-    VCS_HEAD_REF: fennec/nightly
+    VCS_HEAD_REPOSITORY: 'https://github.com/mozilla-mobile/fenix'
+    VCS_HEAD_REF: fennec/beta
     VCS_REPOSITORY_TYPE: git
     HG_STORE_PATH: /builds/worker/checkouts/hg-store
     TASKGRAPH_HEAD_REPOSITORY: 'https://hg.mozilla.org/ci/taskgraph'
@@ -42,9 +44,9 @@ payload:
       PIP_IGNORE_INSTALLED=0 pip install --user
       /builds/worker/checkouts/taskgraph && ln -s /builds/worker/artifacts
       artifacts && ~/.local/bin/taskgraph cron
-      --head-repository=https://github.com/JohanLorenzo/fenix
+      --head-repository=https://github.com/mozilla-mobile/fenix
       --head-ref="$VCS_HEAD_REF" --repository-type="$VCS_REPOSITORY_TYPE"
-      --project=fenix --level=1 --root=. --force-run=fennec-nightly
+      --project=fenix --level=3 --root=. --force-run=fennec-beta
   retry-exit-status:
     - 72
   artifacts:
@@ -54,11 +56,11 @@ payload:
 metadata:
   owner: mozilla-taskcluster-maintenance@mozilla.com
   source: >-
-    https://tools.taskcluster.net/hooks/#project-releng/cron-task-JohanLorenzo-fenix/fennec-nightly
+    https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-mobile-fenix/fennec-beta
   description: >-
     See
-    https://tools.taskcluster.net/hooks/#project-releng/cron-task-JohanLorenzo-fenix/fennec-nightly
-  name: 'Cron task for https://github.com/JohanLorenzo/fenix'
+    https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-mobile-fenix/fennec-beta
+  name: 'Cron task for https://github.com/mozilla-mobile/fenix'
 priority: normal
 retries: 5
 tags: {}

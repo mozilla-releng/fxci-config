@@ -298,7 +298,7 @@ project-releng/cron-task-mozilla-mobile-focus-android/nightly-public:
     properties: {}
     additionalProperties: false
 
-# These fennec-nightly are just meant to be here during the Fennec to Fenix nightly migration
+# These fennec-* entries are just meant to be here during the Fennec to Fenix migration
 project-releng/cron-task-mozilla-mobile-fenix/fennec-nightly:
   name: 'Cron task for https://github.com/mozilla-mobile/fenix'
   description: >-
@@ -315,16 +315,32 @@ project-releng/cron-task-mozilla-mobile-fenix/fennec-nightly:
     properties: {}
     additionalProperties: false
 
-project-releng/cron-task-JohanLorenzo-fenix/fennec-nightly:
+project-releng/cron-task-mozilla-mobile-fenix/fennec-beta:
+  name: 'Cron task for https://github.com/mozilla-mobile/fenix'
+  description: >-
+    See https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-mobile-fenix/fennec-beta
+  owner: release+tc-hooks@mozilla.com
+  email_on_error: true
+  schedule: []
+  scopes:
+    - assume:repo:github.com/mozilla-mobile/fenix:cron:fennec-beta
+    - queue:route:notify.email.*
+  template_file: hooks/project-releng/cron-task-mozilla-mobile-fenix/fennec-beta.yml
+  trigger_schema:
+    type: object
+    properties: {}
+    additionalProperties: false
+
+project-releng/cron-task-JohanLorenzo-fenix/fennec-beta:
   name: 'Cron task for https://github.com/JohanLorenzo/fenix'
   description: >-
-    See https://tools.taskcluster.net/hooks/#project-releng/cron-task-JohanLorenzo-fenix/fennec-nightly
+    See https://tools.taskcluster.net/hooks/#project-releng/cron-task-JohanLorenzo-fenix/fennec-beta
   owner: jlorenzo+tc@mozilla.com
   email_on_error: true
   schedule: []
   scopes:
-    - assume:repo:github.com/JohanLorenzo/fenix:cron:fennec-nightly
-  template_file: hooks/project-releng/cron-task-JohanLorenzo-fenix/fennec-nightly.yml
+    - assume:repo:github.com/JohanLorenzo/fenix:cron:fennec-beta
+  template_file: hooks/project-releng/cron-task-JohanLorenzo-fenix/fennec-beta.yml
   trigger_schema:
     type: object
     properties: {}
