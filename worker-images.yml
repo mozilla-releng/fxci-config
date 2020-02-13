@@ -10,7 +10,7 @@
 docker-worker-hvm-builder-current: docker-worker-v201912041449-hvm-builder
 docker-worker-hvm-builder-trusted-current: docker-worker-v201912041449-hvm-builder-trusted
 monopacker-docker-worker-current: monopacker-docker-worker-2020-02-07t09-14-17z
-monopacker-docker-worker-trusted-current: monopacker-docker-worker-trusted-2020-02-04t16-30-23z
+monopacker-docker-worker-trusted-current: monopacker-docker-worker-gcp-trusted-2020-02-13t03-22-56z
 
 occ-b-win2012-current: occ-b-win2012-pre
 occ-b-win2012-trusted-current: occ-b-win2012-trusted-pre
@@ -80,29 +80,6 @@ docker-worker-v201912041449-hvm-builder-trusted:
     us-west-2: ami-0bb2a182014e8742b
 
 # monopacker docker-worker images
-# docker-worker version v201911141441
-monopacker-docker-2019-11-18t20-32-23z:
-  aws:
-    us-east-1: ami-0175f02c7d8d75500
-    us-west-1: ami-0a8d4a07bbb687d8d
-    us-west-2: ami-0501a72ca38da7e80
-  fxci-level1-gcp:
-    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-11-18t20-32-23z
-  fxci-level3-gcp:
-    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-11-18t20-32-23z
-  fxci-levelt-gcp:
-    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-11-18t20-32-23z
-monopacker-docker-2019-12-10t15-38-04z:
-  aws:
-    us-east-1: ami-0fb60ab9eb4c5f9f4
-    us-west-1: ami-0425dbf84c2882e6c
-    us-west-2: ami-052c80194ddeefc3c
-  fxci-level1-gcp:
-    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-12-10t15-38-04z
-  fxci-level3-gcp:
-    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-12-10t15-38-04z
-  fxci-levelt-gcp:
-    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-12-10t15-38-04z
 monopacker-docker-worker-trusted-2020-01-08t20-30-16z:
   fxci-level3-gcp:
     # uses old cot key, i.e. J+PAK...
@@ -111,16 +88,6 @@ monopacker-docker-worker-trusted-2020-01-10t21-13-32z:
   fxci-level3-gcp:
     # uses new cot key, i.e. tk/Sj...
     projects/fxci-production-level3-workers/global/images/docker-worker-gcp-trusted-googlecompute-2020-01-10t21-13-32z
-monopacker-docker-worker-2020-02-03t19-23-00z:
-  fxci-level1-gcp:
-    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-03t19-23-00z
-  fxci-level3-gcp:
-    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-03t19-23-00z
-  fxci-levelt-gcp:
-    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-03t19-23-00z
-monopacker-docker-worker-trusted-2020-02-04t16-30-23z:
-  fxci-level3-gcp:
-    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-04t16-30-23z
 monopacker-docker-worker-2020-02-07t09-14-17z:
   fxci-level1-gcp:
     projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-07t09-14-17z
@@ -133,6 +100,9 @@ monopacker-docker-worker-2020-02-12T10-40-15Z:
     us-east-1: ami-0dba3f8bdf9ca7225
     us-west-1: ami-0e3d1dc440550cc66
     us-west-2: ami-0542988103c65ceef
+monopacker-docker-worker-gcp-trusted-2020-02-13t03-22-56z:
+  fxci-level3-gcp:
+    projects/fxci-production-level3-workers/global/images/docker-worker-gcp-trusted-googlecompute-2020-02-13t03-22-56z
 
 # generic-worker images
 gwci-linux:
