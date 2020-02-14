@@ -1338,7 +1338,7 @@
   - queue:create-task:low:built-in/*
   - queue:create-task:low:xpi-1/*
   - queue:create-task:low:xpi-t/*
-  - queue:getArtifact:xpi/*
+  - queue:get-artifact:xpi/*
   - queue:scheduler-id:xpi-level-1
   - docker-worker:cache:xpi-level-1-*
   - secrets:get:project/xpi/xpi-github-clone-ssh
@@ -1369,7 +1369,7 @@
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - queue:route:index.{trust_domain}.v2.adhoc-manifest.*
   - queue:route:index.adhoc.cache.level-{level}.*
-  - queue:getArtifact:adhoc/*
+  - queue:get-artifact:adhoc/*
   to:
   - project:
       alias:
