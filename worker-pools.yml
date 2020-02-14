@@ -2588,6 +2588,8 @@ gecko-t/t-linux-metal:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 1200, VolumeType: gp2}
       worker-config:
+        dockerConfig:
+          allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: r5.metal
       capacityPerInstance: 36
@@ -2596,6 +2598,8 @@ gecko-t/t-linux-metal:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 1200, VolumeType: gp2}
       worker-config:
+        dockerConfig:
+          allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: c5.metal
       capacityPerInstance: 28
@@ -2604,6 +2608,8 @@ gecko-t/t-linux-metal:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 1000, VolumeType: gp2}
       worker-config:
+        dockerConfig:
+          allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 30000000000}
 pmoore-test/gwci-linux:
   description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/gwci-linux but for GCP'
