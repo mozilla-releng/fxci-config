@@ -721,3 +721,12 @@ mvp-adhoc:
   features:
     trust-domain-scopes: true
     taskgraph-actions: true
+
+# Bug 1614312: Add code-analysis project for code-review & code-coverage
+code-analysis:
+  repo: https://github.com/mozilla/code-review
+  repo_type: git
+  trust_domain: code-analysis
+  level: 3
+  features:
+    trust-domain-scopes: true

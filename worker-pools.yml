@@ -2663,6 +2663,39 @@ project-relman/relman-svc:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+
+code-analysis-1/linux:
+  description: Worker for code-analysis CI/CD - level 1
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+code-analysis-3/linux:
+  description: Worker for code-analysis CI/CD - level 3
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
 code-review/bot:
   description: Worker for the code-review bot.
   owner: release+tc-workers@mozilla.com
