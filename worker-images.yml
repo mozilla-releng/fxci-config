@@ -7,8 +7,8 @@
 # Aliases can be defined by a simple string; this is useful for "current" images
 
 ---
-docker-worker-hvm-builder-current: docker-worker-v201912041449-hvm-builder
-docker-worker-hvm-builder-trusted-current: docker-worker-v201912041449-hvm-builder-trusted
+docker-worker-hvm-builder-current: docker-worker-v202002031613-hvm-builder
+docker-worker-hvm-builder-trusted-current: docker-worker-v202002031613-hvm-builder-trusted
 monopacker-docker-worker-current: monopacker-docker-worker-2020-02-07t09-14-17z
 monopacker-docker-worker-trusted-current: monopacker-docker-worker-gcp-trusted-2020-02-13t03-22-56z
 
@@ -78,6 +78,19 @@ docker-worker-v201912041449-hvm-builder-trusted:
     us-east-1: ami-094b2e87a15dd92fd
     us-west-1: ami-0f2f0e39f3cf1bcf7
     us-west-2: ami-0bb2a182014e8742b
+# production docker-worker AMIs
+docker-worker-v202002031613-hvm-builder:
+  aws:
+    eu-central-1: ami-0b246888a9827135f
+    us-east-1: ami-020e038328915f623
+    us-west-1: ami-03b3ccbeb9ea1ac0a
+    us-west-2: ami-02bc31b0b94b6f62c
+docker-worker-v202002031613-hvm-builder-trusted:
+  aws:
+    eu-central-1: ami-0668089c79c6575be
+    us-east-1: ami-03788cad4724efdbc
+    us-west-1: ami-0a111e2f4e0044ebd
+    us-west-2: ami-0faaf8674923beeee
 
 # monopacker docker-worker images
 monopacker-docker-worker-trusted-2020-01-08t20-30-16z:
