@@ -1784,8 +1784,9 @@
     - mobile_releases
 
 - grant:
-  # Grant security team access to secrets and artifats for civet
+  # Grant security team access to secrets and artifacts for civet
   - secrets:get:project/civet/github-deploy-key
+  - secrets:set:project/civet/github-deploy-key
   - queue:get-artifact:project/civet/*
   to:
   - groups:
