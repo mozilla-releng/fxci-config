@@ -39,7 +39,7 @@ payload:
             $eval: payload.status.taskId
   features:
     taskclusterProxy: true
-  image: 'mozilla/code-review:737af4ed93dfc6564ab81642eb1b335b38d89478'
+  image: 'mozilla/code-review:4d7ee1818a08746104b4bc9a7cc0f5b8d7ad00de'
   maxRunTime: 7200
 priority: lowest
 provisionerId: code-review
