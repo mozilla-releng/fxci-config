@@ -1090,6 +1090,10 @@
   - queue:route:index.project.mobile.fenix.v2.fennec-production.*
   - secrets:get:project/mobile/fenix/fennec-beta
   - secrets:get:project/mobile/fenix/fennec-production
+
+  - project:mobile:fenix:releng:signing:cert:fennec-nightly-signing
+  - queue:route:index.project.mobile.fenix.v2.fennec-nightly.*
+  - secrets:get:project/mobile/fenix/fennec-nightly
   to:
   - project:
       alias: fenix
@@ -1101,17 +1105,7 @@
   to:
   - project:
       alias: fenix
-      job: ["cron:fennec-nightly", "cron:fennec-beta"]
-
-- grant:
-  - project:mobile:fenix:releng:signing:cert:fennec-nightly-signing
-  - queue:route:index.project.mobile.fenix.v2.branch.fennec/nightly.*
-  - queue:route:index.project.mobile.fenix.v2.fennec-nightly.*
-  - secrets:get:project/mobile/fenix/fennec-nightly
-  to:
-  - project:
-      alias: fenix
-      job: ["cron:fennec-nightly"]
+      job: ["cron:fennec-beta"]
 
 - grant:
   - project:mobile:fenix:releng:signing:cert:fennec-production-signing
@@ -1786,7 +1780,6 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
-  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/fennec-nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/fennec-beta
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
