@@ -477,6 +477,17 @@
   - project:
       alias: try
 
+- grant:
+  # Bug 1616786 : Allow ci projects to trigger code review bot
+  - queue:route:project.relman.codereview.*
+  to:
+  - project:
+      alias: taskgraph-try
+  - project:
+      alias: ci-configuration-try
+  - project:
+      alias: ci-admin-try
+
 ##
 # Non-gecko tree projects
 
