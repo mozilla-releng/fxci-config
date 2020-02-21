@@ -1547,6 +1547,9 @@ gecko-t/t-linux-large:
     instance_types:
     - instanceType: m5.large
       launchConfig:
+        # Add the a ssh to login into the instance to investigate instances
+        # that don't shutdown (Bug 1600071)
+        KeyName: docker-worker-bug1600071
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
@@ -1586,12 +1589,18 @@ gecko-t/t-linux-xlarge:
       dockerConfig: {allowPrivileged: false}
     instance_types:
     - instanceType: m3.xlarge
+      launchConfig:
+        KeyName: docker-worker-bug1600071
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: c3.xlarge
+      launchConfig:
+        KeyName: docker-worker-bug1600071
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: c3.2xlarge
+      launchConfig:
+        KeyName: docker-worker-bug1600071
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
 comm-t/t-linux-xlarge:
@@ -2711,6 +2720,7 @@ gecko-t/t-linux-metal:
     - instanceType: m5.metal
       capacityPerInstance: 36
       launchConfig:
+        KeyName: docker-worker-bug1600071
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 1200, VolumeType: gp2}
@@ -2721,6 +2731,7 @@ gecko-t/t-linux-metal:
     - instanceType: r5.metal
       capacityPerInstance: 36
       launchConfig:
+        KeyName: docker-worker-bug1600071
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 1200, VolumeType: gp2}
@@ -2731,6 +2742,7 @@ gecko-t/t-linux-metal:
     - instanceType: c5.metal
       capacityPerInstance: 28
       launchConfig:
+        KeyName: docker-worker-bug1600071
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 1000, VolumeType: gp2}
