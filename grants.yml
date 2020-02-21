@@ -1896,16 +1896,6 @@
   - groups:
     - vpn_hg_admin
 
-# Code Analysis CI
-# - build code-review bot image
-# - code review developers can also use it
-- grant:
-  - queue:create-task:highest:code-analysis-3/linux
-  to:
-    roles:
-    - repo:github.com/mozilla/code-review:*
-    - mozillians-group:code-review-developers
-
 # Code Review runtime roles
 # Project https://github.com/mozilla/code-review
 # The Heroku apps can:
