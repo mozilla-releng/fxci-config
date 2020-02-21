@@ -1898,9 +1898,11 @@
 
 # Code Analysis CI
 # - build code-review bot image
+# - index the bot image task
 # - code review developers can also use it
 - grant:
   - queue:create-task:highest:code-analysis-3/linux
+  - queue:route:index.project.code-review.bot.*
   to:
   - roles:
     - repo:github.com/mozilla/code-review:*
