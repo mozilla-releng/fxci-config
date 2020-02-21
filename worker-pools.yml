@@ -1315,7 +1315,7 @@ gecko-t/t-win10-64-gpu-s-beta:
     minCapacity: 0
     maxCapacity: 4
     additional-user-data:
-      workerType: gecko-t-win10-64-gpu-s-b
+      workerType: gecko-t-win10-64-gpu-b
     regions: [us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
     implementation: generic-worker/windows
