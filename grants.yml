@@ -910,6 +910,9 @@
   - project:
       feature: beetmover-maven-snapshot-phase
       job: ["cron:snapshot"]
+  - project:
+      feature: beetmover-maven-nightly-phase
+      job: ["cron:nightly"]
 
 - grant:
   - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-production
@@ -926,6 +929,14 @@
       feature: beetmover-maven-snapshot-phase
       level: 3
       job: ["cron:snapshot"]
+
+- grant:
+  - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-nightly-production
+  to:
+  - project:
+      feature: beetmover-maven-nightly-phase
+      level: 3
+      job: ["cron:nightly"]
 
 - grant:
   - project:mobile:{trust_project}:releng:signing:cert:release-signing
@@ -953,7 +964,7 @@
   - project:
       alias: android-components
       level: 3
-      job: ["release", "cron:snapshot"]
+      job: ["release", "cron:snapshot", "cron:nightly"]
 
 - grant:
   - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}
@@ -1777,6 +1788,7 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/gv-update-nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/gv-update-release
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/snapshot
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
