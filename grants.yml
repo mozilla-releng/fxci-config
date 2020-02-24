@@ -1254,6 +1254,14 @@
       alias: firefox-tv
       job: ["release"]
 
+- grant:
+  - project:mobile:fennec-profile-manager:releng:signing:cert:fennec-nightly-signing
+  - project:mobile:fennec-profile-manager:releng:signing:cert:fennec-production-signing
+  to:
+  - project:
+      alias: fennec-profile-manager
+      job: ["branch:master"]
+
 # L10n repositories
 - grant:
   - queue:create-task:highest:l10n-{level}/*
