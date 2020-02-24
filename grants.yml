@@ -889,7 +889,7 @@
   - queue:route:index.project.mobile.{trust_project}.v2.branch.master.*
   to:
   - project:
-      feature: mobile-roles
+      feature: ["mobile-roles", "taskgraph-cron"]
       level: 3
       job: ["cron:*"]
 
@@ -944,7 +944,11 @@
   - project:
       feature: mobile-sign-phase
       level: 3
-      job: ["release", "cron:nightly"]
+      job: ["release"]
+  - project:
+      feature: ["mobile-sign-phase", "taskgraph-cron"]
+      level: 3
+      job: ["cron:nightly"]
   - project:
       feature: ["mobile-sign-phase", "taskgraph-actions"]
       level: 3
@@ -954,7 +958,7 @@
   - queue:route:index.project.mobile.{trust_project}.v2.nightly.*
   to:
   - project:
-      feature: mobile-sign-phase
+      feature: ["mobile-sign-phase", "taskgraph-cron"]
       level: 3
       job: ["cron:nightly"]
 
@@ -972,7 +976,11 @@
   - project:
       feature: mobile-pushapk-phase
       level: 3
-      job: ["release", "cron:nightly"]
+      job: ["release"]
+  - project:
+      feature: ["mobile-pushapk-phase", "taskgraph-cron"]
+      level: 3
+      job: ["cron:nightly"]
   - project:
       feature: ["mobile-pushapk-phase", "taskgraph-actions"]
       level: 3
@@ -984,7 +992,11 @@
   - project:
       feature: mobile-pushapk-phase
       level: 1
-      job: ["release", "cron:*"]
+      job: ["release"]
+  - project:
+      feature: ["mobile-pushapk-phase", "taskgraph-cron"]
+      level: 1
+      job: ["cron:*"]
   - project:
       feature: ["mobile-pushapk-phase", "taskgraph-actions"]
       level: 1
