@@ -1120,9 +1120,15 @@
 
 - grant:
   - project:mobile:fenix:releng:signing:cert:fennec-production-signing
-  - queue:route:index.project.mobile.fenix.v2.branch.fennec/beta.*
   - queue:route:index.project.mobile.fenix.v2.fennec-beta.*
   - secrets:get:project/mobile/fenix/fennec-beta
+  to:
+  - project:
+      alias: fenix
+      job: ["release", "cron:fennec-beta"]
+
+- grant:
+  - queue:route:index.project.mobile.fenix.v2.branch.fennec/beta.*
   to:
   - project:
       alias: fenix
