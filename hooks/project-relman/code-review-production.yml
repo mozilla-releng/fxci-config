@@ -39,7 +39,10 @@ payload:
             $eval: payload.status.taskId
   features:
     taskclusterProxy: true
-  image: 'mozilla/code-review:01c304a231c7b9fc54e04694dff8872e162e437e'
+  image:
+    type: indexed-image
+    namespace: project.code-review.bot.production
+    path: public/code-review-bot.tar
   maxRunTime: 7200
 priority: lowest
 provisionerId: code-review
