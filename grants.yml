@@ -890,7 +890,7 @@
   - queue:route:index.project.mobile.{trust_project}.v2.branch.master.*
   to:
   - project:
-      feature: ["mobile-roles", "taskgraph-cron"]
+      feature: mobile-roles
       level: 3
       job: ["cron:*"]
 
@@ -945,21 +945,13 @@
   - project:
       feature: mobile-sign-phase
       level: 3
-      job: ["release"]
-  - project:
-      feature: ["mobile-sign-phase", "taskgraph-cron"]
-      level: 3
-      job: ["cron:nightly"]
-  - project:
-      feature: ["mobile-sign-phase", "taskgraph-actions"]
-      level: 3
-      job: ["action:release-promotion"]
+      job: ["release", "cron:nightly", "action:release-promotion"]
 
 - grant:
   - queue:route:index.project.mobile.{trust_project}.v2.nightly.*
   to:
   - project:
-      feature: ["mobile-sign-phase", "taskgraph-cron"]
+      feature: mobile-sign-phase
       level: 3
       job: ["cron:nightly"]
 
@@ -977,15 +969,7 @@
   - project:
       feature: mobile-pushapk-phase
       level: 3
-      job: ["release"]
-  - project:
-      feature: ["mobile-pushapk-phase", "taskgraph-cron"]
-      level: 3
-      job: ["cron:nightly"]
-  - project:
-      feature: ["mobile-pushapk-phase", "taskgraph-actions"]
-      level: 3
-      job: ["action:release-promotion"]
+      job: ["release", "cron:nightly", "action:release-promotion"]
 
 - grant:
   - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}:dep
@@ -993,15 +977,7 @@
   - project:
       feature: mobile-pushapk-phase
       level: 1
-      job: ["release"]
-  - project:
-      feature: ["mobile-pushapk-phase", "taskgraph-cron"]
-      level: 1
-      job: ["cron:*"]
-  - project:
-      feature: ["mobile-pushapk-phase", "taskgraph-actions"]
-      level: 1
-      job: ["action:release-promotion"]
+      job: ["release", "cron:*", "action:release-promotion"]
 
 - grant:
   - secrets:get:project/mobile/{trust_project}/firebase
