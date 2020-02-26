@@ -529,10 +529,6 @@
   # Allow reruning tasks with that scheduler-id
   - queue:rerun-task:{trust_domain}-level-{level}/*
 
-  # routes to support indexing by product
-  - queue:route:index.{trust_domain}.v2.{alias}.*
-  - index:insert-task:{trust_domain}.v2.{alias}.*
-
   # Allow creating tasks on workers associated to the trust-domain
   - queue:create-task:{priority}:{trust_domain}-{level}/*
   - queue:create-task:{priority}:{trust_domain}-t/*
@@ -551,6 +547,24 @@
   - generic-worker:cache:{trust_domain}-level-{level}-*
   to:
   - project:
+      feature: trust-domain-scopes
+
+- grant:
+  # routes to support indexing by product
+  - queue:route:index.{trust_domain}.v2.{alias}.*
+  - index:insert-task:{trust_domain}.v2.{alias}.*
+  to:
+  - project:
+      include_pull_requests: false
+      feature: trust-domain-scopes
+
+- grant:
+  # routes to support indexing by product
+  - queue:route:index.{trust_domain}.v2.{alias}-pr.*
+  - index:insert-task:{trust_domain}.v2.{alias}-pr.*
+  to:
+  - project:
+      job: ['pull-request']
       feature: trust-domain-scopes
 
 - grant:
