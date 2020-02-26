@@ -1900,8 +1900,8 @@
   - secrets:set:project/relman/coverity
   - secrets:set:project/relman/coverity-nss
   to:
-  - roles:
-    - mozillians-group:code-review-developers
+  - group:
+    - code-review-developers
 
 # Bug 1534463: allow `vpn_hg_admin` group to access Mercurial related secrets
 - grant:
@@ -1914,16 +1914,12 @@
     - vpn_hg_admin
 
 # Code Analysis CI
-# - build code-review bot image
-# - index the bot image task
-# - code review developers can also use it
 - grant:
-  - queue:create-task:highest:code-analysis-3/linux
-  - queue:route:index.project.code-review.bot.*
+  # Allow code-review developers to create tasks directly
+  - assume:repo:github.com/mozilla/code-review:pull-request
   to:
-  - roles:
-    - repo:github.com/mozilla/code-review:*
-    - mozillians-group:code-review-developers
+  - group:
+    - code-review-developers
 
 # Code Review runtime roles
 # Project https://github.com/mozilla/code-review
@@ -1956,8 +1952,8 @@
   - secrets:set:project/relman/code-review/*
   - queue:create-task:lowest:code-review/bot
   to:
-  - roles:
-    - mozillians-group:code-review-developers
+  - group:
+    - code-review-developers
 
 - grant:
   - auth:create-client:project/packet/docker-worker
@@ -1979,6 +1975,16 @@
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mcrabill
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|wcosta
 
+# Bug 1604686: Token for gfx github sync, ability to set and get
+- grant:
+  - secrets:get:project/webrender-ci/wrupdater-github-token
+  - secrets:set:project/webrender-ci/wrupdater-github-token
+  - secrets:get:gecko/gfx-github-sync/token
+  - secrets:set:gecko/gfx-github-sync/token
+  to:
+  - roles:
+    - mozillians-group:webrender-ci
+
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
 # access to the root credentials.
@@ -1987,6 +1993,11 @@
   to:
   - roles:
     - mozillians-group:civet-sec-inf
+- grant:
+  - assume:project:releng:ci-group:code-review-developers
+  to:
+  - roles:
+    - mozillians-group:code-review-developers
 - grant:
   - assume:project:releng:ci-group:mobile_releases
   to:
@@ -2077,13 +2088,3 @@
   - roles:
     - mozilla-group:team_relops
     - mozilla-group:releng
-
-# Bug 1604686: Token for gfx github sync, ability to set and get
-- grant:
-  - secrets:get:project/webrender-ci/wrupdater-github-token
-  - secrets:set:project/webrender-ci/wrupdater-github-token
-  - secrets:get:gecko/gfx-github-sync/token
-  - secrets:set:gecko/gfx-github-sync/token
-  to:
-  - roles:
-    - mozillians-group:webrender-ci
