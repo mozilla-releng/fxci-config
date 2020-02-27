@@ -328,13 +328,6 @@
   - docker-worker:feature:balrogStageVPNProxy
   - docker-worker:feature:balrogVPNProxy
   - docker-worker:image:taskclusterprivate/taskcluster-vpn-proxy:*
-  - project:releng:balrog:server:beta
-  - project:releng:balrog:server:release
-  - project:releng:balrog:server:esr
-  - project:releng:beetmover:bucket:release
-  - project:releng:ship-it:production
-  - project:releng:googleplay:beta
-  - secrets:get:project/releng/snapcraft/firefox/edge
   - secrets:get:project/taskcluster/gecko/build/level-3/*
   to:
   - projects:
@@ -345,23 +338,8 @@
 - grant:
   - auth:aws-s3:read-write:tc-gp-private-1d-us-east-1/releng/mbsdiff-cache/
   - project:releng:addons.mozilla.org:server:production
-  - project:releng:beetmover:action:push-to-maven
-  - project:releng:beetmover:action:push-to-partner
-  - project:releng:beetmover:bucket:maven-production
-  - project:releng:beetmover:bucket:partner
-  - project:releng:bouncer:server:production
-  - project:releng:bouncer:server:production-nazgul
-  - project:releng:googleplay:release
-  - project:releng:ship-it:action:mark-as-shipped
-  - project:releng:ship-it:action:mark-as-started
-  - project:releng:ship-it:action:create-new-release
-  - project:releng:ship-it:server:production
-  - project:releng:ship-it:server:staging
   - project:releng:signing:cert:nightly-signing
   - project:releng:signing:cert:release-signing
-  - project:releng:snapcraft:firefox:beta
-  - project:releng:snapcraft:firefox:candidate
-  - project:releng:snapcraft:firefox:esr
   - queue:create-task:highest:proj-autophone/*
   - queue:create-task:highest:scriptworker-prov-v1/depsigning-mac-v1
   - queue:create-task:highest:scriptworker-prov-v1/signing-mac-v1
@@ -369,7 +347,6 @@
   - queue:route:index.gecko.heavyprofile.*
   - queue:route:notify.email.release+tcstaging@mozilla.com.
   - queue:route:notify.email.release-automation-notifications@mozilla.com.*
-  - secrets:get:project/releng/snapcraft/firefox/candidate
   to:
   - projects:
       feature: gecko-roles
@@ -405,6 +382,37 @@
 
 ##
 # project-specific scopes (for esr's to hang onto their old scopes)
+
+- grant:
+  - project:releng:balrog:server:beta
+  - project:releng:balrog:server:esr
+  - project:releng:balrog:server:release
+  - project:releng:beetmover:bucket:maven-production
+  - project:releng:beetmover:bucket:partner
+  - project:releng:beetmover:bucket:release
+  - project:releng:bouncer:server:production
+  - project:releng:bouncer:server:production-nazgul
+  - project:releng:googleplay:beta
+  - project:releng:googleplay:release
+  - project:releng:ship-it:server:production
+  - project:releng:snapcraft:firefox:beta
+  - project:releng:snapcraft:firefox:candidate
+  - project:releng:snapcraft:firefox:esr
+  to:
+  - projects:
+      job: ["action:release-promotion"]
+      trust_domain: gecko
+      level: [3]
+      alias: [mozilla-esr68, mozilla-release, mozilla-beta]
+
+- grant:
+  - project:releng:ship-it:server:production
+  to:
+  - project:
+      job: ["cron:daily-releases"]
+      trust_domain: gecko
+      level: [3]
+      alias: [mozilla-esr68, mozilla-beta]
 
 - grant:
   - project:comm:thunderbird:releng:balrog:server:release
@@ -1471,7 +1479,6 @@
 
 - grant:
   - project:releng:beetmover:bucket:maven-production
-  - project:releng:beetmover:action:push-to-maven
   to:
   - project:
       alias:
