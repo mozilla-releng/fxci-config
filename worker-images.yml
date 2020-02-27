@@ -20,13 +20,6 @@ occ-t-win7-32-current: occ-t-win7-32-pre
 occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-pre
 #occ-mpd001-b-win2012-current: occ-mpd-b-win2012-pre
 occ-mpd001-b-win2012-trusted-current: occ-mpd-b-win2012-trusted-pre
-# Beta OCC
-occ-b-win2012-beta: occ-b-win2012-beta-v20200219
-occ-t-win10-64-beta: occ-t-win10-64-beta-v20200219
-occ-t-win10-64-gpu-s-beta: occ-t-win10-64-gpu-s-beta-v20200219
-occ-t-win7-32-beta: occ-t-win7-32-beta-v20200219
-occ-t-win7-32-gpu-beta: occ-t-win7-32-gpu-beta-v20200219
-
 
 nss-win2012r2-current: nss-win2012r2-pre
 
@@ -181,34 +174,52 @@ nss-win2012r2-pre:
     us-west-1: ami-0d05851ab254517de
     us-west-2: ami-02f981615a8102d24
 
-# OCC v20200219 == OCC Repo: ea5d220802762c528186a177e6f1986e6ed16941
-occ-b-win2012-beta-v20200219:
+# OCC v20200226 == OCC Repo: f82b12b799b1bceec54472ed14d41951aadfb43c
+occ-b-win2012-v20200226:
   aws:
-    eu-central-1: ami-0310e3de514c47dad
-    us-east-1: ami-08ab8d3f662a06055
-    us-west-1: ami-05efbf0cb7ecd42c4
-    us-west-2: ami-0763f9807e7b0acae
-occ-t-win10-64-beta-v20200219:
+    eu-central-1: ami-03a7d4b5d6e2800e3
+    us-east-1: ami-0e6c91a4bc0fd339a
+    us-west-1: ami-0f55d6719006bccd5
+    us-west-2: ami-06cb264b8a9694346
+occ-b-win2012-trusted-v20200226:
   aws:
-    eu-central-1: ami-07caee278fac13674
-    us-east-1: ami-0c4d0914fd61dc70b
-    us-west-1: ami-068d2b1976686b9a7
-    us-west-2: ami-065dd1b04e35e7bcd
-occ-t-win10-64-gpu-s-beta-v20200219:
+    eu-central-1: ami-0842423a27aac7d5b
+    us-east-1: ami-0e2a61d4d8d084416
+    us-west-1: ami-006a43b6bbe6a22c3
+    us-west-2: ami-08a350cc7aab87c68  
+occ-t-win10-64-v20200226:
   aws:
-    eu-central-1: ami-045b23d673230689d
-    us-east-1: ami-0ba7244072e3d2753
-    us-west-1: ami-06964aadc663ba704
-    us-west-2: ami-09c8b306b3507ba16
-occ-t-win7-32-beta-v20200219:
+    eu-central-1: ami-0ec91d0a07d19ee47
+    us-east-1: ami-0da408f72b12dce98
+    us-west-1: ami-062fe0b048273a9ba
+    us-west-2: ami-0b6b28dc94450b4d1
+occ-t-win10-64-gpu-s-v20200226:
   aws:
-    eu-central-1: ami-07bd7406230ca5736
-    us-east-1: ami-05f6e894f78ea5972
-    us-west-1: ami-0045e8a109837d14c
-    us-west-2: ami-01d7ad71f86c57bd0
-occ-t-win7-32-gpu-beta-v20200219:
+    eu-central-1: ami-0e577d408d03800a7
+    us-east-1: ami-096a4fafec9af598e
+    us-west-1: ami-01a19187d53be1fb7
+    us-west-2: ami-059279be577c729a4
+occ-t-win7-32-v20200226:
   aws:
-    eu-central-1: ami-0030d7691f1e04a2f
-    us-east-1: ami-00e51eb6833774c73
-    us-west-1: ami-0f8242cc1fb16ac5d
-    us-west-2: ami-086f70d550c45e346
+    eu-central-1: ami-01db0b27d4878f677
+    us-east-1: ami-04a4865797a61b24d
+    us-west-1: ami-098ffef5cf401c46d
+    us-west-2: ami-06f345a21f6faad86
+occ-t-win7-32-gpu-v20200226:
+  aws:
+    eu-central-1: ami-0b41dc6c8248c4f32
+    us-east-1: ami-02641726e4b419ba4
+    us-west-1: ami-0ebc5c792d8418b65
+    us-west-2: ami-0cecd6bf98b15e862
+occ-mpd-b-win2012-v20200226:
+  aws:
+    eu-central-1: ami-07d4147c61c18619b
+    us-east-1: ami-0395927688a8dedb9
+    us-west-1: ami-08a869b15b885eb49
+    us-west-2: ami-039046a9634043633
+occ-mpd-b-win2012-trusted-v20200226:
+  aws:
+    eu-central-1: ami-09a5852e0cc1edb81
+    us-east-1: ami-08f30fc003814c298
+    us-west-1: ami-0c76678a5bdb06f4e
+    us-west-2: ami-0520ba0d12752373c
