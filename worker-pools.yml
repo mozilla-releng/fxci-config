@@ -2175,37 +2175,36 @@ mpd001-3/decision:
     - us-east-1
     - us-west-1
     - us-west-2
-#mpd001-1/b-win2012:
-#  description: ''
-#  owner: release+tc-workers@mozilla.com
-#  email_on_error: false
-#  provider_id: aws
-#  config:
-#    # XXX Need untrusted image
-#    image: occ-mpd001-b-win2012-current
-#    maxCapacity: 6
-#    additional-user-data:
-#      workerType: mpd001-1-b-win2012
-#    regions: [us-east-1, us-west-1, us-west-2]
-#    security: windows-untrusted
-#    implementation: generic-worker/windows
-#    instance_types:
-#      - instanceType: c4.4xlarge
-#        capacity: 1
-#        launchConfig:
-#          BlockDeviceMappings:
-#          - DeviceName: /dev/sda1
-#            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
-#          - DeviceName: /dev/sdb
-#            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-#      - instanceType: c5.4xlarge
-#        capacity: 1
-#        launchConfig:
-#          BlockDeviceMappings:
-#          - DeviceName: /dev/sda1
-#            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
-#          - DeviceName: /dev/sdb
-#            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+mpd001-1/b-win2012:
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-mpd001-b-win2012-current
+    maxCapacity: 6
+    additional-user-data:
+      workerType: mpd001-1-b-win2012
+    regions: [us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+      - instanceType: c4.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      - instanceType: c5.4xlarge
+        capacity: 1
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 mpd001-3/b-win2012:
   description: ''
   owner: release+tc-workers@mozilla.com
