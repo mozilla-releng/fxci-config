@@ -1417,7 +1417,7 @@
   to:
   - project:
       feature: taskgraph-actions
-      job: branch:master
+      job: branch:*
 
 # Adhoc signing
 
@@ -1585,7 +1585,10 @@
   to:
   - project:
       feature: gecko-actions
-      job: branch:default
+      job:
+        - branch:*
+        - cron:*
+        - action:release-promotion
 
 # control who can run generic actions: basically anyone at the project's
 # level or higher.
