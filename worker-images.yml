@@ -12,8 +12,8 @@ docker-worker-hvm-builder-trusted-current: docker-worker-v202002031613-hvm-build
 monopacker-docker-worker-current: monopacker-docker-worker-2020-02-07t09-14-17z
 monopacker-docker-worker-trusted-current: monopacker-docker-worker-gcp-trusted-2020-02-13t03-22-56z
 
-occ-b-win2012-current: occ-b-win2012-pre
-occ-b-win2012-trusted-current: occ-b-win2012-trusted-pre
+occ-b-win2012-current: occ-b-win2012-v20200226
+occ-b-win2012-trusted-current: occ-b-win2012-trusted-v20200226
 occ-t-win10-64-current: occ-t-win10-64-pre
 occ-t-win10-64-gpu-s-current: occ-t-win10-64-gpu-s-pre
 occ-t-win7-32-current: occ-t-win7-32-pre
