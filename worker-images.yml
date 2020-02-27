@@ -14,12 +14,12 @@ monopacker-docker-worker-trusted-current: monopacker-docker-worker-gcp-trusted-2
 
 occ-b-win2012-current: occ-b-win2012-v20200226
 occ-b-win2012-trusted-current: occ-b-win2012-trusted-v20200226
-occ-t-win10-64-current: occ-t-win10-64-pre
-occ-t-win10-64-gpu-s-current: occ-t-win10-64-gpu-s-pre
-occ-t-win7-32-current: occ-t-win7-32-pre
-occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-pre
+occ-t-win10-64-current: occ-t-win10-64-v20200226
+occ-t-win10-64-gpu-s-current: occ-t-win10-64-gpu-s-v20200226
+occ-t-win7-32-current: occ-t-win7-32-v20200226
+occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-v20200226
 #occ-mpd001-b-win2012-current: occ-mpd-b-win2012-pre
-occ-mpd001-b-win2012-trusted-current: occ-mpd-b-win2012-trusted-pre
+occ-mpd001-b-win2012-trusted-current: occ-mpd-b-win2012-trusted-v20200226
 
 nss-win2012r2-current: nss-win2012r2-pre
 
