@@ -1256,6 +1256,9 @@
 - grant:
   - project:mobile:fennec-profile-manager:releng:signing:cert:fennec-nightly-signing
   - project:mobile:fennec-profile-manager:releng:signing:cert:fennec-production-signing
+  - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-nightly.*
+  - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-beta.*
+  - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-production.*
   to:
   - project:
       alias: fennec-profile-manager
