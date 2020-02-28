@@ -499,6 +499,23 @@
       level: 3
 
 - grant:
+  # Bug 1618285
+  - secrets:get:project/updatebot/try-sshkey
+  - secrets:get:project/updatebot/phabricator-token
+  - secrets:get:project/updatebot/bugzilla-api-key
+  - secrets:get:project/updatebot/database-password
+  - queue:get-artifact:project/updatebot/*
+  to:
+  - project:
+      alias:
+        - mozilla-central
+        # Holly is used for testing, see Bug 1599868
+        - holly
+      # Both repos are level 3, but this ensures that if holly is
+      # changed, these are not granted to a non-level 3 repo
+      level: 3
+
+- grant:
   # Bug 1530376: Add scopes for Code Review bot in CI
   - queue:route:project.relman.codereview.*
   # Bug 1541147: Coverity configuration is stored in this secret
@@ -1862,6 +1879,21 @@
   - groups:
     - civet-sec-inf
 
+- grant:
+  # Grant security team access to secrets and artifacts for updatebot
+  - secrets:get:project/updatebot/try-sshkey
+  - secrets:set:project/updatebot/try-sshkey
+  - secrets:get:project/updatebot/phabricator-token
+  - secrets:set:project/updatebot/phabricator-token
+  - secrets:get:project/updatebot/bugzilla-api-key
+  - secrets:set:project/updatebot/bugzilla-api-key
+  - secrets:get:project/updatebot/database-password
+  - secrets:set:project/updatebot/database-password
+  - queue:get-artifact:project/updatebot/*
+  to:
+  - groups:
+    - updatebot-sec-inf
+
 
 - grant:
   # Grant mobile the ability to see and modify their secrets
@@ -2027,6 +2059,11 @@
   to:
   - roles:
     - mozillians-group:civet-sec-inf
+- grant:
+  - assume:project:releng:ci-group:updatebot-sec-inf
+  to:
+  - roles:
+    - mozillians-group:updatebot-sec-inf
 - grant:
   - assume:project:releng:ci-group:code-review-developers
   to:
