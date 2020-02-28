@@ -274,6 +274,7 @@
   - project:releng:ship-it:action:mark-as-started
   - project:releng:ship-it:action:create-new-release
   - project:releng:snapcraft:firefox:mock
+  - project:releng:flathub:firefox:mock
   - project:releng:treescript:action:*
   - project:releng:treescript:action:tagging
   - queue:create-task:low:scriptworker-prov-v1/signing-mac-dev
@@ -404,6 +405,26 @@
       trust_domain: gecko
       level: [3]
       alias: [mozilla-esr68, mozilla-release, mozilla-beta]
+
+# pushing RCs to beta
+- grant:
+  - project:releng:flathub:firefox:stable
+  - project:releng:flathub:firefox:beta
+  to:
+  - projects:
+      job: ["action:release-promotion"]
+      trust_domain: gecko
+      level: [3]
+      alias: [mozilla-release]
+
+- grant:
+  - project:releng:flathub:firefox:beta
+  to:
+  - projects:
+      job: ["action:release-promotion"]
+      trust_domain: gecko
+      level: [3]
+      alias: [mozilla-beta]
 
 - grant:
   - project:releng:ship-it:server:production
