@@ -368,6 +368,7 @@ nss-try:
   repo_type: hg
   access: scm_level_1
   trust_domain: nss
+  is_try: true
   features:
     hg-push: true
     trust-domain-scopes: true
@@ -388,6 +389,7 @@ ci-configuration-try:
   repo_type: hg
   access: scm_level_1
   trust_domain: ci
+  is_try: true
   features:
     hg-push: true
     trust-domain-scopes: true
@@ -409,6 +411,7 @@ ci-admin-try:
   repo_type: hg
   access: scm_level_1
   trust_domain: ci
+  is_try: true
   features:
     hg-push: true
     taskgraph-actions: true
@@ -431,12 +434,12 @@ taskgraph-try:
   repo_type: hg
   access: scm_level_1
   trust_domain: taskgraph
+  is_try: true
   features:
     hg-push: true
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
-    is_try: true
 
 version-control-tools:
   repo: https://hg.mozilla.org/hgcustom/version-control-tools
