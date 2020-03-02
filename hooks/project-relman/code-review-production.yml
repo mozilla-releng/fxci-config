@@ -41,7 +41,7 @@ payload:
     taskclusterProxy: true
   image:
     type: indexed-image
-    namespace: project.code-review.bot.production
+    namespace: code-analysis.v2.code-review.branch.production
     path: public/code-review-bot.tar
   maxRunTime: 7200
 priority: lowest
