@@ -746,3 +746,12 @@ code-review:
   level: 3
   features:
     trust-domain-scopes: true
+
+# Bug 1617635: Support building & indexing code-coverage docker image
+code-coverage:
+  repo: https://github.com/mozilla/code-coverage
+  repo_type: git
+  trust_domain: code-analysis
+  level: 3
+  features:
+    trust-domain-scopes: true
