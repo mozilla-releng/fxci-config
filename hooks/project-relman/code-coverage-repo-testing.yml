@@ -38,7 +38,10 @@ $merge:
       $eval: payload
     features:
       taskclusterProxy: true
-    image: mozilla/code-coverage:bot-73947442b22b6c8b766a67220a4111c623923cc5
+    image:
+      type: indexed-image
+      namespace: code-analysis.v2.code-coverage.branch.testing
+      path: public/code-coverage-bot.tar
     maxRunTime: 14400
   priority: lowest
   retries: 5
