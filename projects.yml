@@ -39,6 +39,7 @@
 #   - `github-taskgraph` -- this https://github.com/mozilla-mobile repository has started using taskgraph
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - 'scriptworker' -- this repository uses at least one scriptworker instance
+#   - 'shipit' -- this repository interacts with a shipit instance
 #   - 'taskgraph-cron' -- tasks defined in `.cron.yml` can run for this project (non-gecko/comm taskgraph repos only)
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
@@ -503,6 +504,7 @@ fenix:
     mobile-pushapk-phase: true
     mobile-sign-phase: true
     scriptworker: true
+    shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
     treeherder-reporting: true
@@ -524,6 +526,7 @@ fenix-jlorenzo:
     mobile-pushapk-phase: true
     mobile-sign-phase: true
     scriptworker: true
+    shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
   cron:
