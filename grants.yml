@@ -967,7 +967,7 @@
   to:
   - project:
       feature: beetmover-maven-phase
-      job: ["release"]
+      job: ["release", "pull-request"]
   - project:
       feature: beetmover-maven-snapshot-phase
       job: ["cron:snapshot"]
@@ -990,6 +990,15 @@
       feature: beetmover-maven-snapshot-phase
       level: 3
       job: ["cron:snapshot"]
+
+- grant:
+  - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-staging
+  - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-snapshot-staging
+  - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-nightly-staging
+  to:
+  - project:
+      feature: beetmover-maven-phase
+      job: ["pull-request"]
 
 - grant:
   - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-nightly-production
