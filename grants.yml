@@ -1428,6 +1428,9 @@
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - project:xpi:releng:signing:cert:dep-signing
   - project:xpi:releng:signing:cert:release-signing
+  - project:xpi:ship-it:server:staging
+  - project:xpi:ship-it:server:production
+  - project:xpi:ship-it:action:mark-as-shipped
   - queue:create-task:highest:xpi-{level}/*
   - queue:create-task:highest:xpi-t/*
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
