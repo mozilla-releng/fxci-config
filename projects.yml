@@ -485,6 +485,7 @@ reference-browser:
     mobile-pushapk-phase: true
     scriptworker: true
     taskgraph-cron: true
+    taskgraph-actions: true
     treeherder-reporting: true
   cron:
     targets: [nightly, raptor]
