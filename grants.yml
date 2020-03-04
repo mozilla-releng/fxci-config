@@ -1571,6 +1571,15 @@
   - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-esr68/nightly-*
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/nightly-*
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
+  # Allow sherrifs to manage mobile trees
+  - queue:quarantine-worker:mobile-*
+  - worker-manager:remove-worker:mobile-*
+  - queue:cancel-task:mobile-level-*
+  - queue:rerun-task:mobile-level-*
+  - hooks:trigger-hook:project-mobile/in-tree-action-1-generic/*
+  - hooks:trigger-hook:project-mobile/in-tree-action-3-generic/*
+  - hooks:trigger-hook:project-mobile/in-tree-action-1-cancel-all/*
+  - hooks:trigger-hook:project-mobile/in-tree-action-3-cancel-all/*
   to:
   - groups:
     - sheriff
