@@ -241,7 +241,7 @@
   - queue:create-task:medium:proj-autophone/*
   - queue:create-task:low:bitbar/gecko-t-*
   - queue:create-task:low:localprovisioner/*
-  - queue:get-artifact:project/gecko/android-*
+  - queue:get-artifact:project/gecko/*
   - queue:route:index.garbage.*
   - queue:route:notify.*
   - secrets:get:project/taskcluster/gecko/hgfingerprint
@@ -1848,9 +1848,8 @@
   # Allow acceess scopes worker caches
   - docker-worker:cache:mozillaonline-level-1-*
   - docker-worker:cache:mozillaonline-level-3-*
-  # Allow access to pacakged android sdk's from mozilla-central
-  - queue:get-artifact:project/gecko/android-ndk/*
-  - queue:get-artifact:project/gecko/android-sdk/*
+  # Allow access to private toolchains from mozilla-central
+  - queue:get-artifact:project/gecko/*
   # Allow acess to API keys
   - secrets:get:project/releng/gecko/build/level-1/*
   # Allow access to public tooltool artifacts
