@@ -2184,3 +2184,34 @@
   - roles:
     - mozilla-group:team_relops
     - mozilla-group:releng
+- grant:
+  - assume:github-admin:*
+  - assume:hook-id:*
+  - assume:login-identity:*
+  - assume:moz-tree:*
+  - assume:mozillians-group:*
+  - assume:mozillians-user:*
+  - assume:project-admin:*
+  - assume:project:*
+  - assume:repo:*
+  - assume:worker-pool:*
+  - assume:worker-type:*
+  - auth:*
+  - docker-worker:*
+  - generic-worker:*
+  - github:*
+  - hooks:*
+  - in-tree:*
+  - index:*
+  - notify:*
+  - project:*
+  - purge-cache:*
+  - queue:*
+  - scheduler:*
+  - secrets:*
+  - worker-manager:*
+  - worker:*
+  to:
+  - roles:
+    - mozilla-group:team_taskcluster
+  environments: staging
