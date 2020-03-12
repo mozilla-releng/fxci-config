@@ -741,6 +741,7 @@ mvp-adhoc:
   features:
     trust-domain-scopes: true
     taskgraph-actions: true
+    github-taskgraph: true
 
 # Bug 1614312: Add code-analysis project for code-review & code-coverage
 code-review:
