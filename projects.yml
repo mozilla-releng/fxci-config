@@ -33,6 +33,7 @@
 #   - `beetmover-maven-snapshot-phase` -- this https://github.com/mozilla-mobile repository should have beetmover snapshot production related scopes associated
 #   - `beetmover-maven-nightly-phase` -- this https://github.com/mozilla-mobile repository should have beetmover nightly production related scopes associated
 #   - `mobile-firebase-testing` -- this https://github.com/mozilla-mobile repository has end-to-end testing involving devices hosted at Google's Firebase
+#   - `mobile-bump-github` -- this https://github.com/mozilla-mobile repository gets bumped.
 #   - `mobile-public-code-coverage` -- this https://github.com/mozilla-mobile repository has code coverage enabled on PRs
 #   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
 #   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
@@ -480,6 +481,7 @@ reference-browser:
     autophone: true
     github-taskgraph: true
     mobile-roles: true
+    mobile-bump-github: true
     mobile-firebase-testing: true
     mobile-sign-phase: true
     mobile-pushapk-phase: true
@@ -488,7 +490,10 @@ reference-browser:
     taskgraph-actions: true
     treeherder-reporting: true
   cron:
-    targets: [nightly, raptor]
+    targets:
+      - bump-android-components
+      - nightly
+      - raptor
 
 fenix:
   repo: https://github.com/mozilla-mobile/fenix

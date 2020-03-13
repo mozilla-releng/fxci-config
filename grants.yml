@@ -1063,6 +1063,14 @@
       job: ["branch:*"]
 
 - grant:
+  - secrets:get:project/mobile/github
+  to:
+  - project:
+      feature: mobile-bump-github
+      level: 3
+      job: ["cron:bump-*"]
+
+- grant:
   - secrets:get:project/mobile/{alias}/firebase
   to:
   - project:
