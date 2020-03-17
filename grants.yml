@@ -930,6 +930,7 @@
   - queue:create-task:highest:mobile-t/*
   - queue:create-task:{priority}:built-in/*
   - queue:route:index.project.mobile.{trust_project}.cache.level-{level}.*
+  - queue:route:index.mobile.{trust_project}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
   - project:mobile:{trust_project}:releng:signing:cert:dep-signing
   - project:mobile:{trust_project}:releng:signing:format:*
@@ -939,6 +940,7 @@
 
 - grant:
   - queue:route:index.project.mobile.{trust_project}.v2.branch.<..>.*
+  - queue:route:index.mobile.{trust_project}.v2.branch.<..>.*
   to:
   - project:
       feature: mobile-roles
@@ -948,6 +950,7 @@
 # Cron jobs aren't covered by the role defined above
 - grant:
   - queue:route:index.project.mobile.{trust_project}.v2.branch.master.*
+  - queue:route:index.mobile.{trust_project}.v2.branch.master.*
   to:
   - project:
       feature: mobile-roles
@@ -1018,6 +1021,7 @@
 
 - grant:
   - queue:route:index.project.mobile.{trust_project}.v2.nightly.*
+  - queue:route:index.mobile.{trust_project}.v2.nightly.*
   to:
   - project:
       feature: mobile-sign-phase
@@ -1099,7 +1103,9 @@
 - grant:
   # XXX v3.raptor is used by reference-browser, v2.performance-test by fenix
   - queue:route:index.project.mobile.{alias}.v3.raptor.*
+  - queue:route:index.mobile.{alias}.v3.raptor.*
   - queue:route:index.project.mobile.{alias}.v2.performance-test.*
+  - queue:route:index.mobile.{alias}.v2.performance-test.*
   to:
   - project:
       feature: autophone
@@ -1138,7 +1144,9 @@
   - project:mobile:fenix:releng:signing:cert:production-signing
 
   - queue:route:index.project.mobile.fenix.v2.beta.*
+  - queue:route:index.mobile.fenix.v2.beta.*
   - queue:route:index.project.mobile.fenix.v2.production.*
+  - queue:route:index.mobile.fenix.v2.production.*
 
   - secrets:get:project/mobile/fenix/beta
   - secrets:get:project/mobile/fenix/production
@@ -1156,7 +1164,9 @@
   - project:mobile:fenix:releng:signing:cert:fennec-nightly-signing
 
   - queue:route:index.project.mobile.fenix.v2.nightly.*
+  - queue:route:index.mobile.fenix.v2.nightly.*
   - queue:route:index.project.mobile.fenix.v2.fennec-nightly.*
+  - queue:route:index.mobile.fenix.v2.fennec-nightly.*
 
   - secrets:get:project/mobile/fenix/nightly
   - secrets:get:project/mobile/fenix/fennec-nightly
@@ -1168,12 +1178,15 @@
   # XXX `fennec-production-signing` handles beta signing too.
   - project:mobile:fenix:releng:signing:cert:fennec-production-signing
   - queue:route:index.project.mobile.fenix.v2.fennec-beta.*
+  - queue:route:index.mobile.fenix.v2.fennec-beta.*
   - queue:route:index.project.mobile.fenix.v2.fennec-production.*
+  - queue:route:index.mobile.fenix.v2.fennec-production.*
   - secrets:get:project/mobile/fenix/fennec-beta
   - secrets:get:project/mobile/fenix/fennec-production
 
   - project:mobile:fenix:releng:signing:cert:fennec-nightly-signing
   - queue:route:index.project.mobile.fenix.v2.fennec-nightly.*
+  - queue:route:index.mobile.fenix.v2.fennec-nightly.*
   - secrets:get:project/mobile/fenix/fennec-nightly
   to:
   - project:
@@ -1191,6 +1204,7 @@
 - grant:
   - project:mobile:fenix:releng:signing:cert:fennec-production-signing
   - queue:route:index.project.mobile.fenix.v2.fennec-beta.*
+  - queue:route:index.mobile.fenix.v2.fennec-beta.*
   - secrets:get:project/mobile/fenix/fennec-beta
   to:
   - project:
@@ -1199,6 +1213,7 @@
 
 - grant:
   - queue:route:index.project.mobile.fenix.v2.branch.fennec/beta.*
+  - queue:route:index.mobile.fenix.v2.branch.fennec/beta.*
   to:
   - project:
       alias: fenix
@@ -1207,6 +1222,7 @@
 # TODO Bug 1601928: Stop using the garbage namespace once the {alias}/{project} story is defined
 - grant:
   - queue:route:index.garbage.project.mobile.fenix.v2.branch.<..>.*
+  - queue:route:index.garbage.mobile.fenix.v2.branch.<..>.*
   to:
   - project:
       alias: fenix-jlorenzo
@@ -1240,6 +1256,7 @@
 
 - grant:
   - queue:route:index.project.mobile.reference-browser.v3.nightly.*
+  - queue:route:index.mobile.reference-browser.v3.nightly.*
   - secrets:get:project/mobile/reference-browser/nimbledroid
   - secrets:get:project/mobile/reference-browser/sentry
   - queue:route:notify.email.android-components-team@mozilla.com.on-failed
@@ -1276,6 +1293,7 @@
 
 - grant:
     - queue:route:index.project.mobile.focus.release.latest
+    - queue:route:index.mobile.focus.release.latest
   to:
   - project:
       alias: focus-android
@@ -1283,6 +1301,7 @@
 
 - grant:
     - queue:route:index.project.mobile.focus.nightly.latest
+    - queue:route:index.mobile.focus.nightly.latest
     - queue:route:notify.email.firefox-focus@mozilla.com.on-failed
   to:
   - project:
@@ -1309,8 +1328,11 @@
   - project:mobile:fennec-profile-manager:releng:signing:cert:fennec-nightly-signing
   - project:mobile:fennec-profile-manager:releng:signing:cert:fennec-production-signing
   - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-nightly.*
+  - queue:route:index.mobile.fennec-profile-manager.v1.fennec-nightly.*
   - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-beta.*
+  - queue:route:index.mobile.fennec-profile-manager.v1.fennec-beta.*
   - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-production.*
+  - queue:route:index.mobile.fennec-profile-manager.v1.fennec-production.*
   to:
   - project:
       alias: fennec-profile-manager
