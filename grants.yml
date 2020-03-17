@@ -1494,6 +1494,21 @@
       - mvp-adhoc
       job: ["branch:*", "action:*", "pull-request", "action:*", "cron:*"]
 
+# Scriptworker and scriptworker-scripts
+
+- grant:
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+  - queue:create-task:highest:scriptworker-{level}/*
+  - queue:create-task:highest:scriptworker-t/*
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+  - queue:route:index.{trust_domain}.v2.{alias}.*
+  - queue:route:index.scriptworker.cache.level-{level}.*
+  to:
+  - project:
+      alias:
+      - aki-scriptworker-scripts
+      job: ["branch:*", "action:*", "pull-request", "action:*", "cron:*"]
+
 ##
 # delegate cron:nightly-* to hand-managed nightly roles
 #

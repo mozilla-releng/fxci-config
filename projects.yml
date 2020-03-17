@@ -752,6 +752,17 @@ code-review:
   features:
     trust-domain-scopes: true
 
+# Bug 1597598: Add taskgraph support to scriptworker-scripts
+aki-scriptworker-scripts:
+  repo: https://github.com/escapewindow/sws-taskgraph
+  repo_type: git
+  trust_domain: scriptworker
+  level: 1
+  features:
+    trust-domain-scopes: true
+    taskgraph-actions: true
+    github-taskgraph: true
+
 # Bug 1617635: Support building & indexing code-coverage docker image
 code-coverage:
   repo: https://github.com/mozilla/code-coverage
