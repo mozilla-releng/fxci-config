@@ -2045,6 +2045,8 @@
 - grant:
   # Allow code-review developers to create tasks directly
   - assume:repo:github.com/mozilla/code-review:pull-request
+  # Allow code-review developers to trigger their hooks
+  - hooks:trigger-hook:project-relman/code-review-*
   to:
   - group:
     - code-review-developers
