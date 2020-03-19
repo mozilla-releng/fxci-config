@@ -491,6 +491,8 @@ reference-browser:
     treeherder-reporting: true
   cron:
     targets:
+      # Cannot name the following entry "bump-android-components" because the full hookId is larger
+      # than 64 characters. For more details see: https://phabricator.services.mozilla.com/D67443
       - bump-android-comp
       - nightly
 
@@ -504,6 +506,7 @@ fenix:
     autophone: true
     github-taskgraph: true
     mobile-roles: true
+    mobile-bump-github: true
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
     mobile-pushapk-phase: true
@@ -516,6 +519,7 @@ fenix:
   cron:
     targets:
       - browsertime
+      - bump-android-components
       - nightly
       - raptor
 
