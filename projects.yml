@@ -491,7 +491,7 @@ reference-browser:
     treeherder-reporting: true
   cron:
     targets:
-      - bump-android-components
+      - bump-android-comp
       - nightly
       - raptor
 
