@@ -493,7 +493,6 @@ reference-browser:
     targets:
       - bump-android-comp
       - nightly
-      - raptor
 
 fenix:
   repo: https://github.com/mozilla-mobile/fenix
@@ -515,7 +514,10 @@ fenix:
     taskgraph-actions: true
     treeherder-reporting: true
   cron:
-    targets: [nightly, raptor]
+    targets:
+      - browsertime
+      - nightly
+      - raptor
 
 fenix-jlorenzo:
   repo: https://github.com/JohanLorenzo/fenix
@@ -536,7 +538,7 @@ fenix-jlorenzo:
     taskgraph-cron: true
     taskgraph-actions: true
   cron:
-    targets: [nightly, raptor]
+    targets: [nightly]
     hooks_owner: jlorenzo+tc@mozilla.com
     notify_emails: []
 

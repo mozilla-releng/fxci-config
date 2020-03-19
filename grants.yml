@@ -1097,29 +1097,23 @@
   to:
   - project:
       feature: autophone
-      job: ["branch:*", "cron:raptor", "pull-request"]
+      job: ["pull-request"]
+  - project:
+      alias: fenix
+      job: ["cron:raptor", "cron:browsertime"]
+  - project:
+      alias: reference-browser
+      job: ["branch:*"]
 
 - grant:
   - queue:route:notify.email.perftest-alerts@mozilla.com.on-failed
   to:
   - project:
-      feature: autophone
-      level: 3
-      job: ["branch:master", "cron:raptor"]
-
-
-- grant:
-  # XXX v3.raptor is used by reference-browser, v2.performance-test by fenix
-  - queue:route:index.project.mobile.{alias}.v3.raptor.*
-  - queue:route:index.mobile.{alias}.v3.raptor.*
-  - queue:route:index.project.mobile.{alias}.v2.performance-test.*
-  - queue:route:index.mobile.{alias}.v2.performance-test.*
-  to:
+      alias: fenix
+      job: ["cron:raptor", "cron:browsertime"]
   - project:
-      feature: autophone
-      level: 3
-      job: ["branch:master", "cron:raptor"]
-
+      alias: reference-browser
+      job: ["branch:master"]
 
 - grant:
   - project:releng:ship-it:action:mark-as-shipped
@@ -1227,6 +1221,16 @@
       alias: fenix
       job: ["cron:fennec-beta"]
 
+- grant:
+  # XXX v2.performance-test is used by fenix
+  - queue:route:index.project.mobile.{alias}.v2.performance-test.*
+  - queue:route:index.mobile.{alias}.v2.performance-test.*
+  to:
+  - project:
+      alias: fenix
+      level: 3
+      job: ["cron:raptor", "cron:browsertime"]
+
 # TODO Bug 1601928: Stop using the garbage namespace once the {alias}/{project} story is defined
 - grant:
   - queue:route:index.garbage.project.mobile.fenix.v2.branch.<..>.*
@@ -1272,6 +1276,16 @@
   - project:
       alias: reference-browser
       job: ["cron:nightly"]
+
+- grant:
+  # XXX v3.raptor is used by reference-browser
+  - queue:route:index.project.mobile.{alias}.v3.raptor.*
+  - queue:route:index.mobile.{alias}.v3.raptor.*
+  to:
+  - project:
+      alias: reference-browser
+      level: 3
+      job: ["branch:master"]
 
 # focus (android) scopes
 - grant:
