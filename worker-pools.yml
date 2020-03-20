@@ -2584,7 +2584,7 @@ gecko-t/t-linux-metal:
   provider_id: aws
   config:
     regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-2020-03-17T21-09-10Z
+    image: monopacker-docker-worker-2020-03-20T18-47-01Z
     minCapacity: 0
     maxCapacity: 560
     spot: true
@@ -2597,6 +2597,7 @@ gecko-t/t-linux-metal:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 1200, VolumeType: gp2}
       worker-config:
+        capacity: 36
         dockerConfig:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 30000000000}
@@ -2608,6 +2609,7 @@ gecko-t/t-linux-metal:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 1200, VolumeType: gp2}
       worker-config:
+        capacity: 36
         dockerConfig:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 30000000000}
@@ -2619,6 +2621,7 @@ gecko-t/t-linux-metal:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 1000, VolumeType: gp2}
       worker-config:
+        capacity: 28
         dockerConfig:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 30000000000}

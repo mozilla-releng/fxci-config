@@ -128,6 +128,11 @@ monopacker-docker-worker-2020-03-17T21-09-10Z:
     us-east-1: ami-0802c9c8ead2064e2
     us-west-1: ami-01019d9ec341bfd97
     us-west-2: ami-05779c416590ed79a
+monopacker-docker-worker-2020-03-20T18-47-01Z:
+  aws:
+    us-east-1: ami-0a915b24d43547339
+    us-west-1: ami-005fe4cf399571879
+    us-west-2: ami-034c2aed1cc529ceb
 monopacker-docker-worker-gcp-trusted-2020-02-13t03-22-56z:
   fxci-level3-gcp:
     projects/fxci-production-level3-workers/global/images/docker-worker-gcp-trusted-googlecompute-2020-02-13t03-22-56z
