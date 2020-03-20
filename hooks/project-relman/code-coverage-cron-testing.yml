@@ -45,5 +45,4 @@ schedulerId: relman
 scopes:
 - secrets:get:project/relman/code-coverage/runtime-testing
 - docker-worker:cache:code-coverage-bot-testing
-- index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
 - index:insert-task:project.relman.code-coverage.testing.cron.*

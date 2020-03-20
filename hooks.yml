@@ -27,7 +27,6 @@ project-relman/code-coverage-repo-testing:
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - docker-worker:cache:code-coverage-bot-testing
-    - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.testing.repo.*
     - notify:email:*
     - queue:create-task:lowest:code-coverage/bot
@@ -71,7 +70,6 @@ project-relman/code-coverage-cron-testing:
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - docker-worker:cache:code-coverage-bot-testing
-    - index:insert-task:project.releng.services.project.testing.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.testing.cron.*
     - notify:email:*
     - queue:create-task:lowest:code-coverage/bot
