@@ -571,6 +571,17 @@ focus-android:
     scriptworker: true
     taskgraph-cron: true
 
+firefox-ios:
+  repo: https://github.com/mozilla-mobile/firefox-ios
+  trust_domain: mobile
+  trust_project: firefox-ios
+  repo_type: git
+  level: 3
+  features:
+    github-taskgraph: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+
 firefox-tv:
   repo: https://github.com/mozilla-mobile/firefox-tv
   trust_domain: mobile
