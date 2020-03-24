@@ -929,6 +929,7 @@
   - queue:create-task:highest:mobile-{level}/*
   - queue:create-task:highest:mobile-t/*
   - queue:create-task:{priority}:built-in/*
+  - queue:get-artifact:mobile/android-sdk/*
   - queue:route:index.project.mobile.{trust_project}.cache.level-{level}.*
   - queue:route:index.mobile.{trust_project}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
