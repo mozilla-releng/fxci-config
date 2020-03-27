@@ -2595,17 +2595,7 @@ gecko-t/t-linux-metal:
         KeyName: docker-worker-bug1600071
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvdc
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvdd
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvde
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvdf
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvdg
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
+          Ebs: {DeleteOnTermination: true, VolumeSize: 1200, VolumeType: gp2}
       worker-config:
         capacity: 36
         dockerConfig:
@@ -2617,17 +2607,7 @@ gecko-t/t-linux-metal:
         KeyName: docker-worker-bug1600071
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvdc
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvdd
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvde
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvdf
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvdg
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
+          Ebs: {DeleteOnTermination: true, VolumeSize: 1200, VolumeType: gp2}
       worker-config:
         capacity: 36
         dockerConfig:
@@ -2639,15 +2619,7 @@ gecko-t/t-linux-metal:
         KeyName: docker-worker-bug1600071
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvdc
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvdd
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvde
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
-        - DeviceName: /dev/xvdf
-          Ebs: {DeleteOnTermination: true, VolumeSize: 200, VolumeType: gp2}
+          Ebs: {DeleteOnTermination: true, VolumeSize: 1000, VolumeType: gp2}
       worker-config:
         capacity: 28
         dockerConfig:
