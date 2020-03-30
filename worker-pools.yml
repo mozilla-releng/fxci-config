@@ -2586,42 +2586,70 @@ gecko-t/t-linux-metal:
     regions: [us-east-1, us-west-1, us-west-2]
     image: monopacker-docker-worker-2020-03-20T18-47-01Z
     minCapacity: 0
-    maxCapacity: 560
+    maxCapacity: 720
     spot: true
     instance_types:
     - instanceType: m5.metal
-      capacityPerInstance: 36
+      capacityPerInstance: 24
       launchConfig:
         KeyName: docker-worker-bug1600071
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 1200, VolumeType: gp2}
+          # We need this volume size to be able to claim the maximum Iops
+          Ebs: {DeleteOnTermination: true, VolumeSize: 2000, VolumeType: io1, Iops: 64000}
       worker-config:
-        capacity: 36
+        capacity: 24
+        dockerConfig:
+          allowPrivileged: true
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5d.metal
+      capacityPerInstance: 24
+      launchConfig:
+        KeyName: docker-worker-bug1600071
+      worker-config:
+        capacity: 24
         dockerConfig:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: r5.metal
-      capacityPerInstance: 36
+      capacityPerInstance: 24
       launchConfig:
         KeyName: docker-worker-bug1600071
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 1200, VolumeType: gp2}
+          Ebs: {DeleteOnTermination: true, VolumeSize: 2000, VolumeType: io1, Iops: 64000}
       worker-config:
-        capacity: 36
+        capacity: 24
+        dockerConfig:
+          allowPrivileged: true
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: r5d.metal
+      capacityPerInstance: 24
+      launchConfig:
+        KeyName: docker-worker-bug1600071
+      worker-config:
+        capacity: 24
         dockerConfig:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: c5.metal
-      capacityPerInstance: 28
+      capacityPerInstance: 24
       launchConfig:
         KeyName: docker-worker-bug1600071
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 1000, VolumeType: gp2}
+          Ebs: {DeleteOnTermination: true, VolumeSize: 2000, VolumeType: io1, Iops: 64000}
       worker-config:
-        capacity: 28
+        capacity: 24
+        dockerConfig:
+          allowPrivileged: true
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5d.metal
+      capacityPerInstance: 24
+      launchConfig:
+        KeyName: docker-worker-bug1600071
+      worker-config:
+        capacity: 24
         dockerConfig:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 30000000000}
