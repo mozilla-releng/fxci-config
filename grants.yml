@@ -1944,7 +1944,9 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/snapshot
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/bump-android-comp
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/bump-android-components
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/fennec-beta
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public
