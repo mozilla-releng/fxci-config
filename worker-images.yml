@@ -7,8 +7,8 @@
 # Aliases can be defined by a simple string; this is useful for "current" images
 
 ---
-docker-worker-hvm-builder-current: docker-worker-v202003111922-hvm-builder
-docker-worker-hvm-builder-trusted-current: docker-worker-v202003111922-hvm-builder-trusted
+docker-worker-hvm-builder-current: docker-worker-v202004031836-hvm-builder
+docker-worker-hvm-builder-trusted-current: docker-worker-v202004031836-hvm-builder-trusted
 monopacker-docker-worker-current: monopacker-docker-worker-2020-02-07t09-14-17z
 monopacker-docker-worker-trusted-current: monopacker-docker-worker-gcp-trusted-2020-02-13t03-22-56z
 
@@ -101,6 +101,16 @@ docker-worker-v202003111922-hvm-builder-trusted:
     us-east-1: ami-07e70e699424dd695
     us-west-1: ami-09daef7725caf1a0a
     us-west-2: ami-0685cc694058463df
+docker-worker-v202004031836-hvm-builder:
+  aws:
+    us-east-1: ami-0282791a2bf856156
+    us-west-1: ami-06a3ad34aab3661e3
+    us-west-2: ami-0102e9e98777c889d
+docker-worker-v202004031836-hvm-builder-trusted:
+  aws:
+    us-east-1: ami-00d06a33e279e3f08
+    us-west-1: ami-0e21aaf8c44636912
+    us-west-2: ami-00acae7370bdf99d4
 
 # monopacker docker-worker images
 monopacker-docker-worker-trusted-2020-01-08t20-30-16z:
@@ -136,6 +146,11 @@ monopacker-docker-worker-2020-03-20T18-47-01Z:
 monopacker-docker-worker-gcp-trusted-2020-02-13t03-22-56z:
   fxci-level3-gcp:
     projects/fxci-production-level3-workers/global/images/docker-worker-gcp-trusted-googlecompute-2020-02-13t03-22-56z
+monopacker-docker-worker-2020-04-03t19-20-03z:
+  aws:
+    us-east-1: ami-030b2ab7c8f88b9e1
+    us-west-1: ami-0237591aaa5652efe
+    us-west-2: ami-0b2735a529984897b
 
 # generic-worker images
 gwci-linux:

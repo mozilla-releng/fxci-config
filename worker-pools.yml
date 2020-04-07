@@ -2584,7 +2584,7 @@ gecko-t/t-linux-metal:
   provider_id: aws
   config:
     regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-2020-03-20T18-47-01Z
+    image: monopacker-docker-worker-2020-04-03t19-20-03z
     minCapacity: 0
     maxCapacity: 720
     spot: true
