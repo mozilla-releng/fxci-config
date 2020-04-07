@@ -2209,6 +2209,12 @@
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|geoff
     # Magnus Melin (https://bugzilla.mozilla.org/show_bug.cgi?id=1605714)
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mkmelin
+    # Patrick Cloke (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|clokep
+    # Rob Lemly (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|thunderbird
+    # Ian Neal (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|iann_cvs
 - grant:
   - assume:project:releng:ci-group:thunderbird-releng
   to:
