@@ -286,8 +286,7 @@ project-releng/cron-task-mozilla-mobile-focus-android/nightly-public:
     Managed from ci-configuration's hooks.yml for now.
   owner: skaspari@mozilla.com
   email_on_error: true
-  schedule:
-    - '0 12 * * *'
+  schedule: []
   scopes:
     - assume:repo:github.com/mozilla-mobile/focus-android:cron:nightly
   template_file: hooks/project-releng/cron-task-mozilla-mobile-focus-android/nightly-public.yml
