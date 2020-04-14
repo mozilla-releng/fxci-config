@@ -521,6 +521,7 @@ fenix:
       - browsertime
       - bump-android-components
       - nightly
+      - nightly-on-google-play
       - raptor
 
 fenix-jlorenzo:
