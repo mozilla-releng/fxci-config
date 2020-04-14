@@ -597,7 +597,7 @@ firefox-tv:
     mobile-pushapk-phase: true
     scriptworker: true
 
-# https://github.com/mozilla's repositories
+# mozilla's Github repositories
 application-services:
   repo: https://github.com/mozilla/application-services/
   repo_type: git
@@ -609,6 +609,17 @@ application-services:
     github-taskgraph: true
     scriptworker: true
     taskgraph-cron: true
+
+glean:
+  repo: https://github.com/mozilla/glean/
+  repo_type: git
+  level: 3
+  trust_domain: glean
+  features:
+    # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
+    # across projects.
+    github-taskgraph: true
+    scriptworker: true
 
 # mozilla-releng Github repositories
 k8s-autoscale:
