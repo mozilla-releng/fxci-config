@@ -1143,6 +1143,14 @@
       job: ["branch:*", "pull-request"]
 
 - grant:
+  - queue:route:index.project.mobile.fenix.v2.debug.*
+  - queue:route:index.mobile.fenix.v2.debug.*
+  to:
+  - project:
+      alias: fenix
+      job: ["branch:*"]
+
+- grant:
   - project:mobile:fenix:releng:signing:cert:beta-signing
   - project:mobile:fenix:releng:signing:cert:production-signing
 
