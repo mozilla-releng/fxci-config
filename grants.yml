@@ -1432,10 +1432,6 @@
   - queue:route:notify.email.*
   - queue:route:checks
   - queue:get-artifact:project/mpd001/*
-  - project:mpd001:releng:signing:format:sha2signcode
-  - project:mpd001:releng:signing:format:autograph_authenticode
-  # Temporary secret for cloning; this should be renamed
-  - secrets:get:project/releng/callek/mpd001-deploykey
   # Create level-1 scopes explicitly
   - queue:create-task:{priority}:mpd001-1/*
   - queue:route:index.{trust_domain}.cache.level-1.*
@@ -1450,9 +1446,7 @@
 
 - grant:
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
-  - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
-  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-1-*
-  - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-1-*
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - project:mpd001:releng:signing:cert:dep-signing
   to:
   - project:
@@ -1462,10 +1456,8 @@
       # don't get access to scriptworkers.
       job:
         - "branch:master"
+        - "branch:releng"
         - "pull-request"
-        - "branch:callek-branch-of-tom"
-        - "branch:releng-develop"
-        - "branch:releng-release"
         - "branch:release"
 
 - grant:
@@ -1474,11 +1466,11 @@
   - project:
       alias:
       - mpd001
-      # Only enable this for master and pull-requests, so that in-repo branches
-      # don't get access to scriptworkers.
+      # Only enable this for master and release branches, so that in-repo branches
+      # don't get access to release signing.
       job:
+        - "branch:releng"
         - "branch:master"
-        - "branch:releng-release"
         - "branch:release"
 
 # XPI
