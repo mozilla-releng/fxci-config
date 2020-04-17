@@ -1148,6 +1148,39 @@
       feature: ["shipit", "taskgraph-actions"]
       job: ["action:release-promotion"]
 
+- grant:
+  - project:releng:ship-it:server:production
+  to:
+  - project:
+      # TODO: in the glorious future when Fenix will solely be released via
+      # Ship-it we can remove the individual Github release section. But until
+      # then we need to support both for a smooth transition
+      level: 3
+      feature: shipit
+      job: ["release"]
+  - project:
+      level: 3
+      feature: ["shipit", "taskgraph-actions"]
+      job: ["action:release-promotion"]
+
+- grant:
+  - project:releng:ship-it:server:staging
+  to:
+  - project:
+      # TODO: once pull-request-based staging releases are more stable and
+      # available for all mobile projects, we can get rid of this `level=1`
+      # section which addresses the RelEngers forks
+      level: 1
+      feature: shipit
+      job: ["release"]
+  - project:
+      level: 1
+      feature: ["shipit", "taskgraph-actions"]
+      job: ["action:release-promotion"]
+  - project:
+      level: 3
+      feature: ["shipit", "taskgraph-actions"]
+      job: ["pull-request"]
 # fenix specific scopes
 - grant:
   - queue:route:index.project.fenix.android.preview-builds
