@@ -1040,8 +1040,21 @@
   to:
   - project:
       alias: android-components
-      level: 3
       job: ["release", "cron:snapshot", "cron:nightly"]
+
+- grant:
+  - queue:route:index.mobile.{trust_project}.v1.release.*
+  to:
+  - project:
+      alias: android-components
+      job: ["release"]
+
+- grant:
+  - queue:route:index.mobile.{trust_project}.v1.nightly.*
+  to:
+  - project:
+      alias: android-components
+      job: ["cron:nightly"]
 
 - grant:
   - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}
