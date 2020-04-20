@@ -51,7 +51,7 @@ payload:
     command:
         $flatten:
             - 'run-task'
-            - '--vcs-checkout=/builds/worker/checkouts/src'
+            - '--gecko-checkout=/builds/worker/checkouts/src'
             - '--taskgraph-checkout=/builds/worker/checkouts/taskgraph'
             - '--task-cwd=/builds/worker/checkouts/src'
             - '--'

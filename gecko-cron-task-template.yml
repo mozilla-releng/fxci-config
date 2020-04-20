@@ -49,7 +49,7 @@ payload:
         $flatten:
             - '/builds/worker/bin/run-task'
             - {$eval: checkout_options}
-            - '--sparse-profile=build/sparse-profiles/taskgraph'
+            - '--gecko-sparse-profile=build/sparse-profiles/taskgraph'
             - '--'
             - 'bash'
             - '-cx'
