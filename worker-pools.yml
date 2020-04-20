@@ -1207,7 +1207,7 @@ gecko-t/t-win10-64:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         - DeviceName: xvdf
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-gecko-t/t-win10-64-srctest:
+gecko-t/t-win10-64-source:
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
