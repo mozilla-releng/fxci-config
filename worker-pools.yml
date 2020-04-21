@@ -1055,16 +1055,19 @@ gecko-t/t-linux-xlarge-source:
   email_on_error: false
   provider_id: aws
   config:
+    regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
-    maxCapacity: 10
+    maxCapacity: 3500
     worker-config:
       dockerConfig: {allowPrivileged: false}
-    regions: [us-east-1, us-west-1, us-west-2]
     instance_types:
     - instanceType: m3.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: c3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.2xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
 gecko-t/misc:
