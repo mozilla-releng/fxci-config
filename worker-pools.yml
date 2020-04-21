@@ -1070,6 +1070,24 @@ gecko-t/t-linux-xlarge-source:
     - instanceType: c3.2xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+comm-t/t-linux-xlarge-source:
+  description: Worker for Firefox automation tests needing source checkouts.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 10
+    worker-config:
+      dockerConfig: {allowPrivileged: false}
+    regions: [us-east-1, us-west-1, us-west-2]
+    instance_types:
+    - instanceType: m3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
 gecko-t/misc:
   description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
     SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
