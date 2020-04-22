@@ -931,6 +931,9 @@
   - queue:create-task:{priority}:built-in/*
   - queue:get-artifact:mobile/android-sdk/*
   - queue:route:index.project.mobile.{trust_project}.cache.level-{level}.*
+  - queue:route:index.mobile.v2.{trust_project}.cache.level-{level}.*
+  # TODO Bug 1631839: Remove the following scope once all projects have migrated to
+  # the v2 index.
   - queue:route:index.mobile.{trust_project}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
   - project:mobile:{trust_project}:releng:signing:cert:dep-signing
@@ -1044,6 +1047,7 @@
 
 - grant:
   - queue:route:index.mobile.{trust_project}.v1.release.*
+  - queue:route:index.mobile.v2.{trust_project}.release.*
   to:
   - project:
       alias: android-components
@@ -1051,6 +1055,7 @@
 
 - grant:
   - queue:route:index.mobile.{trust_project}.v1.nightly.*
+  - queue:route:index.mobile.v2.{trust_project}.nightly.*
   to:
   - project:
       alias: android-components
