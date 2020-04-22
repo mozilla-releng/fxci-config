@@ -660,6 +660,7 @@
 # - glean specific roles
 - grant:
   - queue:create-task:highest:glean-{level}/*
+  - queue:route:index.project.glean.cache.level-{level}.*
   to:
   - project:
       alias: glean
