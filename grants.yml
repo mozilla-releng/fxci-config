@@ -652,6 +652,17 @@
 ##
 # mozilla roles
 #
+#
+
+# FIXME: Bug 1632147 - app-services and glean should be merged under the same
+# `trust_domain` so that scopes are bulked together like in the mobile world
+#
+# - glean specific roles
+- grant:
+  - queue:create-task:highest:glean-{level}/*
+  to:
+  - project:
+      alias: glean
 
 # - application-services specific roles
 - grant:
