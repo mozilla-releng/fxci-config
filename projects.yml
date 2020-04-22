@@ -385,6 +385,7 @@ ci-configuration:
     hg-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
+  taskcluster_yml_project: ci-admin
 
 ci-configuration-try:
   repo: https://hg.mozilla.org/ci/ci-configuration-try
@@ -396,6 +397,7 @@ ci-configuration-try:
     hg-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
+  taskcluster_yml_project: ci-admin
 
 ci-admin:
   repo: https://hg.mozilla.org/ci/ci-admin
