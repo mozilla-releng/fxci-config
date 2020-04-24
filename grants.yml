@@ -1605,6 +1605,8 @@
   - queue:scheduler-id:xpi-level-1
   - docker-worker:cache:xpi-level-1-*
   - secrets:get:project/xpi/xpi-github-clone-ssh
+  - project:xpi:releng:signing:cert:dep-signing
+  - queue:create-task:low:scriptworker-k8s/xpi-t-*
   to:
   - project:
       feature: xpi-roles
