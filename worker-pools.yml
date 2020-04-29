@@ -1711,11 +1711,10 @@ mobile-1/bitrise:
   email_on_error: false
   provider_id: aws
   config:
-    image: docker-worker-hvm-builder-trusted-current
+    image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 1  # We can only have 3 concurrent builds with the plan we pay. Let's not overload the queue with level 1 jobs
     scalingRatio: 0
-    security: trusted
     instance_types:
     - instanceType: t3.small  # No need for a big instance, it just delegates the heavy lifting to bitrise
       capacity: 1
@@ -1723,7 +1722,6 @@ mobile-1/bitrise:
     - us-east-1
     - us-west-1
     - us-west-2
-app-services-1/decision:
 mobile-3/b-linux-large:
   description: General-purpose worker for projects by android components team (to
     build and release a very large suite of Kotlin components)
