@@ -1716,8 +1716,12 @@ mobile-1/bitrise:
     maxCapacity: 1  # We can only have 3 concurrent builds with the plan we pay. Let's not overload the queue with level 1 jobs
     scalingRatio: 0
     instance_types:
-    - instanceType: t3.small  # No need for a big instance, it just delegates the heavy lifting to bitrise
-      capacity: 1
+    # No need for a big instance, it just delegates the heavy lifting to bitrise. That said, we
+    # can't use t3 instances. The AMIs aren't compatible
+    - instanceType: m3.large
+      capacity: 1   # capacity reduced to 1 (instead of 8), because we don't want more than 1 task for level 1
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 9000000000}
     regions:
     - us-east-1
     - us-west-1
@@ -1822,8 +1826,12 @@ mobile-3/bitrise:
     scalingRatio: 0
     security: trusted
     instance_types:
-    - instanceType: t3.small  # No need for a big instance, it just delegates the heavy lifting to bitrise
-      capacity: 1
+    # No need for a big instance, it just delegates the heavy lifting to bitrise. That said, we
+    # can't use t3 instances. The AMIs aren't compatible
+    - instanceType: m3.large
+      capacity: 3   # capacity reduced to 3 (instead of 8), because we don't want more than 3 tasks for level 3
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 9000000000}
     regions:
     - us-east-1
     - us-west-1
