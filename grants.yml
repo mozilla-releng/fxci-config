@@ -1634,7 +1634,7 @@
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - queue:route:index.{trust_domain}.v2.adhoc-manifest.*
   - queue:route:index.adhoc.cache.level-{level}.*
-  - queue:get-artifact:adhoc/*
+  - queue:get-artifact:releng/adhoc/*
   to:
   - project:
       alias:
