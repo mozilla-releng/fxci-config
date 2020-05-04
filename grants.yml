@@ -439,12 +439,18 @@
   - project:comm:thunderbird:releng:balrog:server:release
   to:
   - project:
+      job: ["action:release-promotion"]
+      trust_domain: comm
+      level: [3]
       alias: [comm-esr60, comm-esr68]
 
 - grant:
   - project:comm:thunderbird:releng:balrog:server:beta
   to:
   - project:
+      job: ["action:release-promotion"]
+      trust_domain: comm
+      level: [3]
       alias: comm-beta
 
 - grant:
@@ -454,13 +460,22 @@
       alias: comm-central
 
 - grant:
+  - project:comm:thunderbird:releng:signing:cert:release-signing
+  to:
+  - project:
+      level: [3]
+      alias: [comm-esr60, comm-esr68, comm-beta]
+
+- grant:
   - project:comm:thunderbird:releng:beetmover:bucket:release
   - project:comm:thunderbird:releng:bouncer:server:production
   - project:comm:thunderbird:releng:bouncer:server:production-nazgul
   - project:comm:thunderbird:releng:ship-it:server:production
-  - project:comm:thunderbird:releng:signing:cert:release-signing
   to:
   - project:
+      job: ["action:release-promotion"]
+      trust_domain: comm
+      level: [3]
       alias: [comm-esr60, comm-esr68, comm-beta]
 
 - grant:
