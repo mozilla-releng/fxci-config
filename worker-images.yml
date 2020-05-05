@@ -11,6 +11,7 @@ docker-worker-hvm-builder-current: docker-worker-v202004241848-hvm-builder
 docker-worker-hvm-builder-trusted-current: docker-worker-v202004241848-hvm-builder-trusted
 monopacker-docker-worker-current: monopacker-docker-worker-2020-02-07t09-14-17z
 monopacker-docker-worker-trusted-current: monopacker-docker-worker-gcp-trusted-2020-02-13t03-22-56z
+monopacker-docker-worker-baremetal-current: monopacker-docker-worker-2020-05-04T14-30-19Z
 
 occ-b-win2012-current: occ-b-win2012-v20200226
 occ-b-win2012-trusted-current: occ-b-win2012-trusted-v20200226
@@ -161,6 +162,11 @@ monopacker-docker-worker-2020-04-03t19-20-03z:
     us-east-1: ami-030b2ab7c8f88b9e1
     us-west-1: ami-0237591aaa5652efe
     us-west-2: ami-0b2735a529984897b
+monopacker-docker-worker-2020-05-04T14-30-19Z:
+  aws:
+    us-east-1: ami-08a1f9efa3d1ac2e9
+    us-west-1: ami-095477afa5016a926
+    us-west-2: ami-07b33db0f538882e1
 
 # generic-worker images
 gwci-linux:
