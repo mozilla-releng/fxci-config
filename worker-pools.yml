@@ -2798,8 +2798,6 @@ gecko-t/t-linux-metal:
     spot: true
     instance_types:
     - instanceType: r5.metal
-      launchConfig:
-        KeyName: walac
       capacityPerInstance: 32
       additional-user-data:
         tmpfsSize: "576G"
@@ -2809,8 +2807,6 @@ gecko-t/t-linux-metal:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 16000000000}
     - instanceType: m5.metal
-      launchConfig:
-        KeyName: walac
       capacityPerInstance: 15
       additional-user-data:
         tmpfsSize: "294G"
