@@ -1484,6 +1484,13 @@
       alias: fennec-profile-manager
       job: ["branch:master"]
 
+- grant:
+  - secrets:get:project/mobile/firefox-ios/bitrise
+  to:
+  - project:
+      alias: firefox-ios
+      job: ["cron:l10-screenshots"]
+
 # L10n repositories
 - grant:
   - queue:create-task:highest:l10n-{level}/*
@@ -2066,6 +2073,7 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/bump-android-components
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/fennec-beta
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/l10-screenshots
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
   - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
