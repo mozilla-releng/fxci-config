@@ -1092,6 +1092,45 @@ comm-t/t-linux-xlarge-source:
     - instanceType: c3.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+gecko-t/t-linux-xlarge-source-1804:
+  description: Worker for Firefox automation tests needing source checkouts.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: monopacker-docker-worker-2020-05-04T14-30-19Z
+    maxCapacity: 3500
+    worker-config:
+      dockerConfig: {allowPrivileged: false}
+    instance_types:
+    - instanceType: m3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.2xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+comm-t/t-linux-xlarge-source-1804:
+  description: Worker for Firefox automation tests needing source checkouts.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: monopacker-docker-worker-2020-05-04T14-30-19Z
+    maxCapacity: 10
+    worker-config:
+      dockerConfig: {allowPrivileged: false}
+    regions: [us-east-1, us-west-1, us-west-2]
+    instance_types:
+    - instanceType: m3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
 gecko-t/misc:
   description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
     SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
@@ -1454,6 +1493,26 @@ gecko-t/t-linux-large:
       worker-config:
         billingCycleInterval: 7200
         capacityManagement: {diskspaceThreshold: 20000000000}
+gecko-t/t-linux-large-1804:
+  description: Worker for Firefox automation based on Ubuntu 18.04
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: monopacker-docker-worker-2020-05-04T14-30-19Z
+    maxCapacity: 3500
+    worker-config:
+      dockerConfig: {allowPrivileged: false}
+    instance_types:
+    - instanceType: m5.large
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
+      worker-config:
+        billingCycleInterval: 7200
+        capacityManagement: {diskspaceThreshold: 20000000000}
 comm-t/t-linux-large:
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -1462,6 +1521,26 @@ comm-t/t-linux-large:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
+    maxCapacity: 3500
+    worker-config:
+      dockerConfig: {allowPrivileged: false}
+    instance_types:
+    - instanceType: m5.large
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
+      worker-config:
+        billingCycleInterval: 7200
+        capacityManagement: {diskspaceThreshold: 20000000000}
+comm-t/t-linux-large-1804:
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: monopacker-docker-worker-2020-05-04T14-30-19Z
     maxCapacity: 3500
     worker-config:
       dockerConfig: {allowPrivileged: false}
@@ -1509,6 +1588,48 @@ comm-t/t-linux-xlarge:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
+    maxCapacity: 3500
+    worker-config:
+      dockerConfig: {allowPrivileged: false}
+    instance_types:
+    - instanceType: m3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.2xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+gecko-t/t-linux-xlarge-1804:
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: monopacker-docker-worker-2020-05-04T14-30-19Z
+    maxCapacity: 3500
+    worker-config:
+      dockerConfig: {allowPrivileged: false}
+    instance_types:
+    - instanceType: m3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c3.2xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+comm-t/t-linux-xlarge-1804:
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: monopacker-docker-worker-2020-05-04T14-30-19Z
     maxCapacity: 3500
     worker-config:
       dockerConfig: {allowPrivileged: false}
