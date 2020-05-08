@@ -24,6 +24,8 @@ occ-mpd001-b-win2012-trusted-current: occ-mpd-b-win2012-trusted-v20200226
 
 nss-win2012r2-current: nss-win2012r2-pre
 
+relops-image-builder-current: relops-image-builder-pre
+
 # production docker-worker AMIs
 docker-worker-v201909302015-hvm-builder:
   aws:
@@ -274,3 +276,11 @@ occ-mpd-b-win2012-trusted-v20200226:
     us-east-1: ami-08f30fc003814c298
     us-west-1: ami-0c76678a5bdb06f4e
     us-west-2: ami-0520ba0d12752373c
+
+relops-image-builder-pre:
+    aws:
+      eu-central-1: ami-07db1c26bda143e33
+      us-east-1: ami-026ed942b8c9d7503
+      us-east-2: ami-0be81fd9f318f0272
+      us-west-1: ami-00f2cff76f39b3333
+      us-west-2: ami-08dcc6990d39afe94

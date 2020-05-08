@@ -863,9 +863,9 @@
 # - cloud-image-builder specific roles
 - grant:
   - queue:route:index.project.relops.cloud-image-builder.*
-  - generic-worker:os-group:relops/*
-  - generic-worker:run-as-administrator:relops/*
-  - queue:create-task:{priority}:relops/*
+  - generic-worker:os-group:relops-3/*
+  - generic-worker:run-as-administrator:relops-3/*
+  - queue:create-task:{priority}:relops-3/*
   - secrets:get:project/relops/image-builder/dev
   to:
   - project:
