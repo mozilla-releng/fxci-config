@@ -924,6 +924,7 @@ gecko-3/decision:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     minCapacity: 5
     maxCapacity: 20
     worker-config: {billingCycleInterval: 21600}
@@ -954,6 +955,7 @@ comm-3/decision:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     minCapacity: 5
     maxCapacity: 20
     worker-config: {billingCycleInterval: 21600}
@@ -984,6 +986,7 @@ gecko-3/images:
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     minCapacity: 1
     maxCapacity: 30
     scalingRatio: 0
@@ -1011,6 +1014,7 @@ comm-3/images:
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     minCapacity: 1
     maxCapacity: 30
     scalingRatio: 0
@@ -1543,6 +1547,7 @@ releng-3/linux:
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 100
     scalingRatio: 0
@@ -1634,7 +1639,7 @@ nss-3/win2012r2:
     additional-user-data:
       workerType: gecko-1-b-win2012
     regions: [us-east-1, us-west-1, us-west-2]
-    security: windows-untrusted
+    security: trusted
     implementation: generic-worker/windows-nss
     instance_types:
       - instanceType: m5d.2xlarge
@@ -2170,6 +2175,7 @@ mozillaonline-3/b-linux:
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-current
+    security: trusted
     maxCapacity: 10
     scalingRatio: 0
     instance_types:
@@ -2282,6 +2288,7 @@ l10n-3/decision:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     scalingRatio: 0
@@ -2298,6 +2305,7 @@ l10n-3/linux:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     scalingRatio: 0
@@ -2325,6 +2333,7 @@ l10n-3/images:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     scalingRatio: 0
@@ -2371,6 +2380,7 @@ mpd001-3/decision:
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     scalingRatio: 0
@@ -2480,6 +2490,7 @@ xpi-3/decision:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     maxCapacity: 10
     worker-config: {billingCycleInterval: 21600}
     instance_types:
@@ -2596,6 +2607,7 @@ xpi-3/images:
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
@@ -2651,6 +2663,7 @@ adhoc-3/decision:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     maxCapacity: 10
     worker-config: {billingCycleInterval: 21600}
     instance_types:
@@ -2767,6 +2780,7 @@ adhoc-3/images:
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
@@ -2892,6 +2906,7 @@ code-analysis-3/linux:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     instance_types:
@@ -3096,6 +3111,7 @@ taskgraph-3/decision:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     instance_types:
@@ -3123,6 +3139,7 @@ taskgraph-3/images:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
@@ -3163,6 +3180,7 @@ ci-3/decision:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     instance_types:
@@ -3190,6 +3208,7 @@ ci-3/images:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
@@ -3246,6 +3265,7 @@ scriptworker-3/decision:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     maxCapacity: 10
     worker-config: {billingCycleInterval: 21600}
     instance_types:
@@ -3362,6 +3382,7 @@ scriptworker-3/images:
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-trusted-current
+    security: trusted
     minCapacity: 0
     maxCapacity: 10
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
