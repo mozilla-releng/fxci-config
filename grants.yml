@@ -90,10 +90,23 @@
   - queue:worker-id:*
   - secrets:get:worker-type:<..>
   - secrets:get:worker-pool:<..>
+  to:
+  - roles:
+    - worker-type:*
+
+- grant:
   - auth:websocktunnel-token:firefoxcitc/*
   to:
   - roles:
     - worker-type:*
+  environments: firefoxci
+
+- grant:
+  - auth:websocktunnel-token:cloudopsstage/*
+  to:
+  - roles:
+    - worker-type:*
+  environments: staging
 
 - grant:
   - auth:sentry:generic-worker
