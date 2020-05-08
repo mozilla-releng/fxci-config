@@ -700,6 +700,12 @@ occ:
   trust_domain: releng
   level: 3
 
+cloud-image-builder:
+  repo: https://github.com/mozilla-platform-ops/cloud-image-builder
+  repo_type: git
+  trust_domain: relops
+  level: 3
+
 # L10n repositories
 android-l10n-tooling:
   repo: https://github.com/mozilla-l10n/android-l10n-tooling

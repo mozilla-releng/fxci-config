@@ -860,6 +860,18 @@
       alias: occ
       job: ["branch:master"]
 
+# - cloud-image-builder specific roles
+- grant:
+  - queue:route:index.project.relops.cloud-image-builder.*
+  - generic-worker:os-group:relops/*
+  - generic-worker:run-as-administrator:relops/*
+  - queue:create-task:{priority}:relops/*
+  - secrets:get:project/relops/image-builder/dev
+  to:
+  - project:
+      alias: cloud-image-builder
+      job: ["branch:master"]
+
 # - mapper specific roles
 - grant:
   - secrets:get:project/releng/mapper/ci
