@@ -33,6 +33,7 @@
       - cancel-all
       - retrigger-decision
       - release-promotion
+      - merge-automation
 
 - trust_domain: xpi
   levels: [1, 3]
