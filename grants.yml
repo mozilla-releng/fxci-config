@@ -1665,6 +1665,12 @@
     - repo:github.com/mozilla-extensions/*
 
 - grant:
+  - queue:get-artifact:xpi/*
+  to:
+  - groups:
+    - team_moco
+
+- grant:
   - in-tree:hook-action:project-{trust_domain}/in-tree-action-{level}-*
   to:
   - project:
