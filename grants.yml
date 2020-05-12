@@ -1850,6 +1850,13 @@
     - team_taskcluster
     - team_services_ops
 
+- grant:
+  # Let cloudops manage the notify denylist to deal with bounces.
+  - notify:manage-denylist
+  to:
+  - groups:
+    - team_services_ops
+
 ##
 # hook scopes
 
