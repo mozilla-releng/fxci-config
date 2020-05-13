@@ -1157,6 +1157,13 @@
       job: ["cron:bump-*"]
 
 - grant:
+  - index:insert-task:project.mobile.fenix.v2.*
+  to:
+  - project:
+      alias: fenix
+      job: ["action:*", "branch:*", "cron:*", "release"]
+
+- grant:
   - secrets:get:project/mobile/{alias}/firebase
   to:
   - project:
