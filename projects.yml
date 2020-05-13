@@ -518,6 +518,7 @@ fenix:
     taskgraph-cron: true
     taskgraph-actions: true
     treeherder-reporting: true
+    trust-domain-scopes: true
   cron:
     targets:
       - browsertime

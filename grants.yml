@@ -1271,7 +1271,6 @@
       job: ["branch:*", "pull-request"]
 
 - grant:
-  - queue:route:index.mobile.v2.fenix.debug.*
   # TODO Bug 1631839: Remove the following scope once all projects have migrated to
   # `index.mobile.v2.*`.
   - queue:route:index.project.mobile.fenix.v2.debug.*
@@ -1283,9 +1282,6 @@
 - grant:
   - project:mobile:fenix:releng:signing:cert:beta-signing
   - project:mobile:fenix:releng:signing:cert:production-signing
-
-  - queue:route:index.mobile.v2.fenix.beta.*
-  - queue:route:index.mobile.v2.fenix.production.*
 
   # TODO Bug 1631839: Remove the 2 following scopes once all projects have migrated to
   # `index.mobile.v2.*`.
@@ -1307,9 +1303,6 @@
   # and then it will be discontinued.
   - project:mobile:fenix:releng:signing:cert:fennec-nightly-signing
 
-  - queue:route:index.mobile.v2.fenix.nightly.*
-  - queue:route:index.mobile.v2.fenix.fennec-nightly.*
-
   # TODO Bug 1631839: Remove the 2 following scopes once all projects have migrated to
   # `index.mobile.v2.*`.
   - queue:route:index.project.mobile.fenix.v2.nightly.*
@@ -1323,7 +1316,6 @@
   # TODO Move the `fennec-production` scopes to the release section once
   # data migration testing is done.
   - project:mobile:fenix:releng:signing:cert:fennec-production-signing
-  - queue:route:index.mobile.v2.fenix.fennec-production.*
   # TODO Bug 1631839: Remove the following scope once all projects have migrated to
   # `index.mobile.v2.*`.
   - queue:route:index.project.mobile.fenix.v2.fennec-production.*
@@ -1344,7 +1336,6 @@
 - grant:
   # XXX `fennec-production-signing` handles beta signing too.
   - project:mobile:fenix:releng:signing:cert:fennec-production-signing
-  - queue:route:index.mobile.v2.fenix.fennec-beta.*
   # TODO Bug 1631839: Remove the following scope once all projects have migrated to
   # `index.mobile.v2.*`.
   - queue:route:index.project.mobile.fenix.v2.fennec-beta.*
@@ -1355,7 +1346,6 @@
       job: ["release", "cron:fennec-beta"]
 
 - grant:
-  - queue:route:index.mobile.v2.fenix.branch.fennec/beta.*
   # TODO Bug 1631839: Remove the following scope once all projects have migrated to
   # `index.mobile.v2.*`.
   - queue:route:index.project.mobile.fenix.v2.branch.fennec/beta.*
