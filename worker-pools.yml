@@ -56,7 +56,8 @@ worker-defaults:
                         "wstAudience": "firefoxcitc"
                         "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
 
-infra/hg-push:
+pools:
+- pool_id: infra/hg-push
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -83,7 +84,7 @@ infra/hg-push:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-gecko-1/b-linux:
+- pool_id: gecko-1/b-linux
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -100,7 +101,7 @@ gecko-1/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-1/b-linux-aws:
+- pool_id: gecko-1/b-linux-aws
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -117,7 +118,7 @@ gecko-1/b-linux-aws:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-1/b-linux-gcp:
+- pool_id: gecko-1/b-linux-gcp
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -149,7 +150,7 @@ gecko-1/b-linux-gcp:
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
-gecko-3/b-linux-gcp:
+- pool_id: gecko-3/b-linux-gcp
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -181,7 +182,7 @@ gecko-3/b-linux-gcp:
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
-comm-1/b-linux:
+- pool_id: comm-1/b-linux
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -198,7 +199,7 @@ comm-1/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-1/b-linux-large:
+- pool_id: gecko-1/b-linux-large
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -243,7 +244,7 @@ gecko-1/b-linux-large:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-comm-1/b-linux-large:
+- pool_id: comm-1/b-linux-large
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -288,7 +289,7 @@ comm-1/b-linux-large:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-1/b-linux-xlarge:
+- pool_id: gecko-1/b-linux-xlarge
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -330,7 +331,7 @@ gecko-1/b-linux-xlarge:
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
       utility: 0.9
-comm-1/b-linux-xlarge:
+- pool_id: comm-1/b-linux-xlarge
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -372,7 +373,7 @@ comm-1/b-linux-xlarge:
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
       utility: 0.9
-gecko-1/decision:
+- pool_id: gecko-1/decision
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -402,7 +403,7 @@ gecko-1/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-comm-1/decision:
+- pool_id: comm-1/decision
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -432,7 +433,7 @@ comm-1/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-1/images:
+- pool_id: gecko-1/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -459,7 +460,7 @@ gecko-1/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-comm-1/images:
+- pool_id: comm-1/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -486,7 +487,7 @@ comm-1/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-2/b-linux:
+- pool_id: gecko-2/b-linux
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -503,7 +504,7 @@ gecko-2/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-2/b-linux-large:
+- pool_id: gecko-2/b-linux-large
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -548,7 +549,7 @@ gecko-2/b-linux-large:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-2/b-linux-xlarge:
+- pool_id: gecko-2/b-linux-xlarge
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -590,7 +591,7 @@ gecko-2/b-linux-xlarge:
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
       utility: 0.9
-gecko-2/decision:
+- pool_id: gecko-2/decision
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -620,7 +621,7 @@ gecko-2/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-2/images:
+- pool_id: gecko-2/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -647,7 +648,7 @@ gecko-2/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-3/b-linux:
+- pool_id: gecko-3/b-linux
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -680,7 +681,7 @@ gecko-3/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-3/b-linux-aws:
+- pool_id: gecko-3/b-linux-aws
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -713,7 +714,7 @@ gecko-3/b-linux-aws:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-comm-3/b-linux:
+- pool_id: comm-3/b-linux
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -746,7 +747,7 @@ comm-3/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-3/b-linux-large:
+- pool_id: gecko-3/b-linux-large
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -792,7 +793,7 @@ gecko-3/b-linux-large:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-comm-3/b-linux-large:
+- pool_id: comm-3/b-linux-large
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -838,7 +839,7 @@ comm-3/b-linux-large:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-3/b-linux-xlarge:
+- pool_id: gecko-3/b-linux-xlarge
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -877,7 +878,7 @@ gecko-3/b-linux-xlarge:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-comm-3/b-linux-xlarge:
+- pool_id: comm-3/b-linux-xlarge
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -916,7 +917,7 @@ comm-3/b-linux-xlarge:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-gecko-3/decision:
+- pool_id: gecko-3/decision
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -947,7 +948,7 @@ gecko-3/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-comm-3/decision:
+- pool_id: comm-3/decision
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -978,7 +979,7 @@ comm-3/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-3/images:
+- pool_id: gecko-3/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -1006,7 +1007,7 @@ gecko-3/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-comm-3/images:
+- pool_id: comm-3/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -1034,7 +1035,7 @@ comm-3/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-3/t-linux-xlarge:
+- pool_id: gecko-3/t-linux-xlarge
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1053,7 +1054,7 @@ gecko-3/t-linux-xlarge:
     - instanceType: c3.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-t/t-linux-xlarge-source:
+- pool_id: gecko-t/t-linux-xlarge-source
   description: Worker for Firefox automation tests needing source checkouts.
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1074,7 +1075,7 @@ gecko-t/t-linux-xlarge-source:
     - instanceType: c3.2xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-comm-t/t-linux-xlarge-source:
+- pool_id: comm-t/t-linux-xlarge-source
   description: Worker for Firefox automation tests needing source checkouts.
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1092,7 +1093,7 @@ comm-t/t-linux-xlarge-source:
     - instanceType: c3.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-t/t-linux-xlarge-source-1804:
+- pool_id: gecko-t/t-linux-xlarge-source-1804
   description: Worker for Firefox automation tests needing source checkouts.
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1113,7 +1114,7 @@ gecko-t/t-linux-xlarge-source-1804:
     - instanceType: c3.2xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-comm-t/t-linux-xlarge-source-1804:
+- pool_id: comm-t/t-linux-xlarge-source-1804
   description: Worker for Firefox automation tests needing source checkouts.
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1131,7 +1132,7 @@ comm-t/t-linux-xlarge-source-1804:
     - instanceType: c3.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-t/misc:
+- pool_id: gecko-t/misc
   description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
     SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
     (total 80GB, 9GB per task).
@@ -1160,7 +1161,7 @@ gecko-t/misc:
     - us-east-1
     - us-west-1
     - us-west-2
-comm-t/misc:
+- pool_id: comm-t/misc
   description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
     SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
     (total 80GB, 9GB per task).
@@ -1189,7 +1190,7 @@ comm-t/misc:
     - us-east-1
     - us-west-1
     - us-west-2
-gecko-1/b-win2012:
+- pool_id: gecko-1/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1219,7 +1220,7 @@ gecko-1/b-win2012:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-gecko-3/b-win2012:
+- pool_id: gecko-3/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1249,7 +1250,7 @@ gecko-3/b-win2012:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-gecko-t/t-win10-64:
+- pool_id: gecko-t/t-win10-64
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1271,7 +1272,7 @@ gecko-t/t-win10-64:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         - DeviceName: xvdf
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-gecko-t/t-win10-64-source:
+- pool_id: gecko-t/t-win10-64-source
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1293,7 +1294,7 @@ gecko-t/t-win10-64-source:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         - DeviceName: xvdf
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-gecko-t/t-win10-64-gpu-s:
+- pool_id: gecko-t/t-win10-64-gpu-s
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1315,7 +1316,7 @@ gecko-t/t-win10-64-gpu-s:
            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
          - DeviceName: xvdf
            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-gecko-t/t-win7-32:
+- pool_id: gecko-t/t-win7-32
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1339,7 +1340,7 @@ gecko-t/t-win7-32:
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
         - DeviceName: /dev/sdc
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
-gecko-t/t-win7-32-gpu:
+- pool_id: gecko-t/t-win7-32-gpu
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1363,7 +1364,7 @@ gecko-t/t-win7-32-gpu:
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
         - DeviceName: /dev/sdc
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
-comm-1/b-win2012:
+- pool_id: comm-1/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1393,7 +1394,7 @@ comm-1/b-win2012:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-comm-3/b-win2012:
+- pool_id: comm-3/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1423,7 +1424,7 @@ comm-3/b-win2012:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-comm-t/t-win10-64:
+- pool_id: comm-t/t-win10-64
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1446,7 +1447,7 @@ comm-t/t-win10-64:
         - DeviceName: xvdf
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       userData: {}
-comm-t/t-win7-32:
+- pool_id: comm-t/t-win7-32
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1470,7 +1471,7 @@ comm-t/t-win7-32:
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
         - DeviceName: /dev/sdc
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
-gecko-t/t-linux-large:
+- pool_id: gecko-t/t-linux-large
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1493,7 +1494,7 @@ gecko-t/t-linux-large:
       worker-config:
         billingCycleInterval: 7200
         capacityManagement: {diskspaceThreshold: 20000000000}
-gecko-t/t-linux-large-1804:
+- pool_id: gecko-t/t-linux-large-1804
   description: Worker for Firefox automation based on Ubuntu 18.04
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1513,7 +1514,7 @@ gecko-t/t-linux-large-1804:
       worker-config:
         billingCycleInterval: 7200
         capacityManagement: {diskspaceThreshold: 20000000000}
-comm-t/t-linux-large:
+- pool_id: comm-t/t-linux-large
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1533,7 +1534,7 @@ comm-t/t-linux-large:
       worker-config:
         billingCycleInterval: 7200
         capacityManagement: {diskspaceThreshold: 20000000000}
-comm-t/t-linux-large-1804:
+- pool_id: comm-t/t-linux-large-1804
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1553,7 +1554,7 @@ comm-t/t-linux-large-1804:
       worker-config:
         billingCycleInterval: 7200
         capacityManagement: {diskspaceThreshold: 20000000000}
-gecko-t/t-linux-xlarge:
+- pool_id: gecko-t/t-linux-xlarge
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1580,7 +1581,7 @@ gecko-t/t-linux-xlarge:
         KeyName: docker-worker-bug1600071
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-comm-t/t-linux-xlarge:
+- pool_id: comm-t/t-linux-xlarge
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1601,7 +1602,7 @@ comm-t/t-linux-xlarge:
     - instanceType: c3.2xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-t/t-linux-xlarge-1804:
+- pool_id: gecko-t/t-linux-xlarge-1804
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1622,7 +1623,7 @@ gecko-t/t-linux-xlarge-1804:
     - instanceType: c3.2xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-comm-t/t-linux-xlarge-1804:
+- pool_id: comm-t/t-linux-xlarge-1804
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1643,7 +1644,7 @@ comm-t/t-linux-xlarge-1804:
     - instanceType: c3.2xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-releng-1/linux:
+- pool_id: releng-1/linux
   description: Releng github worker
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1661,7 +1662,7 @@ releng-1/linux:
     - us-east-1
     - us-west-1
     - us-west-2
-releng-3/linux:
+- pool_id: releng-3/linux
   description: Releng github worker
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1680,7 +1681,7 @@ releng-3/linux:
     - us-east-1
     - us-west-1
     - us-west-2
-releng-t/linux:
+- pool_id: releng-t/linux
   description: Releng github worker
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1698,7 +1699,7 @@ releng-t/linux:
     - us-east-1
     - us-west-1
     - us-west-2
-relops-3/decision:
+- pool_id: relops-3/decision
   description: build windows cloud images for taskcluster windows workloads
   owner: grenade@mozilla.com
   email_on_error: true
@@ -1714,7 +1715,7 @@ relops-3/decision:
     - us-east-1
     - us-west-1
     - us-west-2
-relops-3/win2019:
+- pool_id: relops-3/win2019
   description: build windows cloud images for taskcluster windows workloads
   owner: grenade@mozilla.com
   email_on_error: true
@@ -1738,7 +1739,7 @@ relops-3/win2019:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         - DeviceName: /dev/sdc
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-nss-1/linux:
+- pool_id: nss-1/linux
   description: Worker type that can be used for nss related pushes.
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1755,7 +1756,7 @@ nss-1/linux:
     - us-east-1
     - us-west-1
     - us-west-2
-nss-3/linux:
+- pool_id: nss-3/linux
   description: Worker type that can be used for nss related pushes.
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1773,7 +1774,7 @@ nss-3/linux:
     - us-east-1
     - us-west-1
     - us-west-2
-nss-1/win2012r2:
+- pool_id: nss-1/win2012r2
   description: Worker type that can be used for nss related pushes.
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1789,7 +1790,7 @@ nss-1/win2012r2:
     instance_types:
       - instanceType: m5d.2xlarge
         capacity: 1
-nss-3/win2012r2:
+- pool_id: nss-3/win2012r2
   description: Worker type that can be used for nss related pushes.
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1805,7 +1806,7 @@ nss-3/win2012r2:
     instance_types:
       - instanceType: m5d.2xlarge
         capacity: 1
-mobile-1/b-linux-large:
+- pool_id: mobile-1/b-linux-large
   description: General-purpose worker for projects by android components team (to
     build and release a very large suite of Kotlin components)
   owner: release+tc-workers@mozilla.com
@@ -1828,7 +1829,7 @@ mobile-1/b-linux-large:
     - us-east-1
     - us-west-1
     - us-west-2
-mobile-1/b-linux:
+- pool_id: mobile-1/b-linux
   description: Level 1 build workers for mobile projects
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1845,7 +1846,7 @@ mobile-1/b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
-mobile-1/decision:
+- pool_id: mobile-1/decision
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1864,7 +1865,7 @@ mobile-1/decision:
     - us-east-1
     - us-west-1
     - us-west-2
-mobile-1/images:
+- pool_id: mobile-1/images
   description: 'Builds docker images for mobile projects; NOTE: capacity set to 1
     instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -1889,7 +1890,7 @@ mobile-1/images:
     - us-east-1
     - us-west-1
     - us-west-2
-mobile-1/bitrise:
+- pool_id: mobile-1/bitrise
   description: Level 1 workers to interact with bitrise.io (iOS CI)
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1910,7 +1911,7 @@ mobile-1/bitrise:
     - us-east-1
     - us-west-1
     - us-west-2
-mobile-3/b-linux-large:
+- pool_id: mobile-3/b-linux-large
   description: General-purpose worker for projects by android components team (to
     build and release a very large suite of Kotlin components)
   owner: release+tc-workers@mozilla.com
@@ -1934,7 +1935,7 @@ mobile-3/b-linux-large:
     - us-east-1
     - us-west-1
     - us-west-2
-mobile-3/b-linux:
+- pool_id: mobile-3/b-linux
   description: Level 3 build workers for mobile projects
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1952,7 +1953,7 @@ mobile-3/b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
-mobile-3/decision:
+- pool_id: mobile-3/decision
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -1972,7 +1973,7 @@ mobile-3/decision:
     - us-east-1
     - us-west-1
     - us-west-2
-mobile-3/images:
+- pool_id: mobile-3/images
   description: 'Builds docker images for mobile projects; NOTE: capacity set to 1
     instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -1998,7 +1999,7 @@ mobile-3/images:
     - us-east-1
     - us-west-1
     - us-west-2
-mobile-3/bitrise:
+- pool_id: mobile-3/bitrise
   description: Level 3 workers to interact with bitrise.io (iOS CI)
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2020,7 +2021,7 @@ mobile-3/bitrise:
     - us-east-1
     - us-west-1
     - us-west-2
-app-services-1/decision:
+- pool_id: app-services-1/decision
   description: Worker for rust projects by Application Services team
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2041,7 +2042,7 @@ app-services-1/decision:
     - us-east-1
     - us-west-1
     - us-west-2
-app-services-1/images:
+- pool_id: app-services-1/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -2065,7 +2066,7 @@ app-services-1/images:
     - us-east-1
     - us-west-1
     - us-west-2
-app-services-3/decision:
+- pool_id: app-services-3/decision
   description: Worker for rust projects by Application Services team
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2087,7 +2088,7 @@ app-services-3/decision:
     - us-east-1
     - us-west-1
     - us-west-2
-app-services-3/images:
+- pool_id: app-services-3/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -2112,7 +2113,7 @@ app-services-3/images:
     - us-east-1
     - us-west-1
     - us-west-2
-app-services-1/b-linux:
+- pool_id: app-services-1/b-linux
   description: Worker for rust projects by Application Services team
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2138,7 +2139,7 @@ app-services-1/b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
-app-services-3/b-linux:
+- pool_id: app-services-3/b-linux
   description: Worker for rust projects by Application Services team
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2164,7 +2165,7 @@ app-services-3/b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
-glean-1/decision:
+- pool_id: glean-1/decision
   description: Worker for rust projects by Glean team
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2185,7 +2186,7 @@ glean-1/decision:
     - us-east-1
     - us-west-1
     - us-west-2
-glean-1/images:
+- pool_id: glean-1/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -2209,7 +2210,7 @@ glean-1/images:
     - us-east-1
     - us-west-1
     - us-west-2
-glean-3/decision:
+- pool_id: glean-3/decision
   description: Worker for rust projects by Glean team
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2231,7 +2232,7 @@ glean-3/decision:
     - us-east-1
     - us-west-1
     - us-west-2
-glean-3/images:
+- pool_id: glean-3/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -2256,7 +2257,7 @@ glean-3/images:
     - us-east-1
     - us-west-1
     - us-west-2
-glean-1/b-linux:
+- pool_id: glean-1/b-linux
   description: Worker for rust projects by Glean team
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2282,7 +2283,7 @@ glean-1/b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
-glean-3/b-linux:
+- pool_id: glean-3/b-linux
   description: Worker for rust projects by Glean team
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2308,7 +2309,7 @@ glean-3/b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
-mozillaonline-1/b-linux:
+- pool_id: mozillaonline-1/b-linux
   description: Worker for MozillaOnline automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2329,7 +2330,7 @@ mozillaonline-1/b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
-mozillaonline-3/b-linux:
+- pool_id: mozillaonline-3/b-linux
   description: Worker for MozillaOnline automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2351,7 +2352,7 @@ mozillaonline-3/b-linux:
     - us-east-1
     - us-west-1
     - us-west-2
-hg-t/linux:
+- pool_id: hg-t/linux
   description: Testing for https://hg.mozilla.org/hgcustom/version-control-tools
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2369,7 +2370,7 @@ hg-t/linux:
     - us-east-1
     - us-west-1
     - us-west-2
-l10n-1/decision:
+- pool_id: l10n-1/decision
   description: Worker for L10n decision tasks
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2386,7 +2387,7 @@ l10n-1/decision:
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.4
-l10n-1/linux:
+- pool_id: l10n-1/linux
   description: General-purpose worker for l10n automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2413,7 +2414,7 @@ l10n-1/linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-l10n-1/images:
+- pool_id: l10n-1/images
   description: General-purpose worker for l10n automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2441,7 +2442,7 @@ l10n-1/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-l10n-3/decision:
+- pool_id: l10n-3/decision
   description: Worker for l10n decision tasks
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2458,7 +2459,7 @@ l10n-3/decision:
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.4
-l10n-3/linux:
+- pool_id: l10n-3/linux
   description: General-purpose worker for l10n automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2486,7 +2487,7 @@ l10n-3/linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-l10n-3/images:
+- pool_id: l10n-3/images
   description: General-purpose worker for l10n automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2515,7 +2516,7 @@ l10n-3/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-mpd001-1/decision:
+- pool_id: mpd001-1/decision
   description: Worker for mpd001 Decision Tasks
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2534,7 +2535,7 @@ mpd001-1/decision:
     - us-east-1
     - us-west-1
     - us-west-2
-mpd001-3/decision:
+- pool_id: mpd001-3/decision
   description: Worker for mpd001 Decision Tasks
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2554,7 +2555,7 @@ mpd001-3/decision:
     - us-east-1
     - us-west-1
     - us-west-2
-mpd001-1/b-win2012:
+- pool_id: mpd001-1/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2584,7 +2585,7 @@ mpd001-1/b-win2012:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-mpd001-3/b-win2012:
+- pool_id: mpd001-3/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2614,7 +2615,7 @@ mpd001-3/b-win2012:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-xpi-1/decision:
+- pool_id: xpi-1/decision
   description: Worker for XPI automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2643,7 +2644,7 @@ xpi-1/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-xpi-3/decision:
+- pool_id: xpi-3/decision
   description: Worker for XPI automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2673,7 +2674,7 @@ xpi-3/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-xpi-1/b-linux:
+- pool_id: xpi-1/b-linux
   description: Worker for XPI automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2690,7 +2691,7 @@ xpi-1/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-xpi-3/b-linux:
+- pool_id: xpi-3/b-linux
   description: Worker for XPI automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2735,7 +2736,7 @@ xpi-3/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-xpi-1/images:
+- pool_id: xpi-1/images
   description: 'Builds docker images for XPI; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -2760,7 +2761,7 @@ xpi-1/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-xpi-3/images:
+- pool_id: xpi-3/images
   description: 'Builds docker images for xpi; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -2787,7 +2788,7 @@ xpi-3/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-adhoc-1/decision:
+- pool_id: adhoc-1/decision
   description: Worker for adhoc signing automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2816,7 +2817,7 @@ adhoc-1/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-adhoc-3/decision:
+- pool_id: adhoc-3/decision
   description: Worker for adhoc signing automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2846,7 +2847,7 @@ adhoc-3/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-adhoc-1/b-linux:
+- pool_id: adhoc-1/b-linux
   description: Worker for adhoc signing automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2863,7 +2864,7 @@ adhoc-1/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-adhoc-3/b-linux:
+- pool_id: adhoc-3/b-linux
   description: Worker for adhoc signing automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -2908,7 +2909,7 @@ adhoc-3/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-adhoc-1/images:
+- pool_id: adhoc-1/images
   description: 'Builds docker images for adhoc signing; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -2933,7 +2934,7 @@ adhoc-1/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-adhoc-3/images:
+- pool_id: adhoc-3/images
   description: 'Builds docker images for adhoc signing; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -2960,7 +2961,7 @@ adhoc-3/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-gecko-t/t-linux-metal:
+- pool_id: gecko-t/t-linux-metal
   description: Monopacker metal workers for Firefox automation
   owner: mcrabill@mozilla.com
   email_on_error: false
@@ -2990,7 +2991,7 @@ gecko-t/t-linux-metal:
         dockerConfig:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 16000000000}
-pmoore-test/gwci-linux:
+- pool_id: pmoore-test/gwci-linux
   description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/gwci-linux but for GCP'
   owner: pmoore@mozilla.com
   email_on_error: true
@@ -3022,7 +3023,7 @@ pmoore-test/gwci-linux:
     minCapacity: 0
     maxCapacity: 10
     image: gwci-linux
-project-relman/relman-svc:
+- pool_id: project-relman/relman-svc
   description: Release management workers
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -3043,7 +3044,7 @@ project-relman/relman-svc:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
 
-code-analysis-1/linux:
+- pool_id: code-analysis-1/linux
   description: Worker for code-analysis CI/CD - level 1
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -3059,7 +3060,7 @@ code-analysis-1/linux:
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
-code-analysis-3/linux:
+- pool_id: code-analysis-3/linux
   description: Worker for code-analysis CI/CD - level 3
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -3076,7 +3077,7 @@ code-analysis-3/linux:
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
-code-review/bot:
+- pool_id: code-review/bot
   description: Worker for the code-review bot.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -3132,7 +3133,7 @@ code-review/bot:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 10, VolumeType: gp2}
-code-coverage/bot:
+- pool_id: code-coverage/bot
   description: Worker for the code-coverage bot.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -3251,7 +3252,7 @@ code-coverage/bot:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
-taskgraph-1/decision:
+- pool_id: taskgraph-1/decision
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -3264,76 +3265,7 @@ taskgraph-1/decision:
     instance_types:
     - instanceType: m5d.large
       capacityPerInstance: 1
-taskgraph-3/decision:
-  description: Worker for firefox-ci automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    security: trusted
-    minCapacity: 0
-    maxCapacity: 10
-    instance_types:
-    - instanceType: m5d.large
-      capacityPerInstance: 1
-taskgraph-1/images:
-  description: Worker for firefox-ci automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
-    instance_types:
-    - instanceType: m5d.large
-      capacityPerInstance: 1
-taskgraph-3/images:
-  description: Worker for firefox-ci automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    security: trusted
-    minCapacity: 0
-    maxCapacity: 10
-    worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
-    instance_types:
-    - instanceType: m5d.large
-      capacityPerInstance: 1
-taskgraph-t/linux:
-  description: Worker for firefox-ci automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    instance_types:
-    - instanceType: m5d.large
-      capacityPerInstance: 1
-ci-1/decision:
-  description: Worker for firefox-ci automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    instance_types:
-    - instanceType: m5d.large
-      capacityPerInstance: 1
-ci-3/decision:
+- pool_id: taskgraph-3/decision
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -3347,7 +3279,7 @@ ci-3/decision:
     instance_types:
     - instanceType: m5d.large
       capacityPerInstance: 1
-ci-1/images:
+- pool_id: taskgraph-1/images
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -3361,7 +3293,7 @@ ci-1/images:
     instance_types:
     - instanceType: m5d.large
       capacityPerInstance: 1
-ci-3/images:
+- pool_id: taskgraph-3/images
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -3376,7 +3308,7 @@ ci-3/images:
     instance_types:
     - instanceType: m5d.large
       capacityPerInstance: 1
-ci-t/linux:
+- pool_id: taskgraph-t/linux
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
@@ -3389,7 +3321,76 @@ ci-t/linux:
     instance_types:
     - instanceType: m5d.large
       capacityPerInstance: 1
-scriptworker-1/decision:
+- pool_id: ci-1/decision
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+- pool_id: ci-3/decision
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    security: trusted
+    minCapacity: 0
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+- pool_id: ci-1/images
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+- pool_id: ci-3/images
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    security: trusted
+    minCapacity: 0
+    maxCapacity: 10
+    worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+- pool_id: ci-t/linux
+  description: Worker for firefox-ci automation.
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5d.large
+      capacityPerInstance: 1
+- pool_id: scriptworker-1/decision
   description: Worker for scriptworker automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -3418,7 +3419,7 @@ scriptworker-1/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-scriptworker-3/decision:
+- pool_id: scriptworker-3/decision
   description: Worker for scriptworker automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -3448,7 +3449,7 @@ scriptworker-3/decision:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-scriptworker-1/b-linux:
+- pool_id: scriptworker-1/b-linux
   description: Worker for scriptworker automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -3465,7 +3466,7 @@ scriptworker-1/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-scriptworker-3/b-linux:
+- pool_id: scriptworker-3/b-linux
   description: Worker for scriptworker automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
@@ -3510,7 +3511,7 @@ scriptworker-3/b-linux:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-scriptworker-1/images:
+- pool_id: scriptworker-1/images
   description: 'Builds docker images for scriptworkers; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
@@ -3535,7 +3536,7 @@ scriptworker-1/images:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-scriptworker-3/images:
+- pool_id: scriptworker-3/images
   description: 'Builds docker images for scriptworkers; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
   owner: release+tc-workers@mozilla.com
