@@ -122,10 +122,6 @@ pools:
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
     - instanceType: c5d.4xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
       utility: 2
@@ -147,10 +143,6 @@ pools:
     maxCapacity: 20
     instance_types:
     - instanceType: c5d.4xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
       utility: 2
