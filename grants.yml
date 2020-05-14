@@ -234,10 +234,6 @@
   - docker-worker:capability:device:loopbackVideo
   - docker-worker:capability:privileged
   - docker-worker:feature:allowPtrace
-  - docker-worker:image:quay.io/mozilla/builder:*
-  - docker-worker:image:quay.io/mozilla/decision:*
-  - docker-worker:image:taskcluster/builder:*
-  - docker-worker:image:taskcluster/tester:*
   - index:insert-task:garbage.*
   - notify:email:*
   - project:releng:balrog:channel:*
@@ -328,8 +324,6 @@
 # moz-tree:level:2:*
 - grant:
   - docker-worker:capability:device:phone
-  - docker-worker:image:taskclusterprivate/phone-builder:*
-  - docker-worker:image:taskclusterprivate/tester-device:*
   - secrets:get:project/taskcluster/gecko/build/level-2/*
   to:
   - projects:
@@ -341,7 +335,6 @@
   - auth:aws-s3:read-write:public-qemu-images/repository/hg.mozilla.org/mozilla-central/*
   - docker-worker:feature:balrogStageVPNProxy
   - docker-worker:feature:balrogVPNProxy
-  - docker-worker:image:taskclusterprivate/taskcluster-vpn-proxy:*
   - secrets:get:project/taskcluster/gecko/build/level-3/*
   to:
   - projects:
