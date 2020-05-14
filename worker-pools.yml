@@ -97,6 +97,8 @@ pools:
       - pool-group: comm-1
       - pool-group: comm-3
         chain-of-trust: trusted
+      - pool-group: kaios-1
+      - pool-group: kaios-2
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image:
@@ -107,7 +109,10 @@ pools:
         by-chain-of-trust:
             trusted: trusted
             default: null
-    maxCapacity: 1000
+    maxCapacity:
+        by-pool-group:
+            "kaios-.*": 10
+            default: 1000
     instance_types:
     - instanceType: c5.4xlarge
       launchConfig:
@@ -243,6 +248,8 @@ pools:
       - pool-group: comm-1
       - pool-group: comm-3
         chain-of-trust: trusted
+      - pool-group: kaios-1
+      - pool-group: kaios-2
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image:
@@ -303,6 +310,8 @@ pools:
       - pool-group: comm-1
       - pool-group: comm-3
         chain-of-trust: trusted
+      - pool-group: kaios-1
+      - pool-group: kaios-2
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image:
@@ -316,11 +325,13 @@ pools:
     minCapacity:
         by-pool-group:
             gecko-2: 0
+            "kaios-.*": 0
             default: 5
     maxCapacity:
         by-pool-group:
             (gecko|comm)-3: 20
             gecko-2: 20
+            "kaios-.*": 10
             default: 40
     worker-config: {billingCycleInterval: 21600}
     instance_types:
@@ -362,6 +373,8 @@ pools:
       - pool-group: app-services-1
       - pool-group: app-services-3
         chain-of-trust: trusted
+      - pool-group: kaios-1
+      - pool-group: kaios-2
   config:
     image:
         by-chain-of-trust:
@@ -438,6 +451,8 @@ pools:
       - pool-group: comm-1
       - pool-group: comm-3
         chain-of-trust: trusted
+      - pool-group: kaios-1
+      - pool-group: kaios-2
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image:
@@ -495,10 +510,14 @@ pools:
         chain-of-trust: trusted
       - pool-group: comm-t
         suffix: ""
+      - pool-group: kaios-t
+        suffix: ""
         # Separate pool of workers with source checkout caches
       - pool-group: gecko-t
         suffix: "-source"
       - pool-group: comm-t
+        suffix: "-source"
+      - pool-group: kaios-t
         suffix: "-source"
   config:
     image:
@@ -511,7 +530,8 @@ pools:
             default: null
     maxCapacity:
         by-pool-group:
-            ".*-t$": 3500
+            "(gecko|comm)-t$": 3500
+            kaios-t: 10
             gecko-3: 10
     worker-config:
       dockerConfig: {allowPrivileged: false}
@@ -575,6 +595,7 @@ pools:
   variants:
       - pool-group: gecko-t
       - pool-group: comm-t
+      - pool-group: kaios-t
   config:
     image: docker-worker-hvm-builder-current
     maxCapacity: 32

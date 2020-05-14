@@ -126,7 +126,11 @@
 
   # Provide access to sccache buckets
   - assume:project:taskcluster:{trust_domain}:level-{level}-sccache-buckets
+  to:
+  - project:
+      feature: gecko-roles
 
+- grant:
   # access to workers; all levels have access to the same workers, but at
   # different priorities and levels
   - queue:create-task:{priority}:scriptworker-k8s/{trust_domain}-{level}-*
@@ -134,6 +138,7 @@
   to:
   - project:
       feature: gecko-roles
+      trust_domain: [gecko, comm]
 
 - grant:
   - auth:aws-s3:read-write:comm-central-level-1-sccache-eu-central-1/*
@@ -247,7 +252,6 @@
   - projects:
       feature: gecko-roles
       level: [1, 2, 3]
-
 
 # moz-tree:level:1:gecko
 - grant:
