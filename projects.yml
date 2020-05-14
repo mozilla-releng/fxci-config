@@ -536,11 +536,9 @@ fenix:
     trust-domain-scopes: true
   cron:
     targets:
-      - browsertime
       - bump-android-components
       - nightly
       - nightly-on-google-play
-      - raptor
 
 fenix-jlorenzo:
   repo: https://github.com/JohanLorenzo/fenix

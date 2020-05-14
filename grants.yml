@@ -1190,7 +1190,7 @@
       job: ["pull-request"]
   - project:
       alias: fenix
-      job: ["cron:raptor", "cron:browsertime"]
+      job: ["cron:nightly"]
   - project:
       alias: reference-browser
       job: ["branch:*"]
@@ -1200,7 +1200,7 @@
   to:
   - project:
       alias: fenix
-      job: ["cron:raptor", "cron:browsertime"]
+      job: ["cron:nightly"]
   - project:
       alias: reference-browser
       job: ["branch:master"]
@@ -1210,7 +1210,7 @@
   to:
   - project:
       alias: fenix
-      job: ["cron:raptor", "cron:browsertime"]
+      job: ["cron:nightly"]
   - project:
       alias: reference-browser
       job: ["branch:master"]
@@ -1367,7 +1367,7 @@
   - project:
       alias: fenix
       level: 3
-      job: ["cron:raptor", "cron:browsertime"]
+      job: ["cron:nightly"]
 
 # TODO Bug 1601928: Stop using the garbage namespace once the {alias}/{project} story is defined
 - grant:
