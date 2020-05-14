@@ -236,20 +236,8 @@
   - docker-worker:feature:allowPtrace
   - index:insert-task:garbage.*
   - notify:email:*
-  - project:releng:balrog:channel:*
-  - project:releng:balrog:server:dep
-  - project:releng:beetmover:action:*
-  - project:releng:beetmover:bucket:dep
-  - project:releng:beetmover:bucket:maven-staging
-  - project:releng:googleplay:dep
-  - project:releng:ship-it:server:staging
-  - project:releng:signing:cert:dep-signing
-  - project:releng:signing:format:*
   - purge-cache:{trust_domain}-{level}/*
   - purge-cache:{trust_domain}-t/*
-  - queue:create-task:medium:proj-autophone/*
-  - queue:create-task:low:bitbar/gecko-t-*
-  - queue:create-task:low:localprovisioner/*
   - queue:get-artifact:project/gecko/*
   - queue:route:index.garbage.*
   - queue:route:notify.*
@@ -275,17 +263,29 @@
   - generic-worker:run-as-administrator:gecko-t/t-win10-64-beta
   - project:releng:addons.mozilla.org:server:staging
   - project:releng:balrog:action:*
+  - project:releng:balrog:channel:*
+  - project:releng:balrog:server:dep
+  - project:releng:beetmover:action:*
+  - project:releng:beetmover:bucket:dep
   - project:releng:beetmover:bucket:dep-partner
+  - project:releng:beetmover:bucket:maven-staging
   - project:releng:bouncer:action:*
   - project:releng:bouncer:server:staging
   - project:releng:bouncer:server:staging-nazgul
+  - project:releng:flathub:firefox:mock
+  - project:releng:googleplay:dep
+  - project:releng:ship-it:action:create-new-release
   - project:releng:ship-it:action:mark-as-shipped
   - project:releng:ship-it:action:mark-as-started
-  - project:releng:ship-it:action:create-new-release
+  - project:releng:ship-it:server:staging
+  - project:releng:signing:cert:dep-signing
+  - project:releng:signing:format:*
   - project:releng:snapcraft:firefox:mock
-  - project:releng:flathub:firefox:mock
   - project:releng:treescript:action:*
   - project:releng:treescript:action:tagging
+  - queue:create-task:medium:proj-autophone/*
+  - queue:create-task:low:bitbar/gecko-t-*
+  - queue:create-task:low:localprovisioner/*
   - queue:create-task:low:scriptworker-prov-v1/signing-mac-dev
   - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1
   - queue:create-task:low:terraform-packet/*
