@@ -529,13 +529,22 @@ pools:
       dockerConfig: {allowPrivileged: false}
     regions: [us-east-1, us-west-1, us-west-2]
     instance_types:
-    - instanceType: m3.xlarge
+    - instanceType: m5.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.xlarge
+    - instanceType: m5a.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.2xlarge
+    - instanceType: m5d.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5ad.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5d.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: gecko-t/t-linux-xlarge-source-1804
@@ -550,13 +559,22 @@ pools:
     worker-config:
       dockerConfig: {allowPrivileged: false}
     instance_types:
-    - instanceType: m3.xlarge
+    - instanceType: m5.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.xlarge
+    - instanceType: m5a.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.2xlarge
+    - instanceType: m5d.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5ad.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5d.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: comm-t/t-linux-xlarge-source-1804
@@ -571,10 +589,22 @@ pools:
       dockerConfig: {allowPrivileged: false}
     regions: [us-east-1, us-west-1, us-west-2]
     instance_types:
-    - instanceType: m3.xlarge
+    - instanceType: m5.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.xlarge
+    - instanceType: m5a.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5d.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5ad.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5d.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: "{pool-group}/misc"
@@ -986,13 +1016,22 @@ pools:
     worker-config:
       dockerConfig: {allowPrivileged: false}
     instance_types:
-    - instanceType: m3.xlarge
+    - instanceType: m5.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.xlarge
+    - instanceType: m5a.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.2xlarge
+    - instanceType: m5d.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5ad.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5d.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: comm-t/t-linux-xlarge-1804
@@ -1007,13 +1046,22 @@ pools:
     worker-config:
       dockerConfig: {allowPrivileged: false}
     instance_types:
-    - instanceType: m3.xlarge
+    - instanceType: m5.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.xlarge
+    - instanceType: m5a.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c3.2xlarge
+    - instanceType: m5d.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: m5ad.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5.xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+    - instanceType: c5d.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: releng-1/linux
