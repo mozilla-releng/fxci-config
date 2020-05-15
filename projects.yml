@@ -37,7 +37,7 @@
 #   - `mobile-public-code-coverage` -- this https://github.com/mozilla-mobile repository has code coverage enabled on PRs
 #   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
 #   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
-#   - `github-taskgraph` -- this https://github.com/mozilla-mobile repository has started using taskgraph
+#   - `github-taskgraph` -- this github repository has started using taskgraph
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - 'scriptworker' -- this repository uses at least one scriptworker instance
 #   - 'shipit' -- this repository interacts with a shipit instance
@@ -786,6 +786,15 @@ test-xpi-manifest:
 
 test-xpi-public:
   repo: https://github.com/escapewindow/test-xpi-public
+  repo_type: git
+  trust_domain: xpi
+  level: 1
+  features:
+    trust-domain-scopes: true
+    xpi-roles: true
+
+test-xpi-private:
+  repo: https://github.com/escapewindow/test-xpi-private
   repo_type: git
   trust_domain: xpi
   level: 1
