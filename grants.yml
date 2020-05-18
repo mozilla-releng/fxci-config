@@ -992,7 +992,6 @@
       feature: mobile-roles
 
 - grant:
-  - queue:route:index.mobile.v2.{trust_project}.branch.<..>.*
   # TODO Bug 1631839: Remove the 2 following scopes once all projects have migrated to
   # `index.mobile.v2.*`.
   - queue:route:index.mobile.{trust_project}.v2.branch.<..>.*
@@ -1005,7 +1004,6 @@
 
 # Cron jobs aren't covered by the role defined above
 - grant:
-  - queue:route:index.mobile.v2.{trust_project}.branch.master.*
   # TODO Bug 1631839: Remove the 2 following scopes once all projects have migrated to
   # `index.mobile.v2.*`.
   - queue:route:index.mobile.{trust_project}.v2.branch.master.*

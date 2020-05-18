@@ -485,6 +485,7 @@ android-components:
     scriptworker: true
     taskgraph-cron: true
     treeherder-reporting: true
+    trust-domain-scopes: true
   cron:
     targets: [snapshot, nightly]
 
@@ -506,6 +507,7 @@ reference-browser:
     taskgraph-cron: true
     taskgraph-actions: true
     treeherder-reporting: true
+    trust-domain-scopes: true
   cron:
     targets:
       # Cannot name the following entry "bump-android-components" because the full hookId is larger
