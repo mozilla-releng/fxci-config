@@ -1403,10 +1403,10 @@
       job: ["branch:*", "cron:nightly"]
 
 - grant:
-  - queue:route:index.mobile.v2.reference-browser.nightly.*
-  # TODO Bug 1631839: Remove the following scope once all projects have migrated to
+  # TODO Bug 1631839: Remove the 2 following scopes once all projects have migrated to
   # `index.mobile.v2.*`.
   - queue:route:index.project.mobile.reference-browser.v3.nightly.*
+  - index:insert-task:index.project.mobile.reference-browser.v3.nightly.*
   - secrets:get:project/mobile/reference-browser/nimbledroid
   - secrets:get:project/mobile/reference-browser/sentry
   - queue:route:notify.email.android-components-team@mozilla.com.on-failed
@@ -1420,6 +1420,7 @@
 - grant:
   # XXX v3.raptor is used by reference-browser
   - queue:route:index.project.mobile.{alias}.v3.raptor.*
+  - index:insert-task:project.mobile.reference-browser.v3.raptor.*
   to:
   - project:
       alias: reference-browser
