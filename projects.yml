@@ -30,7 +30,6 @@
 #   - `mobile-roles` -- this repository should have https://github.com/mozilla-mobile roles assigned (for users, actions, cron, etc.)
 #   - `xpi-roles` -- this repository should have xpi roles assigned (for users, actions, cron, etc.)
 #   - `beetmover-maven-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
-#   - `beetmover-maven-snapshot-phase` -- this https://github.com/mozilla-mobile repository should have beetmover snapshot production related scopes associated
 #   - `beetmover-maven-nightly-phase` -- this https://github.com/mozilla-mobile repository should have beetmover nightly production related scopes associated
 #   - `mobile-firebase-testing` -- this https://github.com/mozilla-mobile repository has end-to-end testing involving devices hosted at Google's Firebase
 #   - `mobile-bump-github` -- this https://github.com/mozilla-mobile repository gets bumped.
@@ -476,7 +475,6 @@ android-components:
   level: 3
   features:
     beetmover-maven-phase: true
-    beetmover-maven-snapshot-phase: true
     beetmover-maven-nightly-phase: true
     github-taskgraph: true
     mobile-roles: true
@@ -487,7 +485,7 @@ android-components:
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
-    targets: [snapshot, nightly]
+    targets: [nightly]
 
 reference-browser:
   repo: https://github.com/mozilla-mobile/reference-browser
