@@ -975,30 +975,6 @@ pools:
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
         - DeviceName: /dev/sdc
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
-- pool_id: gecko-t/t-win7-32-r5large
-  description: ''
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    image: occ-t-win7-32-current
-    maxCapacity: 1024
-    additional-user-data:
-      workerType: gecko-t-win7-32-small
-    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
-    security: windows-untrusted
-    implementation: generic-worker/windows
-    instance_types:
-    - instanceType: r5.large
-      capacity: 1
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs: {VolumeType: gp2, VolumeSize: 30, DeleteOnTermination: true}
-        - DeviceName: /dev/sdb
-          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
-        - DeviceName: /dev/sdc
-          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
 - pool_id: gecko-t/t-win7-32-gpu
   description: ''
   owner: release+tc-workers@mozilla.com
