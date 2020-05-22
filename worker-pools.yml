@@ -214,6 +214,24 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
+- pool_id: gecko-1/b-linux-experiment
+  description: Worker for Firefox automation experiment
+  owner: glandium@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-west-2]
+    image: docker-worker-hvm-builder-current
+    maxCapacity: 2
+    instance_types:
+    - instanceType: c5d.9xlarge
+      capacityPerInstance: 3
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
 - pool_id: gecko-1/b-linux-aws-1804
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
