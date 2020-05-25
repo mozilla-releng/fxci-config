@@ -802,15 +802,15 @@ pools:
     userData: {billingCycleInterval: 21600}
     instance_types:
     - instanceType: r3.xlarge
-      capacity: 8
+      capacityPerInstance: 8
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
     - instanceType: m3.xlarge
-      capacity: 8
+      capacityPerInstance: 8
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
     - instanceType: c3.xlarge
-      capacity: 8
+      capacityPerInstance: 8
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
     regions:
@@ -1383,7 +1383,7 @@ pools:
     scalingRatio: 0
     instance_types:
     - instanceType: m5d.large
-      capacity: 2
+      capacityPerInstance: 2
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
     regions:
@@ -1429,7 +1429,7 @@ pools:
     # No need for a big instance, it just delegates the heavy lifting to bitrise. That said, we
     # can't use t3 instances. The AMIs aren't compatible
     - instanceType: m3.large
-      capacity: 1   # capacity reduced to 1 (instead of 8), because we don't want more than 1 task for level 1
+      capacityPerInstance: 1   # capacity reduced to 1 (instead of 8), because we don't want more than 1 task for level 1
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
     regions:
@@ -1490,7 +1490,7 @@ pools:
     security: trusted
     instance_types:
     - instanceType: m5d.large
-      capacity: 2
+      capacityPerInstance: 2
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
     regions:
@@ -1538,7 +1538,7 @@ pools:
     # No need for a big instance, it just delegates the heavy lifting to bitrise. That said, we
     # can't use t3 instances. The AMIs aren't compatible
     - instanceType: m3.large
-      capacity: 3   # capacity reduced to 3 (instead of 8), because we don't want more than 3 tasks for level 3
+      capacityPerInstance: 3   # capacity reduced to 3 (instead of 8), because we don't want more than 3 tasks for level 3
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
     regions:
@@ -2388,7 +2388,6 @@ pools:
       additional-user-data:
         tmpfsSize: "576G"
       worker-config:
-        capacity: 32
         dockerConfig:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 16000000000}
@@ -2397,7 +2396,6 @@ pools:
       additional-user-data:
         tmpfsSize: "294G"
       worker-config:
-        capacity: 15
         dockerConfig:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 16000000000}
