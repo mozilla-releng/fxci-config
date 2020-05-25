@@ -717,9 +717,17 @@ pools:
     - instanceType: m5.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
     - instanceType: m5a.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
     - instanceType: m5d.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
@@ -729,6 +737,10 @@ pools:
     - instanceType: c5.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
     - instanceType: c5d.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
@@ -747,9 +759,17 @@ pools:
     - instanceType: m5.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
     - instanceType: m5a.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
     - instanceType: m5d.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
@@ -759,6 +779,10 @@ pools:
     - instanceType: c5.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
     - instanceType: c5d.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
