@@ -260,8 +260,7 @@ pools:
     regions: [us-central1]
     image: monopacker-docker-worker-current
     instance_types:
-      - capacityPerInstance: 1
-        minCpuPlatform: "Intel Skylake"
+      - minCpuPlatform: "Intel Skylake"
         workerConfig:
           task:
             reclaimDivisor: 2
@@ -292,8 +291,7 @@ pools:
     regions: [us-central1]
     image: monopacker-docker-worker-trusted-current
     instance_types:
-      - capacityPerInstance: 1
-        minCpuPlatform: "Intel Skylake"
+      - minCpuPlatform: "Intel Skylake"
         workerConfig:
           task:
             reclaimDivisor: 2
@@ -834,7 +832,6 @@ pools:
     implementation: generic-worker/windows
     instance_types:
       - instanceType: c4.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -842,7 +839,6 @@ pools:
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       - instanceType: c5.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -864,7 +860,6 @@ pools:
     implementation: generic-worker/windows
     instance_types:
       - instanceType: c4.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -872,7 +867,6 @@ pools:
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       - instanceType: c5.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -937,8 +931,7 @@ pools:
     security: windows-untrusted
     implementation: generic-worker/windows
     instance_types:
-     - capacity: 1
-       instanceType: g3s.xlarge
+     - instanceType: g3s.xlarge
        launchConfig:
          BlockDeviceMappings:
          - DeviceName: /dev/xvda
@@ -960,7 +953,6 @@ pools:
     implementation: generic-worker/windows
     instance_types:
     - instanceType: c4.2xlarge
-      capacity: 1
       launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/sda1
@@ -984,7 +976,6 @@ pools:
     implementation: generic-worker/windows
     instance_types:
     - instanceType: g2.2xlarge
-      capacity: 1
       launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/sda1
@@ -1008,7 +999,6 @@ pools:
     implementation: generic-worker/windows
     instance_types:
       - instanceType: c4.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -1016,7 +1006,6 @@ pools:
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       - instanceType: c5.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -1038,7 +1027,6 @@ pools:
     implementation: generic-worker/windows
     instance_types:
       - instanceType: c4.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -1046,7 +1034,6 @@ pools:
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       - instanceType: c5.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -1091,7 +1078,6 @@ pools:
     implementation: generic-worker/windows
     instance_types:
     - instanceType: c4.2xlarge
-      capacity: 1
       launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/sda1
@@ -1206,7 +1192,6 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
     instance_types:
     - instanceType: m5d.xlarge
-      capacity: 1
     regions:
     - us-east-1
     - us-west-1
@@ -1225,7 +1210,6 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
     instance_types:
     - instanceType: m5d.xlarge
-      capacity: 1
     regions:
     - us-east-1
     - us-west-1
@@ -1243,7 +1227,6 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
     instance_types:
     - instanceType: m5d.xlarge
-      capacity: 1
     regions:
     - us-east-1
     - us-west-1
@@ -1259,7 +1242,6 @@ pools:
     security: trusted
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
     regions:
     - us-east-1
     - us-west-1
@@ -1279,7 +1261,6 @@ pools:
       workerType: relops-image-builder
     instance_types:
     - instanceType: c5.4xlarge
-      capacityPerInstance: 1
       launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/sda1
@@ -1300,7 +1281,6 @@ pools:
     scalingRatio: 0
     instance_types:
     - instanceType: m5d.xlarge
-      capacity: 1
     regions:
     - us-east-1
     - us-west-1
@@ -1318,7 +1298,6 @@ pools:
     security: trusted
     instance_types:
     - instanceType: m5d.xlarge
-      capacity: 1
     regions:
     - us-east-1
     - us-west-1
@@ -1338,7 +1317,6 @@ pools:
     implementation: generic-worker/windows-nss
     instance_types:
       - instanceType: m5d.2xlarge
-        capacity: 1
 - pool_id: nss-3/win2012r2
   description: Worker type that can be used for nss related pushes.
   owner: release+tc-workers@mozilla.com
@@ -1354,7 +1332,6 @@ pools:
     implementation: generic-worker/windows-nss
     instance_types:
       - instanceType: m5d.2xlarge
-        capacity: 1
 - pool_id: mobile-1/b-linux-large
   description: General-purpose worker for projects by android components team (to
     build and release a very large suite of Kotlin components)
@@ -1390,7 +1367,6 @@ pools:
     scalingRatio: 0
     instance_types:
     - instanceType: m5d.xlarge
-      capacity: 1
     regions:
     - us-east-1
     - us-west-1
@@ -1497,7 +1473,6 @@ pools:
     security: trusted
     instance_types:
     - instanceType: m5d.xlarge
-      capacity: 1
     regions:
     - us-east-1
     - us-west-1
@@ -1583,7 +1558,6 @@ pools:
     worker-config: {billingCycleInterval: 21600}
     instance_types:
     - instanceType: m5d.large
-      capacity: 1
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.4
@@ -1605,7 +1579,6 @@ pools:
     security: trusted
     instance_types:
     - instanceType: m5d.large
-      capacity: 1
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.5
@@ -1626,7 +1599,6 @@ pools:
     instance_types:
     # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
     - instanceType: c5d.4xlarge
-      capacity: 1
       utility: 2
       launchConfig:
         BlockDeviceMappings:
@@ -1653,7 +1625,6 @@ pools:
     instance_types:
     # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
     - instanceType: c5d.4xlarge
-      capacity: 1
       utility: 1
       launchConfig:
         BlockDeviceMappings:
@@ -1678,7 +1649,6 @@ pools:
     worker-config: {billingCycleInterval: 21600}
     instance_types:
     - instanceType: m5d.large
-      capacity: 1
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.4
@@ -1724,7 +1694,6 @@ pools:
     security: trusted
     instance_types:
     - instanceType: m5d.large
-      capacity: 1
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
       utility: 1.5
@@ -1770,7 +1739,6 @@ pools:
     instance_types:
     # XXX: we might need befier instances (e.g. c5d.4x large) for rust compilation.
     - instanceType: c5d.large
-      capacity: 1
       utility: 2
       launchConfig:
         BlockDeviceMappings:
@@ -1797,7 +1765,6 @@ pools:
     instance_types:
     # XXX: we might need befier instances (e.g. c5d.4x large) for rust compilation.
     - instanceType: c5d.large
-      capacity: 1
       utility: 1
       launchConfig:
         BlockDeviceMappings:
@@ -1865,7 +1832,6 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
     instance_types:
     - instanceType: c5d.2xlarge
-      capacity: 1
     regions:
     - us-east-1
     - us-west-1
@@ -2070,7 +2036,6 @@ pools:
     implementation: generic-worker/windows
     instance_types:
       - instanceType: c4.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -2078,7 +2043,6 @@ pools:
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       - instanceType: c5.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -2100,7 +2064,6 @@ pools:
     implementation: generic-worker/windows
     instance_types:
       - instanceType: c4.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -2108,7 +2071,6 @@ pools:
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       - instanceType: c5.4xlarge
-        capacity: 1
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
@@ -2483,7 +2445,6 @@ pools:
     maxCapacity: 100
     instance_types:
     - instanceType: m5.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2504,7 +2465,6 @@ pools:
     maxCapacity: 10
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2521,7 +2481,6 @@ pools:
     maxCapacity: 10
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2537,7 +2496,6 @@ pools:
     maxCapacity: 100
     instance_types:
     - instanceType: m5.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2546,7 +2504,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 10, VolumeType: gp2}
     - instanceType: m5a.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2555,7 +2512,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 10, VolumeType: gp2}
     - instanceType: m5d.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2564,7 +2520,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 10, VolumeType: gp2}
     - instanceType: m5ad.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2573,7 +2528,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 10, VolumeType: gp2}
     - instanceType: m4.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2593,7 +2547,6 @@ pools:
     maxCapacity: 100
     instance_types:
     - instanceType: r5.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2602,7 +2555,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: r5d.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2611,7 +2563,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: r5a.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2620,7 +2571,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: r5ad.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2629,7 +2579,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: z1d.large
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2638,7 +2587,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: m5.xlarge
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2647,7 +2595,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: m5a.xlarge
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2656,7 +2603,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: m5d.xlarge
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2665,7 +2611,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: m5ad.xlarge
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2674,7 +2619,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: m4.xlarge
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2683,7 +2627,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: c5.2xlarge
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2692,7 +2635,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: c5d.2xlarge
-      capacityPerInstance: 1
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
@@ -2712,7 +2654,6 @@ pools:
     maxCapacity: 10
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
 - pool_id: taskgraph-3/decision
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
@@ -2726,7 +2667,6 @@ pools:
     maxCapacity: 10
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
 - pool_id: taskgraph-1/images
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
@@ -2740,7 +2680,6 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
 - pool_id: taskgraph-3/images
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
@@ -2755,7 +2694,6 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
 - pool_id: taskgraph-t/linux
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
@@ -2768,7 +2706,6 @@ pools:
     maxCapacity: 10
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
 - pool_id: ci-1/decision
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
@@ -2781,7 +2718,6 @@ pools:
     maxCapacity: 10
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
 - pool_id: ci-3/decision
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
@@ -2795,7 +2731,6 @@ pools:
     maxCapacity: 10
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
 - pool_id: ci-1/images
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
@@ -2809,7 +2744,6 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
 - pool_id: ci-3/images
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
@@ -2824,7 +2758,6 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
 - pool_id: ci-t/linux
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
@@ -2837,7 +2770,6 @@ pools:
     maxCapacity: 10
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 1
 - pool_id: scriptworker-1/decision
   description: Worker for scriptworker automation
   owner: release+tc-workers@mozilla.com
