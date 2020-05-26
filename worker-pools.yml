@@ -222,7 +222,7 @@ pools:
   config:
     regions: [us-west-2]
     image: docker-worker-hvm-builder-current
-    maxCapacity: 2
+    maxCapacity: 6
     instance_types:
     - instanceType: c5d.9xlarge
       capacityPerInstance: 3
