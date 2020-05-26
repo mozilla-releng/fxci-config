@@ -1231,21 +1231,6 @@ pools:
     - us-east-1
     - us-west-1
     - us-west-2
-- pool_id: relops-3/decision
-  description: build windows cloud images for taskcluster windows workloads
-  owner: grenade@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    security: trusted
-    instance_types:
-    - instanceType: m5d.large
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 - pool_id: relops-3/win2019
   description: build windows cloud images for taskcluster windows workloads
   owner: grenade@mozilla.com
@@ -1371,25 +1356,6 @@ pools:
     - us-east-1
     - us-west-1
     - us-west-2
-- pool_id: mobile-1/decision
-  description: Worker for Firefox automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 1
-    maxCapacity: 100
-    scalingRatio: 0
-    instance_types:
-    - instanceType: m5d.large
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 - pool_id: mobile-1/images
   description: 'Builds docker images for mobile projects; NOTE: capacity set to 1
     instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -1477,26 +1443,6 @@ pools:
     - us-east-1
     - us-west-1
     - us-west-2
-- pool_id: mobile-3/decision
-  description: Worker for Firefox automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 1
-    maxCapacity: 100
-    scalingRatio: 0
-    security: trusted
-    instance_types:
-    - instanceType: m5d.large
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 - pool_id: mobile-3/images
   description: 'Builds docker images for mobile projects; NOTE: capacity set to 1
     instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -1545,43 +1491,73 @@ pools:
     - us-east-1
     - us-west-1
     - us-west-2
-- pool_id: app-services-1/decision
-  description: Worker for rust projects by Application Services team
+- pool_id: "{pool-group}/decision"
+  description: Worker for decision tasks
   owner: release+tc-workers@mozilla.com
   email_on_error: false
   provider_id: aws
+  variants:
+      - pool-group: adhoc-1
+      - pool-group: adhoc-3
+        chain-of-trust: trusted
+      - pool-group: app-services-1
+      - pool-group: app-services-3
+        chain-of-trust: trusted
+      - pool-group: glean-1
+      - pool-group: glean-3
+        chain-of-trust: trusted
+      - pool-group: mpd001-1
+      - pool-group: mpd001-3
+        chain-of-trust: trusted
+      - pool-group: mobile-1
+      - pool-group: mobile-3
+        chain-of-trust: trusted
+      - pool-group: scriptworker-1
+      - pool-group: scriptworker-3
+        chain-of-trust: trusted
+      - pool-group: xpi-1
+      - pool-group: xpi-3
+        chain-of-trust: trusted
+      - pool-group: ci-1
+      - pool-group: ci-3
+      - pool-group: l10n-1
+      - pool-group: l10n-3
+      - pool-group: relops-3
+      - pool-group: taskgraph-1
+      - pool-group: taskgraph-3
   config:
-    image: docker-worker-hvm-builder-current
+    image:
+        by-chain-of-trust:
+            trusted: docker-worker-hvm-builder-trusted-current
+            default: docker-worker-hvm-builder-current
+    security:
+        by-pool-group:
+            ".*-3": trusted
+            default: null
     minCapacity: 1
-    maxCapacity: 30
+    maxCapacity:
+        by-pool-group:
+            "mobile-.*": 100
+            default: 10
     scalingRatio: 0
     worker-config: {billingCycleInterval: 21600}
     instance_types:
-    - instanceType: m5d.large
+    - instanceType: c5d.large
+      capacityPerInstance: 2
       worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-- pool_id: app-services-3/decision
-  description: Worker for rust projects by Application Services team
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 1
-    maxCapacity: 10
-    scalingRatio: 0
-    worker-config: {billingCycleInterval: 21600}
-    security: trusted
-    instance_types:
+        capacityManagement:
+          diskspaceThreshold: 30000000000
     - instanceType: m5d.large
+      capacityPerInstance: 2
       worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
+        capacityManagement:
+          diskspaceThreshold: 30000000000
+    - instanceType: c5.large
+      capacityPerInstance: 2
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
     regions:
     - us-east-1
     - us-west-1
@@ -1636,26 +1612,6 @@ pools:
     - us-east-1
     - us-west-1
     - us-west-2
-- pool_id: glean-1/decision
-  description: Worker for rust projects by Glean team
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 1
-    maxCapacity: 15
-    scalingRatio: 0
-    worker-config: {billingCycleInterval: 21600}
-    instance_types:
-    - instanceType: m5d.large
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 - pool_id: glean-1/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -1676,27 +1632,6 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-- pool_id: glean-3/decision
-  description: Worker for rust projects by Glean team
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 1
-    maxCapacity: 10
-    scalingRatio: 0
-    worker-config: {billingCycleInterval: 21600}
-    security: trusted
-    instance_types:
-    - instanceType: m5d.large
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
     regions:
     - us-east-1
     - us-west-1
@@ -1836,23 +1771,6 @@ pools:
     - us-east-1
     - us-west-1
     - us-west-2
-- pool_id: l10n-1/decision
-  description: Worker for L10n decision tasks
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    scalingRatio: 0
-    instance_types:
-    - instanceType: m5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
 - pool_id: l10n-1/linux
   description: General-purpose worker for l10n automation
   owner: release+tc-workers@mozilla.com
@@ -1908,23 +1826,6 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-- pool_id: l10n-3/decision
-  description: Worker for l10n decision tasks
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    security: trusted
-    minCapacity: 0
-    maxCapacity: 10
-    scalingRatio: 0
-    instance_types:
-    - instanceType: m5d.large
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
 - pool_id: l10n-3/linux
   description: General-purpose worker for l10n automation
   owner: release+tc-workers@mozilla.com
@@ -1982,45 +1883,6 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-- pool_id: mpd001-1/decision
-  description: Worker for mpd001 Decision Tasks
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    scalingRatio: 0
-    instance_types:
-    - instanceType: m5d.large
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-- pool_id: mpd001-3/decision
-  description: Worker for mpd001 Decision Tasks
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    security: trusted
-    minCapacity: 0
-    maxCapacity: 10
-    scalingRatio: 0
-    instance_types:
-    - instanceType: m5d.large
-      userData:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
 - pool_id: mpd001-1/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
@@ -2077,65 +1939,6 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-- pool_id: xpi-1/decision
-  description: Worker for XPI automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    worker-config: {billingCycleInterval: 21600}
-    instance_types:
-    - instanceType: c5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      capacityPerInstance: 2
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-- pool_id: xpi-3/decision
-  description: Worker for XPI automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-trusted-current
-    security: trusted
-    maxCapacity: 10
-    worker-config: {billingCycleInterval: 21600}
-    instance_types:
-    - instanceType: c5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      capacityPerInstance: 2
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: xpi-1/b-linux
   description: Worker for XPI automation
   owner: release+tc-workers@mozilla.com
@@ -2244,65 +2047,6 @@ pools:
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: c5.xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-- pool_id: adhoc-1/decision
-  description: Worker for adhoc signing automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    worker-config: {billingCycleInterval: 21600}
-    instance_types:
-    - instanceType: c5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      capacityPerInstance: 2
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-- pool_id: adhoc-3/decision
-  description: Worker for adhoc signing automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-trusted-current
-    security: trusted
-    maxCapacity: 10
-    worker-config: {billingCycleInterval: 21600}
-    instance_types:
-    - instanceType: c5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      capacityPerInstance: 2
       launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
@@ -2640,31 +2384,6 @@ pools:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
-- pool_id: taskgraph-1/decision
-  description: Worker for firefox-ci automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    instance_types:
-    - instanceType: m5d.large
-- pool_id: taskgraph-3/decision
-  description: Worker for firefox-ci automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    security: trusted
-    minCapacity: 0
-    maxCapacity: 10
-    instance_types:
-    - instanceType: m5d.large
 - pool_id: taskgraph-1/images
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
@@ -2700,31 +2419,6 @@ pools:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    instance_types:
-    - instanceType: m5d.large
-- pool_id: ci-1/decision
-  description: Worker for firefox-ci automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    minCapacity: 0
-    maxCapacity: 10
-    instance_types:
-    - instanceType: m5d.large
-- pool_id: ci-3/decision
-  description: Worker for firefox-ci automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    security: trusted
     minCapacity: 0
     maxCapacity: 10
     instance_types:
@@ -2768,65 +2462,6 @@ pools:
     maxCapacity: 10
     instance_types:
     - instanceType: m5d.large
-- pool_id: scriptworker-1/decision
-  description: Worker for scriptworker automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    worker-config: {billingCycleInterval: 21600}
-    instance_types:
-    - instanceType: c5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      capacityPerInstance: 2
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-- pool_id: scriptworker-3/decision
-  description: Worker for scriptworker automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-trusted-current
-    security: trusted
-    maxCapacity: 10
-    worker-config: {billingCycleInterval: 21600}
-    instance_types:
-    - instanceType: c5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
-    - instanceType: m5d.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
-      capacityPerInstance: 2
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: scriptworker-1/b-linux
   description: Worker for scriptworker automation
   owner: release+tc-workers@mozilla.com
