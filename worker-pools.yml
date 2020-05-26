@@ -249,47 +249,26 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-- pool_id: gecko-1/b-linux-gcp
+- pool_id: "{pool-group}/b-linux-gcp"
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
-  provider_id: fxci-level1-gcp
+  variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+  provider_id:
+    by-chain-of-trust:
+          trusted: fxci-level3-gcp
+          default: fxci-level1-gcp
   config:
     minCapacity: 0
     maxCapacity: 1000
     regions: [us-central1]
-    image: monopacker-docker-worker-current
-    instance_types:
-      - minCpuPlatform: "Intel Skylake"
-        workerConfig:
-          task:
-            reclaimDivisor: 2
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 10
-              sourceImage: '<image>'
-            type: PERSISTENT
-          - autoDelete: true
-            initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
-            type: SCRATCH
-            interface: NVME
-        machine_type: custom-32-73728
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-- pool_id: gecko-3/b-linux-gcp
-  description: Worker for Firefox automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
-  provider_id: fxci-level3-gcp
-  config:
-    minCapacity: 0
-    maxCapacity: 1000
-    regions: [us-central1]
-    image: monopacker-docker-worker-trusted-current
+    image:
+        by-chain-of-trust:
+            trusted: monopacker-docker-worker-trusted-current
+            default: monopacker-docker-worker-current
     instance_types:
       - minCpuPlatform: "Intel Skylake"
         workerConfig:
