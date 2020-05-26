@@ -460,7 +460,6 @@ pools:
             gecko-2: 20
             "kaios-.*": 10
             default: 40
-    worker-config: {billingCycleInterval: 21600}
     instance_types:
     - instanceType: c5d.xlarge
       capacityPerInstance: 2
@@ -799,7 +798,6 @@ pools:
     image: docker-worker-hvm-builder-current
     maxCapacity: 32
     scalingRatio: 0
-    userData: {billingCycleInterval: 21600}
     instance_types:
     - instanceType: r5d.xlarge
       capacityPerInstance: 8
@@ -1107,7 +1105,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
       worker-config:
-        billingCycleInterval: 7200
         capacityManagement: {diskspaceThreshold: 20000000000}
 - pool_id: gecko-t/t-linux-large-1804
   description: Worker for Firefox automation based on Ubuntu 18.04
@@ -1127,7 +1124,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
       worker-config:
-        billingCycleInterval: 7200
         capacityManagement: {diskspaceThreshold: 20000000000}
 - pool_id: comm-t/t-linux-large
   description: Worker for Firefox automation
@@ -1147,7 +1143,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
       worker-config:
-        billingCycleInterval: 7200
         capacityManagement: {diskspaceThreshold: 20000000000}
 - pool_id: gecko-t/t-linux-xlarge-1804
   description: Worker for Firefox automation
@@ -1540,7 +1535,6 @@ pools:
             "mobile-.*": 100
             default: 10
     scalingRatio: 0
-    worker-config: {billingCycleInterval: 21600}
     instance_types:
     - instanceType: c5d.large
       capacityPerInstance: 2
