@@ -801,15 +801,15 @@ pools:
     scalingRatio: 0
     userData: {billingCycleInterval: 21600}
     instance_types:
-    - instanceType: r3.xlarge
+    - instanceType: r5d.xlarge
       capacityPerInstance: 8
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
-    - instanceType: m3.xlarge
+    - instanceType: m5d.xlarge
       capacityPerInstance: 8
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
-    - instanceType: c3.xlarge
+    - instanceType: c5d.xlarge
       capacityPerInstance: 8
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
