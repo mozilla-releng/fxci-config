@@ -494,6 +494,7 @@ android-components:
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
     scriptworker: true
+    taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -515,8 +516,8 @@ reference-browser:
     mobile-sign-phase: true
     mobile-pushapk-phase: true
     scriptworker: true
-    taskgraph-cron: true
     taskgraph-actions: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
@@ -543,8 +544,8 @@ fenix:
     mobile-sign-phase: true
     scriptworker: true
     shipit: true
-    taskgraph-cron: true
     taskgraph-actions: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
@@ -569,8 +570,8 @@ fenix-jlorenzo:
     mobile-sign-phase: true
     scriptworker: true
     shipit: true
-    taskgraph-cron: true
     taskgraph-actions: true
+    taskgraph-cron: true
   cron:
     targets: [nightly]
     hooks_owner: jlorenzo+tc@mozilla.com
@@ -610,9 +611,10 @@ firefox-ios:
   features:
     github-taskgraph: true
     mobile-roles: true
+    taskgraph-actions: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    taskgraph-cron: true
   cron:
     targets: [l10-screenshots]
 
