@@ -1657,7 +1657,6 @@
   to:
   - project:
       feature: taskgraph-actions
-      job: branch:*
 
 # Adhoc signing
 
