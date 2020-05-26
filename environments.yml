@@ -90,7 +90,7 @@ firefoxci:
                         "eu-central-1": ["sg-e53d0d8e"]
         invalid-instances:
             - zones: ["us-east-1e"]
-              families: ["m5", "m5a", "m5d", "c5", "c5d", "r5a", "z1d"]
+              families: ["m5", "m5a", "m5ad", "m5d", "c5", "c5d", "r5a", "z1d"]
             - zones: ["us-east-1b", "us-east-1f"]
               families: ["r3", "m3", "c3"]
             - zones: ["us-east-1a", "us-east-1b", "us-east-1d", "us-east-1e"]
