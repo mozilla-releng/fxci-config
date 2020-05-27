@@ -2026,68 +2026,45 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-- pool_id: adhoc-1/b-linux
-  description: Worker for adhoc signing automation
+- pool_id: '{pool-group}/b-linux'
+  description: Worker for linux build
   owner: release+tc-workers@mozilla.com
   email_on_error: false
   provider_id: aws
+  variants:
+      - pool-group: adhoc-1
+      - pool-group: adhoc-3
+        chain-of-trust: trusted
+      - pool-group: scriptworker-1
+      - pool-group: scriptworker-3
+        chain-of-trust: trusted
   config:
     regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
+    image:
+        by-chain-of-trust:
+            trusted: docker-worker-hvm-builder-trusted-current
+            default: docker-worker-hvm-builder-current
+    security:
+        by-chain-of-trust:
+            trusted: trusted
+            default: null
     maxCapacity: 10
     instance_types:
-    - instanceType: c5d.4xlarge
+    - instanceType: c5d.large
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.large
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    - instanceType: c5.large
       launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-- pool_id: adhoc-3/b-linux
-  description: Worker for adhoc signing automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    maxCapacity: 10
-    security: trusted
-    regions: [us-east-1, us-west-1, us-west-2]
-    instance_types:
-    - instanceType: c5d.9xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m5d.12xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m5.12xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: c5.9xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m4.10xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: c4.8xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
+        capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: gecko-t/t-linux-metal
   description: Monopacker metal workers for Firefox automation
   owner: mcrabill@mozilla.com
@@ -2435,68 +2412,6 @@ pools:
     maxCapacity: 10
     instance_types:
     - instanceType: m5d.large
-- pool_id: scriptworker-1/b-linux
-  description: Worker for scriptworker automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    instance_types:
-    - instanceType: c5d.4xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-- pool_id: scriptworker-3/b-linux
-  description: Worker for scriptworker automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    maxCapacity: 10
-    security: trusted
-    regions: [us-east-1, us-west-1, us-west-2]
-    instance_types:
-    - instanceType: c5d.9xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m5d.12xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m5.12xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: c5.9xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m4.10xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: c4.8xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
 - pool_id: scriptworker-1/images
   description: 'Builds docker images for scriptworkers; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
