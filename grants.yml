@@ -1652,6 +1652,7 @@
   to:
   - groups:
     - team_moco
+    - team_mozillaonline
 
 - grant:
   - in-tree:hook-action:project-{trust_domain}/in-tree-action-{level}-*
@@ -2371,6 +2372,11 @@
   - roles:
     # Rob Lemley [:rjl] (https://bugzilla.mozilla.org/show_bug.cgi?id=1496783)
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|thunderbird
+- grant:
+  - assume:project:releng:ci-group:team_mozillaonline
+  to:
+  - roles:
+    - mozilla-group:team_mozillaonline
 
 # These grants are directly to the mozilla-group roles as they need
 # are the root of available scopes.
