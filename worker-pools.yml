@@ -1912,68 +1912,6 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-- pool_id: xpi-1/b-linux
-  description: Worker for XPI automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: docker-worker-hvm-builder-current
-    maxCapacity: 10
-    instance_types:
-    - instanceType: c5d.4xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-- pool_id: xpi-3/b-linux
-  description: Worker for XPI automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    image: docker-worker-hvm-builder-trusted-current
-    maxCapacity: 10
-    security: trusted
-    regions: [us-east-1, us-west-1, us-west-2]
-    instance_types:
-    - instanceType: c5d.9xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m5d.12xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m5.12xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: c5.9xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m4.10xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: c4.8xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
 - pool_id: xpi-1/images
   description: 'Builds docker images for XPI; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -2037,6 +1975,9 @@ pools:
         chain-of-trust: trusted
       - pool-group: scriptworker-1
       - pool-group: scriptworker-3
+        chain-of-trust: trusted
+      - pool-group: xpi-1
+      - pool-group: xpi-3
         chain-of-trust: trusted
   config:
     regions: [us-east-1, us-west-1, us-west-2]
