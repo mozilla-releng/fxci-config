@@ -1665,12 +1665,15 @@
 - grant:
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - project:adhoc:releng:signing:cert:dep-signing
+  - project:adhoc:releng:ship-it:server:staging
+  - project:adhoc:releng:ship-it:action:mark-as-shipped
   - queue:create-task:highest:adhoc-{level}/*
   - queue:create-task:highest:adhoc-t/*
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - queue:route:index.{trust_domain}.v2.adhoc-manifest.*
   - queue:route:index.adhoc.cache.level-{level}.*
   - queue:get-artifact:releng/adhoc/*
+  - queue:route:notify.email.*
   to:
   - project:
       alias:
