@@ -29,6 +29,7 @@
 #   - `gecko-roles` -- this repository should have gecko-related roles assigned (for users, actions, cron, etc.)
 #   - `mobile-roles` -- this repository should have https://github.com/mozilla-mobile roles assigned (for users, actions, cron, etc.)
 #   - `xpi-roles` -- this repository should have xpi roles assigned (for users, actions, cron, etc.)
+#   - `adhoc-roles` -- this repository should have adhoc roles assigned (for users, actions, cron, etc.)
 #   - `beetmover-maven-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `beetmover-maven-nightly-phase` -- this https://github.com/mozilla-mobile repository should have beetmover nightly production related scopes associated
 #   - `mobile-firebase-testing` -- this https://github.com/mozilla-mobile repository has end-to-end testing involving devices hosted at Google's Firebase
@@ -818,13 +819,47 @@ test-xpi-private:
     xpi-roles: true
 
 # Bug 1594621: Create an adhoc signing repository
-mvp-adhoc:
-  repo: https://github.com/mozilla-releng/mvp-adhoc
+staging-adhoc-signing:
+  repo: https://github.com/mozilla-releng/staging-adhoc-signing
   repo_type: git
   trust_domain: adhoc
   level: 1
   features:
     trust-domain-scopes: true
+    adhoc-roles: true
+    taskgraph-actions: true
+    github-taskgraph: true
+
+staging-adhoc-manifest:
+  repo: https://github.com/mozilla-releng/staging-adhoc-manifest
+  repo_type: git
+  trust_domain: adhoc
+  level: 1
+  features:
+    trust-domain-scopes: true
+    adhoc-roles: true
+    taskgraph-actions: true
+    github-taskgraph: true
+
+adhoc-signing:
+  repo: https://github.com/mozilla-releng/adhoc-signing
+  repo_type: git
+  trust_domain: adhoc
+  level: 3
+  features:
+    trust-domain-scopes: true
+    adhoc-roles: true
+    taskgraph-actions: true
+    github-taskgraph: true
+
+adhoc-manifest:
+  repo: https://github.com/mozilla-releng/adhoc-manifest
+  repo_type: git
+  trust_domain: adhoc
+  level: 3
+  features:
+    trust-domain-scopes: true
+    adhoc-roles: true
     taskgraph-actions: true
     github-taskgraph: true
 
