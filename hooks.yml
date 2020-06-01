@@ -296,32 +296,17 @@ project-releng/cron-task-mozilla-mobile-focus-android/nightly-public:
     additionalProperties: false
 
 # These fennec-* entries are just meant to be here during the Fennec to Fenix migration
-project-releng/cron-task-mozilla-mobile-fenix/fennec-beta:
+project-releng/cron-task-mozilla-mobile-fenix/fennec-production:
   name: 'Cron task for https://github.com/mozilla-mobile/fenix'
   description: >-
-    See https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-mobile-fenix/fennec-beta
+    See https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-mobile-fenix/fennec-production
   owner: release+tc-hooks@mozilla.com
   email_on_error: true
   schedule: []
   scopes:
-    - assume:repo:github.com/mozilla-mobile/fenix:cron:fennec-beta
+    - assume:repo:github.com/mozilla-mobile/fenix:cron:fennec-production
     - queue:route:notify.email.*
-  template_file: hooks/project-releng/cron-task-mozilla-mobile-fenix/fennec-beta.yml
-  trigger_schema:
-    type: object
-    properties: {}
-    additionalProperties: false
-
-project-releng/cron-task-JohanLorenzo-fenix/fennec-beta:
-  name: 'Cron task for https://github.com/JohanLorenzo/fenix'
-  description: >-
-    See https://tools.taskcluster.net/hooks/#project-releng/cron-task-JohanLorenzo-fenix/fennec-beta
-  owner: jlorenzo+tc@mozilla.com
-  email_on_error: true
-  schedule: []
-  scopes:
-    - assume:repo:github.com/JohanLorenzo/fenix:cron:fennec-beta
-  template_file: hooks/project-releng/cron-task-JohanLorenzo-fenix/fennec-beta.yml
+  template_file: hooks/project-releng/cron-task-mozilla-mobile-fenix/fennec-production.yml
   trigger_schema:
     type: object
     properties: {}

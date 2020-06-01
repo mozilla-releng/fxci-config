@@ -1,6 +1,6 @@
 ---
 # This job is a almost a copy of https://firefox-ci-tc.services.mozilla.com/hooks/project-releng/cron-task-mozilla-mobile-fenix%2Fnightly
-# 2 things are changed, though: `VCS_HEAD_REF` and `--force-run=fennec-beta`
+# 2 things are changed, though: `VCS_HEAD_REF` and `--force-run=fennec-production`
 provisionerId: mobile-3
 workerType: decision
 schedulerId: mobile-level-3
@@ -12,7 +12,7 @@ routes:
   - notify.email.release+failedcron@mozilla.com.on-failed
   - notify.email.release+exceptioncron@mozilla.com.on-exception
 scopes:
-  - 'assume:hook-id:project-releng/cron-task-mozilla-mobile-fenix/fennec-beta'
+  - 'assume:hook-id:project-releng/cron-task-mozilla-mobile-fenix/fennec-production'
 payload:
   image:
     type: indexed-image
@@ -20,7 +20,7 @@ payload:
     path: public/image.tar.zst
   env:
     VCS_HEAD_REPOSITORY: 'https://github.com/mozilla-mobile/fenix'
-    VCS_HEAD_REF: fennec/beta
+    VCS_HEAD_REF: fennec/production
     VCS_REPOSITORY_TYPE: git
     HG_STORE_PATH: /builds/worker/checkouts/hg-store
     TASKGRAPH_HEAD_REPOSITORY: 'https://hg.mozilla.org/ci/taskgraph'
@@ -46,7 +46,7 @@ payload:
       artifacts && ~/.local/bin/taskgraph cron
       --head-repository=https://github.com/mozilla-mobile/fenix
       --head-ref="$VCS_HEAD_REF" --repository-type="$VCS_REPOSITORY_TYPE"
-      --project=fenix --level=3 --root=. --force-run=fennec-beta
+      --project=fenix --level=3 --root=. --force-run=fennec-production
   retry-exit-status:
     - 72
   artifacts:
@@ -56,10 +56,10 @@ payload:
 metadata:
   owner: mozilla-taskcluster-maintenance@mozilla.com
   source: >-
-    https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-mobile-fenix/fennec-beta
+    https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-mobile-fenix/fennec-production
   description: >-
     See
-    https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-mobile-fenix/fennec-beta
+    https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-mobile-fenix/fennec-production
   name: 'Cron task for https://github.com/mozilla-mobile/fenix'
 priority: normal
 retries: 5
