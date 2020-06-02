@@ -726,6 +726,7 @@
 # - scriptworker specific roles
 - grant:
   - secrets:get:repo:github.com/mozilla-releng/scriptworker:coveralls
+  - secrets:get:repo:github.com/mozilla-releng/scriptworker:github
   to:
   - project:
       alias: scriptworker
