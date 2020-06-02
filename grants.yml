@@ -1759,6 +1759,12 @@
         - mozilla-beta
         - mozilla-release
       job: cron:ship-geckoview
+  - project:
+      # We still support RELBRANCHes on mozilla-release. Geckoview gets automatically shipped on
+      # GECKOVIEW_\d+_RELBRANCH (\d+ being the major version)
+      alias: mozilla-release
+      # /!\ Relbranches currently use `branch:default`
+      job: branch:*
 
 ##
 # Administrative Scopes
