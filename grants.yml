@@ -1802,6 +1802,9 @@
   - hooks:trigger-hook:project-mobile/in-tree-action-3-generic/*
   - hooks:trigger-hook:project-mobile/in-tree-action-1-cancel-all/*
   - hooks:trigger-hook:project-mobile/in-tree-action-3-cancel-all/*
+  # Allow sheriffs to force schedule a decision task, whenever one has gone missing because of a
+  # bustage
+  - hooks:trigger-hook:hg-push:*
   to:
   - groups:
     - sheriff
