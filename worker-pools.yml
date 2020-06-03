@@ -872,6 +872,11 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
         - DeviceName: xvdf
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+    worker-config:
+      genericWorker:
+        config:
+          "idleTimeoutSecs": 1
+
 - pool_id: gecko-t/t-win10-64-source
   description: ''
   owner: release+tc-workers@mozilla.com
@@ -915,6 +920,10 @@ pools:
            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
          - DeviceName: xvdf
            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+    worker-config:
+      genericWorker:
+        config:
+          "idleTimeoutSecs": 1
 - pool_id: gecko-t/t-win7-32
   description: ''
   owner: release+tc-workers@mozilla.com
@@ -938,6 +947,10 @@ pools:
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
         - DeviceName: /dev/sdc
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
+    worker-config:
+      genericWorker:
+        config:
+          "idleTimeoutSecs": 1
 - pool_id: gecko-t/t-win7-32-gpu
   description: ''
   owner: release+tc-workers@mozilla.com
@@ -961,6 +974,10 @@ pools:
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
         - DeviceName: /dev/sdc
           Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
+    worker-config:
+      genericWorker:
+        config:
+          "idleTimeoutSecs": 1
 - pool_id: comm-1/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
@@ -1074,6 +1091,8 @@ pools:
     maxCapacity: 3500
     worker-config:
       dockerConfig: {allowPrivileged: false}
+      shutdown:
+        afterIdleSeconds: 15
     instance_types:
     - instanceType: m5.large
       launchConfig:
@@ -1096,6 +1115,8 @@ pools:
     maxCapacity: 3500
     worker-config:
       dockerConfig: {allowPrivileged: false}
+      shutdown:
+        afterIdleSeconds: 15
     instance_types:
     - instanceType: m5.large
       launchConfig:
@@ -1134,6 +1155,8 @@ pools:
     maxCapacity: 3500
     worker-config:
       dockerConfig: {allowPrivileged: false}
+      shutdown:
+        afterIdleSeconds: 15
     instance_types:
     - instanceType: m5.xlarge
       worker-config:
