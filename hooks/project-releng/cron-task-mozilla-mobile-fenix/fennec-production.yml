@@ -34,7 +34,7 @@ payload:
   maxRunTime: 1800
   command:
     - run-task
-    - '--gecko-checkout=/builds/worker/checkouts/src'
+    - '--vcs-checkout=/builds/worker/checkouts/src'
     - '--taskgraph-checkout=/builds/worker/checkouts/taskgraph'
     - '--task-cwd=/builds/worker/checkouts/src'
     - '--'
