@@ -1318,6 +1318,7 @@
       job: ["cron:fennec-production"]
 
 - grant:
+  # XXX `fennec-production-signing` handles beta signing too.
   - project:mobile:fenix:releng:signing:cert:fennec-production-signing
   # TODO Bug 1631839: Remove the following scope once all projects have migrated to
   # `index.mobile.v2.*`.
@@ -1327,6 +1328,16 @@
   - project:
       alias: fenix
       job: ["release", "cron:fennec-production"]
+
+- grant:
+  # TODO Bug 1631839: Remove the following scope once all projects have migrated to
+  # `index.mobile.v2.*`.
+  - queue:route:index.project.mobile.fenix.v2.fennec-beta.*
+  - secrets:get:project/mobile/fenix/fennec-beta
+  to:
+  - project:
+      alias: fenix
+      job: ["release"]
 
 - grant:
   # TODO Bug 1631839: Remove the following scope once all projects have migrated to
