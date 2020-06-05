@@ -1266,6 +1266,8 @@
   # TODO Bug 1631839: Remove the following scope once all projects have migrated to
   # `index.mobile.v2.*`.
   - queue:route:index.project.mobile.fenix.v2.debug.*
+  - queue:route:index.project.mobile.fenix.v2.nightly-simulation.*
+  - secrets:get:project/mobile/fenix/nightly-simulation
   to:
   - project:
       alias: fenix
