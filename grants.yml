@@ -2325,8 +2325,7 @@
   - assume:worker-type:localprovisioner/nss*
   to:
   - roles:
-    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mcrabill
-    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|wcosta
+    - team_taskcluster
 
 # Bug 1604686: Token for gfx github sync, ability to set and get
 - grant:
