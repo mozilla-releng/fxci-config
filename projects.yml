@@ -675,12 +675,6 @@ product-details:
   trust_domain: releng
   level: 3
 
-scriptworker-scripts:
-  repo: https://github.com/mozilla-releng/scriptworker-scripts
-  repo_type: git
-  trust_domain: releng
-  level: 3
-
 shipit:
   repo: https://github.com/mozilla-releng/shipit
   repo_type: git
@@ -873,11 +867,11 @@ code-review:
     trust-domain-scopes: true
 
 # Bug 1597598: Add taskgraph support to scriptworker-scripts
-aki-scriptworker-scripts:
-  repo: https://github.com/escapewindow/sws-taskgraph
+scriptworker-scripts:
+  repo: https://github.com/mozilla-releng/scriptworker-scripts
   repo_type: git
   trust_domain: scriptworker
-  level: 1
+  level: 3
   features:
     trust-domain-scopes: true
     taskgraph-actions: true
