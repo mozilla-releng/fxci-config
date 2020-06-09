@@ -698,11 +698,15 @@
   - queue:route:index.project.application-services.*
   - queue:create-task:highest:app-services-{level}/*
   - queue:route:notify.email.*
+  - project:mozilla:{trust_project}:releng:signing:cert:dep-signing
+  - project:mozilla:{trust_project}:releng:signing:format:*
   to:
   - project:
       alias: application-services
 
 - grant:
+  - project:mozilla:{trust_project}:releng:signing:cert:release-signing
+    # TODO: to remove this scope once releases are migrated to taskgraph
   - project:mozilla:application-services:releng:signing:cert:release-signing
   - secrets:get:project/application-services/gradle-plugin-publish
   - secrets:get:project/application-services/publish
