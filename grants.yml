@@ -254,8 +254,8 @@
 
 # moz-tree:level:1:gecko
 - grant:
-  - generic-worker:allow-rdp:gecko-1/win*
-  - generic-worker:allow-rdp:gecko-t/win*
+  - generic-worker:allow-rdp:gecko-1/b-win*
+  - generic-worker:allow-rdp:gecko-t/t-win*
   - generic-worker:os-group:gecko-t/t-win7-32/Administrators
   - generic-worker:os-group:gecko-t/t-win7-32-beta/Administrators
   - generic-worker:os-group:gecko-t/t-win10-64/Administrators
