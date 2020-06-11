@@ -412,7 +412,7 @@
       job: ["action:release-promotion"]
       trust_domain: gecko
       level: [3]
-      alias: [mozilla-esr68, mozilla-release, mozilla-beta]
+      alias: [mozilla-esr68, mozilla-esr78, mozilla-release, mozilla-beta]
 
 # pushing RCs to beta
 - grant:
