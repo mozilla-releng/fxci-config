@@ -666,6 +666,7 @@ glean:
   repo_type: git
   level: 3
   trust_domain: glean
+  trust_project: glean
   features:
     # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
     # across projects.

@@ -685,9 +685,22 @@
   - queue:create-task:highest:glean-{level}/*
   - queue:route:index.project.glean.cache.level-{level}.*
   - project:releng:services/tooltool/api/download/internal
+  - project:mozilla:{trust_project}:releng:signing:cert:dep-signing
+  - project:mozilla:{trust_project}:releng:signing:format:*
+  - project:mozilla:{trust_project}:releng:beetmover:action:push-to-maven
+  - project:mozilla:{trust_project}:releng:beetmover:bucket:maven-staging
   to:
   - project:
       alias: glean
+
+- grant:
+  - project:mozilla:{trust_project}:releng:signing:cert:release-signing
+  - project:mozilla:{trust_project}:releng:beetmover:bucket:maven-production
+  to:
+  - project:
+      alias: glean
+      level: 3
+      job: ["release"]
 
 # - application-services specific roles
 - grant:
@@ -700,6 +713,8 @@
   - queue:route:notify.email.*
   - project:mozilla:{trust_project}:releng:signing:cert:dep-signing
   - project:mozilla:{trust_project}:releng:signing:format:*
+  - project:mozilla:{trust_project}:releng:beetmover:action:push-to-maven
+  - project:mozilla:{trust_project}:releng:beetmover:bucket:maven-staging
   to:
   - project:
       alias: application-services
@@ -716,9 +731,13 @@
   # decision task, yet.
   - queue:create-task:highest:scriptworker-k8s/appservices-3-signing
   - queue:create-task:highest:scriptworker-k8s/appservices-3-beetmover
-  # TODO Make these 2 scopes compliant with the `beetmover-maven-phase` feature.
+  # TODO In bug 1632147 we will reorganize scriptworker scopes to re-use the
+  # `beetmover-maven-phase` once we have a new `trust_project` for this and
+  # `glean` project
   - project:mozilla:application-services:releng:beetmover:action:push-to-maven
   - project:mozilla:application-services:releng:beetmover:bucket:maven-production
+  - project:mozilla:{trust_project}:releng:beetmover:action:push-to-maven
+  - project:mozilla:{trust_project}:releng:beetmover:bucket:maven-production
   to:
   - project:
       alias: application-services
