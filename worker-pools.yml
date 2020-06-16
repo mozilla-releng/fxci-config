@@ -444,18 +444,16 @@ pools:
       capacityPerInstance: 2
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.5
+    - instanceType: c5ad.xlarge
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: m5d.xlarge
       capacityPerInstance: 2
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-      utility: 1.4
-    - instanceType: c5.xlarge
+    - instanceType: m5ad.xlarge
       capacityPerInstance: 2
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: '{pool-group}/images'
@@ -1543,17 +1541,21 @@ pools:
       worker-config:
         capacityManagement:
           diskspaceThreshold: 30000000000
+    - instanceType: c5ad.large
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 30000000000
     - instanceType: m5d.large
       capacityPerInstance: 2
       worker-config:
         capacityManagement:
           diskspaceThreshold: 30000000000
-    - instanceType: c5.large
+    - instanceType: m5ad.large
       capacityPerInstance: 2
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 30000000000
     regions:
     - us-east-1
     - us-west-1
