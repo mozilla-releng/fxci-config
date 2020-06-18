@@ -1550,10 +1550,7 @@ pools:
             ".*-3": trusted
             default: null
     minCapacity: 1
-    maxCapacity:
-        by-pool-group:
-            "mobile-.*": 100
-            default: 10
+    maxCapacity: 10
     scalingRatio: 0
     instance_types:
     - instanceType: c5d.large
