@@ -450,15 +450,13 @@ pools:
             default: null
     minCapacity:
         by-pool-group:
-            gecko-2: 0
-            "kaios-.*": 0
-            default: 5
+            "gecko-[13]": 5
+            default: 0
     maxCapacity:
         by-pool-group:
-            (gecko|comm)-3: 20
-            gecko-2: 20
-            "kaios-.*": 10
-            default: 40
+            gecko-1: 40
+            gecko-3: 20
+            default: 4
     instance_types:
     - instanceType: c5d.xlarge
       capacityPerInstance: 2
