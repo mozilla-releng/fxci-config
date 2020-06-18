@@ -131,8 +131,9 @@ pools:
             default: null
     maxCapacity:
         by-pool-group:
+            "gecko-.*": 1000
+            "comm-.*": 200
             "kaios-.*": 10
-            default: 1000
     instance_types:
     - instanceType: c5.4xlarge
       launchConfig:
@@ -699,7 +700,11 @@ pools:
             default: null
     maxCapacity:
         by-pool-group:
-            "(gecko|comm)-t$": 3500
+            gecko-t:
+                by-suffix:
+                    "": 1500
+                    "-source": 200
+            comm-t: 10
             kaios-t: 10
             gecko-3: 10
     worker-config:
@@ -1104,7 +1109,7 @@ pools:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
-    maxCapacity: 3500
+    maxCapacity: 2500
     worker-config:
       dockerConfig: {allowPrivileged: false}
       shutdown:
@@ -1149,7 +1154,7 @@ pools:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
-    maxCapacity: 3500
+    maxCapacity: 100
     worker-config:
       dockerConfig: {allowPrivileged: false}
     instance_types:
