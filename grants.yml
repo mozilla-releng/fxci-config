@@ -2334,19 +2334,10 @@
     - code-review-developers
 
 - grant:
-  - auth:create-client:project/packet/docker-worker
-  - auth:create-client:project/nss-nspr/*
-  - auth:sentry:docker-worker
-  - auth:statsum:docker-worker
-  - queue:claim-work:localprovisioner/nss*
-  - queue:worker-id:*
-  - secrets:get:project/taskcluster/docker-worker/certificate-key
-  - secrets:set:project/taskcluster/docker-worker/certificate-key
-  - secrets:get:worker-pool:localprovisioner/nss*
-  - secrets:get:worker-type:localprovisioner/nss*
-  - assume:worker-type:localprovisioner/nss*
+  # Grant taskcluster team permission to reset access tokens for nss workers
+  - auth:reset-access-token:project/nss-nspr/*
   to:
-  - roles:
+  - group:
     - team_taskcluster
 
 # Bug 1604686: Token for gfx github sync, ability to set and get
