@@ -1144,7 +1144,12 @@
   to:
   - project:
       feature: mobile-firebase-testing
-      job: ["branch:*"]
+      job: ["action:*", "branch:*"]
+  - project:
+      # Fenix PRs are restricted to collaborators, so exposing firebase is safe-enough for PRs.
+      # Fenix also has some Firebase tests on nightly.
+      alias: fenix
+      job: ["cron:nightly", "cron:nightly-on-google-play", "pull-request"]
 
 - grant:
   - secrets:get:project/mobile/github
@@ -1160,24 +1165,6 @@
   - project:
       alias: fenix
       job: ["action:*", "branch:*", "cron:*", "release"]
-
-- grant:
-  - secrets:get:project/mobile/{alias}/firebase
-  to:
-  - project:
-      # Fenix PRs are now restricted to collaborators, so exposing firebase is safe-enough
-      # Fenix also has a new Firebase test only on nightly.
-      alias: fenix
-      job: ["pull-request", "cron:nightly", "cron:nightly-on-google-play"]
-
-
-# android-components specific scopes
-- grant:
-  - secrets:get:project/mobile/android-components/firebase
-  to:
-  - projects:
-      alias: android-components
-      job: ["branch:*"]
 
 - grant:
   - project:mobile:{trust_project}:releng:signing:cert:dep-signing
