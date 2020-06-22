@@ -2135,8 +2135,11 @@ pools:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
-    minCapacity: 1
-    maxCapacity: 100
+    minCapacity: 0
+    maxCapacity: 2
+    worker-config:
+      shutdown:
+        afterIdleSeconds: 15
     instance_types:
     - instanceType: m5.large
       worker-config:
