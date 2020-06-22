@@ -725,7 +725,6 @@
   - project:mozilla:application-services:releng:signing:cert:release-signing
   - secrets:get:project/application-services/gradle-plugin-publish
   - secrets:get:project/application-services/publish
-  - secrets:get:project/application-services/symbols-token
   # TODO Bug 1597329 - Remove these 4 scopes once the naming scheme is applied to the workers
   # Scopes are kind of duplicated because of this project doesn't use "assume:" scopes on the
   # decision task, yet.
@@ -743,6 +742,14 @@
       alias: application-services
       level: 3
       job: ["release"]
+
+- grant:
+  - secrets:get:project/application-services/symbols-token
+  to:
+  - project:
+      alias: application-services
+      level: 3
+      job: ["release", "branch:*"]
 
 # - scriptworker specific roles
 - grant:
