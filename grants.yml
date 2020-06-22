@@ -288,7 +288,6 @@
   - project:releng:treescript:action:tagging
   - queue:create-task:medium:proj-autophone/*
   - queue:create-task:low:bitbar/gecko-t-*
-  - queue:create-task:low:localprovisioner/*
   - queue:create-task:low:scriptworker-prov-v1/signing-mac-dev
   - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1
   - queue:get-artifact:releng/partner/*
