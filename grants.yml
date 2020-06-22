@@ -695,6 +695,7 @@
 - grant:
   - project:mozilla:{trust_project}:releng:signing:cert:release-signing
   - project:mozilla:{trust_project}:releng:beetmover:bucket:maven-production
+  - queue:route:notify.email.*
   to:
   - project:
       alias: glean
