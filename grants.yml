@@ -702,6 +702,15 @@
       level: 3
       job: ["release"]
 
+- grant:
+  # TODO Bug 1631839: Remove thisu scope once project has migrated to
+  # `index.glean.v2.*`.
+  - queue:route:index.project.glean.v2.branch.*
+  to:
+  - project:
+      alias: glean
+      job: ["branch:*", "release"]
+
 # - application-services specific roles
 - grant:
   - docker-worker:taskcluster-proxy:tooltool.download.internal
