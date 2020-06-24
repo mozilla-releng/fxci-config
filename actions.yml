@@ -19,28 +19,28 @@
   levels: [1, 2, 3]
   action_perms:
       - generic
-      - purge-caches
       - cancel-all
-      - retrigger-decision
-      - release-promotion
       - merge-automation
+      - purge-caches
+      - release-promotion
+      - retrigger-decision
 
 - trust_domain: comm
   levels: [1, 3]
   action_perms:
       - generic
-      - purge-caches
       - cancel-all
-      - retrigger-decision
-      - release-promotion
       - merge-automation
+      - purge-caches
+      - release-promotion
+      - retrigger-decision
 
 - trust_domain: kaios
   levels: [1, 2]
   action_perms:
       - generic
-      - purge-caches
       - cancel-all
+      - purge-caches
       - retrigger-decision
 
 - trust_domain: xpi
