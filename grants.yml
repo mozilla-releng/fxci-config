@@ -526,6 +526,7 @@
   - secrets:get:project/updatebot/phabricator-token
   - secrets:get:project/updatebot/bugzilla-api-key
   - secrets:get:project/updatebot/database-password
+  - secrets:get:project/updatebot/sentry-url
   - queue:get-artifact:project/updatebot/*
   to:
   - project:
@@ -2203,6 +2204,8 @@
   - secrets:set:project/updatebot/bugzilla-api-key
   - secrets:get:project/updatebot/database-password
   - secrets:set:project/updatebot/database-password
+  - secrets:get:project/updatebot/sentry-url
+  - secrets:set:project/updatebot/sentry-url
   - queue:get-artifact:project/updatebot/*
   to:
   - groups:
