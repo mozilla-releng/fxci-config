@@ -388,6 +388,15 @@
       feature: gecko-roles
       level: [1, 2, 3]
 
+- grant:
+  # Allow the backfill action to trigger the per-push action that schedules the backfilled tasks.
+  - hooks:trigger-hook:project-{trust_domain}/in-tree-action-{level}-backfill/*
+  to:
+  - projects:
+      job: ["action:backfill"]
+      feature: [gecko-roles, gecko-actions]
+      level: [1, 2, 3]
+
 ##
 # project-specific scopes (for esr's to hang onto their old scopes)
 
@@ -1946,10 +1955,13 @@
         - action:release-promotion
 
 # control who can run generic actions: basically anyone at the project's
-# level or higher.
+# level or higher. The backfill action is similarily unrestricted, but has
+# a seperate action permision, to allow it to trigger actions.
 - grant:
   - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
   - hooks:trigger-hook:project-comm/in-tree-action-1-generic/*
+  - hooks:trigger-hook:project-gecko/in-tree-action-1-backfill/*
+  - hooks:trigger-hook:project-comm/in-tree-action-1-backfill/*
   to:
   - groups:
     - active_scm_level_1
@@ -1959,6 +1971,8 @@
 - grant:
   - hooks:trigger-hook:project-gecko/in-tree-action-2-generic/*
   - hooks:trigger-hook:project-comm/in-tree-action-2-generic/*
+  - hooks:trigger-hook:project-gecko/in-tree-action-2-backfill/*
+  - hooks:trigger-hook:project-comm/in-tree-action-2-backfill/*
   to:
   - groups:
     - active_scm_level_2
@@ -1967,6 +1981,8 @@
 - grant:
   - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
   - hooks:trigger-hook:project-comm/in-tree-action-3-generic/*
+  - hooks:trigger-hook:project-gecko/in-tree-action-3-backfill/*
+  - hooks:trigger-hook:project-comm/in-tree-action-3-backfill/*
   to:
   - groups:
     - active_scm_level_3
