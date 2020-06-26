@@ -18,7 +18,7 @@
 
 ---
 provisionerId: infra
-workerType: hg-push
+workerType: build-decision
 schedulerId: ${trust_domain}-level-${level}
 
 # The "$fromNow" options here are escaped so that they are processed by the hooks service's

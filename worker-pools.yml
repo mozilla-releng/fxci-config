@@ -59,7 +59,7 @@ worker-defaults:
                         "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
 
 pools:
-- pool_id: infra/hg-push
+- pool_id: infra/build-decision
   description: Worker for firefox-ci automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
