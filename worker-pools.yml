@@ -1325,7 +1325,7 @@ pools:
     maxCapacity: 150
     additional-user-data:
       workerType: gecko-1-b-win2012
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-west-1, us-west-2]
     security: windows-untrusted
     implementation: generic-worker/windows-nss
     instance_types:
@@ -1344,7 +1344,7 @@ pools:
     maxCapacity: 150
     additional-user-data:
       workerType: gecko-1-b-win2012
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-west-1, us-west-2]
     security: trusted
     implementation: generic-worker/windows-nss
     instance_types:

@@ -223,7 +223,6 @@ occ-mpd-b-win2012-trusted-pre:
 
 nss-win2012r2-pre:
   aws:
-    us-east-1: ami-00711ead51d83d62b
     us-west-1: ami-0d05851ab254517de
     us-west-2: ami-02f981615a8102d24
 
@@ -239,7 +238,7 @@ occ-b-win2012-trusted-v20200226:
     eu-central-1: ami-0842423a27aac7d5b
     us-east-1: ami-0e2a61d4d8d084416
     us-west-1: ami-006a43b6bbe6a22c3
-    us-west-2: ami-08a350cc7aab87c68  
+    us-west-2: ami-08a350cc7aab87c68
 occ-t-win10-64-v20200226:
   aws:
     eu-central-1: ami-0ec91d0a07d19ee47
