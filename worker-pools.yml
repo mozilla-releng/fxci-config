@@ -1282,7 +1282,7 @@ pools:
   config:
     image: docker-worker-hvm-builder-current
     minCapacity: 0
-    maxCapacity: 50
+    maxCapacity: 150
     scalingRatio: 0
     instance_types:
     - instanceType: m5d.xlarge
@@ -1290,6 +1290,10 @@ pools:
     - us-east-1
     - us-west-1
     - us-west-2
+    worker-config:
+      genericWorker:
+        config:
+          "idleTimeoutSecs": 1
 - pool_id: nss-3/linux
   description: Worker type that can be used for nss related pushes.
   owner: release+tc-workers@mozilla.com
@@ -1298,7 +1302,7 @@ pools:
   config:
     image: docker-worker-hvm-builder-current
     minCapacity: 0
-    maxCapacity: 50
+    maxCapacity: 150
     scalingRatio: 0
     security: trusted
     instance_types:
@@ -1307,6 +1311,10 @@ pools:
     - us-east-1
     - us-west-1
     - us-west-2
+    worker-config:
+      genericWorker:
+        config:
+          "idleTimeoutSecs": 1
 - pool_id: nss-1/win2012r2
   description: Worker type that can be used for nss related pushes.
   owner: release+tc-workers@mozilla.com
@@ -1314,7 +1322,7 @@ pools:
   provider_id: aws
   config:
     image: nss-win2012r2-current
-    maxCapacity: 10
+    maxCapacity: 150
     additional-user-data:
       workerType: gecko-1-b-win2012
     regions: [us-east-1, us-west-1, us-west-2]
@@ -1322,6 +1330,10 @@ pools:
     implementation: generic-worker/windows-nss
     instance_types:
       - instanceType: m5d.2xlarge
+    worker-config:
+      genericWorker:
+        config:
+          "idleTimeoutSecs": 1
 - pool_id: nss-3/win2012r2
   description: Worker type that can be used for nss related pushes.
   owner: release+tc-workers@mozilla.com
@@ -1329,7 +1341,7 @@ pools:
   provider_id: aws
   config:
     image: nss-win2012r2-current
-    maxCapacity: 10
+    maxCapacity: 150
     additional-user-data:
       workerType: gecko-1-b-win2012
     regions: [us-east-1, us-west-1, us-west-2]
@@ -1337,6 +1349,10 @@ pools:
     implementation: generic-worker/windows-nss
     instance_types:
       - instanceType: m5d.2xlarge
+    worker-config:
+      genericWorker:
+        config:
+          "idleTimeoutSecs": 1
 - pool_id: mobile-1/b-linux-large
   description: General-purpose worker for projects by android components team (to
     build and release a very large suite of Kotlin components)
