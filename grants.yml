@@ -1327,6 +1327,11 @@
   # `index.mobile.v2.*`.
   - queue:route:index.project.mobile.fenix.v2.nightly.*
   - queue:route:index.project.mobile.fenix.v2.fennec-nightly.*
+  - queue:route:index.project.mobile.fenix.v2.production.*
+
+  # TODO Bug 1649400 - Remove these 2 scopes once `production` is renamed to `nightly`
+  - project:mobile:fenix:releng:signing:cert:production-signing
+  - secrets:get:project/mobile/fenix/production
 
   - secrets:get:project/mobile/fenix/nightly
   - secrets:get:project/mobile/fenix/fennec-nightly
