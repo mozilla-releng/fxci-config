@@ -348,7 +348,6 @@ autoland:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
     is-trunk: true
