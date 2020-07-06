@@ -7,8 +7,36 @@
 # Aliases can be defined by a simple string; this is useful for "current" images
 
 ---
+
+# docker-worker-hvm* are the Ubuntu-14.04 based workers, built by
+# https://github.com/taskcluster/docker-worker-deploy/.  These are deprecated but still
+# in use.
+
 docker-worker-hvm-builder-current: docker-worker-v202004241848-hvm-builder
 docker-worker-hvm-builder-trusted-current: docker-worker-v202004241848-hvm-builder-trusted
+
+# monopacker-docker-worker-* images are built with monopacker.
+
+# For "-trusted-current", use secrets from
+# `docker-worker/yaml/firefoxci-tc-production-l3.yaml` in the TC team's
+# password repo.  Use monpacker builders `docker_worker_gcp_trusted` and
+# `docker_worker_aws`.
+#
+# For `-current`, use `docker-worker/yaml/firefoxci-tc-staging-l1.yaml`, and
+# builders `docker_worker_gcp` and `docker_worker_aws`.
+#
+# To build in AWS, you will need AWS credentials with permissions to run Packer; see
+# https://www.packer.io/docs/builders/amazon/#iam-task-or-instance-role.  These creds
+# should be created in the `mozilla-taskcluster` AWS account.
+#
+# To build in GCP, you will need project access to the following GCP projects:
+# - -current -> `taskcluster-imaging`
+# - -trusted-current -> `fxci-prod-level3-workers`
+# Relops can configure the level-3 access for you.  It will require that
+# you have a static source IP.  "Compute Engine Instance Admin (v1)" is the
+# required permission.  You will need to select the appropriate project with
+# `gcloud config set project <project>` before starting.
+
 monopacker-docker-worker-current: monopacker-docker-worker-2020-02-07t09-14-17z
 monopacker-docker-worker-trusted-current: monopacker-docker-worker-gcp-trusted-2020-02-13t03-22-56z
 monopacker-docker-worker-baremetal-current: monopacker-docker-worker-2020-05-04T14-30-19Z
