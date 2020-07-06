@@ -1578,22 +1578,22 @@ pools:
       capacityPerInstance: 2
       worker-config:
         capacityManagement:
-          diskspaceThreshold: 30000000000
+          diskspaceThreshold: 20000000000
     - instanceType: c5ad.large
       capacityPerInstance: 2
       worker-config:
         capacityManagement:
-          diskspaceThreshold: 30000000000
+          diskspaceThreshold: 20000000000
     - instanceType: m5d.large
       capacityPerInstance: 2
       worker-config:
         capacityManagement:
-          diskspaceThreshold: 30000000000
+          diskspaceThreshold: 20000000000
     - instanceType: m5ad.large
       capacityPerInstance: 2
       worker-config:
         capacityManagement:
-          diskspaceThreshold: 30000000000
+          diskspaceThreshold: 20000000000
     regions:
     - us-east-1
     - us-west-1
