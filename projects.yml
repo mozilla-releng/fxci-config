@@ -435,7 +435,7 @@ nss-try:
 ci-configuration:
   repo: https://hg.mozilla.org/ci/ci-configuration
   repo_type: hg
-  access: scm_level_3
+  access: scm_firefoxci
   trust_domain: ci
   features:
     hg-push: true
@@ -458,7 +458,7 @@ ci-configuration-try:
 ci-admin:
   repo: https://hg.mozilla.org/ci/ci-admin
   repo_type: hg
-  access: scm_level_3
+  access: scm_firefoxci
   trust_domain: ci
   features:
     hg-push: true
