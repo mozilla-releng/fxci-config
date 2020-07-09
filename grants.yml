@@ -1957,6 +1957,8 @@
 - grant:
   # Let cloudops manage the notify denylist to deal with bounces.
   - notify:manage-denylist
+  # Allow cloudops to access tokens for clients that they manage.
+  - auth:reset-access-token:project/releng/scriptworker/cloudops-canary
   to:
   - groups:
     - team_services_ops

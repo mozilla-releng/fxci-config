@@ -346,6 +346,10 @@ project/releng/scriptworker/bouncer/prod/firefoxci-gecko-3:
     scopes:
         - queue:claim-work:scriptworker-k8s/gecko-3-bouncer
         - queue:worker-id:gecko-3-bouncer/gecko-3-bouncer-*
+project/releng/scriptworker/cloudops-canary:
+    description: Allows cloudops' jenkins to trigger scriptworker canary tasks
+    scopes:
+        - hooks:trigger-hook:project-releng/cron-task-mozilla-central/scriptworker-canary
 project/releng/scriptworker/iscript/dep:
     description: ''
     scopes:
