@@ -219,6 +219,8 @@ mozilla-central:
       - nightly-desktop-win64-aarch64
       - ship-geckoview
       - l10n-bumper
+      - target: scriptworker-canary
+        allow-input: true
 comm-central:
   repo: https://hg.mozilla.org/comm-central
   repo_type: hg

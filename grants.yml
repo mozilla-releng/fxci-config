@@ -452,6 +452,26 @@
       alias: [mozilla-esr68, mozilla-beta]
 
 - grant:
+  # Allow the scriptworker-canary cron hook to trigger the corresponding action.
+  - hooks:trigger-hook:project-{trust_domain}/in-tree-action-{level}-scriptworker-canary/*
+  to:
+  - project:
+      job: ['cron:scriptworker-canary']
+      trust_domain: gecko
+      level: [3]
+      alias: [mozilla-central]
+
+- grant:
+  # Allow the scriptworker-canary action to access the trybld-scriptworker key.
+  - secrets:get:project/releng/scriptworker/scriptworker-canary-sshkey
+  to:
+  - project:
+      job: ['action:scriptworker-canary']
+      trust_domain: gecko
+      level: [3]
+      alias: [mozilla-central]
+
+- grant:
   - project:comm:thunderbird:releng:balrog:server:release
   to:
   - project:

@@ -25,6 +25,7 @@
       - purge-caches
       - release-promotion
       - retrigger-decision
+      - scriptworker-canary
 
 - trust_domain: comm
   levels: [1, 3]
