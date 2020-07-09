@@ -193,6 +193,10 @@ project/releng/generic-worker/datacenter-gecko-t-win10-64-hb:
     description: Datacenter Windows 10 beta workers. For automated worker configuration testing.
     scopes:
         - assume:worker-type:releng-hardware/gecko-t-win10-64-hb
+project/releng/generic-worker/datacenter-gecko-t-win-talos:
+    description: Datacenter Windows 10 experimental perf  test worker.
+    scopes:
+        - assume:worker-type:releng-hardware/gecko-t-win-talos
 project/releng/generic-worker/datacenter-gecko-t-win10-64-ht:
     description: Datacenter Windows testing workers. For testing and development.
     scopes:
@@ -857,3 +861,35 @@ project/wpt/wptsync:
     description: Created in Bug 1596469 - Secret handed to :jgraham
     scopes:
         - assume:repo:hg.mozilla.org/try:*
+project/relops/image-builder/dev:
+    environments: [staging]
+    description: build cloud windows images in ci
+    scopes:
+        - auth:create-role:repo:github.com/mozilla-platform-ops/cloud-image-builder:branch:*
+        - auth:update-role:repo:github.com/mozilla-platform-ops/cloud-image-builder:branch:*
+        - generic-worker:os-group:relops/win2019/Administrators
+        - generic-worker:run-as-administrator:relops/*
+        - queue:create-task:high:relops/*
+        - queue:create-task:highest:relops/*
+        - queue:create-task:low:relops/*
+        - queue:create-task:medium:relops/*
+        - queue:create-task:very-high:relops/*
+        - queue:route:index.project.relops.cloud-image-builder.*
+        - queue:scheduler-id:-
+        - queue:scheduler-id:taskcluster-github
+        - secrets:get:project/relops/image-builder/dev
+        - worker-manager:manage-worker-pool:gecko-1/win*
+        - worker-manager:manage-worker-pool:gecko-3/win*
+        - worker-manager:manage-worker-pool:gecko-t/win*
+        - worker-manager:manage-worker-pool:mpd001-1/win*
+        - worker-manager:manage-worker-pool:mpd001-3/win*
+        - worker-manager:manage-worker-pool:relops/*
+        - worker-manager:provider:aws
+        - worker-manager:provider:azure
+
+project/relops/image-builder/purge:
+    environments: [staging]
+    description: clean up unused azure resources
+    scopes:
+        - assume:hook-id:project-relops/cron-task-purge-azure-resources
+        - hooks:modify-hook:project-relops/cron-task-purge-azure-resources
