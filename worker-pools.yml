@@ -13,6 +13,8 @@
 # translated into a region[..].launchSpec.ImageId value based on worker-pools.yml.
 ---
 worker-defaults:
+    lifecycle:
+        reregistrationTimeout: 345600
     worker-config:
         by-implementation:
             docker-worker:
