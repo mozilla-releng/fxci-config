@@ -16,11 +16,7 @@
 firefoxci:
     root_url: https://firefox-ci-tc.services.mozilla.com
     # no modifications in production, please!
-    modify_resources:
-      # we do not want hooks to trigger on a schedule in staging, as that adds
-      # lots of load (e.g., building nightlies).  They can be triggered
-      # manually if needed for testing.
-      - remove_hook_schedules
+    modify_resources: []
     worker_manager:
         providers:
             aws:
