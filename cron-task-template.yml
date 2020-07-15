@@ -53,6 +53,10 @@ payload:
             - "${level}"
             - "--repository-type"
             - "${repo_type}"
+            - $if: 'branch'
+              then:
+                  - "--branch"
+                  - "${branch}"
             - "--trust-domain"
             - "${trust_domain}"
             - {$eval: cron_options}
