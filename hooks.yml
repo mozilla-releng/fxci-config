@@ -294,20 +294,3 @@ project-releng/cron-task-mozilla-mobile-focus-android/nightly-public:
     type: object
     properties: {}
     additionalProperties: false
-
-# These fennec-* entries are just meant to be here during the Fennec to Fenix migration
-project-releng/cron-task-mozilla-mobile-fenix/fennec-production:
-  name: 'Cron task for https://github.com/mozilla-mobile/fenix'
-  description: >-
-    See https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-mobile-fenix/fennec-production
-  owner: release+tc-hooks@mozilla.com
-  email_on_error: true
-  schedule: []
-  scopes:
-    - assume:repo:github.com/mozilla-mobile/fenix:cron:fennec-production
-    - queue:route:notify.email.*
-  template_file: hooks/project-releng/cron-task-mozilla-mobile-fenix/fennec-production.yml
-  trigger_schema:
-    type: object
-    properties: {}
-    additionalProperties: false
