@@ -1744,7 +1744,6 @@
   to:
   - project:
       alias:
-      - adhoc-manifest
       - adhoc-signing
       # Only enable this for master and actions.
       job: ["branch:master", "action:*"]

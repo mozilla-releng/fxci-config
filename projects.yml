@@ -858,30 +858,8 @@ staging-adhoc-signing:
     taskgraph-actions: true
     github-taskgraph: true
 
-staging-adhoc-manifest:
-  repo: https://github.com/mozilla-releng/staging-adhoc-manifest
-  repo_type: git
-  trust_domain: adhoc
-  level: 1
-  features:
-    trust-domain-scopes: true
-    adhoc-roles: true
-    taskgraph-actions: true
-    github-taskgraph: true
-
 adhoc-signing:
   repo: https://github.com/mozilla-releng/adhoc-signing
-  repo_type: git
-  trust_domain: adhoc
-  level: 3
-  features:
-    trust-domain-scopes: true
-    adhoc-roles: true
-    taskgraph-actions: true
-    github-taskgraph: true
-
-adhoc-manifest:
-  repo: https://github.com/mozilla-releng/adhoc-manifest
   repo_type: git
   trust_domain: adhoc
   level: 3
