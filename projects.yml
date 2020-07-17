@@ -585,6 +585,7 @@ fenix:
       - nightly-on-google-play
       - target: fennec-production
         branch: fennec/production
+      - screenshots
 
 fenix-jlorenzo:
   repo: https://github.com/JohanLorenzo/fenix
