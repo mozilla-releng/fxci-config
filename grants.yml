@@ -994,7 +994,7 @@
   to:
   - projects:
       alias: shipit
-      job: ["branch:testing", "branch:staging", "branch:production", "branch:dev"]
+      job: ["branch:production", "branch:dev"]
 
 # - tooltool specific roles
 - grant:

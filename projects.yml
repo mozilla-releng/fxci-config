@@ -712,6 +712,8 @@ product-details:
 shipit:
   repo: https://github.com/mozilla-releng/shipit
   repo_type: git
+  features:
+    github-taskgraph: true
   trust_domain: releng
   level: 3
 
