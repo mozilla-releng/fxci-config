@@ -714,6 +714,7 @@ shipit:
   repo_type: git
   features:
     github-taskgraph: true
+    trust-domain-scopes: true
   trust_domain: releng
   level: 3
 
