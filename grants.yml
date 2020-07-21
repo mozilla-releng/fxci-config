@@ -2220,6 +2220,7 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/bump-android-components
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly-on-google-play
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/fennec-production
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/l10-screenshots
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public
