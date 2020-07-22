@@ -1561,6 +1561,9 @@ pools:
       - pool-group: relops-3
       - pool-group: taskgraph-1
       - pool-group: taskgraph-3
+      - pool-group: releng-1
+      - pool-group: releng-3
+        chain-of-trust: trusted
   config:
     image:
         by-chain-of-trust:
@@ -2041,6 +2044,9 @@ pools:
         chain-of-trust: trusted
       - pool-group: xpi-1
       - pool-group: xpi-3
+        chain-of-trust: trusted
+      - pool-group: releng-1
+      - pool-group: releng-3
         chain-of-trust: trusted
   config:
     regions: [us-east-1, us-west-1, us-west-2]
