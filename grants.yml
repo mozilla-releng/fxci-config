@@ -1041,39 +1041,12 @@
   - queue:create-task:{priority}:built-in/*
   - queue:get-artifact:mobile/android-sdk/*
   - queue:route:index.mobile.v2.{trust_project}.cache.level-{level}.*
-  # TODO Bug 1631839: Remove the following 2 scopes once all projects have migrated to
-  # `index.mobile.v2.*`.
-  - queue:route:index.mobile.{trust_project}.cache.level-{level}.*
-  - queue:route:index.project.mobile.{trust_project}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
   - project:mobile:{trust_project}:releng:signing:cert:dep-signing
   - project:mobile:{trust_project}:releng:signing:format:*
   to:
   - project:
       feature: mobile-roles
-
-- grant:
-  # TODO Bug 1631839: Remove the 2 following scopes once all projects have migrated to
-  # `index.mobile.v2.*`.
-  - queue:route:index.mobile.{trust_project}.v2.branch.<..>.*
-  - queue:route:index.project.mobile.{trust_project}.v2.branch.<..>.*
-  to:
-  - project:
-      feature: mobile-roles
-      level: 3
-      job: ["branch:*"]
-
-# Cron jobs aren't covered by the role defined above
-- grant:
-  # TODO Bug 1631839: Remove the 2 following scopes once all projects have migrated to
-  # `index.mobile.v2.*`.
-  - queue:route:index.mobile.{trust_project}.v2.branch.master.*
-  - queue:route:index.project.mobile.{trust_project}.v2.branch.master.*
-  to:
-  - project:
-      feature: mobile-roles
-      level: 3
-      job: ["cron:*"]
 
 - grant:
   # These tokens are considered public because they're available to Pull Requests. We need them
@@ -1130,9 +1103,6 @@
 
 - grant:
   - queue:route:index.mobile.v2.{trust_project}.nightly.*
-  # TODO Bug 1631839: Remove the following scope once all projects have migrated to
-  # `index.mobile.v2.*`.
-  - queue:route:index.project.mobile.{trust_project}.v2.nightly.*
   to:
   - project:
       feature: mobile-sign-phase
@@ -1204,13 +1174,6 @@
       feature: mobile-bump-github
       level: 3
       job: ["cron:bump-*"]
-
-- grant:
-  - index:insert-task:project.mobile.fenix.v2.*
-  to:
-  - project:
-      alias: fenix
-      job: ["action:*", "branch:*", "cron:*", "release"]
 
 - grant:
   - project:mobile:{trust_project}:releng:signing:cert:dep-signing
@@ -1309,10 +1272,6 @@
       job: ["branch:*", "pull-request"]
 
 - grant:
-  # TODO Bug 1631839: Remove the following scope once all projects have migrated to
-  # `index.mobile.v2.*`.
-  - queue:route:index.project.mobile.fenix.v2.debug.*
-  - queue:route:index.project.mobile.fenix.v2.nightly-simulation.*
   - secrets:get:project/mobile/fenix/nightly-simulation
   to:
   - project:
@@ -1322,11 +1281,6 @@
 - grant:
   - project:mobile:fenix:releng:signing:cert:beta-signing
   - project:mobile:fenix:releng:signing:cert:production-signing
-
-  # TODO Bug 1631839: Remove the 2 following scopes once all projects have migrated to
-  # `index.mobile.v2.*`.
-  - queue:route:index.project.mobile.fenix.v2.beta.*
-  - queue:route:index.project.mobile.fenix.v2.production.*
 
   - secrets:get:project/mobile/fenix/beta
   - secrets:get:project/mobile/fenix/production
@@ -1342,12 +1296,6 @@
   # XXX Bug 1600104 - Fennec Nightly users will be moved to a Fenix build
   # and then it will be discontinued.
   - project:mobile:fenix:releng:signing:cert:fennec-nightly-signing
-
-  # TODO Bug 1631839: Remove the 2 following scopes once all projects have migrated to
-  # `index.mobile.v2.*`.
-  - queue:route:index.project.mobile.fenix.v2.nightly.*
-  - queue:route:index.project.mobile.fenix.v2.fennec-nightly.*
-  - queue:route:index.project.mobile.fenix.v2.production.*
 
   # TODO Bug 1649400 - Remove these 2 scopes once `production` is renamed to `nightly`
   - project:mobile:fenix:releng:signing:cert:production-signing
@@ -1373,9 +1321,6 @@
 - grant:
   # XXX `fennec-production-signing` handles beta signing too.
   - project:mobile:fenix:releng:signing:cert:fennec-production-signing
-  # TODO Bug 1631839: Remove the following scope once all projects have migrated to
-  # `index.mobile.v2.*`.
-  - queue:route:index.project.mobile.fenix.v2.fennec-production.*
   - secrets:get:project/mobile/fenix/fennec-production
   to:
   - project:
@@ -1383,38 +1328,14 @@
       job: ["release", "cron:fennec-production"]
 
 - grant:
-  # TODO Bug 1631839: Remove the following scope once all projects have migrated to
-  # `index.mobile.v2.*`.
-  - queue:route:index.project.mobile.fenix.v2.fennec-beta.*
   - secrets:get:project/mobile/fenix/fennec-beta
   to:
   - project:
       alias: fenix
       job: ["release"]
 
-- grant:
-  # TODO Bug 1631839: Remove the following scope once all projects have migrated to
-  # `index.mobile.v2.*`.
-  - queue:route:index.project.mobile.fenix.v2.branch.fennec/production.*
-  to:
-  - project:
-      alias: fenix
-      job: ["cron:fennec-production"]
-
-# TODO Bug 1631839: Remove the following section once all projects have migrated to
-# `index.mobile.v2.*`. This section has been factorized with reference-browser
-- grant:
-  # XXX v2.performance-test is used by fenix
-  - queue:route:index.project.mobile.{alias}.v2.performance-test.*
-  to:
-  - project:
-      alias: fenix
-      level: 3
-      job: ["cron:nightly"]
-
 # TODO Bug 1601928: Stop using the garbage namespace once the {alias}/{project} story is defined
 - grant:
-  - queue:route:index.garbage.project.mobile.fenix.v2.branch.<..>.*
   - queue:route:index.garbage.mobile.v2.fenix.branch.<..>.*
   to:
   - project:
@@ -1448,10 +1369,6 @@
       job: ["branch:*", "cron:nightly"]
 
 - grant:
-  # TODO Bug 1631839: Remove the 2 following scopes once all projects have migrated to
-  # `index.mobile.v2.*`.
-  - queue:route:index.project.mobile.reference-browser.v3.nightly.*
-  - index:insert-task:project.mobile.reference-browser.v3.nightly.*
   - secrets:get:project/mobile/reference-browser/nimbledroid
   - secrets:get:project/mobile/reference-browser/sentry
   - queue:route:notify.email.android-components-team@mozilla.com.on-failed
@@ -1459,18 +1376,6 @@
   - project:
       alias: reference-browser
       job: ["cron:nightly"]
-
-# TODO Bug 1631839: Remove the following section once all projects have migrated to
-# `index.mobile.v2.*`. That section has been factorized with fenix
-- grant:
-  # XXX v3.raptor is used by reference-browser
-  - queue:route:index.project.mobile.{alias}.v3.raptor.*
-  - index:insert-task:project.mobile.reference-browser.v3.raptor.*
-  to:
-  - project:
-      alias: reference-browser
-      level: 3
-      job: ["branch:master"]
 
 # focus (android) scopes
 - grant:
@@ -1531,14 +1436,14 @@
       alias: firefox-tv
       job: ["release"]
 
+
+# TODO Remove the following section once the Fenix migration is done
 - grant:
   - project:mobile:fennec-profile-manager:releng:signing:cert:fennec-nightly-signing
   - project:mobile:fennec-profile-manager:releng:signing:cert:fennec-production-signing
   - queue:route:index.mobile.v2.fennec-profile-manager.fennec-nightly.*
   - queue:route:index.mobile.v2.fennec-profile-manager.fennec-beta.*
   - queue:route:index.mobile.v2.fennec-profile-manager.fennec-production.*
-  # TODO Bug 1631839: Remove the 3 following scopes once all projects have migrated to
-  # `index.mobile.v2.*`.
   - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-nightly.*
   - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-beta.*
   - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-production.*
