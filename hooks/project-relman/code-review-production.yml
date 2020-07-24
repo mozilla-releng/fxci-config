@@ -9,7 +9,7 @@ extra: {}
 metadata:
   description: Publish issues detected in remote tasks
   name: Code review publication (production)
-  owner: babadie@mozilla.com
+  owner: release-mgmt-analysis@mozilla.com
   source: 'https://github.com/mozilla/code-review'
 payload:
   artifacts:

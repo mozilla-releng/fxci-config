@@ -7,7 +7,7 @@ workerType: bot
 metadata:
   description: ''
   name: Code Coverage aggregation task - cron (testing)
-  owner: mcastelluccio@mozilla.com
+  owner: release-mgmt-analysis@mozilla.com
   source: https://github.com/mozilla/code-coverage
 payload:
   artifacts:

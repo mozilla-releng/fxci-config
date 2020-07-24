@@ -9,7 +9,7 @@ extra: {}
 metadata:
   description: Build datasets for bugzilla dashboard
   name: Bugzilla dashboard data generation (production)
-  owner: babadie@mozilla.com
+  owner: release-mgmt-analysis@mozilla.com
   source: 'https://github.com/mozilla/bugzilla-dashboard-backend'
 payload:
   artifacts:

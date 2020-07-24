@@ -15,7 +15,7 @@ $merge:
       $if: "'taskName' in payload"
       then: {$eval: payload.taskName}
       else: Code Coverage aggregation task - repo (production)
-    owner: mcastelluccio@mozilla.com
+    owner: release-mgmt-analysis@mozilla.com
     source: https://github.com/mozilla/code-coverage
   payload:
     artifacts:
