@@ -31,7 +31,7 @@ docker-worker-hvm-builder-trusted-current: docker-worker-v202004241848-hvm-build
 #
 # To build in GCP, you will need project access to the following GCP projects:
 # - -current -> `taskcluster-imaging`
-# - -trusted-current -> `fxci-prod-level3-workers`
+# - -trusted-current -> `fxci-production-level3-workers`
 # Relops can configure the level-3 access for you.  It will require that
 # you have a static source IP.  "Compute Engine Instance Admin (v1)" is the
 # required permission.  You will need to select the appropriate project with
