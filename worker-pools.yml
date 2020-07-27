@@ -155,6 +155,36 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
+# Temporary entry to test out new monopacker images that will replace the
+# existing b-linux ones: https://bugzilla.mozilla.org/show_bug.cgi?id=1637302
+- pool_id: 'gecko-1/b-linux-alpha'
+  description: Worker for gecko-based automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: monopacker-docker-worker-2020-07-22T01-14-41Z
+    maxCapacity: 20
+    instance_types:
+    - instanceType: c5.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
+    - instanceType: c5d.4xlarge
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
+      utility: 2
+    - instanceType: m5.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
 - pool_id: '{pool-group}/b-linux-1804'
   description: Worker for gecko-based automation
   owner: release+tc-workers@mozilla.com
