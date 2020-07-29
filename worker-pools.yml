@@ -2133,6 +2133,26 @@ pools:
         dockerConfig:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 16000000000}
+- pool_id: kaios-t/t-linux-metal
+  description: Monopacker metal workers for Firefox automation
+  owner: mcrabill@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: monopacker-docker-worker-baremetal-current
+    minCapacity: 0
+    maxCapacity: 15
+    spot: true
+    instance_types:
+    - instanceType: m5.metal
+      capacityPerInstance: 15
+      additional-user-data:
+        tmpfsSize: "294G"
+      worker-config:
+        dockerConfig:
+          allowPrivileged: true
+        capacityManagement: {diskspaceThreshold: 16000000000}
 - pool_id: pmoore-test/gwci-linux
   description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/gwci-linux but for GCP'
   owner: pmoore@mozilla.com
