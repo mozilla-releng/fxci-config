@@ -2116,6 +2116,8 @@ pools:
     minCapacity: 0
     maxCapacity: 720
     spot: true
+    worker-config:
+      shutdown: {afterIdleSeconds: 15}
     instance_types:
     - instanceType: r5.metal
       capacityPerInstance: 32
