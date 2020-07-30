@@ -189,6 +189,10 @@ project/releng/generic-worker/datacenter-gecko-t-osx-staging:
         - queue:worker-id:mdc1/t-yosemite*
         - queue:worker-id:mdc2/t-mojave*
         - queue:worker-id:mdc2/t-yosemite*
+project/releng/generic-worker/datacenter-gecko-t-win10-64-dev:
+    description: Windows 10 Dedicated workers for developer hardware testing.
+    scopes:
+        - assume:worker-type:releng-hardware/gecko-t-win10-64-dev
 project/releng/generic-worker/datacenter-gecko-t-win10-64-hb:
     description: Datacenter Windows 10 beta workers. For automated worker configuration testing.
     scopes:
