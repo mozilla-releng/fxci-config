@@ -525,6 +525,7 @@ pools:
       - pool-group: adhoc-3
         chain-of-trust: trusted
       - pool-group: app-services-1
+      - pool-group: app-services-t
       - pool-group: app-services-3
         chain-of-trust: trusted
       - pool-group: kaios-1
@@ -1567,6 +1568,7 @@ pools:
       - pool-group: adhoc-3
         chain-of-trust: trusted
       - pool-group: app-services-1
+      - pool-group: app-services-t
       - pool-group: app-services-3
         chain-of-trust: trusted
       - pool-group: glean-1
@@ -1638,12 +1640,36 @@ pools:
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-current
-    minCapacity: 2
-    maxCapacity: 100
+    minCapacity: 0
+    maxCapacity: 50
     scalingRatio: 0
     instance_types:
-    # XXX: we might need befier instances (e.g. c5d.9x large) for rust compilation.
     - instanceType: c5d.4xlarge
+      utility: 2
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+        restrictCPU: false
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
+# Bug 1648046 - temporarily add experimental worker
+- pool_id: app-services-t/b-linux
+  description: Worker for rust projects by Application Services team
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: docker-worker-hvm-builder-current
+    minCapacity: 0
+    maxCapacity: 50
+    scalingRatio: 0
+    instance_types:
+    - instanceType: c5.xlarge
       utility: 2
       launchConfig:
         BlockDeviceMappings:
@@ -1663,7 +1689,7 @@ pools:
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-trusted-current
-    minCapacity: 2
+    minCapacity: 0
     maxCapacity: 100
     scalingRatio: 0
     security: trusted
