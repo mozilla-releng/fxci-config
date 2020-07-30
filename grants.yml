@@ -675,6 +675,15 @@
   - project:
       feature: treeherder-reporting
 
+- grant:
+  # routes to support reporting to treeherder
+  - queue:route:tc-treeherder-stage.v2.{alias}-pr.*
+  - queue:route:tc-treeherder.v2.{alias}-pr.*
+  to:
+  - project:
+      job: ['pull-request']
+      feature: treeherder-reporting
+
 
 - grant:
   - queue:create-task:{priority}:hg-t/*
