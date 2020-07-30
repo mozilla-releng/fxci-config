@@ -57,32 +57,32 @@ relops-image-builder-current: relops-image-builder-pre
 # production docker-worker AMIs
 docker-worker-v201909302015-hvm-builder:
   aws:
-    eu-central-1: ami-058993f91452e39f6
-    us-east-1: ami-09f6f72509d742502
+    eu-central-1: ami-09c2cc55cb70c4c7e
+    us-east-1: ami-09b57f1b0cce1b43e
     us-west-1: ami-087991f6d2383cd2b
     us-west-2: ami-09c88d0779d181691
 docker-worker-v201910231323-hvm-builder-trusted:
   aws:
-    eu-central-1: ami-04e6a610a901f838e
-    us-east-1: ami-06ecdf5b0d39fd1d3
+    eu-central-1: ami-00289fa38ae0234c9
+    us-east-1: ami-0141ccd3045c08653
     us-west-1: ami-0094ac4ee041f24e7
     us-west-2: ami-0a99e89a874cf97c1
 docker-worker-v201910231323-hvm-builder:
   aws:
-    eu-central-1: ami-0b124c91920205b15
-    us-east-1: ami-02a87fa1f6a4d9d2c
+    eu-central-1: ami-0bef3ba928aa3e8f5
+    us-east-1: ami-000ac706663fea404
     us-west-1: ami-05bf92a940dae090d
     us-west-2: ami-03f808b14ea0e3d4a
 docker-worker-v201911061915-hvm-builder:
   aws:
-    eu-central-1: ami-09ad484a5e23fdf2d
-    us-east-1: ami-088330dbe601b9d09
+    eu-central-1: ami-0439849bc46e4e44d
+    us-east-1: ami-0c6baccdc3a45fbae
     us-west-1: ami-0635735a119e7c2f4
     us-west-2: ami-0e8780fabeed48695
 docker-worker-v201911061915-hvm-builder-trusted:
   aws:
-    eu-central-1: ami-0e8d0de10ec3e74f6
-    us-east-1: ami-05a99577d53966d18
+    eu-central-1: ami-02a9b0ddd5df2f4b8
+    us-east-1: ami-0f83af2653bf8e86f
     us-west-1: ami-03e36157e9715181b
     us-west-2: ami-04f8c1146b2c66c6d
 docker-worker-v201911141441-hvm-builder:
@@ -211,40 +211,40 @@ monopacker-docker-worker-2020-05-04T14-30-19Z:
 # generic-worker images
 gwci-linux:
   aws:
-    us-east-1: ami-000f78733862c228b
+    us-east-1: ami-0376deba0edbb4182
     us-west-1: ami-0d2bc4a97a0aaa9d3
     us-west-2: ami-00e7eeb8d7449b1ce
 occ-b-win2012-pre:
   aws:
-    eu-central-1: ami-0ea4281515c1694d6
-    us-east-1: ami-06f0a71f5043a32a6
+    eu-central-1: ami-0b87f079b1cc620d6
+    us-east-1: ami-0da02e9fca7ed9571
     us-west-1: ami-0f60c98f2480844df
     us-west-2: ami-08766522e4f058dba
 occ-b-win2012-trusted-pre:
   aws:
-    us-east-1: ami-0cead3a65f8db9b35
+    us-east-1: ami-0528797bdcd2ea228
     us-west-1: ami-093f078f632dd65f1
     us-west-2: ami-08d29be36b85571d8
 occ-t-win10-64-pre:
   aws:
-    eu-central-1: ami-09e1aa7e1f48539c1
-    us-east-1: ami-0c7fbac545e94f4c4
+    eu-central-1: ami-0d5d873abb4d8d550
+    us-east-1: ami-08656fa2de4214392
     us-west-1: ami-0b14e1e3b5665f447
     us-west-2: ami-05d629b4a0589d79a
 occ-t-win10-64-gpu-s-pre:
   aws:
-    us-east-1: ami-09fcb7d01a8cb362f
+    us-east-1: ami-072339690c3daf976
     us-west-1: ami-08d135989870fe173
     us-west-2: ami-00f44353bc695991a
 occ-t-win7-32-pre:
   aws:
-    eu-central-1: ami-023422045b5233177
-    us-east-1: ami-0c0208f672c8cda55
+    eu-central-1: ami-0dfab5a4f63b6a0ad
+    us-east-1: ami-060329ad97274a637
     us-west-1: ami-08e087e85ba09f929
     us-west-2: ami-07e0e8cc311e35b8d
 occ-t-win7-32-gpu-pre:
   aws:
-    us-east-1: ami-08b7d279b7444681b
+    us-east-1: ami-05fe57b3c5b8b12b9
     us-west-1: ami-0d943d137b0a78d5d
     us-west-2: ami-0003e4e80ff09fd52
 #occ-mpd-b-win2012-pre:
@@ -255,7 +255,7 @@ occ-t-win7-32-gpu-pre:
 #    us-west-2: <>
 occ-mpd-b-win2012-trusted-pre:
   aws:
-    us-east-1: ami-00ac1326739b7ea83
+    us-east-1: ami-0ec3a03bb7d714bfc
     us-west-1: ami-05fc1054896b9c36f
     us-west-2: ami-01f384dec7ba738af
 
