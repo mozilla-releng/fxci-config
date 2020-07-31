@@ -1150,9 +1150,29 @@ pools:
     instance_types:
     - instanceType: m5.large
       launchConfig:
-        # Add the a ssh to login into the instance to investigate instances
-        # that don't shutdown (Bug 1600071)
-        KeyName: docker-worker-bug1600071
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 20000000000}
+# Temporary entry to test out new monopacker images that will replace the
+# existing b-linux ones: https://bugzilla.mozilla.org/show_bug.cgi?id=1637302
+- pool_id: gecko-t/t-linux-large-alpha
+  description: Worker for Firefox automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: monopacker-docker-worker-2020-07-22T01-14-41Z
+    maxCapacity: 20
+    worker-config:
+      dockerConfig: {allowPrivileged: false}
+      shutdown:
+        afterIdleSeconds: 15
+    instance_types:
+    - instanceType: m5.large
+      launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
