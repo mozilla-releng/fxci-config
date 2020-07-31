@@ -515,6 +515,7 @@ android-components:
   trust_domain: mobile
   trust_project: android-components
   repo_type: git
+  default_branch: master
   level: 3
   features:
     beetmover-maven-phase: true
@@ -536,6 +537,7 @@ reference-browser:
   trust_domain: mobile
   trust_project: reference-browser
   repo_type: git
+  default_branch: master
   level: 3
   features:
     autophone: true
@@ -562,6 +564,7 @@ fenix:
   trust_domain: mobile
   trust_project: fenix
   repo_type: git
+  default_branch: master
   level: 3
   features:
     autophone: true
@@ -592,6 +595,7 @@ fenix-jlorenzo:
   trust_domain: mobile
   trust_project: fenix
   repo_type: git
+  default_branch: master
   level: 1
   features:
     autophone: true
@@ -615,6 +619,7 @@ fennec-profile-manager:
   trust_domain: mobile
   trust_project: fennec-profile-manager
   repo_type: git
+  default_branch: master
   level: 3
   features:
     github-taskgraph: true
@@ -627,6 +632,7 @@ focus-android:
   trust_domain: mobile
   trust_project: focus
   repo_type: git
+  default_branch: master
   level: 3
   features:
     mobile-roles: true
@@ -656,6 +662,7 @@ firefox-tv:
   trust_domain: mobile
   trust_project: firefox-tv
   repo_type: git
+  default_branch: master
   level: 3
   features:
     github-taskgraph: true
@@ -694,24 +701,28 @@ glean:
 k8s-autoscale:
   repo: https://github.com/mozilla-releng/k8s-autoscale
   repo_type: git
+  default_branch: master
   trust_domain: releng
   level: 3
 
 mapper:
   repo: https://github.com/mozilla-releng/mapper
   repo_type: git
+  default_branch: master
   trust_domain: releng
   level: 3
 
 product-details:
   repo: https://github.com/mozilla-releng/product-details
   repo_type: git
+  default_branch: master
   trust_domain: releng
   level: 3
 
 shipit:
   repo: https://github.com/mozilla-releng/shipit
   repo_type: git
+  default_branch: master
   features:
     github-taskgraph: true
     trust-domain-scopes: true
@@ -721,30 +732,35 @@ shipit:
 tooltool:
   repo: https://github.com/mozilla-releng/tooltool
   repo_type: git
+  default_branch: master
   trust_domain: releng
   level: 3
 
 treestatus:
   repo: https://github.com/mozilla-releng/treestatus
   repo_type: git
+  default_branch: master
   trust_domain: releng
   level: 3
 
 balrog:
   repo: https://github.com/mozilla-releng/balrog
   repo_type: git
+  default_branch: master
   trust_domain: releng
   level: 3
 
 taskhuddler:
   repo: https://github.com/mozilla-releng/taskhuddler
   repo_type: git
+  default_branch: master
   trust_domain: releng
   level: 3
 
 scriptworker:
   repo: https://github.com/mozilla-releng/scriptworker
   repo_type: git
+  default_branch: master
   trust_domain: releng
   level: 3
 
@@ -752,18 +768,21 @@ scriptworker:
 build-puppet:
   repo: https://github.com/mozilla-releng/build-puppet
   repo_type: git
+  default_branch: master
   trust_domain: releng
   level: 1
 
 occ:
   repo: https://github.com/mozilla-releng/OpenCloudConfig
   repo_type: git
+  default_branch: master
   trust_domain: releng
   level: 3
 
 cloud-image-builder:
   repo: https://github.com/mozilla-platform-ops/cloud-image-builder
   repo_type: git
+  default_branch: master
   trust_domain: relops
   level: 3
 
@@ -771,6 +790,7 @@ cloud-image-builder:
 android-l10n-tooling:
   repo: https://github.com/mozilla-l10n/android-l10n-tooling
   repo_type: git
+  default_branch: master
   level: 3
   trust_domain: l10n
   features:
@@ -796,6 +816,7 @@ android-l10n-tooling:
 elmo-taskcluster:
   repo: https://github.com/mozilla-services/elmo-taskcluster
   repo_type: git
+  default_branch: master
   level: 3
   trust_domain: l10n
 
@@ -803,6 +824,7 @@ elmo-taskcluster:
 mpd001:
   repo: https://github.com/mozilla-services/guardian-vpn-windows
   repo_type: git
+  default_branch: master
   level: 3
   trust_domain: mpd001
 
@@ -812,6 +834,7 @@ mpd001:
 xpi-manifest:
   repo: https://github.com/mozilla-extensions/xpi-manifest
   repo_type: git
+  default_branch: master
   trust_domain: xpi
   level: 3
   features:
@@ -823,6 +846,7 @@ xpi-manifest:
 test-xpi-manifest:
   repo: https://github.com/escapewindow/test-xpi-manifest
   repo_type: git
+  default_branch: master
   trust_domain: xpi
   level: 1
   features:
@@ -834,6 +858,7 @@ test-xpi-manifest:
 test-xpi-public:
   repo: https://github.com/escapewindow/test-xpi-public
   repo_type: git
+  default_branch: master
   trust_domain: xpi
   level: 1
   features:
@@ -843,6 +868,7 @@ test-xpi-public:
 test-xpi-private:
   repo: https://github.com/escapewindow/test-xpi-private
   repo_type: git
+  default_branch: master
   trust_domain: xpi
   level: 1
   features:
@@ -853,6 +879,7 @@ test-xpi-private:
 staging-adhoc-signing:
   repo: https://github.com/mozilla-releng/staging-adhoc-signing
   repo_type: git
+  default_branch: master
   trust_domain: adhoc
   level: 1
   features:
@@ -864,6 +891,7 @@ staging-adhoc-signing:
 adhoc-signing:
   repo: https://github.com/mozilla-releng/adhoc-signing
   repo_type: git
+  default_branch: master
   trust_domain: adhoc
   level: 3
   features:
@@ -876,6 +904,7 @@ adhoc-signing:
 code-review:
   repo: https://github.com/mozilla/code-review
   repo_type: git
+  default_branch: master
   trust_domain: code-analysis
   level: 3
   features:
@@ -885,6 +914,7 @@ code-review:
 scriptworker-scripts:
   repo: https://github.com/mozilla-releng/scriptworker-scripts
   repo_type: git
+  default_branch: master
   trust_domain: scriptworker
   level: 3
   features:
@@ -896,6 +926,7 @@ scriptworker-scripts:
 code-coverage:
   repo: https://github.com/mozilla/code-coverage
   repo_type: git
+  default_branch: master
   trust_domain: code-analysis
   level: 3
   features:
