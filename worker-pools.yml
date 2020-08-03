@@ -1689,7 +1689,7 @@ pools:
     maxCapacity: 50
     scalingRatio: 0
     instance_types:
-    - instanceType: c5.xlarge
+    - instanceType: c5d.2xlarge
       utility: 2
       launchConfig:
         BlockDeviceMappings:
