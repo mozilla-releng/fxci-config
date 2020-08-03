@@ -21,6 +21,9 @@ worker-defaults:
                 shutdown:
                     enabled: true
                     afterIdleSeconds: 900
+                deviceManagement:
+                    hostSharedMemory: {enabled: false}
+                    kvm: {enabled: false}
             generic-worker/windows:
                 genericWorker:
                     config:
@@ -2168,6 +2171,8 @@ pools:
     spot: true
     worker-config:
       shutdown: {afterIdleSeconds: 15}
+      deviceManagement:
+          kvm: {enabled: true}
     instance_types:
     - instanceType: r5.metal
       capacityPerInstance: 32
