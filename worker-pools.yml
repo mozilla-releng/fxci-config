@@ -166,6 +166,10 @@ pools:
     regions: [us-east-1, us-west-1, us-west-2]
     image: monopacker-docker-worker-current
     maxCapacity: 20
+    worker-config:
+      deviceManagement:
+          loopbackAudio: {enabled: false}
+          loopbackVideo: {enabled: false}
     instance_types:
     - instanceType: c5.4xlarge
       launchConfig:
