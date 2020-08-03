@@ -955,10 +955,19 @@
   - generic-worker:run-as-administrator:relops-3/*
   - queue:create-task:{priority}:relops-3/*
   - secrets:get:project/relops/image-builder/dev
+  # Allow creating tasks on test workers
+  - generic-worker:os-group:relops-test-workers/*
+  - generic-worker:run-as-administrator:relops-test-workers/*
+  - queue:create-task:{priority}:relops-test-workers/*
+  - queue:scheduler-id:taskcluster-github
+  - worker-manager:manage-worker-pool:relops-test-workers/*
+  - worker-manager:provider:aws
+  - worker-manager:provider:azure
   to:
   - project:
       alias: cloud-image-builder
       job: ["branch:master"]
+  environment: staging
 
 # - mapper specific roles
 - grant:

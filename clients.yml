@@ -888,8 +888,13 @@ project/relops/image-builder/dev:
         - worker-manager:manage-worker-pool:mpd001-1/win*
         - worker-manager:manage-worker-pool:mpd001-3/win*
         - worker-manager:manage-worker-pool:relops/*
+        # Allow creating tasks on test workers
         - worker-manager:provider:aws
         - worker-manager:provider:azure
+        - worker-manager:manage-worker-pool:relops-test-workers/*
+        - queue:create-task:{priority}:relops-test-workers/*
+        - generic-worker:os-group:relops-test-workers/*
+        - generic-worker:run-as-administrator:relops-test-workers/*
 
 project/relops/image-builder/purge:
     environments: [staging]
