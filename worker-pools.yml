@@ -1413,10 +1413,10 @@ pools:
   config:
     image: docker-worker-hvm-builder-current
     minCapacity: 0
-    maxCapacity: 500
+    maxCapacity: 50
     scalingRatio: 0
     instance_types:
-    - instanceType: c5d.4xlarge
+    - instanceType: c5d.2xlarge
       launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
@@ -1498,11 +1498,11 @@ pools:
   config:
     image: docker-worker-hvm-builder-trusted-current
     minCapacity: 0
-    maxCapacity: 500
+    maxCapacity: 50
     scalingRatio: 0
     security: trusted
     instance_types:
-    - instanceType: c5d.4xlarge
+    - instanceType: c5d.2xlarge
       launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
