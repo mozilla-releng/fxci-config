@@ -1689,27 +1689,6 @@
       - scriptworker-scripts
       job: ["branch:*", "action:*", "pull-request", "action:*", "cron:*"]
 
-# XXX only to avoid breaking existing non-taskgraph automation.
-# XXX delete these once we get scriptworker-scripts fully onto taskgraph
-- grant:
-  - notify:email:*
-  - notify:irc-channel:*
-  - notify:irc-user:*
-  - queue:create-task:highest:releng-3/*
-  - queue:create-task:highest:releng-1/*
-  - queue:create-task:highest:releng-t/*
-  - queue:route:garbage.*
-  - queue:route:index.garbage.*
-  - queue:route:notify.email.*
-  - queue:route:notify.irc-channel.*
-  - queue:route:notify.irc-user.*
-  - queue:scheduler-id:taskcluster-github
-  to:
-  - project:
-      alias:
-      - scriptworker-scripts
-      job: ["branch:*", "pull-request", "release"]
-
 # - scriptworker-scripts specific roles
 # XXX delete these once we port scriptworker-scripts cloudops deploys to CoT
 #     downloads
