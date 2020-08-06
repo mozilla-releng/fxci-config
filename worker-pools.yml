@@ -192,43 +192,6 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-- pool_id: '{pool-group}/b-linux-1804'
-  description: Worker for gecko-based automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  variants:
-      - pool-group: gecko-1
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-2020-05-04T14-30-19Z
-    security:
-        by-chain-of-trust:
-            trusted: trusted
-            default: null
-    maxCapacity:
-        by-pool-group:
-            "kaios-.*": 10
-            default: 1000
-    instance_types:
-    - instanceType: c5.4xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: c5d.4xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-      utility: 2
-    - instanceType: m5.4xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
 - pool_id: gecko-1/b-linux-perf
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -237,20 +200,6 @@ pools:
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
-    maxCapacity: 20
-    instance_types:
-    - instanceType: c5d.4xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-      utility: 2
-- pool_id: gecko-1/b-linux-perf-1804
-  description: Worker for Firefox automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-2020-05-04T14-30-19Z
     maxCapacity: 20
     instance_types:
     - instanceType: c5d.4xlarge
@@ -286,23 +235,6 @@ pools:
     instance_types:
     - instanceType: c5d.9xlarge
       capacityPerInstance: 3
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-- pool_id: gecko-1/b-linux-aws-1804
-  description: Worker for Firefox automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-2020-05-04T14-30-19Z
-    maxCapacity: 50
-    instance_types:
-    - instanceType: c5d.4xlarge
       launchConfig:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
@@ -371,57 +303,6 @@ pools:
         by-chain-of-trust:
             trusted: docker-worker-hvm-builder-trusted-current
             default: docker-worker-hvm-builder-current
-    security:
-        by-chain-of-trust:
-            trusted: trusted
-            default: null
-    maxCapacity: 10
-    scalingRatio: 0
-    instance_types:
-    - instanceType: c5d.9xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m5d.12xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m5.12xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m4.10xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: c5.9xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: c4.8xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-- pool_id: "{pool-group}/b-linux-large-1804"
-  description: Worker for gecko-based automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  variants:
-      - pool-group: gecko-1
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-2020-05-04T14-30-19Z
     security:
         by-chain-of-trust:
             trusted: trusted
@@ -659,54 +540,6 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-- pool_id: "{pool-group}/b-linux-xlarge-1804"
-  description: Worker for gecko-based automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  variants:
-      - pool-group: gecko-1
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-2020-05-04T14-30-19Z
-    security:
-        by-chain-of-trust:
-            trusted: trusted
-            default: null
-    maxCapacity: 10
-    scalingRatio: 0
-    instance_types:
-    - instanceType: c5d.18xlarge
-      utility: 1.1
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m5d.24xlarge
-      utility: 1.3
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m5.24xlarge
-      utility: 1.1
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: m4.16xlarge
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
-    - instanceType: c5.18xlarge
-      utility: 0.9
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 70000000000}
 - pool_id: "{pool-group}/t-linux-xlarge{suffix}"
   description: Worker for gecko-based automation
   owner: release+tc-workers@mozilla.com
@@ -750,48 +583,6 @@ pools:
     worker-config:
       dockerConfig: {allowPrivileged: false}
     regions: [us-east-1, us-west-1, us-west-2]
-    instance_types:
-    - instanceType: m5.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-    - instanceType: m5a.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-    - instanceType: m5d.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: m5ad.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c5.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-    - instanceType: c5d.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-- pool_id: gecko-t/t-linux-xlarge-source-1804
-  description: Worker for Firefox automation tests needing source checkouts.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-2020-05-04T14-30-19Z
-    maxCapacity: 3500
-    worker-config:
-      dockerConfig: {allowPrivileged: false}
     instance_types:
     - instanceType: m5.xlarge
       worker-config:
@@ -1185,27 +976,6 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 20000000000}
-- pool_id: gecko-t/t-linux-large-1804
-  description: Worker for Firefox automation based on Ubuntu 18.04
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-2020-05-04T14-30-19Z
-    maxCapacity: 3500
-    worker-config:
-      dockerConfig: {allowPrivileged: false}
-      shutdown:
-        afterIdleSeconds: 15
-    instance_types:
-    - instanceType: m5.large
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 20000000000}
 - pool_id: comm-t/t-linux-large
   description: Worker for Firefox automation
   owner: release+tc-workers@mozilla.com
@@ -1225,38 +995,6 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 20000000000}
-- pool_id: gecko-t/t-linux-xlarge-1804
-  description: Worker for Firefox automation
-  owner: release+tc-workers@mozilla.com
-  email_on_error: false
-  provider_id: aws
-  config:
-    regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-2020-05-04T14-30-19Z
-    maxCapacity: 3500
-    worker-config:
-      dockerConfig: {allowPrivileged: false}
-      shutdown:
-        afterIdleSeconds: 15
-    instance_types:
-    - instanceType: m5.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: m5a.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: m5d.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: m5ad.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c5.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c5d.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: releng-1/linux
   description: Releng github worker
   owner: release+tc-workers@mozilla.com
