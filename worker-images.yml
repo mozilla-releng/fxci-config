@@ -210,6 +210,24 @@ monopacker-docker-worker-2020-05-04T14-30-19Z:
     us-east-1: ami-08a1f9efa3d1ac2e9
     us-west-1: ami-095477afa5016a926
     us-west-2: ami-07b33db0f538882e1
+monopacker-docker-worker-2020-08-05t22-29-20z:
+  aws:
+    us-east-1: ami-0fe24f9486925b029
+    us-west-1: ami-04dd8b4beade35aae
+    us-west-2: ami-05386759ffd1588de
+  fxci-level1-gcp:
+    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-08-05t22-29-20z
+  fxci-level3-gcp:
+    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-08-05t22-29-20z
+  fxci-levelt-gcp:
+    projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-08-05t22-29-20z
+monopacker-docker-worker-trusted-2020-08-05t22-01-11z:
+  aws:
+    us-east-1: ami-0b7779127f469c41b
+    us-west-1: ami-02ef0e03f2ce4653d
+    us-west-2: ami-0c6b38c7153dddc28
+  fxci-level3-gcp:
+    projects/fxci-production-level3-workers/global/images/docker-worker-gcp-trusted-googlecompute-2020-08-05t22-01-11z
 
 # generic-worker images
 gwci-linux:
