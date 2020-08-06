@@ -218,12 +218,19 @@
 - grant:
   # access to OSX testers
   - queue:create-task:{priority}:releng-hardware/gecko-t-osx-*
+  to:
+  - project:
+      feature: gecko-roles
+      trust_domain: comm
+
+- grant:
   # gecko misc workers (used for index tasks)
   - queue:create-task:{priority}:gecko-t/misc
   to:
   - project:
       feature: gecko-roles
       trust_domain: comm
+      alias: comm-esr68
 
 
 # moz-tree roles include the basic scopes available to version-control trees at
