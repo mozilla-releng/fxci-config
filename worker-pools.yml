@@ -327,8 +327,8 @@ pools:
     regions: [us-central1]
     image:
         by-chain-of-trust:
-            trusted: monopacker-docker-worker-gcp-trusted-current
-            default: monopacker-docker-worker-gcp-current
+            trusted: monopacker-docker-worker-trusted-current
+            default: monopacker-docker-worker-current
     instance_types:
       - minCpuPlatform: "Intel Skylake"
         workerConfig:
@@ -1171,7 +1171,7 @@ pools:
   provider_id: aws
   config:
     regions: [us-east-1, us-west-1, us-west-2]
-    image: monopacker-docker-worker-2020-07-22T01-14-41Z
+    image: monopacker-docker-worker-current
     maxCapacity: 20
     worker-config:
       dockerConfig: {allowPrivileged: false}
