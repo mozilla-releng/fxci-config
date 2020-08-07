@@ -718,14 +718,12 @@ mapper:
 product-details:
   repo: https://github.com/mozilla-releng/product-details
   repo_type: git
-  default_branch: master
   trust_domain: releng
   level: 3
 
 shipit:
   repo: https://github.com/mozilla-releng/shipit
   repo_type: git
-  default_branch: master
   features:
     github-taskgraph: true
     trust-domain-scopes: true
@@ -749,7 +747,6 @@ treestatus:
 balrog:
   repo: https://github.com/mozilla-releng/balrog
   repo_type: git
-  default_branch: master
   trust_domain: releng
   level: 3
 
