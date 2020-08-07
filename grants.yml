@@ -1116,6 +1116,34 @@
       job: ["cron:nightly"]
 
 - grant:
+  - project:{trust_domain}:{trust_project}:releng:github:action:release
+  to:
+  - project:
+      feature: github-publication
+      job: ["release", "pull-request"]
+
+- grant:
+  - project:{trust_domain}:{trust_project}:releng:github:project:{trust_project}
+  to:
+  - project:
+      feature: github-publication
+      job: ["release", "pull-request"]
+      # TODO: Uncomment the following lines once integration testing is done
+      # level: 3
+      # job: ["release"]
+
+- grant:
+  - project:{trust_domain}:{trust_project}:releng:github:project:mock
+  to:
+  - project:
+      feature: github-publication
+      level: 1
+      job: ["release"]
+  - project:
+      feature: github-publication
+      job: ["pull-request"]
+
+- grant:
   - project:mobile:{trust_project}:releng:signing:cert:release-signing
   to:
   - project:
