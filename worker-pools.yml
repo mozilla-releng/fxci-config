@@ -611,9 +611,6 @@ pools:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-    - instanceType: c5d.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: "{pool-group}/misc"
   description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
     SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
