@@ -384,10 +384,6 @@ pools:
       capacityPerInstance: 2
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: c5ad.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: m5d.xlarge
       capacityPerInstance: 2
       worker-config:
@@ -1371,11 +1367,6 @@ pools:
     scalingRatio: 0
     instance_types:
     - instanceType: c5d.large
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement:
-          diskspaceThreshold: 20000000000
-    - instanceType: c5ad.large
       capacityPerInstance: 2
       worker-config:
         capacityManagement:
