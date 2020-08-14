@@ -552,9 +552,10 @@
         - mozilla-central
         # Holly is used for testing, see Bug 1599868
         - holly
-      # Both repos are level 3, but this ensures that if holly is
-      # changed, these are not granted to a non-level 3 repo
-      level: 3
+        - kaios
+      # kaios is level 2. We need to remember to remove holly from the above
+      # list if/when we stop using it for civet work.
+      level: 2
 
 - grant:
   # Bug 1618285
