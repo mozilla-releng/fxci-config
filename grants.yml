@@ -2437,7 +2437,8 @@
 
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1659596
 - grant:
-  - queue:rerun-task:mobile-level-*
+  - hooks:trigger-hook:project-mobile/in-tree-action-1-generic/*
+  - hooks:trigger-hook:project-mobile/in-tree-action-3-generic/*
   to:
   - roles:
     - mozillians-group:android-components-developers
