@@ -550,11 +550,13 @@
   - project:
       alias:
         - mozilla-central
+        - autoland
         # Holly is used for testing, see Bug 1599868
         - holly
         - kaios
-      # kaios is level 2. We need to remember to remove holly from the above
+      # XXX kaios is level 2. We need to remember to remove holly from the above
       # list if/when we stop using it for civet work.
+      # XXX we probably also need a level 1 solution.
       level: 2
 
 - grant:
