@@ -2435,6 +2435,13 @@
   - roles:
     - mozilla-group:team_mozillaonline
 
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1659596
+- grant:
+  - queue:rerun-task:mobile-level-*
+  to:
+  - roles:
+    - mozillians-group:android-components-developers
+
 # These grants are directly to the mozilla-group roles as they need
 # are the root of available scopes.
 - grant:
