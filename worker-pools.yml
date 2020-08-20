@@ -1334,9 +1334,6 @@ pools:
       - pool-group: mpd001-1
       - pool-group: mpd001-3
         chain-of-trust: trusted
-      - pool-group: mobile-1
-      - pool-group: mobile-3
-        chain-of-trust: trusted
       - pool-group: scriptworker-1
       - pool-group: scriptworker-3
         chain-of-trust: trusted
@@ -1371,6 +1368,42 @@ pools:
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
+    - instanceType: m5d.large
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+    - instanceType: m5ad.large
+      capacityPerInstance: 2
+      worker-config:
+        capacityManagement:
+          diskspaceThreshold: 20000000000
+    regions:
+    - us-east-1
+    - us-west-1
+    - us-west-2
+- pool_id: "{pool-group}/decision"
+  description: Worker for decision tasks
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  variants:
+      - pool-group: mobile-1
+      - pool-group: mobile-3
+        chain-of-trust: trusted
+  config:
+    image:
+        by-chain-of-trust:
+            trusted: docker-worker-hvm-builder-trusted-current
+            default: docker-worker-hvm-builder-current
+    security:
+        by-pool-group:
+            ".*-3": trusted
+            default: null
+    minCapacity: 1
+    maxCapacity: 10
+    scalingRatio: 0
+    instance_types:
     - instanceType: m5d.large
       capacityPerInstance: 2
       worker-config:
