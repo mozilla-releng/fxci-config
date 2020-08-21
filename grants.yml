@@ -1339,7 +1339,9 @@
   - project:mobile:fenix:releng:signing:cert:production-signing
 
   - secrets:get:project/mobile/fenix/beta
+  # TODO: Remove the "production" scope once Fenix 79 is shipped.
   - secrets:get:project/mobile/fenix/production
+  - secrets:get:project/mobile/fenix/release
 
   - secrets:get:project/mobile/fenix/nimbledroid
   to:
