@@ -1892,7 +1892,7 @@ pools:
         capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: gecko-t/t-linux-metal
   description: Monopacker metal workers for Firefox automation
-  owner: mcrabill@mozilla.com
+  owner: release+tc-workers@mozilla.com
   email_on_error: false
   provider_id: aws
   config:
@@ -1924,7 +1924,7 @@ pools:
         capacityManagement: {diskspaceThreshold: 16000000000}
 - pool_id: gecko-t/t-linux-metal-alpha
   description: Monopacker metal workers for Firefox automation
-  owner: mcrabill@mozilla.com
+  owner: release+tc-workers@mozilla.com
   email_on_error: false
   provider_id: aws
   config:
@@ -1956,7 +1956,7 @@ pools:
         capacityManagement: {diskspaceThreshold: 16000000000}
 - pool_id: kaios-t/t-linux-metal
   description: Monopacker metal workers for Firefox automation
-  owner: mcrabill@mozilla.com
+  owner: release+tc-workers@mozilla.com
   email_on_error: false
   provider_id: aws
   config:
