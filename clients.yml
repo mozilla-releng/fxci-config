@@ -607,6 +607,7 @@ project/releng/scriptworker/signing/dev/firefoxci-gecko-t:
     scopes:
         - queue:claim-work:scriptworker-k8s/gecko-t-signing-dev
         - queue:worker-id:gecko-t-signing-dev/gecko-t-signing-dev-*
+        - queue:get-artifact:releng/partner/*
 project/releng/scriptworker/signing/dev/firefoxci-mpd001-t:
     description: dev mpd001 signing
     scopes:
