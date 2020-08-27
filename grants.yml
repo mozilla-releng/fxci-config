@@ -344,6 +344,8 @@
   - docker-worker:feature:balrogStageVPNProxy
   - docker-worker:feature:balrogVPNProxy
   - secrets:get:project/taskcluster/gecko/build/level-3/*
+  - secrets:get:project/civet/github-deploy-key
+  - queue:get-artifact:project/civet/*
   to:
   - projects:
       feature: gecko-roles
