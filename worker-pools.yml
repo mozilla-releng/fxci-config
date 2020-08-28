@@ -388,10 +388,6 @@ pools:
       capacityPerInstance: 2
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: m5ad.xlarge
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
 - pool_id: '{pool-group}/images'
   description: 'Builds docker images; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -595,9 +591,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
     - instanceType: m5d.xlarge
-      worker-config:
-        capacityManagement: {diskspaceThreshold: 30000000000}
-    - instanceType: m5ad.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
     - instanceType: c5.xlarge
@@ -1373,11 +1366,6 @@ pools:
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
-    - instanceType: m5ad.large
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement:
-          diskspaceThreshold: 20000000000
     regions:
     - us-east-1
     - us-west-1
@@ -1405,11 +1393,6 @@ pools:
     scalingRatio: 0
     instance_types:
     - instanceType: m5d.large
-      capacityPerInstance: 2
-      worker-config:
-        capacityManagement:
-          diskspaceThreshold: 20000000000
-    - instanceType: m5ad.large
       capacityPerInstance: 2
       worker-config:
         capacityManagement:
@@ -2095,14 +2078,6 @@ pools:
         BlockDeviceMappings:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 10, VolumeType: gp2}
-    - instanceType: m5ad.large
-      worker-config:
-        capacityManagement:
-          diskspaceThreshold: 20000000000
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 10, VolumeType: gp2}
     - instanceType: m4.large
       worker-config:
         capacityManagement:
@@ -2179,14 +2154,6 @@ pools:
         - DeviceName: /dev/xvdb
           Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
     - instanceType: m5d.xlarge
-      worker-config:
-        capacityManagement:
-          diskspaceThreshold: 20000000000
-      launchConfig:
-        BlockDeviceMappings:
-        - DeviceName: /dev/xvdb
-          Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
-    - instanceType: m5ad.xlarge
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
