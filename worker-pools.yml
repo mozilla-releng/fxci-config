@@ -660,6 +660,34 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+- pool_id: gecko-2/b-win2012
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-b-win2012-current
+    maxCapacity: 512
+    additional-user-data:
+      workerType: gecko-2-b-win2012
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+      - instanceType: c4.4xlarge
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      - instanceType: c5.4xlarge
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 - pool_id: gecko-3/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
