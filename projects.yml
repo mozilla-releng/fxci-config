@@ -351,11 +351,15 @@ autoland:
   trust_domain: gecko
   features:
     gecko-actions: true
+    gecko-cron: true
     gecko-roles: true
     hg-push: true
     is-trunk: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron:
+    targets:
+      - perftest-on-autoland
 stylo:
   repo: https://hg.mozilla.org/incubator/stylo
   repo_type: hg
