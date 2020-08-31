@@ -441,6 +441,7 @@ ci-configuration:
   trust_domain: ci
   features:
     hg-push: true
+    taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
   taskcluster_yml_project: ci-admin
@@ -453,6 +454,7 @@ ci-configuration-try:
   is_try: true
   features:
     hg-push: true
+    taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
   taskcluster_yml_project: ci-admin
