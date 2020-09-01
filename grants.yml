@@ -1762,12 +1762,8 @@
   - queue:rerun-task:gecko-level-*
   # Allow managing treestatus
   - project:releng:services/treestatus/*
-  # Allow triggering nightlies and geckoview
-  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
-  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-release/ship-geckoview
-  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-esr68/nightly-*
+  # Allow triggering nightlies
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/nightly-*
-  - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
   # Allow sheriffs to manage mobile trees
   - queue:quarantine-worker:mobile-*
   - worker-manager:remove-worker:mobile-*
@@ -1785,12 +1781,30 @@
     - sheriff
 
 - grant:
+  # Allow triggering nightlies and geckoview
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
+  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
+  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-release/ship-geckoview
+
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly-on-google-play
   to:
   - groups:
     - sheriff
+    - vpn_releasemgt
     - mobile_releases
+
+- grant:
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/gv-update-beta
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/gv-update-nightly
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/gv-update-release
+
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/bump-android-components
+  to:
+  - groups:
+    - vpn_releasemgt
+    - mobile_releases
+
 
 - grant:
   # Allow people with level-3 access to access interactive tasks
@@ -2108,19 +2122,12 @@
 - grant:
   # Grant mobile the ability to manually start release automation
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/api-docs-update
-  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/gv-update-beta
-  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/gv-update-nightly
-  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/gv-update-release
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/bump-android-comp
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
-  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/bump-android-components
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/l10-screenshots
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public
-  - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
-  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
-  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-release/ship-geckoview
   - queue:rerun-task:mobile-level-*
   to:
   - groups:
