@@ -1337,12 +1337,10 @@
       job: ["branch:*"]
 
 - grant:
-  - project:mobile:fenix:releng:signing:cert:beta-signing
-  - project:mobile:fenix:releng:signing:cert:production-signing
+  # XXX `fennec-production-signing` handles beta signing too.
+  - project:mobile:fenix:releng:signing:cert:fennec-production-signing
 
   - secrets:get:project/mobile/fenix/beta
-  # TODO: Remove the "production" scope once Fenix 79 is shipped.
-  - secrets:get:project/mobile/fenix/production
   - secrets:get:project/mobile/fenix/release
 
   - secrets:get:project/mobile/fenix/nimbledroid
@@ -1361,30 +1359,6 @@
   - project:
       alias: fenix
       job: ["cron:nightly", "cron:nightly-on-google-play"]
-
-- grant:
-  - project:mobile:fenix:releng:googleplay:product:fenix
-  - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
-  to:
-  - project:
-      alias: fenix
-      job: ["cron:fennec-production"]
-
-- grant:
-  # XXX `fennec-production-signing` handles beta signing too.
-  - project:mobile:fenix:releng:signing:cert:fennec-production-signing
-  - secrets:get:project/mobile/fenix/fennec-production
-  to:
-  - project:
-      alias: fenix
-      job: ["release", "cron:fennec-production"]
-
-- grant:
-  - secrets:get:project/mobile/fenix/fennec-beta
-  to:
-  - project:
-      alias: fenix
-      job: ["release"]
 
 # TODO Bug 1601928: Stop using the garbage namespace once the {alias}/{project} story is defined
 - grant:
@@ -2159,7 +2133,6 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/bump-android-components
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly-on-google-play
-  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/fennec-production
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/l10-screenshots
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview

@@ -594,8 +594,6 @@ fenix:
       - bump-android-components
       - nightly
       - nightly-on-google-play
-      - target: fennec-production
-        branch: fennec/production
       - screenshots
 
 fenix-jlorenzo:
