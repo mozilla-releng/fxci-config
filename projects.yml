@@ -621,19 +621,6 @@ fenix-jlorenzo:
     hooks_owner: jlorenzo+tc@mozilla.com
     notify_emails: []
 
-fennec-profile-manager:
-  repo: https://github.com/mozilla-mobile/fennec-profile-manager
-  trust_domain: mobile
-  trust_project: fennec-profile-manager
-  repo_type: git
-  default_branch: master
-  level: 3
-  features:
-    github-taskgraph: true
-    mobile-roles: true
-    mobile-sign-phase: true
-    scriptworker: true
-
 focus-android:
   repo: https://github.com/mozilla-mobile/focus-android
   trust_domain: mobile

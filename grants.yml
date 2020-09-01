@@ -1459,22 +1459,6 @@
       alias: firefox-tv
       job: ["release"]
 
-
-# TODO Remove the following section once the Fenix migration is done
-- grant:
-  - project:mobile:fennec-profile-manager:releng:signing:cert:fennec-nightly-signing
-  - project:mobile:fennec-profile-manager:releng:signing:cert:fennec-production-signing
-  - queue:route:index.mobile.v2.fennec-profile-manager.fennec-nightly.*
-  - queue:route:index.mobile.v2.fennec-profile-manager.fennec-beta.*
-  - queue:route:index.mobile.v2.fennec-profile-manager.fennec-production.*
-  - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-nightly.*
-  - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-beta.*
-  - queue:route:index.project.mobile.fennec-profile-manager.v1.fennec-production.*
-  to:
-  - project:
-      alias: fennec-profile-manager
-      job: ["branch:master"]
-
 - grant:
   - secrets:get:project/mobile/firefox-ios/bitrise
   to:
