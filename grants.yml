@@ -283,7 +283,6 @@
   - project:releng:bouncer:server:staging
   - project:releng:bouncer:server:staging-nazgul
   - project:releng:flathub:firefox:mock
-  - project:releng:googleplay:dep
   - project:releng:ship-it:action:create-new-release
   - project:releng:ship-it:action:mark-as-shipped
   - project:releng:ship-it:action:mark-as-started
@@ -418,8 +417,6 @@
   - project:releng:beetmover:bucket:release
   - project:releng:bouncer:server:production
   - project:releng:bouncer:server:production-nazgul
-  - project:releng:googleplay:beta
-  - project:releng:googleplay:release
   - project:releng:ship-it:server:production
   - project:releng:snapcraft:firefox:beta
   - project:releng:snapcraft:firefox:candidate
@@ -1709,7 +1706,6 @@
       job: cron:nightly-*
 
 - grant:
-  - project:releng:googleplay:aurora
   - project:releng:beetmover:bucket:nightly
   - project:releng:signing:cert:nightly-signing
   to:
