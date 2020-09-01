@@ -1352,17 +1352,9 @@
       job: ["release"]
 
 - grant:
-  - project:mobile:fenix:releng:signing:cert:nightly-signing
-  # XXX Bug 1600104 - Fennec Nightly users will be moved to a Fenix build
-  # and then it will be discontinued.
-  - project:mobile:fenix:releng:signing:cert:fennec-nightly-signing
-
-  # TODO Bug 1649400 - Remove these 2 scopes once `production` is renamed to `nightly`
+  # TODO Change the following scope once `production` is entirely renamed to `nightly`
   - project:mobile:fenix:releng:signing:cert:production-signing
-  - secrets:get:project/mobile/fenix/production
-
   - secrets:get:project/mobile/fenix/nightly
-  - secrets:get:project/mobile/fenix/fennec-nightly
   - secrets:get:project/mobile/fenix/nimbledroid
   - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
   to:
