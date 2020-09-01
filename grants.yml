@@ -1352,7 +1352,7 @@
   to:
   - project:
       alias: fenix
-      job: ["cron:nightly", "cron:nightly-on-google-play"]
+      job: ["action:generic", "cron:nightly", "cron:nightly-on-google-play"]
 
 # TODO Bug 1601928: Stop using the garbage namespace once the {alias}/{project} story is defined
 - grant:
@@ -1768,7 +1768,7 @@
   - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-esr68/nightly-*
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/nightly-*
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
-  # Allow sherrifs to manage mobile trees
+  # Allow sheriffs to manage mobile trees
   - queue:quarantine-worker:mobile-*
   - worker-manager:remove-worker:mobile-*
   - queue:cancel-task:mobile-level-*
@@ -1783,6 +1783,14 @@
   to:
   - groups:
     - sheriff
+
+- grant:
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly-on-google-play
+  to:
+  - groups:
+    - sheriff
+    - mobile_releases
 
 - grant:
   # Allow people with level-3 access to access interactive tasks
@@ -2108,8 +2116,6 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/bump-android-comp
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/bump-android-components
-  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
-  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly-on-google-play
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/l10-screenshots
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
