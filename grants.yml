@@ -1755,8 +1755,10 @@
   - queue:quarantine-worker:gecko-t/*
   - queue:quarantine-worker:proj-autophone/gecko-*
   - queue:quarantine-worker:releng-hardware/gecko-*
-  # Allow sheriffs to terminate gecko related workers
+  - queue:quarantine-worker:mobile-*
+  # Allow sheriffs to terminate gecko/mobile related workers
   - worker-manager:remove-worker:gecko-*
+  - worker-manager:remove-worker:mobile-*
   # Allow sheriffs to rerun and cancel gecko tasks
   # Allows cancelling tasks with that scheduler-id
   - queue:cancel-task:gecko-level-*
@@ -1765,15 +1767,6 @@
   - project:releng:services/treestatus/*
   # Allow triggering nightlies
   - hooks:trigger-hook:project-releng/cron-task-mozilla-central/nightly-*
-  # Allow sheriffs to manage mobile trees
-  - queue:quarantine-worker:mobile-*
-  - worker-manager:remove-worker:mobile-*
-  - queue:cancel-task:mobile-level-*
-  - queue:rerun-task:mobile-level-*
-  - hooks:trigger-hook:project-mobile/in-tree-action-1-generic/*
-  - hooks:trigger-hook:project-mobile/in-tree-action-3-generic/*
-  - hooks:trigger-hook:project-mobile/in-tree-action-1-cancel-all/*
-  - hooks:trigger-hook:project-mobile/in-tree-action-3-cancel-all/*
   # Allow sheriffs to force schedule a decision task, whenever one has gone missing because of a
   # bustage
   - hooks:trigger-hook:hg-push/*
@@ -1789,6 +1782,14 @@
 
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly-on-google-play
+
+  # Allow to manage mobile trees
+  - queue:cancel-task:mobile-level-*
+  - queue:rerun-task:mobile-level-*
+  - hooks:trigger-hook:project-mobile/in-tree-action-1-generic/*
+  - hooks:trigger-hook:project-mobile/in-tree-action-3-generic/*
+  - hooks:trigger-hook:project-mobile/in-tree-action-1-cancel-all/*
+  - hooks:trigger-hook:project-mobile/in-tree-action-3-cancel-all/*
   to:
   - groups:
     - sheriff
