@@ -180,8 +180,6 @@ project-releng/cron-task-mozilla-mobile-android-components/api-docs-update:
     Managed from ci-configuration's hooks.yml for now.
   owner: skaspari@mozilla.com
   email_on_error: true
-  schedule:
-    - '0 0 12 * * *'
   scopes:
     - queue:scheduler-id:mobile-level-3
     - queue:create-task:lowest:mobile-3/b-linux
