@@ -593,6 +593,10 @@ pools:
     - instanceType: m5d.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
     - instanceType: c5.xlarge
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
