@@ -358,6 +358,21 @@ project/releng/scriptworker/cloudops-canary:
     description: Allows cloudops' jenkins to trigger scriptworker canary tasks
     scopes:
         - hooks:trigger-hook:project-releng/cron-task-mozilla-central/scriptworker-canary
+project/releng/scriptworker/github/dev/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-github-dev
+        - queue:worker-id:mobile-1-github-dev/mobile-1-github-dev-*
+project/releng/scriptworker/github/prod/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-github
+        - queue:worker-id:mobile-1-github/mobile-1-github-*
+project/releng/scriptworker/github/prod/firefoxci-mobile-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-3-github
+        - queue:worker-id:mobile-3-github/mobile-3-github-*
 project/releng/scriptworker/iscript/dep:
     description: ''
     scopes:
