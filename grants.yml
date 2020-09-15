@@ -553,10 +553,7 @@
         # Holly is used for testing, see Bug 1599868
         - holly
         - kaios
-      # XXX kaios is level 2. We need to remember to remove holly from the above
-      # list if/when we stop using it for civet work.
-      # XXX we probably also need a level 1 solution.
-      level: 2
+        - try
 
 - grant:
   # Bug 1618285
@@ -567,6 +564,7 @@
   - secrets:get:project/updatebot/sentry-url
   - secrets:get:project/updatebot/sql-proxy-config
   - queue:get-artifact:project/updatebot/*
+  - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
   to:
   - project:
       alias:
@@ -2162,7 +2160,6 @@
   to:
   - groups:
     - updatebot-sec-inf
-
 
 - grant:
   # Grant mobile the ability to see and modify their secrets
