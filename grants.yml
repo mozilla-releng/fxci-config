@@ -1791,7 +1791,6 @@
   to:
   - groups:
     - sheriff
-    - vpn_releasemgt
     - mobile_releases
 
 - grant:
@@ -1802,7 +1801,6 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/bump-android-components
   to:
   - groups:
-    - vpn_releasemgt
     - mobile_releases
 
 
@@ -1989,18 +1987,6 @@
   to:
   - groups:
     - thunderbird-releng
-
-# release promotion is only available to relman/releng
-- grant:
-  - hooks:trigger-hook:project-gecko/in-tree-action-1-release-promotion/*
-  - hooks:trigger-hook:project-comm/in-tree-action-1-release-promotion/*
-  - hooks:trigger-hook:project-gecko/in-tree-action-2-release-promotion/*
-  - hooks:trigger-hook:project-comm/in-tree-action-2-release-promotion/*
-  - hooks:trigger-hook:project-gecko/in-tree-action-3-release-promotion/*
-  - hooks:trigger-hook:project-comm/in-tree-action-3-release-promotion/*
-  to:
-  - groups:
-    - vpn_releasemgt
 
 # tooltool.mozilla-releng.net and tokens.mozilla-releng.net scopes
 
