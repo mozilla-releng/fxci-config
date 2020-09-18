@@ -548,11 +548,6 @@
   to:
   - project:
       alias:
-        - mozilla-central
-        - autoland
-        # Holly is used for testing, see Bug 1599868
-        - holly
-        - kaios
         - try
 
 - grant:
