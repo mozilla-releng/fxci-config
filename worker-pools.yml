@@ -159,6 +159,78 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
+- pool_id: 'gecko-1/b-linux-aki-c5n'
+  description: Worker for gecko-based automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    security: null
+    maxCapacity: 10
+    instance_types:
+    - instanceType: c5n.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
+- pool_id: 'gecko-1/b-linux-aki-m5d'
+  description: Worker for gecko-based automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    security: null
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5d.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
+- pool_id: 'gecko-1/b-linux-aki-m5n'
+  description: Worker for gecko-based automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    security: null
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5n.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
+- pool_id: 'gecko-1/b-linux-aki-m5dn'
+  description: Worker for gecko-based automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    security: null
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m5dn.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
 # Temporary entry to test out new monopacker images that will replace the
 # existing b-linux ones: https://bugzilla.mozilla.org/show_bug.cgi?id=1637302
 - pool_id: 'gecko-1/b-linux-alpha'
@@ -658,6 +730,90 @@ pools:
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       - instanceType: c5.4xlarge
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+- pool_id: gecko-1/b-win2012-aki-c5n
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-b-win2012-current
+    maxCapacity: 512
+    additional-user-data:
+      workerType: gecko-1-b-win2012-aki-c5n
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+      - instanceType: c5n.4xlarge
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+- pool_id: gecko-1/b-win2012-aki-m5d
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-b-win2012-current
+    maxCapacity: 512
+    additional-user-data:
+      workerType: gecko-1-b-win2012-aki-m5d
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+      - instanceType: m5d.4xlarge
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+- pool_id: gecko-1/b-win2012-aki-m5n
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-b-win2012-current
+    maxCapacity: 512
+    additional-user-data:
+      workerType: gecko-1-b-win2012-aki-m5n
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+      - instanceType: m5n.4xlarge
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+- pool_id: gecko-1/b-win2012-aki-m5dn
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-b-win2012-current
+    maxCapacity: 512
+    additional-user-data:
+      workerType: gecko-1-b-win2012-aki-m5dn
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+      - instanceType: m5dn.4xlarge
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
