@@ -772,8 +772,6 @@
 
 - grant:
   - project:mozilla:{trust_project}:releng:signing:cert:release-signing
-    # TODO: to remove this scope once releases are migrated to taskgraph
-  - project:mozilla:application-services:releng:signing:cert:release-signing
   - secrets:get:project/application-services/gradle-plugin-publish
   - secrets:get:project/application-services/publish
   # TODO Bug 1597329 - Remove these 4 scopes once the naming scheme is applied to the workers
@@ -784,8 +782,6 @@
   # TODO In bug 1632147 we will reorganize scriptworker scopes to re-use the
   # `beetmover-maven-phase` once we have a new `trust_project` for this and
   # `glean` project
-  - project:mozilla:application-services:releng:beetmover:action:push-to-maven
-  - project:mozilla:application-services:releng:beetmover:bucket:maven-production
   - project:mozilla:{trust_project}:releng:beetmover:action:push-to-maven
   - project:mozilla:{trust_project}:releng:beetmover:bucket:maven-production
   to:

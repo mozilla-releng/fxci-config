@@ -296,16 +296,6 @@ project/releng/scriptworker/beetmover/prod/firefoxci-app-services-3:
     scopes:
         - queue:claim-work:scriptworker-k8s/app-services-3-beetmover
         - queue:worker-id:app-services-3-beetmover/app-services-3-beetmover-*
-project/releng/scriptworker/beetmover/prod/firefoxci-applicationservices-1:
-    description: ''
-    scopes:
-        - queue:claim-work:scriptworker-k8s/appservices-1-beetmover
-        - queue:worker-id:appservices-1-beetmover/appservices-1-beetmover-*
-project/releng/scriptworker/beetmover/prod/firefoxci-applicationservices-3:
-    description: ''
-    scopes:
-        - queue:claim-work:scriptworker-k8s/appservices-3-beetmover
-        - queue:worker-id:appservices-3-beetmover/appservices-3-beetmover-*
 project/releng/scriptworker/beetmover/prod/firefoxci-comm-1:
     description: ''
     scopes:
@@ -676,16 +666,6 @@ project/releng/scriptworker/signing/prod/firefoxci-app-services-t:
     scopes:
         - queue:claim-work:scriptworker-k8s/app-services-t-signing
         - queue:worker-id:app-services-t-signing/app-services-t-signing-*
-project/releng/scriptworker/signing/prod/firefoxci-applicationservices-3:
-    description: ''
-    scopes:
-        - queue:claim-work:scriptworker-k8s/appservices-3-signing
-        - queue:worker-id:appservices-3-signing/appservices-3-signing-*
-project/releng/scriptworker/signing/prod/firefoxci-applicationservices-t:
-    description: ''
-    scopes:
-        - queue:claim-work:scriptworker-k8s/appservices-t-signing
-        - queue:worker-id:appservices-t-signing/appservices-t-signing-*
 project/releng/scriptworker/signing/prod/firefoxci-comm-3:
     description: ''
     scopes:
