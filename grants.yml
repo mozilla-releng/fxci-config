@@ -2446,3 +2446,14 @@
   - roles:
     - mozilla-group:team_taskcluster
   environments: staging
+
+# Bug 1669283: Secrets for mozperftest
+- grant:
+  - secrets:get:project/releng/gecko/build/level-1/conditioned-profiles
+  - secrets:set:project/releng/gecko/build/level-1/conditioned-profiles
+  - secrets:get:project/releng/gecko/build/level-3/conditioned-profiles
+  - secrets:set:project/releng/gecko/build/level-3/conditioned-profiles
+  to:
+  - roles:
+    # Tarek Ziade
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|tziade
