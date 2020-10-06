@@ -37,10 +37,6 @@ firefoxci:
                     - "us-east-1d"
                     - "us-east-1e"
                     - "us-east-1f"
-                us-east-2:
-                    - "us-east-2a"
-                    - "us-east-2b"
-                    - "us-east-2c"
                 us-west-1:
                     - "us-west-1b"
                     - "us-west-1c"
@@ -60,9 +56,6 @@ firefoxci:
                 us-east-1d: "subnet-e7e6ccaf"
                 us-east-1e: "subnet-deb5a8e2"
                 us-east-1f: "subnet-7f720d73"
-                us-east-2a: "subnet-6d481604"
-                us-east-2b: "subnet-b5db40ce"
-                us-east-2c: "subnet-ab62c0e6"
                 us-west-1b: "subnet-7641632e"
                 us-west-1c: "subnet-48a9b82c"
                 us-west-2a: "subnet-d948b6bf"
@@ -77,7 +70,6 @@ firefoxci:
                     # docker-worker - gecko-workers
                     by-region:
                         "us-east-1": ["sg-12cd3762"]
-                        "us-east-2": ["sg-28817140"]
                         "us-west-1": ["sg-caed26ac"]
                         "us-west-2": ["sg-2728435d"]
                         "eu-central-1": ["sg-8b3d0de0"]
@@ -86,7 +78,6 @@ firefoxci:
                     # rdp-only - gecko-workers
                     by-region:
                         "us-east-1": ["sg-0dc9337d", "sg-27d72d57"]
-                        "us-east-2": ["sg-3482725c", "sg-f581719d"]
                         "us-west-1": ["sg-5be3283d", "sg-fee02b98"]
                         "us-west-2": ["sg-09d6be73", "sg-3bd7bf41"]
                         "eu-central-1": ["sg-c03e0eab", "sg-e43d0d8f"]
@@ -94,7 +85,6 @@ firefoxci:
                     # no-inbound - gecko-workers
                     by-region:
                         "us-east-1": ["sg-7aca300a"]
-                        "us-east-2": ["sg-948171fc"]
                         "us-west-1": ["sg-5ce02b3a"]
                         "us-west-2": ["sg-a0d6beda"]
                         "eu-central-1": ["sg-e53d0d8e"]
@@ -164,10 +154,6 @@ staging:
                     - "us-east-1d"
                     - "us-east-1e"
                     - "us-east-1f"
-                us-east-2:
-                    - "us-east-2a"
-                    - "us-east-2b"
-                    - "us-east-2c"
                 us-west-1:
                     - "us-west-1a"
                     - "us-west-1b"
@@ -187,9 +173,6 @@ staging:
                 us-east-1d: subnet-01454cff97aa89f34
                 us-east-1e: subnet-04003ab20f583059b
                 us-east-1f: subnet-0d8c0e26a6194119c
-                us-east-2a: subnet-0c96f3f882722fefd
-                us-east-2b: subnet-0f712d4162b201860
-                us-east-2c: subnet-030d7ddb01e726745
                 us-west-1a: subnet-0a30116fa0be3bc99
                 us-west-1b: subnet-01aac9d0ea7efdbc4
                 us-west-2a: subnet-06b091438ea962936
@@ -204,7 +187,6 @@ staging:
                     # docker-worker - gecko-workers
                     by-region:
                         "us-east-1": ["sg-01738525fc9991bd0"]
-                        "us-east-2": ["sg-0cc41eb4c589087d0"]
                         "us-west-1": ["sg-0f52b4554cfc115e7"]
                         "us-west-2": ["sg-07ca8c96f1574d42b"]
                         "eu-central-1": ["sg-0febd8c614542ba9c"]
@@ -213,7 +195,6 @@ staging:
                     # rdp-only - gecko-workers
                     by-region:
                         "us-east-1": ["sg-06f0ef799985524a4", "sg-041e142d0ba63c7aa"]
-                        "us-east-2": ["sg-0bf266f90b08d65c3", "sg-0932a39661d99d519"]
                         "us-west-1": ["sg-07ffff7a1ad3c4958", "sg-0c7efe44870028d78"]
                         "us-west-2": ["sg-0588dee891c7069e7", "sg-073d8cda785e8f939"]
                         "eu-central-1": ["sg-04a0ee6ff719528e9", "sg-095ad8255839a053c"]
@@ -221,7 +202,6 @@ staging:
                     # no-inbound - gecko-workers
                     by-region:
                         "us-east-1": ["sg-03ab72cd36e14ce66"]
-                        "us-east-2": ["sg-0eaeb6fba32fcec3f"]
                         "us-west-1": ["sg-042aa0d6570f103e7"]
                         "us-west-2": ["sg-042aa0d6570f103e7"]
                         "eu-central-1": ["sg-026d562d7bb83f005"]
