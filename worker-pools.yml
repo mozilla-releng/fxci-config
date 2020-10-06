@@ -69,7 +69,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 1
     maxCapacity: 4
@@ -126,7 +126,7 @@ pools:
       - pool-group: kaios-1
       - pool-group: kaios-2
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image:
         by-chain-of-trust:
             trusted: docker-worker-hvm-builder-trusted-current
@@ -195,7 +195,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: monopacker-docker-worker-current
     maxCapacity: 20
     worker-config:
@@ -227,7 +227,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     maxCapacity: 20
     instance_types:
@@ -241,7 +241,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     maxCapacity: 50
     instance_types:
@@ -327,7 +327,7 @@ pools:
       - pool-group: kaios-1
       - pool-group: kaios-2
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image:
         by-chain-of-trust:
             trusted: docker-worker-hvm-builder-trusted-current
@@ -389,7 +389,7 @@ pools:
       - pool-group: kaios-1
       - pool-group: kaios-2
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image:
         by-chain-of-trust:
             trusted: docker-worker-hvm-builder-trusted-current
@@ -453,7 +453,7 @@ pools:
             '(comm|gecko)-.*': 30
             default: 10
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     instance_types:
     - instanceType: c5d.xlarge
       worker-config:
@@ -477,7 +477,7 @@ pools:
     image: docker-worker-hvm-builder-trusted-current
     maxCapacity: 50
     security: trusted
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     instance_types:
     - instanceType: c5.4xlarge
       launchConfig:
@@ -517,7 +517,7 @@ pools:
       - pool-group: kaios-1
       - pool-group: kaios-2
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image:
         by-chain-of-trust:
             trusted: docker-worker-hvm-builder-trusted-current
@@ -602,7 +602,7 @@ pools:
             gecko-3: 10
     worker-config:
       dockerConfig: {allowPrivileged: false}
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     instance_types:
     - instanceType: m5.xlarge
       worker-config:
@@ -660,10 +660,7 @@ pools:
       capacityPerInstance: 8
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: gecko-1/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
@@ -984,7 +981,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     maxCapacity: 2500
     worker-config:
@@ -1007,7 +1004,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: monopacker-docker-worker-current
     maxCapacity: 20
     worker-config:
@@ -1028,7 +1025,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     maxCapacity: 100
     worker-config:
@@ -1054,10 +1051,7 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
     instance_types:
     - instanceType: m5d.xlarge
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: releng-3/linux
   description: Releng github worker
   owner: release+tc-workers@mozilla.com
@@ -1072,10 +1066,7 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
     instance_types:
     - instanceType: m5d.xlarge
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: releng-t/linux
   description: Releng github worker
   owner: release+tc-workers@mozilla.com
@@ -1089,10 +1080,7 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
     instance_types:
     - instanceType: m5d.xlarge
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: relops-3/win2019
   description: build windows cloud images for taskcluster windows workloads
   owner: grenade@mozilla.com
@@ -1128,10 +1116,7 @@ pools:
     scalingRatio: 0
     instance_types:
     - instanceType: m5d.xlarge
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     worker-config:
       genericWorker:
         config:
@@ -1149,10 +1134,7 @@ pools:
     security: trusted
     instance_types:
     - instanceType: m5d.xlarge
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     worker-config:
       genericWorker:
         config:
@@ -1214,10 +1196,7 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: mobile-1/b-linux
   description: Level 1 build workers for mobile projects
   owner: release+tc-workers@mozilla.com
@@ -1230,10 +1209,7 @@ pools:
     scalingRatio: 0
     instance_types:
     - instanceType: m5d.xlarge
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: mobile-1/images
   description: 'Builds docker images for mobile projects; NOTE: capacity set to 1
     instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -1255,10 +1231,7 @@ pools:
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
         restrictCPU: false
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: mobile-1/bitrise
   description: Level 1 workers to interact with bitrise.io (iOS CI)
   owner: release+tc-workers@mozilla.com
@@ -1276,10 +1249,7 @@ pools:
       capacityPerInstance: 1   # capacity reduced to 1 (instead of 8), because we don't want more than 1 task for level 1
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: mobile-3/b-linux-large
   description: General-purpose worker for projects by android components team (to
     build and release a very large suite of Kotlin components)
@@ -1300,10 +1270,7 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: mobile-3/b-linux
   description: Level 3 build workers for mobile projects
   owner: release+tc-workers@mozilla.com
@@ -1317,10 +1284,7 @@ pools:
     security: trusted
     instance_types:
     - instanceType: m5d.xlarge
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: mobile-3/images
   description: 'Builds docker images for mobile projects; NOTE: capacity set to 1
     instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -1343,10 +1307,7 @@ pools:
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
         restrictCPU: false
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: mobile-3/bitrise
   description: Level 3 workers to interact with bitrise.io (iOS CI)
   owner: release+tc-workers@mozilla.com
@@ -1365,10 +1326,7 @@ pools:
       capacityPerInstance: 3   # capacity reduced to 3 (instead of 8), because we don't want more than 3 tasks for level 3
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: "{pool-group}/decision"
   description: Worker for decision tasks
   owner: release+tc-workers@mozilla.com
@@ -1426,10 +1384,7 @@ pools:
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: "{pool-group}/decision"
   description: Worker for decision tasks
   owner: release+tc-workers@mozilla.com
@@ -1457,10 +1412,7 @@ pools:
       worker-config:
         capacityManagement:
           diskspaceThreshold: 20000000000
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: app-services-1/b-linux
   description: Worker for rust projects by Application Services team
   owner: release+tc-workers@mozilla.com
@@ -1481,10 +1433,7 @@ pools:
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
         restrictCPU: false
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: app-services-3/b-linux
   description: Worker for rust projects by Application Services team
   owner: release+tc-workers@mozilla.com
@@ -1505,10 +1454,7 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: glean-1/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -1529,10 +1475,7 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: glean-3/images
   description: 'Builds docker images for gecko; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -1554,10 +1497,7 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: glean-1/b-linux
   description: Worker for rust projects by Glean team
   owner: release+tc-workers@mozilla.com
@@ -1579,10 +1519,7 @@ pools:
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
         restrictCPU: false
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: glean-3/b-linux
   description: Worker for rust projects by Glean team
   owner: release+tc-workers@mozilla.com
@@ -1604,10 +1541,7 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: mozillaonline-1/b-linux
   description: Worker for MozillaOnline automation
   owner: release+tc-workers@mozilla.com
@@ -1625,10 +1559,7 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: mozillaonline-3/b-linux
   description: Worker for MozillaOnline automation
   owner: release+tc-workers@mozilla.com
@@ -1647,10 +1578,7 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: hg-t/linux
   description: Testing for https://hg.mozilla.org/hgcustom/version-control-tools
   owner: release+tc-workers@mozilla.com
@@ -1664,17 +1592,14 @@ pools:
     worker-config: {dindImage: 'taskcluster/dind-service:v4.0'}
     instance_types:
     - instanceType: c5d.2xlarge
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
 - pool_id: l10n-1/linux
   description: General-purpose worker for l10n automation
   owner: release+tc-workers@mozilla.com
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 10
@@ -1701,7 +1626,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 10
@@ -1729,7 +1654,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     security: trusted
     minCapacity: 0
@@ -1757,7 +1682,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     security: trusted
     minCapacity: 0
@@ -1846,7 +1771,7 @@ pools:
     image: docker-worker-hvm-builder-current
     maxCapacity: 10
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     instance_types:
     - instanceType: c5d.xlarge
       worker-config:
@@ -1873,7 +1798,7 @@ pools:
     minCapacity: 0
     maxCapacity: 10
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     instance_types:
     - instanceType: c5d.xlarge
       worker-config:
@@ -1907,7 +1832,7 @@ pools:
       - pool-group: releng-3
         chain-of-trust: trusted
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image:
         by-chain-of-trust:
             trusted: docker-worker-hvm-builder-trusted-current
@@ -1939,7 +1864,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: monopacker-docker-worker-baremetal-current
     minCapacity: 0
     maxCapacity: 720
@@ -1971,7 +1896,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: monopacker-docker-worker-baremetal-current
     minCapacity: 0
     maxCapacity: 30
@@ -2003,7 +1928,7 @@ pools:
   email_on_error: false
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: monopacker-docker-worker-current
     minCapacity: 0
     maxCapacity: 15
@@ -2055,7 +1980,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 2
@@ -2078,7 +2003,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 10
@@ -2093,7 +2018,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     security: trusted
     minCapacity: 0
@@ -2109,7 +2034,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 1
     maxCapacity: 100
@@ -2152,7 +2077,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 1
     maxCapacity: 100
@@ -2251,7 +2176,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 10
@@ -2264,7 +2189,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     security: trusted
     minCapacity: 0
@@ -2278,7 +2203,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 10
@@ -2290,7 +2215,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 10
@@ -2303,7 +2228,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     security: trusted
     minCapacity: 0
@@ -2317,7 +2242,7 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     image: docker-worker-hvm-builder-current
     minCapacity: 0
     maxCapacity: 10
@@ -2333,7 +2258,7 @@ pools:
     image: docker-worker-hvm-builder-current
     maxCapacity: 10
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     instance_types:
     - instanceType: c5d.xlarge
       worker-config:
@@ -2360,7 +2285,7 @@ pools:
     minCapacity: 0
     maxCapacity: 10
     worker-config: {dindImage: 'taskcluster/dind-service:v4.1'}
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
     instance_types:
     - instanceType: c5d.xlarge
       worker-config:

@@ -145,11 +145,13 @@ docker-worker-v202004031836-hvm-builder-trusted:
 docker-worker-v202004241848-hvm-builder:
   aws:
     us-east-1: ami-01dd72830baa6a0bc
+    us-east-2: ami-084aa955433c2b01c
     us-west-1: ami-0790f4d44d742adba
     us-west-2: ami-02209580e11786d58
 docker-worker-v202004241848-hvm-builder-trusted:
   aws:
     us-east-1: ami-0c7619923463d28f9
+    us-east-2: ami-0cf51d2b8f4998c80
     us-west-1: ami-0a60d2d4a5c6253de
     us-west-2: ami-01a86f99411dd3c48
 
@@ -210,6 +212,7 @@ monopacker-docker-worker-2020-05-04T14-30-19Z:
 monopacker-docker-worker-2020-08-05t22-29-20z:
   aws:
     us-east-1: ami-0fe24f9486925b029
+    us-east-2: ami-0dc9bc061e73af06a
     us-west-1: ami-04dd8b4beade35aae
     us-west-2: ami-05386759ffd1588de
   fxci-level1-gcp:
@@ -221,6 +224,7 @@ monopacker-docker-worker-2020-08-05t22-29-20z:
 monopacker-docker-worker-trusted-2020-08-05t22-01-11z:
   aws:
     us-east-1: ami-0b7779127f469c41b
+    us-east-2: ami-000cfc6085429a750
     us-west-1: ami-02ef0e03f2ce4653d
     us-west-2: ami-0c6b38c7153dddc28
   fxci-level3-gcp:
