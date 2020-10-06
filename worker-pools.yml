@@ -187,6 +187,78 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 70000000000}
+- pool_id: 'gecko-1/b-linux-aki-m6g'
+  description: Worker for gecko-based automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    security: null
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m6g.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
+- pool_id: 'gecko-1/b-linux-aki-m6gd'
+  description: Worker for gecko-based automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    security: null
+    maxCapacity: 10
+    instance_types:
+    - instanceType: m6gd.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
+- pool_id: 'gecko-1/b-linux-aki-c6g'
+  description: Worker for gecko-based automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    security: null
+    maxCapacity: 10
+    instance_types:
+    - instanceType: c6g.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
+- pool_id: 'gecko-1/b-linux-aki-c6gd'
+  description: Worker for gecko-based automation
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    regions: [us-east-1, us-east-2, us-west-1, us-west-2]
+    image: docker-worker-hvm-builder-current
+    security: null
+    maxCapacity: 10
+    instance_types:
+    - instanceType: c6gd.4xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 70000000000}
 # Temporary entry to test out new monopacker images that will replace the
 # existing b-linux ones: https://bugzilla.mozilla.org/show_bug.cgi?id=1637302
 - pool_id: 'gecko-1/b-linux-alpha'
