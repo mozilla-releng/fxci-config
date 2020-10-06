@@ -207,6 +207,7 @@ monopacker-docker-worker-2020-04-03t19-20-03z:
 monopacker-docker-worker-2020-05-04T14-30-19Z:
   aws:
     us-east-1: ami-08a1f9efa3d1ac2e9
+    us-east-2: ami-02f84c10be74a2dff
     us-west-1: ami-095477afa5016a926
     us-west-2: ami-07b33db0f538882e1
 monopacker-docker-worker-2020-08-05t22-29-20z:

@@ -143,6 +143,7 @@
 - grant:
   - auth:aws-s3:read-write:comm-central-level-1-sccache-eu-central-1/*
   - auth:aws-s3:read-write:comm-central-level-1-sccache-us-east-1/*
+  - auth:aws-s3:read-write:comm-central-level-1-sccache-us-east-2/*
   - auth:aws-s3:read-write:comm-central-level-1-sccache-us-west-1/*
   - auth:aws-s3:read-write:comm-central-level-1-sccache-us-west-2/*
   to:
@@ -152,6 +153,7 @@
 - grant:
   - auth:aws-s3:read-write:comm-central-level-2-sccache-eu-central-1/*
   - auth:aws-s3:read-write:comm-central-level-2-sccache-us-east-1/*
+  - auth:aws-s3:read-write:comm-central-level-2-sccache-us-east-2/*
   - auth:aws-s3:read-write:comm-central-level-2-sccache-us-west-1/*
   - auth:aws-s3:read-write:comm-central-level-2-sccache-us-west-2/*
   to:
@@ -161,6 +163,7 @@
 - grant:
   - auth:aws-s3:read-write:comm-central-level-3-sccache-eu-central-1/*
   - auth:aws-s3:read-write:comm-central-level-3-sccache-us-east-1/*
+  - auth:aws-s3:read-write:comm-central-level-3-sccache-us-east-2/*
   - auth:aws-s3:read-write:comm-central-level-3-sccache-us-west-1/*
   - auth:aws-s3:read-write:comm-central-level-3-sccache-us-west-2/*
   to:
@@ -170,6 +173,7 @@
 - grant:
   - auth:aws-s3:read-write:taskcluster-level-1-sccache-eu-central-1/*
   - auth:aws-s3:read-write:taskcluster-level-1-sccache-us-east-1/*
+  - auth:aws-s3:read-write:taskcluster-level-1-sccache-us-east-2/*
   - auth:aws-s3:read-write:taskcluster-level-1-sccache-us-west-1/*
   - auth:aws-s3:read-write:taskcluster-level-1-sccache-us-west-2/*
   - auth:gcp:access-token:sccache-3/sccache-l1*
@@ -180,6 +184,7 @@
 - grant:
   - auth:aws-s3:read-write:taskcluster-level-2-sccache-eu-central-1/*
   - auth:aws-s3:read-write:taskcluster-level-2-sccache-us-east-1/*
+  - auth:aws-s3:read-write:taskcluster-level-2-sccache-us-east-2/*
   - auth:aws-s3:read-write:taskcluster-level-2-sccache-us-west-1/*
   - auth:aws-s3:read-write:taskcluster-level-2-sccache-us-west-2/*
   - auth:gcp:access-token:sccache-3/sccache-l2*
@@ -190,6 +195,7 @@
 - grant:
   - auth:aws-s3:read-write:taskcluster-level-3-sccache-eu-central-1/*
   - auth:aws-s3:read-write:taskcluster-level-3-sccache-us-east-1/*
+  - auth:aws-s3:read-write:taskcluster-level-3-sccache-us-east-2/*
   - auth:aws-s3:read-write:taskcluster-level-3-sccache-us-west-1/*
   - auth:aws-s3:read-write:taskcluster-level-3-sccache-us-west-2/*
   - auth:gcp:access-token:sccache-3/sccache-l3*
