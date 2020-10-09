@@ -2273,6 +2273,16 @@
   - group:
     - team_taskcluster
 
+# Non-Moco Sheriffs-basic
+# contributors in the Sheriffs group that need:
+# * retriggering and rerunning tasks on production trees
+# * dashboard showing CI automation tasks waiting for getting a machine
+- grant:
+  - queue:rerun-task:gecko-level-*
+  to:
+  - group:
+    - non-moco-sheriffs-basic
+
 # Bug 1604686: Token for gfx github sync, ability to set and get
 - grant:
   - secrets:get:project/webrender-ci/wrupdater-github-token
@@ -2316,6 +2326,11 @@
   to:
   - roles:
     - mozilla-group:sheriff
+- grant:
+  - assume:project:releng:ci-group:non-moco-sheriffs-basic
+  to:
+  - roles:
+    - mozilla-group:non-moco-sheriffs-basic
 - grant:
   - assume:project:releng:ci-group:team_taskcluster
   to:
