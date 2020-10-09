@@ -2358,7 +2358,7 @@
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mkmelin
     # Patrick Cloke (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|clokep
-    # Rob Lemly (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
+    # Rob Lemley (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|thunderbird
     # Ian Neal (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|iann_cvs
@@ -2368,6 +2368,8 @@
   - roles:
     # Rob Lemley [:rjl] (https://bugzilla.mozilla.org/show_bug.cgi?id=1496783)
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|thunderbird
+    # Dave Miller [:justdave] (https://bugzilla.mozilla.org/show_bug.cgi?id=1668396)
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|justdave23
 - grant:
   - assume:project:releng:ci-group:team_mozillaonline
   to:
