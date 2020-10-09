@@ -286,6 +286,11 @@ project/releng/scriptworker/beetmover/dev/firefoxci-gecko-1:
         - queue:claim-work:scriptworker-k8s/gecko-1-beetmover-dev
         - queue:get-artifact:releng/partner/*
         - queue:worker-id:gecko-1-beetmover-dev/gecko-1-beetmover-dev-*
+project/releng/scriptworker/beetmover/dev/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-beetmover-dev
+        - queue:worker-id:mobile-1-beetmover-dev/mobile-1-beetmover-dev-*
 project/releng/scriptworker/beetmover/prod/firefoxci-app-services-1:
     description: ''
     scopes:
