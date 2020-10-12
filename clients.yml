@@ -157,7 +157,11 @@ project/releng/generic-worker/datacenter-gecko-t-linux:
     scopes:
         - assume:worker-type:releng-hardware/gecko-t-linux*
         - queue:worker-id:mdc1/t-linux*
+        - queue:worker-id:mdc1/ms*
+        - queue:worker-id:mdc1/moon*
         - queue:worker-id:mdc2/t-linux*
+        - queue:worker-id:mdc2/ms*
+        - queue:worker-id:mdc2/moon*
 project/releng/generic-worker/datacenter-gecko-t-linux-beta:
     description: testing non-perf tasks on linux hardware workers
     scopes:
@@ -178,36 +182,24 @@ project/releng/generic-worker/datacenter-gecko-t-osx:
     description: Datacenter MacOS dedicated developer and automation worker.
     scopes:
         - assume:worker-type:releng-hardware/gecko-t-osx*
+        - queue:worker-id:mdc1/mac*
         - queue:worker-id:mdc1/t-yosemite*
         - queue:worker-id:mdc1/t-mojave*
-        - queue:worker-id:mdc1/t-catalina*
-        - queue:worker-id:mdc1/t-bigsur*
-        - queue:worker-id:mdc1/t-macos*
-        - queue:worker-id:mdc1/t-osx*
+        - queue:worker-id:mdc2/mac*
         - queue:worker-id:mdc2/t-yosemite*
         - queue:worker-id:mdc2/t-mojave*
-        - queue:worker-id:mdc2/t-catalina*
-        - queue:worker-id:mdc2/t-bigsur*
-        - queue:worker-id:mdc2/t-macos*
-        - queue:worker-id:mdc2/t-osx*
 project/releng/generic-worker/datacenter-gecko-t-osx-staging:
     description: Datacenter MacOS dedicated developer and automation staging worker.
     scopes:
         - assume:worker-type:releng-hardware/gecko-t-osx-1010-*
         - assume:worker-type:releng-hardware/gecko-t-osx-1014-*
         - assume:worker-type:releng-hardware/gecko-t-osx-1015-*
+        - queue:worker-id:mdc1/mac*
         - queue:worker-id:mdc1/t-yosemite*
         - queue:worker-id:mdc1/t-mojave*
-        - queue:worker-id:mdc1/t-catalina*
-        - queue:worker-id:mdc1/t-bigsur*
-        - queue:worker-id:mdc1/t-macos*
-        - queue:worker-id:mdc1/t-osx*
+        - queue:worker-id:mdc2/mac*
         - queue:worker-id:mdc2/t-yosemite*
         - queue:worker-id:mdc2/t-mojave*
-        - queue:worker-id:mdc2/t-catalina*
-        - queue:worker-id:mdc2/t-bigsur*
-        - queue:worker-id:mdc2/t-macos*
-        - queue:worker-id:mdc2/t-osx*
 project/releng/generic-worker/datacenter-gecko-t-win10-64-1803-hw:
     description: Datacenter Windows 10 main production worker. Used for Talos,Raptor, and unittest. 1803 references the os build.
     scopes:
