@@ -2330,7 +2330,7 @@
   - assume:project:releng:ci-group:non-moco-sheriffs-basic
   to:
   - roles:
-    - mozilla-group:non-moco-sheriffs-basic
+    - mozillians-group:non-moco-sheriffs-basic
 - grant:
   - assume:project:releng:ci-group:team_taskcluster
   to:
