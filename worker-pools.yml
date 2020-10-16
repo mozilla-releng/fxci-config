@@ -909,12 +909,16 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+          - DeviceName: /dev/sdc
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       - instanceType: c5.4xlarge
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+          - DeviceName: /dev/sdc
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 - pool_id: comm-3/b-win2012
   description: ''
