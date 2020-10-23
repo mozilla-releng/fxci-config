@@ -336,10 +336,10 @@ jamun:
   repo: https://hg.mozilla.org/projects/jamun
   repo_type: hg
   access: scm_level_2
-  trust_domain: gecko
+  trust_domain: comm
   features:
     gecko-actions: true
-    gecko-cron: true
+    gecko-cron: false
     gecko-roles: true
     hg-push: true
     treeherder-reporting: true
