@@ -121,6 +121,7 @@ pools:
       - pool-group: gecko-3
         chain-of-trust: trusted
       - pool-group: comm-1
+      - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
       - pool-group: kaios-1
@@ -322,6 +323,7 @@ pools:
       - pool-group: gecko-3
         chain-of-trust: trusted
       - pool-group: comm-1
+      - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
       - pool-group: kaios-1
@@ -384,6 +386,7 @@ pools:
       - pool-group: gecko-3
         chain-of-trust: trusted
       - pool-group: comm-1
+      - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
       - pool-group: kaios-1
@@ -428,6 +431,7 @@ pools:
       - pool-group: gecko-3
         chain-of-trust: trusted
       - pool-group: comm-1
+      - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
       - pool-group: adhoc-1
@@ -512,6 +516,7 @@ pools:
       - pool-group: gecko-3
         chain-of-trust: trusted
       - pool-group: comm-1
+      - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
       - pool-group: kaios-1
