@@ -200,7 +200,7 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-beta:
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
-    - '0 0 14 * * *'
+    - '0 0 15 * * *'
   scopes:
     - queue:scheduler-id:mobile-level-3
     - queue:create-task:lowest:mobile-3/b-linux
@@ -242,7 +242,7 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-release:
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
-    - '0 0 14 * * *'
+    - '0 0 16 * * *'
   scopes:
     - queue:scheduler-id:mobile-level-3
     - queue:create-task:lowest:mobile-3/b-linux
@@ -263,7 +263,7 @@ project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update:
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
-    - '0 0 14 * * *'
+    - '0 0 17 * * *'
   scopes:
     - queue:scheduler-id:mobile-level-3
     - queue:create-task:lowest:mobile-3/b-linux
