@@ -1451,7 +1451,7 @@
   to:
   - project:
       alias: firefox-ios
-      job: ["cron:l10-screenshots"]
+      job: ["cron:l10-screenshots", "action:*"]
 
 # L10n repositories
 - grant:
