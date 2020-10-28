@@ -43,8 +43,8 @@ monopacker-docker-worker-baremetal-current: monopacker-docker-worker-2020-05-04T
 
 occ-b-win2012-current: occ-b-win2012-v20201014
 occ-b-win2012-trusted-current: occ-b-win2012-trusted-83ededb
-occ-t-win10-64-current: occ-t-win10-64-pre
-occ-t-win10-64-gpu-s-current: occ-t-win10-64-gpu-s-pre
+occ-t-win10-64-current: occ-t-win10-64-9ed04eb
+occ-t-win10-64-gpu-s-current: occ-t-win10-64-gpu-s-15415a4
 occ-t-win7-32-current: occ-t-win7-32-v20200226
 occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-v20200226
 occ-mpd001-b-win2012-current: occ-mpd-b-win2012-v20200226
@@ -243,17 +243,6 @@ occ-b-win2012-trusted-pre:
     us-east-1: ami-0528797bdcd2ea228
     us-west-1: ami-093f078f632dd65f1
     us-west-2: ami-08d29be36b85571d8
-occ-t-win10-64-pre:
-  aws:
-    eu-central-1: ami-0d5d873abb4d8d550
-    us-east-1: ami-08656fa2de4214392
-    us-west-1: ami-0b14e1e3b5665f447
-    us-west-2: ami-05d629b4a0589d79a
-occ-t-win10-64-gpu-s-pre:
-  aws:
-    us-east-1: ami-072339690c3daf976
-    us-west-1: ami-08d135989870fe173
-    us-west-2: ami-00f44353bc695991a
 occ-t-win7-32-pre:
   aws:
     eu-central-1: ami-0dfab5a4f63b6a0ad
@@ -294,18 +283,18 @@ occ-b-win2012-trusted-83ededb:
     us-east-1: ami-0978123a845a061c1
     us-west-1: ami-07163c5e52e34866a
     us-west-2: ami-03da2722a08986fe2
-occ-t-win10-64-v20200226:
+occ-t-win10-64-9ed04eb:
   aws:
-    eu-central-1: ami-0ec91d0a07d19ee47
-    us-east-1: ami-0da408f72b12dce98
-    us-west-1: ami-062fe0b048273a9ba
-    us-west-2: ami-0b6b28dc94450b4d1
-occ-t-win10-64-gpu-s-v20200226:
+    eu-central-1: ami-0a18142645b09f239
+    us-east-1: ami-0c365f668d4994031
+    us-west-1: ami-0c27a414716f12d2c
+    us-west-2: ami-060466b6a8383320b
+occ-t-win10-64-gpu-s-15415a4:
   aws:
-    eu-central-1: ami-0e577d408d03800a7
-    us-east-1: ami-096a4fafec9af598e
-    us-west-1: ami-01a19187d53be1fb7
-    us-west-2: ami-059279be577c729a4
+    eu-central-1: ami-0edef7012b9dcc275
+    us-east-1: ami-0ce303e4b25ad6085
+    us-west-1: ami-0af8cddafe92aa9b8
+    us-west-2: ami-0c33b8f687d771402
 occ-t-win7-32-v20200226:
   aws:
     eu-central-1: ami-01db0b27d4878f677
