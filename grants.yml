@@ -1258,6 +1258,15 @@
       job: ["branch:master"]
 
 - grant:
+  - queue:route:notify.email.android-components-team@mozilla.com.on-failed
+  - queue:route:notify.email.geckoview-core@mozilla.com.on-failed
+  to:
+  - project:
+      alias: android-components
+      # Used in order to warn the AC team whenever a GV update cannot be merged
+      job: ["pull-request"]
+
+- grant:
   - project:releng:ship-it:action:mark-as-shipped
   to:
   - project:
