@@ -2404,5 +2404,5 @@ pools:
   description: 'macOS DTK machines'
   owner: release+tc-workers@mozilla.com
   email_on_error: false
-  provided_id: static
+  provider_id: static
   config: {}
