@@ -2400,7 +2400,7 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-- pool-id: releng-hardware/gecko-t-osx-dtk-dev
+- pool_id: releng-hardware/gecko-t-osx-dtk-dev
   description: 'macOS DTK machines'
   owner: release+tc-workers@mozilla.com
   email_on_error: false
