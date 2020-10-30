@@ -2405,4 +2405,5 @@ pools:
   owner: release+tc-workers@mozilla.com
   email_on_error: false
   provider_id: static
-  config: {}
+  config:
+    implementation: generic-worker/macos
