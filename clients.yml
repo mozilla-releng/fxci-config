@@ -734,6 +734,11 @@ project/releng/scriptworker/tree/dev/firefoxci-gecko-1:
     scopes:
         - queue:claim-work:scriptworker-k8s/gecko-1-tree-dev
         - queue:worker-id:gecko-1-tree-dev/gecko-1-tree-dev-*
+project/releng/scriptworker/tree/dev/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-tree-dev
+        - queue:worker-id:mobile-1-tree-dev/mobile-1-tree-dev-*
 project/releng/scriptworker/tree/prod/firefoxci-comm-1:
     description: ''
     scopes:
@@ -749,11 +754,21 @@ project/releng/scriptworker/tree/prod/firefoxci-gecko-1:
     scopes:
         - queue:claim-work:scriptworker-k8s/gecko-1-tree
         - queue:worker-id:gecko-1-tree/gecko-1-tree-*
+project/releng/scriptworker/tree/prod/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-tree
+        - queue:worker-id:mobile-1-tree/mobile-1-tree-*
 project/releng/scriptworker/tree/prod/firefoxci-gecko-3:
     description: ''
     scopes:
         - queue:claim-work:scriptworker-k8s/gecko-3-tree
         - queue:worker-id:gecko-3-tree/gecko-3-tree-*
+project/releng/scriptworker/tree/prod/firefoxci-mobile-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-3-tree
+        - queue:worker-id:mobile-3-tree/mobile-3-tree-*
 project/releng/scriptworker/xpi-3-signing:
     description: ''
     scopes:
