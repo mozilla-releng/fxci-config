@@ -2450,7 +2450,7 @@
   - worker-manager:list-worker-pool-errors:*
   - worker-manager:list-worker-pools
   - worker-manager:list-workers:*
-  to: 
+  to:
   - roles:
     - anonymous
 
@@ -2529,3 +2529,14 @@
   - roles:
     # Tarek Ziade
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|tziade
+
+# Bug 1672397: Scopes to use Taskcluster notify service
+- grant:
+  - notify:email:perftest-alerts@mozilla.com
+  - notify:email:dhunt@mozilla.com
+  - notify:email:beatrice.acasandrei@softvision.com
+  - notify:email:igoldan@mozilla.com
+  to:
+  - roles:
+    # Beatrice Acasandrei - Softvision Sheriff contributor
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bacasandrei
