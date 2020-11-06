@@ -152,6 +152,10 @@ project/releng/generic-worker/datacenter-gecko-1-b-osx:
     description: Datacenter level 1 MacOS dedicated developer and automation worker.
     scopes:
         - assume:worker-type:releng-hardware/gecko-1-b-osx*
+project/releng/generic-worker/datacenter-gecko-3-b-osx:
+    description: Datacenter level 3 MacOS dedicated developer and automation worker.
+    scopes:
+        - assume:worker-type:releng-hardware/gecko-3-b-osx*
 project/releng/generic-worker/datacenter-gecko-3-t-osx:
     description: Datacenter level 3 MacOS dedicated developer and automation worker.
     scopes:
