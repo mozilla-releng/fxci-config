@@ -551,23 +551,45 @@
         - try
 
 - grant:
-  # Bug 1618285
-  - secrets:get:project/updatebot/try-sshkey
-  - secrets:get:project/updatebot/phabricator-token
-  - secrets:get:project/updatebot/bugzilla-api-key
-  - secrets:get:project/updatebot/database-password
-  - secrets:get:project/updatebot/sentry-url
-  - secrets:get:project/updatebot/sql-proxy-config
+  # Bug 1618285 (Updatebot)
+  - secrets:get:project/updatebot/dev/try-sshkey
+  - secrets:get:project/updatebot/dev/phabricator-token
+  - secrets:get:project/updatebot/dev/bugzilla-api-key
+  - secrets:get:project/updatebot/dev/database-password
+  - secrets:get:project/updatebot/dev/sentry-url
+  - secrets:get:project/updatebot/dev/sql-proxy-config
   - queue:get-artifact:project/updatebot/*
   - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
   to:
   - project:
       alias:
-        - mozilla-central
-        # Holly is used for testing, see Bug 1599868
         - holly
-      # Both repos are level 3, but this ensures that if holly is
-      # changed, these are not granted to a non-level 3 repo
+
+- grant:
+  # Bug 1618285 (Updatebot)
+  # Only grant the retrigger permission to -central/holly
+  - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
+  to:
+  - project:
+      alias:
+        - mozilla-central
+        - holly
+      # This ensures that these are not granted to a level 1 repo
+      level: 2
+
+- grant:
+  # Bug 1618285 (Updatebot)
+  - secrets:get:project/updatebot/prod/try-sshkey
+  - secrets:get:project/updatebot/prod/phabricator-token
+  - secrets:get:project/updatebot/prod/bugzilla-api-key
+  - secrets:get:project/updatebot/prod/database-password
+  - secrets:get:project/updatebot/prod/sentry-url
+  - secrets:get:project/updatebot/prod/sql-proxy-config
+  - queue:get-artifact:project/updatebot/*
+  to:
+  - project:
+      alias:
+        - mozilla-central
       level: 3
 
 - grant:
@@ -2130,18 +2152,30 @@
 
 - grant:
   # Grant security team access to secrets and artifacts for updatebot
-  - secrets:get:project/updatebot/try-sshkey
-  - secrets:set:project/updatebot/try-sshkey
-  - secrets:get:project/updatebot/phabricator-token
-  - secrets:set:project/updatebot/phabricator-token
-  - secrets:get:project/updatebot/bugzilla-api-key
-  - secrets:set:project/updatebot/bugzilla-api-key
-  - secrets:get:project/updatebot/database-password
-  - secrets:set:project/updatebot/database-password
-  - secrets:get:project/updatebot/sentry-url
-  - secrets:set:project/updatebot/sentry-url
-  - secrets:get:project/updatebot/sql-proxy-config
-  - secrets:set:project/updatebot/sql-proxy-config
+  - secrets:get:project/updatebot/dev/try-sshkey
+  - secrets:set:project/updatebot/dev/try-sshkey
+  - secrets:get:project/updatebot/dev/phabricator-token
+  - secrets:set:project/updatebot/dev/phabricator-token
+  - secrets:get:project/updatebot/dev/bugzilla-api-key
+  - secrets:set:project/updatebot/dev/bugzilla-api-key
+  - secrets:get:project/updatebot/dev/database-password
+  - secrets:set:project/updatebot/dev/database-password
+  - secrets:get:project/updatebot/dev/sentry-url
+  - secrets:set:project/updatebot/dev/sentry-url
+  - secrets:get:project/updatebot/dev/sql-proxy-config
+  - secrets:set:project/updatebot/dev/sql-proxy-config
+  - secrets:get:project/updatebot/prod/try-sshkey
+  - secrets:set:project/updatebot/prod/try-sshkey
+  - secrets:get:project/updatebot/prod/phabricator-token
+  - secrets:set:project/updatebot/prod/phabricator-token
+  - secrets:get:project/updatebot/prod/bugzilla-api-key
+  - secrets:set:project/updatebot/prod/bugzilla-api-key
+  - secrets:get:project/updatebot/prod/database-password
+  - secrets:set:project/updatebot/prod/database-password
+  - secrets:get:project/updatebot/prod/sentry-url
+  - secrets:set:project/updatebot/prod/sentry-url
+  - secrets:get:project/updatebot/prod/sql-proxy-config
+  - secrets:set:project/updatebot/prod/sql-proxy-config
   - queue:get-artifact:project/updatebot/*
   to:
   - groups:
