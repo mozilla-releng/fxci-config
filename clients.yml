@@ -108,6 +108,10 @@ project/packet/docker-worker:
         - secrets:get:project/taskcluster/docker-worker/certificate-key
         - secrets:get:worker-pool:terraform-packet/*
         - secrets:get:worker-type:terraform-packet/*
+project/performance/desktop-startup-recorder:
+    description: Recorder machine for fxrecord project. Hardware hosted in Toronto.
+    scopes:
+        - assume:worker-type:performance-hardware/gecko-t-fxrecorder*
 project/releng/generic-worker/azure-gecko-1-b-win2012:
     description: Windows 2012 experimental production worker.
     scopes:

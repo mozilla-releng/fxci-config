@@ -2406,3 +2406,9 @@ pools:
   email_on_error: false
   provider_id: static
   config: {}
+- pool_id: performance-hardware/gecko-t-fxrecorder
+  description: 'Desktop startup recorder machines'
+  owner: barret@mozilla.com
+  email_on_error: false
+  provider_id: static
+  config: {}
