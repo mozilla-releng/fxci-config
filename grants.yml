@@ -214,6 +214,11 @@
       feature: gecko-roles
       trust_domain: gecko
 
+- grant:
+  - queue:get-artifact:private/openh264/*
+  to:
+  - groups:
+    - team_moco
 
 - grant:
   # access to OSX testers
