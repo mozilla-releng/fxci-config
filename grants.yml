@@ -1845,6 +1845,10 @@
 
 - grant:
   # Additional permissions for thunderbird-releng on comm level 3 tasks
+  # Merge Day Automation
+  - hooks:trigger-hook:project-comm/in-tree-action-1-merge-automation/*
+  - hooks:trigger-hook:project-comm/in-tree-action-2-merge-automation/*
+  - hooks:trigger-hook:project-comm/in-tree-action-3-merge-automation/*
   # Allow cancel
   - queue:cancel-task:comm-level-3/*
   # Allow rerun
