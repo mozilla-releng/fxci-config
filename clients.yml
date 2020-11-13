@@ -153,14 +153,9 @@ project/releng/generic-worker/bitbar-gecko-t-win10-aarch64:
         - assume:worker-type:bitbar/gecko-t-win64-aarch64-laptop
         - auth:sentry:generic-worker
 project/releng/generic-worker/datacenter-gecko-1-b-osx:
-    # XXX bug 1665379 - Remove this client once the gecko-1-b-osx* queue is empty
     description: Datacenter level 1 MacOS dedicated developer and automation worker.
     scopes:
         - assume:worker-type:releng-hardware/gecko-1-b-osx*
-project/releng/generic-worker/datacenter-gecko-t-b-osx:
-    description: Datacenter level t (untrusted) MacOS dedicated developer and automation worker.
-    scopes:
-        - assume:worker-type:releng-hardware/gecko-t-b-osx*
 project/releng/generic-worker/datacenter-gecko-3-b-osx:
     description: Datacenter level 3 MacOS dedicated developer and automation worker.
     scopes:
