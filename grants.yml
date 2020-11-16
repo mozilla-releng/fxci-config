@@ -557,18 +557,19 @@
 
 - grant:
   # Bug 1618285 (Updatebot)
-  - secrets:get:project/updatebot/dev/try-sshkey
-  - secrets:get:project/updatebot/dev/phabricator-token
-  - secrets:get:project/updatebot/dev/bugzilla-api-key
-  - secrets:get:project/updatebot/dev/database-password
-  - secrets:get:project/updatebot/dev/sentry-url
-  - secrets:get:project/updatebot/dev/sql-proxy-config
+  - secrets:get:project/updatebot/2/try-sshkey
+  - secrets:get:project/updatebot/2/phabricator-token
+  - secrets:get:project/updatebot/2/bugzilla-api-key
+  - secrets:get:project/updatebot/2/database-password
+  - secrets:get:project/updatebot/2/sentry-url
+  - secrets:get:project/updatebot/2/sql-proxy-config
   - queue:get-artifact:project/updatebot/*
   - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
   to:
   - project:
       alias:
         - holly
+      level: 2
 
 - grant:
   # Bug 1618285 (Updatebot)
@@ -584,12 +585,12 @@
 
 - grant:
   # Bug 1618285 (Updatebot)
-  - secrets:get:project/updatebot/prod/try-sshkey
-  - secrets:get:project/updatebot/prod/phabricator-token
-  - secrets:get:project/updatebot/prod/bugzilla-api-key
-  - secrets:get:project/updatebot/prod/database-password
-  - secrets:get:project/updatebot/prod/sentry-url
-  - secrets:get:project/updatebot/prod/sql-proxy-config
+  - secrets:get:project/updatebot/3/try-sshkey
+  - secrets:get:project/updatebot/3/phabricator-token
+  - secrets:get:project/updatebot/3/bugzilla-api-key
+  - secrets:get:project/updatebot/3/database-password
+  - secrets:get:project/updatebot/3/sentry-url
+  - secrets:get:project/updatebot/3/sql-proxy-config
   - queue:get-artifact:project/updatebot/*
   to:
   - project:
