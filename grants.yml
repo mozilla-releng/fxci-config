@@ -215,6 +215,15 @@
       trust_domain: gecko
 
 - grant:
+  # Let's not require a separate level 2 pool for hardware
+  - queue:create-task:{priority}:releng-hardware/gecko-1-*
+  to:
+  - project:
+      feature: gecko-roles
+      trust_domain: gecko
+      level: 2
+
+- grant:
   - queue:get-artifact:private/openh264/*
   to:
   - groups:
