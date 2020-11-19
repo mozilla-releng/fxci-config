@@ -20,6 +20,9 @@ payload:
     public/zero_coverage_report.json:
       path: "/zero_coverage_report.json"
       type: file
+    public/commit_coverage.json.zst:
+      path: "/commit_coverage.json.zst"
+      type: file
   cache:
     code-coverage-bot-production: "/cache"
   capabilities: {}
