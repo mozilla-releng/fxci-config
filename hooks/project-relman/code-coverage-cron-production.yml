@@ -23,6 +23,9 @@ payload:
     public/commit_coverage.json.zst:
       path: "/commit_coverage.json.zst"
       type: file
+    public/triggered_revisions.zst:
+      path: "/triggered_revisions.zst"
+      type: file
   cache:
     code-coverage-bot-production: "/cache"
   capabilities: {}
