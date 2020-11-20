@@ -46,6 +46,7 @@ project-relman/code-coverage-cron-production:
   schedule:
     - "0 0 0 * * *"
   scopes:
+    - hooks:trigger-hook:project-relman/code-coverage-repo-production
     - assume:project:taskcluster:mozilla-github-repository
     - docker-worker:cache:code-coverage-bot-production
     - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
@@ -68,6 +69,7 @@ project-relman/code-coverage-cron-testing:
   schedule:
     - "0 0 0 * * *"
   scopes:
+    - hooks:trigger-hook:project-relman/code-coverage-repo-testing
     - assume:project:taskcluster:mozilla-github-repository
     - docker-worker:cache:code-coverage-bot-testing
     - index:insert-task:project.relman.code-coverage.testing.cron.*
