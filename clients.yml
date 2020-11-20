@@ -806,6 +806,8 @@ project/releng/shipit/production:
         - hooks:trigger-hook:project-comm/in-tree-action-3-release-promotion/*
         - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
         - hooks:trigger-hook:project-gecko/in-tree-action-3-release-promotion/*
+        - hooks:trigger-hook:project-mobile/in-tree-action-3-generic/*
+        - hooks:trigger-hook:project-mobile/in-tree-action-3-release-promotion/*
         - hooks:trigger-hook:project-xpi/in-tree-action-3-release-promotion/*
         - notify:matrix-room:!tBWwNyfeKqGvkNpdDL:mozilla.org
         - notify:matrix-room:!xPTYfLywxFMryjbnJl:mozilla.org
