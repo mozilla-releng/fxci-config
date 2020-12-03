@@ -635,12 +635,14 @@ project/releng/scriptworker/signing/dev/firefoxci-adhoc-t:
         - queue:claim-work:scriptworker-k8s/adhoc-t-signing-dev
         - queue:get-artifact:releng/adhoc/*
         - queue:worker-id:adhoc-t-signing-dev/adhoc-t-signing-dev-*
+        - queue:get-artifact:private/openh264/*
 project/releng/scriptworker/signing/dev/firefoxci-gecko-t:
     description: ''
     scopes:
         - queue:claim-work:scriptworker-k8s/gecko-t-signing-dev
         - queue:worker-id:gecko-t-signing-dev/gecko-t-signing-dev-*
         - queue:get-artifact:releng/partner/*
+        - queue:get-artifact:private/openh264/*
 project/releng/scriptworker/signing/dev/firefoxci-mpd001-t:
     description: dev mpd001 signing
     scopes:
@@ -659,12 +661,14 @@ project/releng/scriptworker/signing/prod/firefoxci-adhoc-3:
         - queue:claim-work:scriptworker-k8s/adhoc-3-signing
         - queue:get-artifact:releng/adhoc/*
         - queue:worker-id:adhoc-3-signing/adhoc-3-signing-*
+        - queue:get-artifact:private/openh264/*
 project/releng/scriptworker/signing/prod/firefoxci-adhoc-t:
     description: ''
     scopes:
         - queue:claim-work:scriptworker-k8s/adhoc-t-signing
         - queue:get-artifact:releng/adhoc/*
         - queue:worker-id:adhoc-t-signing/adhoc-t-signing-*
+        - queue:get-artifact:private/openh264/*
 project/releng/scriptworker/signing/prod/firefoxci-app-services-3:
     description: ''
     scopes:
@@ -691,12 +695,14 @@ project/releng/scriptworker/signing/prod/firefoxci-gecko-3:
         - queue:claim-work:scriptworker-k8s/gecko-3-signing
         - queue:get-artifact:releng/*
         - queue:worker-id:gecko-3-signing/gecko-3-signing-*
+        - queue:get-artifact:private/openh264/*
 project/releng/scriptworker/signing/prod/firefoxci-gecko-t:
     description: ''
     scopes:
         - queue:claim-work:scriptworker-k8s/gecko-t-signing
         - queue:get-artifact:releng/partner/*
         - queue:worker-id:gecko-t-signing/gecko-t-signing-*
+        - queue:get-artifact:private/openh264/*
 project/releng/scriptworker/signing/prod/firefoxci-glean-3:
     description: ''
     scopes:
