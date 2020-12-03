@@ -544,7 +544,7 @@ aki-android-components:
   trust_domain: mobile
   trust_project: android-components
   repo_type: git
-  default_branch: staging
+  default_branch: master
   level: 1
   features:
     beetmover-maven-phase: true
