@@ -1855,6 +1855,7 @@
   to:
   - groups:
     - thunderbird-sheriff
+    - thunderbird-releng
 
 - grant:
   # Additional permissions for thunderbird-releng on comm level 3 tasks
@@ -2403,16 +2404,12 @@
   - assume:project:releng:ci-group:thunderbird-sheriff
   to:
   - roles:
-    # Jorg K (https://bugzilla.mozilla.org/show_bug.cgi?id=1459478)
-    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mozilla23456789
     # Geoff Lankow (https://bugzilla.mozilla.org/show_bug.cgi?id=1520433)
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|geoff
     # Magnus Melin (https://bugzilla.mozilla.org/show_bug.cgi?id=1605714)
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mkmelin
     # Patrick Cloke (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|clokep
-    # Rob Lemley (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
-    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|thunderbird
     # Ian Neal (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|iann_cvs
 - grant:
