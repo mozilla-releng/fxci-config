@@ -832,6 +832,10 @@ project/releng/shipit/staging:
         - notify:matrix-room:!wGgsWXnVncJLSBYmuf:mozilla.org
         - project:releng:services/shipit_api/rebuild_product_details
         - project:releng:services/shipit_api/update_release_status
+project/releng/treeherder/production:
+    description: Treeherder production client
+    scopes:
+        - notify:email:*
 project/releng/treestatus/dev:
     description: ''
     scopes:
