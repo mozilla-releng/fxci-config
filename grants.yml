@@ -335,6 +335,7 @@
   - project:comm:thunderbird:releng:treescript:action:tagging
   - project:comm:thunderbird:releng:treescript:action:version_bump
   - queue:create-task:low:scriptworker-prov-v1/tb-depsigning-mac-v1
+  - queue:get-artifact:project/comm/*
   - secrets:get:project/comm/thunderbird/releng/build/level-1/*
   to:
   - projects:
