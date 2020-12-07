@@ -89,6 +89,24 @@ project/autophone/gecko-t-bitbar-unit-p2:
         - auth:websocktunnel-token:firefoxcitc/bitbar.*
         - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-unit-p2
         - queue:worker-id:bitbar/*
+project/autophone/gecko-t-bitbar-unit-s7:
+    description: 'Bitbar Samsung S7 Galaxy Phones - Unit Pool'
+    scopes:
+        - auth:sentry:tc-worker-script
+        - auth:statsum:tc-worker-script
+        - auth:webhooktunnel
+        - auth:websocktunnel-token:firefoxcitc/bitbar.*
+        - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-unit-s7
+        - queue:worker-id:bitbar/*
+project/autophone/gecko-t-bitbar-perf-s7:
+    description: 'Bitbar Samsung S7 Galaxy Phones - Perf Pool'
+    scopes:
+        - auth:sentry:tc-worker-script
+        - auth:statsum:tc-worker-script
+        - auth:webhooktunnel
+        - auth:websocktunnel-token:firefoxcitc/bitbar.*
+        - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-perf-s7
+        - queue:worker-id:bitbar/*
 project/nss-nspr/aarch64:
     description: Created for Franziskus to support the 64-bit ARM machines
     scopes:
