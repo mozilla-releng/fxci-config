@@ -1215,6 +1215,16 @@
       job: ["cron:nightly"]
 
 - grant:
+  - project:mobile:{trust_project}:releng:beetmover:action:push-to-maven
+  - project:mobile:{trust_project}:releng:beetmover:bucket:maven-staging
+  - project:mobile:{trust_project}:releng:github:project:mock
+  - project:mobile:{trust_project}:releng:github:action:release
+  - queue:route:index.garbage.*
+  to:
+  - project:
+      alias: aki-android-components
+
+- grant:
   - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}
   to:
   - project:
@@ -1296,6 +1306,10 @@
 - grant:
   - queue:route:notify.email.android-components-team@mozilla.com.on-failed
   - queue:route:notify.email.geckoview-core@mozilla.com.on-failed
+  - project:mobile:{trust_project}:releng:beetmover:action:push-to-maven
+  - project:mobile:{trust_project}:releng:beetmover:bucket:maven-staging
+  - project:mobile:{trust_project}:releng:github:project:mock
+  - project:mobile:{trust_project}:releng:github:action:release
   to:
   - project:
       alias: android-components
