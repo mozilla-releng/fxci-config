@@ -1681,7 +1681,7 @@
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
   - queue:create-task:highest:adhoc-{level}/*
   - queue:create-task:highest:adhoc-t/*
-  - queue:create-task:highest:scriptworker-prov-v1/dev-{trust_domain}-mac-v3-signing
+  - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac-dev
   - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-mac-v3-signing
   - project:adhoc:releng:signing:cert:dep-signing
   - project:adhoc:releng:ship-it:server:staging
