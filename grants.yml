@@ -1679,12 +1679,13 @@
 - grant:
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
+  - queue:create-task:highest:adhoc-{level}/*
+  - queue:create-task:highest:adhoc-t/*
+  - queue:create-task:highest:scriptworker-prov-v1/dev-{trust_domain}-mac-v3-signing
+  - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-mac-v3-signing
   - project:adhoc:releng:signing:cert:dep-signing
   - project:adhoc:releng:ship-it:server:staging
   - project:adhoc:releng:ship-it:action:mark-as-shipped
-  - queue:create-task:highest:adhoc-{level}/*
-  - queue:create-task:highest:adhoc-t/*
-  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - queue:route:index.{trust_domain}.v2.{alias}.*
   - queue:route:index.{trust_domain}.v2.staging-adhoc-manifest.*
   - queue:route:index.adhoc-signing.cache.level-{level}.*
