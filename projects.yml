@@ -532,6 +532,7 @@ android-components:
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
     scriptworker: true
+    shipit: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -554,6 +555,7 @@ aki-android-components:
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
     scriptworker: true
+    shipit: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
