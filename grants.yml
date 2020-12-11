@@ -1217,6 +1217,7 @@
 - grant:
   - project:mobile:{trust_project}:releng:beetmover:action:push-to-maven
   - project:mobile:{trust_project}:releng:beetmover:bucket:maven-staging
+  - project:mobile:{trust_project}:releng:github:project:staging-android-components
   - project:mobile:{trust_project}:releng:github:project:mock
   - project:mobile:{trust_project}:releng:github:action:release
   - queue:route:index.garbage.*
