@@ -1116,7 +1116,7 @@
   to:
   - project:
       feature: beetmover-maven-phase
-      job: ["release", "pull-request"]
+      job: ["release", "pull-request", "action:release-promotion"]
   - project:
       feature: beetmover-maven-nightly-phase
       job: ["cron:nightly"]
@@ -1127,7 +1127,7 @@
   - project:
       feature: beetmover-maven-phase
       level: 3
-      job: ["release"]
+      job: ["release", "action:release-promotion"]
 
 - grant:
   - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-staging
@@ -1202,10 +1202,13 @@
 
 - grant:
   - queue:route:index.mobile.v2.{trust_project}.release.*
+  - project:mobile:{trust_project}:releng:github:project:android-components
+  - project:mobile:{trust_project}:releng:github:action:release
+  - project:mobile:{trust_project}:releng:signing:cert:release-signing
   to:
   - project:
       alias: android-components
-      job: ["release"]
+      job: ["release", "action:release-promotion"]
 
 - grant:
   - queue:route:index.mobile.v2.{trust_project}.nightly.*
