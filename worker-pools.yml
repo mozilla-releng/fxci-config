@@ -1314,7 +1314,7 @@ pools:
   config:
     image: docker-worker-hvm-builder-trusted-current
     minCapacity: 0
-    maxCapacity: 50
+    maxCapacity: 100
     scalingRatio: 0
     security: trusted
     instance_types:
@@ -1473,7 +1473,7 @@ pools:
         by-pool-group:
             ".*-3": trusted
             default: null
-    minCapacity: 1
+    minCapacity: 2
     maxCapacity: 10
     scalingRatio: 0
     instance_types:
