@@ -540,29 +540,6 @@ android-components:
   cron:
     targets: [nightly]
 
-aki-android-components:
-  repo: https://github.com/escapewindow/android-components
-  trust_domain: mobile
-  trust_project: android-components
-  repo_type: git
-  default_branch: master
-  level: 1
-  features:
-    beetmover-maven-phase: true
-    beetmover-maven-nightly-phase: true
-    github-taskgraph: true
-    mobile-roles: true
-    mobile-firebase-testing: true
-    mobile-public-code-coverage: true
-    scriptworker: true
-    shipit: true
-    taskgraph-actions: true
-    taskgraph-cron: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-  cron:
-    targets: []
-
 staging-android-components:
   repo: https://github.com/mozilla-releng/staging-android-components
   trust_domain: mobile
@@ -642,31 +619,6 @@ fenix:
       - nightly
       - nightly-on-google-play
       - screenshots
-
-fenix-jlorenzo:
-  repo: https://github.com/JohanLorenzo/fenix
-  trust_domain: mobile
-  trust_project: fenix
-  repo_type: git
-  default_branch: master
-  level: 1
-  features:
-    autophone: true
-    github-publication: true
-    github-taskgraph: true
-    mobile-roles: true
-    mobile-firebase-testing: true
-    mobile-public-code-coverage: true
-    mobile-pushapk-phase: true
-    mobile-sign-phase: true
-    scriptworker: true
-    shipit: true
-    taskgraph-actions: true
-    taskgraph-cron: true
-  cron:
-    targets: [nightly]
-    hooks_owner: jlorenzo+tc@mozilla.com
-    notify_emails: []
 
 staging-fenix:
   repo: https://github.com/mozilla-releng/staging-fenix

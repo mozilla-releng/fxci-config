@@ -1230,7 +1230,7 @@
   - queue:route:index.garbage.*
   to:
   - project:
-      alias: [aki-android-components, staging-android-components]
+      alias: staging-android-components
 
 - grant:
   - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}
@@ -1416,7 +1416,7 @@
   - queue:route:index.garbage.mobile.v2.fenix.branch.<..>.*
   to:
   - project:
-      alias: [fenix-jlorenzo, staging-fenix]
+      alias: staging-fenix
       job: ["branch:*"]
 
 - grant:
