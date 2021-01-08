@@ -30,7 +30,7 @@ docker-worker-hvm-builder-trusted-current: docker-worker-v202004241848-hvm-build
 # should be created in the `mozilla-taskcluster` AWS account.
 #
 # To build in GCP, you will need project access to the following GCP projects:
-# - -current -> `taskcluster-imaging`
+# - -current -> `taskcluster-imaging` (Note that there is a fxci-production-level1-workers project; it is unused)
 # - -trusted-current -> `fxci-production-level3-workers`
 # Relops can configure the level-3 access for you.  It will require that
 # you have a static source IP.  "Compute Engine Instance Admin (v1)" is the
@@ -239,11 +239,11 @@ monopacker-docker-worker-2020-08-05t22-29-20z-bug1676214:
     us-west-1: ami-007012d8875fd42aa
     us-west-2: ami-02dba89933a1c4558
   fxci-level1-gcp:
-    projects/fxci-production-level1-workers/global/images/docker-firefoxci-gcp-l1-googlecompute-2020-11-09t21-38-30z
+    projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2020-11-09t21-38-30z
   fxci-level3-gcp:
     projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2020-11-09t21-03-26z
   fxci-levelt-gcp:
-    projects/fxci-production-level1-workers/global/images/docker-firefoxci-gcp-l1-googlecompute-2020-11-09t21-38-30z
+    projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2020-11-09t21-38-30z
 monopacker-docker-worker-trusted-2020-08-05t22-01-11z:
   aws:
     us-east-1: ami-0b7779127f469c41b
