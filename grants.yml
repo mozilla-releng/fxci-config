@@ -2345,8 +2345,8 @@
 
 # Glean team should be able to rerun tasks for the Glean releases powered by TC
 - grant:
-  - queue:cancel-task:glean-level-*
-  - queue:rerun-task:glean-level-*
+  - hooks:trigger-hook:project-glean/in-tree-action-1-generic/*
+  - hooks:trigger-hook:project-glean/in-tree-action-3-generic/*
   to:
   - group:
     - glean_team
