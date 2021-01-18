@@ -714,6 +714,7 @@ glean:
     # across projects.
     github-taskgraph: true
     scriptworker: true
+    taskgraph-actions: true
 
 # mozilla-releng Github repositories
 k8s-autoscale:
