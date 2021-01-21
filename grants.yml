@@ -985,24 +985,28 @@
       alias: occ
       job: ["branch:master"]
 
-# - cloud-image-builder specific roles
+# - cloud-image-builder/cloud-image-deploy specific roles
 - grant:
-  - queue:route:index.project.relops.cloud-image-builder.*
-  - generic-worker:os-group:relops-3/*
-  - generic-worker:run-as-administrator:relops-3/*
-  - queue:create-task:{priority}:relops-3/*
-  - secrets:get:project/relops/image-builder/dev
-  # Allow creating tasks on test workers
-  - generic-worker:os-group:relops-test-workers/*
-  - generic-worker:run-as-administrator:relops-test-workers/*
-  - queue:create-task:{priority}:relops-test-workers/*
+  - queue:route:index.project.relops.*
+  - generic-worker:os-group:*
+  - generic-worker:run-as-administrator:*
+  - queue:create-task:{priority}:gecko-1/win*
+  - queue:create-task:{priority}:gecko-t/win*
+  - queue:create-task:{priority}:relops*
+  - secrets:get:project/relops/image-builder*
+  - secrets:get:project/relops/image-deploy*
   - queue:scheduler-id:taskcluster-github
-  - worker-manager:manage-worker-pool:relops-test-workers/*
+  - worker-manager:manage-worker-pool:gecko-1/win*
+  - worker-manager:manage-worker-pool:gecko-t/win*
+  - worker-manager:manage-worker-pool:relops*
   - worker-manager:provider:aws
   - worker-manager:provider:azure
   to:
   - project:
       alias: cloud-image-builder
+      job: ["branch:master"]
+  - project:
+      alias: cloud-image-deploy
       job: ["branch:master"]
   environment: staging
 
