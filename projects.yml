@@ -806,7 +806,7 @@ cloud-image-builder:
 cloud-image-deploy:
   repo: https://github.com/mozilla-platform-ops/cloud-image-deploy
   repo_type: git
-  default_branch: master
+  default_branch: main
   trust_domain: relops
   level: 3
 

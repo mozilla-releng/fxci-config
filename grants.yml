@@ -1007,7 +1007,7 @@
       job: ["branch:master"]
   - project:
       alias: cloud-image-deploy
-      job: ["branch:master"]
+      job: ["branch:main"]
   environment: staging
 
 # - mapper specific roles
