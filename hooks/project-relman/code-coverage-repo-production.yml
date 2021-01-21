@@ -18,11 +18,6 @@ $merge:
     owner: release-mgmt-analysis@mozilla.com
     source: https://github.com/mozilla/code-coverage
   payload:
-    artifacts:
-      public/code-coverage-report.json:
-        expires: {$fromNow: 2 weeks}
-        path: "/build/ccov-reports/all.all.json"
-        type: file
     cache:
       code-coverage-bot-production: "/cache"
     capabilities: {}
