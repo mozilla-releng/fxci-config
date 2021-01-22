@@ -1004,7 +1004,7 @@
   to:
   - project:
       alias: cloud-image-builder
-      job: ["branch:master"]
+      job: ["branch:main"]
   - project:
       alias: cloud-image-deploy
       job: ["branch:main"]
