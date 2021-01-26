@@ -23,7 +23,7 @@ payload:
     TASKCLUSTER_SECRET: project/relman/bugzilla-dashboard/runtime-production
   features:
     taskclusterProxy: true
-  image: 'mozilla/bugzilla-dashboard:backend-50de7f462054ba9abc842677f88c6fb0d117f6fb'
+  image: 'mozilla/bugzilla-dashboard:backend-d8656ac0865344ec62039589e179538226ad7b30'
   maxRunTime: 7200
 priority: lowest
 provisionerId: project-relman
