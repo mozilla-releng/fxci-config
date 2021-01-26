@@ -987,6 +987,13 @@
 
 # - cloud-image-builder/cloud-image-deploy specific roles
 - grant:
+  - auth:create-role:worker-pool:gecko-1/win*
+  - auth:create-role:worker-pool:gecko-t/win*
+  - auth:sentry:generic-worker
+  - auth:update-role:worker-pool:gecko-1/win*
+  - auth:update-role:worker-pool:gecko-t/win*
+  - auth:websocktunnel-token:cloudopsstage/*
+  - auth:websocktunnel-token:firefoxcitc/*
   - queue:route:index.project.relops.*
   - generic-worker:os-group:*
   - generic-worker:run-as-administrator:*
