@@ -1177,7 +1177,7 @@
   - project:
       feature: github-publication
       level: 1
-      job: ["release"]
+      job: ["release", "action:release-promotion"]
   - project:
       feature: github-publication
       job: ["pull-request"]
@@ -1234,7 +1234,7 @@
   - project:mobile:{trust_project}:releng:github:project:staging-android-components
   - project:mobile:{trust_project}:releng:github:project:mock
   - project:mobile:{trust_project}:releng:github:action:release
-  - queue:route:index.garbage.*
+  - queue:route:index.mobile.v2.{alias}.*
   to:
   - project:
       alias: staging-android-components
@@ -1418,13 +1418,11 @@
       alias: fenix
       job: ["action:generic", "cron:nightly", "cron:nightly-on-google-play"]
 
-# TODO Bug 1601928: Stop using the garbage namespace once the {alias}/{project} story is defined
 - grant:
-  - queue:route:index.garbage.mobile.v2.fenix.branch.<..>.*
+  - queue:route:index.mobile.v2.staging-fenix.*
   to:
   - project:
       alias: staging-fenix
-      job: ["branch:*"]
 
 - grant:
   - queue:route:checks

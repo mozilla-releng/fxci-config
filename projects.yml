@@ -640,6 +640,7 @@ staging-fenix:
     shipit: true
     taskgraph-actions: true
     taskgraph-cron: true
+    treeherder-reporting: true
   cron:
     targets: [nightly]
     hooks_owner: releng+staging-fenix@mozilla.com
