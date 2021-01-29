@@ -414,18 +414,21 @@ project/releng/scriptworker/iscript/dep:
     scopes:
         - assume:worker-type:scriptworker-prov-v1/depsigning-mac-v1
         - queue:get-artifact:releng/partner/*
+        - queue:get-artifact:private/openh264/*
         - queue:worker-id:signing-mac-v1/dep-mac-v3-signing*
 project/releng/scriptworker/iscript/dev:
     description: ''
     scopes:
         - assume:worker-type:scriptworker-prov-v1/signing-mac-dev
         - queue:get-artifact:releng/partner/*
+        - queue:get-artifact:private/openh264/*
         - queue:worker-id:signing-mac-v1/dev-mac-v3-signing*
 project/releng/scriptworker/iscript/prod:
     description: ''
     scopes:
         - assume:worker-type:scriptworker-prov-v1/signing-mac-v1
         - queue:get-artifact:releng/partner/*
+        - queue:get-artifact:private/openh264/*
         - queue:worker-id:signing-mac-v1/mac-v3-signing*
 project/releng/scriptworker/iscript/tb-dep:
     description: ''
