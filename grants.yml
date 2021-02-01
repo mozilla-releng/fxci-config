@@ -2500,6 +2500,7 @@
   - index:list-tasks:*
   - purge-cache:all-purge-requests
   - purge-cache:purge-requests:*
+  - queue:create-task:project:none
   - queue:get-artifact:public/*
   - queue:get-provisioner:*
   - queue:get-task:*
