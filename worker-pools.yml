@@ -1297,7 +1297,7 @@ pools:
     instance_types:
     # No need for a big instance, it just delegates the heavy lifting to bitrise. That said, we
     # can't use t3 instances. The AMIs aren't compatible
-    - instanceType: m5.large
+    - instanceType: m5d.large
       capacityPerInstance: 1   # capacity reduced to 1 (instead of 8), because we don't want more than 1 task for level 1
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
@@ -1386,7 +1386,7 @@ pools:
     instance_types:
     # No need for a big instance, it just delegates the heavy lifting to bitrise. That said, we
     # can't use t3 instances. The AMIs aren't compatible
-    - instanceType: m5.large
+    - instanceType: m5d.large
       capacityPerInstance: 3   # capacity reduced to 3 (instead of 8), because we don't want more than 3 tasks for level 3
       worker-config:
         capacityManagement: {diskspaceThreshold: 9000000000}
