@@ -1287,7 +1287,7 @@ pools:
 - pool_id: mobile-1/bitrise
   description: Level 1 workers to interact with bitrise.io (iOS CI)
   owner: release+tc-workers@mozilla.com
-  email_on_error: false
+  email_on_error: true
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-current
@@ -1375,7 +1375,7 @@ pools:
 - pool_id: mobile-3/bitrise
   description: Level 3 workers to interact with bitrise.io (iOS CI)
   owner: release+tc-workers@mozilla.com
-  email_on_error: false
+  email_on_error: true
   provider_id: aws
   config:
     image: docker-worker-hvm-builder-trusted-current
