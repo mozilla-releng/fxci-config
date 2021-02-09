@@ -220,7 +220,7 @@
   to:
   - project:
       feature: gecko-roles
-      trust_domain: gecko
+      trust_domain: [gecko, kaios]
       level: 2
 
 - grant:
