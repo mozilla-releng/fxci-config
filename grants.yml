@@ -543,12 +543,6 @@
       alias: oak
 
 - grant:
-  - secrets:get:project/relman/coverity
-  to:
-  - project:
-      alias: pine
-
-- grant:
   # Bug 1527818: Coverity configuration is stored in this secret
   - secrets:get:project/relman/coverity
   # Bug 1527818: Coverity license is stored in this secret
