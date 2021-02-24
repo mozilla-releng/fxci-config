@@ -1894,9 +1894,9 @@
   - hooks:trigger-hook:project-comm/in-tree-action-2-merge-automation/*
   - hooks:trigger-hook:project-comm/in-tree-action-3-merge-automation/*
   # Allow cancel
-  - queue:cancel-task:comm-level-3/*
+  - queue:cancel-task:comm-level-*
   # Allow rerun
-  - queue:rerun-task:comm-level-3/*
+  - queue:rerun-task:comm-level-*
   to:
   - groups:
     - thunderbird-releng
