@@ -73,7 +73,9 @@ mozilla-release:
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
-    targets: [ship-geckoview]
+    targets:
+      - ship-geckoview
+      - periodic-update
 mozilla-esr68:
   repo: https://hg.mozilla.org/releases/mozilla-esr68
   repo_type: hg
@@ -105,6 +107,7 @@ mozilla-esr78:
   cron:
     targets:
       - l10n-bumper
+      - periodic-update
 comm-esr68:
   repo: https://hg.mozilla.org/releases/comm-esr68
   repo_type: hg
@@ -172,6 +175,7 @@ mozilla-beta:
       - ship-geckoview
       - l10n-bumper
       - daily-releases
+      - periodic-update
 comm-beta:
   repo: https://hg.mozilla.org/releases/comm-beta
   repo_type: hg
@@ -205,6 +209,7 @@ mozilla-central:
       - nightly-desktop-win32
       - nightly-desktop-win64
       - nightly-desktop-win64-aarch64
+      - periodic-update
       - ship-geckoview
       - l10n-bumper
       - target: scriptworker-canary
