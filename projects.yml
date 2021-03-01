@@ -76,22 +76,6 @@ mozilla-release:
     targets:
       - ship-geckoview
       - periodic-update
-mozilla-esr68:
-  repo: https://hg.mozilla.org/releases/mozilla-esr68
-  repo_type: hg
-  access: scm_level_3
-  trust_domain: gecko
-  features:
-    gecko-actions: true
-    gecko-cron: true
-    gecko-roles: true
-    hg-push: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-  cron:
-    targets:
-      - l10n-bumper
-      - daily-releases
 mozilla-esr78:
   repo: https://hg.mozilla.org/releases/mozilla-esr78
   repo_type: hg
@@ -108,19 +92,6 @@ mozilla-esr78:
     targets:
       - l10n-bumper
       - periodic-update
-comm-esr68:
-  repo: https://hg.mozilla.org/releases/comm-esr68
-  repo_type: hg
-  access: scm_level_3
-  trust_domain: comm
-  parent_repo: https://hg.mozilla.org/releases/mozilla-esr68
-  features:
-    gecko-actions: true
-    gecko-cron: true
-    gecko-roles: true
-    hg-push: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
 comm-esr78:
   repo: https://hg.mozilla.org/releases/comm-esr78
   repo_type: hg
