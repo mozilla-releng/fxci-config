@@ -989,13 +989,17 @@
   - generic-worker:os-group:*
   - generic-worker:run-as-administrator:*
   - queue:create-task:{priority}:gecko-1/win*
+  - queue:create-task:{priority}:gecko-1/b-win*
   - queue:create-task:{priority}:gecko-t/win*
+  - queue:create-task:{priority}:gecko-t/t-win*
   - queue:create-task:{priority}:relops*
   - secrets:get:project/relops/image-builder*
   - secrets:get:project/relops/image-deploy*
   - queue:scheduler-id:taskcluster-github
   - worker-manager:manage-worker-pool:gecko-1/win*
+  - worker-manager:manage-worker-pool:gecko-1/b-win*
   - worker-manager:manage-worker-pool:gecko-t/win*
+  - worker-manager:manage-worker-pool:gecko-t/t-win*
   - worker-manager:manage-worker-pool:relops*
   - worker-manager:provider:aws
   - worker-manager:provider:azure
