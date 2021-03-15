@@ -835,6 +835,579 @@ project/releng/scriptworker/xpi-t-signing:
         - queue:claim-work:scriptworker-prov-v1/xpi-t-signing
         - queue:get-artifact:xpi/*
         - queue:worker-id:signing-linux-v1/depsigning-worker*
+project/releng/scriptworker/v2/addon/dev/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-addon-dev
+        - queue:worker-id:gecko-1-addon-dev/gecko-1-addon-dev-*
+project/releng/scriptworker/v2/addon/prod/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-addon
+        - queue:worker-id:gecko-1-addon/gecko-1-addon-*
+project/releng/scriptworker/v2/addon/prod/firefoxci-gecko-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-3-addon
+        - queue:worker-id:gecko-3-addon/gecko-3-addon-*
+project/releng/scriptworker/v2/balrog/dev/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-balrog-dev
+        - queue:worker-id:gecko-1-balrog-dev/gecko-1-balrog-dev-*
+project/releng/scriptworker/v2/balrog/prod/firefoxci-comm-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/comm-1-balrog
+        - queue:worker-id:comm-1-balrog/comm-1-balrog-*
+project/releng/scriptworker/v2/balrog/prod/firefoxci-comm-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/comm-3-balrog
+        - queue:worker-id:comm-3-balrog/comm-3-balrog-*
+project/releng/scriptworker/v2/balrog/prod/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-balrog
+        - queue:worker-id:gecko-1-balrog/gecko-1-balrog-*
+project/releng/scriptworker/v2/balrog/prod/firefoxci-gecko-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-3-balrog
+        - queue:worker-id:gecko-3-balrog/gecko-3-balrog-*
+project/releng/scriptworker/v2/beetmover/dev/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-beetmover-dev
+        - queue:get-artifact:releng/partner/*
+        - queue:worker-id:gecko-1-beetmover-dev/gecko-1-beetmover-dev-*
+project/releng/scriptworker/v2/beetmover/dev/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-beetmover-dev
+        - queue:worker-id:mobile-1-beetmover-dev/mobile-1-beetmover-dev-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-app-services-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/app-services-1-beetmover
+        - queue:worker-id:app-services-1-beetmover/app-services-1-beetmover-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-app-services-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/app-services-3-beetmover
+        - queue:worker-id:app-services-3-beetmover/app-services-3-beetmover-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-comm-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/comm-1-beetmover
+        - queue:worker-id:comm-1-beetmover/comm-1-beetmover-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-comm-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/comm-3-beetmover
+        - queue:worker-id:comm-3-beetmover/comm-3-beetmover-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-beetmover
+        - queue:get-artifact:releng/partner/*
+        - queue:worker-id:gecko-1-beetmover/gecko-1-beetmover-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-gecko-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-3-beetmover
+        - queue:get-artifact:releng/*
+        - queue:worker-id:gecko-3-beetmover/gecko-3-beetmover-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-glean-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/glean-1-beetmover
+        - queue:worker-id:glean-1-beetmover/glean-1-beetmover-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-glean-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/glean-3-beetmover
+        - queue:worker-id:glean-3-beetmover/glean-3-beetmover-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-beetmover
+        - queue:worker-id:mobile-1-beetmover/mobile-1-beetmover-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-mobile-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-3-beetmover
+        - queue:worker-id:mobile-3-beetmover/mobile-3-beetmover-*
+project/releng/scriptworker/v2/bouncer/dev/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-bouncer-dev
+        - queue:worker-id:gecko-1-bouncer-dev/gecko-1-bouncer-dev-*
+project/releng/scriptworker/v2/bouncer/prod/firefoxci-comm-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/comm-1-bouncer
+        - queue:worker-id:comm-1-bouncer/comm-1-bouncer-*
+project/releng/scriptworker/v2/bouncer/prod/firefoxci-comm-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/comm-3-bouncer
+        - queue:worker-id:comm-3-bouncer/comm-3-bouncer-*
+project/releng/scriptworker/v2/bouncer/prod/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-bouncer
+        - queue:worker-id:gecko-1-bouncer/gecko-1-bouncer-*
+project/releng/scriptworker/v2/bouncer/prod/firefoxci-gecko-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-3-bouncer
+        - queue:worker-id:gecko-3-bouncer/gecko-3-bouncer-*
+project/releng/scriptworker/v2/cloudops-canary:
+    description: Allows cloudops' jenkins to trigger scriptworker canary tasks
+    scopes:
+        - hooks:trigger-hook:project-releng/cron-task-mozilla-central/scriptworker-canary
+project/releng/scriptworker/v2/github/dev/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-github-dev
+        - queue:worker-id:mobile-1-github-dev/mobile-1-github-dev-*
+project/releng/scriptworker/v2/github/prod/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-github
+        - queue:worker-id:mobile-1-github/mobile-1-github-*
+project/releng/scriptworker/v2/github/prod/firefoxci-mobile-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-3-github
+        - queue:worker-id:mobile-3-github/mobile-3-github-*
+project/releng/scriptworker/v2/iscript/dep:
+    description: ''
+    scopes:
+        - assume:worker-type:scriptworker-prov-v1/depsigning-mac-v1
+        - queue:get-artifact:releng/partner/*
+        - queue:get-artifact:private/openh264/*
+        - queue:worker-id:signing-mac-v1/dep-mac-v3-signing*
+project/releng/scriptworker/v2/iscript/dev:
+    description: ''
+    scopes:
+        - assume:worker-type:scriptworker-prov-v1/signing-mac-dev
+        - queue:get-artifact:releng/partner/*
+        - queue:get-artifact:private/openh264/*
+        - queue:worker-id:signing-mac-v1/dev-mac-v3-signing*
+project/releng/scriptworker/v2/iscript/prod:
+    description: ''
+    scopes:
+        - assume:worker-type:scriptworker-prov-v1/signing-mac-v1
+        - queue:get-artifact:releng/partner/*
+        - queue:get-artifact:private/openh264/*
+        - queue:worker-id:signing-mac-v1/mac-v3-signing*
+project/releng/scriptworker/v2/iscript/tb-dep:
+    description: ''
+    scopes:
+        - assume:worker-type:scriptworker-prov-v1/tb-depsigning-mac-v1
+        - queue:worker-id:signing-mac-v1/dep-mac-v3-signing*
+project/releng/scriptworker/v2/iscript/tb-prod:
+    description: ''
+    scopes:
+        - assume:worker-type:scriptworker-prov-v1/tb-signing-mac-v1
+        - queue:worker-id:signing-mac-v1/tb-mac-v3-signing*
+project/releng/scriptworker/v2/mpd001-3-signing:
+    description: mpd001 signing
+    scopes:
+        - project:mpd001:releng:signing:*
+        - queue:claim-work:scriptworker-k8s/mpd001-1-signing
+        - queue:claim-work:scriptworker-k8s/mpd001-3-signing
+        - queue:claim-work:scriptworker-prov-v1/mpd001-1-signing
+        - queue:claim-work:scriptworker-prov-v1/mpd001-3-signing
+        - queue:get-artifact:project/mpd001/*
+        - queue:poll-task-urls:scriptworker-prov-v1/mpd001-1-signing
+        - queue:poll-task-urls:scriptworker-prov-v1/mpd001-3-signing
+        - queue:worker-id:mpd001-1-signing/mpd001-1-signing
+        - queue:worker-id:mpd001-1-signing/signing-linux-dev1
+        - queue:worker-id:mpd001-3-signing/mpd001-3-signing
+        - queue:worker-id:mpd001-3-signing/signing-linux*
+project/releng/scriptworker/v2/notarization-poller/prod:
+    description: Mac notarization poller client.
+    scopes:
+        - assume:worker-type:scriptworker-prov-v1/mac-notarization-poller
+        - queue:get-artifact:releng/partner/*
+project/releng/scriptworker/v2/notarization-poller/tb-prod:
+    description: ''
+    scopes:
+        - assume:worker-type:scriptworker-prov-v1/tb-mac-notarization-poller
+        - queue:get-artifact:releng/partner/*
+project/releng/scriptworker/v2/pushapk/dev/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-pushapk-dev
+        - queue:worker-id:gecko-1-pushapk-dev/gecko-1-pushapk-dev-*
+project/releng/scriptworker/v2/pushapk/prod/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-pushapk
+        - queue:worker-id:gecko-1-pushapk/gecko-1-pushapk-*
+project/releng/scriptworker/v2/pushapk/prod/firefoxci-gecko-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-3-pushapk
+        - queue:worker-id:gecko-3-pushapk/gecko-3-pushapk-*
+project/releng/scriptworker/v2/pushapk/prod/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-pushapk
+        - queue:worker-id:mobile-1-pushapk/mobile-1-pushapk-*
+project/releng/scriptworker/v2/pushapk/prod/firefoxci-mobile-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-3-pushapk
+        - queue:worker-id:mobile-3-pushapk/mobile-3-pushapk-*
+project/releng/scriptworker/v2/pushflatpak/dev/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-pushflatpak-dev
+        - queue:worker-id:gecko-1-pushflatpak-dev/gecko-1-pushflatpak-dev-*
+project/releng/scriptworker/v2/pushflatpak/prod/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-pushflatpak
+        - queue:worker-id:gecko-1-pushflatpak/gecko-1-pushflatpak-*
+project/releng/scriptworker/v2/pushflatpak/prod/firefoxci-gecko-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-3-pushflatpak
+        - queue:worker-id:gecko-3-pushflatpak/gecko-3-pushflatpak-*
+project/releng/scriptworker/v2/pushsnap/dev/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-pushsnap-dev
+        - queue:worker-id:gecko-1-pushsnap-dev/gecko-1-pushsnap-dev-*
+project/releng/scriptworker/v2/pushsnap/prod/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-pushsnap
+        - queue:worker-id:gecko-1-pushsnap/gecko-1-pushsnap-*
+project/releng/scriptworker/v2/pushsnap/prod/firefoxci-gecko-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-3-pushsnap
+        - queue:worker-id:gecko-3-pushsnap/gecko-3-pushsnap-*
+project/releng/scriptworker/v2/shipit/dev/firefoxci-adhoc-1:
+    description: Adhoc level 1 shipit scriptworker
+    scopes:
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/adhoc-1-shipit-dev
+        - queue:worker-id:adhoc-1-shipit-dev/adhoc-1-shipit-dev-*
+project/releng/scriptworker/v2/shipit/dev/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - project:releng:services/shipit_api/add_release/devedition
+        - project:releng:services/shipit_api/add_release/fennec
+        - project:releng:services/shipit_api/add_release/firefox
+        - project:releng:services/shipit_api/dev/add_release/devedition
+        - project:releng:services/shipit_api/dev/add_release/firefox
+        - project:releng:services/shipit_api/dev/schedule_phase/devedition/ship_devedition
+        - project:releng:services/shipit_api/dev/schedule_phase/firefox/ship_firefox
+        - project:releng:services/shipit_api/rebuild_product_details
+        - project:releng:services/shipit_api/schedule_phase/devedition/ship_devedition
+        - project:releng:services/shipit_api/schedule_phase/fennec/ship_fennec_beta
+        - project:releng:services/shipit_api/schedule_phase/firefox/ship_firefox
+        - project:releng:services/shipit_api/staging/add_release/devedition
+        - project:releng:services/shipit_api/staging/add_release/firefox
+        - project:releng:services/shipit_api/staging/schedule_phase/devedition/ship_devedition
+        - project:releng:services/shipit_api/staging/schedule_phase/firefox/ship_firefox
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/gecko-1-shipit-dev
+        - queue:worker-id:gecko-1-shipit-dev/gecko-1-shipit-dev-*
+project/releng/scriptworker/v2/shipit/dev/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - project:releng:services/shipit_api/rebuild_product_details
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/mobile-1-shipit-dev
+        - queue:worker-id:mobile-1-shipit-dev/mobile-1-shipit-dev-*
+project/releng/scriptworker/v2/shipit/dev/firefoxci-xpi-1:
+    description: XPI dev shipit scriptworker
+    scopes:
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/xpi-1-shipit-dev
+        - queue:worker-id:xpi-1-shipit-dev/xpi-1-shipit-dev-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-adhoc-1:
+    description: Adhoc level 1 shipit scriptworker
+    scopes:
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/adhoc-1-shipit
+        - queue:worker-id:adhoc-1-shipit/adhoc-1-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-adhoc-3:
+    description: Adhoc level 3 shipit scriptworker
+    scopes:
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/adhoc-3-shipit
+        - queue:worker-id:adhoc-3-shipit/adhoc-3-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-comm-1:
+    description: ''
+    scopes:
+        - project:releng:services/shipit_api/rebuild_product_details
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/comm-1-shipit
+        - queue:worker-id:comm-1-shipit/comm-1-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-comm-3:
+    description: ''
+    scopes:
+        - project:releng:services/shipit_api/rebuild_product_details
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/comm-3-shipit
+        - queue:worker-id:comm-3-shipit/comm-3-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - project:releng:services/shipit_api/add_release/devedition
+        - project:releng:services/shipit_api/add_release/fennec
+        - project:releng:services/shipit_api/add_release/firefox
+        - project:releng:services/shipit_api/dev/add_release/devedition
+        - project:releng:services/shipit_api/dev/add_release/firefox
+        - project:releng:services/shipit_api/dev/schedule_phase/devedition/ship_devedition
+        - project:releng:services/shipit_api/dev/schedule_phase/firefox/ship_firefox
+        - project:releng:services/shipit_api/rebuild_product_details
+        - project:releng:services/shipit_api/schedule_phase/devedition/ship_devedition
+        - project:releng:services/shipit_api/schedule_phase/fennec/ship_fennec_beta
+        - project:releng:services/shipit_api/schedule_phase/firefox/ship_firefox
+        - project:releng:services/shipit_api/staging/add_release/devedition
+        - project:releng:services/shipit_api/staging/add_release/firefox
+        - project:releng:services/shipit_api/staging/schedule_phase/devedition/ship_devedition
+        - project:releng:services/shipit_api/staging/schedule_phase/firefox/ship_firefox
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/gecko-1-shipit
+        - queue:worker-id:gecko-1-shipit/gecko-1-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-3:
+    description: ''
+    scopes:
+        - project:releng:services/shipit_api/add_release/devedition
+        - project:releng:services/shipit_api/add_release/fennec
+        - project:releng:services/shipit_api/add_release/firefox
+        - project:releng:services/shipit_api/production/add_release/devedition
+        - project:releng:services/shipit_api/production/add_release/firefox
+        - project:releng:services/shipit_api/production/schedule_phase/devedition/ship_devedition
+        - project:releng:services/shipit_api/production/schedule_phase/firefox/ship_firefox
+        - project:releng:services/shipit_api/rebuild_product_details
+        - project:releng:services/shipit_api/schedule_phase/devedition/ship_devedition
+        - project:releng:services/shipit_api/schedule_phase/fennec/ship_fennec_beta
+        - project:releng:services/shipit_api/schedule_phase/firefox/ship_firefox
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/gecko-3-shipit
+        - queue:worker-id:gecko-3-shipit/gecko-3-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - project:releng:services/shipit_api/rebuild_product_details
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/mobile-1-shipit
+        - queue:worker-id:mobile-1-shipit/mobile-1-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-mobile-3:
+    description: ''
+    scopes:
+        - project:releng:services/shipit_api/rebuild_product_details
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/mobile-3-shipit
+        - queue:worker-id:mobile-3-shipit/mobile-3-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-xpi-1:
+    description: XPI level 1 shipit scriptworker
+    scopes:
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/xpi-1-shipit
+        - queue:worker-id:xpi-1-shipit/xpi-1-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-xpi-3:
+    description: XPI level 3 shipit scriptworker
+    scopes:
+        - project:releng:services/shipit_api/update_release_status
+        - queue:claim-work:scriptworker-k8s/xpi-3-shipit
+        - queue:worker-id:xpi-3-shipit/xpi-3-shipit-*
+project/releng/scriptworker/v2/signing/dev/firefoxci-adhoc-t:
+    description: Adhoc signing dev signing scriptworker client
+    scopes:
+        - queue:claim-work:scriptworker-k8s/adhoc-t-signing-dev
+        - queue:get-artifact:releng/adhoc/*
+        - queue:worker-id:adhoc-t-signing-dev/adhoc-t-signing-dev-*
+        - queue:get-artifact:private/openh264/*
+project/releng/scriptworker/v2/mac-signing/dev/firefoxci-adhoc-t:
+    description: Adhoc iscript dev scriptworker client
+    scopes:
+        - queue:claim-work:scriptworker-prov-v1/adhoc-signing-mac-dev
+        - queue:get-artifact:releng/adhoc/*
+        - queue:get-artifact:private/openh264/*
+        - queue:worker-id:adhoc-signing-mac-v1/dev-adhoc-mac-v3-signing*
+project/releng/scriptworker/v2/signing/dev/firefoxci-gecko-t:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-t-signing-dev
+        - queue:worker-id:gecko-t-signing-dev/gecko-t-signing-dev-*
+        - queue:get-artifact:releng/partner/*
+        - queue:get-artifact:private/openh264/*
+project/releng/scriptworker/v2/signing/dev/firefoxci-mpd001-t:
+    description: dev mpd001 signing
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mpd001-t-signing-dev
+        - queue:get-artifact:project/mpd001/*
+        - queue:worker-id:mpd001-t-signing-dev/mpd001-t-signing-dev-*
+project/releng/scriptworker/v2/signing/dev/firefoxci-xpi-t:
+    description: dev xpi signing
+    scopes:
+        - queue:claim-work:scriptworker-k8s/xpi-t-signing-dev
+        - queue:get-artifact:xpi/*
+        - queue:worker-id:xpi-t-signing-dev/xpi-t-signing-dev-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-adhoc-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/adhoc-3-signing
+        - queue:get-artifact:releng/adhoc/*
+        - queue:worker-id:adhoc-3-signing/adhoc-3-signing-*
+        - queue:get-artifact:private/openh264/*
+project/releng/scriptworker/v2/signing/prod/firefoxci-adhoc-t:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/adhoc-t-signing
+        - queue:get-artifact:releng/adhoc/*
+        - queue:worker-id:adhoc-t-signing/adhoc-t-signing-*
+        - queue:get-artifact:private/openh264/*
+project/releng/scriptworker/v2/mac-signing/prod/firefoxci-adhoc-3:
+    description: Adhoc iscript production scriptworker client
+    scopes:
+        - queue:claim-work:scriptworker-prov-v1/adhoc-3-signing-mac
+        - queue:get-artifact:releng/adhoc/*
+        - queue:get-artifact:private/openh264/*
+        - queue:worker-id:adhoc-signing-mac-v1/adhoc-mac-v3-signing*
+project/releng/scriptworker/v2/signing/prod/firefoxci-app-services-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/app-services-3-signing
+        - queue:worker-id:app-services-3-signing/app-services-3-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-app-services-t:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/app-services-t-signing
+        - queue:worker-id:app-services-t-signing/app-services-t-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-comm-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/comm-3-signing
+        - queue:worker-id:comm-3-signing/comm-3-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-comm-t:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/comm-t-signing
+        - queue:worker-id:comm-t-signing/comm-t-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-gecko-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-3-signing
+        - queue:get-artifact:releng/*
+        - queue:worker-id:gecko-3-signing/gecko-3-signing-*
+        - queue:get-artifact:private/openh264/*
+project/releng/scriptworker/v2/signing/prod/firefoxci-gecko-t:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-t-signing
+        - queue:get-artifact:releng/partner/*
+        - queue:worker-id:gecko-t-signing/gecko-t-signing-*
+        - queue:get-artifact:private/openh264/*
+project/releng/scriptworker/v2/signing/prod/firefoxci-glean-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/glean-3-signing
+        - queue:worker-id:glean-3-signing/glean-3-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-glean-t:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/glean-t-signing
+        - queue:worker-id:glean-t-signing/glean-t-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-mobile-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-3-signing
+        - queue:worker-id:mobile-3-signing/mobile-3-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-mobile-t:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-t-signing
+        - queue:worker-id:mobile-t-signing/mobile-t-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-mpd001-3:
+    description: prod mpd001 signing
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mpd001-3-signing
+        - queue:get-artifact:project/mpd001/*
+        - queue:worker-id:mpd001-3-signing/mpd001-3-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-mpd001-t:
+    description: mpd001 dep signing
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mpd001-t-signing
+        - queue:get-artifact:project/mpd001/*
+        - queue:worker-id:mpd001-t-signing/mpd001-t-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-xpi-3:
+    description: production xpi signing
+    scopes:
+        - queue:claim-work:scriptworker-k8s/xpi-3-signing
+        - queue:get-artifact:xpi/*
+        - queue:worker-id:xpi-3-signing/xpi-3-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-xpi-t:
+    description: dep xpi signing
+    scopes:
+        - queue:claim-work:scriptworker-k8s/xpi-t-signing
+        - queue:get-artifact:xpi/*
+        - queue:worker-id:xpi-t-signing/xpi-t-signing-*
+project/releng/scriptworker/v2/tree/dev/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-tree-dev
+        - queue:worker-id:gecko-1-tree-dev/gecko-1-tree-dev-*
+project/releng/scriptworker/v2/tree/dev/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-tree-dev
+        - queue:worker-id:mobile-1-tree-dev/mobile-1-tree-dev-*
+project/releng/scriptworker/v2/tree/prod/firefoxci-comm-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/comm-1-tree
+        - queue:worker-id:comm-1-tree/comm-1-tree-*
+project/releng/scriptworker/v2/tree/prod/firefoxci-comm-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/comm-3-tree
+        - queue:worker-id:comm-3-tree/comm-3-tree-*
+project/releng/scriptworker/v2/tree/prod/firefoxci-gecko-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-1-tree
+        - queue:worker-id:gecko-1-tree/gecko-1-tree-*
+project/releng/scriptworker/v2/tree/prod/firefoxci-mobile-1:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-1-tree
+        - queue:worker-id:mobile-1-tree/mobile-1-tree-*
+project/releng/scriptworker/v2/tree/prod/firefoxci-gecko-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/gecko-3-tree
+        - queue:worker-id:gecko-3-tree/gecko-3-tree-*
+project/releng/scriptworker/v2/tree/prod/firefoxci-mobile-3:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mobile-3-tree
+        - queue:worker-id:mobile-3-tree/mobile-3-tree-*
+project/releng/scriptworker/v2/xpi-3-signing:
+    description: ''
+    scopes:
+        - queue:claim-work:scriptworker-prov-v1/xpi-3-signing
+        - queue:get-artifact:xpi/*
+        - queue:worker-id:signing-linux-v1/signing-linux-*
+project/releng/scriptworker/v2/xpi-t-signing:
+    description: ''
+    scopes:
+        - project:xpi:releng:signing:cert:dep-signing
+        - queue:claim-work:scriptworker-prov-v1/xpi-t-signing
+        - queue:get-artifact:xpi/*
+        - queue:worker-id:signing-linux-v1/depsigning-worker*
 project/releng/services/tooltool/bug1604706:
     description: tooltool permissions for occ
     scopes:
