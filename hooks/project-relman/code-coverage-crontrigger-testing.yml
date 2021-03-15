@@ -36,5 +36,5 @@ retries: 5
 schedulerId: relman
 scopes:
 - secrets:get:project/relman/code-coverage/runtime-testing
-- index:insert-task:project.relman.code-coverage.testing.crontesting.*
+- index:insert-task:project.relman.code-coverage.testing.crontrigger.*
 - hooks:trigger-hook:project-relman/code-coverage-repo-testing
