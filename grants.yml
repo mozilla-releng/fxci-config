@@ -2241,6 +2241,7 @@
   - hooks:trigger-hook:project-relman/code-coverage-cron-production
   - hooks:trigger-hook:project-relman/code-coverage-repo-production
   - hooks:trigger-hook:project-relman/code-coverage-crontrigger-testing
+  - hooks:trigger-hook:project-relman/code-coverage-crontrigger-production
   - secrets:get:project/relman/code-coverage/*
   - secrets:set:project/relman/code-coverage/*
   - queue:create-task:lowest:code-coverage/bot

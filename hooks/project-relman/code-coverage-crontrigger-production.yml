@@ -6,25 +6,14 @@ provisionerId: code-coverage
 workerType: bot
 metadata:
   description: ''
-  name: Code Coverage aggregation task - cron (production)
+  name: Code Coverage - cron trigger task (production)
   owner: release-mgmt-analysis@mozilla.com
   source: https://github.com/mozilla/code-coverage
 payload:
   artifacts:
-    public/chunk_mapping.tar.xz:
-      path: "/chunk_mapping.tar.xz"
+    public/triggered_revisions.zst:
+      path: "/triggered_revisions.zst"
       type: file
-    public/per_chunk_mapping.tar.xz:
-      path: "/per_chunk_mapping.tar.xz"
-      type: file
-    public/zero_coverage_report.json:
-      path: "/zero_coverage_report.json"
-      type: file
-    public/commit_coverage.json.zst:
-      path: "/commit_coverage.json.zst"
-      type: file
-  cache:
-    code-coverage-bot-production: "/cache"
   capabilities: {}
   command:
   - code-coverage-cron
@@ -47,5 +36,5 @@ retries: 5
 schedulerId: relman
 scopes:
 - secrets:get:project/relman/code-coverage/runtime-production
-- docker-worker:cache:code-coverage-bot-production
-- index:insert-task:project.relman.code-coverage.production.cron.*
+- index:insert-task:project.relman.code-coverage.production.crontrigger.*
+- hooks:trigger-hook:project-relman/code-coverage-repo-production

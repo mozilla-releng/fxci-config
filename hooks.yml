@@ -46,10 +46,8 @@ project-relman/code-coverage-cron-production:
   schedule:
     - "0 0 12 * * *"
   scopes:
-    - hooks:trigger-hook:project-relman/code-coverage-repo-production
     - assume:project:taskcluster:mozilla-github-repository
     - docker-worker:cache:code-coverage-bot-production
-    - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.production.cron.*
     - notify:email:*
     - queue:create-task:highest:code-coverage/bot
@@ -78,6 +76,27 @@ project-relman/code-coverage-cron-testing:
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
   template_file: hooks/project-relman/code-coverage-cron-testing.yml
+  trigger_schema:
+    type: object
+    additionalProperties: true
+
+project-relman/code-coverage-crontrigger-production:
+  name: Code coverage hook (production)
+  description: Automatically trigger code coverage ingestion hook
+  owner: release-mgmt-analysis@mozilla.com
+  email_on_error: true
+  schedule:
+    - "0 */30 * * * *"
+  scopes:
+    - hooks:trigger-hook:project-relman/code-coverage-repo-production
+    - assume:project:taskcluster:mozilla-github-repository
+    - index:insert-task:project.relman.code-coverage.production.crontrigger.*
+    - notify:email:*
+    - queue:create-task:highest:code-coverage/bot
+    - queue:route:notify.email.*
+    - queue:scheduler-id:relman
+    - secrets:get:project/relman/code-coverage/runtime-production
+  template_file: hooks/project-relman/code-coverage-crontrigger-production.yml
   trigger_schema:
     type: object
     additionalProperties: true
