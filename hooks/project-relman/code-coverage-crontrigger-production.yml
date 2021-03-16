@@ -16,7 +16,7 @@ payload:
       type: file
   capabilities: {}
   command:
-  - code-coverage-cron
+  - code-coverage-crontrigger
   - "--taskcluster-secret"
   - project/relman/code-coverage/runtime-production
   - "--cache-root"
