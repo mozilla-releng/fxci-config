@@ -796,8 +796,6 @@ android-l10n-tooling:
             routing_key_pattern: primary.mozilla-mobile.firefox-tv
           - exchange: exchange/taskcluster-github/v1/push
             routing_key_pattern: primary.mozilla-lockwise.lockwise-android
-          - exchange: exchange/taskcluster-github/v1/push
-            routing_key_pattern: primary.MozillaReality.FirefoxReality
       - target: update-projects
         bindings: []
 
