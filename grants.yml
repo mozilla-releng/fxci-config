@@ -543,6 +543,8 @@
   - secrets:get:project/webrender-ci/wrupdater-github-token
   # Bug 1604686: Token for gfx github sync.
   - secrets:get:gecko/gfx-github-sync/token
+  # Bug 1698511: Sentry API key is stored in this secret
+  - secrets:get:project/engwf/gecko/3/tokens
   to:
   - project:
       alias: mozilla-central
