@@ -553,6 +553,8 @@
   # Bug 1599870
   - secrets:get:project/civet/github-deploy-key
   - queue:get-artifact:project/civet/*
+  # Temporary scope for testing Bug 1698511
+  - secrets:get:garbage/mhentges
   to:
   - project:
       alias:
