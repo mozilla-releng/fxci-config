@@ -543,11 +543,24 @@
   - secrets:get:project/webrender-ci/wrupdater-github-token
   # Bug 1604686: Token for gfx github sync.
   - secrets:get:gecko/gfx-github-sync/token
-  # Bug 1698511: Sentry API key is stored in this secret
-  - secrets:get:project/engwf/gecko/3/tokens
   to:
   - project:
       alias: mozilla-central
+
+- grant:
+  # Bug 1698511: Sentry API key is stored in this secret
+  - secrets:get:project/engwf/gecko/{level}/tokens
+  to:
+  - project:
+      alias: ["mozilla-central", "try"]
+
+- grant:
+  # Grant engwf team access to secrets and artifacts for engwf
+  - secrets:get:project/engwf/*
+  - secrets:set:project/engwf/*
+  to:
+  - groups:
+    - engworkflow
 
 - grant:
   # Bug 1599870
@@ -2469,6 +2482,11 @@
   to:
   - roles:
     - mozilla-group:team_mozillaonline
+- grant:
+  - assume:project:releng:ci-group:engworkflow
+  to:
+  - roles:
+    - mozillians-group:engworkflow
 
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1659596
 - grant:
