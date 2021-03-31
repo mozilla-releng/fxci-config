@@ -533,6 +533,16 @@
   - project:
       alias: ["oak", "pine"]
 
+# Bug 1702054: Scopes to trigger cron hooks on pine
+- grant:
+  - hooks:trigger-hook:project-releng/cron-task-projects-pine/*
+  to:
+  - roles:
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bgrinstead
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|dtownsend
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|erose
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mkaply
+
 - grant:
   # Bug 1527818: Coverity configuration is stored in this secret
   - secrets:get:project/relman/coverity
