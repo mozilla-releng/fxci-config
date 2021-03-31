@@ -531,7 +531,7 @@
   - project:releng:balrog:server:nightly
   to:
   - project:
-      alias: oak
+      alias: ["oak", "pine"]
 
 - grant:
   # Bug 1527818: Coverity configuration is stored in this secret
