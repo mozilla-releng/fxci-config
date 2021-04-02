@@ -1663,7 +1663,7 @@
   - project:
       alias:
       - xpi-manifest
-      - test-xpi-manifest
+      - staging-xpi-manifest
       # Only enable this for master and actions.
       job: ["branch:master", "action:*"]
 
