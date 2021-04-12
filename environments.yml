@@ -75,12 +75,11 @@ firefoxci:
                         "eu-central-1": ["sg-8b3d0de0"]
                 windows-untrusted:
                     # livelog-direct - gecko-workers
-                    # rdp-only - gecko-workers
                     by-region:
-                        "us-east-1": ["sg-0dc9337d", "sg-27d72d57"]
-                        "us-west-1": ["sg-5be3283d", "sg-fee02b98"]
-                        "us-west-2": ["sg-09d6be73", "sg-3bd7bf41"]
-                        "eu-central-1": ["sg-c03e0eab", "sg-e43d0d8f"]
+                        "us-east-1": ["sg-0dc9337d"]
+                        "us-west-1": ["sg-5be3283d"]
+                        "us-west-2": ["sg-09d6be73"]
+                        "eu-central-1": ["sg-c03e0eab"]
                 trusted:
                     # no-inbound - gecko-workers
                     by-region:

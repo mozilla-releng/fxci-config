@@ -266,8 +266,6 @@
 
 # moz-tree:level:1:gecko
 - grant:
-  - generic-worker:allow-rdp:gecko-1/b-win*
-  - generic-worker:allow-rdp:gecko-t/t-win*
   - generic-worker:os-group:gecko-t/t-win7-32/Administrators
   - generic-worker:os-group:gecko-t/t-win7-32-beta/Administrators
   - generic-worker:os-group:gecko-t/t-win10-64/Administrators
@@ -307,6 +305,53 @@
       feature: gecko-roles
       level: [1, 2, 3]
       trust_domain: gecko
+
+# moz-tree:level:1:gecko (staging deployment)
+- grant:
+  - generic-worker:allow-rdp:gecko-1/b-win*
+  - generic-worker:allow-rdp:gecko-t/t-win*
+  - generic-worker:allow-rdp:gecko-1/win*
+  - generic-worker:allow-rdp:gecko-t/win*
+  - generic-worker:os-group:gecko-t/t-win7-32/Administrators
+  - generic-worker:os-group:gecko-t/t-win7-32-beta/Administrators
+  - generic-worker:os-group:gecko-t/t-win10-64/Administrators
+  - generic-worker:os-group:gecko-t/t-win10-64-alpha/Administrators
+  - generic-worker:os-group:gecko-t/t-win10-64-beta/Administrators
+  - generic-worker:run-as-administrator:gecko-t/t-win10-64
+  - generic-worker:run-as-administrator:gecko-t/t-win10-64-alpha
+  - generic-worker:run-as-administrator:gecko-t/t-win10-64-beta
+  - project:releng:addons.mozilla.org:server:staging
+  - project:releng:balrog:action:*
+  - project:releng:balrog:channel:*
+  - project:releng:balrog:server:dep
+  - project:releng:beetmover:action:*
+  - project:releng:beetmover:bucket:dep
+  - project:releng:beetmover:bucket:dep-partner
+  - project:releng:beetmover:bucket:maven-staging
+  - project:releng:bouncer:action:*
+  - project:releng:bouncer:server:staging
+  - project:releng:bouncer:server:staging-nazgul
+  - project:releng:flathub:firefox:mock
+  - project:releng:ship-it:action:create-new-release
+  - project:releng:ship-it:action:mark-as-shipped
+  - project:releng:ship-it:action:mark-as-started
+  - project:releng:ship-it:server:staging
+  - project:releng:signing:cert:dep-signing
+  - project:releng:signing:format:*
+  - project:releng:snapcraft:firefox:mock
+  - project:releng:treescript:action:*
+  - project:releng:treescript:action:tagging
+  - queue:create-task:medium:proj-autophone/*
+  - queue:create-task:low:bitbar/gecko-t-*
+  - queue:create-task:low:scriptworker-prov-v1/signing-mac-dev
+  - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1
+  - queue:get-artifact:releng/partner/*
+  to:
+  - projects:
+      feature: gecko-roles
+      level: [1, 2, 3]
+      trust_domain: gecko
+  environments: staging
 
 # moz-tree:level:1:comm
 - grant:
