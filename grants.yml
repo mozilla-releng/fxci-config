@@ -586,7 +586,8 @@
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bgrinstead
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|dtownsend
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|erose
-    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mkaply
+    # mkaply
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mozilla234
 
 - grant:
   # Bug 1527818: Coverity configuration is stored in this secret
