@@ -1694,6 +1694,8 @@
 
 - grant:
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+  - project:xpi:releng:github:project:staging-xpi-manifest
+  - project:xpi:releng:github:action:release
   - project:xpi:releng:signing:cert:dep-signing
   - project:xpi:releng:signing:cert:release-signing
   - project:xpi:releng:ship-it:server:staging
