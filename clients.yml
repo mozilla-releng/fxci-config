@@ -1011,3 +1011,13 @@ project/relops/image-builder/purge:
     scopes:
         - assume:hook-id:project-relops/cron-task-purge-azure-resources
         - hooks:modify-hook:project-relops/cron-task-purge-azure-resources
+
+project/perf-sheriffs/treeherder/bot:
+    description: Performance Sheriffing backfill bot
+    scopes:
+        - hooks:trigger-hook:project-gecko/in-tree-action-1-backfill/*
+        - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
+        - hooks:trigger-hook:project-gecko/in-tree-action-2-backfill/*
+        - hooks:trigger-hook:project-gecko/in-tree-action-2-generic/*
+        - hooks:trigger-hook:project-gecko/in-tree-action-3-backfill/*
+        - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
