@@ -1486,6 +1486,7 @@
 
 - grant:
   - queue:route:index.mobile.v2.staging-fenix.*
+  - queue:route:tc-treeherder.v2.fenix-pr.*
   to:
   - project:
       alias: staging-fenix
