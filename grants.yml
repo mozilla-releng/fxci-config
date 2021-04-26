@@ -1431,7 +1431,7 @@
       # section which addresses the RelEngers forks
       level: 1
       feature: shipit
-      job: ["release"]
+      job: ["release", "pull-request"]
   - project:
       level: 1
       feature: ["shipit", "taskgraph-actions"]
