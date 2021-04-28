@@ -619,7 +619,7 @@ focus-android:
   trust_domain: mobile
   trust_project: focus
   repo_type: git
-  default_branch: master
+  default_branch: main
   level: 3
   features:
     mobile-roles: true

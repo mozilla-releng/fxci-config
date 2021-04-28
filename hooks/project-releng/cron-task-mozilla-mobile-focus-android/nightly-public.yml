@@ -10,7 +10,7 @@ payload:
   command:
   - "/bin/bash"
   - "-cx"
-  - git fetch origin && git reset --hard origin/master && pip install json-e GitPython
+  - git fetch origin && git reset --hard origin/main && pip install json-e GitPython
     PyYaml && python tools/taskcluster/schedule-nightly-graph.py
   env:
     CRON_TASK_ID: "${taskId}"
