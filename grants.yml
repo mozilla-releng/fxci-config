@@ -1742,6 +1742,7 @@
     # easily creating new repos for xpi source. Let's automatically
     # give them level 1 scopes for master, PRs, and other branches.
     - repo:github.com/mozilla-extensions/*
+    - repo:github.com/mozilla-releng/staging-xpi-*
 
 - grant:
   - queue:get-artifact:xpi/*
