@@ -1736,7 +1736,7 @@
   to:
   - project:
       feature: xpi-roles
-      job: ["pull-request", "branch:*", "cron:*", "action:*"]
+      job: ["pull-request", "branch:*", "cron:*", "action:*", "tag:*"]
   - roles:
     # The mozilla-extensions github organization is designed to allow for
     # easily creating new repos for xpi source. Let's automatically
