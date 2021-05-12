@@ -30,6 +30,7 @@
 #   - `mobile-roles` -- this repository should have https://github.com/mozilla-mobile roles assigned (for users, actions, cron, etc.)
 #   - `xpi-roles` -- this repository should have xpi roles assigned (for users, actions, cron, etc.)
 #   - `adhoc-roles` -- this repository should have adhoc roles assigned (for users, actions, cron, etc.)
+#   - `beetmover-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `beetmover-maven-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `beetmover-maven-nightly-phase` -- this https://github.com/mozilla-mobile repository should have beetmover nightly production related scopes associated
 #   - `mobile-firebase-testing` -- this https://github.com/mozilla-mobile repository has end-to-end testing involving devices hosted at Google's Firebase
@@ -567,6 +568,7 @@ fenix:
   level: 3
   features:
     autophone: true
+    beetmover-phase: true
     github-taskgraph: true
     github-publication: true
     mobile-roles: true
