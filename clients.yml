@@ -413,16 +413,19 @@ project/releng/scriptworker/v2/github/dev/firefoxci-xpi-1:
     description: ''
     scopes:
         - queue:claim-work:scriptworker-k8s/xpi-1-github-dev
+        - queue:get-artifact:xpi/*
         - queue:worker-id:xpi-1-github-dev/xpi-1-github-dev-*
 project/releng/scriptworker/v2/github/prod/firefoxci-xpi-1:
     description: ''
     scopes:
         - queue:claim-work:scriptworker-k8s/xpi-1-github
+        - queue:get-artifact:xpi/*
         - queue:worker-id:xpi-1-github/xpi-1-github-*
 project/releng/scriptworker/v2/github/prod/firefoxci-xpi-3:
     description: ''
     scopes:
         - queue:claim-work:scriptworker-k8s/xpi-3-github
+        - queue:get-artifact:xpi/*
         - queue:worker-id:xpi-3-github/xpi-3-github-*
 project/releng/scriptworker/v2/iscript/dep:
     description: ''
