@@ -687,8 +687,6 @@
       alias: taskgraph-try
   - project:
       alias: ci-configuration-try
-  - project:
-      alias: ci-admin-try
 
 ##
 # Non-gecko tree projects

@@ -31,7 +31,7 @@ routes:
 scopes:
   - assume:hook-id:${hookGroupId}/${hookId}
 payload:
-    # built by pushes to the ci-admin repository
+    # built by pushes to the ci-configuration repository
     image:
         type: indexed-image
         path: public/image.tar.zst

@@ -9,7 +9,7 @@
 # - `provider_id` -- the worker-manager provider for this worker pool
 # - `config` -- the configuration for this worker pool, specific to the provider type
 #
-# A top-level `image` property in the config will be interpreted by ci-admin and
+# A top-level `image` property in the config will be interpreted by ci-configuration and
 # translated into a region[..].launchSpec.ImageId value based on worker-pools.yml.
 ---
 worker-defaults:

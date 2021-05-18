@@ -31,7 +31,7 @@ routes:
     - index.hg-push.v1.${alias}.revision.$${payload.payload.data.heads[0]}
     - index.hg-push.v1.${alias}.pushlog-id.$${payload.payload.data.pushlog_pushes[0].pushid}
 payload:
-    # built by pushes to the ci-admin repository
+    # built by pushes to the ci-configuration repository
     image:
         type: indexed-image
         path: public/image.tar.zst

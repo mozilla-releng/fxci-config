@@ -417,7 +417,7 @@ ci-configuration:
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
-  taskcluster_yml_project: ci-admin
+  taskcluster_yml_project: ci-configuration
 
 ci-configuration-try:
   repo: https://hg.mozilla.org/ci/ci-configuration-try
@@ -430,30 +430,7 @@ ci-configuration-try:
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
-  taskcluster_yml_project: ci-admin
-
-ci-admin:
-  repo: https://hg.mozilla.org/ci/ci-admin
-  repo_type: hg
-  access: scm_firefoxci
-  trust_domain: ci
-  features:
-    hg-push: true
-    taskgraph-actions: true
-    trust-domain-scopes: true
-    treeherder-reporting: true
-
-ci-admin-try:
-  repo: https://hg.mozilla.org/ci/ci-admin-try
-  repo_type: hg
-  access: scm_level_1
-  trust_domain: ci
-  is_try: true
-  features:
-    hg-push: true
-    taskgraph-actions: true
-    trust-domain-scopes: true
-    treeherder-reporting: true
+  taskcluster_yml_project: ci-configuration
 
 taskgraph:
   repo: https://hg.mozilla.org/ci/taskgraph

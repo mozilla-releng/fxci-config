@@ -14,8 +14,8 @@ job-defaults:
         code-review: true
     worker-type: t-linux
     run-on-projects:
-        - ci-admin
-        - ci-admin-try
+        - ci-configuration
+        - ci-configuration-try
     worker:
         docker-image: {in-tree: python3.7}
         max-run-time: 3600
@@ -31,39 +31,25 @@ job-defaults:
 
 jobs:
     check-staging:
-        description: "Run `ci-admin check` against the staging cluster to validate the latest changes"
+        description: "Run `tc-admin check` against the staging cluster to validate the latest changes"
         treeherder:
             symbol: check(staging)
-        run-on-projects:
-            - ci-configuration
-            - ci-configuration-try
         run:
-            checkout:
-                admin: {}
-                config:
-                    path: config
             command: >-
                 pip install --user -r requirements/base.txt &&
                 pip install --user . &&
                 TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.cloudops.mozgcp.net
-                ci-admin check --environment staging --ci-configuration-directory ${PWD}/config
+                tc-admin check --environment staging
     check-firefoxci:
-        description: "Run `ci-admin check` against the firefoxci cluster to validate the latest changes"
+        description: "Run `tc-admin check` against the firefoxci cluster to validate the latest changes"
         treeherder:
             symbol: check(firefoxci)
-        run-on-projects:
-            - ci-configuration
-            - ci-configuration-try
         run:
-            checkout:
-                admin: {}
-                config:
-                    path: config
             command: >-
                 pip install --user -r requirements/base.txt &&
                 pip install --user . &&
                 TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com
-                ci-admin check --environment firefoxci --ci-configuration-directory ${PWD}/config
+                tc-admin check --environment firefoxci
     unit:
         description: "Run `unit tests` to validate the latest changes"
         treeherder:
