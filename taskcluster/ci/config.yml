@@ -1,0 +1,36 @@
+---
+trust-domain: ci
+treeherder:
+    group-names:
+        'I': 'Docker Image Builds'
+        'check': 'config checks'
+
+task-priority: low
+
+taskgraph:
+    repositories:
+        admin:
+            name: ci-admin
+            project-regex: ci-admin.*
+            default-repository: https://hg.mozilla.org/ci/ci-admin
+            default-ref: default
+            type: hg
+        config:
+            name: ci-configuration
+            project-regex: ci-configuration.*
+            default-repository: https://hg.mozilla.org/ci/ci-configuration
+            default-ref: default
+            type: hg
+
+workers:
+    aliases:
+        images:
+            provisioner: 'ci-{level}'
+            implementation: docker-worker
+            os: linux
+            worker-type: images
+        t-linux:
+            provisioner: 'ci-t'
+            implementation: docker-worker
+            os: linux
+            worker-type: linux

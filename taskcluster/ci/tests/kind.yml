@@ -1,0 +1,113 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+
+loader: taskgraph.loader.transform:loader
+
+transforms:
+    - taskgraph.transforms.job:transforms
+    - taskgraph.transforms.task:transforms
+
+job-defaults:
+    attributes:
+        code-review: true
+    worker-type: t-linux
+    run-on-projects:
+        - ci-admin
+        - ci-admin-try
+    worker:
+        docker-image: {in-tree: python3.7}
+        max-run-time: 3600
+    treeherder:
+        kind: test
+        platform: tests/opt
+        tier: 1
+    run:
+        cwd: '{checkout}'
+        using: run-task
+        checkout:
+            admin: {}
+
+jobs:
+    check-staging:
+        description: "Run `ci-admin check` against the staging cluster to validate the latest changes"
+        treeherder:
+            symbol: check(staging)
+        run-on-projects:
+            - ci-configuration
+            - ci-configuration-try
+        run:
+            checkout:
+                admin: {}
+                config:
+                    path: config
+            command: >-
+                pip install --user -r requirements/base.txt &&
+                pip install --user . &&
+                TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.cloudops.mozgcp.net
+                ci-admin check --environment staging --ci-configuration-directory ${PWD}/config
+    check-firefoxci:
+        description: "Run `ci-admin check` against the firefoxci cluster to validate the latest changes"
+        treeherder:
+            symbol: check(firefoxci)
+        run-on-projects:
+            - ci-configuration
+            - ci-configuration-try
+        run:
+            checkout:
+                admin: {}
+                config:
+                    path: config
+            command: >-
+                pip install --user -r requirements/base.txt &&
+                pip install --user . &&
+                TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com
+                ci-admin check --environment firefoxci --ci-configuration-directory ${PWD}/config
+    unit:
+        description: "Run `unit tests` to validate the latest changes"
+        treeherder:
+            symbol: unit
+        worker:
+            env:
+                # fail instead of skipping tests due to missing information
+                NO_TEST_SKIP: "1"
+        run:
+            command: >-
+                pip install --user -r requirements/test.txt &&
+                pip install --user . &&
+                py.test
+    flake8:
+        description: "Run `flake8` to validate the latest changes"
+        treeherder:
+            symbol: f8
+        run:
+            command: >-
+                pip install --user -r requirements/test.txt  &&
+                flake8
+    black:
+        description: "Run `black` to validate the latest changes"
+        treeherder:
+            symbol: black
+        run:
+            command: >-
+                pip install --user -r requirements/test.txt  &&
+                black --check .
+
+    isort:
+        description: "Run `isort` to validate the latest changes"
+        treeherder:
+            symbol: isort
+        run:
+            command: >-
+                pip install --user -r requirements/test.txt  &&
+                cd src && isort --check --diff .
+
+    yamllint:
+        description: "Run `yamllint` to validate the latest changes"
+        treeherder:
+            symbol: yaml
+        run:
+            command: >-
+                pip install --user -r requirements/test.txt  &&
+                yamllint .

@@ -1,0 +1,15 @@
+tc-admin<2.7.0
+taskcluster
+click
+blessings<2
+attrs  # http://www.attrs.org/en/stable/backward-compatibility.html
+memoized==0.3  # no semver..
+sortedcontainers<3
+aiohttp<4
+pyyaml~=5.3
+iso8601==0.1.12  # no semver..
+json-e<3
+# These are used at run-time as part of `tc-admin check`
+pytest
+pytest-asyncio
+async-timeout

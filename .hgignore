@@ -1,0 +1,10 @@
+\.pytest_cache
+sandbox
+TODO.txt
+.eggs
+\.egg-info$
+__pycache__
+\.tox
+build/
+\.coverage
+dist
