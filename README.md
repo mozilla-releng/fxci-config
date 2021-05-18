@@ -44,7 +44,7 @@ Furthermore, regression bisection might build an old revision that refers to a f
 
 # Managing CI Configuration
 
-This repository introduces a management tool, `ci-admin`, for the management of taskcluster resources, such as roles and hooks. It can download existing resources and compare them to a stored configuration.
+This repository introduces a management tool, `tc-admin`, for the management of taskcluster resources, such as roles and hooks. It can download existing resources and compare them to a stored configuration.
 A collection of resources also specifies the set of managed resources: this allows controlled deletion of resources that are no longer expected.
 It is based on [`tc-admin`](https://github.com/taskcluster/tc-admin), the standard Taskcluster administrative tool; see that library's documentation for more details than are provided here.
 
@@ -60,7 +60,7 @@ This tool examines the contents of the `ci-configuration` repository, as well as
 
 The `environment` describes the cluster being affected, such as `firefoxci` or `staging`. There is also a [community](https://github.com/mozilla/community-tc-config/) environment which is managed separately.
 
-You will usually want to check the changes that will be applied using `ci-admin diff` and then apply them using `ci-admin apply`
+You will usually want to check the changes that will be applied using `tc-admin diff` and then apply them using `tc-admin apply`
 
 You can supply `--grep` to both 'diff' and 'apply' options to limit the effects to specific changes.
 
@@ -68,13 +68,13 @@ You can supply `--grep` to both 'diff' and 'apply' options to limit the effects 
 
 1. Make changes in a local clone of this repository
 1. Determine which taskcluster environment is relevant, such as `firefoxci`; the options are in `environments.yml`.
-1. Use the `ci-admin diff` and `ci-admin check` to ensure the changes are what you expect, passing the appropriate `--environment`.
+1. Use the `tc-admin diff` and `tc-admin check` to ensure the changes are what you expect, passing the appropriate `--environment`.
 
    Examples:
 
-   * `ci-admin diff --environment=firefoxci`
-   * `ci-admin diff --environment=firefoxci --ids-only` - only show the id's of the resources to be modified (much shorter!)
-   * `ci-admin check --environment=firefoxci`
+   * `tc-admin diff --environment=firefoxci`
+   * `tc-admin diff --environment=firefoxci --ids-only` - only show the id's of the resources to be modified (much shorter!)
+   * `tc-admin check --environment=firefoxci`
 
 1. Submit changes to Phabricator for review.
    On landing, the changes will be applied automaticallyi.
@@ -83,9 +83,9 @@ To apply changes locally (not recommended):
 
 1. Generate some taskcluster credentials, such as `taskcluster signin`.
 1. Apply the generated configuration using **either**
-   * `ci-admin apply --environment=firefoxci` to apply all of the generated configuration
+   * `tc-admin apply --environment=firefoxci` to apply all of the generated configuration
    **or**
-   * `ci-admin apply --environment=firefoxci --grep my-changes` to apply only the selected areas of new configuration.
+   * `tc-admin apply --environment=firefoxci --grep my-changes` to apply only the selected areas of new configuration.
 
    Which you choose will depend on the current state of the repository and whether there are multiple changes waiting to be applied at a later time.
 
@@ -93,27 +93,32 @@ To apply changes locally (not recommended):
 
 ## More Information
 
-* **`ci-admin diff --environment=firefoxci`**
+* **`tc-admin diff --environment=firefoxci`**
 
    Generate a diff of the currently running taskcluster configuration,
    and the one generated from the tip of the ci-configuration repository.
 
-* **`ci-admin diff --environment=firefoxci --grep somestring`**
+* **`tc-admin diff --environment=firefoxci --grep somestring`**
 
    The `grep` option will return full configuration entries relating to the
    provided string. For example, if you have added a new action called `my-action`
    then `--grep my-action` will show only those entries.
 
-* **`ci-admin generate`**
+* **`tc-admin generate`**
 
   Generates the expected CI configuration. Use `--json` to get JSON output.
 
-* **`ci-admin current`**
+* **`tc-admin current`**
 
   Produces the currently running CI configuration. This also understands `--json`.
 
-  `generate` and `current` are two steps run automatically when using `ci-admin diff`
+  `generate` and `current` are two steps run automatically when using `tc-admin diff`
 
-* **`ci-admin <sub-command> --help`**
+* **`tc-admin <sub-command> --help`**
 
-  Each command should have helpful text here. Please add some if it's missing.
+  Each command should have helpful text here.
+  These commands are defined in [tc-admin](https://github.com/taskcluster/tc-admin); see that tool for more information and to report bugs.
+
+* **`ci-admin <sub-command> ..`**
+
+  For backward compatibility, the `ci-admin` command behaves exactly the same as `tc-admin`.
