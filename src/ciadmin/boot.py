@@ -29,24 +29,6 @@ appconfig.options.add(
     help="environment for which resources are to be generated",
 )
 
-appconfig.options.add(
-    "--ci-configuration-repository",
-    default="https://hg.mozilla.org/ci/ci-configuration",
-    help="repository containing ci-configuration",
-)
-
-appconfig.options.add(
-    "--ci-configuration-revision",
-    default="default",
-    help="revision of the ci-configuration repository",
-)
-
-appconfig.options.add(
-    "--ci-configuration-directory",
-    help="local directory containing ci-configuration repository "
-    "(overrides repository/revision)",
-)
-
 appconfig.check_path = os.path.join(os.path.dirname(__file__), "check")
 
 appconfig.generators.register(scm_group_roles.update_resources)
