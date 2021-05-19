@@ -4,7 +4,7 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
-from tcadmin.util.root_url import root_url
+from tcadmin.util.root_url import root_url as get_root_url
 
 from ciadmin.generate.ciconfig.environment import Environment
 
@@ -77,11 +77,12 @@ async def modify_resources(resources):
 
     # sanity-check, to prevent applying to the wrong Taskcluster instance, allowing
     # for the presence or absence of trailing `/` to avoid user inconvenience.
-    if root_url().rstrip("/") != environment.root_url.rstrip("/"):
+    root_url = await get_root_url()
+    if root_url.rstrip("/") != environment.root_url.rstrip("/"):
         raise RuntimeError(
             "Environment {} expects rootUrl {}"
             ", but active credentials are for {}".format(
-                environment.name, environment.root_url, root_url()
+                environment.name, environment.root_url, root_url
             )
         )
 

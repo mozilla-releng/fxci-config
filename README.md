@@ -52,6 +52,7 @@ It is based on [`tc-admin`](https://github.com/taskcluster/tc-admin), the standa
 
 1. Create and activate a new python virtualenv
 1. pip install -e .
+1. pip install -r requirements/local.txt
 1. If you will be applying changes, ensure you have a way of generating taskcluster credentials, such as [taskcluster-cli](https://github.com/taskcluster/taskcluster/releases)
 
 ## Starting Concepts
@@ -122,3 +123,7 @@ To apply changes locally (not recommended):
 * **`ci-admin <sub-command> ..`**
 
   For backward compatibility, the `ci-admin` command behaves exactly the same as `tc-admin`.
+
+# Development
+
+To update dependencies, make changes to `requirements/*.in`, then install `pip-compile-multi` from PyPI and run `pip-compile-multi -s -g requirements/base.in`.

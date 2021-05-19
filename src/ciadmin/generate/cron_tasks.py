@@ -35,7 +35,7 @@ async def make_hooks(project, environment):
         "trust_domain": project.trust_domain,
         "hookGroupId": hookGroupId,
         "hookId": hookId,
-        "taskcluster_root_url": root_url(),
+        "taskcluster_root_url": await root_url(),
         "project_repo": project.repo,
         "alias": project.alias,
         "trim_whitespace": lambda s: re.sub(r"\s+", " ", s).strip(),

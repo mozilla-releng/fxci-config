@@ -1,4 +1,4 @@
-tc-admin<2.7.0
+tc-admin>=3.1.0
 taskcluster
 click
 blessings<2
