@@ -19,39 +19,16 @@ app = CLI("Interact with firefox-ci cluster")
 
 def ciconfig_arguments(app, *, use_environment=True):
     def decorator(func):
-        @app.argument(
-            "--ci-configuration-repository",
-            default="https://hg.mozilla.org/ci/ci-configuration",
-            help="repository containing ci-configuration",
-        )
-        @app.argument(
-            "--ci-configuration-revision",
-            default="default",
-            help="revision of the ci-configuration repository",
-        )
-        @app.argument(
-            "--ci-configuration-directory",
-            help="local directory containing ci-configuration repository "
-            "(overrides repository/revision)",
-        )
         @functools.wraps(func)
         def wrapper(args):
             from ciadmin.boot import appconfig
 
-            options = {}
+            ac = AppConfig()
 
             if use_environment and "environment" in args:
-                options["--environment"] = args.pop("environment")
+                ac.options = {"--environment": args.pop("environment")}
 
-            for argument in (
-                "ci_configuration_repository",
-                "ci_configuration_revision",
-                "ci_configuration_directory",
-            ):
-                if argument in args:
-                    options["--" + argument.replace("_", "-")] = args.pop(argument)
-
-            with AppConfig._as_current(appconfig.with_options(options)):
+            with AppConfig._as_current(ac):
                 func(args)
 
         if use_environment:
