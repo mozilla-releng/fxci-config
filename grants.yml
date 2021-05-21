@@ -1703,9 +1703,7 @@
   - project:xpi:releng:github:project:mozilla-releng/staging-xpi-*
   - project:xpi:releng:github:action:release
   - project:xpi:releng:signing:cert:dep-signing
-  - project:xpi:releng:signing:cert:release-signing
   - project:xpi:releng:ship-it:server:staging
-  - project:xpi:releng:ship-it:server:production
   - project:xpi:releng:ship-it:action:mark-as-shipped
   - queue:create-task:highest:xpi-{level}/*
   - queue:create-task:highest:xpi-t/*
@@ -1718,6 +1716,17 @@
       alias:
       - xpi-manifest
       - staging-xpi-manifest
+      # Only enable this for master and actions.
+      job: ["branch:master", "action:*"]
+
+- grant:
+  - project:xpi:releng:github:project:mozilla-extensions/*
+  - project:xpi:releng:signing:cert:release-signing
+  - project:xpi:releng:ship-it:server:production
+  to:
+  - project:
+      alias:
+      - xpi-manifest
       # Only enable this for master and actions.
       job: ["branch:master", "action:*"]
 
