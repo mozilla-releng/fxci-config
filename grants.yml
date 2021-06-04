@@ -589,6 +589,14 @@
     # mkaply
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mozilla234
 
+# grant relman access to trigger mozilla-central & mozilla-releases hooks
+- grant:
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-central*
+  - hooks:trigger-hook:project-releng/cron-task-releases-mozilla*
+  to:
+  - roles:
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|rvandermeulen
+
 - grant:
   # Bug 1527818: Coverity configuration is stored in this secret
   - secrets:get:project/relman/coverity
