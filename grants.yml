@@ -2716,4 +2716,4 @@
   - generic-worker:allow-rdp:gecko-t/t-win*
   to:
   - roles:
-    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mhengtes
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mhentges
