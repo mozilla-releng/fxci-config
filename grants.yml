@@ -2711,3 +2711,9 @@
   - roles:
     # Beatrice Acasandrei - Softvision Sheriff contributor
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bacasandrei
+
+- grant:
+  - generic-worker:allow-rdp:gecko-t/t-win*
+  to:
+  - roles:
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mhengtes
