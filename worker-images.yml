@@ -13,7 +13,7 @@
 # in use.
 
 docker-worker-hvm-builder-current: docker-worker-v202004241848-hvm-builder-bug1676214
-docker-worker-hvm-builder-trusted-current: docker-worker-v202004241848-hvm-builder-trusted-bug1676214
+docker-worker-hvm-builder-trusted-current: docker-worker-v202004241848-hvm-builder-trusted-bug1705196
 
 # monopacker-docker-worker-* images are built with monopacker.
 
@@ -164,6 +164,11 @@ docker-worker-v202004241848-hvm-builder-trusted-bug1676214:
     us-east-1: ami-0cf2dc9e4b190d0c9
     us-west-1: ami-0c3b7d65639bf5ba2
     us-west-2: ami-03e0359d864cbcf5f
+docker-worker-v202004241848-hvm-builder-trusted-bug1705196:
+  aws:
+    us-east-1: ami-09353fe74f3ea543f
+    us-west-1: ami-0de827c6d96d7b6ee
+    us-west-2: ami-0e3dc51bfc03e710d
 
 # monopacker docker-worker images
 monopacker-docker-worker-trusted-2020-01-08t20-30-16z:
