@@ -205,6 +205,7 @@
   - queue:create-task:{priority}:gecko-t/*
   - queue:create-task:{priority}:releng-hardware/gecko-{level}-*
   - queue:create-task:{priority}:releng-hardware/gecko-t-*
+  - queue:create-task:{priority}:performance-hardware/gecko-t-*
 
   # access to openh264 artifacts; necessary for symbol upload and signing when
   # building new openh264 binaries
