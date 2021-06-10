@@ -1182,6 +1182,7 @@
   - queue:get-artifact:mobile/android-sdk/*
   - queue:route:index.mobile.v2.{trust_project}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
+  - notify:email:*
   - project:mobile:{trust_project}:releng:signing:cert:dep-signing
   - project:mobile:{trust_project}:releng:signing:format:*
   to:
