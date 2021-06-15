@@ -2727,6 +2727,7 @@
   - worker-manager:manage-worker-pool:gecko-t/win10-64-azure-*
   - worker-manager:provider:azure2
   - worker-manager:provider:null-provider
+  - generic-worker:allow-rdp:gecko-t/win10-64-azure*
   to:
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|michelle2
