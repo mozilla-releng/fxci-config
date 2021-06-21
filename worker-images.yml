@@ -42,7 +42,7 @@ monopacker-docker-worker-trusted-current: monopacker-docker-worker-trusted-2020-
 monopacker-docker-worker-baremetal-current: monopacker-docker-worker-2020-05-04T14-30-19Z-bug1676214
 
 occ-b-win2012-current: occ-b-win2012-v20201014
-occ-b-win2012-trusted-current: occ-b-win2012-trusted-53f934e
+occ-b-win2012-trusted-current: occ-b-win2012-trusted-83ededb
 occ-t-win10-64-current: occ-t-win10-64-9ed04eb
 occ-t-win10-64-beta: occ-t-win10-64-feced22
 occ-t-win10-64-gpu-s-current: occ-t-win10-64-gpu-s-15415a4
@@ -318,11 +318,11 @@ occ-b-win2012-v20201014:
     us-east-1: ami-0e24803fec8cd6c9b
     us-west-1: ami-0fef0fa04ad1b9b93
     us-west-2: ami-01413ee84de19d4b6
-occ-b-win2012-trusted-53f934e:
+occ-b-win2012-trusted-83ededb:
   aws:
-    us-east-1: ami-08a9cc9e9fb4e4bb9
-    us-west-1: ami-09bcbf159f10606b3
-    us-west-2: ami-0840457b2490caab1
+    us-east-1: ami-0978123a845a061c1
+    us-west-1: ami-07163c5e52e34866a
+    us-west-2: ami-03da2722a08986fe2
 occ-t-win10-64-9ed04eb:
   aws:
     eu-central-1: ami-0a18142645b09f239
