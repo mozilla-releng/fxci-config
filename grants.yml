@@ -1484,9 +1484,13 @@
 - grant:
   # XXX `fennec-production-signing` handles beta signing too.
   - project:mobile:fenix:releng:signing:cert:fennec-production-signing
+  # `production-signing` handles mozillaonline signing
+  - project:mobile:fenix:releng:signing:cert:production-signing
 
   - secrets:get:project/mobile/fenix/beta
   - secrets:get:project/mobile/fenix/release
+  - secrets:get:project/mobile/fenix/beta-mozillaonline
+  - secrets:get:project/mobile/fenix/release-mozillaonline
   to:
   - project:
       alias: fenix
