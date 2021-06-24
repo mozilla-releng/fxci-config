@@ -597,7 +597,7 @@
   - hooks:trigger-hook:project-releng/cron-task-releases-mozilla*
   to:
   - groups:
-    - firefox-shipit
+    - shipit_firefox
 
 - grant:
   # Bug 1527818: Coverity configuration is stored in this secret
@@ -2578,10 +2578,10 @@
   - roles:
     - mozillians-group:engworkflow
 - grant:
-  - assume:project:releng:ci-group:firefox-shipit
+  - assume:project:releng:ci-group:shipit_firefox
   to:
   - roles:
-    - mozilla-group:firefox-shipit
+    - mozilla-group:shipit_firefox
 
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1659596
 - grant:
