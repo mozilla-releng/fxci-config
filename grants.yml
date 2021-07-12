@@ -1615,6 +1615,13 @@
       alias: firefox-ios
       job: ["cron:l10-screenshots", "action:*"]
 
+- grant:
+  - secrets:get:project/mobile/focus-ios/bitrise
+  to:
+  - project:
+      alias: focus-ios
+      job: ["cron:l10-screenshots", "action:*"]
+
 # L10n repositories
 - grant:
   - queue:create-task:highest:l10n-{level}/*
@@ -2283,6 +2290,7 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/bump-android-comp
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/l10-screenshots
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-ios/l10-screenshots
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public
   - queue:rerun-task:mobile-level-*
   to:

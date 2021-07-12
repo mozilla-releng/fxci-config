@@ -624,6 +624,22 @@ firefox-ios:
   cron:
     targets: [l10-screenshots]
 
+focus-ios:
+  repo: https://github.com/mozilla-mobile/focus-ios
+  trust_domain: mobile
+  trust_project: focus-ios
+  repo_type: git
+  level: 3
+  features:
+    github-taskgraph: true
+    mobile-roles: true
+    taskgraph-actions: true
+    taskgraph-cron: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+  cron:
+    targets: [l10-screenshots]
+
 firefox-tv:
   repo: https://github.com/mozilla-mobile/firefox-tv
   trust_domain: mobile
