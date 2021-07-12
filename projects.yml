@@ -189,6 +189,7 @@ mozilla-central:
       - periodic-update
       - ship-geckoview
       - l10n-bumper
+      - l10n-cross-channel
       - target: scriptworker-canary
         allow-input: true
 comm-central:
