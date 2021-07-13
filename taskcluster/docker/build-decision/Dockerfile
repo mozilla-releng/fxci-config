@@ -1,6 +1,6 @@
 # %ARG PYTHON_VERSION
 FROM python:$PYTHON_VERSION-slim
-MAINTAINER Tom Prince <mozilla@hocat.ca>
+MAINTAINER Aki Sasaki <aki@mozilla.com>
 
 # %include build-decision/requirements/base.in
 # %include build-decision/requirements/base.txt

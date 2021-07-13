@@ -21,8 +21,6 @@ def ciconfig_arguments(app, *, use_environment=True):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(args):
-            from ciadmin.boot import appconfig
-
             ac = AppConfig()
 
             if use_environment and "environment" in args:
