@@ -434,7 +434,6 @@ ci-configuration:
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
-  taskcluster_yml_project: ci-configuration
 
 ci-configuration-try:
   repo: https://hg.mozilla.org/ci/ci-configuration-try
@@ -447,7 +446,6 @@ ci-configuration-try:
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
-  taskcluster_yml_project: ci-configuration
 
 taskgraph:
   repo: https://hg.mozilla.org/ci/taskgraph

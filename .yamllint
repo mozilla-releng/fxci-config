@@ -1,0 +1,12 @@
+---
+extends: default
+
+ignore: |
+  /.tox/
+
+rules:
+    document-end:
+        present: false
+    # Checks currently failing
+    line-length: disable
+    indentation: {spaces: 4}

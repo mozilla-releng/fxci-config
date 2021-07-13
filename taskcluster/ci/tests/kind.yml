@@ -27,7 +27,7 @@ job-defaults:
         cwd: '{checkout}'
         using: run-task
         checkout:
-            admin: {}
+            config: {}
 
 jobs:
     check-staging:
