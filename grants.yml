@@ -2748,3 +2748,11 @@
   to:
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|michelle2
+
+# Bug 1714818: Grant secret scopes to special worker to fix bug 1714818
+- grant:
+  - secrets:set:worker-pool:gecko-1/b-linux-bug1714818
+  - secrets:get:worker-pool:gecko-1/b-linux-bug1714818
+  to:
+  - roles:
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|michelle2
