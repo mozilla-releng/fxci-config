@@ -2757,10 +2757,3 @@
   to:
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|michelle2
-
-# Bug 1716420: Grant scopes to masterwayz to run tests on her loaner
-- grant:
-  - queue:create-task:low:releng-hardware/t-osx-1100-m1-masterwayz
-  to:
-  - roles:
-    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|michelle2
