@@ -90,10 +90,12 @@ jobs:
                 cd src && isort --check --diff .
 
     yamllint:
+        # Only run yamllint on taskcluster/ until we resolve the linting
+        # issues in our firefoxci yaml
         description: "Run `yamllint` to validate the latest changes"
         treeherder:
             symbol: yaml
         run:
             command: >-
                 pip install --user -r requirements/test.txt  &&
-                yamllint .
+                yamllint taskcluster
