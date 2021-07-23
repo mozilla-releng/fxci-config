@@ -1184,6 +1184,7 @@
   - queue:route:notify.*
   - queue:scheduler-id:{trust_domain}-level-{level}
   - notify:email:*
+  - notify:slack-channel:*
   - project:mobile:{trust_project}:releng:signing:cert:dep-signing
   - project:mobile:{trust_project}:releng:signing:format:*
   to:
