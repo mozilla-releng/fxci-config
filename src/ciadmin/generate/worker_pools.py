@@ -153,11 +153,9 @@ def get_azure_provider_config(
     vmSizes = config["vmSizes"]
     purpose = config["worker-purpose"]
     image = worker_images[config["image"]]
-    user_data = config.pop("additional-user-data", {})
     implementation = config.pop(
         "implementation", "generic-worker/worker-runner-windows"
     )
-    spot = config.pop("spot", True)
 
     defaults = evaluate_keyed_by(defaults, "defaults", {"provider": provider_id})
     azure_config = environment.azure_config
@@ -184,9 +182,14 @@ def get_azure_provider_config(
             rgroup = f"rg-{resource_suffix}"
             vnet = f"vn-{resource_suffix}"
             snet = f"sn-{resource_suffix}"
-            subnetId = f"{subscription_id}/resourceGroups/{rgroup}/providers/Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
-            imageReference_id = f"{subscription_id}/resourceGroups/{image_rgroup}/providers/Microsoft.Compute/images/{ImageId}"
-
+            subnetId = (
+                f"{subscription_id}/resourceGroups/{rgroup}/providers/"
+                f"Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
+            )
+            imageReference_id = (
+                f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
+                f"Microsoft.Compute/images/{ImageId}"
+            )
             launch_config = {
                 "location": loc,
                 "subnetId": subnetId,

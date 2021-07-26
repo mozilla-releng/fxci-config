@@ -50,26 +50,25 @@ worker-defaults:
                        "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
             generic-worker/worker-runner-windows:
                 genericWorker:
-                     config:
-                      "cachesDir": "Z:\\caches"
-                      "cleanUpTaskDirs": true
-                      "disableReboots": false
-                      "downloadsDir": "Z:\\downloads"
-                      "livelogExecutable": "C:\\generic-worker\\livelog.exe"
-                      "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
-                      "idleTimeoutSecs": 300
-                      "numberOfTasksToRun": 0
-                      "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd"
-                      "runTasksAsCurrentUser": false
-                      "sentryProject": "generic-worker"
-                      "shutdownMachineOnIdle": true
-                      "shutdownMachineOnInternalError": true
-                      "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
-                      "taskclusterProxyPort": 80
-                      "tasksDir": "Z:\\"
-                      "wstAudience": "firefoxcitc"
-                      "wstServerURL": "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net"
-
+                    config:
+                        "cachesDir": "Z:\\caches"
+                        "cleanUpTaskDirs": true
+                        "disableReboots": false
+                        "downloadsDir": "Z:\\downloads"
+                        "livelogExecutable": "C:\\generic-worker\\livelog.exe"
+                        "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
+                        "idleTimeoutSecs": 300
+                        "numberOfTasksToRun": 0
+                        "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd"
+                        "runTasksAsCurrentUser": false
+                        "sentryProject": "generic-worker"
+                        "shutdownMachineOnIdle": true
+                        "shutdownMachineOnInternalError": true
+                        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
+                        "taskclusterProxyPort": 80
+                        "tasksDir": "Z:\\"
+                        "wstAudience": "firefoxcitc"
+                        "wstServerURL": "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net"
             generic-worker/windows-nss:
                 genericWorker:
                     config:
@@ -853,8 +852,7 @@ pools:
     image: ronin-t-windows10-64-2004-current
     image_resource_group: rg-packer-through-cib
     worker-purpose: gecko-t
-    # locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
-    locations: [central-us]
+    locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
     maxCapacity: 600
     workerConfig:
       genericWorker:

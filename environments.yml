@@ -149,6 +149,8 @@ staging:
         providers:
             aws:
                 implementation: aws
+            azure2:
+                implementation: azure
             fxci-level1-gcp:
                 implementation: google
             fxci-level2-gcp:
@@ -217,6 +219,16 @@ staging:
                         "us-west-2": ["sg-042aa0d6570f103e7"]
                         "eu-central-1": ["sg-026d562d7bb83f005"]
         invalid-instances: []
+    azure_config:
+        subscription: "108d46d5-fe9b-4850-9a7d-8c914aa6c1f0"
+        location:
+            - "centralus"
+            - "eastus"
+            - "eastus2"
+            - "northcentralus"
+            - "southcentralus"
+            - "westus"
+            - "westus2"
     google_config:
         zones:
             by-region:
