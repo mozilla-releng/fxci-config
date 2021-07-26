@@ -48,6 +48,28 @@ worker-defaults:
                        "tasksDir": "Z:\\"
                        "wstAudience": "firefoxcitc"
                        "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+            generic-worker/worker-runner-windows:
+                genericWorker:
+                     config:
+                      "cachesDir": "Z:\\caches"
+                      "cleanUpTaskDirs": true
+                      "disableReboots": false
+                      "downloadsDir": "Z:\\downloads"
+                      "livelogExecutable": "C:\\generic-worker\\livelog.exe"
+                      "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
+                      "idleTimeoutSecs": 300
+                      "numberOfTasksToRun": 0
+                      "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd"
+                      "runTasksAsCurrentUser": false
+                      "sentryProject": "generic-worker"
+                      "shutdownMachineOnIdle": true
+                      "shutdownMachineOnInternalError": true
+                      "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
+                      "taskclusterProxyPort": 80
+                      "tasksDir": "Z:\\"
+                      "wstAudience": "firefoxcitc"
+                      "wstServerURL": "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net"
+
             generic-worker/windows-nss:
                 genericWorker:
                     config:
@@ -822,6 +844,151 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
           - DeviceName: /dev/sdc
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+- pool_id: gecko-t/win10-64-2004
+  description: ''
+  owner: mcornmesser@mozilla.com
+  email_on_error: true
+  provider_id: azure2
+  config:
+    image: ronin-t-windows10-64-2004-current
+    image_resource_group: rg-packer-through-cib
+    worker-purpose: gecko-t
+    # locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
+    locations: [central-us]
+    maxCapacity: 600
+    workerConfig:
+      genericWorker:
+        config:
+          workerType: win10-64-2004
+          provisionerId: gecko-t
+          idleTimeoutSecs: 300
+    tags:
+      workerType: gecko-t-win10-64-2004
+      deploymentId: fee55f6
+      sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+      sourceRevision: cloud_windows
+      sourceRepository: ronin_puppet
+      sourceOrganisation: mozilla-platform-ops
+    spot: true
+    vmSizes:
+      - vmSize: Standard_F8s_v2
+        launchConfig:
+          osProfile:
+            windowsConfiguration:
+              timeZone: UTC
+              enableAutomaticUpdates: false
+          storageProfile:
+            osDisk:
+              osType: Windows
+              createOption: FromImage
+            dataDisks:
+              - lun: 0
+                diskSizeGB: 30
+                managedDisk:
+                  storageAccountType: Standard_LRS
+                createOption: FromImage
+          hardwareProfile:
+            vmSize: Standard_F8s_v2
+          diagnosticsProfile:
+            bootDiagnostics:
+              enabled: false
+    capacityPerInstance: 1
+- pool_id: gecko-t/win10-64-2004-gpu
+  description: ''
+  owner: mcornmesser@mozilla.com
+  email_on_error: true
+  provider_id: azure2
+  config:
+    image: ronin-t-windows10-64-2004-gpu-current
+    image_resource_group: rg-packer-through-cib
+    worker-purpose: gecko-t
+    locations: [north-central-us, south-central-us, east-us]
+    maxCapacity: 600
+    workerConfig:
+      genericWorker:
+        config:
+          workerType: win10-64-200-gpu4
+          provisionerId: gecko-t
+          idleTimeoutSecs: 300
+    tags:
+      workerType: gecko-t-win10-64-2004-gpu
+      deploymentId: fee55f6
+      sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+      sourceRevision: cloud_windows
+      sourceRepository: ronin_puppet
+      sourceOrganisation: mozilla-platform-ops
+    spot: true
+    vmSizes:
+      - vmSize: Standard_NV6
+        launchConfig:
+          osProfile:
+            windowsConfiguration:
+              timeZone: UTC
+              enableAutomaticUpdates: false
+          storageProfile:
+            osDisk:
+              osType: Windows
+              createOption: FromImage
+            dataDisks:
+              - lun: 0
+                diskSizeGB: 30
+                managedDisk:
+                  storageAccountType: Standard_LRS
+                createOption: FromImage
+          hardwareProfile:
+            vmSize: Standard_NV6
+          diagnosticsProfile:
+            bootDiagnostics:
+              enabled: false
+    capacityPerInstance: 1
+- pool_id: gecko-t/win10-64-2004-test
+  description: ''
+  owner: mcornmesser@mozilla.com
+  email_on_error: true
+  provider_id: azure2
+  config:
+    image: ronin-t-windows10-64-2004-current
+    image_resource_group: rg-packer-through-cib
+    worker-purpose: gecko-t
+    locations: [central-us, east-us-2]
+    maxCapacity: 15
+    workerConfig:
+      genericWorker:
+        config:
+          workerType: win10-64-2004-test
+          provisionerId: gecko-t
+          idleTimeoutSecs: 300
+    tags:
+      workerType: gecko-t-win10-64-2004-test
+      deploymentId: b839260
+      sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+      sourceRevision: cloud_windows
+      sourceRepository: ronin_puppet
+      sourceOrganisation: mozilla-platform-ops
+    spot: true
+    vmSizes:
+      - vmSize: Standard_F8s_v2
+        launchConfig:
+          osProfile:
+            windowsConfiguration:
+              timeZone: UTC
+              enableAutomaticUpdates: false
+          storageProfile:
+            osDisk:
+              osType: Windows
+              createOption: FromImage
+            dataDisks:
+              - lun: 0
+                diskSizeGB: 30
+                managedDisk:
+                  storageAccountType: Standard_LRS
+                createOption: FromImage
+          hardwareProfile:
+            vmSize: Standard_F8s_v2
+          diagnosticsProfile:
+            bootDiagnostics:
+              enabled: false
+    capacityPerInstance: 1
 - pool_id: gecko-t/t-win10-64
   description: ''
   owner: release+tc-workers@mozilla.com

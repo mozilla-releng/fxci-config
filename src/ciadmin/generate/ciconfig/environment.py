@@ -25,6 +25,7 @@ class Environment:
 
     worker_manager = attr.ib(type=dict)
     aws_config = attr.ib(type=dict, factory=lambda: {})
+    azure_config = attr.ib(type=dict, factory=lambda: {})
     google_config = attr.ib(type=dict, factory=lambda: {})
     cron = attr.ib(type=dict, factory=lambda: {})
 

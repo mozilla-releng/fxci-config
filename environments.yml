@@ -21,6 +21,8 @@ firefoxci:
         providers:
             aws:
                 implementation: aws
+            azure2:
+                implementation: azure
             fxci-level1-gcp:
                 implementation: google
             fxci-level2-gcp:
@@ -96,6 +98,16 @@ firefoxci:
               families: ["r5ad"]
             - zones: ["us-east-1c"]
               families: ["m5dn"]
+    azure_config:
+        subscription: "108d46d5-fe9b-4850-9a7d-8c914aa6c1f0"
+        location:
+            - "centralus"
+            - "eastus"
+            - "eastus2"
+            - "northcentralus"
+            - "southcentralus"
+            - "westus"
+            - "westus2"
     google_config:
         zones:
             by-region:

@@ -144,6 +144,77 @@ def get_aws_provider_config(
     }
 
 
+def get_azure_provider_config(
+    environment, provider_id, pool_id, config, worker_images, defaults
+):
+
+    locations = config.pop("locations")
+    image_rgroup = config.pop("image_resource_group")
+    vmSizes = config["vmSizes"]
+    purpose = config["worker-purpose"]
+    image = worker_images[config["image"]]
+    user_data = config.pop("additional-user-data", {})
+    implementation = config.pop(
+        "implementation", "generic-worker/worker-runner-windows"
+    )
+    spot = config.pop("spot", True)
+
+    defaults = evaluate_keyed_by(defaults, "defaults", {"provider": provider_id})
+    azure_config = environment.azure_config
+
+    lifecycle = merge(defaults.get("lifecycle", {}), config.pop("lifecycle", {}))
+
+    worker_config = evaluate_keyed_by(
+        defaults.get("worker-config", {}),
+        pool_id,
+        {"implementation": implementation},
+    )
+    worker_config = merge(worker_config, config.get("worker-config", {}))
+    tags = config.get("tags", {})
+
+    launch_configs = []
+    for location in locations:
+        for vmSize in vmSizes:
+
+            loc = location.replace("-", "")
+            ImageId = image.image_id(provider_id, location)
+            subscription_id = azure_config["subscription"]
+            subscription_id = f"/subscriptions/{subscription_id}"
+            resource_suffix = f"{location}-{purpose}"
+            rgroup = f"rg-{resource_suffix}"
+            vnet = f"vn-{resource_suffix}"
+            snet = f"sn-{resource_suffix}"
+            subnetId = f"{subscription_id}/resourceGroups/{rgroup}/providers/Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
+            imageReference_id = f"{subscription_id}/resourceGroups/{image_rgroup}/providers/Microsoft.Compute/images/{ImageId}"
+
+            launch_config = {
+                "location": loc,
+                "subnetId": subnetId,
+                "tags": merge(
+                    tags,
+                ),
+                "workerConfig": merge(
+                    worker_config,
+                ),
+                "hardwareProfile": {"vmSize": vmSize},
+                "priority": "spot",
+                "billingProfile": {"maxPrice": -1},
+                "evictionPolicy": "Delete",
+                "capacityPerInstance": 1,
+                "storageProfile": {"imageReference": {"id": imageReference_id}},
+            }
+
+            launch_config = merge(launch_config, vmSize.get("launchConfig", {}))
+            launch_configs.append(launch_config)
+
+    return {
+        "minCapacity": config.get("minCapacity", 0),
+        "maxCapacity": config["maxCapacity"],
+        "lifecycle": lifecycle,
+        "launchConfigs": launch_configs,
+    }
+
+
 def get_google_provider_config(
     environment, provider_id, pool_id, config, worker_images, defaults
 ):
@@ -212,6 +283,7 @@ def get_google_provider_config(
 PROVIDER_IMPLEMENTATIONS = {
     "aws": get_aws_provider_config,
     "google": get_google_provider_config,
+    "azure": get_azure_provider_config,
 }
 
 
