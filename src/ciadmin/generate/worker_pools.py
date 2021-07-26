@@ -99,6 +99,17 @@ def get_aws_provider_config(
                     instance_type["instanceType"],
                 ):
                     continue
+                if implementation == "docker-worker":
+                    instance_worker_config = merge(
+                        worker_config,
+                        instance_type.get("worker-config", {}),
+                        {"capacity": instance_type.get("capacityPerInstance", 1)},
+                    )
+                else:
+                    instance_worker_config = merge(
+                        worker_config,
+                        instance_type.get("worker-config", {}),
+                    )
                 launch_config = {
                     "capacityPerInstance": instance_type.get("capacityPerInstance", 1),
                     "region": region,
@@ -109,11 +120,7 @@ def get_aws_provider_config(
                         "SecurityGroupIds": security_groups,
                         "InstanceType": instance_type["instanceType"],
                     },
-                    "workerConfig": merge(
-                        worker_config,
-                        instance_type.get("worker-config", {}),
-                        {"capacity": instance_type.get("capacityPerInstance", 1)},
-                    ),
+                    "workerConfig": instance_worker_config,
                 }
                 launch_config["additionalUserData"] = {}
                 launch_config["additionalUserData"].update(user_data)
@@ -175,8 +182,12 @@ def get_google_provider_config(
                 launch_config["workerConfig"] = merge(
                     worker_config,
                     launch_config.pop("worker-config", {}),
-                    {"capacity": launch_config.get("capacityPerInstance", 1)},
                 )
+                if implementation == "docker-worker":
+                    launch_config["workerConfig"] = merge(
+                        launch_config["workerConfig"],
+                        {"capacity": instance_type.get("capacityPerInstance", 1)},
+                    )
                 launch_config[
                     "machineType"
                 ] = "zones/{zone}/machineTypes/{machine_type}".format(

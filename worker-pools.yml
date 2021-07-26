@@ -32,7 +32,7 @@ worker-defaults:
                        "cachesDir": "Z:\\caches"
                        "cleanUpTaskDirs": true
                        "deploymentId": "f37dd7ee1cae"
-                       "disableReboots": true
+                       "disableReboots": false
                        "downloadsDir": "Z:\\downloads"
                        "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
                        "livelogExecutable": "C:\\generic-worker\\livelog.exe"
@@ -41,7 +41,7 @@ worker-defaults:
                        "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd"
                        "runTasksAsCurrentUser": false
                        "sentryProject": "generic-worker"
-                       "shutdownMachineOnIdle": false
+                       "shutdownMachineOnIdle": true
                        "shutdownMachineOnInternalError": true
                        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
                        "taskclusterProxyPort": 80
