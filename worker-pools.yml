@@ -90,7 +90,7 @@ worker-defaults:
                         "taskclusterProxyPort": 80
                         "tasksDir": "Z:\\"
                         "wstAudience": "firefoxcitc"
-                        "wstServerURL": "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net"
+                        "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
             generic-worker/windows-nss:
                 genericWorker:
                     config:
