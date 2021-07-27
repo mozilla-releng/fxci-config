@@ -69,6 +69,28 @@ worker-defaults:
                         "tasksDir": "Z:\\"
                         "wstAudience": "firefoxcitc"
                         "wstServerURL": "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net"
+            generic-worker/occ-8047eee:
+                genericWorker:
+                    config:
+                        "cachesDir": "Z:\\caches"
+                        "cleanUpTaskDirs": true
+                        "deploymentId": "8047eee"
+                        "disableReboots": false
+                        "downloadsDir": "Z:\\downloads"
+                        "livelogExecutable": "C:\\generic-worker\\livelog.exe"
+                        "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
+                        "idleTimeoutSecs": 300
+                        "numberOfTasksToRun": 0
+                        "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd"
+                        "runTasksAsCurrentUser": false
+                        "sentryProject": "generic-worker"
+                        "shutdownMachineOnIdle": true
+                        "shutdownMachineOnInternalError": true
+                        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe"
+                        "taskclusterProxyPort": 80
+                        "tasksDir": "Z:\\"
+                        "wstAudience": "firefoxcitc"
+                        "wstServerURL": "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net"
             generic-worker/windows-nss:
                 genericWorker:
                     config:
@@ -759,7 +781,7 @@ pools:
       workerType: gecko-1-b-win2012
     regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
-    implementation: generic-worker/windows
+    implementation: generic-worker/occ-8047eee
     instance_types:
       - instanceType: c4.4xlarge
         launchConfig:
@@ -791,7 +813,7 @@ pools:
       workerType: gecko-2-b-win2012
     regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
-    implementation: generic-worker/windows
+    implementation: generic-worker/occ-8047eee
     instance_types:
       - instanceType: c4.4xlarge
         launchConfig:
@@ -823,7 +845,7 @@ pools:
       workerType: gecko-3-b-win2012
     regions: [us-east-1, us-west-1, us-west-2]
     security: trusted
-    implementation: generic-worker/windows
+    implementation: generic-worker/occ-8047eee
     instance_types:
       - instanceType: c4.4xlarge
         launchConfig:
@@ -1026,7 +1048,7 @@ pools:
       workerType: gecko-t-win10-64-beta
     regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
-    implementation: generic-worker/windows
+    implementation: generic-worker/occ-8047eee
     instance_types:
     - instanceType: c5.2xlarge
       launchConfig:
@@ -1101,7 +1123,7 @@ pools:
       workerType: gecko-t-win10-64-gpu-b
     regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
-    implementation: generic-worker/windows
+    implementation: generic-worker/occ-8047eee
     instance_types:
      - instanceType: g3s.xlarge
        launchConfig:
@@ -1183,7 +1205,7 @@ pools:
       workerType: gecko-1-b-win2012
     regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
-    implementation: generic-worker/windows
+    implementation: generic-worker/occ-8047eee
     instance_types:
       - instanceType: c4.4xlarge
         launchConfig:
@@ -1215,7 +1237,7 @@ pools:
       workerType: gecko-2-b-win2012
     regions: [ eu-central-1, us-east-1, us-west-1, us-west-2 ]
     security: windows-untrusted
-    implementation: generic-worker/windows
+    implementation: generic-worker/occ-8047eee
     instance_types:
     - instanceType: c4.4xlarge
       launchConfig:
@@ -1247,7 +1269,7 @@ pools:
       workerType: gecko-3-b-win2012
     regions: [us-east-1, us-west-1, us-west-2]
     security: trusted
-    implementation: generic-worker/windows
+    implementation: generic-worker/occ-8047eee
     instance_types:
       - instanceType: c4.4xlarge
         launchConfig:
