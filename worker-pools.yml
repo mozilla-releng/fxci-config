@@ -884,7 +884,7 @@ pools:
           idleTimeoutSecs: 300
     tags:
       workerType: gecko-t-win10-64-2004
-      deploymentId: fee55f6
+      deploymentId: 3490b04
       sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
       sourceRevision: cloud_windows
       sourceRepository: ronin_puppet
