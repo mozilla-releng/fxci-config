@@ -812,6 +812,7 @@ android-l10n-tooling:
   features:
     github-taskgraph: true
     taskgraph-cron: true
+    taskgraph-actions: true
   cron:
     targets:
       - target: update-l10n
