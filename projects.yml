@@ -569,7 +569,7 @@ fenix:
   trust_domain: mobile
   trust_project: fenix
   repo_type: git
-  default_branch: master
+  default_branch: main
   level: 3
   features:
     autophone: true
