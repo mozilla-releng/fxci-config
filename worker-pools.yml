@@ -885,7 +885,7 @@ pools:
           idleTimeoutSecs: 300
     tags:
       workerType: gecko-t-win10-64-2004
-      deploymentId: 3490b04
+      deploymentId: 9f298e8
       sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
       sourceRevision: cloud_windows
       sourceRepository: ronin_puppet
@@ -934,7 +934,7 @@ pools:
           idleTimeoutSecs: 300
     tags:
       workerType: gecko-t-win10-64-2004-gpu
-      deploymentId: fee55f6
+      deploymentId: 9f298e8
       sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
       sourceRevision: cloud_windows
       sourceRepository: ronin_puppet
@@ -973,7 +973,7 @@ pools:
     image_resource_group: rg-packer-through-cib
     implementation: generic-worker/worker-runner-windows
     worker-purpose: gecko-t
-    locations: [central-us, east-us-2]
+    locations: [central-us]
     maxCapacity: 15
     workerConfig:
       genericWorker:
