@@ -5,6 +5,8 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import copy
+import hashlib
+import pprint
 
 import attr
 from tcadmin.resources import WorkerPool
@@ -48,6 +50,18 @@ def _validate_instance_capacity(pool_id, implementation, instance_types):
                 f"{implementation} does not support capacity-per-instance != 1 "
                 f"in worker {pool_id}.",
             )
+
+
+def _populate_deployment_id(instance_worker_config, image_id):
+    if "genericWorker" not in instance_worker_config or instance_worker_config[
+        "genericWorker"
+    ]["config"].get("deploymentId"):
+        return
+    _hash_config = copy.deepcopy(instance_worker_config)
+    _hash_config["imageId"] = image_id
+    instance_worker_config["genericWorker"]["config"]["deploymentId"] = hashlib.sha256(
+        pprint.pformat(_hash_config).encode("utf-8")
+    ).hexdigest()
 
 
 def get_aws_provider_config(
@@ -110,11 +124,13 @@ def get_aws_provider_config(
                         worker_config,
                         instance_type.get("worker-config", {}),
                     )
+                image_id = image.image_id(provider_id, region)
+                _populate_deployment_id(instance_worker_config, image_id)
                 launch_config = {
                     "capacityPerInstance": instance_type.get("capacityPerInstance", 1),
                     "region": region,
                     "launchConfig": {
-                        "ImageId": image.image_id(provider_id, region),
+                        "ImageId": image_id,
                         "Placement": {"AvailabilityZone": availability_zone},
                         "SubnetId": subnet_id,
                         "SecurityGroupIds": security_groups,
