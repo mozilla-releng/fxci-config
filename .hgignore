@@ -2,7 +2,7 @@
 sandbox
 TODO.txt
 .eggs
-\.egg-info$
+\.egg-info/
 __pycache__
 \.tox
 build/
