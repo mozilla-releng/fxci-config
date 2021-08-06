@@ -10,7 +10,7 @@ payload:
   command:
   - "/bin/bash"
   - "-cx"
-  - git fetch origin && git reset --hard origin/master && automation/taskcluster/action/update_geckoview.sh
+  - git fetch origin main && git reset --hard FETCH_HEAD && automation/taskcluster/action/update_geckoview.sh
     beta
   maxRunTime: 3600
   expires:
