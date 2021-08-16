@@ -208,6 +208,12 @@ project/releng/generic-worker/datacenter-gecko-t-loaner:
         - assume:worker-type:releng-hardware/gecko-t-linux-talos-*
         - assume:worker-type:releng-hardware/gecko-t-osx-1014-*
         - assume:worker-type:releng-hardware/gecko-t-osx-1015-*
+# TODO: figure out what the vpn build machines worker ids will be
+#project/releng/generic-worker/datacenter-mozillavpn-t-osx:
+#    description: Datacenter MacOS build machines for Mozilla VPN
+#    scopes:
+#        - assume:worker-type:releng-hardware/mozillavpn-b-osx*
+#        - queue:worker-id:mdc2/???*
 project/releng/generic-worker/datacenter-gecko-t-osx:
     description: Datacenter MacOS dedicated developer and automation worker.
     scopes:
@@ -458,21 +464,35 @@ project/releng/scriptworker/v2/iscript/tb-prod:
     scopes:
         - assume:worker-type:scriptworker-prov-v1/tb-signing-mac-v1
         - queue:worker-id:signing-mac-v1/tb-mac-v3-signing*
-project/releng/scriptworker/v2/mpd001-3-signing:
-    description: mpd001 signing
+project/releng/scriptworker/v2/mozillavpn-3-signing:
+    description: mozillavpn signing
     scopes:
-        - project:mpd001:releng:signing:*
-        - queue:claim-work:scriptworker-k8s/mpd001-1-signing
-        - queue:claim-work:scriptworker-k8s/mpd001-3-signing
-        - queue:claim-work:scriptworker-prov-v1/mpd001-1-signing
-        - queue:claim-work:scriptworker-prov-v1/mpd001-3-signing
-        - queue:get-artifact:project/mpd001/*
-        - queue:poll-task-urls:scriptworker-prov-v1/mpd001-1-signing
-        - queue:poll-task-urls:scriptworker-prov-v1/mpd001-3-signing
-        - queue:worker-id:mpd001-1-signing/mpd001-1-signing
-        - queue:worker-id:mpd001-1-signing/signing-linux-dev1
-        - queue:worker-id:mpd001-3-signing/mpd001-3-signing
-        - queue:worker-id:mpd001-3-signing/signing-linux*
+        - project:mozillavpn:releng:signing:*
+        - queue:claim-work:scriptworker-k8s/mozillavpn-1-signing
+        - queue:claim-work:scriptworker-k8s/mozillavpn-3-signing
+        - queue:claim-work:scriptworker-prov-v1/mozillavpn-1-signing
+        - queue:claim-work:scriptworker-prov-v1/mozillavpn-3-signing
+        - queue:get-artifact:project/mozillavpn/*
+        - queue:poll-task-urls:scriptworker-prov-v1/mozillavpn-1-signing
+        - queue:poll-task-urls:scriptworker-prov-v1/mozillavpn-3-signing
+        - queue:worker-id:mozillavpn-1-signing/mozillavpn-1-signing
+        - queue:worker-id:mozillavpn-1-signing/signing-linux-dev1
+        - queue:worker-id:mozillavpn-3-signing/mozillavpn-3-signing
+        - queue:worker-id:mozillavpn-3-signing/signing-linux*
+project/releng/scriptworker/v2/iscript/mozillavpn-dep:
+    description: ''
+    scopes:
+        - assume:worker-type:scriptworker-prov-v1/mozillavpn-depsigning-mac-v1
+        - queue:worker-id:signing-mac-v1/mozillavpn-dep-mac-v3-signing*
+project/releng/scriptworker/v2/iscript/mozillavpn-prod:
+    description: ''
+    scopes:
+        - assume:worker-type:scriptworker-prov-v1/mozillavpn-signing-mac-v1
+        - queue:worker-id:signing-mac-v1/mozillavpn-mac-v3-signing*
+project/releng/scriptworker/v2/notarization-poller/mozillavpn-prod:
+    description: Mac notarization poller client.
+    scopes:
+        - assume:worker-type:scriptworker-prov-v1/mozillavpn-mac-notarization-poller
 project/releng/scriptworker/v2/notarization-poller/prod:
     description: Mac notarization poller client.
     scopes:
@@ -689,12 +709,12 @@ project/releng/scriptworker/v2/signing/dev/firefoxci-gecko-t:
         - queue:worker-id:gecko-t-signing-dev/gecko-t-signing-dev-*
         - queue:get-artifact:releng/partner/*
         - queue:get-artifact:private/openh264/*
-project/releng/scriptworker/v2/signing/dev/firefoxci-mpd001-t:
-    description: dev mpd001 signing
+project/releng/scriptworker/v2/signing/dev/firefoxci-mozillavpn-t:
+    description: dev mozillavpn signing
     scopes:
-        - queue:claim-work:scriptworker-k8s/mpd001-t-signing-dev
-        - queue:get-artifact:project/mpd001/*
-        - queue:worker-id:mpd001-t-signing-dev/mpd001-t-signing-dev-*
+        - queue:claim-work:scriptworker-k8s/mozillavpn-t-signing-dev
+        - queue:get-artifact:project/mozillavpn/*
+        - queue:worker-id:mozillavpn-t-signing-dev/mozillavpn-t-signing-dev-*
 project/releng/scriptworker/v2/signing/dev/firefoxci-xpi-t:
     description: dev xpi signing
     scopes:
@@ -776,18 +796,18 @@ project/releng/scriptworker/v2/signing/prod/firefoxci-mobile-t:
     scopes:
         - queue:claim-work:scriptworker-k8s/mobile-t-signing
         - queue:worker-id:mobile-t-signing/mobile-t-signing-*
-project/releng/scriptworker/v2/signing/prod/firefoxci-mpd001-3:
-    description: prod mpd001 signing
+project/releng/scriptworker/v2/signing/prod/firefoxci-mozillavpn-3:
+    description: prod mozillavpn signing
     scopes:
-        - queue:claim-work:scriptworker-k8s/mpd001-3-signing
-        - queue:get-artifact:project/mpd001/*
-        - queue:worker-id:mpd001-3-signing/mpd001-3-signing-*
-project/releng/scriptworker/v2/signing/prod/firefoxci-mpd001-t:
-    description: mpd001 dep signing
+        - queue:claim-work:scriptworker-k8s/mozillavpn-3-signing
+        - queue:get-artifact:project/mozillavpn/*
+        - queue:worker-id:mozillavpn-3-signing/mozillavpn-3-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-mozillavpn-t:
+    description: mozillavpn dep signing
     scopes:
-        - queue:claim-work:scriptworker-k8s/mpd001-t-signing
-        - queue:get-artifact:project/mpd001/*
-        - queue:worker-id:mpd001-t-signing/mpd001-t-signing-*
+        - queue:claim-work:scriptworker-k8s/mozillavpn-t-signing
+        - queue:get-artifact:project/mozillavpn/*
+        - queue:worker-id:mozillavpn-t-signing/mozillavpn-t-signing-*
 project/releng/scriptworker/v2/signing/prod/firefoxci-xpi-3:
     description: production xpi signing
     scopes:
@@ -997,8 +1017,8 @@ project/relops/image-builder/dev:
         - worker-manager:manage-worker-pool:gecko-1/win*
         - worker-manager:manage-worker-pool:gecko-3/win*
         - worker-manager:manage-worker-pool:gecko-t/win*
-        - worker-manager:manage-worker-pool:mpd001-1/win*
-        - worker-manager:manage-worker-pool:mpd001-3/win*
+        - worker-manager:manage-worker-pool:mozillavpn-1/win*
+        - worker-manager:manage-worker-pool:mozillavpn-3/win*
         - worker-manager:manage-worker-pool:relops/*
         # Allow creating tasks on test workers
         - worker-manager:provider:aws

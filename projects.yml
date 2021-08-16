@@ -835,14 +835,13 @@ elmo-taskcluster:
   level: 3
   trust_domain: l10n
 
-# MPD 001 // FirefoxVPN
-mpd001:
-  repo: https://github.com/mozilla-services/guardian-vpn-windows
+# Mozilla VPN
+mozilla-vpn-client:
+  repo: https://github.com/mozilla-mobile/mozilla-vpn-client
   repo_type: git
-  default_branch: master
+  default_branch: main
   level: 3
-  trust_domain: mpd001
-
+  trust_domain: mozillavpn
 
 # Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
 # repo:github.com/mozilla-extensions/* is configured in grants.yml, under the xpi-roles feature

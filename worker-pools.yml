@@ -1744,8 +1744,8 @@ pools:
       - pool-group: glean-1
       - pool-group: glean-3
         chain-of-trust: trusted
-      - pool-group: mpd001-1
-      - pool-group: mpd001-3
+      - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-3
         chain-of-trust: trusted
       - pool-group: scriptworker-1
       - pool-group: scriptworker-3
@@ -2140,16 +2140,52 @@ pools:
           Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
-- pool_id: mpd001-1/b-win2012
+- pool_id: '{pool-group}/b-linux'
+  description: Worker for linux build
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  variants:
+      - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-3
+        chain-of-trust: trusted
+  config:
+    regions: [us-east-1, us-west-1, us-west-2]
+    image:
+        by-chain-of-trust:
+            trusted: docker-worker-hvm-builder-trusted-current
+            default: docker-worker-hvm-builder-current
+    security:
+        by-chain-of-trust:
+            trusted: trusted
+            default: null
+    maxCapacity: 10
+    instance_types:
+    - instanceType: c5d.large
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.5
+    - instanceType: m5d.large
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+      utility: 1.4
+    - instanceType: c5.large
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/xvdb
+          Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      worker-config:
+        capacityManagement: {diskspaceThreshold: 30000000000}
+- pool_id: mozillavpn-1/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
   provider_id: aws
   config:
-    image: occ-mpd001-b-win2012-current
+    image: occ-b-win2012-current
     maxCapacity: 6
     additional-user-data:
-      workerType: mpd001-1-b-win2012
+      workerType: mozillavpn-1-b-win2012
     regions: [us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
     implementation: generic-worker/windows
@@ -2168,16 +2204,16 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-- pool_id: mpd001-3/b-win2012
+- pool_id: mozillavpn-3/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
   email_on_error: false
   provider_id: aws
   config:
-    image: occ-mpd001-b-win2012-trusted-current
+    image: occ-b-win2012-trusted-current
     maxCapacity: 6
     additional-user-data:
-      workerType: mpd001-3-b-win2012
+      workerType: mozillavpn-3-b-win2012
     regions: [us-east-1, us-west-1, us-west-2]
     security: trusted
     implementation: generic-worker/windows

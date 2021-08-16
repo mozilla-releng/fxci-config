@@ -1035,19 +1035,19 @@
   - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-2-b-win*
   - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-3-b-win*
   - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win*
-  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mpd-1-b-win*
-  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mpd-3-b-win*
-  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mpd001-1-b-win*
-  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mpd001-3-b-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-1-b-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-3-b-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-1-b-win*
+  - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-3-b-win*
   - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:relops*
   - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win*
   - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-2-b-win*
   - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-3-b-win*
   - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win*
-  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mpd-1-b-win*
-  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mpd-3-b-win*
-  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mpd001-1-b-win*
-  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mpd001-3-b-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-1-b-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-3-b-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-1-b-win*
+  - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-3-b-win*
   - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:relops*
   to:
   - project:
@@ -1667,20 +1667,20 @@
       job: ["branch:*", "cron:*"]
 
 
-# MPD001
+# Mozilla VPN
 
 - grant:
   - queue:create-task:{priority}:built-in/*
-  - queue:create-task:{priority}:mpd001-{level}/*
+  - queue:create-task:{priority}:mozillavpn-{level}/*
   - queue:route:index.{trust_domain}.cache.level-{level}.*
   - queue:scheduler-id:{trust_domain}-level-{level}
   - docker-worker:cache:{trust_domain}-level-{level}-*
   - generic-worker:cache:{trust_domain}-level-{level}-*
   - queue:route:notify.email.*
   - queue:route:checks
-  - queue:get-artifact:project/mpd001/*
+  - queue:get-artifact:project/mozillavpn/*
   # Create level-1 scopes explicitly
-  - queue:create-task:{priority}:mpd001-1/*
+  - queue:create-task:{priority}:mozillavpn-1/*
   - queue:route:index.{trust_domain}.cache.level-1.*
   - queue:scheduler-id:{trust_domain}-level-1
   - docker-worker:cache:{trust_domain}-level-1-*
@@ -1688,37 +1688,32 @@
   to:
   - project:
       alias:
-      - mpd001
+      - mozillavpn
       job: ["pull-request", "branch:*", "cron:*"]
 
 - grant:
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
-  - project:mpd001:releng:signing:cert:dep-signing
+  - project:mozillavpn:releng:signing:cert:dep-signing
   to:
   - project:
       alias:
-      - mpd001
-      # Only enable this for master and pull-requests, so that in-repo branches
-      # don't get access to scriptworkers.
+      - mozillavpn
       job:
-        - "branch:master"
-        - "branch:releng"
+        - "branch:*"
         - "pull-request"
-        - "branch:release"
 
 - grant:
-  - project:mpd001:releng:signing:cert:release-signing
+  - project:mozillavpn:releng:signing:cert:release-signing
   to:
   - project:
       alias:
-      - mpd001
+      - mozillavpn
       # Only enable this for master and release branches, so that in-repo branches
       # don't get access to release signing.
       job:
-        - "branch:releng"
-        - "branch:master"
-        - "branch:release"
+        - "branch:main"
+        - "branch:releases/*"
 
 # XPI
 
