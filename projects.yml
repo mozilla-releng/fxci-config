@@ -842,6 +842,12 @@ mozilla-vpn-client:
   default_branch: main
   level: 3
   trust_domain: mozillavpn
+  features:
+    github-taskgraph: true
+    taskgraph-actions: true
+    taskgraph-cron: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
 
 # Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
 # repo:github.com/mozilla-extensions/* is configured in grants.yml, under the xpi-roles feature
