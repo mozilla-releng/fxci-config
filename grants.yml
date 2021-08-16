@@ -587,7 +587,6 @@
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bgrinstead
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|dtownsend
-    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|erose
     # mkaply
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mozilla234
 
