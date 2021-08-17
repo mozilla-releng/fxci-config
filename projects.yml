@@ -863,6 +863,7 @@ mozilla-vpn-client:
   default_branch: main
   level: 3
   trust_domain: mozillavpn
+  trust_project: mozillavpn
   features:
     github-taskgraph: true
     taskgraph-actions: true

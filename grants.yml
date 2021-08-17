@@ -1686,7 +1686,7 @@
   to:
   - project:
       alias:
-      - mozillavpn
+      - mozilla-vpn-client
       job: ["pull-request", "branch:*", "cron:*"]
 
 - grant:
@@ -1696,7 +1696,7 @@
   to:
   - project:
       alias:
-      - mozillavpn
+      - mozilla-vpn-client
       job:
         - "branch:*"
         - "pull-request"
@@ -1706,7 +1706,7 @@
   to:
   - project:
       alias:
-      - mozillavpn
+      - mozilla-vpn-client
       # Only enable this for master and release branches, so that in-repo branches
       # don't get access to release signing.
       job:
