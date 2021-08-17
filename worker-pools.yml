@@ -542,6 +542,9 @@ pools:
         chain-of-trust: trusted
       - pool-group: kaios-1
       - pool-group: kaios-2
+      - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-3
+        chain-of-trust: trusted
   config:
     image:
         by-chain-of-trust:
