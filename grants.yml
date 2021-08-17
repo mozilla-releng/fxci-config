@@ -1550,7 +1550,6 @@
 
 # focus (android) scopes
 - grant:
-  # It hasn't been migrated to taskgraph
   - queue:scheduler-id:taskcluster-github
   - queue:route:statuses
   to:
@@ -1575,16 +1574,14 @@
       job: ["release", "cron:nightly"]
 
 - grant:
-    # XXX Focus is deprecated and won't be migrated to `index.mobile.v2`
-    - queue:route:index.project.mobile.focus.release.latest
+    - queue:route:index.v2.project.mobile.focus-android.release.latest
   to:
   - project:
       alias: focus-android
       job: ["release"]
 
 - grant:
-    # XXX Focus is deprecated and won't be migrated to `index.mobile.v2`
-    - queue:route:index.project.mobile.focus.nightly.latest
+    - queue:route:index.v2.project.mobile.focus-android.nightly.latest
     - queue:route:notify.email.firefox-focus@mozilla.com.on-failed
   to:
   - project:
