@@ -629,7 +629,6 @@ focus-android:
   default_branch: main
   level: 3
   features:
-    autophone: true
     beetmover-phase: true
     github-taskgraph: true
     github-publication: true
@@ -654,7 +653,6 @@ staging-focus-android:
   default_branch: main
   level: 3
   features:
-    autophone: true
     github-publication: true
     github-taskgraph: true
     mobile-roles: true
