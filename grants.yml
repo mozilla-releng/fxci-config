@@ -1574,14 +1574,14 @@
       job: ["release", "cron:nightly"]
 
 - grant:
-    - queue:route:index.v2.project.mobile.focus-android.release.latest
+    - queue:route:index.v2.project.mobile.{trust-project}.release.*
   to:
   - project:
       alias: focus-android
       job: ["release"]
 
 - grant:
-    - queue:route:index.v2.project.mobile.focus-android.nightly.latest
+    - queue:route:index.v2.project.mobile.{trust-project}.nightly.*
     - queue:route:notify.email.firefox-focus@mozilla.com.on-failed
   to:
   - project:

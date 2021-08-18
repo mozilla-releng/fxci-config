@@ -624,36 +624,49 @@ staging-fenix:
 focus-android:
   repo: https://github.com/mozilla-mobile/focus-android
   trust_domain: mobile
-  trust_project: focus
+  trust_project: focus-android
   repo_type: git
   default_branch: main
   level: 3
   features:
+    autophone: true
+    beetmover-phase: true
     github-taskgraph: true
+    github-publication: true
     mobile-roles: true
-    mobile-sign-phase: true
+    mobile-bump-github: true
+    mobile-firebase-testing: true
+    mobile-public-code-coverage: true
     mobile-pushapk-phase: true
+    mobile-sign-phase: true
     scriptworker: true
     shipit: true
-    taskgraph-cron: true
     taskgraph-actions: true
+    taskgraph-cron: true
+    treeherder-reporting: true
     trust-domain-scopes: true
 
 staging-focus-android:
   repo: https://github.com/mozilla-releng/staging-focus-android
   trust_domain: mobile
-  trust_project: focus
+  trust_project: focus-android
   repo_type: git
   default_branch: main
   level: 3
   features:
+    autophone: true
+    github-publication: true
     github-taskgraph: true
     mobile-roles: true
-    mobile-sign-phase: true
+    mobile-firebase-testing: true
+    mobile-public-code-coverage: true
     mobile-pushapk-phase: true
+    mobile-sign-phase: true
     scriptworker: true
     shipit: true
+    taskgraph-actions: true
     taskgraph-cron: true
+    treeherder-reporting: true
     taskgraph-actions: true
 
 firefox-ios:
