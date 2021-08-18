@@ -1574,14 +1574,18 @@
       job: ["release", "cron:nightly"]
 
 - grant:
-    - queue:route:index.v2.project.mobile.{trust_project}.release.*
+  #TODO remove once switched over to taskgraph
+    - queue:route:index.project.mobile.focus.release.latest
+    - queue:route:index.v2.project.{trust_domain}.{trust_project}.release.*
   to:
   - project:
       alias: focus-android
       job: ["release"]
 
 - grant:
-    - queue:route:index.v2.project.mobile.{trust_project}.nightly.*
+  #TODO remove once switched over to taskgraph
+    - queue:route:index.project.mobile.focus.nightly.latest
+    - queue:route:index.v2.project.{trust_domain}.{trust_project}.nightly.*
     - queue:route:notify.email.firefox-focus@mozilla.com.on-failed
   to:
   - project:
