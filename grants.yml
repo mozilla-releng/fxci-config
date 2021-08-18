@@ -1592,6 +1592,29 @@
       alias: focus-android
       job: ["cron:nightly"]
 
+# TODO: remove me once focus is switched over to taskgraph
+# the new scopes are `focus-android`, which are added in other blocks
+- grant:
+  - project:mobile:focus:releng:signing:cert:release-signing
+  - project:mobile:focus:releng:signing:format:*
+  - project:mobile:focus:releng:googleplay:product:focus
+  to:
+  - project:
+      alias: focus-android
+      level: 3
+      job: ["release", "cron:nightly", "action:release-promotion"]
+
+- grant:
+  - project:mobile:focus:releng:googleplay:product:focus:dep
+  to:
+  - project:
+      alias: focus-android
+      job: ["pull-request"]
+  - project:
+      alias: focus-android
+      level: 1
+      job: ["release", "cron:*", "action:release-promotion"]
+
 # firefox-tv specific scopes
 - grant:
   - secrets:get:project/mobile/firefox-tv/tokens
