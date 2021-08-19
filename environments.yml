@@ -105,9 +105,11 @@ firefoxci:
             - "eastus"
             - "eastus2"
             - "northcentralus"
+            - "northeurope"
             - "southcentralus"
             - "westus"
             - "westus2"
+            - "westeurope"
     google_config:
         zones:
             by-region:

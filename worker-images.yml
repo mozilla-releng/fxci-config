@@ -367,9 +367,11 @@ ronin-t-windows10-64-2004-current:
     west-us-2: gecko-t-win10-64-2004-westus2-20h1-evd-093284b
 ronin-t-windows10-64-2004-gpu-current:
   azure2:
-    east-us: gecko-t-win10-64-2004-gpu-eastus-20h1-evd-9f298e8
-    north-central-us: gecko-t-win10-64-2004-gpu-northcentralus-20h1-evd-9f298e8
-    south-central-us: gecko-t-win10-64-2004-gpu-southcentralus-20h1-evd-9f298e8
+    east-us: gecko-t-win10-64-2004-gpu-eastus-20h1-evd-028e4f8
+    north-central-us: gecko-t-win10-64-2004-gpu-northcentralus-20h1-evd-028e4f8
+    south-central-us: gecko-t-win10-64-2004-gpu-southcentralus-20h1-evd-028e4f8
+    north-europe: gecko-t-win10-64-2004-gpu-northeurope-20h1-evd-028e4f8
+    west-europe: gecko-t-win10-64-2004-gpu-westeurope-20h1-evd-028e4f8
 ronin-t-windows10-64-2004-test:
   azure2:
     central-us: gecko-t-win10-64-2004-test-centralus-20h1-evd-b839260
