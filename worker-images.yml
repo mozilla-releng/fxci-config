@@ -358,13 +358,13 @@ occ-t-win7-32-gpu-v20200226:
     us-west-2: ami-0cecd6bf98b15e862
 ronin-t-windows10-64-2004-current:
   azure2:
-    central-us: gecko-t-win10-64-2004-centralus-20h1-evd-9f298e8
-    east-us: gecko-t-win10-64-2004-eastus-20h1-evd-9f298e8
-    east-us-2: gecko-t-win10-64-2004-eastus2-20h1-evd-9f298e8
-    north-central-us: gecko-t-win10-64-2004-northcentralus-20h1-evd-9f298e8
-    south-central-us: gecko-t-win10-64-2004-southcentralus-20h1-evd-9f298e8
-    west-us: gecko-t-win10-64-2004-westus-20h1-evd-9f298e8
-    west-us-2: gecko-t-win10-64-2004-westus2-20h1-evd-9f298e8
+    central-us: gecko-t-win10-64-2004-centralus-20h1-evd-093284b
+    east-us: gecko-t-win10-64-2004-eastus-20h1-evd-093284b
+    east-us-2: gecko-t-win10-64-2004-eastus2-20h1-evd-093284b
+    north-central-us: gecko-t-win10-64-2004-northcentralus-20h1-evd-093284b
+    south-central-us: gecko-t-win10-64-2004-southcentralus-20h1-evd-093284b
+    west-us: gecko-t-win10-64-2004-westus-20h1-evd-093284b
+    west-us-2: gecko-t-win10-64-2004-westus2-20h1-evd-093284b
 ronin-t-windows10-64-2004-gpu-current:
   azure2:
     east-us: gecko-t-win10-64-2004-gpu-eastus-20h1-evd-9f298e8
