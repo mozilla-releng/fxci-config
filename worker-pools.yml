@@ -2189,9 +2189,9 @@ pools:
     maxCapacity: 6
     additional-user-data:
       workerType: mozillavpn-1-b-win2012
-    regions: [us-east-1, us-west-1, us-west-2]
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
-    implementation: generic-worker/windows
+    implementation: generic-worker/occ-8047eee
     instance_types:
       - instanceType: c4.4xlarge
         launchConfig:
@@ -2200,12 +2200,16 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+          - DeviceName: /dev/sdc
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       - instanceType: c5.4xlarge
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+          - DeviceName: /dev/sdc
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 - pool_id: mozillavpn-3/b-win2012
   description: ''
@@ -2219,7 +2223,7 @@ pools:
       workerType: mozillavpn-3-b-win2012
     regions: [us-east-1, us-west-1, us-west-2]
     security: trusted
-    implementation: generic-worker/windows
+    implementation: generic-worker/occ-8047eee
     instance_types:
       - instanceType: c4.4xlarge
         launchConfig:
@@ -2228,12 +2232,16 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+          - DeviceName: /dev/sdc
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
       - instanceType: c5.4xlarge
         launchConfig:
           BlockDeviceMappings:
           - DeviceName: /dev/sda1
             Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
           - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+          - DeviceName: /dev/sdc
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 - pool_id: xpi-1/images
   description: 'Builds docker images for XPI; NOTE: capacity set to 1 instead of
