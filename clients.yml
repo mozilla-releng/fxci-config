@@ -464,21 +464,21 @@ project/releng/scriptworker/v2/iscript/tb-prod:
     scopes:
         - assume:worker-type:scriptworker-prov-v1/tb-signing-mac-v1
         - queue:worker-id:signing-mac-v1/tb-mac-v3-signing*
-project/releng/scriptworker/v2/mozillavpn-3-signing:
+project/releng/scriptworker/v2/signing/dev/firefoxci-mozillavpn-t:
     description: mozillavpn signing
     scopes:
-        - project:mozillavpn:releng:signing:*
-        - queue:claim-work:scriptworker-k8s/mozillavpn-1-signing
+        - queue:claim-work:scriptworker-k8s/mozillavpn-t-signing
+        - queue:worker-id:mozillavpn-t-signing-dev/signing-linux-dev*
+project/releng/scriptworker/v2/signing/prod/firefoxci-mozillavpn-t:
+    description: mozillavpn signing
+    scopes:
+        - queue:claim-work:scriptworker-k8s/mozillavpn-t-signing
+        - queue:worker-id:mozillavpn-t-signing/mozillavpn-t-signing*
+project/releng/scriptworker/v2/signing/prod/firefoxci-mozillavpn-3:
+    description: mozillavpn signing
+    scopes:
         - queue:claim-work:scriptworker-k8s/mozillavpn-3-signing
-        - queue:claim-work:scriptworker-prov-v1/mozillavpn-1-signing
-        - queue:claim-work:scriptworker-prov-v1/mozillavpn-3-signing
-        - queue:get-artifact:project/mozillavpn/*
-        - queue:poll-task-urls:scriptworker-prov-v1/mozillavpn-1-signing
-        - queue:poll-task-urls:scriptworker-prov-v1/mozillavpn-3-signing
-        - queue:worker-id:mozillavpn-1-signing/mozillavpn-1-signing
-        - queue:worker-id:mozillavpn-1-signing/signing-linux-dev1
-        - queue:worker-id:mozillavpn-3-signing/mozillavpn-3-signing
-        - queue:worker-id:mozillavpn-3-signing/signing-linux*
+        - queue:worker-id:mozillavpn-3-signing/mozillavpn-3-signing*
 project/releng/scriptworker/v2/iscript/mozillavpn-dep:
     description: ''
     scopes:
