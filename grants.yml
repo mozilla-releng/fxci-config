@@ -1524,6 +1524,7 @@
       feature: github-taskgraph
 
 - grant:
+  - queue:route:checks
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   to:
