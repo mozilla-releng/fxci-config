@@ -878,7 +878,8 @@ mozilla-vpn-client:
   features:
     github-taskgraph: true
     taskgraph-actions: true
-    taskgraph-cron: true
+    # Enable this after .taskcluster.yml and .cron.yml exist in the repo
+    #taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
 
