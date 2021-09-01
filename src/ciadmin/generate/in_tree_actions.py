@@ -156,9 +156,6 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
                 project=prop('repository project name (also known as "alias")'),
                 level=prop("repository SCM level"),
             ),
-            scope_repository_url=prop(
-                "repository URL to use when checking scopes for this action"
-            ),
             parameters={
                 "type": "object",
                 "description": "decision task parameters",
@@ -212,8 +209,7 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
                 # calculate it directly in .taskcluster.yml, once all the other work
                 # for actions-as-hooks has finished
                 "repo_scope": "assume:repo:"
-                "${payload.decision.scope_repository_url[8:]}:action:"
-                + action.action_perm,
+                "${payload.decision.repository.url[8:]}:action:" + action.action_perm,
                 "action_perm": action.action_perm,
             },
             # remaining sections are copied en masse from the hook payload

@@ -1979,8 +1979,6 @@
   - queue:rerun-task:mobile-level-*
   - hooks:trigger-hook:project-mobile/in-tree-action-1-generic/*
   - hooks:trigger-hook:project-mobile/in-tree-action-3-generic/*
-  - hooks:trigger-hook:project-mobile/in-tree-action-1-rerun-pr/*
-  - hooks:trigger-hook:project-mobile/in-tree-action-3-rerun-pr/*
   - hooks:trigger-hook:project-mobile/in-tree-action-1-cancel-all/*
   - hooks:trigger-hook:project-mobile/in-tree-action-3-cancel-all/*
   to:
@@ -2490,8 +2488,6 @@
 - grant:
   - hooks:trigger-hook:project-glean/in-tree-action-1-generic/*
   - hooks:trigger-hook:project-glean/in-tree-action-3-generic/*
-  - hooks:trigger-hook:project-glean/in-tree-action-1-rerun-pr/*
-  - hooks:trigger-hook:project-glean/in-tree-action-3-rerun-pr/*
   to:
   - group:
     - glean_team
@@ -2620,8 +2616,6 @@
 - grant:
   - hooks:trigger-hook:project-mobile/in-tree-action-1-generic/*
   - hooks:trigger-hook:project-mobile/in-tree-action-3-generic/*
-  - hooks:trigger-hook:project-mobile/in-tree-action-1-rerun-pr/*
-  - hooks:trigger-hook:project-mobile/in-tree-action-3-rerun-pr/*
   to:
   - roles:
     - mozillians-group:android-components-developers
