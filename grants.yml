@@ -1565,7 +1565,7 @@
   to:
   - project:
       alias: focus-android
-      job: ["branch:*"]
+      job: ["branch:*", "pull-request"]
 
 - grant:
     - secrets:get:project/focus/tokens
