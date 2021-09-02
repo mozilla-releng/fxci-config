@@ -1749,6 +1749,11 @@
   - project:xpi:releng:signing:cert:dep-signing
   - project:xpi:releng:ship-it:server:staging
   - project:xpi:releng:ship-it:action:mark-as-shipped
+  - project:xpi:beetmover:action:*
+  - project:xpi:beetmover:bucket:dep
+  - project:xpi:balrog:action:*
+  - project:xpi:balrog:channel:*
+  - project:xpi:balrog:server:staging
   - queue:create-task:highest:xpi-{level}/*
   - queue:create-task:highest:xpi-t/*
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
@@ -1767,6 +1772,8 @@
   - project:xpi:releng:github:project:mozilla-extensions/*
   - project:xpi:releng:signing:cert:release-signing
   - project:xpi:releng:ship-it:server:production
+  - project:xpi:beetmover:bucket:release
+  - project:xpi:balrog:server:release
   to:
   - project:
       alias:
