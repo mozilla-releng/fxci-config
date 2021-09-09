@@ -28,6 +28,9 @@ from .ciconfig.projects import Project
 # last fired.  This ensures that any "popular" hooks stick around, for example
 # to support try jobs run against old revisions.
 HOOK_RETENTION_TIME = datetime.timedelta(days=60)
+# Actions that should use `scope_repository_url` instead of `repository.url`
+# to generate scopes.
+SCOPE_REPOSITORY_ACTIONS = ["rerun-pr"]
 
 
 async def hash_taskcluster_ymls():
@@ -89,7 +92,7 @@ async def hash_taskcluster_ymls():
     return rv
 
 
-def make_hook(action, tcyml_content, tcyml_hash, projects):
+def make_hook(action, tcyml_content, tcyml_hash, projects, scope_repo_location):
     hookGroupId = "project-{}".format(action.trust_domain)
     hookId = "in-tree-action-{}-{}/{}".format(
         action.level, action.action_perm, tcyml_hash
@@ -156,12 +159,15 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
                 project=prop('repository project name (also known as "alias")'),
                 level=prop("repository SCM level"),
             ),
+            scope_repository_url=prop(
+                "repository URL to use when checking scopes for this action"
+            ),
             parameters={
                 "type": "object",
                 "description": "decision task parameters",
                 "additionalProperties": True,
             },
-            optional={"parameters"},
+            optional={"parameters", "scope_repository_url"},
         ),
         user=obj(
             "Information provided by the user or user interface",
@@ -209,7 +215,7 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
                 # calculate it directly in .taskcluster.yml, once all the other work
                 # for actions-as-hooks has finished
                 "repo_scope": "assume:repo:"
-                "${payload.decision.repository.url[8:]}:action:" + action.action_perm,
+                f"${{{scope_repo_location}[8:]}}:action:" + action.action_perm,
                 "action_perm": action.action_perm,
             },
             # remaining sections are copied en masse from the hook payload
@@ -301,7 +307,13 @@ async def update_resources(resources):
             hooks_to_make[hash] = content
 
         for hash, content in hooks_to_make.items():
-            hook = make_hook(action, content, hash, hashed_tcymls)
+            # Eventually we should be able to drop this default once all
+            # taskgraph users have upgraded to a version that sets
+            # `scope_repository_url`
+            scope_repo_location = "payload.decision.repository.url"
+            if action.action_perm in SCOPE_REPOSITORY_ACTIONS:
+                scope_repo_location = "payload.decision.scope_repository_url"
+            hook = make_hook(action, content, hash, hashed_tcymls, scope_repo_location)
             resources.add(hook)
             added_hooks.add(hook.id)
 
