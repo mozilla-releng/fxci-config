@@ -652,7 +652,7 @@ staging-focus-android:
   trust_project: focus-android
   repo_type: git
   default_branch: main
-  level: 3
+  level: 1
   features:
     github-publication: true
     github-taskgraph: true
