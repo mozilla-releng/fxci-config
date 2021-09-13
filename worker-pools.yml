@@ -2419,6 +2419,38 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
           - DeviceName: /dev/sdc
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+- pool_id: mpd001-3/b-win2012
+  description: ''
+  owner: release+tc-workers@mozilla.com
+  email_on_error: false
+  provider_id: aws
+  config:
+    image: occ-mpd001-b-win2012-trusted-current
+    maxCapacity: 6
+    additional-user-data:
+      workerType: mpd001-3-b-win2012
+    regions: [us-east-1, us-west-1, us-west-2]
+    security: trusted
+    implementation: generic-worker/occ-8047eee
+    instance_types:
+      - instanceType: c4.4xlarge
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+          - DeviceName: /dev/sdc
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      - instanceType: c5.4xlarge
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+          - DeviceName: /dev/sdc
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 - pool_id: xpi-1/images
   description: 'Builds docker images for XPI; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
