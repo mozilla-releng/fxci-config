@@ -49,6 +49,7 @@ occ-t-win10-64-gpu-s-current: occ-t-win10-64-gpu-s-15415a4
 occ-t-win10-64-gpu-b-beta: occ-t-win10-64-gpu-b-feced22
 occ-t-win7-32-current: occ-t-win7-32-v20200226
 occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-v20200226
+occ-mpd001-b-win2012-trusted-current: occ-mpd-b-win2012-trusted-v20200226
 
 nss-win2012r2-current: nss-win2012r2-pre
 
@@ -356,6 +357,12 @@ occ-t-win7-32-gpu-v20200226:
     us-east-1: ami-02641726e4b419ba4
     us-west-1: ami-0ebc5c792d8418b65
     us-west-2: ami-0cecd6bf98b15e862
+occ-mpd-b-win2012-trusted-v20200226:
+  aws:
+    eu-central-1: ami-09a5852e0cc1edb81
+    us-east-1: ami-08f30fc003814c298
+    us-west-1: ami-0c76678a5bdb06f4e
+    us-west-2: ami-0520ba0d12752373c
 ronin-t-windows10-64-2004-current:
   azure2:
     central-us: gecko-t-win10-64-2004-centralus-20h1-evd-093284b
