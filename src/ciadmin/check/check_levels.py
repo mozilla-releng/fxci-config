@@ -52,3 +52,18 @@ async def check_scopes_for_hg_repos():
         if project.repo_type == "hg"
     }
     assert tc_levels == hgmo_levels
+
+
+@pytest.mark.asyncio
+async def check_elevated_privileges_for_staging_repos():
+    """
+    Ensures that the any project with an alias starting with `staging-`
+    has a level of 1 or None.
+    """
+
+    projects = await Project.fetch_all()
+    elevated_staging_repos = {}
+    for project in projects:
+        if project.alias.startswith("staging-") and project.level not in (1, None):
+            elevated_staging_repos[project.alias] = project.level
+    assert not elevated_staging_repos
