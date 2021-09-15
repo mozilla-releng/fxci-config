@@ -1560,8 +1560,7 @@
 
 - grant:
     - queue:route:notify.irc-channel.#android-ci.on-any
-    - secrets:get:project/focus/firebase
-    - secrets:get:project/focus/nimbledroid
+    - secrets:get:project/mobile/focus-android/firebase
   to:
   - project:
       alias: focus-android
