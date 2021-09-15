@@ -2741,6 +2741,13 @@
     - mozilla-group:team_taskcluster
   environments: staging
 
+# docker-worker AMI related: create tasks for every pool to see versions
+- grant:
+  - queue:create-task:low:*
+  to:
+  - roles:
+    - mozilla-group:team_taskcluster
+
 # Bug 1672397: Scopes to use Taskcluster notify service
 - grant:
   - notify:email:perftest-alerts@mozilla.com
