@@ -239,7 +239,6 @@
       feature: gecko-roles
       trust_domain: comm
 
-
 # moz-tree roles include the basic scopes available to version-control trees at
 # each of the three Mozilla source-code management levels.  They are useful as
 # shorthand to configure `repo:*` roles.  While most scopes are still contained
