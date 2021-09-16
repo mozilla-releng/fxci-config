@@ -91,7 +91,6 @@ mozilla-esr78:
     trust-domain-scopes: true
   cron:
     targets:
-      - l10n-bumper
       - periodic-update
 mozilla-esr91:
   repo: https://hg.mozilla.org/releases/mozilla-esr91
@@ -107,7 +106,6 @@ mozilla-esr91:
     trust-domain-scopes: true
   cron:
     targets:
-      - l10n-bumper
       - periodic-update
 comm-esr78:
   repo: https://hg.mozilla.org/releases/comm-esr78
