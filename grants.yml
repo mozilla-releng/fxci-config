@@ -1994,6 +1994,7 @@
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly-on-google-play
 
   # Allow to manage mobile trees
+  - queue:cancel-task:taskcluster-github/*
   - queue:cancel-task:mobile-level-*
   - queue:rerun-task:mobile-level-*
   - hooks:trigger-hook:project-mobile/in-tree-action-1-generic/*
