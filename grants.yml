@@ -1614,6 +1614,13 @@
       level: 1
       job: ["release", "cron:*", "action:release-promotion"]
 
+- grant:
+  - queue:route:index.mobile.v2.staging-focus-android.*
+  - queue:route:tc-treeherder.v2.focus-android-pr.*
+  to:
+  - project:
+      alias: staging-focus-android
+
 # firefox-tv specific scopes
 - grant:
   - secrets:get:project/mobile/firefox-tv/tokens
