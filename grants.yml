@@ -1735,6 +1735,13 @@
         - "pull-request"
 
 - grant:
+  - project:releng:services/tooltool/api/download/public
+  - project:releng:services/tooltool/api/download/internal
+  to:
+  - project:
+      alias: mozilla-vpn-client
+
+- grant:
   - project:mozillavpn:releng:signing:cert:release-signing
   to:
   - project:
