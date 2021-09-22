@@ -329,6 +329,8 @@ maple:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron:
+    targets: [nightly-desktop]
 jamun:
   repo: https://hg.mozilla.org/projects/jamun
   repo_type: hg
