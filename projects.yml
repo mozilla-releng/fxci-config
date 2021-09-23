@@ -645,6 +645,9 @@ focus-android:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron:
+    targets:
+      - nightly
 
 staging-focus-android:
   repo: https://github.com/mozilla-releng/staging-focus-android
@@ -667,6 +670,11 @@ staging-focus-android:
     taskgraph-cron: true
     treeherder-reporting: true
     taskgraph-actions: true
+  cron:
+    targets: [nightly]
+    hooks_owner: releng+staging-focus-android@mozilla.com
+    notify_emails: []
+
 
 firefox-ios:
   repo: https://github.com/mozilla-mobile/firefox-ios
