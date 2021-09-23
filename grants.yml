@@ -142,6 +142,12 @@
       trust_domain: [gecko, comm]
 
 - grant:
+  - queue:create-task:{priority}:scriptworker-k8s/{trust_domain}-1-*
+  to:
+  - project:
+      alias: maple
+
+- grant:
   - auth:aws-s3:read-write:comm-central-level-1-sccache-eu-central-1/*
   - auth:aws-s3:read-write:comm-central-level-1-sccache-us-east-1/*
   - auth:aws-s3:read-write:comm-central-level-1-sccache-us-west-1/*
