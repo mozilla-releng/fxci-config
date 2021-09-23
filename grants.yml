@@ -1190,6 +1190,13 @@
       feature: mobile-roles
 
 - grant:
+  - secrets:get:project/releng/mobile/github-cron-token
+  to:
+  - project:
+      trust_domain: mobile
+      job: ["cron:*"]
+
+- grant:
   # These tokens are considered public because they're available to Pull Requests. We need them
   # there because we want coverage reports.
   - secrets:get:project/mobile/{trust_project}/public-tokens
