@@ -1368,6 +1368,15 @@
       # Fenix also has some Firebase tests on nightly.
       alias: fenix
       job: ["cron:nightly", "cron:nightly-on-google-play", "cron:screenshots", "pull-request"]
+  - project:
+      # Focus PRs are restricted to collaborators, so exposing firebase is safe-enough for PRs.
+      # Focus also has some Firebase tests on nightly.
+      alias: focus-android
+      job: ["cron:nightly", "pull-request"]
+  - project:
+      # TODO - remove once focus/taskcluster work is complete
+      alias: staging-focus-android
+      job: ["pull-request"]
 
 - grant:
   - secrets:get:project/mobile/github
@@ -1572,7 +1581,6 @@
 
 - grant:
     - queue:route:notify.irc-channel.#android-ci.on-any
-    - secrets:get:project/mobile/focus-android/firebase
   to:
   - project:
       alias: focus-android
