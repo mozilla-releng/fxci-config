@@ -39,6 +39,8 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
     for project in projects:
         if not match(grantee.access, project.access):
             continue
+        if not match(grantee.repo_type, project.repo_type):
+            continue
         if not match(grantee.level, project.get_level()):
             continue
         if not match(grantee.alias, project.alias):

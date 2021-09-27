@@ -24,6 +24,7 @@ class ProjectGrantee:
     level = attr.ib(type=list, converter=listify, default=None)
     alias = attr.ib(type=list, converter=listify, default=None)
     feature = attr.ib(type=list, converter=listify, default=None)
+    repo_type = attr.ib(type=list, converter=listify, default=None)
     is_try = attr.ib(type=bool, default=None)
     trust_domain = attr.ib(type=list, converter=listify, default=None)
     job = attr.ib(type=list, converter=listify, default="*")
