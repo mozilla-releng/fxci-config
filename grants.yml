@@ -1199,7 +1199,7 @@
   - secrets:get:project/releng/mobile/github-cron-token
   to:
   - project:
-      trust_domain: mobile
+      repo_type: ["git"]
       job: ["cron:*"]
 
 - grant:
