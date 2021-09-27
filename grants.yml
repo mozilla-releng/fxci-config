@@ -1635,6 +1635,15 @@
       level: 1
       job: ["release", "cron:*", "action:release-promotion"]
 
+# TODO - remove after nightly work is tested and merged
+- grant:
+  - project:mobile:focus-android:releng:googleplay:product:focus-android:dep
+  to:
+  - project:
+      alias: staging-focus-android
+      level: 1
+      job: ["cron:*"]
+
 - grant:
   - queue:route:index.mobile.v2.staging-focus-android.*
   - queue:route:tc-treeherder.v2.focus-android-pr.*
