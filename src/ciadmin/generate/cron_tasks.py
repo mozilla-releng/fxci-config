@@ -50,15 +50,13 @@ async def make_hooks(project, environment):
             "hooks_owner", cron_config.get("hooks_owner", "")
         ),
     }
+    if "github.com" in project.repo:
+        context["cron_options"].extend(["--github-token-secret", GITHUB_TOKEN_SECRET])
 
     # use the cron-task-template.yml from the ci-configuration repository, rendering it
     # with the context values described there
     task_template = await get_ciconfig_file("cron-task-template.yml")
     task = jsone.render(task_template, context)
-    if "github.com" in project.repo:
-        context["cron_options"].append(
-            "--github-token-secret={}".format(GITHUB_TOKEN_SECRET)
-        )
 
     resources = [
         Hook(
