@@ -1064,7 +1064,7 @@ pools:
           idleTimeoutSecs: 300
     tags:
       workerType: gecko-t-win10-64-2004
-      deploymentId: 093284b
+      deploymentId: 5db26eb
       sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
       sourceRevision: cloud_windows
       sourceRepository: ronin_puppet
@@ -1113,7 +1113,7 @@ pools:
           idleTimeoutSecs: 300
     tags:
       workerType: gecko-t-win10-64-2004-gpu
-      deploymentId: 028e4f8
+      deploymentId: 5db26eb
       sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
       sourceRevision: cloud_windows
       sourceRepository: ronin_puppet
