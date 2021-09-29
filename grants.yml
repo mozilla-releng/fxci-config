@@ -1597,6 +1597,7 @@
   #TODO remove once switched over to taskgraph
     - queue:route:index.project.mobile.focus.release.latest
     - queue:route:index.v2.project.{trust_domain}.{trust_project}.release.*
+    - project:mobile:focus-android:releng:signing:cert:production-signing
   to:
   - project:
       alias: focus-android
