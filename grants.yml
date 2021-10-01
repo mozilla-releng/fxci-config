@@ -281,6 +281,7 @@
   - generic-worker:run-as-administrator:gecko-t/t-win10-64
   - generic-worker:run-as-administrator:gecko-t/t-win10-64-alpha
   - generic-worker:run-as-administrator:gecko-t/t-win10-64-beta
+  - generic-worker:run-as-administrator:gecko-t/win10-64-2004
   - project:releng:addons.mozilla.org:server:staging
   - project:releng:balrog:action:*
   - project:releng:balrog:channel:*
@@ -327,6 +328,7 @@
   - generic-worker:run-as-administrator:gecko-t/t-win10-64
   - generic-worker:run-as-administrator:gecko-t/t-win10-64-alpha
   - generic-worker:run-as-administrator:gecko-t/t-win10-64-beta
+  - generic-worker:run-as-administrator:gecko-t/win10-64-2004
   - project:releng:addons.mozilla.org:server:staging
   - project:releng:balrog:action:*
   - project:releng:balrog:channel:*
