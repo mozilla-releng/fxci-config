@@ -278,6 +278,7 @@
   - generic-worker:os-group:gecko-t/t-win10-64/Administrators
   - generic-worker:os-group:gecko-t/t-win10-64-alpha/Administrators
   - generic-worker:os-group:gecko-t/t-win10-64-beta/Administrators
+  - generic-worker:os-group:gecko-t/win10-64-2004/Administrators
   - generic-worker:run-as-administrator:gecko-t/t-win10-64
   - generic-worker:run-as-administrator:gecko-t/t-win10-64-alpha
   - generic-worker:run-as-administrator:gecko-t/t-win10-64-beta
@@ -325,6 +326,7 @@
   - generic-worker:os-group:gecko-t/t-win10-64/Administrators
   - generic-worker:os-group:gecko-t/t-win10-64-alpha/Administrators
   - generic-worker:os-group:gecko-t/t-win10-64-beta/Administrators
+  - generic-worker:os-group:gecko-t/win10-64-2004/Administrators
   - generic-worker:run-as-administrator:gecko-t/t-win10-64
   - generic-worker:run-as-administrator:gecko-t/t-win10-64-alpha
   - generic-worker:run-as-administrator:gecko-t/t-win10-64-beta
