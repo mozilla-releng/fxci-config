@@ -1612,6 +1612,7 @@
     - queue:route:index.project.mobile.focus.nightly.latest
     - queue:route:index.v2.project.{trust_domain}.{trust_project}.nightly.*
     - queue:route:notify.email.firefox-focus@mozilla.com.on-failed
+    - project:mobile:focus-android:releng:signing:cert:production-signing
   to:
   - project:
       alias: focus-android
