@@ -208,12 +208,14 @@ project/releng/generic-worker/datacenter-gecko-t-loaner:
         - assume:worker-type:releng-hardware/gecko-t-linux-talos-*
         - assume:worker-type:releng-hardware/gecko-t-osx-1014-*
         - assume:worker-type:releng-hardware/gecko-t-osx-1015-*
-# TODO: figure out what the vpn build machines worker ids will be
-#project/releng/generic-worker/datacenter-mozillavpn-t-osx:
-#    description: Datacenter MacOS build machines for Mozilla VPN
-#    scopes:
-#        - assume:worker-type:releng-hardware/mozillavpn-b-osx*
-#        - queue:worker-id:mdc2/???*
+project/releng/generic-worker/datacenter-mozillavpn-1-b-osx:
+    description: Datacenter level 1 MacOS build machines for Mozilla VPN
+    scopes:
+        - assume:worker-type:releng-hardware/mozillavpn-b-1-osx*
+project/releng/generic-worker/datacenter-mozillavpn-3-b-osx:
+    description: Datacenter level 1 MacOS build machines for Mozilla VPN
+    scopes:
+        - assume:worker-type:releng-hardware/mozillavpn-b-3-osx*
 project/releng/generic-worker/datacenter-gecko-t-osx:
     description: Datacenter MacOS dedicated developer and automation worker.
     scopes:
