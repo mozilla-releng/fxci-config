@@ -527,7 +527,7 @@
       job: ['cron:scriptworker-canary']
       trust_domain: gecko
       level: [3]
-      alias: [mozilla-central]
+      alias: [mozilla-central, autoland]
 
 - grant:
   # Allow the scriptworker-canary action to access the trybld-scriptworker key.
@@ -537,7 +537,7 @@
       job: ['action:scriptworker-canary']
       trust_domain: gecko
       level: [3]
-      alias: [mozilla-central]
+      alias: [mozilla-central, autoland]
 
 - grant:
   - project:comm:thunderbird:releng:balrog:server:release
