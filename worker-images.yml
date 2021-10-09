@@ -155,9 +155,9 @@ docker-worker-v202004241848-hvm-builder-trusted:
     us-west-2: ami-01a86f99411dd3c48
 docker-worker-v202004241848-hvm-builder-bug1676214:
   aws:
-    us-east-1: ami-030351eb257542536
-    us-west-1: ami-001e2f92c69f7ddfb
-    us-west-2: ami-0d3cd077c6f51f624
+    us-east-1: ami-0fd21b9566eba5684
+    us-west-1: ami-07158734d06a46355
+    us-west-2: ami-0926dadf98882995d
 docker-worker-v202004241848-hvm-builder-trusted-bug1676214:
   aws:
     us-east-1: ami-0cf2dc9e4b190d0c9
@@ -165,9 +165,9 @@ docker-worker-v202004241848-hvm-builder-trusted-bug1676214:
     us-west-2: ami-03e0359d864cbcf5f
 docker-worker-v202004241848-hvm-builder-trusted-bug1705196:
   aws:
-    us-east-1: ami-09353fe74f3ea543f
-    us-west-1: ami-0de827c6d96d7b6ee
-    us-west-2: ami-0e3dc51bfc03e710d
+    us-east-1: ami-0483d5338c35a6bf7
+    us-west-1: ami-0f9193bae5a2b7026
+    us-west-2: ami-0ded8859755ebede7
 
 # monopacker docker-worker images
 monopacker-docker-worker-trusted-2020-01-08t20-30-16z:
@@ -225,9 +225,9 @@ monopacker-docker-worker-2020-05-04T14-30-19Z:
     us-west-2: ami-07b33db0f538882e1
 monopacker-docker-worker-2020-05-04T14-30-19Z-bug1676214:
   aws:
-    us-east-1: ami-05b8b85ba7e1884b3
-    us-west-1: ami-04ff42cacfbd28cd9
-    us-west-2: ami-0af454e126ac59a6e
+    us-east-1: ami-04f6d199fb4335a2f
+    us-west-1: ami-0128afe4764e1e1b0
+    us-west-2: ami-0eda623438535d185
 monopacker-docker-worker-2020-08-05t22-29-20z:
   aws:
     us-east-1: ami-0fe24f9486925b029
@@ -241,15 +241,15 @@ monopacker-docker-worker-2020-08-05t22-29-20z:
     projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-08-05t22-29-20z
 monopacker-docker-worker-2020-08-05t22-29-20z-bug1676214:
   aws:
-    us-east-1: ami-0d06ad0672180c8bf
-    us-west-1: ami-007012d8875fd42aa
-    us-west-2: ami-02dba89933a1c4558
+    us-east-1: ami-0cb04cbc768d418a5
+    us-west-1: ami-0c87b43691de5ef70
+    us-west-2: ami-06342dd8da2c37197
   fxci-level1-gcp:
-    projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2020-11-09t21-38-30z
+    projects/taskcluster-imaging/global/images/fxci-level1-gcp-0y9sk1q1wfj5d06y0nea
   fxci-level3-gcp:
-    projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2020-11-09t21-03-26z
+    projects/fxci-production-level3-workers/global/images/fxci-level3-gcp-0y049yr8imhe3lz4vlcn
   fxci-levelt-gcp:
-    projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2020-11-09t21-38-30z
+    projects/taskcluster-imaging/global/images/fxci-level1-gcp-0y9sk1q1wfj5d06y0nea
 monopacker-docker-worker-trusted-2020-08-05t22-01-11z:
   aws:
     us-east-1: ami-0b7779127f469c41b
@@ -263,7 +263,7 @@ monopacker-docker-worker-trusted-2020-08-05t22-01-11z-bug1676214:
     us-west-1: ami-08d909aa4d6a62ca3
     us-west-2: ami-008fbf458e350fc3d
   fxci-level3-gcp:
-    projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2020-11-09t21-03-26z
+    projects/fxci-production-level3-workers/global/images/fxci-level3-gcp-0y049yr8imhe3lz4vlcn
 
 # generic-worker images
 gwci-linux:
