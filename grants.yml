@@ -2020,7 +2020,12 @@
 
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly-on-google-play
+  to:
+  - groups:
+    - sheriff
+    - mobile_releases
 
+- grant:
   # Allow to manage mobile trees
   - queue:cancel-task:taskcluster-github/*
   - queue:cancel-task:mobile-level-*
@@ -2033,6 +2038,7 @@
   - groups:
     - sheriff
     - mobile_releases
+    - mobile_test_ops
 
 - grant:
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/gv-update-beta
@@ -2043,7 +2049,6 @@
   to:
   - groups:
     - mobile_releases
-
 
 - grant:
   # Allow people with level-3 access to access interactive tasks
@@ -2574,6 +2579,11 @@
   to:
   - roles:
     - mozilla-group:mobile_releases
+- grant:
+  - assume:project:releng:ci-group:mobile_test_ops
+  to:
+  - roles:
+    - mozilla-group:mobile_test_ops
 - grant:
   - assume:project:releng:ci-group:glean_team
   to:
