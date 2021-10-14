@@ -1240,6 +1240,58 @@ pools:
             bootDiagnostics:
               enabled: false
     capacityPerInstance: 1
+- pool_id: gecko-t/win10-64-2004-ssd
+  description: ''
+  owner: mcornmesser@mozilla.com
+  email_on_error: true
+  provider_id: azure2
+  config:
+    image: ronin-t-windows10-64-2004-current
+    image_resource_group: rg-packer-through-cib
+    implementation: generic-worker/worker-runner-windows
+    worker-purpose: gecko-t
+    locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
+    maxCapacity: 100
+    workerConfig:
+      genericWorker:
+        config:
+          workerType: win10-64-2004-ssd
+          provisionerId: gecko-t
+          idleTimeoutSecs: 300
+    tags:
+      workerType: gecko-t-win10-64-2004-ssd
+      deploymentId: 093284b
+      sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+      sourceRevision: cloud_windows
+      sourceRepository: ronin_puppet
+      sourceOrganisation: mozilla-platform-ops
+    spot: true
+    vmSizes:
+      - vmSize: Standard_F8s_v2
+        launchConfig:
+          osProfile:
+            windowsConfiguration:
+              timeZone: UTC
+              enableAutomaticUpdates: false
+          storageProfile:
+            osDisk:
+              diskSizeGB: 500
+              osType: Windows
+              managedDisk:
+                storageAccountType: Premium_LRS
+              createOption: FromImage
+            dataDisks:
+              - lun: 0
+                diskSizeGB: 30
+                managedDisk:
+                  storageAccountType: Premium_LRS
+                createOption: FromImage
+          hardwareProfile:
+            vmSize: Standard_F8s_v2
+          diagnosticsProfile:
+            bootDiagnostics:
+              enabled: false
+    capacityPerInstance: 1
 - pool_id: gecko-t/t-win10-64
   description: ''
   owner: release+tc-workers@mozilla.com
