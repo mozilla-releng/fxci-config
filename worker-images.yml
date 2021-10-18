@@ -376,13 +376,13 @@ occ-mpd-b-win2012-trusted-v20200226:
     us-west-2: ami-0520ba0d12752373c
 ronin-t-windows10-64-2004-current:
   azure2:
-    central-us: gecko-t-win10-64-2004-centralus-20h1-evd-5db26eb
-    east-us: gecko-t-win10-64-2004-eastus-20h1-evd-5db26eb
-    east-us-2: gecko-t-win10-64-2004-eastus2-20h1-evd-5db26eb
-    north-central-us: gecko-t-win10-64-2004-northcentralus-20h1-evd-5db26eb
-    south-central-us: gecko-t-win10-64-2004-southcentralus-20h1-evd-5db26eb
-    west-us: gecko-t-win10-64-2004-westus-20h1-evd-5db26eb
-    west-us-2: gecko-t-win10-64-2004-westus2-20h1-evd-5db26eb
+    central-us: gecko-t-win10-64-2004-centralus-20h1-evd-7c12c58
+    east-us: gecko-t-win10-64-2004-eastus-20h1-evd-7c12c58
+    east-us-2: gecko-t-win10-64-2004-eastus2-20h1-evd-7c12c58
+    north-central-us: gecko-t-win10-64-2004-northcentralus-20h1-evd-7c12c58
+    south-central-us: gecko-t-win10-64-2004-southcentralus-20h1-evd-7c12c58
+    west-us: gecko-t-win10-64-2004-westus-20h1-evd-7c12c58
+    west-us-2: gecko-t-win10-64-2004-westus2-20h1-evd-7c12c58
 ronin-t-windows10-64-2004-gpu-current:
   azure2:
     east-us: gecko-t-win10-64-2004-gpu-eastus-20h1-evd-5db26eb
