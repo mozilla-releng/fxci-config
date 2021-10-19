@@ -2174,6 +2174,7 @@
   to:
   - groups:
     - active_scm_level_3
+    - sheriff
 
 # retriggering a decision requires a lot of scopes, so only sheriffs
 # and releng can do it
