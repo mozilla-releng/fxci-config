@@ -1791,6 +1791,12 @@
         - "branch:main"
         - "branch:releases/*"
 
+- grant:
+  - queue:rerun-task:mozillavpn-level-*
+  to:
+  - roles:
+    - mozillians-group:mozillavpn-developers
+
 # XPI
 
 - grant:
