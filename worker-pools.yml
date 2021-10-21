@@ -800,6 +800,9 @@ pools:
         chain-of-trust: trusted
       - pool-group: kaios-1
       - pool-group: kaios-2
+      - pool-group: mobile-1
+      - pool-group: mobile-3
+        chain-of-trust: trusted
   config:
     regions: [us-east-1, us-west-1, us-west-2]
     image:
