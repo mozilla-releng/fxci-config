@@ -691,10 +691,14 @@ pools:
       capacityPerInstance: 2
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+        shutdown:
+          afterIdleSeconds: 7200
     - instanceType: m5d.xlarge
       capacityPerInstance: 2
       worker-config:
         capacityManagement: {diskspaceThreshold: 30000000000}
+        shutdown:
+          afterIdleSeconds: 7200
 - pool_id: '{pool-group}/images'
   description: 'Builds docker images; NOTE: capacity set to 1 instead of
     3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
