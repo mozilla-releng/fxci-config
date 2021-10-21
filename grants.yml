@@ -2026,6 +2026,8 @@
 
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
   - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly-on-google-play
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly
+  - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public
   to:
   - groups:
     - sheriff
