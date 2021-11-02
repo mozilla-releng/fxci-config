@@ -1593,6 +1593,8 @@
 - grant:
     - secrets:get:project/focus/tokens
     - secrets:get:project/mobile/focus-android/nightly
+    - secrets:get:project/mobile/focus-android/beta
+    - secrets:get:project/mobile/focus-android/release
   to:
   - project:
       alias: focus-android
