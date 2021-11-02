@@ -330,6 +330,12 @@ occ-t-win10-64-gpu-s-b4be759:
     us-east-1: ami-05f04bb7de9d65ec9
     us-west-1: ami-0e22078423401c44c
     us-west-2: ami-0cb8c51012a093735
+occ-t-win10-64-beta-4384030:
+  aws:
+    eu-central-1: ami-0e0b6ee0f8e27e0ea
+    us-east-1: ami-08fc916c02da54a36
+    us-west-1: ami-019d5948111bbae1a
+    us-west-2: ami-09036e0ae4ff323a5
 occ-t-win10-64-gpu-b-4384030:
   aws:
     eu-central-1: ami-01bf1592342a68906
