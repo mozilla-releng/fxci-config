@@ -987,6 +987,38 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
           - DeviceName: /dev/sdc
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+- pool_id: gecko-1/b-win2012-beta
+  description: experimental gecko builder
+  owner: grenade@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    image: occ-b-win2012-beta
+    maxCapacity: 512
+    additional-user-data:
+      workerType: gecko-1-b-win2012-beta
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/occ-8047eee
+    instance_types:
+      - instanceType: c4.4xlarge
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+          - DeviceName: /dev/sdc
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+      - instanceType: c5.4xlarge
+        launchConfig:
+          BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+          - DeviceName: /dev/sdb
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+          - DeviceName: /dev/sdc
+            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 - pool_id: gecko-2/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
@@ -1407,8 +1439,8 @@ pools:
   email_on_error: true
   provider_id: aws
   config:
-    image: occ-t-win10-64-gpu-b-beta
-    maxCapacity: 512
+    image: occ-t-win10-64-gpu-beta
+    maxCapacity: 16
     additional-user-data:
       workerType: gecko-t-win10-64-gpu-b
     regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
@@ -1456,6 +1488,33 @@ pools:
       genericWorker:
         config:
           "idleTimeoutSecs": 1
+- pool_id: gecko-t/t-win7-32-beta
+  description: experimental gecko tester
+  owner: grenade@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    image: occ-t-win7-32-beta
+    maxCapacity: 16
+    additional-user-data:
+      workerType: gecko-t-win7-32-beta
+    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+    - instanceType: c4.2xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs: {VolumeType: gp2, VolumeSize: 30, DeleteOnTermination: true}
+        - DeviceName: /dev/sdb
+          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
+        - DeviceName: /dev/sdc
+          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
+    worker-config:
+      genericWorker:
+        config:
+          "idleTimeoutSecs": 1
 - pool_id: gecko-t/t-win7-32-gpu
   description: ''
   owner: release+tc-workers@mozilla.com
@@ -1466,6 +1525,33 @@ pools:
     maxCapacity: 600
     additional-user-data:
       workerType: gecko-t-win7-32-gpu
+    regions: [us-east-1, us-west-1, us-west-2]
+    security: windows-untrusted
+    implementation: generic-worker/windows
+    instance_types:
+    - instanceType: g2.2xlarge
+      launchConfig:
+        BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs: {VolumeType: gp2, VolumeSize: 30, DeleteOnTermination: true}
+        - DeviceName: /dev/sdb
+          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
+        - DeviceName: /dev/sdc
+          Ebs: {VolumeType: gp2, VolumeSize: 120, DeleteOnTermination: true}
+    worker-config:
+      genericWorker:
+        config:
+          "idleTimeoutSecs": 1
+- pool_id: gecko-t/t-win7-32-gpu-b
+  description: experimental gecko tester
+  owner: grenade@mozilla.com
+  email_on_error: true
+  provider_id: aws
+  config:
+    image: occ-t-win7-32-gpu-beta
+    maxCapacity: 16
+    additional-user-data:
+      workerType: gecko-t-win7-32-gpu-b
     regions: [us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
     implementation: generic-worker/windows
