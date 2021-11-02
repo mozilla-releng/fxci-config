@@ -750,6 +750,7 @@ application-services:
     github-taskgraph: true
     scriptworker: true
     taskgraph-cron: true
+    taskgraph-actions: true
 
 glean:
   repo: https://github.com/mozilla/glean/
