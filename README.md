@@ -1,7 +1,7 @@
 # CI Configuration
 
 This repository contains configuration for CI automation relating to the Gecko
-source code
+source code.
 
 Specifically, this configuration does not "ride the trains".  Instead, the head
 of the default branch of this repository applies to all Gecko projects and
