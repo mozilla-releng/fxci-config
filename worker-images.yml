@@ -48,10 +48,12 @@ occ-t-win10-64-current: occ-t-win10-64-b4be759
 occ-t-win10-64-beta: occ-t-win10-64-beta-4384030
 occ-t-win10-64-gpu-s-current: occ-t-win10-64-gpu-s-b4be759
 occ-t-win10-64-gpu-beta: occ-t-win10-64-gpu-b-4384030
-occ-t-win7-32-current: occ-t-win7-32-b4be759
+# occ-t-win7-32-current: occ-t-win7-32-b4be759
 occ-t-win7-32-beta: occ-t-win7-32-beta-4384030
-occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-b4be759
+# occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-b4be759
 occ-t-win7-32-gpu-beta: occ-t-win7-32-gpu-b-4384030
+occ-t-win7-32-current: occ-t-win7-32-v20200226
+occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-v20200226
 occ-mpd001-b-win2012-trusted-current: occ-mpd-b-win2012-trusted-v20200226
 
 nss-win2012r2-current: nss-win2012r2-pre
@@ -366,6 +368,18 @@ occ-t-win7-32-gpu-b-4384030:
     us-east-1: ami-0df9550ff5dffff81
     us-west-1: ami-022c0b744b13e611e
     us-west-2: ami-0d80b9acdefa73057
+occ-t-win7-32-v20200226:
+  aws:
+    eu-central-1: ami-01db0b27d4878f677
+    us-east-1: ami-04a4865797a61b24d
+    us-west-1: ami-098ffef5cf401c46d
+    us-west-2: ami-06f345a21f6faad86
+occ-t-win7-32-gpu-v20200226:
+  aws:
+    eu-central-1: ami-0b41dc6c8248c4f32
+    us-east-1: ami-02641726e4b419ba4
+    us-west-1: ami-0ebc5c792d8418b65
+    us-west-2: ami-0cecd6bf98b15e862
 occ-mpd-b-win2012-trusted-v20200226:
   aws:
     eu-central-1: ami-09a5852e0cc1edb81
