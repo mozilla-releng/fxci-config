@@ -17,7 +17,7 @@ job-defaults:
         - ci-configuration
         - ci-configuration-try
     worker:
-        docker-image: {in-tree: python3.7}
+        docker-image: {in-tree: python3.9}
         max-run-time: 3600
     treeherder:
         kind: test
