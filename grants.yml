@@ -301,7 +301,6 @@
   - project:releng:ship-it:server:staging
   - project:releng:signing:cert:dep-signing
   - project:releng:signing:format:*
-  - project:releng:snapcraft:firefox:mock
   - project:releng:treescript:action:*
   - project:releng:treescript:action:tagging
   - queue:create-task:medium:proj-autophone/*
@@ -349,7 +348,6 @@
   - project:releng:ship-it:server:staging
   - project:releng:signing:cert:dep-signing
   - project:releng:signing:format:*
-  - project:releng:snapcraft:firefox:mock
   - project:releng:treescript:action:*
   - project:releng:treescript:action:tagging
   - queue:create-task:medium:proj-autophone/*
@@ -480,9 +478,6 @@
   - project:releng:bouncer:server:production
   - project:releng:bouncer:server:production-nazgul
   - project:releng:ship-it:server:production
-  - project:releng:snapcraft:firefox:beta
-  - project:releng:snapcraft:firefox:candidate
-  - project:releng:snapcraft:firefox:esr
   to:
   - projects:
       job: ["action:release-promotion"]

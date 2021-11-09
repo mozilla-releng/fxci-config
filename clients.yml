@@ -581,21 +581,6 @@ project/releng/scriptworker/v2/pushflatpak/prod/firefoxci-gecko-3:
     scopes:
         - queue:claim-work:scriptworker-k8s/gecko-3-pushflatpak
         - queue:worker-id:gecko-3-pushflatpak/gecko-3-pushflatpak-*
-project/releng/scriptworker/v2/pushsnap/dev/firefoxci-gecko-1:
-    description: ''
-    scopes:
-        - queue:claim-work:scriptworker-k8s/gecko-1-pushsnap-dev
-        - queue:worker-id:gecko-1-pushsnap-dev/gecko-1-pushsnap-dev-*
-project/releng/scriptworker/v2/pushsnap/prod/firefoxci-gecko-1:
-    description: ''
-    scopes:
-        - queue:claim-work:scriptworker-k8s/gecko-1-pushsnap
-        - queue:worker-id:gecko-1-pushsnap/gecko-1-pushsnap-*
-project/releng/scriptworker/v2/pushsnap/prod/firefoxci-gecko-3:
-    description: ''
-    scopes:
-        - queue:claim-work:scriptworker-k8s/gecko-3-pushsnap
-        - queue:worker-id:gecko-3-pushsnap/gecko-3-pushsnap-*
 project/releng/scriptworker/v2/shipit/dev/firefoxci-adhoc-1:
     description: Adhoc level 1 shipit scriptworker
     scopes:
