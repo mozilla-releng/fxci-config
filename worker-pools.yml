@@ -1100,7 +1100,7 @@ pools:
         config:
           workerType: win10-64-2004
           provisionerId: gecko-t
-          idleTimeoutSecs: 300
+          idleTimeoutSecs: 3600
     tags:
       workerType: gecko-t-win10-64-2004
       deploymentId: 5db26eb
@@ -1147,9 +1147,9 @@ pools:
     workerConfig:
       genericWorker:
         config:
-          workerType: win10-64-200-gpu4
+          workerType: win10-64-2004-gpu
           provisionerId: gecko-t
-          idleTimeoutSecs: 300
+          idleTimeoutSecs: 1800
     tags:
       workerType: gecko-t-win10-64-2004-gpu
       deploymentId: 5db26eb
@@ -1247,7 +1247,7 @@ pools:
         config:
           workerType: win10-64-2004-source
           provisionerId: gecko-t
-          idleTimeoutSecs: 300
+          idleTimeoutSecs: 1800
     tags:
       workerType: gecko-t-win10-64-2004-source
       deploymentId: 093284b
@@ -1296,7 +1296,7 @@ pools:
         config:
           workerType: win10-64-2004-ssd
           provisionerId: gecko-t
-          idleTimeoutSecs: 300
+          idleTimeoutSecs: 1800
     tags:
       workerType: gecko-t-win10-64-2004-ssd
       deploymentId: 093284b
@@ -1348,7 +1348,7 @@ pools:
         config:
           workerType: win10-64-2004-ssd-gpu
           provisionerId: gecko-t
-          idleTimeoutSecs: 300
+          idleTimeoutSecs: 1800
     tags:
       workerType: gecko-t-win10-64-2004-ssd-gpu
       deploymentId: 093284b
