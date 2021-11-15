@@ -1085,7 +1085,7 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 - pool_id: gecko-t/win10-64-2004
   description: ''
-  owner: mcornmesser@mozilla.com
+  owner: michelle@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
@@ -1134,7 +1134,7 @@ pools:
     capacityPerInstance: 1
 - pool_id: gecko-t/win10-64-2004-gpu
   description: ''
-  owner: mcornmesser@mozilla.com
+  owner: michelle@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
@@ -1183,7 +1183,7 @@ pools:
     capacityPerInstance: 1
 - pool_id: gecko-t/win10-64-2004-test
   description: ''
-  owner: mcornmesser@mozilla.com
+  owner: michelle@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
@@ -1281,7 +1281,7 @@ pools:
     capacityPerInstance: 1
 - pool_id: gecko-t/win10-64-2004-ssd
   description: ''
-  owner: mcornmesser@mozilla.com
+  owner: michelle@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
