@@ -64,11 +64,6 @@ async def create_worker_secrets(*, update):
 
     expiry = fromNow("1000y")
     for worker_pool in sorted(docker_pools):
-        # bhearsum's hack to workaround this worker pool
-        # getting the stateless secret, which is not supported
-        # by that pool.
-        if "gecko-t-osx-dtk-dev" in worker_pool:
-            continue
         secret_name = "worker-pool:{}".format(worker_pool)
         try:
             old_secret = await secrets_api.get(secret_name)
