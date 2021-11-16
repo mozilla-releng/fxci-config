@@ -43,7 +43,7 @@ class CLI:
 
     def create_parser(self):
         parser = argparse.ArgumentParser(description=self.description)
-        subparsers = parser.add_subparsers(dest="command")
+        subparsers = parser.add_subparsers(dest="command_name")
         subparsers.required = True
         for (func, args, kwargs, defaults) in self._commands:
             subparser = subparsers.add_parser(*args, **kwargs)
