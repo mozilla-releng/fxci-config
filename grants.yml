@@ -266,6 +266,7 @@
   - queue:route:notify.*
   - secrets:get:project/taskcluster/gecko/hgfingerprint
   - secrets:get:project/taskcluster/gecko/hgmointernal
+  - secrets:get:project/perftest/gecko/level-{level}/*
   to:
   - projects:
       feature: gecko-roles
@@ -2689,6 +2690,11 @@
   to:
   - roles:
     - mozillians-group:android-components-developers
+- grant:
+  - assume:project:releng:ci-group:perftest
+  to:
+  - roles:
+    - mozilla-group:perftest
 
 # The 'anonymous' role defines scopes that are allowed for *any* API call; on other
 # words, these define public access.
@@ -2843,3 +2849,11 @@
   to:
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|michelle2
+
+# Bug 1738050: secret scopes to perftest
+- grant:
+  - secrets:set:project/perftest/*
+  - secrets:get:project/perftest/*
+  to:
+  - roles:
+    - mozilla-group:perftest
