@@ -2023,6 +2023,7 @@
   to:
   - groups:
     - sheriff
+    - perf_sheriff
 
 - grant:
   # Allow triggering nightlies and geckoview
@@ -2189,6 +2190,7 @@
   - groups:
     - active_scm_level_3
     - sheriff
+    - perf_sheriff
 
 # retriggering a decision requires a lot of scopes, so only sheriffs
 # and releng can do it
@@ -2202,6 +2204,7 @@
   to:
   - groups:
     - sheriff
+    - perf_sheriff
 
 # In addition to the default scopes, retriggering a decision task requires
 # the scopes of a decision task.  These differ per project, so we use some
@@ -2225,6 +2228,7 @@
   to:
   - groups:
     - sheriff
+    - perf_sheriff
 
 # pretty much anyone can cancel-all at level 1 or 2, while only releng/sheriff
 # can do so at level 3
@@ -2239,6 +2243,7 @@
     - active_scm_level_2
     - active_scm_level_3
     - sheriff
+    - perf_sheriff
 
 - grant:
   - hooks:trigger-hook:project-gecko/in-tree-action-3-cancel-all/*
@@ -2246,6 +2251,7 @@
   to:
   - groups:
     - sheriff
+    - perf_sheriff
 
 # Thunderbird releng can only cancel-all on comm trees
 - grant:
@@ -2614,6 +2620,11 @@
   to:
   - roles:
     - mozilla-group:sheriff
+- grant:
+  - assume:project:releng:ci-group:perf_sheriff
+  to:
+  - roles:
+    - mozilla-group:perf_sheriff
 - grant:
   - assume:project:releng:ci-group:non-moco-sheriffs-basic
   to:

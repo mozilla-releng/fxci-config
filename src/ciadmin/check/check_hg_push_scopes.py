@@ -84,8 +84,9 @@ def check_ci_groups_trigger_hook(ci_group_roles, hg_push_hooks):
     for roleId, role_scopes in ci_group_roles.items():
         # allowlist
         if roleId in (
-            "project:releng:ci-group:sheriff",
+            "project:releng:ci-group:perf_sheriff",
             "project:releng:ci-group:releng",
+            "project:releng:ci-group:sheriff",
         ):
             continue
         for hookId in hg_push_hooks:
