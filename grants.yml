@@ -2052,6 +2052,7 @@
   to:
   - groups:
     - sheriff
+    - perf_sheriff
     - mobile_releases
     - mobile_test_ops
 
@@ -2333,6 +2334,7 @@
   to:
   - groups:
     - sheriff
+    - perf_sheriff
 
 
 # Allow MozillaOnline to create builds
