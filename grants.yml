@@ -1593,7 +1593,6 @@
       job: ["branch:*", "pull-request"]
 
 - grant:
-    - secrets:get:project/focus/tokens
     - secrets:get:project/mobile/focus-android/nightly
     - secrets:get:project/mobile/focus-android/beta
     - secrets:get:project/mobile/focus-android/release
@@ -1603,8 +1602,6 @@
       job: ["release", "cron:nightly"]
 
 - grant:
-  #TODO remove once switched over to taskgraph
-    - queue:route:index.project.mobile.focus.release.latest
     - queue:route:index.v2.project.{trust_domain}.{trust_project}.release.*
     - project:mobile:focus-android:releng:signing:cert:production-signing
   to:
@@ -1613,8 +1610,6 @@
       job: ["release"]
 
 - grant:
-  #TODO remove once switched over to taskgraph
-    - queue:route:index.project.mobile.focus.nightly.latest
     - queue:route:index.v2.project.{trust_domain}.{trust_project}.nightly.*
     - queue:route:notify.email.firefox-focus@mozilla.com.on-failed
     - project:mobile:focus-android:releng:signing:cert:production-signing
@@ -1622,38 +1617,6 @@
   - project:
       alias: focus-android
       job: ["cron:nightly"]
-
-# TODO: remove me once focus is switched over to taskgraph
-# the new scopes are `focus-android`, which are added in other blocks
-- grant:
-  - project:mobile:focus:releng:signing:cert:release-signing
-  - project:mobile:focus:releng:signing:format:*
-  - project:mobile:focus:releng:googleplay:product:focus
-  to:
-  - project:
-      alias: focus-android
-      level: 3
-      job: ["release", "cron:nightly", "action:release-promotion"]
-
-- grant:
-  - project:mobile:focus:releng:googleplay:product:focus:dep
-  to:
-  - project:
-      alias: focus-android
-      job: ["pull-request"]
-  - project:
-      alias: focus-android
-      level: 1
-      job: ["release", "cron:*", "action:release-promotion"]
-
-# TODO - remove after nightly work is tested and merged
-- grant:
-  - project:mobile:focus-android:releng:googleplay:product:focus-android:dep
-  to:
-  - project:
-      alias: staging-focus-android
-      level: 1
-      job: ["cron:*"]
 
 - grant:
   - queue:route:index.mobile.v2.staging-focus-android.*
