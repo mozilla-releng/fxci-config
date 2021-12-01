@@ -1253,6 +1253,7 @@
 - grant:
   - project:{trust_domain}:{alias}:releng:beetmover:bucket:dep
   - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-releases
+  - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-bucket
   to:
   - project:
       feature: beetmover-phase
