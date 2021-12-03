@@ -1252,12 +1252,27 @@
 
 - grant:
   - project:{trust_domain}:{alias}:releng:beetmover:bucket:dep
-  - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-releases
   - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-bucket
   to:
   - project:
       feature: beetmover-phase
       job: ["pull-request"]
+
+- grant:
+  - project:{trust_domain}:{alias}:releng:beetmover:bucket:nightly
+  - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-bucket
+  to:
+  - project:
+      feature: beetmover-phase
+      job: ["cron:nightly"]
+
+- grant:
+  - project:{trust_domain}:{alias}:releng:beetmover:bucket:release
+  - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-bucket
+  to:
+  - project:
+      feature: beetmover-phase
+      job: ["release"]
 
 - grant:
   - project:{trust_domain}:{trust_project}:releng:github:action:release
