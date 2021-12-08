@@ -1046,7 +1046,7 @@ pools:
           idleTimeoutSecs: 3600
     tags:
       workerType: gecko-t-win10-64-2004
-      deploymentId: 5db26eb
+      deploymentId: f160361
       sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
       sourceRevision: cloud_windows
       sourceRepository: ronin_puppet
@@ -1095,7 +1095,7 @@ pools:
           idleTimeoutSecs: 1800
     tags:
       workerType: gecko-t-win10-64-2004-gpu
-      deploymentId: 5db26eb
+      deploymentId: f160361
       sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
       sourceRevision: cloud_windows
       sourceRepository: ronin_puppet
@@ -1193,7 +1193,7 @@ pools:
           idleTimeoutSecs: 1800
     tags:
       workerType: gecko-t-win10-64-2004-source
-      deploymentId: 093284b
+      deploymentId: f160361
       sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
       sourceRevision: cloud_windows
       sourceRepository: ronin_puppet
@@ -1242,7 +1242,7 @@ pools:
           idleTimeoutSecs: 1800
     tags:
       workerType: gecko-t-win10-64-2004-ssd
-      deploymentId: 093284b
+      deploymentId: f160361
       sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
       sourceRevision: cloud_windows
       sourceRepository: ronin_puppet
@@ -1267,7 +1267,7 @@ pools:
                 diskSizeGB: 120
                 managedDisk:
                   storageAccountType: Premium_LRS
-                createOption: Empty
+                createOption: FromImage
           hardwareProfile:
             vmSize: Standard_F8s_v2
           diagnosticsProfile:
@@ -1294,7 +1294,7 @@ pools:
           idleTimeoutSecs: 1800
     tags:
       workerType: gecko-t-win10-64-2004-ssd-gpu
-      deploymentId: 093284b
+      deploymentId: f160361
       sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
       sourceRevision: cloud_windows
       sourceRepository: ronin_puppet
