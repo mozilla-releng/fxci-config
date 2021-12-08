@@ -1264,10 +1264,10 @@ pools:
               createOption: FromImage
             dataDisks:
               - lun: 0
-                diskSizeGB: 30
+                diskSizeGB: 120
                 managedDisk:
                   storageAccountType: Premium_LRS
-                createOption: FromImage
+                createOption: Empty
           hardwareProfile:
             vmSize: Standard_F8s_v2
           diagnosticsProfile:
