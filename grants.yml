@@ -1261,6 +1261,8 @@
 - grant:
   - project:{trust_domain}:{alias}:releng:beetmover:bucket:nightly
   - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-bucket
+  # TODO: Remove this once we're no longer testing on dev worker pool.
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-1-*
   to:
   - project:
       feature: beetmover-phase
@@ -1269,6 +1271,8 @@
 - grant:
   - project:{trust_domain}:{alias}:releng:beetmover:bucket:release
   - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-bucket
+  # TODO: Remove this once we're no longer testing on dev worker pool.
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-1-*
   to:
   - project:
       feature: beetmover-phase
