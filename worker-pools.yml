@@ -1028,7 +1028,7 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 - pool_id: gecko-t/win10-64-2004
   description: ''
-  owner: relops-azure-provisioning@mozilla.com
+  owner: michelle@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
@@ -1077,7 +1077,7 @@ pools:
     capacityPerInstance: 1
 - pool_id: gecko-t/win10-64-2004-gpu
   description: ''
-  owner: relops-azure-provisioning@mozilla.com
+  owner: michelle@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
@@ -1126,7 +1126,7 @@ pools:
     capacityPerInstance: 1
 - pool_id: gecko-t/win10-64-2004-perf
   description: ''
-  owner: relops-azure-provisioning@mozilla.com
+  owner: michelle@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
@@ -1176,7 +1176,7 @@ pools:
 
 - pool_id: gecko-t/win10-64-2004-test
   description: ''
-  owner: relops-azure-provisioning@mozilla.com
+  owner: michelle@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
@@ -1225,7 +1225,7 @@ pools:
     capacityPerInstance: 1
 - pool_id: gecko-t/win10-64-2004-source
   description: ''
-  owner: relops-azure-provisioning@mozilla.com
+  owner: michelle+firefoxci@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
@@ -1274,7 +1274,7 @@ pools:
     capacityPerInstance: 1
 - pool_id: gecko-t/win10-64-2004-ssd
   description: ''
-  owner: relops-azure-provisioning@mozilla.com
+  owner: michelle@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
@@ -1326,7 +1326,7 @@ pools:
     capacityPerInstance: 1
 - pool_id: gecko-t/win10-64-2004-ssd-datatest
   description: ''
-  owner: relops-azure-provisioning@mozilla.com
+  owner: michelle@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
@@ -1378,7 +1378,7 @@ pools:
     capacityPerInstance: 1
 - pool_id: gecko-t/win10-64-2004-ssd-gpu
   description: ''
-  owner: relops-azure-provisioning@mozilla.com
+  owner: michelle+firefoxci@masterwayz.nl
   email_on_error: true
   provider_id: azure2
   config:
