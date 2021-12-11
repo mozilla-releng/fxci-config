@@ -1343,7 +1343,7 @@ pools:
           provisionerId: gecko-t
           idleTimeoutSecs: 1800
     tags:
-      workerType: gecko-t-win10-64-2004-ssd
+      workerType: gecko-t-win10-64-2004-ssd-datatest
       deploymentId: f160361
       sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
       sourceRevision: cloud_windows
