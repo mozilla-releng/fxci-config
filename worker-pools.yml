@@ -1068,7 +1068,7 @@ pools:
                 diskSizeGB: 30
                 managedDisk:
                   storageAccountType: Standard_LRS
-                createOption: FromImage
+                createOption: Empty
           hardwareProfile:
             vmSize: Standard_F8s_v2
           diagnosticsProfile:
@@ -1117,7 +1117,7 @@ pools:
                 diskSizeGB: 30
                 managedDisk:
                   storageAccountType: Standard_LRS
-                createOption: FromImage
+                createOption: Empty
           hardwareProfile:
             vmSize: Standard_NV6
           diagnosticsProfile:
@@ -1166,7 +1166,7 @@ pools:
                 diskSizeGB: 30
                 managedDisk:
                   storageAccountType: Standard_LRS
-                createOption: FromImage
+                createOption: Empty
           hardwareProfile:
             vmSize: Standard_NV6
           diagnosticsProfile:
@@ -1216,7 +1216,7 @@ pools:
                 diskSizeGB: 30
                 managedDisk:
                   storageAccountType: Standard_LRS
-                createOption: FromImage
+                createOption: Empty
           hardwareProfile:
             vmSize: Standard_F8s_v2
           diagnosticsProfile:
@@ -1265,7 +1265,7 @@ pools:
                 diskSizeGB: 30
                 managedDisk:
                   storageAccountType: Standard_LRS
-                createOption: FromImage
+                createOption: Empty
           hardwareProfile:
             vmSize: Standard_F8s_v2
           diagnosticsProfile:
@@ -1317,7 +1317,7 @@ pools:
                 diskSizeGB: 30
                 managedDisk:
                   storageAccountType: Premium_LRS
-                createOption: FromImage
+                createOption: Empty
           hardwareProfile:
             vmSize: Standard_F8s_v2
           diagnosticsProfile:
@@ -1421,7 +1421,7 @@ pools:
                 diskSizeGB: 30
                 managedDisk:
                   storageAccountType: Premium_LRS
-                createOption: FromImage
+                createOption: Empty
           hardwareProfile:
             vmSize: Standard_NV12s_v3
           diagnosticsProfile:
