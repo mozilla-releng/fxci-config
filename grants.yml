@@ -1307,6 +1307,14 @@
       job: ["pull-request"]
 
 - grant:
+  - project:mobile:focus-android:releng:github:project:staging-focus-android"
+  to:
+  - project:
+      feature: github-publication
+      level: 1
+      job: ["action:release-promotion", "release"]
+
+- grant:
   - project:mobile:{trust_project}:releng:signing:cert:release-signing
   to:
   - project:
