@@ -2840,13 +2840,13 @@
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mhentges
 
-# Bug 1715817: Scopes to manage Azure images and testing workers
+# Bug 1715817: Scopes to manage Azure images and workers
 - grant:
-  - worker-manager:manage-worker-pool:gecko-t/win10-64-azure-*
+  - worker-manager:manage-worker-pool:gecko-t/win10-64-2004*
   - worker-manager:provider:azure2
   - worker-manager:provider:null-provider
-  - generic-worker:allow-rdp:gecko-t/win10-64-azure*
-  - worker-manager:remove-worker:gecko-t/win10-64-azure-*
+  - generic-worker:allow-rdp:gecko-t/win10-64-2004*
+  - worker-manager:remove-worker:gecko-t/win10-64-2004*
   to:
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|michelle2
