@@ -1789,7 +1789,10 @@
         - "branch:main"
         - "branch:releases/*"
 
+# Bug 1745945: secret scopes for mozillavpn-developers
 - grant:
+  - secrets:set:project/mozillavpn/*
+  - secrets:get:project/mozillavpn/*
   - queue:rerun-task:mozillavpn-level-*
   to:
   - roles:
