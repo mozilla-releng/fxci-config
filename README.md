@@ -46,7 +46,7 @@ a single file using the `raw` HTTP API method.
 
 Files in this directory are likely to live "forever".  It's difficult to
 determine whether any branch or product still refers to a file, so deleting a
-file always carries some risk of breakage.  Furthermore, regression bisection
+file always carries some risk of breakage. Furthermore, regression bisection
 might build an old revision that refers to a file no longer referred to in the
 head commit.
 
