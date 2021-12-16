@@ -1262,6 +1262,9 @@
   - project:{trust_domain}:{alias}:releng:beetmover:bucket:nightly
   - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-bucket
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
+  # TODO: Remove below once beetmover landed to prod workers
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-1-*
+  - project:{trust_domain}:{alias}:releng:beetmover:bucket:dep
   to:
   - project:
       feature: beetmover-phase
