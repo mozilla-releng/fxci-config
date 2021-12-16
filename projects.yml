@@ -607,7 +607,6 @@ fenix:
     targets:
       - bump-android-components
       - nightly
-      - nightly-on-google-play
       - screenshots
 
 staging-fenix:
