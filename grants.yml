@@ -1778,11 +1778,12 @@
 
 - grant:
   - project:mozillavpn:releng:signing:cert:release-signing
+  - secrets:get:project/mozillavpn/tokens
   to:
   - project:
       alias:
       - mozilla-vpn-client
-      # Only enable this for master and release branches, so that in-repo branches
+      # Only enable this for main and release branches, so that in-repo branches
       # don't get access to release signing.
       job:
         - "branch:main"
