@@ -912,7 +912,7 @@ mozilla-vpn-client:
 xpi-manifest:
   repo: https://github.com/mozilla-extensions/xpi-manifest
   repo_type: git
-  default_branch: master
+  default_branch: main
   trust_domain: xpi
   level: 3
   features:

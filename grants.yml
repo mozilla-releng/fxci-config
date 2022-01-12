@@ -1824,7 +1824,7 @@
       - staging-xpi-manifest
       # Only enable this for main and actions.
       # TODO: Remove "master" once fully switched to "main"
-      job: ["branch:master", "branch:main", "action:*"]
+      job: ["branch:main", "action:*"]
 
 - grant:
   - project:xpi:releng:github:project:mozilla-extensions/*
@@ -1838,7 +1838,7 @@
       - xpi-manifest
       # Only enable this for main and actions.
       # TODO: Remove "master" once fully switched to "main"
-      job: ["branch:master", "branch:main", "action:*"]
+      job: ["branch:main", "action:*"]
 
 - grant:
   # access to workers; all levels have access to the same workers, but at
