@@ -1277,7 +1277,7 @@
   to:
   - project:
       feature: beetmover-phase
-      job: ["release"]
+      job: ["release", "action:release-promotion"]
 
 - grant:
   - project:{trust_domain}:{trust_project}:releng:github:action:release
