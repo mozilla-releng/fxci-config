@@ -935,7 +935,7 @@ rally-core-addon:
 staging-xpi-manifest:
   repo: https://github.com/mozilla-releng/staging-xpi-manifest
   repo_type: git
-  default_branch: master
+  default_branch: main
   trust_domain: xpi
   level: 1
   features:
