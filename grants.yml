@@ -2787,6 +2787,9 @@
   - roles:
     - mozilla-group:team_relops
     - mozilla-group:releng
+    # Bug 1750131 - Temporarily
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|pmoore
+
 - grant:
   - assume:github-admin:*
   - assume:hook-id:*
