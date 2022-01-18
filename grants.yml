@@ -1770,6 +1770,7 @@
         - "pull-request"
 
 - grant:
+  - project:{trust_project}:releng:signing:format:*
   - project:releng:services/tooltool/api/download/public
   - project:releng:services/tooltool/api/download/internal
   to:
