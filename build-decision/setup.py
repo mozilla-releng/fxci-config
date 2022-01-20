@@ -10,7 +10,7 @@ setup(
     "(Taskcluster settings) for Firefox CI",
     author="Dustin Mitchell",
     author_email="dustin@mozilla.com",
-    url="https://hg.mozilla.org/ci/ci-admin",
+    url="https://hg.mozilla.org/ci/ci-configuration",
     packages=find_packages("src"),
     package_dir={"": "src"},
     install_requires=requirements,
