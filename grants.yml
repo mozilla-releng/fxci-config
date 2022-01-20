@@ -1634,7 +1634,7 @@
   to:
   - project:
       alias: focus-android
-      job: ["release", "cron:nightly"]
+      job: ["release", "action:release-promotion", "cron:nightly"]
 
 - grant:
     - queue:route:index.v2.project.{trust_domain}.{trust_project}.release.*
@@ -1642,7 +1642,7 @@
   to:
   - project:
       alias: focus-android
-      job: ["release"]
+      job: ["release", "action:release-promotion"]
 
 - grant:
     - queue:route:index.v2.project.{trust_domain}.{trust_project}.nightly.*
