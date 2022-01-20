@@ -1257,6 +1257,10 @@
   - project:
       feature: beetmover-phase
       job: ["pull-request"]
+  - project:
+      feature: beetmover-phase
+      level: 1
+      job: ["action:release-promotion"]
 
 - grant:
   - project:{trust_domain}:{alias}:releng:beetmover:bucket:nightly
@@ -1268,6 +1272,7 @@
   to:
   - project:
       feature: beetmover-phase
+      level: 3
       job: ["cron:nightly"]
 
 - grant:
@@ -1277,6 +1282,7 @@
   to:
   - project:
       feature: beetmover-phase
+      level: 3
       job: ["release", "action:release-promotion"]
 
 - grant:

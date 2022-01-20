@@ -618,6 +618,7 @@ staging-fenix:
   level: 1
   features:
     autophone: true
+    beetmover-phase: true
     github-publication: true
     github-taskgraph: true
     mobile-roles: true
