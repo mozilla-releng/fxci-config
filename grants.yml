@@ -1251,8 +1251,8 @@
       job: ["cron:nightly"]
 
 - grant:
-  - project:{trust_domain}:{alias}:releng:beetmover:bucket:dep
-  - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-bucket
+  - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:dep
+  - project:{trust_domain}:{trust_project}:releng:beetmover:action:direct-push-to-bucket
   to:
   - project:
       feature: beetmover-phase
