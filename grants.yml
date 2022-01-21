@@ -1312,7 +1312,7 @@
       job: ["pull-request"]
 
 - grant:
-  - project:mobile:focus-android:releng:github:project:staging-focus-android
+  - project:{trust_domain}:{trust_project}:releng:github:project:{alias}
   to:
   - project:
       feature: github-publication
