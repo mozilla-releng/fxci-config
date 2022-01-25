@@ -296,6 +296,7 @@
   - project:releng:bouncer:server:staging
   - project:releng:bouncer:server:staging-nazgul
   - project:releng:flathub:firefox:mock
+  - project:releng:microsoftstore:mock
   - project:releng:ship-it:action:create-new-release
   - project:releng:ship-it:action:mark-as-shipped
   - project:releng:ship-it:action:mark-as-started
@@ -343,6 +344,7 @@
   - project:releng:bouncer:server:staging
   - project:releng:bouncer:server:staging-nazgul
   - project:releng:flathub:firefox:mock
+  - project:releng:microsoftstore:mock
   - project:releng:ship-it:action:create-new-release
   - project:releng:ship-it:action:mark-as-shipped
   - project:releng:ship-it:action:mark-as-started
@@ -499,6 +501,26 @@
 
 - grant:
   - project:releng:flathub:firefox:beta
+  to:
+  - projects:
+      job: ["action:release-promotion"]
+      trust_domain: gecko
+      level: [3]
+      alias: [mozilla-beta]
+
+# pushing RCs to beta
+- grant:
+  - project:releng:microsoftstore:release
+  - project:releng:microsoftstore:beta
+  to:
+  - projects:
+      job: ["action:release-promotion"]
+      trust_domain: gecko
+      level: [3]
+      alias: [mozilla-release]
+
+- grant:
+  - project:releng:microsoftstore:beta
   to:
   - projects:
       job: ["action:release-promotion"]
