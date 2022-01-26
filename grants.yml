@@ -508,10 +508,8 @@
       level: [3]
       alias: [mozilla-beta]
 
-# pushing RCs to beta
 - grant:
   - project:releng:microsoftstore:release
-  - project:releng:microsoftstore:beta
   to:
   - projects:
       job: ["action:release-promotion"]
