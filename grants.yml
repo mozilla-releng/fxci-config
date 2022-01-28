@@ -1914,6 +1914,8 @@
 - grant:
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
+  - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-t-*
+  - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
   - queue:create-task:highest:adhoc-{level}/*
   - queue:create-task:highest:adhoc-t/*
   - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac-dev
