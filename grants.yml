@@ -2665,6 +2665,11 @@
   - roles:
     - mozilla-group:team_taskcluster
 - grant:
+  - assume:project:releng:ci-group:fxci_tc_admins
+  to:
+  - roles:
+    - mozilla-group:fxci_tc_admins
+- grant:
   - assume:project:releng:ci-group:team_services_ops
   to:
   - roles:
@@ -2816,6 +2821,7 @@
   - roles:
     - mozilla-group:team_relops
     - mozilla-group:releng
+    - mozilla-group:fxci_tc_admins
 - grant:
   - assume:github-admin:*
   - assume:hook-id:*
