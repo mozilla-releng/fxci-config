@@ -778,8 +778,13 @@ project/releng/scriptworker/v2/mac-signing/prod/firefoxci-adhoc-3:
     scopes:
         - queue:claim-work:scriptworker-prov-v1/adhoc-3-signing-mac
         - queue:get-artifact:releng/adhoc/*
-        - queue:get-artifact:private/openh264/*
         - queue:worker-id:adhoc-signing-mac-v1/adhoc-mac-v3-signing*
+project/releng/scriptworker/v2/mac-signing/prod/firefoxci-adhoc-t:
+    description: Adhoc iscript production scriptworker client
+    scopes:
+        - queue:claim-work:scriptworker-prov-v1/adhoc-t-signing-mac
+        - queue:get-artifact:releng/adhoc/*
+        - queue:worker-id:adhoc-depsigning-mac-v1/adhoc-mac-v3-depsigning*
 project/releng/scriptworker/v2/signing/prod/firefoxci-app-services-3:
     description: ''
     scopes:
