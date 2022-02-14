@@ -603,7 +603,7 @@
   - project:releng:balrog:server:nightly
   to:
   - project:
-      alias: ["oak", "pine"]
+      alias: ["oak", "cedar", "pine"]
 
 # Bug 1702054: Scopes to trigger cron hooks on pine
 - grant:
