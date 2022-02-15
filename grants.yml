@@ -1576,7 +1576,7 @@
   to:
   - project:
       alias: fenix
-      job: ["action:release-promotion", "release"]
+      job: ["action:release-promotion", "release", "action:*"]
 
 - grant:
   # TODO Change the following scope once `production` is entirely renamed to `nightly`
