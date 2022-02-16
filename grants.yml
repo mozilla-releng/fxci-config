@@ -1310,7 +1310,7 @@
   to:
   - project:
       feature: github-publication
-      job: ["action:release-promotion", "release", "pull-request", "action:*"]
+      job: ["action:release-promotion", "release", "pull-request"]
 
 - grant:
   - project:{trust_domain}:{trust_project}:releng:github:project:{trust_project}
@@ -1318,7 +1318,7 @@
   - project:
       feature: github-publication
       level: 3
-      job: ["action:release-promotion", "release", "action:*"]
+      job: ["action:release-promotion", "release"]
 
 - grant:
   - project:{trust_domain}:{trust_project}:releng:github:project:mock
@@ -1402,7 +1402,7 @@
   - project:
       feature: mobile-pushapk-phase
       level: 3
-      job: ["release", "cron:nightly", "action:release-promotion", "action:*"]
+      job: ["release", "cron:nightly", "action:release-promotion"]
   - project:
       alias: fenix
       job: ["cron:nightly-on-google-play"]
@@ -1576,7 +1576,7 @@
   to:
   - project:
       alias: fenix
-      job: ["action:release-promotion", "release", "action:*"]
+      job: ["action:release-promotion", "release"]
 
 - grant:
   # TODO Change the following scope once `production` is entirely renamed to `nightly`
