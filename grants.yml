@@ -1402,7 +1402,7 @@
   - project:
       feature: mobile-pushapk-phase
       level: 3
-      job: ["release", "cron:nightly", "action:release-promotion"]
+      job: ["release", "cron:nightly", "action:release-promotion", "action:*"]
   - project:
       alias: fenix
       job: ["cron:nightly-on-google-play"]
