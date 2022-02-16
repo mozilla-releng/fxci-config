@@ -1310,7 +1310,7 @@
   to:
   - project:
       feature: github-publication
-      job: ["action:release-promotion", "release", "pull-request"]
+      job: ["action:release-promotion", "release", "pull-request", "action:*"]
 
 - grant:
   - project:{trust_domain}:{trust_project}:releng:github:project:{trust_project}
@@ -1318,7 +1318,7 @@
   - project:
       feature: github-publication
       level: 3
-      job: ["action:release-promotion", "release"]
+      job: ["action:release-promotion", "release", "action:*"]
 
 - grant:
   - project:{trust_domain}:{trust_project}:releng:github:project:mock
