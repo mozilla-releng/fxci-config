@@ -863,6 +863,8 @@
 - grant:
   - queue:create-task:highest:glean-{level}/*
   - queue:route:index.project.glean.cache.level-{level}.*
+  # RELENG-798 - until we have a shared trust domain to push toolchain artifacts to
+  - queue:get-artifact:project/gecko/mac-sdk/*
   - project:releng:services/tooltool/api/download/internal
   - project:mozilla:{trust_project}:releng:signing:cert:dep-signing
   - project:mozilla:{trust_project}:releng:signing:format:*
