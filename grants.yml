@@ -809,6 +809,7 @@
   to:
   - project:
       feature: treeherder-reporting
+      include_pull_requests: false
 
 - grant:
   # routes to support reporting to treeherder
