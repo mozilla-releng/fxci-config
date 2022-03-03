@@ -1808,6 +1808,7 @@
 
 - grant:
   - project:mozillavpn:releng:signing:cert:release-signing
+  - project:mozillavpn:releng:googleplay:track:internal
   - secrets:get:project/mozillavpn/tokens
   to:
   - project:
