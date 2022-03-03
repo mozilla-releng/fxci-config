@@ -213,7 +213,7 @@ project/releng/generic-worker/datacenter-mozillavpn-1-b-osx:
     scopes:
         - assume:worker-type:releng-hardware/mozillavpn-b-1-osx*
 project/releng/generic-worker/datacenter-mozillavpn-3-b-osx:
-    description: Datacenter level 1 MacOS build machines for Mozilla VPN
+    description: Datacenter level 3 MacOS build machines for Mozilla VPN
     scopes:
         - assume:worker-type:releng-hardware/mozillavpn-b-3-osx*
 project/releng/generic-worker/datacenter-gecko-t-osx:
@@ -503,34 +503,30 @@ project/releng/scriptworker/v2/iscript/tb-prod:
         - assume:worker-type:scriptworker-prov-v1/tb-signing-mac-v1
         - queue:worker-id:signing-mac-v1/tb-mac-v3-signing*
 project/releng/scriptworker/v2/signing/dev/firefoxci-mozillavpn-t:
-    description: mozillavpn signing
+    description: mozillavpn linux signing
     scopes:
         - queue:claim-work:scriptworker-k8s/mozillavpn-t-signing
-        - queue:worker-id:mozillavpn-t-signing-dev/signing-linux-dev*
+        - queue:worker-id:mozillavpn-t-signing-dev/mozillavpn-t-signing-dev*
 project/releng/scriptworker/v2/signing/prod/firefoxci-mozillavpn-t:
-    description: mozillavpn signing
+    description: mozillavpn linux signing
     scopes:
         - queue:claim-work:scriptworker-k8s/mozillavpn-t-signing
         - queue:worker-id:mozillavpn-t-signing/mozillavpn-t-signing*
 project/releng/scriptworker/v2/signing/prod/firefoxci-mozillavpn-3:
-    description: mozillavpn signing
+    description: mozillavpn linux signing
     scopes:
         - queue:claim-work:scriptworker-k8s/mozillavpn-3-signing
         - queue:worker-id:mozillavpn-3-signing/mozillavpn-3-signing*
-project/releng/scriptworker/v2/iscript/mozillavpn-dep:
-    description: ''
+project/releng/scriptworker/v2/mac-signing/prod/firefoxci-mozillavpn-t:
+    description: mozillavpn mac signing
     scopes:
-        - assume:worker-type:scriptworker-prov-v1/mozillavpn-depsigning-mac-v1
-        - queue:worker-id:signing-mac-v1/mozillavpn-dep-mac-v3-signing*
-project/releng/scriptworker/v2/iscript/mozillavpn-prod:
-    description: ''
+        - assume:worker-type:scriptworker-prov-v1/mozillavpn-t-signing-mac
+        - queue:worker-id:mozillavpn-t-signing-mac/mozillavpn-t-signing-mac*
+project/releng/scriptworker/v2/mac-signing/prod/firefoxci-mozillavpn-3:
+    description: mozillavpn mac signing
     scopes:
-        - assume:worker-type:scriptworker-prov-v1/mozillavpn-signing-mac-v1
-        - queue:worker-id:signing-mac-v1/mozillavpn-mac-v3-signing*
-project/releng/scriptworker/v2/notarization-poller/mozillavpn-prod:
-    description: Mac notarization poller client.
-    scopes:
-        - assume:worker-type:scriptworker-prov-v1/mozillavpn-mac-notarization-poller
+        - assume:worker-type:scriptworker-prov-v1/mozillavpn-3-signing-mac
+        - queue:worker-id:mozillavpn-3-signing-mac/mozillavpn-3-signing-mac*
 project/releng/scriptworker/v2/notarization-poller/prod:
     description: Mac notarization poller client.
     scopes:
@@ -762,12 +758,6 @@ project/releng/scriptworker/v2/signing/dev/firefoxci-gecko-t:
         - queue:worker-id:gecko-t-signing-dev/gecko-t-signing-dev-*
         - queue:get-artifact:releng/partner/*
         - queue:get-artifact:private/openh264/*
-project/releng/scriptworker/v2/signing/dev/firefoxci-mozillavpn-t:
-    description: dev mozillavpn signing
-    scopes:
-        - queue:claim-work:scriptworker-k8s/mozillavpn-t-signing-dev
-        - queue:get-artifact:project/mozillavpn/*
-        - queue:worker-id:mozillavpn-t-signing-dev/mozillavpn-t-signing-dev-*
 project/releng/scriptworker/v2/signing/dev/firefoxci-xpi-t:
     description: dev xpi signing
     scopes:
@@ -854,18 +844,6 @@ project/releng/scriptworker/v2/signing/prod/firefoxci-mobile-t:
     scopes:
         - queue:claim-work:scriptworker-k8s/mobile-t-signing
         - queue:worker-id:mobile-t-signing/mobile-t-signing-*
-project/releng/scriptworker/v2/signing/prod/firefoxci-mozillavpn-3:
-    description: prod mozillavpn signing
-    scopes:
-        - queue:claim-work:scriptworker-k8s/mozillavpn-3-signing
-        - queue:get-artifact:project/mozillavpn/*
-        - queue:worker-id:mozillavpn-3-signing/mozillavpn-3-signing-*
-project/releng/scriptworker/v2/signing/prod/firefoxci-mozillavpn-t:
-    description: mozillavpn dep signing
-    scopes:
-        - queue:claim-work:scriptworker-k8s/mozillavpn-t-signing
-        - queue:get-artifact:project/mozillavpn/*
-        - queue:worker-id:mozillavpn-t-signing/mozillavpn-t-signing-*
 project/releng/scriptworker/v2/signing/prod/firefoxci-xpi-3:
     description: production xpi signing
     scopes:
