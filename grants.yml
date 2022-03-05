@@ -2902,6 +2902,15 @@
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
 
+# No bug: Scopes for testing workers (assumes the block above of Bug 1715817 is still in place)
+- grant:
+  - worker-manager:manage-worker-pool:gecko-1/masterwayz*
+  - worker-manager:provider:fxci-level1-gcp
+  - worker-manager:remove-worker:gecko-1/masterwayz*
+  to:
+  - roles:
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
+
 # Bug 1738050: secret scopes to perftest
 - grant:
   - secrets:set:project/perftest/*

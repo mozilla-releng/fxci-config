@@ -531,6 +531,72 @@ pools:
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
+- pool_id: "gecko-1/masterwayz-b-linux-gcp"
+  description: GCP Linux testing pool for Firefox CI Automation
+  owner: mgoossens+fxci@mozilla.com
+  email_on_error: true
+  provider_id: fxci-level1-gcp
+  config:
+    minCapacity: 0
+    maxCapacity: 20
+    regions: [us-central1]
+    image: monopacker-docker-worker-current
+    instance_types:
+      - minCpuPlatform: "Intel Cascadelake"
+        workerConfig:
+          task:
+            reclaimDivisor: 2
+        disks:
+          - autoDelete: true
+            boot: true
+            initializeParams:
+              diskSizeGb: 20
+              sourceImage: '<image>'
+            type: PERSISTENT
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+        machine_type: n2-custom-16-73728
+        networkInterfaces:
+          - accessConfigs:
+              - type: ONE_TO_ONE_NAT
 - pool_id: "{pool-group}/b-linux-large"
   description: Worker for gecko-based automation
   owner: release+tc-workers@mozilla.com
