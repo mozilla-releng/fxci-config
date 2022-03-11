@@ -335,7 +335,7 @@ pools:
             trusted: monopacker-docker-worker-trusted-current
             default: monopacker-docker-worker-current
     instance_types:
-      - minCpuPlatform: "Intel Skylake"
+      - minCpuPlatform: "Intel Cascadelake"
         workerConfig:
           task:
             reclaimDivisor: 2
@@ -351,14 +351,33 @@ pools:
               diskType: zones/us-central1-a/diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
-        machine_type: custom-32-73728
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+          - autoDelete: true
+            initializeParams:
+              diskType: zones/us-central1-a/diskTypes/local-ssd
+            type: SCRATCH
+            interface: NVME
+        machine_type: n2-custom-16-73728
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
-- pool_id: "gecko-1/b-linux-gcp-glandium"
+- pool_id: "{pool-group}/b-linux-large-gcp"
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
+  variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-3
+        chain-of-trust: trusted
   provider_id:
     by-chain-of-trust:
           trusted: fxci-level3-gcp
@@ -407,62 +426,14 @@ pools:
         networkInterfaces:
           - accessConfigs:
               - type: ONE_TO_ONE_NAT
-- pool_id: "gecko-1/b-linux-gcp-glandium-16"
+- pool_id: "{pool-group}/b-linux-xlarge-gcp"
   description: Worker for Firefox automation.
   owner: release+tc-workers@mozilla.com
   email_on_error: true
-  provider_id:
-    by-chain-of-trust:
-          trusted: fxci-level3-gcp
-          default: fxci-level1-gcp
-  config:
-    minCapacity: 0
-    maxCapacity: 1000
-    regions: [us-central1]
-    image:
-        by-chain-of-trust:
-            trusted: monopacker-docker-worker-trusted-current
-            default: monopacker-docker-worker-current
-    instance_types:
-      - minCpuPlatform: "Intel Cascadelake"
-        workerConfig:
-          task:
-            reclaimDivisor: 2
-        disks:
-          - autoDelete: true
-            boot: true
-            initializeParams:
-              diskSizeGb: 20
-              sourceImage: '<image>'
-            type: PERSISTENT
-          - autoDelete: true
-            initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
-            type: SCRATCH
-            interface: NVME
-          - autoDelete: true
-            initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
-            type: SCRATCH
-            interface: NVME
-          - autoDelete: true
-            initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
-            type: SCRATCH
-            interface: NVME
-          - autoDelete: true
-            initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
-            type: SCRATCH
-            interface: NVME
-        machine_type: n2-custom-16-73728
-        networkInterfaces:
-          - accessConfigs:
-              - type: ONE_TO_ONE_NAT
-- pool_id: "gecko-1/b-linux-gcp-glandium-64"
-  description: Worker for Firefox automation.
-  owner: release+tc-workers@mozilla.com
-  email_on_error: true
+  variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-3
+        chain-of-trust: trusted
   provider_id:
     by-chain-of-trust:
           trusted: fxci-level3-gcp
