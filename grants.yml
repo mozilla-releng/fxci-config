@@ -2455,6 +2455,7 @@
   - groups:
     - mobile_releases
     - mobile_eng_ops
+    - mobile_test_ops
 
 # Code Coverage runtime roles
 # Project https://github.com/mozilla/code-coverage
