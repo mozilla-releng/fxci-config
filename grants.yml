@@ -1807,8 +1807,15 @@
       alias: mozilla-vpn-client
 
 - grant:
+  - project:mozillavpn:releng:googleplay:product:mozillavpn
+  to:
+  - project:
+      alias:
+      - mozilla-vpn-client
+      job: ["release"]
+
+- grant:
   - project:mozillavpn:releng:signing:cert:release-signing
-  - project:mozillavpn:releng:googleplay:track:internal
   - secrets:get:project/mozillavpn/tokens
   to:
   - project:
