@@ -2912,6 +2912,13 @@
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
 
+# No bug: Scopes to run things like merge-automation jobs on try for scriptworker scripts testing
+- grant:
+  - hooks:trigger-hook:project-gecko/in-tree-action-1-*
+  to:
+  - roles:
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
+
 # Bug 1738050: secret scopes to perftest
 - grant:
   - secrets:set:project/perftest/*
