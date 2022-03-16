@@ -348,22 +348,22 @@ pools:
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
         machine_type: n2-custom-16-73728
@@ -404,22 +404,22 @@ pools:
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
         machine_type: n2-custom-32-73728
@@ -460,42 +460,42 @@ pools:
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
         machine_type: n2-custom-64-102400
@@ -526,42 +526,42 @@ pools:
             type: PERSISTENT
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
           - autoDelete: true
             initializeParams:
-              diskType: zones/us-central1-a/diskTypes/local-ssd
+              diskType: diskTypes/local-ssd
             type: SCRATCH
             interface: NVME
         machine_type: n2-custom-16-73728

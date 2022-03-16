@@ -269,6 +269,11 @@ def get_google_provider_config(
                 for disk in launch_config["disks"]:
                     if disk["initializeParams"].get("sourceImage") == "<image>":
                         disk["initializeParams"]["sourceImage"] = image_name
+                    if disk["initializeParams"].get("diskType"):
+                        yamlDefinedDiskType = disk["initializeParams"]["diskType"]
+                        disk["initializeParams"]["diskType"] = (
+                            "zones/" + zone + "/" + yamlDefinedDiskType
+                        )
                 launch_config["workerConfig"] = merge(
                     worker_config,
                     launch_config.pop("worker-config", {}),
