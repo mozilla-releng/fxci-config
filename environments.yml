@@ -114,6 +114,7 @@ firefoxci:
         zones:
             by-region:
                 us-central1: ['us-central1-a', 'us-central1-b', 'us-central1-c', 'us-central1-f']
+                us-west1: ['us-west1-a', 'us-west1-b']
     cron:
       gecko:
         hooks_owner: release+tc-hooks@mozilla.com
@@ -235,6 +236,7 @@ staging:
         zones:
             by-region:
                 us-central1: ['us-central1-a', 'us-central1-b', 'us-central1-c', 'us-central1-f']
+                us-west1: ['us-west1-a', 'us-west1-b']
     cron:
       gecko:
         hooks_owner: release+tc-hooks-staging@mozilla.com

@@ -329,7 +329,7 @@ pools:
   config:
     minCapacity: 0
     maxCapacity: 1000
-    regions: [us-central1]
+    regions: [us-central1, us-west1]
     image:
         by-chain-of-trust:
             trusted: monopacker-docker-worker-trusted-current
@@ -385,7 +385,7 @@ pools:
   config:
     minCapacity: 0
     maxCapacity: 1000
-    regions: [us-central1]
+    regions: [us-central1, us-west1]
     image:
         by-chain-of-trust:
             trusted: monopacker-docker-worker-trusted-current
@@ -441,7 +441,7 @@ pools:
   config:
     minCapacity: 0
     maxCapacity: 1000
-    regions: [us-central1]
+    regions: [us-central1, us-west1]
     image:
         by-chain-of-trust:
             trusted: monopacker-docker-worker-trusted-current
