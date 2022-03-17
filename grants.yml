@@ -939,6 +939,16 @@
       level: 3
       job: ["release", "branch:*"]
 
+- grant:
+  - hooks:trigger-hook:project-app-services/in-tree-action-1-generic/*
+  - hooks:trigger-hook:project-app-services/in-tree-action-3-generic/*
+  - queue:create-task:highest:app-services-*
+  - queue:scheduler-id:app-services-level-*
+  - secrets:get:project/application-services/*
+  to:
+  - roles:
+    - mozillians-group:application-services
+
 # - scriptworker specific roles
 - grant:
   - secrets:get:repo:github.com/mozilla-releng/scriptworker:coveralls
