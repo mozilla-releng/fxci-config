@@ -37,7 +37,7 @@ jobs:
         run:
             command: >-
                 pip install --user -r requirements/base.txt &&
-                pip install --user . &&
+                pip install --user --no-deps . &&
                 TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.cloudops.mozgcp.net
                 tc-admin check --environment staging
     check-firefoxci:
@@ -47,7 +47,7 @@ jobs:
         run:
             command: >-
                 pip install --user -r requirements/base.txt &&
-                pip install --user . &&
+                pip install --user --no-deps . &&
                 TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com
                 tc-admin check --environment firefoxci
     unit:
@@ -61,7 +61,7 @@ jobs:
         run:
             command: >-
                 pip install --user -r requirements/test.txt &&
-                pip install --user . &&
+                pip install --user --no-deps . &&
                 py.test
     flake8:
         description: "Run `flake8` to validate the latest changes"

@@ -168,7 +168,8 @@ tasks:
                                         ln -s /builds/worker/artifacts artifacts &&
                                         taskgraph action-callback
                                     else: >
-                                        pip install --user /builds/worker/checkouts/taskgraph &&
+                                        pip install --user -r /builds/worker/checkouts/taskgraph/requirements/base.txt &&
+                                        pip install --user --no-deps /builds/worker/checkouts/taskgraph &&
                                         ln -s /builds/worker/artifacts artifacts &&
                                         ~/.local/bin/taskgraph decision
                                         --pushlog-id='${push.pushlog_id}'
