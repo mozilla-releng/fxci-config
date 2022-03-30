@@ -909,7 +909,22 @@ mozilla-vpn-client:
     github-taskgraph: true
     taskgraph-actions: true
     # Enable this after .taskcluster.yml and .cron.yml exist in the repo
-    #taskgraph-cron: true
+    # taskgraph-cron: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+
+staging-mozilla-vpn-client:
+  repo: https://github.com/mozilla-releng/staging-mozilla-vpn-client
+  repo_type: git
+  default_branch: main
+  level: 1
+  trust_domain: mozillavpn
+  trust_project: mozillavpn
+  features:
+    github-taskgraph: true
+    taskgraph-actions: true
+    # Enable this after .taskcluster.yml and .cron.yml exist in the repo
+    # taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
 
