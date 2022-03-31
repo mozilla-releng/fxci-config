@@ -2752,14 +2752,14 @@ pools:
 - pool_id: mozillavpn-1/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
-  email_on_error: false
+  email_on_error: true
   provider_id: aws
   config:
     image: occ-b-win2012-current
     maxCapacity: 6
     additional-user-data:
       workerType: mozillavpn-1-b-win2012
-    regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+    regions: [us-east-1, us-west-1, us-west-2]
     security: windows-untrusted
     implementation: generic-worker/occ-8047eee
     instance_types:
