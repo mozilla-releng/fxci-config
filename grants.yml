@@ -1838,6 +1838,16 @@
         - "branch:main"
         - "branch:releases/*"
 
+- grant:
+  - secrets:get:project/mozillavpn/tokens
+  to:
+  - project:
+      alias:
+      - staging-mozilla-vpn-client
+      job:
+        - "branch:main"
+        - "branch:releases/*"
+
 # Bug 1745945: secret scopes for mozillavpn-developers
 - grant:
   - secrets:set:project/mozillavpn/*
