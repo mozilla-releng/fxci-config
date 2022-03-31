@@ -11,7 +11,6 @@ import os
 import attr
 import jsone
 import slugid
-
 import taskcluster
 
 from .util.http import SESSION

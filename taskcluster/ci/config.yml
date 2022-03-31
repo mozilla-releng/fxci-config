@@ -4,6 +4,7 @@ treeherder:
     group-names:
         'I': 'Docker Image Builds'
         'check': 'config checks'
+        'unit': 'unit tests'
 
 task-priority: low
 

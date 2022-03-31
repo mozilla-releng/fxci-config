@@ -27,4 +27,4 @@ force_grid_wrap = 0
 use_parentheses = true
 line_length=88
 known_third_party = ["taskcluster", "tcadmin"]
-known_first_party = ["ciadmin"]
+known_first_party = ["ciadmin", "build_decision"]

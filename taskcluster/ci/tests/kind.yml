@@ -50,10 +50,10 @@ jobs:
                 pip install --user --no-deps . &&
                 TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com
                 tc-admin check --environment firefoxci
-    unit:
-        description: "Run `unit tests` to validate the latest changes"
+    unit-ciadmin:
+        description: "Run ciadmin `unit tests` to validate the latest changes"
         treeherder:
-            symbol: unit
+            symbol: unit(ciadmin)
         worker:
             env:
                 # fail instead of skipping tests due to missing information
@@ -62,7 +62,20 @@ jobs:
             command: >-
                 pip install --user -r requirements/test.txt &&
                 pip install --user --no-deps . &&
-                py.test
+                py.test tests/
+    unit-build-decision:
+        description: "Run build-decision `unit tests` to validate the latest changes"
+        treeherder:
+            symbol: unit(build-decision)
+        worker:
+            env:
+                # fail instead of skipping tests due to missing information
+                NO_TEST_SKIP: "1"
+        run:
+            command: >-
+                pip install --user -r build-decision/requirements/test.txt &&
+                pip install --user --no-deps build-decision/. &&
+                py.test build-decision/tests/
     flake8:
         description: "Run `flake8` to validate the latest changes"
         treeherder:
@@ -87,7 +100,7 @@ jobs:
         run:
             command: >-
                 pip install --user -r requirements/test.txt  &&
-                cd src && isort --check --diff .
+                isort --check --diff src/ build-decision/src/
 
     yamllint:
         # Only run yamllint on taskcluster/ until we resolve the linting

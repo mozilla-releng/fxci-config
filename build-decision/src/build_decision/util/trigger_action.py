@@ -20,7 +20,6 @@ import os
 import attr
 import jsone
 import jsonschema
-
 import taskcluster
 
 from . import scopes
