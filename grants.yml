@@ -1839,6 +1839,18 @@
         - "branch:releases/*"
 
 - grant:
+  - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+  - project:mozillavpn:releng:signing:cert:dep-signing
+  - project:mozillavpn:releng:signing:format:autograph_debsign
+  to:
+  - project:
+      alias:
+      - staging-mozilla-vpn-client
+      job:
+        - "branch:*"
+        - "pull-request"
+
+- grant:
   - secrets:get:project/mozillavpn/tokens
   to:
   - project:
