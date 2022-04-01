@@ -2921,28 +2921,20 @@
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mhentges
 
 # Bug 1715817: Scopes to manage Azure images and workers
+# No bug: Scopes to run things like merge-automation jobs on try for scriptworker scripts testing
+# No bug: Scopes for testing workers (assumes the block above of Bug 1715817 is still in place)
+# Bug 1762597 - Merge automation scope for mgoossens
 - grant:
   - worker-manager:manage-worker-pool:gecko-t/win10-64-2004*
   - worker-manager:provider:azure2
   - worker-manager:provider:null-provider
   - generic-worker:allow-rdp:gecko-t/win10-64-2004*
   - worker-manager:remove-worker:gecko-t/win10-64-2004*
-  to:
-  - roles:
-    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
-
-# No bug: Scopes for testing workers (assumes the block above of Bug 1715817 is still in place)
-- grant:
+  - hooks:trigger-hook:project-gecko/in-tree-action-1-*
   - worker-manager:manage-worker-pool:gecko-1/masterwayz*
   - worker-manager:provider:fxci-level1-gcp
   - worker-manager:remove-worker:gecko-1/masterwayz*
-  to:
-  - roles:
-    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
-
-# No bug: Scopes to run things like merge-automation jobs on try for scriptworker scripts testing
-- grant:
-  - hooks:trigger-hook:project-gecko/in-tree-action-1-*
+  - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
   to:
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
