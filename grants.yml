@@ -1839,6 +1839,15 @@
         - "branch:releases/*"
 
 - grant:
+  - queue:route:checks
+  - queue:route:tc-treeherder.v2.{alias}.*
+  - queue:scheduler-id:{trust_domain}-level-1
+  - queue:create-task:project:none
+  to:
+  - project:
+      alias: staging-mozilla-vpn-client
+
+- grant:
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   - project:mozillavpn:releng:signing:cert:dep-signing
   - project:mozillavpn:releng:signing:format:autograph_debsign
