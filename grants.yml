@@ -2944,7 +2944,8 @@
 # Bug 1715817: Scopes to manage Azure images and workers
 # No bug: Scopes to run things like merge-automation jobs on try for scriptworker scripts testing
 # No bug: Scopes for testing workers (assumes the block above of Bug 1715817 is still in place)
-# Bug 1762597 - Merge automation scope for mgoossens
+# Bug 1762597: Merge automation scope for mgoossens
+# No bug: treestatus scopes for mergeduty
 - grant:
   - worker-manager:manage-worker-pool:gecko-t/win10-64-2004*
   - worker-manager:provider:azure2
@@ -2956,6 +2957,7 @@
   - worker-manager:provider:fxci-level1-gcp
   - worker-manager:remove-worker:gecko-1/masterwayz*
   - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
+  - project:releng:services/treestatus/*
   to:
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
