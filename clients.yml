@@ -523,7 +523,7 @@ project/releng/scriptworker/v2/iscript/tb-prod:
 project/releng/scriptworker/v2/signing/dev/firefoxci-mozillavpn-t:
     description: mozillavpn linux signing
     scopes:
-        - queue:claim-work:scriptworker-k8s/mozillavpn-t-signing
+        - queue:claim-work:scriptworker-k8s/mozillavpn-t-signing-dev
         - queue:worker-id:mozillavpn-t-signing-dev/mozillavpn-t-signing-dev*
 project/releng/scriptworker/v2/signing/prod/firefoxci-mozillavpn-t:
     description: mozillavpn linux signing
