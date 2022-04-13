@@ -124,6 +124,12 @@ def get_aws_provider_config(
                         worker_config,
                         instance_type.get("worker-config", {}),
                     )
+                    if aws_config.get("wst_server_url") and instance_worker_config.get(
+                        "genericWorker", {}
+                    ).get("config"):
+                        instance_worker_config["genericWorker"]["config"].setdefault(
+                            "wstServerURL", aws_config["wst_server_url"]
+                        )
                 image_id = image.image_id(provider_id, region)
                 _populate_deployment_id(instance_worker_config, image_id)
                 launch_config = {
@@ -184,6 +190,10 @@ def get_azure_provider_config(
         {"implementation": implementation},
     )
     worker_config = merge(worker_config, config.get("worker-config", {}))
+    if azure_config.get("wst_server_url"):
+        worker_config["genericWorker"]["config"].setdefault(
+            "wstServerURL", azure_config["wst_server_url"]
+        )
     tags = config.get("tags", {})
 
     launch_configs = []
@@ -283,6 +293,13 @@ def get_google_provider_config(
                         launch_config["workerConfig"],
                         {"capacity": instance_type.get("capacityPerInstance", 1)},
                     )
+                else:
+                    if google_config.get("wst_server_url") and launch_config[
+                        "workerConfig"
+                    ].get("genericWorker", {}).get("config"):
+                        launch_config["workerConfig"]["genericWorker"][
+                            "config"
+                        ].setdefault("wstServerURL", google_config["wst_server_url"])
                 launch_config[
                     "machineType"
                 ] = "zones/{zone}/machineTypes/{machine_type}".format(

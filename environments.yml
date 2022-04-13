@@ -30,6 +30,7 @@ firefoxci:
             fxci-level3-gcp:
                 implementation: google
     aws_config:
+        wst_server_url: "https://firefoxci-websocktunnel.services.mozilla.com/"
         availability-zones:
             by-region:
                 us-east-1:
@@ -99,6 +100,7 @@ firefoxci:
             - zones: ["us-east-1c"]
               families: ["m5dn"]
     azure_config:
+        wst_server_url: "https://firefoxci-websocktunnel.services.mozilla.com/"
         subscription: "108d46d5-fe9b-4850-9a7d-8c914aa6c1f0"
         location:
             - "centralus"
@@ -111,6 +113,7 @@ firefoxci:
             - "westus2"
             - "westeurope"
     google_config:
+        wst_server_url: "https://firefoxci-websocktunnel.services.mozilla.com/"
         zones:
             by-region:
                 us-central1: ['us-central1-a', 'us-central1-b', 'us-central1-c', 'us-central1-f']
@@ -161,6 +164,7 @@ staging:
             fxci-level3-gcp:
                 implementation: google
     aws_config:
+        wst_server_url: "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/"
         availability-zones:
             by-region:
                 us-east-1:
@@ -223,6 +227,7 @@ staging:
                         "eu-central-1": ["sg-026d562d7bb83f005"]
         invalid-instances: []
     azure_config:
+        wst_server_url: "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/"
         subscription: "108d46d5-fe9b-4850-9a7d-8c914aa6c1f0"
         location:
             - "centralus"
@@ -233,6 +238,7 @@ staging:
             - "westus"
             - "westus2"
     google_config:
+        wst_server_url: "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/"
         zones:
             by-region:
                 us-central1: ['us-central1-a', 'us-central1-b', 'us-central1-c', 'us-central1-f']
