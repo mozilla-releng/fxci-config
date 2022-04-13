@@ -718,8 +718,6 @@
   - queue:route:project.relman.codereview.*
   to:
   - project:
-      alias: taskgraph-try
-  - project:
       alias: ci-configuration-try
 
 ##

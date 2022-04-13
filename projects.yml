@@ -481,24 +481,13 @@ ci-configuration-try:
     treeherder-reporting: true
 
 taskgraph:
-  repo: https://hg.mozilla.org/ci/taskgraph
-  repo_type: hg
-  access: scm_level_3
+  repo: https://github.com/taskcluster/taskgraph
+  repo_type: git
   trust_domain: taskgraph
+  default_branch: main
+  level: 3
   features:
-    hg-push: true
-    taskgraph-actions: true
-    trust-domain-scopes: true
-    treeherder-reporting: true
-
-taskgraph-try:
-  repo: https://hg.mozilla.org/ci/taskgraph-try
-  repo_type: hg
-  access: scm_level_1
-  trust_domain: taskgraph
-  is_try: true
-  features:
-    hg-push: true
+    github-taskgraph: true
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
