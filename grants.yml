@@ -2944,6 +2944,7 @@
 # No bug: Scopes for testing workers (assumes the block above of Bug 1715817 is still in place)
 # Bug 1762597: Merge automation scope for mgoossens
 # No bug: treestatus scopes for mergeduty
+# Bug 1764433: grant scopes for secret testing
 - grant:
   - worker-manager:manage-worker-pool:gecko-t/win10-64-2004*
   - worker-manager:provider:azure2
@@ -2956,6 +2957,8 @@
   - worker-manager:remove-worker:gecko-1/masterwayz*
   - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
   - project:releng:services/treestatus/*
+  - secrets:get:project/releng/gecko/build/level-1/masterwayz*
+  - secrets:set:project/releng/gecko/build/level-1/masterwayz*
   to:
   - roles:
     - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
