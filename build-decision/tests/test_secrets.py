@@ -20,6 +20,7 @@ import build_decision.secrets as secrets
     ),
 )
 def test_get_secret(secret_name, secret, secret_key, expected):
+    """Mock the secrets fetch, and test which values we get back."""
     fake_res = MagicMock()
     fake_res.json.return_value = secret
     fake_session = MagicMock()

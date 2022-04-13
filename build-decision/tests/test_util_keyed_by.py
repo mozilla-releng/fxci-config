@@ -15,6 +15,7 @@ import build_decision.util.keyed_by as keyed_by
     ),
 )
 def test_keymatch(attributes, target, expected):
+    """Test keyed-by logic, include regexes."""
     assert keyed_by.keymatch(attributes, target) == expected
 
 
@@ -129,6 +130,7 @@ def test_keymatch(attributes, target, expected):
     ),
 )
 def test_evaluate_keyed_by(value, item_name, attributes, expected, exception):
+    """Add full coverage for evaluate_keyed_by."""
     if exception:
         with pytest.raises(exception):
             keyed_by.evaluate_keyed_by(value, item_name, attributes)

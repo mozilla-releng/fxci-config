@@ -59,6 +59,7 @@ def test_render_tc_yml_exception(tc_yml, raises, expected):
 
 
 def test_display_task():
+    """Add coverage for ``Task.display``."""
     task = decision.Task(task_id="asdf", task_payload={"foo": "bar"})
     # This will print() output; just exercise for coverage, for now.
     # We can capture STDOUT or mock print later if we want more real testing.
@@ -67,6 +68,7 @@ def test_display_task():
 
 @pytest.mark.parametrize("proxy", (True, False))
 def test_submit_task(proxy):
+    """Add coverage for ``Task.submit``."""
     task_id = "asdf"
     task_payload = {"foo": "bar"}
     task = decision.Task(task_id=task_id, task_payload=task_payload)
