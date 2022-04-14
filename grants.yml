@@ -835,12 +835,6 @@
   - project:
       trust_domain: [taskgraph, ci]
 
-- grant:
-  - secrets:get:project/releng/taskgraph/ci
-  to:
-  - project:
-      alias: taskgraph
-
 ##
 # feature-specific roles
 
