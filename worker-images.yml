@@ -269,6 +269,9 @@ monopacker-docker-worker-trusted-2020-08-05t22-01-11z-bug1676214:
     us-west-2: ami-008fbf458e350fc3d
   fxci-level3-gcp:
     projects/fxci-production-level3-workers/global/images/fxci-level3-gcp-0y049yr8imhe3lz4vlcn
+monopacker-docker-worker-testing-bug1764751:
+  fxci-level1-gcp:
+    projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2022-04-11t19-11-40z 
 
 # generic-worker images
 gwci-linux:
