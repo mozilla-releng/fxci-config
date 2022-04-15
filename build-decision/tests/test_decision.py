@@ -79,4 +79,4 @@ def test_submit_task(proxy):
     with patch.object(decision.taskcluster, "Queue", return_value=fake_queue):
         with patch.dict(os.environ, env, clear=True):
             task.submit()
-    assert fake_queue.createTask.called_once_with(task_id, task_payload)
+    fake_queue.createTask.assert_called_once_with(task_id, task_payload)
