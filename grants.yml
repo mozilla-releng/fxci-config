@@ -633,6 +633,8 @@
   - secrets:get:project/webrender-ci/wrupdater-github-token
   # Bug 1604686: Token for gfx github sync.
   - secrets:get:gecko/gfx-github-sync/token
+  # Bug 1751132: Token for rlbox github sync.
+  - secrets:get:gecko/rlbox-github-sync/token
   to:
   - project:
       alias: mozilla-central
@@ -2656,6 +2658,15 @@
   to:
   - roles:
     - mozillians-group:webrender-ci
+
+# Bug 1751132: Token for rlbox github sync, ability to set and get
+- grant:
+  - secrets:get:gecko/rlbox-github-sync/token
+  - secrets:set:gecko/rlbox-github-sync/token
+  to:
+  - roles:
+    - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mh
+
 
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
