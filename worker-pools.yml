@@ -1048,7 +1048,7 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 - pool_id: gecko-1/b-win2012-beta
   description: experimental gecko builder
-  owner: grenade@mozilla.com
+  owner: relops-aws-provisioning@mozilla.com
   email_on_error: true
   provider_id: aws
   config:
@@ -1572,7 +1572,7 @@ pools:
           "idleTimeoutSecs": 1
 - pool_id: gecko-t/t-win10-64-beta
   description: experimental gecko tester
-  owner: grenade@mozilla.com
+  owner: relops-aws-provisioning@mozilla.com
   email_on_error: true
   provider_id: aws
   config:
@@ -1648,7 +1648,7 @@ pools:
           "idleTimeoutSecs": 1
 - pool_id: gecko-t/t-win10-64-gpu-b
   description: experimental gecko tester
-  owner: grenade@mozilla.com
+  owner: relops-aws-provisioning@mozilla.com
   email_on_error: true
   provider_id: aws
   config:
@@ -1703,7 +1703,7 @@ pools:
           "idleTimeoutSecs": 1
 - pool_id: gecko-t/t-win7-32-beta
   description: experimental gecko tester
-  owner: grenade@mozilla.com
+  owner: relops-aws-provisioning@mozilla.com
   email_on_error: true
   provider_id: aws
   config:
@@ -1757,7 +1757,7 @@ pools:
           "idleTimeoutSecs": 1
 - pool_id: gecko-t/t-win7-32-gpu-b
   description: experimental gecko tester
-  owner: grenade@mozilla.com
+  owner: relops-aws-provisioning@mozilla.com
   email_on_error: true
   provider_id: aws
   config:
@@ -2090,7 +2090,7 @@ pools:
     - us-west-2
 - pool_id: relops-3/win2019
   description: build windows cloud images for taskcluster windows workloads
-  owner: grenade@mozilla.com
+  owner: relops-aws-provisioning@mozilla.com
   email_on_error: true
   provider_id: aws
   config:
