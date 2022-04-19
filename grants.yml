@@ -1803,6 +1803,16 @@
         - "branch:*"
         - "pull-request"
 
+# XXX Temporarily granted to help debug bug 1762389, remove once finished!
+- grant:
+  - queue:create-task:highest:gecko-1/b-win2012
+  to:
+  - project:
+      alias:
+      - mozilla-vpn-client
+      job:
+        - "branch:ahal/b-win2012-test"
+
 - grant:
   - project:{trust_project}:releng:signing:format:*
   - project:releng:services/tooltool/api/download/public
