@@ -1811,7 +1811,7 @@
       alias:
       - mozilla-vpn-client
       job:
-        - "branch:ahal/b-win2012-test"
+        - "pull-request"
 
 - grant:
   - project:{trust_project}:releng:signing:format:*
