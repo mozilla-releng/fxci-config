@@ -2843,38 +2843,6 @@ pools:
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
           - DeviceName: /dev/sdc
             Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-- pool_id: mozillavpn-1/b-win2012-bug1762389
-  description: ''
-  owner: ahal@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    image: occ-b-win2012-current
-    maxCapacity: 6
-    additional-user-data:
-      workerType: mozillavpn-1-b-win2012-bug1762389
-    regions: [us-east-1, us-west-1, us-west-2]
-    security: windows-untrusted
-    implementation: generic-worker/occ-8047eee
-    instance_types:
-      - instanceType: c4.4xlarge
-        launchConfig:
-          BlockDeviceMappings:
-          - DeviceName: /dev/sda1
-            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
-          - DeviceName: /dev/sdb
-            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-          - DeviceName: /dev/sdc
-            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-      - instanceType: c5.4xlarge
-        launchConfig:
-          BlockDeviceMappings:
-          - DeviceName: /dev/sda1
-            Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
-          - DeviceName: /dev/sdb
-            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-          - DeviceName: /dev/sdc
-            Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
 - pool_id: mozillavpn-3/b-win2012
   description: ''
   owner: release+tc-workers@mozilla.com
