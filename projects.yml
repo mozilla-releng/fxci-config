@@ -820,9 +820,13 @@ taskhuddler:
 scriptworker:
   repo: https://github.com/mozilla-releng/scriptworker
   repo_type: git
-  default_branch: master
-  trust_domain: releng
+  default_branch: main
+  trust_domain: scriptworker
   level: 3
+  features:
+    trust-domain-scopes: true
+    taskgraph-actions: true
+    github-taskgraph: true
 
 # mozilla-releng Github repositories
 build-puppet:
