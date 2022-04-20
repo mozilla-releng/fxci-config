@@ -39,12 +39,13 @@
 #   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
 #   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
 #   - `github-taskgraph` -- this github repository has started using taskgraph
-#   - `github-publication` -- this github repository automates publication to github releases.
+#   - `github-publication` -- this github repository automates publication to github releases
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - 'scriptworker' -- this repository uses at least one scriptworker instance
 #   - 'shipit' -- this repository interacts with a shipit instance
 #   - 'taskgraph-cron' -- tasks defined in `.cron.yml` can run for this project (non-gecko/comm taskgraph repos only)
-#   - `trust-domain-scopes` -- this repository should have generic scopes associated to it's trust domain
+#   - 'taskgraph-actions' -- this repository defines in-tree actions and should have corresponding hooks defined
+#   - `trust-domain-scopes` -- this repository should have generic scopes associated to its trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
 
