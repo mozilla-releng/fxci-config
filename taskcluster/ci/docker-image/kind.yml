@@ -16,11 +16,6 @@ transforms:
 # generate tasks for every docker image in the directory, secure in the
 # knowledge that unnecessary images will be omitted from the target task graph
 jobs:
-    python3.7:
-        symbol: I(python3.7)
-        definition: python
-        args:
-            PYTHON_VERSION: "3.7"
     build-decision:
         symbol: I(build-decision)
         definition: build-decision
