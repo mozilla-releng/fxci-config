@@ -951,7 +951,7 @@
   to:
   - project:
       alias: scriptworker
-      job: ["pull-request", "branch:master"]
+      job: ["pull-request", "branch:main"]
 
 # - balrog specific roles
 - grant:
