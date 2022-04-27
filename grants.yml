@@ -1405,6 +1405,7 @@
   - project:mobile:{trust_project}:releng:github:project:staging-android-components
   - project:mobile:{trust_project}:releng:github:project:mock
   - project:mobile:{trust_project}:releng:github:action:release
+  - project:mobile:{trust_project}:releng:github:action:bump-geckoview
   - queue:route:index.mobile.v2.{alias}.*
   to:
   - project:

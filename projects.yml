@@ -545,7 +545,8 @@ staging-android-components:
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
-    targets: []
+    targets:
+      - bump-geckoview
 
 reference-browser:
   repo: https://github.com/mozilla-mobile/reference-browser
