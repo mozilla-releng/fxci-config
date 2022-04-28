@@ -3186,38 +3186,6 @@ pools:
         dockerConfig:
           allowPrivileged: true
         capacityManagement: {diskspaceThreshold: 16000000000}
-- pool_id: pmoore-test/gwci-linux
-  description: '[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/gwci-linux but for GCP'
-  owner: pmoore@mozilla.com
-  email_on_error: true
-  provider_id: aws
-  config:
-    regions:
-    - us-east-1
-    - us-west-1
-    - us-west-2
-    instance_types:
-    - instanceType: c4.2xlarge
-      worker-config:
-        genericWorker:
-          config:
-            deploymentId: KSjGK16ySI-A7Cs-DGAnLg
-            ed25519SigningKeyLocation: "/etc/generic-worker/ed25519_key"
-            livelogExecutable: "/usr/local/bin/livelog"
-            runTasksAsCurrentUser: true
-            shutdownMachineOnInternalError: false
-            taskclusterProxyExecutable: "/usr/local/bin/taskcluster-proxy"
-            taskclusterProxyPort: 8080
-            tasksDir: "/home"
-            workerTypeMetadata:
-              machine-setup:
-                maintainer: pmoore@mozilla.com
-                script: https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh
-            wstAudience: taskcluster-net
-            wstServerURL: https://websocktunnel.tasks.build
-    minCapacity: 0
-    maxCapacity: 10
-    image: gwci-linux
 - pool_id: project-relman/relman-svc
   description: Release management workers
   owner: release+tc-workers@mozilla.com
