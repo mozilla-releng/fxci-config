@@ -1850,8 +1850,11 @@
 
 - grant:
   - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+  - queue:create-task:low:releng-hardware/mozillavpn-b-1-*
   - project:mozillavpn:releng:signing:cert:dep-signing
   - project:mozillavpn:releng:signing:format:autograph_debsign
+  - project:releng:services/tooltool/api/download/public
+  - project:releng:services/tooltool/api/download/internal
   to:
   - project:
       alias:
