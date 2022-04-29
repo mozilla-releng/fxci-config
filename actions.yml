@@ -1,3 +1,4 @@
+---
 # This file defines in-tree actions, the roles that have access to them, the
 # schema they accept, and the levels and trust-domains for which they exist.
 #
@@ -13,83 +14,82 @@
 # The optional `input_schema` property gives the schema for the `user.input`
 # portion of the hook's triggerPayload.  If not specified, the default is to
 # allow anything in that field.
----
 
 - trust_domain: gecko
   levels: [1, 2, 3]
   action_perms:
-      - generic
-      - backfill
-      - cancel-all
-      - merge-automation
-      - purge-caches
-      - release-promotion
-      - retrigger-decision
-      - scriptworker-canary
+    - generic
+    - backfill
+    - cancel-all
+    - merge-automation
+    - purge-caches
+    - release-promotion
+    - retrigger-decision
+    - scriptworker-canary
 
 - trust_domain: comm
   levels: [1, 2, 3]
   action_perms:
-      - generic
-      - backfill
-      - cancel-all
-      - merge-automation
-      - purge-caches
-      - release-promotion
-      - retrigger-decision
+    - generic
+    - backfill
+    - cancel-all
+    - merge-automation
+    - purge-caches
+    - release-promotion
+    - retrigger-decision
 
 - trust_domain: kaios
   levels: [1, 2]
   action_perms:
-      - generic
-      - backfill
-      - cancel-all
-      - purge-caches
-      - retrigger-decision
+    - generic
+    - backfill
+    - cancel-all
+    - purge-caches
+    - retrigger-decision
 
 - trust_domain: xpi
   levels: [1, 3]
   action_perms:
-      - generic
-      - release-promotion
+    - generic
+    - release-promotion
 
 - trust_domain: adhoc
   levels: [1, 3]
   action_perms:
-      - generic
-      - release-promotion
+    - generic
+    - release-promotion
 
 - trust_domain: mobile
   levels: [1, 3]
   action_perms:
-      - generic
-      - cancel-all
-      - release-promotion
+    - generic
+    - cancel-all
+    - release-promotion
 
 - trust_domain: taskgraph
   levels: [1, 3]
   action_perms:
-      - generic
-      - cancel-all
+    - generic
+    - cancel-all
 
 - trust_domain: ci
   levels: [1, 3]
   action_perms:
-      - generic
-      - cancel-all
+    - generic
+    - cancel-all
 
 - trust_domain: scriptworker
   levels: [1, 3]
   action_perms:
-      - generic
+    - generic
 
 - trust_domain: glean
   levels: [1, 3]
   action_perms:
-      - generic
+    - generic
 
 - trust_domain: app-services
   levels: [1, 3]
   action_perms:
-      - generic
-      - cancel-all
+    - generic
+    - cancel-all

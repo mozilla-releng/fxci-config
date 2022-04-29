@@ -1,3 +1,4 @@
+---
 # This file contains configuration for each of the repositories related to Firefox CI.
 #
 # Repositories are also known as projects (mostly within the
@@ -49,7 +50,6 @@
 #   - `treeherder-reporting` -- this repository reports results to treeherder
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
 
----
 ash:
   repo: https://hg.mozilla.org/projects/ash
   repo_type: hg
@@ -680,7 +680,6 @@ staging-focus-android:
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
-    taskgraph-actions: true
   cron:
     targets: [nightly]
     hooks_owner: releng+staging-focus-android@mozilla.com

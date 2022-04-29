@@ -1,3 +1,4 @@
+---
 # This file contains configuration for each of the environments in which
 # ci-configuration applies.
 #
@@ -12,241 +13,240 @@
 # make to the generated resources.  Such modifications are defined in ci-admin,
 # and exist to help configure minor differences between environments, such as
 # to prevent a staging environment from carrying a full production workload.
----
 firefoxci:
-    root_url: https://firefox-ci-tc.services.mozilla.com
-    # no modifications in production, please!
-    modify_resources: []
-    worker_manager:
-        providers:
-            aws:
-                implementation: aws
-            azure2:
-                implementation: azure
-            fxci-level1-gcp:
-                implementation: google
-            fxci-level2-gcp:
-                implementation: google
-            fxci-level3-gcp:
-                implementation: google
-    aws_config:
-        wst_server_url: "https://firefoxci-websocktunnel.services.mozilla.com/"
-        availability-zones:
-            by-region:
-                us-east-1:
-                    - "us-east-1a"
-                    - "us-east-1b"
-                    - "us-east-1c"
-                    - "us-east-1d"
-                    - "us-east-1e"
-                    - "us-east-1f"
-                us-west-1:
-                    - "us-west-1b"
-                    - "us-west-1c"
-                us-west-2:
-                    - "us-west-2a"
-                    - "us-west-2b"
-                    - "us-west-2c"
-                eu-central-1:
-                    - eu-central-1a
-                    - eu-central-1b
-                    - eu-central-1c
-        subnet-id:
-            by-availability-zone:
-                us-east-1a: "subnet-566e060c"
-                us-east-1b: "subnet-f2c93496"
-                us-east-1c: "subnet-c52454e9"
-                us-east-1d: "subnet-e7e6ccaf"
-                us-east-1e: "subnet-deb5a8e2"
-                us-east-1f: "subnet-7f720d73"
-                us-west-1b: "subnet-7641632e"
-                us-west-1c: "subnet-48a9b82c"
-                us-west-2a: "subnet-d948b6bf"
-                us-west-2b: "subnet-2eaaba67"
-                us-west-2c: "subnet-540a9f0f"
-                eu-central-1a: subnet-935645fb
-                eu-central-1b: subnet-6988da13
-                eu-central-1c: subnet-114d525b
-        security-groups:
-            by-security:
-                untrusted:
-                    # docker-worker - gecko-workers
-                    by-region:
-                        "us-east-1": ["sg-12cd3762"]
-                        "us-west-1": ["sg-caed26ac"]
-                        "us-west-2": ["sg-2728435d"]
-                        "eu-central-1": ["sg-8b3d0de0"]
-                windows-untrusted:
-                    # livelog-direct - gecko-workers
-                    by-region:
-                        "us-east-1": ["sg-0dc9337d"]
-                        "us-west-1": ["sg-5be3283d"]
-                        "us-west-2": ["sg-09d6be73"]
-                        "eu-central-1": ["sg-c03e0eab"]
-                trusted:
-                    # no-inbound - gecko-workers
-                    by-region:
-                        "us-east-1": ["sg-7aca300a"]
-                        "us-west-1": ["sg-5ce02b3a"]
-                        "us-west-2": ["sg-a0d6beda"]
-                        "eu-central-1": ["sg-e53d0d8e"]
-        invalid-instances:
-            - zones: ["us-east-1e"]
-              families: ["m5", "m5a", "m5ad", "m5d", "m5dn", "m5n", "c5", "c5d", "c5n", "r5a", "z1d"]
-            - zones: ["us-east-1b", "us-east-1f"]
-              families: ["r3", "m3", "c3"]
-            - zones: ["us-east-1a", "us-east-1b", "us-east-1d", "us-east-1e"]
-              families: ["r5ad"]
-            - zones: ["us-east-1c"]
-              families: ["m5dn"]
-    azure_config:
-        wst_server_url: "https://firefoxci-websocktunnel.services.mozilla.com/"
-        subscription: "108d46d5-fe9b-4850-9a7d-8c914aa6c1f0"
-        location:
-            - "centralus"
-            - "eastus"
-            - "eastus2"
-            - "northcentralus"
-            - "northeurope"
-            - "southcentralus"
-            - "westus"
-            - "westus2"
-            - "westeurope"
-    google_config:
-        wst_server_url: "https://firefoxci-websocktunnel.services.mozilla.com/"
-        zones:
-            by-region:
-                us-central1: ['us-central1-a', 'us-central1-b', 'us-central1-c', 'us-central1-f']
-                us-west1: ['us-west1-a', 'us-west1-b']
-    cron:
-      gecko:
-        hooks_owner: release+tc-hooks@mozilla.com
-        notify_emails:
-          - to_address: ciduty+failedcron@mozilla.com
-            on_event: on-failed
-          - to_address: ciduty+exceptioncron@mozilla.com
-            on_event: on-exception
-          - to_address: sheriffs+failedcron@mozilla.org
-            on_event: on-failed
-          - to_address: sheriffs+exceptioncron@mozilla.org
-            on_event: on-exception
-      taskgraph:
-        hooks_owner: release+tc-hooks@mozilla.com
-        notify_emails:
-          - to_address: release+failedcron@mozilla.com
-            on_event: on-failed
-          - to_address: release+exceptioncron@mozilla.com
-            on_event: on-exception
+  root_url: https://firefox-ci-tc.services.mozilla.com
+  # no modifications in production, please!
+  modify_resources: []
+  worker_manager:
+    providers:
+      aws:
+        implementation: aws
+      azure2:
+        implementation: azure
+      fxci-level1-gcp:
+        implementation: google
+      fxci-level2-gcp:
+        implementation: google
+      fxci-level3-gcp:
+        implementation: google
+  aws_config:
+    wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
+    availability-zones:
+      by-region:
+        us-east-1:
+          - us-east-1a
+          - us-east-1b
+          - us-east-1c
+          - us-east-1d
+          - us-east-1e
+          - us-east-1f
+        us-west-1:
+          - us-west-1b
+          - us-west-1c
+        us-west-2:
+          - us-west-2a
+          - us-west-2b
+          - us-west-2c
+        eu-central-1:
+          - eu-central-1a
+          - eu-central-1b
+          - eu-central-1c
+    subnet-id:
+      by-availability-zone:
+        us-east-1a: subnet-566e060c
+        us-east-1b: subnet-f2c93496
+        us-east-1c: subnet-c52454e9
+        us-east-1d: subnet-e7e6ccaf
+        us-east-1e: subnet-deb5a8e2
+        us-east-1f: subnet-7f720d73
+        us-west-1b: subnet-7641632e
+        us-west-1c: subnet-48a9b82c
+        us-west-2a: subnet-d948b6bf
+        us-west-2b: subnet-2eaaba67
+        us-west-2c: subnet-540a9f0f
+        eu-central-1a: subnet-935645fb
+        eu-central-1b: subnet-6988da13
+        eu-central-1c: subnet-114d525b
+    security-groups:
+      by-security:
+        untrusted:
+          # docker-worker - gecko-workers
+          by-region:
+            us-east-1: [sg-12cd3762]
+            us-west-1: [sg-caed26ac]
+            us-west-2: [sg-2728435d]
+            eu-central-1: [sg-8b3d0de0]
+        windows-untrusted:
+          # livelog-direct - gecko-workers
+          by-region:
+            us-east-1: [sg-0dc9337d]
+            us-west-1: [sg-5be3283d]
+            us-west-2: [sg-09d6be73]
+            eu-central-1: [sg-c03e0eab]
+        trusted:
+          # no-inbound - gecko-workers
+          by-region:
+            us-east-1: [sg-7aca300a]
+            us-west-1: [sg-5ce02b3a]
+            us-west-2: [sg-a0d6beda]
+            eu-central-1: [sg-e53d0d8e]
+    invalid-instances:
+      - zones: [us-east-1e]
+        families: [m5, m5a, m5ad, m5d, m5dn, m5n, c5, c5d, c5n, r5a, z1d]
+      - zones: [us-east-1b, us-east-1f]
+        families: [r3, m3, c3]
+      - zones: [us-east-1a, us-east-1b, us-east-1d, us-east-1e]
+        families: [r5ad]
+      - zones: [us-east-1c]
+        families: [m5dn]
+  azure_config:
+    wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
+    subscription: 108d46d5-fe9b-4850-9a7d-8c914aa6c1f0
+    location:
+      - centralus
+      - eastus
+      - eastus2
+      - northcentralus
+      - northeurope
+      - southcentralus
+      - westus
+      - westus2
+      - westeurope
+  google_config:
+    wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
+    zones:
+      by-region:
+        us-central1: [us-central1-a, us-central1-b, us-central1-c, us-central1-f]
+        us-west1: [us-west1-a, us-west1-b]
+  cron:
+    gecko:
+      hooks_owner: release+tc-hooks@mozilla.com
+      notify_emails:
+        - to_address: ciduty+failedcron@mozilla.com
+          on_event: on-failed
+        - to_address: ciduty+exceptioncron@mozilla.com
+          on_event: on-exception
+        - to_address: sheriffs+failedcron@mozilla.org
+          on_event: on-failed
+        - to_address: sheriffs+exceptioncron@mozilla.org
+          on_event: on-exception
+    taskgraph:
+      hooks_owner: release+tc-hooks@mozilla.com
+      notify_emails:
+        - to_address: release+failedcron@mozilla.com
+          on_event: on-failed
+        - to_address: release+exceptioncron@mozilla.com
+          on_event: on-exception
 
 staging:
-    root_url: https://stage.taskcluster.nonprod.cloudops.mozgcp.net
-    modify_resources:
-      # we do not want hooks to trigger on a schedule in staging, as that adds
-      # lots of load (e.g., building nightlies).  They can be triggered
-      # manually if needed for testing.
-      - remove_hook_schedules
-      # similarly, we do not want to bind hooks to exchanges, as those exchanges
-      # likely do not exist here
-      - remove_hook_bindings
-      # Remove minimum capacity of all worker-types, since staging clusters
-      # do not have enough load to justify always-on workers.
-      - remove_worker_min_capacity
-    worker_manager:
-        providers:
-            aws:
-                implementation: aws
-            azure2:
-                implementation: azure
-            fxci-level1-gcp:
-                implementation: google
-            fxci-level2-gcp:
-                implementation: google
-            fxci-level3-gcp:
-                implementation: google
-    aws_config:
-        wst_server_url: "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/"
-        availability-zones:
-            by-region:
-                us-east-1:
-                    - "us-east-1a"
-                    - "us-east-1b"
-                    - "us-east-1c"
-                    - "us-east-1d"
-                    - "us-east-1e"
-                    - "us-east-1f"
-                us-west-1:
-                    - "us-west-1a"
-                    - "us-west-1b"
-                us-west-2:
-                    - "us-west-2a"
-                    - "us-west-2b"
-                    - "us-west-2c"
-                eu-central-1:
-                    - eu-central-1a
-                    - eu-central-1b
-                    - eu-central-1c
-        subnet-id:
-            by-availability-zone:
-                us-east-1a: subnet-0c938056fff37f311
-                us-east-1b: subnet-00d682e89c23d7a86
-                us-east-1c: subnet-006eff582598db077
-                us-east-1d: subnet-01454cff97aa89f34
-                us-east-1e: subnet-04003ab20f583059b
-                us-east-1f: subnet-0d8c0e26a6194119c
-                us-west-1a: subnet-0a30116fa0be3bc99
-                us-west-1b: subnet-01aac9d0ea7efdbc4
-                us-west-2a: subnet-06b091438ea962936
-                us-west-2b: subnet-00927443142f01ddf
-                us-west-2c: subnet-0ab2f88a3fa4ab7a0
-                eu-central-1a: subnet-04d80721f2a2ef77d
-                eu-central-1b: subnet-0aff5b04441588586
-                eu-central-1c: subnet-051cbe370d97542ed
-        security-groups:
-            by-security:
-                untrusted:
-                    # docker-worker - gecko-workers
-                    by-region:
-                        "us-east-1": ["sg-01738525fc9991bd0"]
-                        "us-west-1": ["sg-0f52b4554cfc115e7"]
-                        "us-west-2": ["sg-07ca8c96f1574d42b"]
-                        "eu-central-1": ["sg-0febd8c614542ba9c"]
-                windows-untrusted:
-                    # livelog-direct - gecko-workers
-                    # rdp-only - gecko-workers
-                    by-region:
-                        "us-east-1": ["sg-06f0ef799985524a4", "sg-041e142d0ba63c7aa"]
-                        "us-west-1": ["sg-07ffff7a1ad3c4958", "sg-0c7efe44870028d78"]
-                        "us-west-2": ["sg-0588dee891c7069e7", "sg-073d8cda785e8f939"]
-                        "eu-central-1": ["sg-04a0ee6ff719528e9", "sg-095ad8255839a053c"]
-                trusted:
-                    # no-inbound - gecko-workers
-                    by-region:
-                        "us-east-1": ["sg-03ab72cd36e14ce66"]
-                        "us-west-1": ["sg-042aa0d6570f103e7"]
-                        "us-west-2": ["sg-042aa0d6570f103e7"]
-                        "eu-central-1": ["sg-026d562d7bb83f005"]
-        invalid-instances: []
-    azure_config:
-        wst_server_url: "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/"
-        subscription: "108d46d5-fe9b-4850-9a7d-8c914aa6c1f0"
-        location:
-            - "centralus"
-            - "eastus"
-            - "eastus2"
-            - "northcentralus"
-            - "southcentralus"
-            - "westus"
-            - "westus2"
-    google_config:
-        wst_server_url: "https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/"
-        zones:
-            by-region:
-                us-central1: ['us-central1-a', 'us-central1-b', 'us-central1-c', 'us-central1-f']
-                us-west1: ['us-west1-a', 'us-west1-b']
-    cron:
-      gecko:
-        hooks_owner: release+tc-hooks-staging@mozilla.com
-        notify_emails: []
-      taskgraph:
-        hooks_owner: release+tc-hooks-staging@mozilla.com
-        notify_emails: []
+  root_url: https://stage.taskcluster.nonprod.cloudops.mozgcp.net
+  modify_resources:
+    # we do not want hooks to trigger on a schedule in staging, as that adds
+    # lots of load (e.g., building nightlies).  They can be triggered
+    # manually if needed for testing.
+    - remove_hook_schedules
+    # similarly, we do not want to bind hooks to exchanges, as those exchanges
+    # likely do not exist here
+    - remove_hook_bindings
+    # Remove minimum capacity of all worker-types, since staging clusters
+    # do not have enough load to justify always-on workers.
+    - remove_worker_min_capacity
+  worker_manager:
+    providers:
+      aws:
+        implementation: aws
+      azure2:
+        implementation: azure
+      fxci-level1-gcp:
+        implementation: google
+      fxci-level2-gcp:
+        implementation: google
+      fxci-level3-gcp:
+        implementation: google
+  aws_config:
+    wst_server_url: https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/
+    availability-zones:
+      by-region:
+        us-east-1:
+          - us-east-1a
+          - us-east-1b
+          - us-east-1c
+          - us-east-1d
+          - us-east-1e
+          - us-east-1f
+        us-west-1:
+          - us-west-1a
+          - us-west-1b
+        us-west-2:
+          - us-west-2a
+          - us-west-2b
+          - us-west-2c
+        eu-central-1:
+          - eu-central-1a
+          - eu-central-1b
+          - eu-central-1c
+    subnet-id:
+      by-availability-zone:
+        us-east-1a: subnet-0c938056fff37f311
+        us-east-1b: subnet-00d682e89c23d7a86
+        us-east-1c: subnet-006eff582598db077
+        us-east-1d: subnet-01454cff97aa89f34
+        us-east-1e: subnet-04003ab20f583059b
+        us-east-1f: subnet-0d8c0e26a6194119c
+        us-west-1a: subnet-0a30116fa0be3bc99
+        us-west-1b: subnet-01aac9d0ea7efdbc4
+        us-west-2a: subnet-06b091438ea962936
+        us-west-2b: subnet-00927443142f01ddf
+        us-west-2c: subnet-0ab2f88a3fa4ab7a0
+        eu-central-1a: subnet-04d80721f2a2ef77d
+        eu-central-1b: subnet-0aff5b04441588586
+        eu-central-1c: subnet-051cbe370d97542ed
+    security-groups:
+      by-security:
+        untrusted:
+          # docker-worker - gecko-workers
+          by-region:
+            us-east-1: [sg-01738525fc9991bd0]
+            us-west-1: [sg-0f52b4554cfc115e7]
+            us-west-2: [sg-07ca8c96f1574d42b]
+            eu-central-1: [sg-0febd8c614542ba9c]
+        windows-untrusted:
+          # livelog-direct - gecko-workers
+          # rdp-only - gecko-workers
+          by-region:
+            us-east-1: [sg-06f0ef799985524a4, sg-041e142d0ba63c7aa]
+            us-west-1: [sg-07ffff7a1ad3c4958, sg-0c7efe44870028d78]
+            us-west-2: [sg-0588dee891c7069e7, sg-073d8cda785e8f939]
+            eu-central-1: [sg-04a0ee6ff719528e9, sg-095ad8255839a053c]
+        trusted:
+          # no-inbound - gecko-workers
+          by-region:
+            us-east-1: [sg-03ab72cd36e14ce66]
+            us-west-1: [sg-042aa0d6570f103e7]
+            us-west-2: [sg-042aa0d6570f103e7]
+            eu-central-1: [sg-026d562d7bb83f005]
+    invalid-instances: []
+  azure_config:
+    wst_server_url: https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/
+    subscription: 108d46d5-fe9b-4850-9a7d-8c914aa6c1f0
+    location:
+      - centralus
+      - eastus
+      - eastus2
+      - northcentralus
+      - southcentralus
+      - westus
+      - westus2
+  google_config:
+    wst_server_url: https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/
+    zones:
+      by-region:
+        us-central1: [us-central1-a, us-central1-b, us-central1-c, us-central1-f]
+        us-west1: [us-west1-a, us-west1-b]
+  cron:
+    gecko:
+      hooks_owner: release+tc-hooks-staging@mozilla.com
+      notify_emails: []
+    taskgraph:
+      hooks_owner: release+tc-hooks-staging@mozilla.com
+      notify_emails: []

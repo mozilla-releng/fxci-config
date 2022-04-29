@@ -1,3 +1,4 @@
+---
 # This is the template for the task definition for hg push hooks.  Its job is
 # to run a decision task for the given revision of the given repository.
 #
@@ -16,64 +17,62 @@
 # The context for the second rendering is that provided by the hooks service in response
 # to a Pulse message from exchange/hgpushes/v2 or a triggerHook call with the same payload
 
----
 provisionerId: infra
 workerType: build-decision
 schedulerId: ${trust_domain}-level-${level}
 
 # The "$fromNow" options here are escaped so that they are processed by the hooks service's
 # JSON-e rendering when the hook is fired.
-deadline: {$$fromNow: '30 minutes'}
-expires: {$$fromNow: '3 days'}
+deadline: {$$fromNow: 30 minutes}
+expires: {$$fromNow: 3 days}
 scopes:
-    - assume:${project_role_prefix}:branch:*
+  - assume:${project_role_prefix}:branch:*
 routes:
-    - index.hg-push.v1.${alias}.revision.$${payload.payload.data.heads[0]}
-    - index.hg-push.v1.${alias}.pushlog-id.$${payload.payload.data.pushlog_pushes[0].pushid}
+  - index.hg-push.v1.${alias}.revision.$${payload.payload.data.heads[0]}
+  - index.hg-push.v1.${alias}.pushlog-id.$${payload.payload.data.pushlog_pushes[0].pushid}
 payload:
-    # built by pushes to the ci-configuration repository
-    image:
-        mozillareleases/build-decision:c8c65816c6f80d7f6466a8561549a5d9bc21db7f@sha256:97b21a2cf55f323127c1ec3f7d1a73a672efa5bfc0fd2aa11f6b348b6aac7d67
-    env:
-       # pass along the hook payload, which is the Pulse message from hg (v2)
-       # https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications
-       PULSE_MESSAGE: {$$json: {$$eval: 'payload'}}
-    command:
-        $flatten:
-            - "hg-push"
-            # hard-coded values that can't be changed by the hook payload
-            - "--repo-url"
-            - "${project_repo}"
-            - "--project"
-            - "${alias}"
-            - "--level"
-            - "${level}"
-            - "--trust-domain"
-            - "${trust_domain}"
-            - "--repository-type"
-            - "hg"
-            - $if: 'taskcluster_yml_repo'
-              then:
-                  - "--taskcluster-yml-repo"
-                  - "${taskcluster_yml_repo}"
-    features:
-        taskclusterProxy: true
+  # built by pushes to the ci-configuration repository
+  image: mozillareleases/build-decision:c8c65816c6f80d7f6466a8561549a5d9bc21db7f@sha256:97b21a2cf55f323127c1ec3f7d1a73a672efa5bfc0fd2aa11f6b348b6aac7d67
+  env:
+    # pass along the hook payload, which is the Pulse message from hg (v2)
+    # https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications
+    PULSE_MESSAGE: {$$json: {$$eval: payload}}
+  command:
+    $flatten:
+      - hg-push
+      # hard-coded values that can't be changed by the hook payload
+      - --repo-url
+      - ${project_repo}
+      - --project
+      - ${alias}
+      - --level
+      - ${level}
+      - --trust-domain
+      - ${trust_domain}
+      - --repository-type
+      - hg
+      - $if: taskcluster_yml_repo
+        then:
+          - --taskcluster-yml-repo
+          - ${taskcluster_yml_repo}
+  features:
+    taskclusterProxy: true
 
     # If this task does not succeed immediately, something is probably wrong.  We want to avoid a storm of
     # decision tasks when that problem is resolved, so we are conservative with the time it can possibly retry
-    maxRunTime: 600
+  maxRunTime: 600
 metadata:
-    $$let:
-        description:
-            $$if: 'firedBy == "triggerHook"'
-            then: 'Fired by triggerHook call from $${clientId}'
-            else: 'Fired by $${firedBy}'
-    in:
-        owner: 'mozilla-taskcluster-maintenance@mozilla.com'
-        source: https://firefox-ci-tc.services.mozilla.com/hooks/${hookGroupId}/${hookId}
-        description: "$${description}"
-        name: On-Push task for ${project_repo}
-priority: 'highest'
+  $$let:
+    description:
+      $$if: firedBy == "triggerHook"
+      then: Fired by triggerHook call from $${clientId}
+      else: Fired by $${firedBy}
+  in:
+    owner: mozilla-taskcluster-maintenance@mozilla.com
+    source: https://firefox-ci-tc.services.mozilla.com/hooks/${hookGroupId}/${hookId}
+    description: $${description}
+    name: On-Push task for ${project_repo}
+priority: highest
 retries: 5
 tags: {}
 extra: {}

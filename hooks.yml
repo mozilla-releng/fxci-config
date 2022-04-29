@@ -44,7 +44,7 @@ project-relman/code-coverage-cron-production:
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   schedule:
-    - "0 0 12 * * *"
+    - 0 0 12 * * *
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - docker-worker:cache:code-coverage-bot-production
@@ -65,7 +65,7 @@ project-relman/code-coverage-cron-testing:
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   schedule:
-    - "0 0 12 * * *"
+    - 0 0 12 * * *
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - docker-worker:cache:code-coverage-bot-testing
@@ -86,7 +86,7 @@ project-relman/code-coverage-crontrigger-production:
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   schedule:
-    - "0 */30 * * * *"
+    - 0 */30 * * * *
   scopes:
     - hooks:trigger-hook:project-relman/code-coverage-repo-production
     - assume:project:taskcluster:mozilla-github-repository
@@ -107,7 +107,7 @@ project-relman/code-coverage-crontrigger-testing:
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   schedule:
-    - "0 */30 * * * *"
+    - 0 */30 * * * *
   scopes:
     - hooks:trigger-hook:project-relman/code-coverage-repo-testing
     - assume:project:taskcluster:mozilla-github-repository
@@ -176,7 +176,7 @@ project-relman/bugzilla-dashboard-backend-production:
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   schedule:
-    - '0 0 */6 * * *'
+    - 0 0 */6 * * *
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.production.bugzilla-dashboard.*
@@ -195,7 +195,7 @@ project-relman/bugzilla-dashboard-backend-testing:
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   schedule:
-    - '0 0 */6 * * *'
+    - 0 0 */6 * * *
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.testing.bugzilla-dashboard.*
@@ -214,7 +214,7 @@ project-relman/bugzilla-dashboard-backend-testing:
 
 # was project-mobile/android-components-api-docs-update
 project-releng/cron-task-mozilla-mobile-android-components/api-docs-update:
-  name: "Android Components - API docs Update"
+  name: Android Components - API docs Update
   description: >-
     Hook for updating the API docs automatically.
 
@@ -233,7 +233,7 @@ project-releng/cron-task-mozilla-mobile-android-components/api-docs-update:
 
 # was project-mobile/android-components-geckoview-update-beta
 project-releng/cron-task-mozilla-mobile-android-components/gv-update-beta:
-  name: "Android Components - GeckoView Update (Beta)"
+  name: Android Components - GeckoView Update (Beta)
   description: >-
     Updating GeckoView Beta dependency.
 
@@ -241,7 +241,7 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-beta:
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
-    - '0 0 15 * * *'
+    - 0 0 15 * * *
   scopes:
     - queue:scheduler-id:mobile-level-3
     - queue:create-task:lowest:mobile-3/b-linux
@@ -254,7 +254,7 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-beta:
 
 # was project-mobile/android-components-geckoview-update-nightly
 project-releng/cron-task-mozilla-mobile-android-components/gv-update-nightly:
-  name: "Android Components - GeckoView Update (Nightly)"
+  name: Android Components - GeckoView Update (Nightly)
   description: >-
     Updating GeckoView Nightly dependency.
 
@@ -262,7 +262,7 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-nightly:
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
-    - '0 0 14 * * *'
+    - 0 0 14 * * *
   scopes:
     - queue:scheduler-id:mobile-level-3
     - queue:create-task:lowest:mobile-3/b-linux
@@ -275,7 +275,7 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-nightly:
 
 # was project-mobile/android-components-geckoview-update-release
 project-releng/cron-task-mozilla-mobile-android-components/gv-update-release:
-  name: "Android Components - GeckoView Update (Release)"
+  name: Android Components - GeckoView Update (Release)
   description: >-
     Updating GeckoView Release dependency.
 
@@ -283,7 +283,7 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-release:
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
-    - '0 0 16 * * *'
+    - 0 0 16 * * *
   scopes:
     - queue:scheduler-id:mobile-level-3
     - queue:create-task:lowest:mobile-3/b-linux
@@ -296,7 +296,7 @@ project-releng/cron-task-mozilla-mobile-android-components/gv-update-release:
 
 # was project-mobile/android-components-publicsuffixlist-update
 project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update:
-  name: "Android Components - Public Suffix List Update"
+  name: Android Components - Public Suffix List Update
   description: >-
     Hook for updating the Public Suffix List automatically.
 
@@ -304,7 +304,7 @@ project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update:
   owner: skaspari@mozilla.com
   email_on_error: true
   schedule:
-    - '0 0 17 * * *'
+    - 0 0 17 * * *
   scopes:
     - queue:scheduler-id:mobile-level-3
     - queue:create-task:lowest:mobile-3/b-linux
@@ -317,10 +317,10 @@ project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update:
 
 # was project-mobile/focus-nightly-public
 project-releng/cron-task-mozilla-mobile-focus-android/nightly-public:
-  name: "Focus/Klar Nightly Builds (Public)"
+  name: Focus/Klar Nightly Builds (Public)
   description: >-
-    Public Nightly builds of Focus/Klar. Automatically signed and uploaded to "nightly" track of Google
-    Play. https://github.com/mozilla-mobile/focus-android/wiki/Release-tracks
+    Public Nightly builds of Focus/Klar. Automatically signed and uploaded to "nightly"
+    track of Google Play. https://github.com/mozilla-mobile/focus-android/wiki/Release-tracks
 
     Managed from ci-configuration's hooks.yml for now.
   owner: skaspari@mozilla.com

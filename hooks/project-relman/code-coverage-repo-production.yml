@@ -1,48 +1,48 @@
 ---
 $merge:
-- $if: "'taskGroupId' in payload"
-  then:
-    taskGroupId: {$eval: payload.taskGroupId}
-  else: {}
-- created: {$fromNow: 0 seconds}
-  deadline: {$fromNow: 4 hours}
-  expires: {$fromNow: 1 month}
-  provisionerId: code-coverage
-  workerType: bot
-  metadata:
-    description: ''
-    name:
-      $if: "'taskName' in payload"
-      then: {$eval: payload.taskName}
-      else: Code Coverage aggregation task - repo (production)
-    owner: release-mgmt-analysis@mozilla.com
-    source: https://github.com/mozilla/code-coverage
-  payload:
-    cache:
-      code-coverage-bot-production: "/cache"
-    capabilities: {}
-    command:
-    - "code-coverage-repo"
-    - "--taskcluster-secret"
-    - "project/relman/code-coverage/runtime-production"
-    - "--cache-root"
-    - "/cache"
-    - "--working-dir"
-    - "/build"
-    env:
-      $eval: payload
-    features:
-      taskclusterProxy: true
-    image:
-      type: indexed-image
-      namespace: code-analysis.v2.code-coverage.branch.production
-      path: public/code-coverage-bot.tar
-    maxRunTime: 14400
-  priority: lowest
-  retries: 5
-  schedulerId: relman
-  scopes:
-  - secrets:get:project/relman/code-coverage/runtime-production
-  - notify:email:*
-  - docker-worker:cache:code-coverage-bot-production
-  - index:insert-task:project.relman.code-coverage.production.repo.*
+  - $if: "'taskGroupId' in payload"
+    then:
+      taskGroupId: {$eval: payload.taskGroupId}
+    else: {}
+  - created: {$fromNow: 0 seconds}
+    deadline: {$fromNow: 4 hours}
+    expires: {$fromNow: 1 month}
+    provisionerId: code-coverage
+    workerType: bot
+    metadata:
+      description: ''
+      name:
+        $if: "'taskName' in payload"
+        then: {$eval: payload.taskName}
+        else: Code Coverage aggregation task - repo (production)
+      owner: release-mgmt-analysis@mozilla.com
+      source: https://github.com/mozilla/code-coverage
+    payload:
+      cache:
+        code-coverage-bot-production: "/cache"
+      capabilities: {}
+      command:
+        - "code-coverage-repo"
+        - "--taskcluster-secret"
+        - "project/relman/code-coverage/runtime-production"
+        - "--cache-root"
+        - "/cache"
+        - "--working-dir"
+        - "/build"
+      env:
+        $eval: payload
+      features:
+        taskclusterProxy: true
+      image:
+        type: indexed-image
+        namespace: code-analysis.v2.code-coverage.branch.production
+        path: public/code-coverage-bot.tar
+      maxRunTime: 14400
+    priority: lowest
+    retries: 5
+    schedulerId: relman
+    scopes:
+      - secrets:get:project/relman/code-coverage/runtime-production
+      - notify:email:*
+      - docker-worker:cache:code-coverage-bot-production
+      - index:insert-task:project.relman.code-coverage.production.repo.*

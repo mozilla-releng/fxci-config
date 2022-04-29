@@ -16,13 +16,13 @@ payload:
       type: file
   capabilities: {}
   command:
-  - code-coverage-crontrigger
-  - "--taskcluster-secret"
-  - project/relman/code-coverage/runtime-testing
-  - "--cache-root"
-  - "/cache"
-  - "--working-dir"
-  - "/build"
+    - code-coverage-crontrigger
+    - "--taskcluster-secret"
+    - project/relman/code-coverage/runtime-testing
+    - "--cache-root"
+    - "/cache"
+    - "--working-dir"
+    - "/build"
   env: {}
   features:
     taskclusterProxy: true
@@ -35,6 +35,6 @@ priority: lowest
 retries: 5
 schedulerId: relman
 scopes:
-- secrets:get:project/relman/code-coverage/runtime-testing
-- index:insert-task:project.relman.code-coverage.testing.crontrigger.*
-- hooks:trigger-hook:project-relman/code-coverage-repo-testing
+  - secrets:get:project/relman/code-coverage/runtime-testing
+  - index:insert-task:project.relman.code-coverage.testing.crontrigger.*
+  - hooks:trigger-hook:project-relman/code-coverage-repo-testing

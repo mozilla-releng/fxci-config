@@ -1,3 +1,4 @@
+---
 # This is the template for the task definition for cron task hooks.  Its job is
 # to run a `mach cron` in a decision-task image; that command will take care of
 # the details.
@@ -15,7 +16,6 @@
 #
 # Note that aside from the task times as noted below, the JSON-e rendering performed
 # when the hook is fired does not supply any additional information.
----
 
 provisionerId: infra
 workerType: build-decision
@@ -23,53 +23,53 @@ schedulerId: ${trust_domain}-level-${level}
 
 # The "$fromNow" options here are escaped so that they are processed by the hooks service's
 # JSON-e rendering when the hook is fired.
-deadline: {$$fromNow: '1 hour'}
-expires: {$$fromNow: '7 days'}
+deadline: {$$fromNow: 1 hour}
+expires: {$$fromNow: 7 days}
 routes:
-  $map: {$eval: 'cron_notify_emails'}
+  $map: {$eval: cron_notify_emails}
   each(entry): notify.email.${entry.to_address}.${entry.on_event}
 scopes:
   - assume:hook-id:${hookGroupId}/${hookId}
 payload:
-    # built by pushes to the ci-configuration repository
-    image:
-        mozillareleases/build-decision:c8c65816c6f80d7f6466a8561549a5d9bc21db7f@sha256:97b21a2cf55f323127c1ec3f7d1a73a672efa5bfc0fd2aa11f6b348b6aac7d67
-    env:
-        $merge:
-            - $if: allow_input
-              then:
-                  # pass along the hook payload
-                  HOOK_PAYLOAD: {$$json: {$$eval: 'payload'}}
-    command:
-        $flatten:
-            - 'cron'
-            - "--repo-url"
-            - "${project_repo}"
-            - "--project"
-            - "${alias}"
-            - "--level"
-            - "${level}"
-            - "--repository-type"
-            - "${repo_type}"
-            - $if: 'branch'
-              then:
-                  - "--branch"
-                  - "${branch}"
-            - "--trust-domain"
-            - "${trust_domain}"
-            - {$eval: cron_options}
-    features:
-      taskclusterProxy: true
-      chainOfTrust: true
-    # If this task does not succeed immediately, something is probably wrong.  We want to avoid a storm of
-    # decision tasks when that problem is resolved, so we are conservative with the time it can possibly retry
-    maxRunTime: 600
+  # built by pushes to the ci-configuration repository
+  image: mozillareleases/build-decision:c8c65816c6f80d7f6466a8561549a5d9bc21db7f@sha256:97b21a2cf55f323127c1ec3f7d1a73a672efa5bfc0fd2aa11f6b348b6aac7d67
+  env:
+    $merge:
+      - $if: allow_input
+        then:
+          # pass along the hook payload
+          HOOK_PAYLOAD: {$$json: {$$eval: payload}}
+  command:
+    $flatten:
+      - cron
+      - --repo-url
+      - ${project_repo}
+      - --project
+      - ${alias}
+      - --level
+      - ${level}
+      - --repository-type
+      - ${repo_type}
+      - $if: branch
+        then:
+          - --branch
+          - ${branch}
+      - --trust-domain
+      - ${trust_domain}
+      - {$eval: cron_options}
+  features:
+    taskclusterProxy: true
+    chainOfTrust: true
+  # If this task does not succeed immediately, something is probably wrong.  We
+  # want to avoid a storm of decision tasks when that problem is resolved, so
+  # we are conservative with the time it can possibly retry
+  maxRunTime: 600
 metadata:
-    owner: 'mozilla-taskcluster-maintenance@mozilla.com'
-    source: https://firefox-ci-tc.services.mozilla.com/hooks/#${hookGroupId}/${hookId}
-    description: See https://firefox-ci-tc.services.mozilla.com/hooks/#${hookGroupId}/${hookId}
-    name: Cron task for ${project_repo}
-priority: 'normal'
+  owner: mozilla-taskcluster-maintenance@mozilla.com
+  source: https://firefox-ci-tc.services.mozilla.com/hooks/#${hookGroupId}/${hookId}
+  description: See https://firefox-ci-tc.services.mozilla.com/hooks/#${hookGroupId}/${hookId}
+  name: Cron task for ${project_repo}
+priority: normal
 retries: 5
 tags: {}
 extra: {}

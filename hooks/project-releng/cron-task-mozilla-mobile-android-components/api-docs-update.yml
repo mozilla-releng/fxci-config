@@ -8,9 +8,9 @@ payload:
   features:
     taskclusterProxy: true
   command:
-  - "/bin/bash"
-  - "-cx"
-  - git fetch origin main && git reset --hard FETCH_HEAD && automation/taskcluster/action/generate_docs.sh
+    - "/bin/bash"
+    - "-cx"
+    - git fetch origin main && git reset --hard FETCH_HEAD && automation/taskcluster/action/generate_docs.sh
   maxRunTime: 3600
   expires:
     "$fromNow": 1 year
@@ -25,6 +25,6 @@ routes: []
 priority: lowest
 retries: 5
 scopes:
-- secrets:get:project/mobile/github
+  - secrets:get:project/mobile/github
 tags: {}
 extra: {}
