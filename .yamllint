@@ -9,4 +9,3 @@ rules:
         present: false
     # Checks currently failing
     line-length: disable
-    indentation: {spaces: 4}
