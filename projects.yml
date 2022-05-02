@@ -748,7 +748,7 @@ application-services:
     taskgraph-actions: true
 
 glean:
-  repo: https://github.com/mozilla/glean/
+  repo: https://github.com/mozilla/glean
   repo_type: git
   level: 3
   trust_domain: glean
