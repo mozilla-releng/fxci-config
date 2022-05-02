@@ -734,7 +734,7 @@ firefox-tv:
 
 # mozilla's Github repositories
 application-services:
-  repo: https://github.com/mozilla/application-services/
+  repo: https://github.com/mozilla/application-services
   repo_type: git
   level: 3
   trust_domain: app-services
