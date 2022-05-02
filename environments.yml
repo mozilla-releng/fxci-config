@@ -29,6 +29,8 @@ firefoxci:
         implementation: google
       fxci-level3-gcp:
         implementation: google
+      fxci-test-gcp:
+        implementation: google
   aws_config:
     wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
     availability-zones:
@@ -162,6 +164,8 @@ staging:
       fxci-level2-gcp:
         implementation: google
       fxci-level3-gcp:
+        implementation: google
+      fxci-test-gcp:
         implementation: google
   aws_config:
     wst_server_url: https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/

@@ -566,9 +566,9 @@ pools:
                 - type: ONE_TO_ONE_NAT
   - pool_id: gecko-1/masterwayz-bug1764751
     description: GCP Linux image testing pool for Firefox CI Automation
-    owner: mgoossens+fxci@mozilla.com
+    owner: fxci-gcp-testers@mozilla.com
     email_on_error: true
-    provider_id: fxci-level1-gcp
+    provider_id: fxci-test-gcp
     config:
       minCapacity: 0
       maxCapacity: 20
