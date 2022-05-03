@@ -583,7 +583,7 @@ pools:
             - autoDelete: true
               boot: true
               initializeParams:
-                diskSizeGb: 20
+                diskSizeGb: 75
                 sourceImage: <image>
               type: PERSISTENT
             - autoDelete: true
