@@ -693,23 +693,6 @@ pools:
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
           worker-config:
             capacityManagement: {diskspaceThreshold: 70000000000}
-  - pool_id: gecko-1/b-linux-bug1760871
-    description: sccache test workers for Bug 1760871
-    owner: mgoossens+bug1760871@mozilla.com
-    email_on_error: false
-    provider_id: aws
-    config:
-      regions: [us-east-1]
-      image: docker-worker-hvm-builder-current
-      maxCapacity: 20
-      instance_types:
-        - instanceType: m5n.4xlarge
-          launchConfig:
-            BlockDeviceMappings:
-              - DeviceName: /dev/xvdb
-                Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-          worker-config:
-            capacityManagement: {diskspaceThreshold: 70000000000}
   - pool_id: '{pool-group}/decision'
     description: Worker for Firefox automation
     owner: release+tc-workers@mozilla.com
