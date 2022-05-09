@@ -1840,6 +1840,7 @@
 
 - grant:
     - queue:route:checks
+    - queue:route:index.{trust_domain}.v2.{trust_project}.cache.level-1.*
     - queue:route:tc-treeherder.v2.{alias}.*
     - queue:scheduler-id:{trust_domain}-level-1
     - queue:create-task:project:none
