@@ -1915,6 +1915,7 @@
 
 - grant:
     - project:xpi:releng:github:project:mozilla-extensions/*
+    - project:xpi:releng:github:project:mozilla-rally/rally-core-addon
     - project:xpi:releng:signing:cert:release-signing
     - project:xpi:releng:ship-it:server:production
     - project:xpi:beetmover:bucket:release
