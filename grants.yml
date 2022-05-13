@@ -555,6 +555,16 @@
         alias: [mozilla-central, autoland]
 
 - grant:
+    # Allow the backfill-all-browsertime cron hook to trigger the backfill action.
+    - hooks:trigger-hook:project-{trust_domain}/in-tree-action-{level}-backfill/*
+  to:
+    - project:
+        job: [cron:backfill-all-browsertime]
+        trust_domain: gecko
+        level: [3]
+        alias: [autoland]
+
+- grant:
     - project:comm:thunderbird:releng:balrog:server:release
   to:
     - project:
