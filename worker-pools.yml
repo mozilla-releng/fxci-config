@@ -576,6 +576,12 @@ pools:
       image: monopacker-docker-worker-testing-bug1764751
       instance_types:
         - minCpuPlatform: Intel Cascadelake
+          metadata:
+            items:
+              - key: 'startup-script'
+                value: "#!/usr/bin/awk BEGIN{system(\"sed -i s/aws/google/ /etc/start-worker.yml;sed -i s'/^&/#/' /etc/rsyslog.d/*cloud*;sleep 300\")}"
+              - key: 'startup-script-url'
+                value: 'gs://relops/worker_setup.sh'
           workerConfig:
             task:
               reclaimDivisor: 2
