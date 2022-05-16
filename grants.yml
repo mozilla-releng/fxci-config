@@ -571,7 +571,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr91, comm-esr78]
+        alias: [comm-esr102, comm-esr91]
 
 - grant:
     - project:comm:thunderbird:releng:balrog:server:beta
@@ -593,7 +593,7 @@
   to:
     - project:
         level: [3]
-        alias: [comm-esr91, comm-esr78, comm-beta]
+        alias: [comm-esr102, comm-esr91, comm-beta]
 
 - grant:
     - project:comm:thunderbird:releng:beetmover:bucket:release
@@ -605,7 +605,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr91, comm-esr78, comm-beta]
+        alias: [comm-esr102, comm-esr91, comm-beta]
 
 - grant:
     - project:releng:beetmover:bucket:nightly
