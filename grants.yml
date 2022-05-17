@@ -1786,6 +1786,7 @@
     - queue:create-task:{priority}:built-in/*
     - queue:create-task:{priority}:mozillavpn-{level}/*
     - queue:create-task:{priority}:releng-hardware/mozillavpn-b-{level}-*
+    - queue:create-task:{priority}:scriptworker-prov-v1/mozillavpn-{level}-*
     - queue:route:index.{trust_domain}.cache.level-{level}.*
     - queue:route:index.{trust_domain}.v2.{trust_project}.cache.level-{level}.*
     - queue:scheduler-id:{trust_domain}-level-{level}
