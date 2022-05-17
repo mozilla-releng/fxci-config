@@ -499,7 +499,7 @@ pools:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
   - pool_id: gecko-1/masterwayz-b-linux-gcp
-    description: GCP Linux testing pool for Firefox CI Automation
+    description: GCP Linux testing pool for Firefox CI Automation testing
     owner: mgoossens+fxci@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
