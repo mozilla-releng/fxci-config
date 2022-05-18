@@ -669,7 +669,6 @@ pools:
           trusted: trusted
           default:
       maxCapacity: 10
-      scalingRatio: 0
       instance_types:
         - instanceType: c5d.9xlarge
           worker-config:
@@ -872,7 +871,6 @@ pools:
           trusted: trusted
           default:
       maxCapacity: 10
-      scalingRatio: 0
       instance_types:
         - instanceType: c5d.18xlarge
           utility: 1.1
@@ -991,7 +989,6 @@ pools:
     config:
       image: docker-worker-hvm-builder-current
       maxCapacity: 32
-      scalingRatio: 0
       instance_types:
         - instanceType: r5d.xlarge
           capacityPerInstance: 8
@@ -1985,7 +1982,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 100
-      scalingRatio: 0
       worker-config: {dindImage: taskcluster/dind-service:v4.0}
       instance_types:
         - instanceType: m5d.xlarge
@@ -2003,7 +1999,6 @@ pools:
       security: trusted
       minCapacity: 0
       maxCapacity: 100
-      scalingRatio: 0
       worker-config: {dindImage: taskcluster/dind-service:v4.0}
       instance_types:
         - instanceType: m5d.xlarge
@@ -2020,7 +2015,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 100
-      scalingRatio: 0
       worker-config: {dindImage: taskcluster/dind-service:v4.0}
       instance_types:
         - instanceType: m5d.xlarge
@@ -2060,7 +2054,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 150
-      scalingRatio: 0
       instance_types:
         - instanceType: m5d.xlarge
       regions:
@@ -2080,7 +2073,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 150
-      scalingRatio: 0
       security: trusted
       instance_types:
         - instanceType: m5d.xlarge
@@ -2140,7 +2132,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 50
-      scalingRatio: 0
       instance_types:
         - instanceType: c5d.2xlarge
           launchConfig:
@@ -2162,7 +2153,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 50
-      scalingRatio: 0
       instance_types:
         - instanceType: m5d.xlarge
       regions:
@@ -2179,7 +2169,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 30
-      scalingRatio: 0
       worker-config: {dindImage: taskcluster/dind-service:v4.1}
       instance_types:
         - instanceType: c5.9xlarge
@@ -2203,7 +2192,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 1  # We can only have 3 concurrent builds with the plan we pay. Let's not overload the queue with level 1 jobs
-      scalingRatio: 0
       instance_types:
         # No need for a big instance, it just delegates the heavy lifting to bitrise. That said, we
         # can't use t3 instances. The AMIs aren't compatible
@@ -2225,7 +2213,6 @@ pools:
       image: docker-worker-hvm-builder-trusted-current
       minCapacity: 0
       maxCapacity: 100
-      scalingRatio: 0
       security: trusted
       instance_types:
         - instanceType: c5d.2xlarge
@@ -2248,7 +2235,6 @@ pools:
       image: docker-worker-hvm-builder-trusted-current
       minCapacity: 0
       maxCapacity: 50
-      scalingRatio: 0
       security: trusted
       instance_types:
         - instanceType: m5d.xlarge
@@ -2266,7 +2252,6 @@ pools:
       image: docker-worker-hvm-builder-trusted-current
       minCapacity: 0
       maxCapacity: 30
-      scalingRatio: 0
       worker-config: {dindImage: taskcluster/dind-service:v4.1}
       security: trusted
       instance_types:
@@ -2291,7 +2276,6 @@ pools:
       image: docker-worker-hvm-builder-trusted-current
       minCapacity: 0
       maxCapacity: 3  # We can only have 3 concurrent builds with the plan we pay
-      scalingRatio: 0
       security: trusted
       instance_types:
         # No need for a big instance, it just delegates the heavy lifting to
@@ -2350,7 +2334,6 @@ pools:
           default:
       minCapacity: 1
       maxCapacity: 10
-      scalingRatio: 0
       instance_types:
         - instanceType: c5d.large
           capacityPerInstance: 2
@@ -2386,7 +2369,6 @@ pools:
           default:
       minCapacity: 2
       maxCapacity: 10
-      scalingRatio: 0
       instance_types:
         - instanceType: m5d.large
           capacityPerInstance: 2
@@ -2406,7 +2388,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 50
-      scalingRatio: 0
       instance_types:
         - instanceType: c5d.4xlarge
           utility: 2
@@ -2430,7 +2411,6 @@ pools:
       image: docker-worker-hvm-builder-trusted-current
       minCapacity: 0
       maxCapacity: 100
-      scalingRatio: 0
       security: trusted
       instance_types:
         - instanceType: c5d.4xlarge
@@ -2455,7 +2435,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 15
-      scalingRatio: 0
       worker-config: {dindImage: taskcluster/dind-service:v4.1}
       instance_types:
         - instanceType: c5d.large
@@ -2479,7 +2458,6 @@ pools:
       image: docker-worker-hvm-builder-trusted-current
       minCapacity: 0
       maxCapacity: 30
-      scalingRatio: 0
       worker-config: {dindImage: taskcluster/dind-service:v4.1}
       security: trusted
       instance_types:
@@ -2503,7 +2481,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 2
       maxCapacity: 100
-      scalingRatio: 0
       instance_types:
         # XXX: we might need befier instances (e.g. c5d.4x large) for rust compilation.
         - instanceType: c5d.large
@@ -2528,7 +2505,6 @@ pools:
       image: docker-worker-hvm-builder-trusted-current
       minCapacity: 2
       maxCapacity: 100
-      scalingRatio: 0
       security: trusted
       instance_types:
         # XXX: we might need befier instances (e.g. c5d.4x large) for rust compilation.
@@ -2552,7 +2528,6 @@ pools:
     config:
       image: docker-worker-hvm-builder-current
       maxCapacity: 10
-      scalingRatio: 0
       instance_types:
         - instanceType: c5d.4xlarge
           launchConfig:
@@ -2574,7 +2549,6 @@ pools:
       image: docker-worker-hvm-builder-current
       security: trusted
       maxCapacity: 10
-      scalingRatio: 0
       instance_types:
         - instanceType: c5d.4xlarge
           launchConfig:
@@ -2596,7 +2570,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 10
-      scalingRatio: 0
       worker-config: {dindImage: taskcluster/dind-service:v4.0}
       instance_types:
         - instanceType: c5d.2xlarge
@@ -2614,7 +2587,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 10
-      scalingRatio: 0
       instance_types:
         - instanceType: c5d.large
           worker-config:
@@ -2641,7 +2613,6 @@ pools:
       image: docker-worker-hvm-builder-current
       minCapacity: 0
       maxCapacity: 10
-      scalingRatio: 0
       worker-config: {dindImage: taskcluster/dind-service:v4.1}
       instance_types:
         - instanceType: c5d.large
@@ -2670,7 +2641,6 @@ pools:
       security: trusted
       minCapacity: 0
       maxCapacity: 10
-      scalingRatio: 0
       instance_types:
         - instanceType: c5d.large
           worker-config:
@@ -2698,7 +2668,6 @@ pools:
       security: trusted
       minCapacity: 0
       maxCapacity: 10
-      scalingRatio: 0
       worker-config: {dindImage: taskcluster/dind-service:v4.1}
       instance_types:
         - instanceType: c5d.large
