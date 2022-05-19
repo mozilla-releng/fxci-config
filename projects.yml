@@ -859,6 +859,13 @@ occ:
   trust_domain: releng
   level: 3
 
+winsign:
+  repo: https://github.com/mozilla-releng/winsign
+  repo_type: git
+  default_branch: main
+  trust_domain: releng
+  level: 1
+
 cloud-image-builder:
   repo: https://github.com/mozilla-platform-ops/cloud-image-builder
   repo_type: git
