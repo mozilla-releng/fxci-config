@@ -168,10 +168,11 @@ def assert_azure_basic(pool):
         "priority": "spot",
         "storageProfile": {
             "imageReference": {
-                "id": "/subscriptions/subscription_id/resourceGroups/rg/providers/Microsoft.Compute/images/id"
+                "id": "/subscriptions/subscription_id/resourceGroups/rg/providers/Microsoft.Compute/images/id"  # noqa: E501
             }
         },
-        "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",
+        "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
+
         "tags": {},
         "workerConfig": {},
     }
@@ -187,7 +188,7 @@ def assert_scaling_ratio(pool):
         pytest.param("aws", None, id="aws_basic"),
         pytest.param("google", None, id="google_basic"),
         pytest.param("azure", None, id="azure_basic"),
-        pytest.param("aws", {"scalingRatio": 0.5}, id="scaling_ratio")
+        pytest.param("aws", {"scalingRatio": 0.5}, id="scaling_ratio"),
     ),
 )
 @pytest.mark.asyncio
