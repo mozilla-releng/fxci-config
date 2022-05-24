@@ -1243,7 +1243,7 @@ pools:
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
       locations: [central-us]
-      maxCapacity: 20
+      maxCapacity: 100
       worker-config:
         genericWorker:
           config:
