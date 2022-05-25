@@ -7,7 +7,6 @@
 import asyncio
 import datetime
 import hashlib
-import re
 import textwrap
 
 import iso8601
@@ -269,11 +268,9 @@ async def update_resources(resources):
     # manage the in-tree-action-* hooks, and corresponding roles, for each trust domain
     trust_domains = set(action.trust_domain for action in actions)
     for trust_domain in trust_domains:
+        resources.manage("Hook=project-{}/in-tree-action-.*".format(trust_domain))
         resources.manage(
-            "Hook=project-{}/in-tree-action-.*".format(re.escape(trust_domain))
-        )
-        resources.manage(
-            "Role=hook-id:project-{}/in-tree-action-.*".format(re.escape(trust_domain))
+            "Role=hook-id:project-{}/in-tree-action-.*".format(trust_domain)
         )
 
     projects_by_level_and_trust_domain = {}

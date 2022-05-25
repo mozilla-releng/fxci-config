@@ -172,7 +172,6 @@ def assert_azure_basic(pool):
             }
         },
         "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
-
         "tags": {},
         "workerConfig": {},
     }

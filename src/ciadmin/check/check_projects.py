@@ -3,6 +3,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
+import re
 
 import pytest
 
@@ -21,4 +22,25 @@ async def check_repo_url():
     for project in projects:
         if project.repo.endswith("/"):
             errors.append(f"{project.repo} ends with a '/'!")
+    assert not errors
+
+
+@pytest.mark.asyncio
+async def check_trust_domains():
+    """
+    Ensures that trust domains are valid.
+    """
+    projects = await Project.fetch_all()
+    trust_domains = set(project.trust_domain for project in projects)
+    errors = []
+
+    for trust_domain in trust_domains:
+        if not trust_domain:
+            continue
+
+        # Ensure no regex special characters, but '-' is ok.
+        td = trust_domain.replace("-", "_")
+        if td != re.escape(td):
+            errors.append(f"{trust_domain} contains regex special characters!")
+
     assert not errors
