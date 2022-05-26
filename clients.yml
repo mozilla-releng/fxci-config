@@ -1110,3 +1110,13 @@ project/perf-sheriffs/treeherder/bot:
     - hooks:trigger-hook:project-gecko/in-tree-action-2-generic/*
     - hooks:trigger-hook:project-gecko/in-tree-action-3-backfill/*
     - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
+
+project/mozci/sheriff-automation:
+  description: Perform sheriff automation for mozci cron.
+  scopes:
+    - hooks:trigger-hook:project-gecko/in-tree-action-1-backfill/*
+    - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
+    - hooks:trigger-hook:project-gecko/in-tree-action-2-backfill/*
+    - hooks:trigger-hook:project-gecko/in-tree-action-2-generic/*
+    - hooks:trigger-hook:project-gecko/in-tree-action-3-backfill/*
+    - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
