@@ -3000,3 +3000,11 @@
   to:
     - roles:
         - mozilla-group:perftest
+
+# Grant auth:sentry:kklemola-* to kkleemola on staging
+- grant:
+    - auth:sentry:kkleemola-*
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|kkleemola
+  environments: staging
