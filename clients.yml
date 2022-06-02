@@ -551,12 +551,12 @@ project/releng/scriptworker/v2/mac-signing/prod/firefoxci-mozillavpn-t:
   description: mozillavpn mac signing
   scopes:
     - assume:worker-type:scriptworker-prov-v1/mozillavpn-t-signing-mac
-    - queue:worker-id:mozillavpn-t-signing-mac/mozillavpn-t-signing-mac*
+    - queue:worker-id:mozillavpn-t-signing-mac/vpn-mac-v3-signing*
 project/releng/scriptworker/v2/mac-signing/prod/firefoxci-mozillavpn-3:
   description: mozillavpn mac signing
   scopes:
     - assume:worker-type:scriptworker-prov-v1/mozillavpn-3-signing-mac
-    - queue:worker-id:mozillavpn-3-signing-mac/mozillavpn-3-signing-mac*
+    - queue:worker-id:mozillavpn-3-signing-mac/vpn-mac-v3-signing*
 project/releng/scriptworker/v2/notarization-poller/prod:
   description: Mac notarization poller client.
   scopes:
