@@ -44,7 +44,7 @@
 # * cron:<job> (cron jobs; kleene-* is allowed)
 # * action:<actionPerm> (action jobs; kleene-* is allowed)
 #
-# the following expansions of the granted scopes are performed:
+# The following expansions of the granted scopes are performed:
 #
 # * {alias} (project alias)
 # * {level} (numeric level; not substituted if this repo has no numeric level)
