@@ -366,10 +366,10 @@ ronin-t-windows10-64-2004-gpu-current:
     west-europe: gecko-t-win10-64-2004-gpu-westeurope-20h1-evd-f160361
 ronin-t-windows10-64-2004-bug1765325:
   azure2:
-    central-us: gecko-t-win10-64-2004-base-centralus-20h1-evd-acb6d2f
+    central-us: gecko-t-win10-64-2004-base-centralus-20h1-evd-7a73724
 ronin-t-windows10-64-2004-gpu-bug1765325:
   azure2:
-    north-central-us: gecko-t-win10-64-2004-base-northcentralus-20h1-evd-acb6d2f
+    north-central-us: gecko-t-win10-64-2004-base-northcentralus-20h1-evd-7a73724
 ronin-t-windows10-64-2004-test:
   azure2:
     central-us: gecko-t-win10-64-2004-test-centralus-20h1-evd-b839260
