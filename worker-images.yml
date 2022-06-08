@@ -40,6 +40,8 @@ monopacker-docker-worker-current: monopacker-docker-worker-2020-08-05t22-29-20z-
 monopacker-docker-worker-trusted-current: monopacker-docker-worker-trusted-2020-08-05t22-01-11z-bug1676214
 monopacker-docker-worker-baremetal-current: monopacker-docker-worker-2020-05-04T14-30-19Z-bug1676214
 
+monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-bug1772714-20220603
+
 occ-b-win2012-current: occ-b-win2012-f0280d3
 occ-b-win2012-beta: occ-b-win2012-beta-4384030
 occ-b-win2012-trusted-current: occ-b-win2012-trusted-f3c189d
@@ -250,6 +252,9 @@ monopacker-docker-worker-trusted-2020-08-05t22-01-11z-bug1676214:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/fxci-level3-gcp-fx0p5dw5rxruubg6rbp6
 monopacker-docker-worker-testing-bug1764751:
   fxci-test-gcp: projects/taskcluster-imaging/global/images/ubuntu-1404
+
+monopacker-docker-worker-gcp-bug1772714-20220603:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u1404-2022-06-03
 
 # generic-worker images
 gwci-linux:

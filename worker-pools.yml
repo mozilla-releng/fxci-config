@@ -975,6 +975,37 @@ pools:
             BlockDeviceMappings:
               - DeviceName: /dev/xvdb
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+  - pool_id: 'gecko-t/t-linux-xlarge-gcp'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 2500
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          workerConfig:
+            task:
+              reclaimDivisor: 2
+          disks:
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 32
+                sourceImage: <image>
+              type: PERSISTENT
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+          machine_type: n2-standard-4
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/misc'
     description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
       SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
@@ -1954,6 +1985,37 @@ pools:
                 Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
           worker-config:
             capacityManagement: {diskspaceThreshold: 20000000000}
+  - pool_id: 'gecko-t/t-linux-large-gcp'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    email_on_error: true
+    config:
+      minCapacity: 0
+      maxCapacity: 2500
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          workerConfig:
+            task:
+              reclaimDivisor: 2
+          disks:
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 32
+                sourceImage: <image>
+              type: PERSISTENT
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+          machine_type: n2-standard-2
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: comm-t/t-linux-large
     description: Worker for Firefox automation
     owner: release+tc-workers@mozilla.com
