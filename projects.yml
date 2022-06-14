@@ -1017,7 +1017,7 @@ staging-adhoc-signing:
 adhoc-signing:
   repo: https://github.com/mozilla-releng/adhoc-signing
   repo_type: git
-  default_branch: master
+  default_branch: main
   trust_domain: adhoc
   level: 3
   features:
