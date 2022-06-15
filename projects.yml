@@ -866,6 +866,13 @@ winsign:
   trust_domain: releng
   level: 1
 
+mozilla-version:
+  repo: https://github.com/mozilla-releng/mozilla-version
+  repo_type: git
+  default_branch: main
+  trust_domain: releng
+  level: 1
+
 cloud-image-builder:
   repo: https://github.com/mozilla-platform-ops/cloud-image-builder
   repo_type: git
