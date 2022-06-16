@@ -369,6 +369,12 @@ project/releng/scriptworker/v2/beetmover/dev/firefoxci-mobile-1:
   scopes:
     - queue:claim-work:scriptworker-k8s/mobile-1-beetmover-dev
     - queue:worker-id:mobile-1-beetmover-dev/mobile-1-beetmover-dev-*
+project/releng/scriptworker/v2/beetmover/dev/firefoxci-mozillavpn-1:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/mozillavpn-1-beetmover-dev
+    - queue:get-artifact:mozillavpn/*
+    - queue:worker-id:mozillavpn-1-beetmover-dev/mozillavpn-1-beetmover-dev-*
 project/releng/scriptworker/v2/beetmover/prod/firefoxci-app-services-1:
   description: ''
   scopes:
@@ -439,6 +445,18 @@ project/releng/scriptworker/v2/beetmover/prod/firefoxci-xpi-3:
     - queue:claim-work:scriptworker-k8s/xpi-3-beetmover
     - queue:get-artifact:xpi/*
     - queue:worker-id:xpi-3-beetmover/xpi-3-beetmover-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-mozillavpn-1:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/mozillavpn-1-beetmover
+    - queue:get-artifact:mozillavpn/*
+    - queue:worker-id:mozillavpn-1-beetmover/mozillavpn-1-beetmover-*
+project/releng/scriptworker/v2/beetmover/prod/firefoxci-mozillavpn-3:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/mozillavpn-3-beetmover
+    - queue:get-artifact:mozillavpn/*
+    - queue:worker-id:mozillavpn-3-beetmover/mozillavpn-3-beetmover-*
 project/releng/scriptworker/v2/bouncer/dev/firefoxci-gecko-1:
   description: ''
   scopes:
