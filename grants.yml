@@ -1839,6 +1839,7 @@
 
 - grant:
     - project:mozillavpn:releng:signing:cert:release-signing
+    - queue:route:index.{trust_domain}.v2.mozilla-vpn-client.branch.*
     - secrets:get:project/mozillavpn/tokens
   to:
     - project:
