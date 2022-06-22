@@ -252,7 +252,7 @@ comm-central:
 cedar:
   repo: https://hg.mozilla.org/projects/cedar
   repo_type: hg
-  access: scm_level_3
+  access: scm_level_2
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -333,7 +333,7 @@ larch:
 maple:
   repo: https://hg.mozilla.org/projects/maple
   repo_type: hg
-  access: scm_level_3
+  access: scm_level_2
   trust_domain: gecko
   features:
     gecko-actions: true
