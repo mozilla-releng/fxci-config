@@ -286,12 +286,6 @@ cypress:
   access: scm_level_2
   trust_domain: comm
   features: {}
-ux:
-  repo: https://hg.mozilla.org/projects/ux
-  repo_type: hg
-  access: scm_level_3
-  trust_domain: gecko
-  features: {}
 graphics:
   repo: https://hg.mozilla.org/projects/graphics
   repo_type: hg
