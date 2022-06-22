@@ -90,21 +90,6 @@ mozilla-release:
     targets:
       - ship-geckoview
       - periodic-update
-mozilla-esr78:
-  repo: https://hg.mozilla.org/releases/mozilla-esr78
-  repo_type: hg
-  access: scm_level_3
-  trust_domain: gecko
-  features:
-    gecko-actions: true
-    gecko-cron: true
-    gecko-roles: true
-    hg-push: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-  cron:
-    targets:
-      - periodic-update
 mozilla-esr102:
   repo: https://hg.mozilla.org/releases/mozilla-esr102
   repo_type: hg
