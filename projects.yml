@@ -286,12 +286,6 @@ cypress:
   access: scm_level_2
   trust_domain: comm
   features: {}
-graphics:
-  repo: https://hg.mozilla.org/projects/graphics
-  repo_type: hg
-  access: scm_level_2
-  trust_domain: gecko
-  features: {}
 try:
   repo: https://hg.mozilla.org/try
   repo_type: hg
@@ -374,19 +368,6 @@ autoland:
   cron:
     targets:
       - perftest-on-autoland
-stylo:
-  repo: https://hg.mozilla.org/incubator/stylo
-  repo_type: hg
-  access: scm_level_2
-  trust_domain: gecko
-  features: {}
-stylo-try:
-  repo: https://hg.mozilla.org/incubator/stylo-try
-  repo_type: hg
-  access: scm_level_1
-  trust_domain: gecko
-  is_try: true
-  features: {}
 holly:
   repo: https://hg.mozilla.org/projects/holly
   repo_type: hg
@@ -712,20 +693,6 @@ focus-ios:
   cron:
     targets: [l10-screenshots]
 
-firefox-tv:
-  repo: https://github.com/mozilla-mobile/firefox-tv
-  trust_domain: mobile
-  trust_project: firefox-tv
-  repo_type: git
-  default_branch: master
-  level: 3
-  features:
-    github-taskgraph: true
-    mobile-roles: true
-    mobile-sign-phase: true
-    mobile-pushapk-phase: true
-    scriptworker: true
-
 # mozilla's Github repositories
 application-services:
   repo: https://github.com/mozilla/application-services
@@ -891,13 +858,6 @@ android-l10n-tooling:
             routing_key_pattern: primary.mozilla-lockwise.lockwise-android
       - target: update-projects
         bindings: []
-
-elmo-taskcluster:
-  repo: https://github.com/mozilla-services/elmo-taskcluster
-  repo_type: git
-  default_branch: master
-  level: 3
-  trust_domain: l10n
 
 # Mozilla VPN
 mozilla-vpn-client:
