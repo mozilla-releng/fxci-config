@@ -1876,6 +1876,7 @@
         job:
           - branch:*
           - pull-request
+          - release
 
 - grant:
     - secrets:get:project/mozillavpn/tokens
@@ -1886,6 +1887,7 @@
         job:
           - branch:main
           - branch:releases/*
+          - release
 
 # Bug 1745945: secret scopes for mozillavpn-developers
 - grant:
