@@ -975,14 +975,20 @@ pools:
             BlockDeviceMappings:
               - DeviceName: /dev/xvdb
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-  - pool_id: 'gecko-t/t-linux-xlarge-gcp'
-    description: Worker for Firefox automation.
+  - pool_id: '{pool-group}/t-linux-xlarge-gcp'
+    description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: gecko-t
+      - pool-group: comm-t
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 2500
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 2500
+          comm-t: 10
       regions: [us-central1, us-west1]
       image: monopacker-docker-worker-gcp-current
       instance_types:
@@ -1985,14 +1991,20 @@ pools:
                 Ebs: {DeleteOnTermination: true, VolumeSize: 32, VolumeType: gp2}
           worker-config:
             capacityManagement: {diskspaceThreshold: 20000000000}
-  - pool_id: 'gecko-t/t-linux-large-gcp'
-    description: Worker for Firefox automation.
+  - pool_id: '{pool-group}/t-linux-large-gcp'
+    description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+      - pool-group: comm-t
     email_on_error: true
     config:
       minCapacity: 0
-      maxCapacity: 2500
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 2500
+          comm-t: 100
       regions: [us-central1, us-west1]
       image: monopacker-docker-worker-gcp-current
       instance_types:
