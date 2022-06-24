@@ -1831,6 +1831,7 @@
 
 - grant:
     - project:mozillavpn:releng:googleplay:product:mozillavpn
+    - queue:route:index.{trust_domain}.v2.mozilla-vpn-client.release.*
   to:
     - project:
         alias:
