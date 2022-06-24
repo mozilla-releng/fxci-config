@@ -1806,7 +1806,11 @@
     - project:
         alias:
           - mozilla-vpn-client
-        job: [pull-request, branch:*, cron:*]
+        job:
+          - branch:*
+          - cron:*
+          - pull-request
+          - release
 
 - grant:
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
@@ -1820,6 +1824,7 @@
         job:
           - branch:*
           - pull-request
+          - release
 
 - grant:
     - project:{trust_project}:releng:signing:format:*
@@ -1840,8 +1845,20 @@
 
 - grant:
     - project:mozillavpn:releng:signing:cert:release-signing
-    - queue:route:index.{trust_domain}.v2.mozilla-vpn-client.branch.*
     - secrets:get:project/mozillavpn/tokens
+  to:
+    - project:
+        alias:
+          - mozilla-vpn-client
+        # Only enable this for main and release branches, so that in-repo branches
+        # don't get access to release signing.
+        job:
+          - branch:main
+          - branch:releases/*
+          - release
+
+- grant:
+    - queue:route:index.{trust_domain}.v2.mozilla-vpn-client.branch.*
   to:
     - project:
         alias:
