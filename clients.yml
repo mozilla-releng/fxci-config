@@ -566,8 +566,11 @@ project/releng/scriptworker/v2/signing/prod/firefoxci-mozillavpn-3:
     - queue:claim-work:scriptworker-k8s/mozillavpn-3-signing
     - queue:worker-id:mozillavpn-3-signing/mozillavpn-3-signing*
 project/releng/scriptworker/v2/mac-signing/prod/firefoxci-mozillavpn-t:
-  description: mozillavpn mac signing
+  description: mozillavpn mac dep signing
   scopes:
+    - assume:worker-type:scriptworker-prov-v1/vpn-depsigning-mac-v1
+    - queue:worker-id:vpn-depsigning-mac-v1/dep-mac-v3-signing*
+    # TODO: Remove once mac-signing19 is not being used for VPN anymore
     - assume:worker-type:scriptworker-prov-v1/mozillavpn-t-signing-mac
     - queue:worker-id:mozillavpn-t-signing-mac/vpn-mac-v3-signing*
 project/releng/scriptworker/v2/mac-signing/prod/firefoxci-mozillavpn-3:
