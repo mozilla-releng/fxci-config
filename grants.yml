@@ -912,6 +912,7 @@
     - queue:route:index.project.application-services.*
     - queue:create-task:highest:app-services-{level}/*
     - queue:route:notify.email.*
+    - queue:route:notify.slack-channel.*
     - project:mozilla:{trust_project}:releng:signing:cert:dep-signing
     - project:mozilla:{trust_project}:releng:signing:format:*
     - project:mozilla:{trust_project}:releng:beetmover:action:push-to-maven
