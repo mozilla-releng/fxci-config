@@ -2998,6 +2998,7 @@ pools:
       image: monopacker-docker-worker-baremetal-current
       minCapacity: 0
       maxCapacity: 720
+      scalingRatio: 0.5
       spot: true
       worker-config:
         shutdown: {afterIdleSeconds: 15}
