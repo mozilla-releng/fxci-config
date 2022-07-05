@@ -612,11 +612,12 @@
     - project:releng:balrog:server:nightly
   to:
     - project:
-        alias: [oak, cedar, pine]
+        alias: [oak, cedar, pine, pine-stable]
 
 # Bug 1702054: Scopes to trigger cron hooks on pine
 - grant:
     - hooks:trigger-hook:project-releng/cron-task-projects-pine/*
+    - hooks:trigger-hook:project-releng/cron-task-projects-pine-stable/*
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bgrinstead

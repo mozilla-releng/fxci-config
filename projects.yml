@@ -176,6 +176,21 @@ pine:
       - nightly-desktop-osx
       - nightly-desktop-win64
       - nightly-pinebuild
+pine-stable:
+  repo: https://hg.mozilla.org/projects/pine-stable
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: gecko
+  features:
+    gecko-actions: true
+    gecko-cron: true
+    gecko-roles: true
+    hg-push: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+  cron:
+    targets:
+      - nightly-pinebuild
 mozilla-beta:
   repo: https://hg.mozilla.org/releases/mozilla-beta
   repo_type: hg
