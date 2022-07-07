@@ -1461,7 +1461,12 @@
         # Fenix PRs are restricted to collaborators, so exposing firebase is safe-enough for PRs.
         # Fenix also has some Firebase tests on nightly.
         alias: fenix
-        job: [cron:nightly, cron:nightly-on-google-play, cron:screenshots, pull-request]
+        job:
+          - cron:nightly
+          - cron:nightly-on-google-play
+          - cron:screenshots
+          - cron:legacy-api-ui-tests
+          - pull-request
     - project:
         # Focus PRs are restricted to collaborators, so exposing firebase is safe-enough for PRs.
         # Focus also has some Firebase tests on nightly.
