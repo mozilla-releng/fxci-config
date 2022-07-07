@@ -1221,6 +1221,13 @@
         alias: treestatus
         job: [branch:dev, branch:staging, branch:production]
 
+- grant:
+    - queue:route:checks
+  to:
+    - project:
+        repo_type: [git]
+        job: ["*"]
+
 ##
 # mobile-specific roles
 #
@@ -1622,7 +1629,6 @@
         alias: staging-fenix
 
 - grant:
-    - queue:route:checks
     - queue:scheduler-id:{trust_domain}-level-{level}
     # allow using worker caches appropriate to this trust domain and level
     - docker-worker:cache:{trust_domain}-level-{level}-*
@@ -1632,7 +1638,6 @@
         feature: github-taskgraph
 
 - grant:
-    - queue:route:checks
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   to:
@@ -1766,7 +1771,6 @@
     - docker-worker:cache:{trust_domain}-level-{level}-*
     - generic-worker:cache:{trust_domain}-level-{level}-*
     - queue:route:notify.email.*
-    - queue:route:checks
   to:
     - project:
         alias:
@@ -1795,7 +1799,6 @@
     - docker-worker:cache:{trust_domain}-level-{level}-*
     - generic-worker:cache:{trust_domain}-level-{level}-*
     - queue:route:notify.email.*
-    - queue:route:checks
     - queue:get-artifact:project/mozillavpn/*
     # Create level-1 scopes explicitly
     - queue:create-task:{priority}:mozillavpn-1/*
@@ -1872,7 +1875,6 @@
           - branch:releases/*
 
 - grant:
-    - queue:route:checks
     - queue:route:index.{trust_domain}.v2.{trust_project}.cache.level-1.*
     - queue:route:tc-treeherder.v2.{alias}.*
     - queue:scheduler-id:{trust_domain}-level-1
@@ -1967,7 +1969,6 @@
     - queue:route:index.xpi.xpi-manifest.cache.level-1.*
     - queue:route:index.xpi.v2.*
     - queue:route:index.xpi.cache.level-1.*
-    - queue:route:checks
     - queue:scheduler-id:taskcluster-github
     - queue:route:notify.email.*
     - queue:create-task:low:built-in/*
