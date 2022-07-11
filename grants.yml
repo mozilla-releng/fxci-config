@@ -853,6 +853,12 @@
     - project:
         alias: taskgraph
 
+- grant:
+    - secrets:get:project/releng/shipit/ci
+  to:
+    - project:
+        alias: shipit
+
 ##
 # feature-specific roles
 
