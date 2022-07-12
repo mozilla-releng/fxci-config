@@ -1171,12 +1171,107 @@ pools:
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
               - DeviceName: /dev/sdc
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+  - pool_id: gecko-t/win10-64-2004-alpha
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows10-64-2004-alpha
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [central-us, north-central-us, south-central-us, north-europe]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win10-64-2004-alpha
+            provisionerId: gecko-t
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F8s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F8s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-t/win10-64-2004-beta
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows10-64-2004-beta
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win10-64-2004-beta
+            provisionerId: gecko-t
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F8s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F8s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
   - pool_id: gecko-t/win10-64-2004
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
     provider_id: azure2
     config:
+      old-style-worker-config: true
       image: ronin-t-windows10-64-2004-current
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
@@ -1220,12 +1315,105 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
+  - pool_id: gecko-t/win10-64-2004-gpu-alpha
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows10-64-2004-alpha
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [north-central-us, south-central-us, north-europe]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win10-64-2004-gpu-alpha
+            provisionerId: gecko-t
+            idleTimeoutSecs: 1800
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_NV6
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_NV6
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+  - pool_id: gecko-t/win10-64-2004-gpu-beta
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows10-64-2004-beta
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [north-central-us, south-central-us, north-europe]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win10-64-2004-gpu-beta
+            provisionerId: gecko-t
+            idleTimeoutSecs: 1800
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_NV6
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_NV6
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
   - pool_id: gecko-t/win10-64-2004-gpu
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
     provider_id: azure2
     config:
+      old-style-worker-config: true
       image: ronin-t-windows10-64-2004-gpu-current
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
@@ -1269,110 +1457,13 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
-  - pool_id: gecko-t/win10-64-2004-bug1765325
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows10-64-2004-bug1765325
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [central-us]
-      maxCapacity: 100
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win10-64-2004-bug1765325
-            provisionerId: gecko-t
-            idleTimeoutSecs: 5400
-      tags:
-        workerType: gecko-t-win10-64-2004-bug1765325
-        deploymentId: 5db26eb
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceRevision: cloud_windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_F8s_v2
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 30
-                  managedDisk:
-                    storageAccountType: Standard_LRS
-                  createOption: Empty
-            hardwareProfile:
-              vmSize: Standard_F8s_v2
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-  - pool_id: gecko-t/win10-64-2004-gpu-bug1765325
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows10-64-2004-gpu-bug1765325
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [north-central-us]
-      maxCapacity: 20
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win10-64-2004-gpu-bug1765325
-            provisionerId: gecko-t
-            idleTimeoutSecs: 1800
-      tags:
-        workerType: gecko-t-win10-64-2004-gpu-bug1765325
-        deploymentId: 5db26eb
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceRevision: cloud_windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_NV6
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 30
-                  managedDisk:
-                    storageAccountType: Standard_LRS
-                  createOption: Empty
-            hardwareProfile:
-              vmSize: Standard_NV6
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
   - pool_id: gecko-t/win10-64-2004-perf
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
     provider_id: azure2
     config:
+      old-style-worker-config: true
       image: ronin-t-windows10-64-2004-gpu-current
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
@@ -1416,62 +1507,13 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
-
-  - pool_id: gecko-t/win10-64-2004-test
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows10-64-2004-current
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [central-us]
-      maxCapacity: 15
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win10-64-2004-test
-            provisionerId: gecko-t
-            idleTimeoutSecs: 300
-      tags:
-        workerType: gecko-t-win10-64-2004-test
-        deploymentId: b839260
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceRevision: cloud_windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_F8s_v2
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 30
-                  managedDisk:
-                    storageAccountType: Standard_LRS
-                  createOption: Empty
-            hardwareProfile:
-              vmSize: Standard_F8s_v2
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
   - pool_id: gecko-t/win10-64-2004-source
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
     provider_id: azure2
     config:
+      old-style-worker-config: true
       image: ronin-t-windows10-64-2004-current
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
@@ -1521,6 +1563,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
+      old-style-worker-config: true
       image: ronin-t-windows10-64-2004-current
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
@@ -1573,6 +1616,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
+      old-style-worker-config: true
       image: ronin-t-windows10-64-2004-datadisk-test
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
@@ -1625,6 +1669,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
+      old-style-worker-config: true
       image: ronin-t-windows10-64-2004-gpu-current
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
@@ -1881,6 +1926,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
+      old-style-worker-config: true
       image: ronin-t-windows10-64-2004-current
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
