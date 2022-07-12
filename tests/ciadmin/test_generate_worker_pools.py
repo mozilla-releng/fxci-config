@@ -102,7 +102,7 @@ def images():
                 clouds={
                     "google": {},
                     "aws": {"us-east1": "id"},
-                    "azure": {"us-east1": "id"},
+                    "azure": {"deployment_id": "d_id", "us-east1": "ue1_id"},
                 },
             ),
         ]
@@ -168,11 +168,11 @@ def assert_azure_basic(pool):
         "priority": "spot",
         "storageProfile": {
             "imageReference": {
-                "id": "/subscriptions/subscription_id/resourceGroups/rg/providers/Microsoft.Compute/images/id"  # noqa: E501
+                "id": "/subscriptions/subscription_id/resourceGroups/rg/providers/Microsoft.Compute/images/ue1_id-d_id"  # noqa: E501
             }
         },
         "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
-        "tags": {},
+        "tags": {"deploymentId": "d_id"},
         "workerConfig": {},
     }
 
