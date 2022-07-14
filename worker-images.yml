@@ -357,7 +357,7 @@ ronin-t-windows10-64-2004-alpha:
     south-central-us: win10-64-2004-southcentralus-20h1-evd
 ronin-t-windows10-64-2004-beta:
   azure2:
-    deployment_id: 83f218d
+    deployment_id: 892e806
     central-us: win10-64-2004-centralus-20h1-evd
     east-us: win10-64-2004-eastus-20h1-evd
     east-us-2: win10-64-2004-eastus2-20h1-evd
