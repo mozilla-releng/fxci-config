@@ -975,19 +975,26 @@ pools:
             BlockDeviceMappings:
               - DeviceName: /dev/xvdb
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-  - pool_id: '{pool-group}/t-linux-xlarge-gcp'
+  - pool_id: '{pool-group}/t-linux-xlarge-gcp{suffix}'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     variants:
       - pool-group: gecko-t
+        suffix: ''
       - pool-group: comm-t
+        suffix: ''
+      - pool-group: gecko-t
+        suffix: -source
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          gecko-t: 2500
+          gecko-t:
+            by-suffix:
+              '': 2500
+              -source: 200
           comm-t: 10
       regions: [us-central1, us-west1]
       image: monopacker-docker-worker-gcp-current
