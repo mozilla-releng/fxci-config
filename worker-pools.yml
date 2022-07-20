@@ -975,7 +975,7 @@ pools:
             BlockDeviceMappings:
               - DeviceName: /dev/xvdb
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-  - pool_id: '{pool-group}/t-linux-xlarge-gcp{suffix}'
+  - pool_id: '{pool-group}/t-linux-xlarge{suffix}-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     variants:
