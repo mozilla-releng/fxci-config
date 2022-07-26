@@ -1497,6 +1497,7 @@
     - queue:create-task:highest:proj-autophone/gecko-t-ap-perf-p2
     - queue:create-task:highest:proj-autophone/gecko-t-bitbar-gw-perf-g5
     - queue:create-task:highest:proj-autophone/gecko-t-bitbar-gw-perf-p2
+    - queue:create-task:highest:proj-autophone/gecko-t-bitbar-gw-perf-a51
   to:
     - project:
         feature: autophone
