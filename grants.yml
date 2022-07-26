@@ -1830,6 +1830,24 @@
           - release
 
 - grant:
+    - project:mozillavpn:releng:beetmover:action:*
+    - project:mozillavpn:releng:beetmover:bucket:dep
+  to:
+    - project:
+        alias:
+          - mozilla-vpn-client
+          - staging-mozilla-vpn-client
+        job: [release, action:*]
+
+- grant:
+    - project:mozillavpn:releng:beetmover:bucket:release
+  to:
+    - project:
+        alias:
+          - mozilla-vpn-client
+        job: [release, action:*]
+
+- grant:
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-t-*
