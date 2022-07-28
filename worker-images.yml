@@ -353,7 +353,7 @@ ronin-t-windows10-64-2004-alpha:
     deployment_id: alpha
     central-us: win10-64-2004-centralus-20h1-evd
     north-central-us: win10-64-2004-northcentralus-20h1-evd
-    north-europe: win10-64-2004-gpu-northeurope-20h1-evd
+    north-europe: win10-64-2004-northeurope-20h1-evd
     south-central-us: win10-64-2004-southcentralus-20h1-evd
 ronin-t-windows10-64-2004-beta:
   azure2:
@@ -364,6 +364,19 @@ ronin-t-windows10-64-2004-beta:
     north-central-us: win10-64-2004-northcentralus-20h1-evd
     north-europe: win10-64-2004-gpu-northeurope-20h1-evd
     south-central-us: win10-64-2004-southcentralus-20h1-evd
+    west-europe: win10-64-2004-westeurope-20h1-evd
+    west-us: win10-64-2004-westus-20h1-evd
+    west-us-2: win10-64-2004-westus2-20h1-evd
+ronin-t-windows10-64-2004-prod:
+  azure2:
+    deployment_id: 892e806
+    central-us: win10-64-2004-centralus-20h1-evd
+    east-us: win10-64-2004-eastus-20h1-evd
+    east-us-2: win10-64-2004-eastus2-20h1-evd
+    north-central-us: win10-64-2004-northcentralus-20h1-evd
+    north-europe: win10-64-2004-gpu-northeurope-20h1-evd
+    south-central-us: win10-64-2004-southcentralus-20h1-evd
+    west-europe: win10-64-2004-westeurope-20h1-evd
     west-us: win10-64-2004-westus-20h1-evd
     west-us-2: win10-64-2004-westus2-20h1-evd
 ronin-t-windows10-64-2004-current:
