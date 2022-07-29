@@ -2071,7 +2071,7 @@ pools:
                 diskType: diskTypes/local-ssd
               type: SCRATCH
               interface: NVME
-          machine_type: n2-highmem-2
+          machine_type: n2-standard-2
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
