@@ -1915,6 +1915,7 @@
 
 - grant:
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+    - queue:create-task:highest:scriptworker-k8s/{trust_domain}-1-*
     - queue:create-task:low:releng-hardware/mozillavpn-b-1-*
     - queue:create-task:low:scriptworker-prov-v1/mozillavpn-t-signing-mac
     - project:mozillavpn:releng:signing:cert:dep-signing
