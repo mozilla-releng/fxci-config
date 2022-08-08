@@ -1830,27 +1830,28 @@
           - release
 
 - grant:
-    - project:mozillavpn:releng:beetmover:action:*
-    - project:mozillavpn:releng:beetmover:bucket:dep
-  to:
-    - project:
-        alias:
-          - mozilla-vpn-client
-          - staging-mozilla-vpn-client
-        job: [release, action:*]
-
-- grant:
+    - project:mozillavpn:releng:beetmover:action:push-to-candidates
     - project:mozillavpn:releng:beetmover:bucket:release
   to:
     - project:
         alias:
           - mozilla-vpn-client
-        job: [release, action:*]
+        job: [release, action:release-promotion]
+
+- grant:
+    - project:mozillavpn:releng:beetmover:action:push-to-releases
+  to:
+    - project:
+        alias:
+          - mozilla-vpn-client
+        job: [action:release-promotion]
 
 - grant:
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-t-*
+    - project:mozillavpn:releng:beetmover:action:push-to-candidates
+    - project:mozillavpn:releng:beetmover:bucket:dep
     - project:mozillavpn:releng:signing:cert:dep-signing
   to:
     - project:
@@ -1919,6 +1920,9 @@
     - queue:create-task:low:releng-hardware/mozillavpn-b-1-*
     - queue:create-task:low:scriptworker-prov-v1/mozillavpn-t-signing-mac
     - queue:create-task:highest:scriptworker-prov-v1/vpn-depsigning-mac-v1
+    - project:mozillavpn:releng:beetmover:action:push-to-candidates
+    - project:mozillavpn:releng:beetmover:action:push-to-releases
+    - project:mozillavpn:releng:beetmover:bucket:dep
     - project:mozillavpn:releng:signing:cert:dep-signing
     - project:mozillavpn:releng:signing:format:*
     - project:releng:services/tooltool/api/download/public
