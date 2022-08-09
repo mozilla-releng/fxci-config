@@ -1754,6 +1754,15 @@
         alias: focus-ios
         job: [cron:l10-screenshots, action:*]
 
+# firefox-android specific scopes
+- grant:
+    - secrets:get:project/mobile/firefox-android/github-clone-ssh
+  to:
+    - project:
+        alias: firefox-android
+        job: ["*"]
+
+
 # L10n repositories
 - grant:
     - queue:create-task:highest:l10n-{level}/*
