@@ -1019,6 +1019,44 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: 'gecko-t/t-linux-kvm-gcp'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 200
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          workerConfig:
+            task:
+              reclaimDivisor: 2
+            deviceManagement:
+              kvm:
+                enabled: true
+            dockerConfig:
+              allowPrivileged: true
+          disks:
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 75
+                sourceImage: <image>
+              type: PERSISTENT
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+          machine_type: n2-standard-8
+          advancedMachineFeatures:
+            enabledNestedVirtualization: true
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/misc'
     description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
       SCM levels.  Used for things like indexing tasks.  Note that disk space is limited

@@ -3053,8 +3053,11 @@
     - worker-manager:remove-worker:gecko-t/win10-64-2004*
     - hooks:trigger-hook:project-gecko/in-tree-action-1-*
     - worker-manager:manage-worker-pool:gecko-1/masterwayz*
+    - worker-manager:manage-worker-pool:gecko-t/masterwayz*
+    - worker-manager:manage-worker-pool:gecko-t/t-linux*
     - worker-manager:provider:fxci-level1-gcp
     - worker-manager:remove-worker:gecko-1/masterwayz*
+    - worker-manager:remove-worker:gecko-t/masterwayz*
     - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
     - project:releng:services/treestatus/*
     - secrets:get:project/releng/gecko/build/level-1/masterwayz*
