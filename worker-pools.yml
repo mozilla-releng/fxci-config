@@ -1029,16 +1029,17 @@ pools:
       maxCapacity: 200
       regions: [us-central1, us-west1]
       image: monopacker-docker-worker-gcp-current
+      worker-config:
+        deviceManagement:
+          kvm:
+            enabled: true
+        dockerConfig:
+          allowPrivileged: true
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           workerConfig:
             task:
               reclaimDivisor: 2
-            deviceManagement:
-              kvm:
-                enabled: true
-            dockerConfig:
-              allowPrivileged: true
           disks:
             - autoDelete: true
               boot: true
