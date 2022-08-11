@@ -382,6 +382,7 @@ autoland:
     trust-domain-scopes: true
   cron:
     targets:
+      - l10n-bumper
       - perftest-on-autoland
 holly:
   repo: https://hg.mozilla.org/projects/holly
