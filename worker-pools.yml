@@ -1054,7 +1054,7 @@ pools:
               interface: NVME
           machine_type: n2-standard-8
           advancedMachineFeatures:
-            enabledNestedVirtualization: true
+            enableNestedVirtualization: true
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
