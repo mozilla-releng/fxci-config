@@ -1503,8 +1503,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
-      old-style-worker-config: true
-      image: ronin-t-windows10-64-2004-gpu-current
+      image: ronin-t-windows10-64-2004-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
@@ -1517,10 +1516,8 @@ pools:
             provisionerId: gecko-t
             idleTimeoutSecs: 5400
       tags:
-        workerType: gecko-t-win10-64-2004-gpu
-        deploymentId: 5db26eb
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceRevision: cloud_windows
+        sourceBranch: cloud_windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -1703,8 +1700,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
-      old-style-worker-config: true
-      image: ronin-t-windows10-64-2004-gpu-current
+      image: ronin-t-windows10-64-2004-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
@@ -1717,10 +1713,8 @@ pools:
             provisionerId: gecko-t
             idleTimeoutSecs: 1800
       tags:
-        workerType: gecko-t-win10-64-2004-ssd-gpu
-        deploymentId: 093284b
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceRevision: cloud_windows
+        sourceBranch: cloud_windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -1960,8 +1954,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
-      old-style-worker-config: true
-      image: ronin-t-windows10-64-2004-current
+      image: ronin-t-windows10-64-2004-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: comm-t
@@ -1974,10 +1967,8 @@ pools:
             provisionerId: comm-t
             idleTimeoutSecs: 3600
       tags:
-        workerType: gecko-t-win10-64-2004
-        deploymentId: 5db26eb
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceRevision: cloud_windows
+        sourceBranch: cloud_windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
