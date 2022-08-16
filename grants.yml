@@ -535,6 +535,15 @@
         alias: [mozilla-beta]
 
 - grant:
+    - queue:create-task:{priority}:scriptworker-k8s/gecko-3-tree
+  to:
+    - project:
+        job: [cron:l10n-bumper]
+        trust_domain: gecko
+        level: [3]
+        alias: [autoland]
+
+- grant:
     # Allow the scriptworker-canary cron hook to trigger the corresponding action.
     - hooks:trigger-hook:project-{trust_domain}/in-tree-action-{level}-scriptworker-canary/*
   to:
