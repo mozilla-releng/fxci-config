@@ -348,6 +348,11 @@ occ-mpd-b-win2012-trusted-v20200226:
     us-east-1: ami-08f30fc003814c298
     us-west-1: ami-0c76678a5bdb06f4e
     us-west-2: ami-0520ba0d12752373c
+ronin-b-windows2012-alpha:
+  azure2:
+    deployment_id: alpha
+    central-us: win2012-r2-64-centralus-2012-R2-Datacenter
+    north-central-us: win2012-r2-64-northcentralus-2012-R2-Datacenter
 ronin-t-windows10-64-2004-alpha:
   azure2:
     deployment_id: alpha
