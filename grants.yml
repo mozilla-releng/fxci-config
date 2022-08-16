@@ -2874,6 +2874,8 @@
     - roles:
         # Rob Lemley [:rjl] (https://bugzilla.mozilla.org/show_bug.cgi?id=1496783)
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|thunderbird
+        # Daniel Darnell (https://bugzilla.mozilla.org/show_bug.cgi?id=1780090)
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|daniel23
 - grant:
     - assume:project:releng:ci-group:team_mozillaonline
   to:
