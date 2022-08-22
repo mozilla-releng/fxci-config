@@ -80,7 +80,7 @@ class Repository:
             else:
                 revset = "default"
             res = SESSION.get(
-                "{}/json-pushes?version=2&changeset={}&tipsonly=1".format(
+                "{}/json-pushes?version=2&changeset={}&full=1".format(
                     self.repo_url, revset
                 )
             )
@@ -100,18 +100,23 @@ class Repository:
                     "only one supported."
                 )
             [(push_id, push_info)] = pushes.items()
-            if revision and revision not in push_info["changesets"]:
+            changesets = push_info["changesets"]
+            first_pushed_revision = changesets[0]
+            base_revision = first_pushed_revision["parents"][0]
+            tip_revision = changesets[-1]["node"]
+            if revision and revision != tip_revision:
                 raise ValueError(
                     "Changeset {} is not the tip {} of the associated push.".format(
-                        revision, push_info["changesets"][0]
+                        revision, tip_revision
                     )
                 )
-            [revision] = push_info["changesets"]
+
             return {
                 "owner": push_info["user"],
                 "pushlog_id": push_id,
                 "pushdate": push_info["date"],
                 "revision": revision,
+                "base_revision": base_revision,
             }
         elif self.repository_type == "git":
             if revision:

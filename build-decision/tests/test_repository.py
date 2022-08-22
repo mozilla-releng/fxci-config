@@ -126,7 +126,7 @@ def test_get_file(mocker, repository_type, repo_url, revision, raises, expected_
         ),
         (
             None,
-            None,
+            "rev",
             None,
             None,
             {
@@ -134,6 +134,7 @@ def test_get_file(mocker, repository_type, repo_url, revision, raises, expected_
                 "pushlog_id": 1,
                 "pushdate": "now",
                 "revision": "rev",
+                "base_revision": "baserev",
             },
         ),
     ),
@@ -142,7 +143,15 @@ def test_hg_push_info(mocker, branch, revision, pushes, raises, expected):
     """Add coverage for hg Repository.get_push_info"""
 
     if pushes is None:
-        pushes = {"pushes": {1: {"user": "me", "date": "now", "changesets": ["rev"]}}}
+        pushes = {
+            "pushes": {
+                1: {
+                    "user": "me",
+                    "date": "now",
+                    "changesets": [{"node": "rev", "parents": ["baserev"]}],
+                }
+            }
+        }
 
     repo = repository.Repository(
         repo_url="https://hg.mozilla.org/fake_repo",
