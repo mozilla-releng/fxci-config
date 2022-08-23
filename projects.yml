@@ -893,9 +893,7 @@ android-l10n-tooling:
           - exchange: exchange/taskcluster-github/v1/push
             routing_key_pattern: primary.mozilla-mobile.android-components
           - exchange: exchange/taskcluster-github/v1/push
-            routing_key_pattern: primary.mozilla-mobile.firefox-tv
-          - exchange: exchange/taskcluster-github/v1/push
-            routing_key_pattern: primary.mozilla-lockwise.lockwise-android
+            routing_key_pattern: primary.mozilla-mobile.focus-android
       - target: update-projects
         bindings: []
 
