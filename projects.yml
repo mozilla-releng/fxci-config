@@ -859,6 +859,13 @@ mozilla-version:
   trust_domain: releng
   level: 1
 
+build-mar:
+  repo: https://github.com/mozilla-releng/build-mar
+  repo_type: git
+  default_branch: master
+  trust_domain: releng
+  level: 1
+
 cloud-image-builder:
   repo: https://github.com/mozilla-platform-ops/cloud-image-builder
   repo_type: git
