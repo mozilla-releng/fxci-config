@@ -1256,12 +1256,12 @@ pools:
                 - lun: 0
                   diskSizeGB: 120
                   managedDisk:
-                    storageAccountType: Standard_LRS
+                    storageAccountType: Premium_LRS
                   createOption: Empty
                 - lun: 1
                   diskSizeGB: 120
                   managedDisk:
-                    storageAccountType: Standard_LRS
+                    storageAccountType: Premium_LRS
                   createOption: Empty
             hardwareProfile:
               vmSize: Standard_F16s_v2
