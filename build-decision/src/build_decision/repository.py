@@ -115,7 +115,7 @@ class Repository:
                 "owner": push_info["user"],
                 "pushlog_id": push_id,
                 "pushdate": push_info["date"],
-                "revision": revision,
+                "revision": tip_revision,
                 "base_revision": base_revision,
             }
         elif self.repository_type == "git":

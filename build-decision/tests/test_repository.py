@@ -137,6 +137,27 @@ def test_get_file(mocker, repository_type, repo_url, revision, raises, expected_
                 "base_revision": "baserev",
             },
         ),
+        (
+            None,
+            None,
+            {
+                "pushes": {
+                    "1": {
+                        "changesets": [{"parents": ["baserev"]}, {"node": "rev"}],
+                        "user": "me",
+                        "date": "now",
+                    }
+                }
+            },
+            None,
+            {
+                "owner": "me",
+                "pushlog_id": "1",
+                "pushdate": "now",
+                "revision": "rev",
+                "base_revision": "baserev",
+            },
+        ),
     ),
 )
 def test_hg_push_info(mocker, branch, revision, pushes, raises, expected):
