@@ -329,7 +329,7 @@ pools:
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current
+          trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -386,7 +386,7 @@ pools:
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current
+          trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -443,7 +443,7 @@ pools:
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current
+          trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake

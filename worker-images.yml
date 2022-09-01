@@ -40,6 +40,8 @@ monopacker-docker-worker-current: monopacker-docker-worker-2020-08-05t22-29-20z-
 monopacker-docker-worker-trusted-current: monopacker-docker-worker-trusted-2020-08-05t22-01-11z-bug1676214
 monopacker-docker-worker-baremetal-current: monopacker-docker-worker-2020-05-04T14-30-19Z-bug1676214
 
+monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-gcp-2022-08-12b
+
 monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-bug1772714-20220603
 
 occ-b-win2012-current: occ-b-win2012-f0280d3
@@ -244,6 +246,8 @@ monopacker-docker-worker-trusted-2020-08-05t22-01-11z:
     us-west-1: ami-02ef0e03f2ce4653d
     us-west-2: ami-0c6b38c7153dddc28
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-worker-gcp-trusted-googlecompute-2020-08-05t22-01-11z
+monopacker-docker-worker-trusted-gcp-2022-08-12b:
+  fxci-level3-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-trusted-u1804-2022-08-12b
 monopacker-docker-worker-trusted-2020-08-05t22-01-11z-bug1676214:
   aws:
     us-east-1: ami-0e9d6a2440af6bcad
