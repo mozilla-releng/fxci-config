@@ -145,9 +145,12 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
                 "Information about the push that created the decision task",
                 owner=prop("user who made the original push"),
                 revision=prop("revision of the original push"),
+                base_revision=prop("revision before the push occurred"),
                 pushlog_id=prop("Mercurial pushlog ID of the original push"),
                 branch=prop("branch revision of original push is from"),
-                optional={"branch"},
+                # TODO Make "base_revision" mandatory once all repositories are
+                # on taskgraph 3.0+
+                optional={"base_revision", "branch"},
             ),
             repository=obj(
                 "Information about the repository where the push occurred",
