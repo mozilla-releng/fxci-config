@@ -618,6 +618,7 @@ fenix:
     targets:
       - bump-android-components
       - nightly
+      - nightly-test
       - screenshots
 
 staging-fenix:
