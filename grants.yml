@@ -1615,7 +1615,7 @@
   to:
     - project:
         alias: fenix
-        job: [branch:*]
+        job: [branch:*, cron:nightly-test]
 
 - grant:
     # XXX `fennec-production-signing` handles beta signing too.
