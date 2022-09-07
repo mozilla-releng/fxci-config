@@ -16,6 +16,10 @@ async def test_fetch_empty(mock_ciconfig_file):
     assert await Project.fetch_all() == []
 
 
+def _filter_out_parsed_url(attr, *args, **kwargs):
+    return attr.name != "_parsed_url"
+
+
 @pytest.mark.parametrize(
     "project_name,project_data,expected_data",
     (
@@ -39,7 +43,9 @@ async def test_fetch_empty(mock_ciconfig_file):
                 "is_try": False,
                 "parent_repo": None,
                 "repo": "https://hg.mozilla.org/projects/ash",
+                "repo_path": "projects/ash",
                 "repo_type": "hg",
+                "role_prefix": "repo:hg.mozilla.org/projects/ash",
                 "taskcluster_yml_project": None,
                 "trust_domain": "gecko",
                 "trust_project": None,
@@ -63,7 +69,9 @@ async def test_fetch_empty(mock_ciconfig_file):
                 "is_try": False,
                 "parent_repo": None,
                 "repo": "https://github.com/mozilla-mobile/fenix/",
+                "repo_path": "mozilla-mobile/fenix",
                 "repo_type": "git",
+                "role_prefix": "repo:github.com/mozilla-mobile/fenix",
                 "taskcluster_yml_project": None,
                 "trust_domain": None,
                 "trust_project": None,
@@ -79,7 +87,8 @@ async def test_fetch_defaults(
     mock_ciconfig_file("projects.yml", {project_name: project_data})
     prjs = await Project.fetch_all()
     assert len(prjs) == 1
-    assert attr.asdict(prjs[0]) == expected_data
+    project = attr.asdict(prjs[0], filter=_filter_out_parsed_url)
+    assert project == expected_data
 
 
 @pytest.mark.parametrize(
@@ -119,8 +128,10 @@ async def test_fetch_defaults(
                 "features": {"hg-push": True, "gecko-cron": False},
                 "is_try": True,
                 "parent_repo": "https://hg.mozilla.org/mozilla-unified",
-                "repo_type": "hg",
                 "repo": "https://hg.mozilla.org/projects/ash",
+                "repo_path": "projects/ash",
+                "repo_type": "hg",
+                "role_prefix": "repo:hg.mozilla.org/projects/ash",
                 "taskcluster_yml_project": None,
                 "trust_domain": "gecko",
                 "trust_project": None,
@@ -160,8 +171,10 @@ async def test_fetch_defaults(
                 "features": {"hg-push": True, "gecko-cron": False},
                 "is_try": False,
                 "parent_repo": "https://github.com/mozilla-releng/",
-                "repo_type": "git",
                 "repo": "https://github.com/mozilla-releng/beetmoverscript/",
+                "repo_path": "mozilla-releng/beetmoverscript",
+                "repo_type": "git",
+                "role_prefix": "repo:github.com/mozilla-releng/beetmoverscript",
                 "taskcluster_yml_project": None,
                 "trust_domain": "beet",
                 "trust_project": None,
@@ -177,14 +190,15 @@ async def test_fetch_nodefaults(
     mock_ciconfig_file("projects.yml", {project_name: project_data})
     prjs = await Project.fetch_all()
     assert len(prjs) == 1
-    assert attr.asdict(prjs[0]) == expected_data
+    project = attr.asdict(prjs[0], filter=_filter_out_parsed_url)
+    assert project == expected_data
 
 
 def test_project_feature():
     "Test the feature method"
     prj = Project(
         alias="prj",
-        repo="https://",
+        repo="https://hg.mozilla.org/prj",
         repo_type="hg",
         access="scm_level_3",
         trust_domain="gecko",
@@ -200,7 +214,7 @@ def test_project_enabled_features():
     "Test enabled_features"
     prj = Project(
         alias="prj",
-        repo="https://",
+        repo="https://hg.mozilla.org/prj",
         repo_type="hg",
         access="scm_level_3",
         trust_domain="gecko",
@@ -215,7 +229,7 @@ def test_project_enabled_features():
         (
             {
                 "alias": "prj",
-                "repo": "https://",
+                "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
                 "access": "scm_level_3",
                 "trust_domain": "gecko",
@@ -225,7 +239,7 @@ def test_project_enabled_features():
         (
             {
                 "alias": "prj",
-                "repo": "https://",
+                "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
                 "access": "scm_level_2",
                 "trust_domain": "gecko",
@@ -235,7 +249,7 @@ def test_project_enabled_features():
         (
             {
                 "alias": "prj",
-                "repo": "https://",
+                "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
                 "access": "scm_level_1",
                 "trust_domain": "gecko",
@@ -245,16 +259,40 @@ def test_project_enabled_features():
         (
             {
                 "alias": "prj",
-                "repo": "https://",
+                "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
                 "access": "scm_autoland",
                 "trust_domain": "gecko",
             },
             3,
         ),
-        ({"alias": "prj", "repo": "https://", "repo_type": "git", "level": 3}, 3),
-        ({"alias": "prj", "repo": "https://", "repo_type": "git", "level": 1}, 1),
-        ({"alias": "prj", "repo": "https://", "repo_type": "git", "level": 1}, 1),
+        (
+            {
+                "alias": "prj",
+                "repo": "https://github.com/some-owner/prj",
+                "repo_type": "git",
+                "level": 3,
+            },
+            3,
+        ),
+        (
+            {
+                "alias": "prj",
+                "repo": "https://github.com/some-owner/prj",
+                "repo_type": "git",
+                "level": 1,
+            },
+            1,
+        ),
+        (
+            {
+                "alias": "prj",
+                "repo": "https://github.com/some-owner/prj",
+                "repo_type": "git",
+                "level": 1,
+            },
+            1,
+        ),
     ),
 )
 def test_project_level_property(project_data, expected_level):
@@ -267,15 +305,30 @@ def test_project_level_property(project_data, expected_level):
     "project_data,error_type",
     (
         (
-            {"alias": "prj", "repo": "https://", "repo_type": "git", "access": 10},
+            {
+                "alias": "prj",
+                "repo": "https://github.com/some-owner/prj",
+                "repo_type": "git",
+                "access": 10,
+            },
             TypeError,
         ),
         (
-            {"alias": "prj", "repo": "https://", "repo_type": "git", "level": "10"},
+            {
+                "alias": "prj",
+                "repo": "https://github.com/some-owner/prj",
+                "repo_type": "git",
+                "level": "10",
+            },
             TypeError,
         ),
         (
-            {"alias": "prj", "repo": "https://", "repo_type": "git", "level": 4},
+            {
+                "alias": "prj",
+                "repo": "https://github.com/some-owner/prj",
+                "repo_type": "git",
+                "level": 4,
+            },
             ValueError,
         ),
     ),
@@ -289,15 +342,23 @@ def test_project_level_failing_validators(project_data, error_type):
 @pytest.mark.parametrize(
     "project_data,error_type",
     (
-        ({"alias": "prj", "repo": "https://", "repo_type": "git"}, RuntimeError),
         (
-            {"alias": "prj", "repo": "https://", "repo_type": "hg", "level": 3},
+            {"alias": "prj", "repo": "https://hg.mozilla.org/prj", "repo_type": "git"},
+            RuntimeError,
+        ),
+        (
+            {
+                "alias": "prj",
+                "repo": "https://hg.mozilla.org/prj",
+                "repo_type": "hg",
+                "level": 3,
+            },
             ValueError,
         ),
         (
             {
                 "alias": "prj",
-                "repo": "https://",
+                "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
                 "access": "scm_level_3",
                 "level": 3,
@@ -307,7 +368,7 @@ def test_project_level_failing_validators(project_data, error_type):
         (
             {
                 "alias": "prj",
-                "repo": "https://",
+                "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "git",
                 "access": "scm_level_3",
             },
@@ -316,7 +377,7 @@ def test_project_level_failing_validators(project_data, error_type):
         (
             {
                 "alias": "prj",
-                "repo": "https://",
+                "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "git",
                 "access": "scm_level_3",
                 "level": 3,
@@ -326,7 +387,7 @@ def test_project_level_failing_validators(project_data, error_type):
         (
             {
                 "alias": "prj",
-                "repo": "https://",
+                "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
                 "access": "scm_mobile???",
             },
@@ -345,43 +406,18 @@ def test_project_repo_path_property():
     "Test the repo_path property"
     prj = Project(
         alias="prj",
-        repo="https://hg.mozilla.org/a/b/c",
+        repo="https://hg.mozilla.org/a/b/",
         repo_type="hg",
         access="scm_level_3",
         trust_domain="gecko",
     )
-    assert prj.repo_path == "a/b/c"
-
-
-def test_project_repo_path_property_trailing_slash():
-    "Test the repo_path property stripping trialing slashes"
-    prj = Project(
-        alias="prj",
-        repo="https://hg.mozilla.org/a/b/c/",
-        repo_type="hg",
-        access="scm_level_3",
-        trust_domain="gecko",
-    )
-    assert prj.repo_path == "a/b/c"
-
-
-def test_project_repo_path_property_not_hg():
-    "Test the repo_path property for non-{hg,git} projects"
-    prj = Project(
-        alias="prj",
-        repo="https://subversionhub.com/a/b/c/",
-        repo_type="svn",
-        level=3,
-        trust_domain="gecko",
-    )
-    with pytest.raises(AttributeError):
-        prj.repo_path
+    assert prj.repo_path == "a/b"
 
 
 @pytest.mark.parametrize(
     "repo_type, repo, expected_result",
     (
-        ("hg", "https://hg.mozilla.org/", "default"),
+        ("hg", "https://hg.mozilla.org/prj", "default"),
         ("git", "https://github.com/someowner/somerepo", "main"),
     ),
 )

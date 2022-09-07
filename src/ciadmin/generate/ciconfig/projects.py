@@ -5,6 +5,7 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import attr
+from mozilla_repo_urls import parse
 
 from .get import get_ciconfig_file
 
@@ -59,6 +60,22 @@ class Project:
         default=attr.Factory(
             lambda self: "main" if self.repo_type == "git" else "default",
             takes_self=True,
+        ),
+    )
+
+    _parsed_url = attr.ib(
+        eq=False,
+        init=False,
+        default=attr.Factory(lambda self: parse(self.repo), takes_self=True),
+    )
+    repo_path = attr.ib(
+        init=False,
+        default=attr.Factory(lambda self: self._parsed_url.repo_path, takes_self=True),
+    )
+    role_prefix = attr.ib(
+        init=False,
+        default=attr.Factory(
+            lambda self: self._parsed_url.taskcluster_role_prefix, takes_self=True
         ),
     )
 
@@ -147,23 +164,3 @@ class Project:
                 "unknown access {} for project {}".format(self.access, self.alias)
             )
         return level
-
-    @property
-    def repo_path(self):
-        if self.repo_type == "hg" and self.repo.startswith("https://hg.mozilla.org/"):
-            return self.repo.replace("https://hg.mozilla.org/", "", 1).rstrip("/")
-        elif self.repo_type == "git" and self.repo.startswith("https://github.com/"):
-            return self.repo.replace("https://github.com/", "", 1).rstrip("/")
-        else:
-            raise AttributeError(
-                "no repo_path available for project {}".format(self.alias)
-            )
-
-    @property
-    def role_prefix(self):
-        if self.repo.startswith(("https://hg.mozilla.org/", "https://github.com")):
-            return self.repo.replace("https://", "repo:", 1).rstrip("/")
-        else:
-            raise AttributeError(
-                "no role_prefix available for project {}".format(self.alias)
-            )
