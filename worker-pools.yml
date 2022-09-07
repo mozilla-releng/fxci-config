@@ -1316,7 +1316,7 @@ pools:
                     storageAccountType: Premium_LRS
                   createOption: Empty
             hardwareProfile:
-              vmSize: Standard_F16s_v2
+              vmSize: Standard_F32s_v2
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
