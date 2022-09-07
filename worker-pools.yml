@@ -985,6 +985,8 @@ pools:
         suffix: ''
       - pool-group: gecko-t
         suffix: -source
+      - pool-group: comm-t
+        suffix: -source
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
