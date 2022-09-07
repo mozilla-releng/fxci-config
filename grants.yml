@@ -1409,37 +1409,8 @@
         job: [cron:nightly-on-google-play]
 
 - grant:
-    - project:mobile:{trust_project}:releng:signing:cert:release-signing
-  to:
-    - project:
-        alias: android-components
-        job: [release, cron:nightly]
-
-- grant:
-    - queue:route:index.mobile.v2.{trust_project}.release.*
-    - project:mobile:{trust_project}:releng:github:project:android-components
-    - project:mobile:{trust_project}:releng:github:action:release
-    - project:mobile:{trust_project}:releng:signing:cert:release-signing
-  to:
-    - project:
-        alias: android-components
-        job: [release, action:release-promotion]
-
-- grant:
-    - queue:route:index.mobile.v2.{trust_project}.nightly.*
-  to:
-    - project:
-        alias: android-components
-        job: [cron:nightly]
-
-- grant:
-    - project:mobile:{trust_project}:releng:beetmover:action:push-to-maven
-    - project:mobile:{trust_project}:releng:beetmover:bucket:maven-staging
     - project:mobile:{trust_project}:releng:github:project:staging-android-components
-    - project:mobile:{trust_project}:releng:github:project:mock
-    - project:mobile:{trust_project}:releng:github:action:release
     - project:mobile:{trust_project}:releng:github:action:bump-geckoview
-    - queue:route:index.mobile.v2.{alias}.*
   to:
     - project:
         alias: staging-android-components
@@ -1541,10 +1512,6 @@
 - grant:
     - queue:route:notify.email.android-components-team@mozilla.com.on-failed
     - queue:route:notify.email.geckoview-core@mozilla.com.on-failed
-    - project:mobile:{trust_project}:releng:beetmover:action:push-to-maven
-    - project:mobile:{trust_project}:releng:beetmover:bucket:maven-staging
-    - project:mobile:{trust_project}:releng:github:project:mock
-    - project:mobile:{trust_project}:releng:github:action:release
   to:
     - project:
         alias: android-components

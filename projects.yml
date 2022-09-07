@@ -503,10 +503,12 @@ firefox-android:
   features:
     beetmover-maven-phase: true
     beetmover-maven-nightly-phase: true
+    github-publication: true
     github-taskgraph: true
     mobile-roles: true
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
+    mobile-sign-phase: true
     scriptworker: true
     shipit: true
     taskgraph-actions: true
@@ -526,10 +528,12 @@ android-components:
   features:
     beetmover-maven-phase: true
     beetmover-maven-nightly-phase: true
+    github-publication: true
     github-taskgraph: true
     mobile-roles: true
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
+    mobile-sign-phase: true
     scriptworker: true
     shipit: true
     taskgraph-actions: true
@@ -549,10 +553,12 @@ staging-android-components:
   features:
     beetmover-maven-phase: true
     beetmover-maven-nightly-phase: true
+    github-publication: true
     github-taskgraph: true
     mobile-roles: true
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
+    mobile-sign-phase: true
     scriptworker: true
     shipit: true
     taskgraph-actions: true
