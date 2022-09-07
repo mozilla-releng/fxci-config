@@ -1484,7 +1484,7 @@
         job: [pull-request]
     - project:
         alias: fenix
-        job: [cron:nightly]
+        job: [cron:nightly, cron:nightly-test]
     - project:
         alias: reference-browser
         job: [branch:*]
