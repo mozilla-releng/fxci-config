@@ -84,7 +84,6 @@ async def hash_taskcluster_ymls():
             "hash": hash(tcy),
             "level": project.level,
             "alias": project.alias,
-            "role_prefix": project.role_prefix,
         }
     return rv
 
@@ -211,9 +210,8 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
                 # hookPayload template.  We would like to get rid of this parameter and
                 # calculate it directly in .taskcluster.yml, once all the other work
                 # for actions-as-hooks has finished
-                "repo_scope": "assume:{}:action:{}".format(
-                    project["role_prefix"], action.action_perm
-                ),
+                "repo_scope": "assume:repo:"
+                "${payload.decision.repository.url[8:]}:action:" + action.action_perm,
                 "action_perm": action.action_perm,
             },
             # remaining sections are copied en masse from the hook payload
