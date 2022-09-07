@@ -6,27 +6,23 @@
 #    pip-compile-multi
 #
 -r test.txt
-backports.entry-points-selectable==1.1.0 \
-    --hash=sha256:988468260ec1c196dab6ae1149260e2f5472c9110334e5d51adcb77867361f6a \
-    --hash=sha256:a6d9a871cde5e15b4c4a53e3d43ba890cc6861ec1332c9c2428c92f977192acc
+distlib==0.3.6 \
+    --hash=sha256:14bad2d9b04d3a36127ac97f30b12a19268f211063d8f8ee4f47108896e11b46 \
+    --hash=sha256:f35c4b692542ca110de7ef0bea44d73981caeb34ca0b9b6b2e6d7790dda8f80e
     # via virtualenv
-distlib==0.3.3 \
-    --hash=sha256:c8b54e8454e5bf6237cc84c20e8264c3e991e824ef27e8f1e81049867d861e31 \
-    --hash=sha256:d982d0751ff6eaaab5e2ec8e691d949ee80eddf01a62eaa96ddb11531fe16b05
-    # via virtualenv
-filelock==3.3.2 \
-    --hash=sha256:7afc856f74fa7006a289fd10fa840e1eebd8bbff6bffb69c26c54a0512ea8cf8 \
-    --hash=sha256:bb2a1c717df74c48a2d00ed625e5a66f8572a3a30baacb7657add1d7bac4097b
+filelock==3.8.0 \
+    --hash=sha256:55447caa666f2198c5b6b13a26d2084d26fa5b115c00d065664b2124680c4edc \
+    --hash=sha256:617eb4e5eedc82fc5f47b6d61e4d11cb837c56cb4544e39081099fa17ad109d4
     # via
     #   tox
     #   virtualenv
-tox==3.24.4 \
-    --hash=sha256:5e274227a53dc9ef856767c21867377ba395992549f02ce55eb549f9fb9a8d10 \
-    --hash=sha256:c30b57fa2477f1fb7c36aa1d83292d5c2336cd0018119e1b1c17340e2c2708ca
+tox==3.25.1 \
+    --hash=sha256:c138327815f53bc6da4fe56baec5f25f00622ae69ef3fe4e1e385720e22486f9 \
+    --hash=sha256:c38e15f4733683a9cc0129fba078633e07eb0961f550a010ada879e95fb32632
     # via -r requirements/local.in
-virtualenv==20.10.0 \
-    --hash=sha256:4b02e52a624336eece99c96e3ab7111f469c24ba226a53ec474e8e787b365814 \
-    --hash=sha256:576d05b46eace16a9c348085f7d0dc8ef28713a2cabaa1cf0aea41e8f12c9218
+virtualenv==20.16.4 \
+    --hash=sha256:014f766e4134d0008dcaa1f95bafa0fb0f575795d07cae50b1bee514185d6782 \
+    --hash=sha256:035ed57acce4ac35c82c9d8802202b0e71adac011a511ff650cbcf9635006a22
     # via tox
 
 # The following packages are considered to be unsafe in a requirements file:
