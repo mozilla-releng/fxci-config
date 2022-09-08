@@ -1464,7 +1464,7 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
-  - pool_id: gecko-t/win10-64-2004-gpu-nv16as_v4
+  - pool_id: gecko-t/win10-64-2004-gpu-nv16asv4
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
@@ -1474,12 +1474,12 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [north-central-us, south-central-us, north-europe]
+      locations: [north-central-us, south-central-us]
       maxCapacity: 25
       worker-config:
         genericWorker:
           config:
-            workerType: win10-64-2004-gpu-alpha
+            workerType: win10-64-2004-gpu-nv16asv4
             provisionerId: gecko-t
             idleTimeoutSecs: 1800
       tags:
