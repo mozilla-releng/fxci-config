@@ -1054,7 +1054,7 @@ pools:
                 diskType: diskTypes/local-ssd
               type: SCRATCH
               interface: NVME
-          machine_type: n2-standard-8
+          machine_type: n2-standard-16
           advancedMachineFeatures:
             enableNestedVirtualization: true
           networkInterfaces:
