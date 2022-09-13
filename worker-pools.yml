@@ -1054,6 +1054,11 @@ pools:
                 diskType: diskTypes/local-ssd
               type: SCRATCH
               interface: NVME
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
           machine_type: n2-standard-16
           advancedMachineFeatures:
             enableNestedVirtualization: true
