@@ -99,3 +99,4 @@
   action_perms:
     - generic
     - cancel-all
+    - release-promotion
