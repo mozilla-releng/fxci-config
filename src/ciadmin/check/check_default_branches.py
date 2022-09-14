@@ -44,23 +44,15 @@ async def check_default_branches_for_git_repos():
 
     projects = await Project.fetch_all()
 
-    def _is_public_git_repo(project):
-        return (
-            project.repo_type == "git"
-            # TODO: find a better flag to filter out private repos
-            and "private" not in project.repo
-            # TODO Remove firefox-android once repo gets public
-            and "firefox-android" not in project.alias
-        )
-
+    # TODO: find a better flag to filter out private repos
     branches_in_projects = {
         project.alias: project.default_branch
         for project in projects
-        if _is_public_git_repo(project)
+        if project.repo_type == "git" and "private" not in project.repo
     }
     branches_on_github = {
         project.alias: await _get_git_default_branch(project)
         for project in projects
-        if _is_public_git_repo(project)
+        if project.repo_type == "git" and "private" not in project.repo
     }
     assert branches_in_projects == branches_on_github
