@@ -1307,6 +1307,10 @@
   to:
     - project:
         feature: beetmover-maven-phase
+        level: 1
+        job: [release, action:release-promotion]
+    - project:
+        feature: beetmover-maven-phase
         job: [pull-request]
 
 - grant:
