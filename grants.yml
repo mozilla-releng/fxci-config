@@ -1284,7 +1284,7 @@
         feature: mobile-public-code-coverage
 
 - grant:
-    - project:{trust_domain}:{alias}:releng:beetmover:action:push-to-maven
+    - project:{trust_domain}:{trust_project}:releng:beetmover:action:push-to-maven
   to:
     - project:
         feature: beetmover-maven-phase
@@ -1294,7 +1294,7 @@
         job: [cron:nightly]
 
 - grant:
-    - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-production
+    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:maven-production
   to:
     - project:
         feature: beetmover-maven-phase
@@ -1302,15 +1302,15 @@
         job: [release, action:release-promotion]
 
 - grant:
-    - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-staging
-    - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-nightly-staging
+    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:maven-staging
+    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:maven-nightly-staging
   to:
     - project:
         feature: beetmover-maven-phase
         job: [pull-request]
 
 - grant:
-    - project:{trust_domain}:{alias}:releng:beetmover:bucket:maven-nightly-production
+    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:maven-nightly-production
   to:
     - project:
         feature: beetmover-maven-nightly-phase
@@ -1330,12 +1330,12 @@
         job: [action:release-promotion]
 
 - grant:
-    - project:{trust_domain}:{alias}:releng:beetmover:bucket:nightly
-    - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-bucket
+    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:nightly
+    - project:{trust_domain}:{trust_project}:releng:beetmover:action:direct-push-to-bucket
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
     # TODO: Remove below once beetmover landed to prod workers
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-1-*
-    - project:{trust_domain}:{alias}:releng:beetmover:bucket:dep
+    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:dep
   to:
     - project:
         feature: beetmover-phase
@@ -1343,8 +1343,8 @@
         job: [cron:nightly]
 
 - grant:
-    - project:{trust_domain}:{alias}:releng:beetmover:bucket:release
-    - project:{trust_domain}:{alias}:releng:beetmover:action:direct-push-to-bucket
+    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:release
+    - project:{trust_domain}:{trust_project}:releng:beetmover:action:direct-push-to-bucket
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
   to:
     - project:
