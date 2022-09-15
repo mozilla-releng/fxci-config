@@ -530,6 +530,33 @@ firefox-android:
   cron:
     targets: [nightly]
 
+staging-firefox-android:
+  repo: https://github.com/mozilla-releng/staging-firefox-android
+  trust_domain: mobile
+  trust_project: firefox-android
+  repo_type: git
+  default_branch: main
+  level: 1
+  features:
+    beetmover-maven-phase: true
+    beetmover-maven-nightly-phase: true
+    github-publication: true
+    github-taskgraph: true
+    mobile-roles: true
+    mobile-firebase-testing: true
+    mobile-public-code-coverage: true
+    mobile-sign-phase: true
+    scriptworker: true
+    shipit: true
+    taskgraph-actions: true
+    taskgraph-cron: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+  cron:
+    targets: [nightly]
+    hooks_owner: releng+staging-firefox-android@mozilla.com
+    notify_emails: []
+
 android-components:
   repo: https://github.com/mozilla-mobile/android-components
   trust_domain: mobile
