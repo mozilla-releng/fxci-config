@@ -1912,6 +1912,7 @@
     - project:mozillavpn:releng:beetmover:action:push-to-candidates
     - project:mozillavpn:releng:beetmover:action:push-to-releases
     - project:mozillavpn:releng:beetmover:action:direct-push-to-bucket
+    - project:mozillavpn:releng:beetmover:action:copy-artifacts
     - project:mozillavpn:releng:beetmover:bucket:dep
     - project:mozillavpn:releng:signing:cert:dep-signing
     - project:mozillavpn:releng:signing:format:*
