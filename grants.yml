@@ -1837,6 +1837,7 @@
 
 - grant:
     - project:mozillavpn:releng:beetmover:action:push-to-releases
+    - project:mozillavpn:releng:beetmover:action:direct-push-to-bucket
   to:
     - project:
         alias:
