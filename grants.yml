@@ -975,6 +975,8 @@
   to:
     - roles:
         - mozillians-group:application-services
+    - groups:
+        - shipit_firefox
 
 # - scriptworker specific roles
 - grant:
