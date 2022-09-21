@@ -606,7 +606,7 @@ staging-android-components:
     trust-domain-scopes: true
   cron:
     targets:
-      - bump-gecko
+      - nightly
 
 reference-browser:
   repo: https://github.com/mozilla-mobile/reference-browser
