@@ -1420,6 +1420,12 @@
   to:
     - project:
         alias: staging-android-components
+- grant:
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-releng-staging-android-components%2fnightly
+  to:
+    - project:
+        alias: staging-android-components
+        job: [branch:main]
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}
