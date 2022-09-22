@@ -1421,7 +1421,7 @@
     - project:
         alias: staging-android-components
 - grant:
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-releng-staging-android-components%2fnightly
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-releng-staging-android-components/nightly
   to:
     - project:
         alias: staging-android-components
