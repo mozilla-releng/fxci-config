@@ -1310,7 +1310,7 @@
     - project:
         feature: beetmover-maven-phase
         level: 1
-        job: [release, action:release-promotion]
+        job: [release, action:release-promotion, cron:nightly]
     - project:
         feature: beetmover-maven-phase
         job: [pull-request]
