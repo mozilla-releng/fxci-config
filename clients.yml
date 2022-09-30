@@ -809,6 +809,11 @@ project/releng/scriptworker/v2/signing/dev/firefoxci-gecko-t:
     - queue:worker-id:gecko-t-signing-dev/gecko-t-signing-dev-*
     - queue:get-artifact:releng/partner/*
     - queue:get-artifact:private/openh264/*
+project/releng/scriptworker/v2/signing/dev/firefoxci-mobile-t:
+  description: dev mobile signing
+  scopes:
+    - queue:claim-work:scriptworker-k8s/mobile-t-signing-dev
+    - queue:worker-id:mobile-t-signing-dev/mobile-t-signing-dev-*
 project/releng/scriptworker/v2/signing/dev/firefoxci-xpi-t:
   description: dev xpi signing
   scopes:
