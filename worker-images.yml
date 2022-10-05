@@ -369,6 +369,13 @@ ronin-t-windows10-64-2004-alpha:
     north-central-us: win10-64-2004-northcentralus-20h1-evd
     north-europe: win10-64-2004-northeurope-20h1-evd
     south-central-us: win10-64-2004-southcentralus-20h1-evd
+ronin-t-windows11-64-2009-alpha:
+  azure2:
+    deployment_id: alpha
+    central-us: win11-64-2009-centralus-win11-21h2-avd
+    north-central-us: win11-64-2009-northcentralus-win11-21h2-avd
+    north-europe: win11-64-2009-northeurope-win11-21h2-avd
+    south-central-us: win11-64-2009-southcentralus-win11-21h2-avd
 ronin-t-windows10-64-2004-beta:
   azure2:
     deployment_id: 892e806
