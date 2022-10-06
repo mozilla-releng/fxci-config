@@ -319,13 +319,20 @@ pools:
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
+      - pool-group: comm-1
+      - pool-group: comm-2
+      - pool-group: comm-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 1000
+      maxCapacity:
+        by-pool-group:
+          gecko-.*: 1000
+          comm-.*: 300
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
@@ -376,13 +383,20 @@ pools:
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
+      - pool-group: comm-1
+      - pool-group: comm-2
+      - pool-group: comm-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 1000
+      maxCapacity:
+        by-pool-group:
+          gecko-.*: 1000
+          comm-.*: 20
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
@@ -433,13 +447,20 @@ pools:
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
+      - pool-group: comm-1
+      - pool-group: comm-2
+      - pool-group: comm-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 1000
+      maxCapacity:
+        by-pool-group:
+          gecko-.*: 1000
+          comm-.*: 20
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
