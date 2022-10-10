@@ -3022,6 +3022,7 @@
 # Bug 1762597: Merge automation scope for mgoossens
 # No bug: treestatus scopes for mergeduty
 # Bug 1764433: grant scopes for secret testing
+# Bug 1794381: Grant masterwayz level 3 cancel scopes for relduty
 - grant:
     - worker-manager:manage-worker-pool:gecko-t/win10-64-2004*
     - worker-manager:provider:azure2
@@ -3039,6 +3040,7 @@
     - project:releng:services/treestatus/*
     - secrets:get:project/releng/gecko/build/level-1/masterwayz*
     - secrets:set:project/releng/gecko/build/level-1/masterwayz*
+    - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
