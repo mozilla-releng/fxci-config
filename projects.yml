@@ -467,7 +467,7 @@ taskgraph:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: collaborators
+      policy: public_restricted
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
