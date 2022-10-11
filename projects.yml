@@ -41,6 +41,7 @@
 #   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
 #   - `github-taskgraph` -- this github repository has started using taskgraph
 #   - `github-publication` -- this github repository automates publication to github releases
+#   - `github-pull-request` -- this github repository uses github pull requests; Value should include a 'policy' matching the repo's `pullRequestPolicy`
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - 'scriptworker' -- this repository uses at least one scriptworker instance
 #   - 'shipit' -- this repository interacts with a shipit instance
@@ -465,6 +466,8 @@ taskgraph:
   level: 3
   features:
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
@@ -489,6 +492,8 @@ firefox-android:
     beetmover-maven-nightly-phase: true
     github-publication: true
     github-taskgraph: true
+    github-pull-request:
+      policy: public
     mobile-roles: true
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
@@ -513,6 +518,8 @@ staging-firefox-android:
     beetmover-maven-phase: true
     beetmover-maven-nightly-phase: true
     github-publication: true
+    github-pull-request:
+      policy: public
     github-taskgraph: true
     mobile-roles: true
     mobile-firebase-testing: true
@@ -541,6 +548,8 @@ android-components:
     beetmover-maven-nightly-phase: true
     github-publication: true
     github-taskgraph: true
+    github-pull-request:
+      policy: public
     mobile-roles: true
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
@@ -566,6 +575,8 @@ staging-android-components:
     beetmover-maven-nightly-phase: true
     github-publication: true
     github-taskgraph: true
+    github-pull-request:
+      policy: public
     mobile-roles: true
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
@@ -590,6 +601,8 @@ reference-browser:
   features:
     autophone: true
     github-taskgraph: true
+    github-pull-request:
+      policy: public
     mobile-roles: true
     mobile-bump-github: true
     mobile-firebase-testing: true
@@ -618,6 +631,8 @@ fenix:
     autophone: true
     beetmover-phase: true
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
     github-publication: true
     mobile-roles: true
     mobile-bump-github: true
@@ -650,6 +665,8 @@ staging-fenix:
     beetmover-phase: true
     github-publication: true
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
     mobile-roles: true
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
@@ -676,6 +693,8 @@ focus-android:
   features:
     beetmover-phase: true
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
     github-publication: true
     mobile-roles: true
     mobile-bump-github: true
@@ -703,6 +722,8 @@ staging-focus-android:
   features:
     github-publication: true
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
     mobile-roles: true
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
@@ -727,6 +748,8 @@ firefox-ios:
   level: 3
   features:
     github-taskgraph: true
+    github-pull-request:
+      policy: public
     mobile-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
@@ -743,6 +766,8 @@ focus-ios:
   level: 3
   features:
     github-taskgraph: true
+    github-pull-request:
+      policy: public
     mobile-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
@@ -762,6 +787,8 @@ application-services:
     # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
     # across projects.
     github-taskgraph: true
+    github-pull-request:
+      policy: public
     scriptworker: true
     taskgraph-cron: true
     taskgraph-actions: true
@@ -777,6 +804,8 @@ glean:
     # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
     # across projects.
     github-taskgraph: true
+    github-pull-request:
+      policy: public
     scriptworker: true
     taskgraph-actions: true
 
@@ -787,6 +816,9 @@ k8s-autoscale:
   default_branch: master
   trust_domain: releng
   level: 3
+  features:
+    github-pull-request:
+      policy: public
 
 mapper:
   repo: https://github.com/mozilla-releng/mapper
@@ -794,18 +826,26 @@ mapper:
   default_branch: master
   trust_domain: releng
   level: 3
+  features:
+    github-pull-request:
+      policy: public
 
 product-details:
   repo: https://github.com/mozilla-releng/product-details
   repo_type: git
   trust_domain: releng
   level: 3
+  features:
+    github-pull-request:
+      policy: collaborators
 
 shipit:
   repo: https://github.com/mozilla-releng/shipit
   repo_type: git
   features:
     github-taskgraph: true
+    github-pull-request:
+      policy: public
     trust-domain-scopes: true
   trust_domain: releng
   level: 3
@@ -816,6 +856,9 @@ tooltool:
   default_branch: master
   trust_domain: releng
   level: 3
+  features:
+    github-pull-request:
+      policy: public
 
 treestatus:
   repo: https://github.com/mozilla-releng/treestatus
@@ -823,12 +866,18 @@ treestatus:
   default_branch: master
   trust_domain: releng
   level: 3
+  features:
+    github-pull-request:
+      policy: public
 
 balrog:
   repo: https://github.com/mozilla-releng/balrog
   repo_type: git
   trust_domain: releng
   level: 3
+  features:
+    github-pull-request:
+      policy: public
 
 taskhuddler:
   repo: https://github.com/mozilla-releng/taskhuddler
@@ -836,6 +885,9 @@ taskhuddler:
   default_branch: master
   trust_domain: releng
   level: 3
+  features:
+    github-pull-request:
+      policy: public
 
 scriptworker:
   repo: https://github.com/mozilla-releng/scriptworker
@@ -847,14 +899,18 @@ scriptworker:
     trust-domain-scopes: true
     taskgraph-actions: true
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
 
-# mozilla-releng Github repositories
 build-puppet:
   repo: https://github.com/mozilla-releng/build-puppet
   repo_type: git
   default_branch: master
   trust_domain: releng
   level: 1
+  features:
+    github-pull-request:
+      policy: public
 
 occ:
   repo: https://github.com/mozilla-releng/OpenCloudConfig
@@ -862,6 +918,9 @@ occ:
   default_branch: master
   trust_domain: releng
   level: 3
+  features:
+    github-pull-request:
+      policy: public
 
 winsign:
   repo: https://github.com/mozilla-releng/winsign
@@ -869,6 +928,9 @@ winsign:
   default_branch: main
   trust_domain: releng
   level: 1
+  features:
+    github-pull-request:
+      policy: public
 
 mozilla-version:
   repo: https://github.com/mozilla-releng/mozilla-version
@@ -876,6 +938,9 @@ mozilla-version:
   default_branch: main
   trust_domain: releng
   level: 1
+  features:
+    github-pull-request:
+      policy: public
 
 build-mar:
   repo: https://github.com/mozilla-releng/build-mar
@@ -883,6 +948,9 @@ build-mar:
   default_branch: master
   trust_domain: releng
   level: 1
+  features:
+    github-pull-request:
+      policy: public
 
 cloud-image-builder:
   repo: https://github.com/mozilla-platform-ops/cloud-image-builder
@@ -890,6 +958,9 @@ cloud-image-builder:
   default_branch: main
   trust_domain: relops
   level: 3
+  features:
+    github-pull-request:
+      policy: collaborators
 
 cloud-image-deploy:
   repo: https://github.com/mozilla-platform-ops/cloud-image-deploy
@@ -897,6 +968,9 @@ cloud-image-deploy:
   default_branch: main
   trust_domain: relops
   level: 3
+  features:
+    github-pull-request:
+      policy: collaborators
 
 # L10n repositories
 android-l10n-tooling:
@@ -907,6 +981,8 @@ android-l10n-tooling:
   trust_domain: l10n
   features:
     github-taskgraph: true
+    github-pull-request:
+      policy: public
     taskgraph-cron: true
     taskgraph-actions: true
   cron:
@@ -932,6 +1008,8 @@ mozilla-vpn-client:
   trust_project: mozillavpn
   features:
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
     taskgraph-actions: true
     # Enable this after .taskcluster.yml and .cron.yml exist in the repo
     # taskgraph-cron: true
@@ -947,6 +1025,8 @@ staging-mozilla-vpn-client:
   trust_project: mozillavpn
   features:
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
     taskgraph-actions: true
     # Enable this after .taskcluster.yml and .cron.yml exist in the repo
     # taskgraph-cron: true
@@ -962,6 +1042,8 @@ xpi-manifest:
   trust_domain: xpi
   level: 3
   features:
+    github-pull-request:
+      policy: collaborators
     trust-domain-scopes: true
     xpi-roles: true
     taskgraph-actions: true
@@ -974,6 +1056,8 @@ rally-core-addon:
   trust_domain: xpi
   level: 1
   features:
+    github-pull-request:
+      policy: collaborators
     trust-domain-scopes: true
     taskgraph-actions: true
     xpi-roles: true
@@ -985,6 +1069,8 @@ staging-xpi-manifest:
   trust_domain: xpi
   level: 1
   features:
+    github-pull-request:
+      policy: collaborators
     trust-domain-scopes: true
     xpi-roles: true
     taskgraph-actions: true
@@ -997,6 +1083,8 @@ staging-xpi-public:
   trust_domain: xpi
   level: 1
   features:
+    github-pull-request:
+      policy: public
     trust-domain-scopes: true
     xpi-roles: true
 
@@ -1007,6 +1095,8 @@ staging-xpi-private:
   trust_domain: xpi
   level: 1
   features:
+    github-pull-request:
+      policy: collaborators
     trust-domain-scopes: true
     xpi-roles: true
 
@@ -1022,6 +1112,8 @@ staging-adhoc-signing:
     adhoc-roles: true
     taskgraph-actions: true
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
 
 adhoc-signing:
   repo: https://github.com/mozilla-releng/adhoc-signing
@@ -1034,6 +1126,8 @@ adhoc-signing:
     adhoc-roles: true
     taskgraph-actions: true
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
 
 # Bug 1614312: Add code-analysis project for code-review & code-coverage
 code-review:
@@ -1044,6 +1138,8 @@ code-review:
   level: 3
   features:
     trust-domain-scopes: true
+    github-pull-request:
+      policy: public
 
 # Bug 1597598: Add taskgraph support to scriptworker-scripts
 scriptworker-scripts:
@@ -1056,6 +1152,8 @@ scriptworker-scripts:
     trust-domain-scopes: true
     taskgraph-actions: true
     github-taskgraph: true
+    github-pull-request:
+      policy: public
 
 # Bug 1617635: Support building & indexing code-coverage docker image
 code-coverage:
@@ -1066,3 +1164,5 @@ code-coverage:
   level: 3
   features:
     trust-domain-scopes: true
+    github-pull-request:
+      policy: public

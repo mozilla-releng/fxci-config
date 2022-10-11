@@ -104,7 +104,10 @@ async def test_fetch_defaults(
                     "targets": ["a", "b"],
                 },
                 "default_branch": "default",
-                "features": {"hg-push": True, "gecko-cron": False},
+                "features": {
+                    "hg-push": {"enabled": True},
+                    "gecko-cron": {"enabled": False},
+                },
                 "is_try": True,
                 "parent_repo": "https://hg.mozilla.org/mozilla-unified",
                 "repo_type": "hg",
@@ -125,7 +128,10 @@ async def test_fetch_defaults(
                     ],
                 },
                 "default_branch": "default",
-                "features": {"hg-push": True, "gecko-cron": False},
+                "features": {
+                    "hg-push": {"enabled": True},
+                    "gecko-cron": {"enabled": False},
+                },
                 "is_try": True,
                 "parent_repo": "https://hg.mozilla.org/mozilla-unified",
                 "repo": "https://hg.mozilla.org/projects/ash",
@@ -146,7 +152,10 @@ async def test_fetch_defaults(
                     "targets": ["a", "b"],
                 },
                 "default_branch": "main",
-                "features": {"hg-push": True, "gecko-cron": False},
+                "features": {
+                    "hg-push": {"enabled": True},
+                    "gecko-cron": {"enabled": False},
+                },
                 "is_try": False,
                 "level": 3,
                 "parent_repo": "https://github.com/mozilla-releng/",
@@ -168,7 +177,10 @@ async def test_fetch_defaults(
                     ],
                 },
                 "default_branch": "main",
-                "features": {"hg-push": True, "gecko-cron": False},
+                "features": {
+                    "hg-push": {"enabled": True},
+                    "gecko-cron": {"enabled": False},
+                },
                 "is_try": False,
                 "parent_repo": "https://github.com/mozilla-releng/",
                 "repo": "https://github.com/mozilla-releng/beetmoverscript/",
@@ -202,9 +214,15 @@ def test_project_feature():
         repo_type="hg",
         access="scm_level_3",
         trust_domain="gecko",
-        features={"taskcluster-pull": True, "gecko-cron": False},
+        features={
+            "taskcluster-pull": True,
+            "gecko-cron": False,
+            "some-data": {"foo": "bar"},
+        },
     )
     assert prj.feature("taskcluster-pull")
+    assert prj.feature("some-data")
+    assert prj.feature("some-data", key="foo") == "bar"
     assert not prj.feature("gecko-cron")
     assert not prj.feature("gecko-cron")
     assert not prj.feature("buildbot")

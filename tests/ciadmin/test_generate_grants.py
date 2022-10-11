@@ -4,6 +4,8 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+from pprint import pprint
+
 import pytest
 from tcadmin.resources import Resources
 
@@ -231,6 +233,136 @@ class TestAddScopesForGroups:
         with pytest.raises(KeyError):
             grants.add_scopes_for_groups(
                 Grant(scopes=["level:{level}"], grantees=[grantee]), grantee, add_scope
+            )
+
+
+class TestAddScopesForGithubPullRequest:
+
+    projects = [
+        Project(
+            alias="hg",
+            repo="https://hg.mozilla.org/hg",
+            repo_type="hg",
+            access="scm_level_1",
+            trust_domain="foo",
+        ),
+        Project(
+            alias="no-prs",
+            repo="https://github.com/mozilla/no-prs",
+            repo_type="git",
+            level=3,
+            trust_domain="foo",
+        ),
+        Project(
+            alias="public",
+            repo="https://github.com/mozilla/public",
+            repo_type="git",
+            level=3,
+            trust_domain="foo",
+            features={
+                "github-pull-request": {
+                    "enabled": True,
+                    "policy": "public",
+                }
+            },
+        ),
+        Project(
+            alias="public-restricted",
+            repo="https://github.com/mozilla/public-restricted",
+            repo_type="git",
+            level=3,
+            trust_domain="foo",
+            features={
+                "github-pull-request": {
+                    "enabled": True,
+                    "policy": "public_restricted",
+                }
+            },
+        ),
+        Project(
+            alias="collaborators",
+            repo="https://github.com/mozilla/collaborators",
+            repo_type="git",
+            level=3,
+            trust_domain="foo",
+            features={
+                "github-pull-request": {
+                    "enabled": True,
+                    "policy": "collaborators",
+                }
+            },
+        ),
+    ]
+
+    def test_grant_to_pull_request_trusted(self, add_scope):
+        grantee = ProjectGrantee(job=["pull-request:trusted"])
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        # Dump expected for copy/paste.
+        pprint(add_scope.added)
+        assert add_scope.added == [
+            ("repo:github.com/mozilla/public-restricted:pull-request", "sc"),
+            ("repo:github.com/mozilla/collaborators:pull-request", "sc"),
+        ]
+
+    def test_grant_to_pull_request_untrusted(self, add_scope):
+        grantee = ProjectGrantee(job=["pull-request:untrusted"])
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        # Dump expected for copy/paste.
+        pprint(add_scope.added)
+        assert add_scope.added == [
+            ("repo:github.com/mozilla/public:pull-request", "sc"),
+            ("repo:github.com/mozilla/public-restricted:pull-request-untrusted", "sc"),
+        ]
+
+    def test_grant_to_pull_request_star(self, add_scope):
+        grantee = ProjectGrantee(job=["pull-request:*"])
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        # Dump expected for copy/paste.
+        pprint(add_scope.added)
+        assert add_scope.added == [
+            ("repo:github.com/mozilla/public:pull-request", "sc"),
+            ("repo:github.com/mozilla/public-restricted:pull-request", "sc"),
+            ("repo:github.com/mozilla/public-restricted:pull-request-untrusted", "sc"),
+            ("repo:github.com/mozilla/collaborators:pull-request", "sc"),
+        ]
+
+    def test_grant_to_star(self, add_scope):
+        grantee = ProjectGrantee(job=["*"])
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        pr_grants = [g for g in add_scope.added if "pull-request" in g[0]]
+
+        # Dump expected for copy/paste.
+        pprint(pr_grants)
+        assert pr_grants == [
+            ("repo:github.com/mozilla/public:pull-request", "sc"),
+            ("repo:github.com/mozilla/public-restricted:pull-request", "sc"),
+            ("repo:github.com/mozilla/public-restricted:pull-request-untrusted", "sc"),
+            ("repo:github.com/mozilla/collaborators:pull-request", "sc"),
+        ]
+
+    def test_include_pull_requests_false(self, add_scope):
+        grantee = ProjectGrantee(job=["pull-request:*"], include_pull_requests=False)
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        assert add_scope.added == []
+
+    def test_invalid_grantee(self):
+        grantee = ProjectGrantee(job=["pull-request"])
+        with pytest.raises(RuntimeError):
+            grants.add_scopes_for_projects(
+                Grant(scopes=["sc"], grantees=[grantee]),
+                grantee,
+                add_scope,
+                self.projects,
             )
 
 

@@ -54,12 +54,22 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             continue
 
         jobs = grantee.job
+
+        # Force being explicit with pull-request policies. Otherwise, the `pull-request`
+        # job would be equivalent to `pull-request:trusted`, which may not be intended.
+        if "pull-request" in jobs:
+            raise RuntimeError(
+                "Invalid job 'pull-request'! Use 'pull-request:*' instead."
+            )
+
+        pr_policy = (project.feature("github-pull-request", key="policy") or "").strip()
+
         if "*" in jobs and project.repo_type == "git" and project.level != 1:
             # Github mixes pull-requests and other tasks under the same prefix
             # Since pull-requests should be level-1, we need to explicitly
             # split based on the job
             jobs = [job for job in jobs if job != "*"]
-            jobs += ["pull-request", "branch:*", "release", "cron:*", "action:*"]
+            jobs += ["pull-request:*", "branch:*", "release", "cron:*", "action:*"]
 
         # Only grant scopes to `cron:` or `action:` jobs if the corresponding features
         # are enabled. This allows having generic grants that don't generate unused
@@ -70,12 +80,41 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             "gecko-actions"
         ):
             jobs = [job for job in jobs if not job.startswith("action:")]
-        if project.repo_type != "git" or not grantee.include_pull_requests:
-            jobs = [job for job in jobs if job != "pull-request"]
+
+        # Only grant pull-request scopes where it makes sense.
+        if (
+            project.repo_type != "git"
+            or not pr_policy
+            or not grantee.include_pull_requests
+        ):
+            jobs = [job for job in jobs if not job.startswith("pull-request")]
+
+        if "pull-request:*" in jobs:
+            jobs.remove("pull-request:*")
+            jobs.extend(["pull-request:trusted", "pull-request:untrusted"])
+
+        # Remove any 'pull-request:trusted' jobs for projects using the 'public' policy.
+        # Similarly, remove any 'pull-request:untrusted' jobs for projects using the
+        # 'collaborators' policy. Only the 'public_restricted' policy supports both at
+        # the same time.
+        if pr_policy == "public":
+            jobs = [job for job in jobs if job != "pull-request:trusted"]
+        elif pr_policy.startswith("collaborators"):
+            jobs = [job for job in jobs if job != "pull-request:untrusted"]
+
+        def job_to_role_suffix(job):
+            # Normalize any `pull-request:` jobs to their appropriate role
+            # suffix.
+            if job == "pull-request:untrusted" and pr_policy == "public_restricted":
+                return "pull-request-untrusted"
+            elif job.startswith("pull-request"):
+                return "pull-request"
+            return job
 
         # ok, this project matches!
         for job in jobs:
-            roleId = "{}:{}".format(project.role_prefix, job)
+            suffix = job_to_role_suffix(job)
+            roleId = "{}:{}".format(project.role_prefix, suffix)
 
             # perform substitutions as grants.yml describes
             subs = {}
@@ -89,7 +128,7 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
                 subs["level"] = project.level
                 # In order to avoid granting pull-requests graphs
                 # access to the level-3 workers, we overwrite their value here
-                if job == "pull-request":
+                if job.startswith("pull-request"):
                     subs["level"] = 1
                 subs["priority"] = LEVEL_PRIORITIES[project.level]
             try:

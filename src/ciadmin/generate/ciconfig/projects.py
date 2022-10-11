@@ -116,6 +116,15 @@ class Project:
                     "property".format(self.alias)
                 )
 
+        # Convert boolean features into a dict of the form {"enabled": <val>}
+        for name, val in self.features.items():
+            if isinstance(val, dict):
+                val.setdefault("enabled", True)
+            elif isinstance(val, bool):
+                self.features[name] = {"enabled": val}
+            else:
+                raise ValueError("Feature {} must be a dict or boolean".format(name))
+
     @staticmethod
     async def fetch_all():
         """Load project metadata from projects.yml in ci-configuration"""
@@ -136,14 +145,14 @@ class Project:
     # values for each feature; the `feature()` and `enabled_features` attributes provide
     # easier access for Python uses.
 
-    def feature(self, feature):
+    def feature(self, feature, key="enabled"):
         "Return True if this feature is enabled"
-        return feature in self.features and self.features[feature]
+        return feature in self.features and self.features[feature][key]
 
     @property
     def enabled_features(self):
         "The list of enabled features"
-        return [f for f, enabled in self.features.items() if enabled]
+        return [f for f, val in self.features.items() if val["enabled"]]
 
     def get_level(self):
         "Get the level, or None if the access level does not define a level"

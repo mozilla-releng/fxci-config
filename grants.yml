@@ -816,7 +816,7 @@
     - index:insert-task:{trust_domain}.v2.{alias}-pr.*
   to:
     - project:
-        job: [pull-request]
+        job: [pull-request:*]
         feature: trust-domain-scopes
 
 - grant:
@@ -836,7 +836,7 @@
     - queue:route:tc-treeherder.v2.{alias}-pr.*
   to:
     - project:
-        job: [pull-request]
+        job: [pull-request:*]
         feature: treeherder-reporting
 
 
@@ -861,6 +861,7 @@
   to:
     - project:
         alias: taskgraph
+        job: [action:*, branch:*, pull-request:trusted, release]
 
 - grant:
     - secrets:get:project/releng/shipit/ci
@@ -985,7 +986,7 @@
   to:
     - project:
         alias: scriptworker
-        job: [pull-request, branch:main]
+        job: [pull-request:trusted, branch:main]
 
 # - balrog specific roles
 - grant:
@@ -993,7 +994,7 @@
   to:
     - project:
         alias: balrog
-        job: [pull-request, branch:master, branch:main]
+        job: [pull-request:*, branch:master, branch:main]
 
 - grant:
     - queue:route:index.project.balrog.*
@@ -1054,7 +1055,7 @@
   to:
     - project:
         alias: occ
-        job: [branch:*, pull-request]
+        job: [branch:*, pull-request:*]
 
 - grant:
     - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:updatetooltoolrepo
@@ -1169,7 +1170,7 @@
   to:
     - projects:
         alias: mapper
-        job: [branch:*, pull-request]
+        job: [branch:*, pull-request:*]
 
 - grant:
     - secrets:get:project/releng/mapper/deploy
@@ -1214,7 +1215,7 @@
   to:
     - projects:
         alias: tooltool
-        job: [branch:*, pull-request]
+        job: [branch:*, pull-request:*]
 
 - grant:
     - secrets:get:project/releng/tooltool/deploy
@@ -1229,7 +1230,7 @@
   to:
     - projects:
         alias: treestatus
-        job: [branch:*, pull-request]
+        job: [branch:*, pull-request:*]
 
 - grant:
     - secrets:get:project/releng/treestatus/deploy
@@ -1290,7 +1291,7 @@
   to:
     - project:
         feature: beetmover-maven-phase
-        job: [release, pull-request, action:release-promotion]
+        job: [release, pull-request:*, action:release-promotion]
     - project:
         feature: beetmover-maven-nightly-phase
         job: [cron:nightly]
@@ -1313,7 +1314,7 @@
         job: [release, action:release-promotion, cron:nightly]
     - project:
         feature: beetmover-maven-phase
-        job: [pull-request]
+        job: [pull-request:*]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:maven-nightly-production
@@ -1329,7 +1330,7 @@
   to:
     - project:
         feature: beetmover-phase
-        job: [pull-request]
+        job: [pull-request:*]
     - project:
         feature: beetmover-phase
         level: 1
@@ -1363,7 +1364,7 @@
   to:
     - project:
         feature: github-publication
-        job: [action:release-promotion, release, pull-request]
+        job: [action:release-promotion, release, pull-request:*]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:github:project:{trust_project}
@@ -1382,7 +1383,7 @@
         job: [release, action:release-promotion]
     - project:
         feature: github-publication
-        job: [pull-request]
+        job: [pull-request:*]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:github:project:{alias}
@@ -1449,7 +1450,7 @@
   to:
     - project:
         feature: mobile-pushapk-phase
-        job: [pull-request]
+        job: [pull-request:*]
     - project:
         feature: mobile-pushapk-phase
         level: 1
@@ -1470,16 +1471,16 @@
           - cron:nightly-on-google-play
           - cron:screenshots
           - cron:legacy-api-ui-tests
-          - pull-request
+          - pull-request:trusted
     - project:
         # Focus PRs are restricted to collaborators, so exposing firebase is safe-enough for PRs.
         # Focus also has some Firebase tests on nightly.
         alias: focus-android
-        job: [cron:nightly, pull-request]
+        job: [cron:nightly, pull-request:trusted]
     - project:
         # TODO - remove once focus/taskcluster work is complete
         alias: staging-focus-android
-        job: [pull-request]
+        job: [pull-request:trusted]
 
 - grant:
     - secrets:get:project/mobile/github
@@ -1499,7 +1500,7 @@
   to:
     - project:
         feature: autophone
-        job: [pull-request]
+        job: [pull-request:*]
     - project:
         alias: fenix
         job: [cron:nightly, cron:nightly-test]
@@ -1534,14 +1535,14 @@
     - project:
         alias: android-components
         # Used in order to warn the AC team whenever a GV update cannot be merged
-        job: [pull-request]
+        job: [pull-request:*]
 
 - grant:
     - project:releng:ship-it:action:mark-as-shipped
   to:
     - project:
         feature: shipit
-        job: [release, pull-request]
+        job: [release, pull-request:*]
     - project:
         feature: [shipit, taskgraph-actions]
         job: [action:release-promotion]
@@ -1570,7 +1571,7 @@
         # section which addresses the RelEngers forks
         level: 1
         feature: shipit
-        job: [release, pull-request]
+        job: [release, pull-request:*]
     - project:
         level: 1
         feature: [shipit, taskgraph-actions]
@@ -1578,7 +1579,7 @@
     - project:
         level: 3
         feature: [shipit, taskgraph-actions]
-        job: [pull-request]
+        job: [pull-request:*]
 # fenix specific scopes
 - grant:
     - queue:route:index.project.fenix.android.preview-builds
@@ -1586,14 +1587,14 @@
   to:
     - project:
         alias: fenix
-        job: [pull-request]
+        job: [pull-request:*]
 
 - grant:
     - secrets:get:project/mobile/fenix/public-tokens
   to:
     - project:
         alias: fenix
-        job: [branch:*, pull-request]
+        job: [branch:*, pull-request:trusted]
 
 - grant:
     - secrets:get:project/mobile/fenix/nightly-simulation
@@ -1675,14 +1676,14 @@
   to:
     - project:
         alias: focus-android
-        job: [branch:*, cron:*, pull-request, release]
+        job: [branch:*, cron:*, pull-request:*, release]
 
 - grant:
     - queue:route:notify.irc-channel.#android-ci.on-any
   to:
     - project:
         alias: focus-android
-        job: [branch:*, pull-request]
+        job: [branch:*, pull-request:*]
 
 - grant:
     - secrets:get:project/mobile/focus-android/nightly
@@ -1724,7 +1725,7 @@
   to:
     - project:
         alias: firefox-tv
-        job: [branch:*, pull-request, release]
+        job: [branch:*, pull-request:*, release]
 
 - grant:
     - queue:route:notify.email.firefox-tv@mozilla.com.on-completed
@@ -1767,7 +1768,7 @@
     - project:
         alias:
           - android-l10n-tooling
-        job: [pull-request, branch:*, cron:*]
+        job: [pull-request:*, branch:*, cron:*]
 
 - grant:
     - secrets:get:l10n/level-{level}/*
@@ -1790,7 +1791,7 @@
     - project:
         alias:
           - elmo-taskcluster
-        job: [pull-request, branch:*, cron:*]
+        job: [pull-request:*, branch:*, cron:*]
 
 - grant:
     - secrets:get:l10n/level-{level}/*
@@ -1829,7 +1830,7 @@
         job:
           - branch:*
           - cron:*
-          - pull-request
+          - pull-request:*
           - release
 
 - grant:
@@ -1864,7 +1865,7 @@
           - mozilla-vpn-client
         job:
           - branch:*
-          - pull-request
+          - pull-request:*
           - release
 
 - grant:
@@ -1874,6 +1875,11 @@
   to:
     - project:
         alias: mozilla-vpn-client
+        job:
+          - action:*
+          - branch:*
+          - pull-request:trusted
+          - release
 
 - grant:
     - project:mozillavpn:releng:googleplay:product:mozillavpn
@@ -1940,7 +1946,7 @@
           - staging-mozilla-vpn-client
         job:
           - branch:*
-          - pull-request
+          - pull-request:trusted
           - release
           - action:release-promotion
 
@@ -2028,7 +2034,7 @@
   to:
     - project:
         feature: xpi-roles
-        job: [pull-request, branch:*, cron:*, action:*, tag:*]
+        job: [pull-request:*, branch:*, cron:*, action:*, tag:*]
     - roles:
         # The mozilla-extensions github organization is designed to allow for
         #
@@ -2072,7 +2078,7 @@
   to:
     - project:
         feature: adhoc-roles
-        job: [branch:*, action:*, pull-request, action:*, cron:*]
+        job: [branch:*, action:*, pull-request:trusted, action:*, cron:*]
 
 - grant:
     - project:adhoc:releng:signing:cert:release-signing
@@ -2102,7 +2108,7 @@
     - project:
         alias:
           - scriptworker-scripts
-        job: [branch:*, action:*, pull-request, action:*, cron:*]
+        job: [branch:*, action:*, pull-request:*, action:*, cron:*]
 
 # - scriptworker-scripts specific roles
 # XXX delete these once we port scriptworker-scripts cloudops deploys to CoT
