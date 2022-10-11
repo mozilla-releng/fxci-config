@@ -2064,7 +2064,7 @@ pools:
       security: windows-untrusted
       implementation: generic-worker/windows
       instance_types:
-        - instanceType: g2.2xlarge
+        - instanceType: g4dn.xlarge
           launchConfig:
             BlockDeviceMappings:
               - DeviceName: /dev/sda1
