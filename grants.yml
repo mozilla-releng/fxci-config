@@ -970,6 +970,7 @@
     - hooks:trigger-hook:project-app-services/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-app-services/in-tree-action-3-generic/*
     - queue:create-task:highest:app-services-*
+    - queue:rerun-task:app-services-level-*
     - queue:get-artifact:private/docker-worker/shell.html
     - queue:scheduler-id:app-services-level-*
     - secrets:get:project/application-services/*
