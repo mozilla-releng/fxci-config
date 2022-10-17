@@ -3024,31 +3024,24 @@
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mhentges
 
-# Bug 1715817: Scopes to manage Azure images and workers
-# No bug: Scopes to run things like merge-automation jobs on try for scriptworker scripts testing
-# No bug: Scopes for testing workers (assumes the block above of Bug 1715817 is still in place)
-# Bug 1762597: Merge automation scope for mgoossens
-# No bug: treestatus scopes for mergeduty
-# Bug 1764433: grant scopes for secret testing
-# Bug 1794381: Grant masterwayz level 3 cancel scopes for relduty
 - grant:
-    - worker-manager:manage-worker-pool:gecko-t/win10-64-2004*
+    - generic-worker:allow-rdp:gecko-t/*
+    - worker-manager:manage-worker-pool:gecko-1/*
+    - worker-manager:manage-worker-pool:gecko-t/*
+    - worker-manager:provider:fxci-level1-gcp
+    - worker-manager:provider:fxci-test-gcp
     - worker-manager:provider:azure2
     - worker-manager:provider:null-provider
-    - generic-worker:allow-rdp:gecko-t/win10-64-2004*
-    - worker-manager:remove-worker:gecko-t/win10-64-2004*
-    - hooks:trigger-hook:project-gecko/in-tree-action-1-*
-    - worker-manager:manage-worker-pool:gecko-1/masterwayz*
-    - worker-manager:manage-worker-pool:gecko-t/masterwayz*
-    - worker-manager:manage-worker-pool:gecko-t/t-linux*
-    - worker-manager:provider:fxci-level1-gcp
-    - worker-manager:remove-worker:gecko-1/masterwayz*
-    - worker-manager:remove-worker:gecko-t/masterwayz*
-    - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
+    - worker-manager:remove-worker:gecko-*
     - project:releng:services/treestatus/*
+    - queue:rerun-task:gecko-level-*
+    - queue:quarantine-worker:gecko-*
     - secrets:get:project/releng/gecko/build/level-1/masterwayz*
     - secrets:set:project/releng/gecko/build/level-1/masterwayz*
+    - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
     - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
+    - hooks:trigger-hook:project-gecko/in-tree-action-1-*
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
