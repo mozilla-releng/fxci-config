@@ -773,6 +773,66 @@ pools:
             capacityManagement: {diskspaceThreshold: 30000000000}
             shutdown:
               afterIdleSeconds: 7200
+  - pool_id: '{pool-group}/decision-gcp'
+    description: Worker for Firefox automation
+    owner: release+tc-workers@mozilla.com
+    email_on_error: false
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-2
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+      - pool-group: comm-1
+      - pool-group: comm-2
+      - pool-group: comm-3
+        chain-of-trust: trusted
+      - pool-group: kaios-1
+      - pool-group: kaios-2
+    config:
+      regions: [us-central1, us-west1]
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-current
+      security:
+        by-chain-of-trust:
+          trusted: trusted
+          default:
+      minCapacity:
+        by-pool-group:
+          gecko-[13]: 5
+          default: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-1: 40
+          gecko-3: 20
+          default: 4
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          workerConfig:
+            task:
+              reclaimDivisor: 2
+          disks:
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 75
+                sourceImage: <image>
+              type: PERSISTENT
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+          machine_type: n2-standard-4
+          capacityPerInstance: 2
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/images'
     description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 (and
       downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
