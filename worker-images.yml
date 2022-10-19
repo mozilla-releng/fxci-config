@@ -362,6 +362,11 @@ ronin-b-windows2012-alpha:
     deployment_id: alpha
     central-us: win2012-r2-64-centralus-2012-R2-Datacenter
     north-central-us: win2012-r2-64-northcentralus-2012-R2-Datacenter
+ronin-b-windows2022-alpha:
+  azure2:
+    deployment_id: alpha
+    central-us: win2022-64-2009-centralus-2022-datacenter-azure-edition
+    north-central-us: win2022-64-2009-northcentralus-2022-datacenter-azure-edition
 ronin-t-windows10-64-2004-alpha:
   azure2:
     deployment_id: alpha
