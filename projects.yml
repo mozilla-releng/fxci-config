@@ -820,16 +820,6 @@ k8s-autoscale:
     github-pull-request:
       policy: public
 
-mapper:
-  repo: https://github.com/mozilla-releng/mapper
-  repo_type: git
-  default_branch: master
-  trust_domain: releng
-  level: 3
-  features:
-    github-pull-request:
-      policy: public
-
 product-details:
   repo: https://github.com/mozilla-releng/product-details
   repo_type: git
@@ -879,16 +869,6 @@ balrog:
     github-pull-request:
       policy: public
 
-taskhuddler:
-  repo: https://github.com/mozilla-releng/taskhuddler
-  repo_type: git
-  default_branch: master
-  trust_domain: releng
-  level: 3
-  features:
-    github-pull-request:
-      policy: public
-
 scriptworker:
   repo: https://github.com/mozilla-releng/scriptworker
   repo_type: git
@@ -901,16 +881,6 @@ scriptworker:
     github-taskgraph: true
     github-pull-request:
       policy: collaborators
-
-build-puppet:
-  repo: https://github.com/mozilla-releng/build-puppet
-  repo_type: git
-  default_branch: master
-  trust_domain: releng
-  level: 1
-  features:
-    github-pull-request:
-      policy: public
 
 occ:
   repo: https://github.com/mozilla-releng/OpenCloudConfig

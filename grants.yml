@@ -1041,8 +1041,6 @@
     - project:
         trust_domain: releng
 
-# - build-puppet has no custom roles.
-
 # - k8s-autoscale roles
 - grant:
     - secrets:get:project/releng/k8s-autoscale/deploy
@@ -1165,21 +1163,6 @@
         alias: cloud-image-deploy
         job: [branch:main]
   environment: staging
-
-# - mapper specific roles
-- grant:
-    - secrets:get:project/releng/mapper/ci
-  to:
-    - projects:
-        alias: mapper
-        job: [branch:*, pull-request:*]
-
-- grant:
-    - secrets:get:project/releng/mapper/deploy
-  to:
-    - projects:
-        alias: mapper
-        job: [branch:dev, branch:staging, branch:production]
 
 # - product-details specific roles
 - grant:

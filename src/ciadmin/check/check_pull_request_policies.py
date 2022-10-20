@@ -28,7 +28,7 @@ async def check_pull_request_policies_for_git_repos():
     """Ensures that the pull-request policy defined in projects.yml
     matches the one in-repo.
     """
-    tcyml_v0_projects = {"build-puppet", "occ"}
+    tcyml_v0_projects = ("occ",)
 
     projects = await Project.fetch_all()
 
