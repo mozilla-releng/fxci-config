@@ -261,7 +261,6 @@ monopacker-docker-worker-trusted-2020-08-05t22-01-11z-bug1676214:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/fxci-level3-gcp-fx0p5dw5rxruubg6rbp6
 monopacker-docker-worker-testing-bug1764751:
   fxci-test-gcp: projects/taskcluster-imaging/global/images/ubuntu-1404
-
 monopacker-docker-worker-gcp-bug1772714-20220603:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u1404-2022-06-03
 
@@ -297,7 +296,7 @@ nss-win2012r2-pre:
   aws:
     us-west-1: ami-0d05851ab254517de
     us-west-2: ami-02f981615a8102d24
-
+# Windows Server 2012
 occ-b-win2012-f0280d3:
   aws:
     eu-central-1: ami-0088f6f069a63870e
@@ -315,6 +314,18 @@ occ-b-win2012-trusted-f3c189d:
     us-east-1: ami-0b4be552fadff3b32
     us-west-1: ami-033412e2574dff89d
     us-west-2: ami-0b4affa0b42f6c9d2
+ronin-b-windows2012-alpha:
+  azure2:
+    deployment_id: alpha
+    central-us: win2012-r2-64-centralus-2012-R2-Datacenter
+    north-central-us: win2012-r2-64-northcentralus-2012-R2-Datacenter
+occ-mpd-b-win2012-trusted-v20200226:
+  aws:
+    eu-central-1: ami-09a5852e0cc1edb81
+    us-east-1: ami-08f30fc003814c298
+    us-west-1: ami-0c76678a5bdb06f4e
+    us-west-2: ami-0520ba0d12752373c
+# Windows 7
 occ-t-win7-32-b4be759:
   aws:
     eu-central-1: ami-04f2ca70a0be624b5
@@ -351,22 +362,13 @@ occ-t-win7-32-gpu-v20200226:
     us-east-1: ami-02641726e4b419ba4
     us-west-1: ami-0ebc5c792d8418b65
     us-west-2: ami-0cecd6bf98b15e862
-occ-mpd-b-win2012-trusted-v20200226:
-  aws:
-    eu-central-1: ami-09a5852e0cc1edb81
-    us-east-1: ami-08f30fc003814c298
-    us-west-1: ami-0c76678a5bdb06f4e
-    us-west-2: ami-0520ba0d12752373c
-ronin-b-windows2012-alpha:
-  azure2:
-    deployment_id: alpha
-    central-us: win2012-r2-64-centralus-2012-R2-Datacenter
-    north-central-us: win2012-r2-64-northcentralus-2012-R2-Datacenter
+# Windows Server 2022
 ronin-b-windows2022-alpha:
   azure2:
     deployment_id: alpha
     central-us: win2022-64-2009-centralus-2022-datacenter-azure-edition
     north-central-us: win2022-64-2009-northcentralus-2022-datacenter-azure-edition
+# Windows 10
 ronin-t-windows10-64-2004-alpha:
   azure2:
     deployment_id: alpha
@@ -374,13 +376,6 @@ ronin-t-windows10-64-2004-alpha:
     north-central-us: win10-64-2004-northcentralus-20h1-evd
     north-europe: win10-64-2004-northeurope-20h1-evd
     south-central-us: win10-64-2004-southcentralus-20h1-evd
-ronin-t-windows11-64-2009-alpha:
-  azure2:
-    deployment_id: alpha
-    central-us: win11-64-2009-centralus-win11-21h2-avd
-    north-central-us: win11-64-2009-northcentralus-win11-21h2-avd
-    north-europe: win11-64-2009-northeurope-win11-21h2-avd
-    south-central-us: win11-64-2009-southcentralus-win11-21h2-avd
 ronin-t-windows10-64-2004-beta:
   azure2:
     deployment_id: 892e806
@@ -405,15 +400,6 @@ ronin-t-windows10-64-2004-prod:
     west-europe: win10-64-2004-westeurope-20h1-evd
     west-us: win10-64-2004-westus-20h1-evd
     west-us-2: win10-64-2004-westus2-20h1-evd
-ronin-t-windows10-64-2004-current:
-  azure2:
-    central-us: gecko-t-win10-64-2004-centralus-20h1-evd-f160361
-    east-us: gecko-t-win10-64-2004-eastus-20h1-evd-f160361
-    east-us-2: gecko-t-win10-64-2004-eastus2-20h1-evd-f160361
-    north-central-us: gecko-t-win10-64-2004-northcentralus-20h1-evd-f160361
-    south-central-us: gecko-t-win10-64-2004-southcentralus-20h1-evd-f160361
-    west-us: gecko-t-win10-64-2004-westus-20h1-evd-f160361
-    west-us-2: gecko-t-win10-64-2004-westus2-20h1-evd-f160361
 ronin-t-windows10-64-2004-gpu-current:
   azure2:
     east-us: gecko-t-win10-64-2004-gpu-eastus-20h1-evd-f160361
@@ -446,6 +432,68 @@ ronin-t-windows10-64-2004-gpu-datadisk-test:
     south-central-us: gecko-t-win10-64-2004-gpu-southcentralus-20h1-evd-f160361
     north-europe: gecko-t-win10-64-2004-gpu-northeurope-20h1-evd-f160361
     west-europe: gecko-t-win10-64-2004-gpu-westeurope-20h1-evd-f160361
+# Windows 11
+ronin-t-windows11-64-2009-alpha:
+  azure2:
+    deployment_id: alpha
+    central-us: win11-64-2009-centralus-win11-21h2-avd
+    north-central-us: win11-64-2009-northcentralus-win11-21h2-avd
+    north-europe: win11-64-2009-northeurope-win11-21h2-avd
+    south-central-us: win11-64-2009-southcentralus-win11-21h2-avd
+ronin-t-windows11-64-2009-beta:
+  azure2:
+    deployment_id: 32380c6
+    central-us: win11-64-2009-centralus-win11-21h2-avd
+    north-central-us: win11-64-2009-northcentralus-win11-21h2-avd
+    north-europe: win11-64-2009-northeurope-win11-21h2-avd
+    south-central-us: win11-64-2009-southcentralus-win11-21h2-avd
+ronin-t-windows11-64-2009-prod:
+  azure2:
+    deployment_id: 32380c6
+    central-us: win11-64-2009-centralus-win11-21h2-avd
+    east-us: win11-64-2009-eastus-win11-21h2-avd
+    east-us-2: win11-64-2009-eastus2-win11-21h2-avd
+    north-central-us: win11-64-2009-northcentralus-win11-21h2-avd
+    north-europe: win11-64-2009-northeurope-win11-21h2-avd
+    south-central-us: win11-64-2009-southcentralus-win11-21h2-avd
+    west-europe: win11-64-2009-westeurope-win11-21h2-avd
+    west-us: win11-64-2009-westus-win11-21h2-avd
+    west-us-2: win11-64-2009-westus2-win11-21h2-avd
+ronin-t-windows11-64-2009-gpu:
+  azure2:
+    deployment_id: 32380c6
+    east-us: gecko-t-win11-64-2009-gpu-eastus-21h2-avd-32380c6
+    north-central-us: gecko-t-win11-64-2009-gpu-northcentralus-21h2-avd-32380c6
+    south-central-us: gecko-t-win11-64-2009-gpu-southcentralus-21h2-avd-32380c6
+    north-europe: gecko-t-win11-64-2009-gpu-northeurope-21h2-avd-32380c6
+    west-europe: gecko-t-win11-64-2009-gpu-westeurope-21h2-avd-32380c6
+ronin-t-windows11-64-2009-gpu-alpha:
+  azure2:
+    deployment_id: 32380c6
+    east-us: gecko-t-win11-64-2009-gpu-eastus-21h2-avd-32380c6
+    north-central-us: gecko-t-win11-64-2009-gpu-northcentralus-21h2-avd-32380c6
+    south-central-us: gecko-t-win11-64-2009-gpu-southcentralus-21h2-avd-32380c6
+    north-europe: gecko-t-win11-64-2009-gpu-northeurope-21h2-avd-32380c6
+    west-europe: gecko-t-win11-64-2009-gpu-westeurope-21h2-avd-32380c6
+ronin-t-windows11-64-2009-gpu-beta:
+  azure2:
+    deployment_id: 32380c6
+    east-us: gecko-t-win11-64-2009-gpu-eastus-21h2-avd-32380c6
+    north-central-us: gecko-t-win11-64-2009-gpu-northcentralus-21h2-avd-32380c6
+    south-central-us: gecko-t-win11-64-2009-gpu-southcentralus-21h2-avd-32380c6
+    north-europe: gecko-t-win11-64-2009-gpu-northeurope-21h2-avd-32380c6
+    west-europe: gecko-t-win11-64-2009-gpu-westeurope-21h2-avd-32380c6
+ronin-t-windows11-64-2009-datadisk-test:
+  azure2:
+    deployment_id: 32380c6
+    central-us: gecko-t-win11-64-2009-centralus-21h2-avd-32380c6
+    east-us: gecko-t-win11-64-2009-eastus-21h2-avd-32380c6
+    east-us-2: gecko-t-win11-64-2009-eastus2-21h2-avd-32380c6
+    north-central-us: gecko-t-win11-64-2009-northcentralus-21h2-avd-32380c6
+    south-central-us: gecko-t-win11-64-2009-southcentralus-21h2-avd-32380c6
+    west-us: gecko-t-win11-64-2009-westus-21h2-avd-32380c6
+    west-us-2: gecko-t-win11-64-2009-westus2-21h2-avd-32380c6
+# Etc
 relops-image-builder-pre:
   aws:
     eu-central-1: ami-07db1c26bda143e33

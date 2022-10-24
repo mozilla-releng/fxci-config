@@ -1177,6 +1177,7 @@ pools:
         - us-east-1
         - us-west-1
         - us-west-2
+# Windows Server 2012
   - pool_id: gecko-1/b-win2012
     description: ''
     owner: release+tc-workers@mozilla.com
@@ -1409,6 +1410,7 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
+# Windows Server 2022
   - pool_id: gecko-1/win2022-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -1513,6 +1515,7 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
+# Windows 10
   - pool_id: gecko-t/win10-64-2004-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -1529,53 +1532,6 @@ pools:
         genericWorker:
           config:
             workerType: win10-64-2004-alpha
-            provisionerId: gecko-t
-            idleTimeoutSecs: 5400
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_F8s_v2
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 30
-                  managedDisk:
-                    storageAccountType: Standard_LRS
-                  createOption: Empty
-            hardwareProfile:
-              vmSize: Standard_F8s_v2
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-  - pool_id: gecko-t/win11-64-2009-alpha
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows11-64-2009-alpha
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [central-us, north-central-us, south-central-us, north-europe]
-      maxCapacity: 25
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win11-64-2009-alpha
             provisionerId: gecko-t
             idleTimeoutSecs: 5400
       tags:
@@ -1701,52 +1657,6 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
-  - pool_id: gecko-t/win10-64-2004-gpu-nv16asv4
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows10-64-2004-alpha
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [north-central-us, south-central-us]
-      maxCapacity: 25
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win10-64-2004-gpu-nv16asv4
-            provisionerId: gecko-t
-            idleTimeoutSecs: 1800
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_NV16as_v4
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 30
-                  managedDisk:
-                    storageAccountType: Standard_LRS
-                  createOption: Empty
-            hardwareProfile:
-              vmSize: Standard_NV16as_v4
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
   - pool_id: gecko-t/win10-64-2004-gpu-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2132,7 +2042,536 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
+      capacityPerInstance: 1 
+# Windows 11
+  - pool_id: gecko-t/win11-64-2009
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows11-64-2009-prod
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
+      maxCapacity: 600
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-2009
+            provisionerId: gecko-t
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F8s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F8s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
       capacityPerInstance: 1
+  - pool_id: gecko-t/win11-64-2009-alpha
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows11-64-2009-alpha
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [central-us, north-central-us, south-central-us, north-europe]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-2009-alpha
+            provisionerId: gecko-t
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F8s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F8s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-t/win11-64-2009-beta
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows11-64-2009-beta
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [central-us, north-central-us, south-central-us, north-europe]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-2009-beta
+            provisionerId: gecko-t
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F8s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F8s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-t/win11-64-2009-gpu
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows11-64-2009-gpu
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [north-central-us, south-central-us, east-us, north-europe, west-europe]
+      maxCapacity: 600
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-2009-gpu
+            provisionerId: gecko-t
+            idleTimeoutSecs: 1800
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_NV6
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_NV6
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-t/win11-64-2009-gpu-alpha
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows11-64-2009-alpha
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [north-central-us, south-central-us, north-europe]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-2009-gpu-alpha
+            provisionerId: gecko-t
+            idleTimeoutSecs: 1800
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_NV6
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_NV6
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+  - pool_id: gecko-t/win11-64-2009-gpu-beta
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows11-64-2009-beta
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [north-central-us, south-central-us, north-europe]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-2009-gpu-beta
+            provisionerId: gecko-t
+            idleTimeoutSecs: 1800
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_NV6
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_NV6
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+  - pool_id: gecko-t/win11-64-2009-perf
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows11-64-2009-prod
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [north-central-us, south-central-us, east-us, north-europe, west-europe]
+      maxCapacity: 600
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-2009-perf
+            provisionerId: gecko-t
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_NV12
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_NV6
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1 
+  - pool_id: gecko-t/win11-64-2009-source
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows11-64-2009-prod
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
+      maxCapacity: 100
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-2009-source
+            provisionerId: gecko-t
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F8s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Standard_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F8s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-t/win11-64-2009-ssd
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows11-64-2009-prod
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
+      maxCapacity: 100
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-2009-ssd
+            provisionerId: gecko-t
+            idleTimeoutSecs: 1800
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F8s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                diskSizeGB: 500
+                osType: Windows
+                managedDisk:
+                  storageAccountType: Premium_LRS
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F8s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-t/win11-64-2009-ssd-datatest
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      old-style-worker-config: true
+      image: ronin-t-windows11-64-2009-datadisk-test
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
+      maxCapacity: 100
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-2009-ssd-datatest
+            provisionerId: gecko-t
+            idleTimeoutSecs: 1800
+      tags:
+        workerType: gecko-t-win11-64-2009-ssd-datatest
+        deploymentId: f160361
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceRevision: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F8s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                diskSizeGB: 500
+                osType: Windows
+                managedDisk:
+                  storageAccountType: Premium_LRS
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 100
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F8s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-t/win11-64-2009-ssd-gpu
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-t-windows11-64-2009-prod
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [south-central-us, east-us, north-europe, west-europe]
+      maxCapacity: 100
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-2009-ssd-gpu
+            provisionerId: gecko-t
+            idleTimeoutSecs: 1800
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_NV12s_v3
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                diskSizeGB: 500
+                osType: Windows
+                managedDisk:
+                  storageAccountType: Premium_LRS
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 30
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_NV12s_v3
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1 
+# Windows 7
   - pool_id: gecko-t/t-win7-32
     description: ''
     owner: release+tc-workers@mozilla.com
