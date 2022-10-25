@@ -319,11 +319,6 @@ ronin-b-windows2012-alpha:
     deployment_id: alpha
     central-us: win2012-r2-64-centralus-2012-R2-Datacenter
     north-central-us: win2012-r2-64-northcentralus-2012-R2-Datacenter
-ronin-b-windows2012-compare:
-  azure2:
-    deployment_id: alpha
-    central-us: win2012-r2-64-compare-centralus-2012-R2-Datacenter
-    north-central-us: win2012-r2-64-compare-northcentralus-2012-R2-Datacenter
 occ-mpd-b-win2012-trusted-v20200226:
   aws:
     eu-central-1: ami-09a5852e0cc1edb81

@@ -1177,7 +1177,7 @@ pools:
         - us-east-1
         - us-west-1
         - us-west-2
-# Windows Server 2012
+  # Windows Server 2012
   - pool_id: gecko-1/b-win2012
     description: ''
     owner: release+tc-workers@mozilla.com
@@ -1410,59 +1410,7 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
-  - pool_id: gecko-1/win2012-compare
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-b-windows2012-compare
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-1
-      locations: [central-us, north-central-us]
-      maxCapacity: 25
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win2012-azure
-            provisionerId: gecko-b
-            idleTimeoutSecs: 5400
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: win_2012
-        sourceRepository: ronin_puppet
-        sourceOrganisation: markcor
-      spot: true
-      vmSizes:
-        - vmSize: Standard_F32s_v2
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 120
-                  managedDisk:
-                    storageAccountType: Premium_LRS
-                  createOption: Empty
-                - lun: 1
-                  diskSizeGB: 120
-                  managedDisk:
-                    storageAccountType: Premium_LRS
-                  createOption: Empty
-            hardwareProfile:
-              vmSize: Standard_F32s_v2
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-# Windows Server 2022
+  # Windows Server 2022
   - pool_id: gecko-1/win2022-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -1567,7 +1515,7 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
-# Windows 10
+  # Windows 10
   - pool_id: gecko-t/win10-64-2004-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2094,8 +2042,8 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1 
-# Windows 11
+      capacityPerInstance: 1
+  # Windows 11
   - pool_id: gecko-t/win11-64-2009
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2154,7 +2102,7 @@ pools:
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
       locations: [central-us, north-central-us, south-central-us, north-europe]
-      maxCapacity: 25
+      maxCapacity: 100
       worker-config:
         genericWorker:
           config:
@@ -2201,7 +2149,7 @@ pools:
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
       locations: [central-us, north-central-us, south-central-us, north-europe]
-      maxCapacity: 25
+      maxCapacity: 100
       worker-config:
         genericWorker:
           config:
@@ -2295,7 +2243,7 @@ pools:
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
       locations: [north-central-us, south-central-us, north-europe]
-      maxCapacity: 25
+      maxCapacity: 100
       worker-config:
         genericWorker:
           config:
@@ -2341,7 +2289,7 @@ pools:
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
       locations: [north-central-us, south-central-us, north-europe]
-      maxCapacity: 25
+      maxCapacity: 100
       worker-config:
         genericWorker:
           config:
@@ -2422,7 +2370,7 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1 
+      capacityPerInstance: 1
   - pool_id: gecko-t/win11-64-2009-source
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2622,8 +2570,8 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1 
-# Windows 7
+      capacityPerInstance: 1
+  # Windows 7
   - pool_id: gecko-t/t-win7-32
     description: ''
     owner: release+tc-workers@mozilla.com
