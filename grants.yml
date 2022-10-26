@@ -2966,6 +2966,7 @@
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mhentges
 
+# All kinds of scopes for migrations, releaseduty and more.
 - grant:
     - generic-worker:allow-rdp:gecko-t/*
     - worker-manager:manage-worker-pool:gecko-1/*
