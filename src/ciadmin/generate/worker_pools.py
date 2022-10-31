@@ -417,7 +417,13 @@ def generate_pool_variants(worker_pools, environment):
 
     def update_config(config, name, attributes):
         config = copy.deepcopy(config)
-        for key in ["image", "maxCapacity", "minCapacity", "security"]:
+        for key in [
+            "image",
+            "maxCapacity",
+            "minCapacity",
+            "security",
+            "instance_types",
+        ]:
             if key in config:
                 value = evaluate_keyed_by(config[key], name, attributes)
                 if value is not None:

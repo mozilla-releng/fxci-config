@@ -889,6 +889,140 @@ pools:
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
           worker-config:
             capacityManagement: {diskspaceThreshold: 30000000000}
+  - pool_id: '{pool-group}/images-gcp'
+    description: 'Builds docker images; NOTE: capacity set to 1 instead of 3
+      to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+    owner: release+tc-workers@mozilla.com
+    email_on_error: false
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-2
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+      - pool-group: comm-1
+      - pool-group: comm-2
+      - pool-group: comm-3
+        chain-of-trust: trusted
+      - pool-group: adhoc-1
+      - pool-group: adhoc-3
+        chain-of-trust: trusted
+      - pool-group: app-services-1
+      - pool-group: app-services-3
+        chain-of-trust: trusted
+      - pool-group: kaios-1
+      - pool-group: kaios-2
+      - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-3
+        chain-of-trust: trusted
+      - pool-group: mobile-1
+      - pool-group: mobile-3
+        chain-of-trust: trusted
+      - pool-group: glean-1
+      - pool-group: glean-3
+        chain-of-trust: trusted
+      - pool-group: l10n-1
+      - pool-group: l10n-3
+        chain-of-trust: trusted
+      - pool-group: xpi-1
+      - pool-group: xpi-3
+        chain-of-trust: trusted
+      - pool-group: taskgraph-1
+      - pool-group: taskgraph-3
+        chain-of-trust: trusted
+      - pool-group: ci-1
+      - pool-group: ci-3
+        chain-of-trust: trusted
+      - pool-group: scriptworker-1
+      - pool-group: scriptworker-3
+        chain-of-trust: trusted
+    config:
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-current
+      security:
+        by-chain-of-trust:
+          trusted: trusted
+          default:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          (comm|gecko)-.*: 30
+          default: 10
+      worker-config: {dindImage: taskcluster/dind-service:v4.1}
+      regions: [us-central1, us-west1]
+      instance_types:
+        by-pool-group:
+          mobile-.*:
+            - minCpuPlatform: Intel Cascadelake
+              workerConfig:
+                task:
+                  reclaimDivisor: 2
+              disks:
+                - autoDelete: true
+                  boot: true
+                  initializeParams:
+                    diskSizeGb: 75
+                    sourceImage: <image>
+                  type: PERSISTENT
+                - autoDelete: true
+                  initializeParams:
+                    diskType: diskTypes/local-ssd
+                  type: SCRATCH
+                  interface: NVME
+              machine_type: n2-standard-32
+              capacityPerInstance: 1
+              networkInterfaces:
+                - accessConfigs:
+                    - type: ONE_TO_ONE_NAT
+          (l10n|taskgraph|ci)-.*:
+            - minCpuPlatform: Intel Cascadelake
+              workerConfig:
+                task:
+                  reclaimDivisor: 2
+              disks:
+                - autoDelete: true
+                  boot: true
+                  initializeParams:
+                    diskSizeGb: 75
+                    sourceImage: <image>
+                  type: PERSISTENT
+                - autoDelete: true
+                  initializeParams:
+                    diskType: diskTypes/local-ssd
+                  type: SCRATCH
+                  interface: NVME
+              machine_type: n2-standard-2
+              capacityPerInstance: 1
+              networkInterfaces:
+                - accessConfigs:
+                    - type: ONE_TO_ONE_NAT
+          default:
+            - minCpuPlatform: Intel Cascadelake
+              workerConfig:
+                task:
+                  reclaimDivisor: 2
+              disks:
+                - autoDelete: true
+                  boot: true
+                  initializeParams:
+                    diskSizeGb: 75
+                    sourceImage: <image>
+                  type: PERSISTENT
+                - autoDelete: true
+                  initializeParams:
+                    diskType: diskTypes/local-ssd
+                  type: SCRATCH
+                  interface: NVME
+              machine_type: n2-standard-4
+              capacityPerInstance: 1
+              networkInterfaces:
+                - accessConfigs:
+                    - type: ONE_TO_ONE_NAT
   - pool_id: gecko-3/b-linux-aws
     description: Worker for Firefox automation
     owner: release+tc-workers@mozilla.com
