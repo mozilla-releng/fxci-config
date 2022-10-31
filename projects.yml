@@ -208,6 +208,9 @@ comm-beta:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron:
+    targets:
+      - l10n-bumper
 mozilla-central:
   repo: https://hg.mozilla.org/mozilla-central
   repo_type: hg
@@ -249,7 +252,9 @@ comm-central:
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
-    targets: [nightly-desktop]
+    targets:
+      - nightly-desktop
+      - l10n-cross-channel
 cedar:
   repo: https://hg.mozilla.org/projects/cedar
   repo_type: hg
