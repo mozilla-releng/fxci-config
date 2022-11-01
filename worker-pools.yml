@@ -2377,7 +2377,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
-      image: ronin-t-windows11-64-2009-gpu
+      image: ronin-t-windows11-64-2009-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
@@ -2661,7 +2661,7 @@ pools:
     provider_id: azure2
     config:
       old-style-worker-config: true
-      image: ronin-t-windows11-64-2009-datadisk-test
+      image: ronin-t-windows11-64-2009-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t

@@ -464,40 +464,6 @@ ronin-t-windows11-64-2009-prod:
     west-europe: win11-64-2009-westeurope-win11-21h2-avd
     west-us: win11-64-2009-westus-win11-21h2-avd
     west-us-2: win11-64-2009-westus2-win11-21h2-avd
-ronin-t-windows11-64-2009-gpu:
-  azure2:
-    deployment_id: 32380c6
-    east-us: gecko-t-win11-64-2009-gpu-eastus-21h2-avd-32380c6
-    north-central-us: gecko-t-win11-64-2009-gpu-northcentralus-21h2-avd-32380c6
-    south-central-us: gecko-t-win11-64-2009-gpu-southcentralus-21h2-avd-32380c6
-    north-europe: gecko-t-win11-64-2009-gpu-northeurope-21h2-avd-32380c6
-    west-europe: gecko-t-win11-64-2009-gpu-westeurope-21h2-avd-32380c6
-ronin-t-windows11-64-2009-gpu-alpha:
-  azure2:
-    deployment_id: 32380c6
-    east-us: gecko-t-win11-64-2009-gpu-eastus-21h2-avd-32380c6
-    north-central-us: gecko-t-win11-64-2009-gpu-northcentralus-21h2-avd-32380c6
-    south-central-us: gecko-t-win11-64-2009-gpu-southcentralus-21h2-avd-32380c6
-    north-europe: gecko-t-win11-64-2009-gpu-northeurope-21h2-avd-32380c6
-    west-europe: gecko-t-win11-64-2009-gpu-westeurope-21h2-avd-32380c6
-ronin-t-windows11-64-2009-gpu-beta:
-  azure2:
-    deployment_id: 32380c6
-    east-us: gecko-t-win11-64-2009-gpu-eastus-21h2-avd-32380c6
-    north-central-us: gecko-t-win11-64-2009-gpu-northcentralus-21h2-avd-32380c6
-    south-central-us: gecko-t-win11-64-2009-gpu-southcentralus-21h2-avd-32380c6
-    north-europe: gecko-t-win11-64-2009-gpu-northeurope-21h2-avd-32380c6
-    west-europe: gecko-t-win11-64-2009-gpu-westeurope-21h2-avd-32380c6
-ronin-t-windows11-64-2009-datadisk-test:
-  azure2:
-    deployment_id: 32380c6
-    central-us: gecko-t-win11-64-2009-centralus-21h2-avd-32380c6
-    east-us: gecko-t-win11-64-2009-eastus-21h2-avd-32380c6
-    east-us-2: gecko-t-win11-64-2009-eastus2-21h2-avd-32380c6
-    north-central-us: gecko-t-win11-64-2009-northcentralus-21h2-avd-32380c6
-    south-central-us: gecko-t-win11-64-2009-southcentralus-21h2-avd-32380c6
-    west-us: gecko-t-win11-64-2009-westus-21h2-avd-32380c6
-    west-us-2: gecko-t-win11-64-2009-westus2-21h2-avd-32380c6
 # Etc
 relops-image-builder-pre:
   aws:
