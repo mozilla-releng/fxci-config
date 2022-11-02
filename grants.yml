@@ -2139,6 +2139,7 @@
     - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-release/ship-geckoview
 
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-android/nightly
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
 
