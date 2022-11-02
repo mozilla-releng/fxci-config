@@ -323,6 +323,9 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
+      - pool-group: app-services-1
+      - pool-group: app-services-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -333,6 +336,8 @@ pools:
         by-pool-group:
           gecko-.*: 1000
           comm-.*: 300
+          app-services-1: 50
+          app-services-3: 100
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
