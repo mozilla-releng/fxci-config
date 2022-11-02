@@ -2145,13 +2145,22 @@
         - perf_sheriff
 
 - grant:
-    # Allow triggering nightlies and geckoview
+    # Allow triggering geckoview, bumps, nightlies and l10n tasks
     - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
     - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
     - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-release/ship-geckoview
 
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/nightly
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
+
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/bump-android-comp
+
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/l10-screenshots
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-ios/l10-screenshots
+
+    - queue:rerun-task:mobile-level-*
   to:
     - groups:
         - sheriff
@@ -2477,20 +2486,6 @@
   to:
     - groups:
         - cloudops
-
-
-- grant:
-    # Grant mobile the ability to manually start release automation
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/nightly
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/bump-android-comp
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/l10-screenshots
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-ios/l10-screenshots
-    - queue:rerun-task:mobile-level-*
-  to:
-    - groups:
-        - mobile_releases
-        - mobile_eng_ops
 
 - grant:
     # Grant security team access to secrets and artifacts for civet
