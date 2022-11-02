@@ -1406,18 +1406,6 @@
   to:
     - project:
         alias: staging-android-components
-- grant:
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-releng-staging-android-components/nightly
-  to:
-    - project:
-        alias: staging-android-components
-        job: [branch:main]
-- grant:
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/nightly
-  to:
-    - project:
-        alias: android-components
-        job: [branch:main]
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}
@@ -2150,7 +2138,6 @@
     - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
     - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-release/ship-geckoview
 
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-android-components/nightly
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
