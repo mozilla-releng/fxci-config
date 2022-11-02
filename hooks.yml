@@ -231,69 +231,6 @@ project-releng/cron-task-mozilla-mobile-android-components/api-docs-update:
     properties: {}
     additionalProperties: false
 
-# was project-mobile/android-components-geckoview-update-beta
-project-releng/cron-task-mozilla-mobile-android-components/gv-update-beta:
-  name: Android Components - GeckoView Update (Beta)
-  description: >-
-    Updating GeckoView Beta dependency.
-
-    Managed from ci-configuration's hooks.yml for now.
-  owner: skaspari@mozilla.com
-  email_on_error: true
-  schedule:
-    - 0 0 15 * * *
-  scopes:
-    - queue:scheduler-id:mobile-level-3
-    - queue:create-task:lowest:mobile-3/b-linux
-    - secrets:get:project/mobile/github
-  template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-beta.yml
-  trigger_schema:
-    type: object
-    properties: {}
-    additionalProperties: false
-
-# was project-mobile/android-components-geckoview-update-nightly
-project-releng/cron-task-mozilla-mobile-android-components/gv-update-nightly:
-  name: Android Components - GeckoView Update (Nightly)
-  description: >-
-    Updating GeckoView Nightly dependency.
-
-    Managed from ci-configuration's hooks.yml for now.
-  owner: skaspari@mozilla.com
-  email_on_error: true
-  schedule:
-    - 0 0 14 * * *
-  scopes:
-    - queue:scheduler-id:mobile-level-3
-    - queue:create-task:lowest:mobile-3/b-linux
-    - secrets:get:project/mobile/github
-  template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-nightly.yml
-  trigger_schema:
-    type: object
-    properties: {}
-    additionalProperties: false
-
-# was project-mobile/android-components-geckoview-update-release
-project-releng/cron-task-mozilla-mobile-android-components/gv-update-release:
-  name: Android Components - GeckoView Update (Release)
-  description: >-
-    Updating GeckoView Release dependency.
-
-    Managed from ci-configuration's hooks.yml for now.
-  owner: skaspari@mozilla.com
-  email_on_error: true
-  schedule:
-    - 0 0 16 * * *
-  scopes:
-    - queue:scheduler-id:mobile-level-3
-    - queue:create-task:lowest:mobile-3/b-linux
-    - secrets:get:project/mobile/github
-  template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/geckoview-update-release.yml
-  trigger_schema:
-    type: object
-    properties: {}
-    additionalProperties: false
-
 # was project-mobile/android-components-publicsuffixlist-update
 project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update:
   name: Android Components - Public Suffix List Update
