@@ -852,6 +852,7 @@ pools:
         chain-of-trust: trusted
       - pool-group: ci-1
       - pool-group: ci-3
+        chain-of-trust: trusted
     config:
       regions: [us-central1, us-west1]
       image:
