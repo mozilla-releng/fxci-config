@@ -850,6 +850,8 @@ pools:
       - pool-group: app-services-1
       - pool-group: app-services-3
         chain-of-trust: trusted
+      - pool-group: ci-1
+      - pool-group: ci-3
     config:
       regions: [us-central1, us-west1]
       image:
@@ -4460,6 +4462,42 @@ pools:
       maxCapacity: 10
       instance_types:
         - instanceType: m5d.large
+  - pool_id: 'ci-t/linux-gcp'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          workerConfig:
+            task:
+              reclaimDivisor: 2
+          disks:
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 75
+                sourceImage: <image>
+              type: PERSISTENT
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+          machine_type: n2-standard-4
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: scriptworker-1/images
     description: 'Builds docker images for scriptworkers; NOTE: capacity set to 1
       instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
