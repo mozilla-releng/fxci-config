@@ -2567,6 +2567,9 @@
 - grant:
     - secrets:set:project/relman/coverity
     - secrets:set:project/relman/coverity-nss
+    - secrets:get:project/relman/code-review/*
+    - secrets:set:project/relman/code-review/*
+    - queue:create-task:lowest:code-review/bot
   to:
     - group:
         - code-review-developers
@@ -2616,14 +2619,6 @@
   to:
     - roles:
         - project:relman:code-review/runtime/production
-
-- grant:
-    - secrets:get:project/relman/code-review/*
-    - secrets:set:project/relman/code-review/*
-    - queue:create-task:lowest:code-review/bot
-  to:
-    - group:
-        - code-review-developers
 
 - grant:
     # Grant taskcluster team permission to reset access tokens for nss workers
