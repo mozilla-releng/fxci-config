@@ -463,6 +463,9 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
+      - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -473,6 +476,7 @@ pools:
         by-pool-group:
           gecko-.*: 1000
           comm-.*: 20
+          default: 10
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
