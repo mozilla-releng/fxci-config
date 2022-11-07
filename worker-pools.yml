@@ -2182,7 +2182,7 @@ pools:
                     storageAccountType: Standard_LRS
                   createOption: Empty
             hardwareProfile:
-              vmSize: Standard_NV6
+              vmSize: Standard_NV12
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2571,7 +2571,7 @@ pools:
                     storageAccountType: Standard_LRS
                   createOption: Empty
             hardwareProfile:
-              vmSize: Standard_NV6
+              vmSize: Standard_NV12s_v3
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2601,7 +2601,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_NV6
+        - vmSize: Standard_NV12s_v3
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2710,7 +2710,7 @@ pools:
                     storageAccountType: Standard_LRS
                   createOption: Empty
             hardwareProfile:
-              vmSize: Standard_NV6
+              vmSize: Standard_NV12
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
