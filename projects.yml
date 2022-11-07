@@ -498,7 +498,7 @@ firefox-android:
     github-publication: true
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     mobile-roles: true
     mobile-firebase-testing: true
     mobile-public-code-coverage: true
