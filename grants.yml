@@ -839,15 +839,6 @@
         job: [pull-request:*]
         feature: treeherder-reporting
 
-
-- grant:
-    - queue:create-task:{priority}:hg-t/*
-    - queue:route:notify.irc-channel.*
-    - queue:route:tc-treeherder.v2.version-control-tools.*
-  to:
-    - project:
-        alias: version-control-tools
-
 - grant:
     - queue:create-task:low:aws-provisioner-v1/gecko-{level}-decision
     - queue:create-task:low:aws-provisioner-v1/gecko-misc

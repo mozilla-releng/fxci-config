@@ -477,13 +477,6 @@ taskgraph:
     trust-domain-scopes: true
     treeherder-reporting: true
 
-version-control-tools:
-  repo: https://hg.mozilla.org/hgcustom/version-control-tools
-  repo_type: hg
-  access: scm_versioncontrol
-  features:
-    hg-push: true
-
 # mobile Github repositories
 firefox-android:
   repo: https://github.com/mozilla-mobile/firefox-android

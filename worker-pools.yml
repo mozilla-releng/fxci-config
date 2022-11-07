@@ -3902,22 +3902,6 @@ pools:
         - us-east-1
         - us-west-1
         - us-west-2
-  - pool_id: hg-t/linux
-    description: Testing for https://hg.mozilla.org/hgcustom/version-control-tools
-    owner: release+tc-workers@mozilla.com
-    email_on_error: false
-    provider_id: aws
-    config:
-      image: docker-worker-hvm-builder-current
-      minCapacity: 0
-      maxCapacity: 10
-      worker-config: {dindImage: taskcluster/dind-service:v4.0}
-      instance_types:
-        - instanceType: c5d.2xlarge
-      regions:
-        - us-east-1
-        - us-west-1
-        - us-west-2
   - pool_id: l10n-1/linux
     description: General-purpose worker for l10n automation
     owner: release+tc-workers@mozilla.com
