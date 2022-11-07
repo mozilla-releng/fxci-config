@@ -1434,7 +1434,10 @@
   to:
     - project:
         feature: mobile-firebase-testing
-        job: [action:*, branch:*]
+        job:
+          - action:*
+          - branch:*
+          - pull-request:trusted
     - project:
         # Fenix PRs are restricted to collaborators, so exposing firebase is safe-enough for PRs.
         # Fenix also has some Firebase tests on nightly.
@@ -1444,16 +1447,11 @@
           - cron:nightly-on-google-play
           - cron:screenshots
           - cron:legacy-api-ui-tests
-          - pull-request:trusted
     - project:
         # Focus PRs are restricted to collaborators, so exposing firebase is safe-enough for PRs.
         # Focus also has some Firebase tests on nightly.
         alias: focus-android
-        job: [cron:nightly, pull-request:trusted]
-    - project:
-        # TODO - remove once focus/taskcluster work is complete
-        alias: staging-focus-android
-        job: [pull-request:trusted]
+        job: [cron:nightly]
 
 - grant:
     - secrets:get:project/mobile/github
