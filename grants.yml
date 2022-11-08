@@ -9,7 +9,7 @@
 #   - <grantee>
 #   - ..
 #
-# The `grant` property specifies the scopes to be granted.  Each will have {..}
+# The `grant` property specifies the scopes to be granted. Each will have {..}
 # parameters expanded with parameters from the grantees selected.
 #
 # ## Projects

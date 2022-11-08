@@ -13,6 +13,7 @@
 # make to the generated resources.  Such modifications are defined in ci-admin,
 # and exist to help configure minor differences between environments, such as
 # to prevent a staging environment from carrying a full production workload.
+
 firefoxci:
   root_url: https://firefox-ci-tc.services.mozilla.com
   # no modifications in production, please!
