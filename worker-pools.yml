@@ -602,82 +602,16 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: gecko-1/masterwayz-b-linux-gcp
-    description: GCP Linux testing pool for Firefox CI Automation testing
-    owner: mgoossens+fxci@mozilla.com
+  - pool_id: gecko-1/masterwayz-bug1799740
+    description: GCP Linux image testing pool for Firefox CI Automation
+    owner: fxci-gcp-testers@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
       maxCapacity: 20
       regions: [us-central1]
-      image: monopacker-docker-worker-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
-          disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 20
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-          machine_type: n2-custom-16-73728
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
-  - pool_id: gecko-1/masterwayz-bug1764751
-    description: GCP Linux image testing pool for Firefox CI Automation
-    owner: fxci-gcp-testers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-test-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 20
-      regions: [us-central1]
-      image: monopacker-docker-worker-testing-bug1764751
+      image: monopacker-docker-worker-testing-bug1799740
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           metadata:

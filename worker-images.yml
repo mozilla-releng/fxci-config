@@ -44,6 +44,8 @@ monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-g
 
 monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-bug1772714-20220603
 
+monopacker-docker-worker-testing-bug1799740: monopacker-docker-worker-2022-11-08t21-41-15z-bug1799740
+
 occ-b-win2012-current: occ-b-win2012-f0280d3
 occ-b-win2012-beta: occ-b-win2012-beta-4384030
 occ-b-win2012-trusted-current: occ-b-win2012-trusted-f3c189d
@@ -245,6 +247,9 @@ monopacker-docker-worker-2020-08-05t22-29-20z-bug1676214:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/fxci-level1-gcp-4p0xjekhzgqrab6wepis
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/fxci-level3-gcp-fx0p5dw5rxruubg6rbp6
   fxci-levelt-gcp: projects/taskcluster-imaging/global/images/fxci-level1-gcp-4p0xjekhzgqrab6wepis
+monopacker-docker-worker-2022-11-08t21-41-15z-bug1799740:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2022-11-08t21-41-15z
+  fxci-levelt-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2022-11-08t21-41-15z
 monopacker-docker-worker-trusted-2020-08-05t22-01-11z:
   aws:
     us-east-1: ami-0b7779127f469c41b
@@ -259,8 +264,6 @@ monopacker-docker-worker-trusted-2020-08-05t22-01-11z-bug1676214:
     us-west-1: ami-08d909aa4d6a62ca3
     us-west-2: ami-008fbf458e350fc3d
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/fxci-level3-gcp-fx0p5dw5rxruubg6rbp6
-monopacker-docker-worker-testing-bug1764751:
-  fxci-test-gcp: projects/taskcluster-imaging/global/images/ubuntu-1404
 monopacker-docker-worker-gcp-bug1772714-20220603:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u1404-2022-06-03
 
