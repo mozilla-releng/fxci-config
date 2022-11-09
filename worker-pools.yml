@@ -1532,6 +1532,7 @@ pools:
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
               - DeviceName: /dev/sdc
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+  # Delete after Azure migration
   - pool_id: gecko-1/win2012-azure
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -1584,6 +1585,7 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
+  # Delete after Azure migration
   - pool_id: gecko-1/win2012-azure-f32
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -1636,6 +1638,7 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
+  # Delete after Azure migration
   - pool_id: gecko-1/win2012-compare
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -1653,6 +1656,406 @@ pools:
           config:
             workerType: win2012-azure
             provisionerId: gecko-b
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: win_2012
+        sourceRepository: ronin_puppet
+        sourceOrganisation: markcor
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+                - lun: 1
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-1/b-win2012-azure-alpha
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-b1-windows2012-alpha
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-1
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: win_2012
+        sourceRepository: ronin_puppet
+        sourceOrganisation: markcor
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+                - lun: 1
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-1/b-win2012-azure-beta
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-b1-windows2012-beta
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-1
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: win_2012
+        sourceRepository: ronin_puppet
+        sourceOrganisation: markcor
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+                - lun: 1
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-1/b-win2012-azure
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-b1-windows2012-prod
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-1
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: win_2012
+        sourceRepository: ronin_puppet
+        sourceOrganisation: markcor
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+                - lun: 1
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-2/b-win2012-azure
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-b1-windows2012-prod
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-2
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: win_2012
+        sourceRepository: ronin_puppet
+        sourceOrganisation: markcor
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+                - lun: 1
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: comm-1/b-win2012-azure
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-b1-windows2012-prod
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: comm-1
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: win_2012
+        sourceRepository: ronin_puppet
+        sourceOrganisation: markcor
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+                - lun: 1
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: comm-2/b-win2012-azure
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-b1-windows2012-prod
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: comm-2
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: win_2012
+        sourceRepository: ronin_puppet
+        sourceOrganisation: markcor
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+                - lun: 1
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: mozillavpn-1/b-win2012-azure
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-b1-windows2012-prod
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: vpn-1
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 5400
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: win_2012
+        sourceRepository: ronin_puppet
+        sourceOrganisation: markcor
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+                - lun: 1
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: nss-1/b-win2012-azure
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-b1-windows2012-prod
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: nss-1
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
             idleTimeoutSecs: 5400
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
