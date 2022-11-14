@@ -1567,6 +1567,59 @@ pools:
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
               - DeviceName: /dev/sdc
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+  - pool_id: '{pool-group}/misc-gcp'
+    description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
+      SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
+      (total 80GB, 9GB per task).
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: gecko-t
+      - pool-group: comm-t
+      - pool-group: kaios-t
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 32
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          workerConfig:
+            task:
+              reclaimDivisor: 2
+          disks:
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 20
+                sourceImage: <image>
+              type: PERSISTENT
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+          machine_type: n2-standard-4
+          capacityPerInstance: 8
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: gecko-1/b-win2012-beta
     description: experimental gecko builder
     owner: relops-aws-provisioning@mozilla.com
