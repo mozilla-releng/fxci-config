@@ -1398,6 +1398,20 @@
     - project:
         alias: staging-android-components
 
+# The trigger-nightly task in firefox-android triggers nightly cron (bug 1791748)
+- grant:
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-releng-staging-firefox-android/nightly
+  to:
+    - project:
+        alias: staging-firefox-android
+        job: [branch:main]
+- grant:
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-android/nightly
+  to:
+    - project:
+        alias: firefox-android
+        job: [branch:main]
+
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}
   to:
