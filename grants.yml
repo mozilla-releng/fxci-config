@@ -1495,7 +1495,7 @@
     - queue:route:notify.email.geckoview-core@mozilla.com.on-failed
   to:
     - project:
-        alias: android-components
+        alias: firefox-android
         # Used in order to warn the AC team whenever a GV update cannot be merged
         job: [pull-request:*]
 
