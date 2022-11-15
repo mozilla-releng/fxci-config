@@ -330,6 +330,13 @@ def get_google_provider_config(
                 launch_config = copy.deepcopy(instance_type)
                 launch_config.setdefault("capacityPerInstance", 1)
                 launch_config.update({"region": region, "zone": zone})
+
+                # When using anchors and aliases, PyYaml re-uses the same
+                # object in memory. Make a copy to avoid modifying the same
+                # object multiple times.
+                launch_config["disks"] = [
+                    copy.deepcopy(d) for d in launch_config["disks"]
+                ]
                 for disk in launch_config["disks"]:
                     if disk["initializeParams"].get("sourceImage") == "<image>":
                         disk["initializeParams"]["sourceImage"] = image_name

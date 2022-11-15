@@ -354,32 +354,22 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
+            - &persistent-disk-20
+              autoDelete: true
               boot: true
               initializeParams:
                 diskSizeGb: 20
                 sourceImage: <image>
               type: PERSISTENT
-            - autoDelete: true
+            - &scratch-disk
+              autoDelete: true
               initializeParams:
                 diskType: diskTypes/local-ssd
               type: SCRATCH
               interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
           machine_type: n2-custom-16-73728
           networkInterfaces:
             - accessConfigs:
@@ -435,17 +425,8 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 20
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-20
+            - *scratch-disk
           machine_type: n2-standard-4
           networkInterfaces:
             - accessConfigs:
@@ -488,32 +469,11 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 20
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-20
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
           machine_type: n2-custom-32-73728
           networkInterfaces:
             - accessConfigs:
@@ -548,32 +508,11 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 20
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-20
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
           machine_type: n2-standard-8
           networkInterfaces:
             - accessConfigs:
@@ -617,52 +556,15 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 20
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-20
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
           machine_type: n2-custom-64-102400
           networkInterfaces:
             - accessConfigs:
@@ -689,52 +591,21 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
+            - &persistent-disk-75
+              autoDelete: true
               boot: true
               initializeParams:
                 diskSizeGb: 75
                 sourceImage: <image>
               type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
           machine_type: n2-custom-16-73728
           networkInterfaces:
             - accessConfigs:
@@ -962,17 +833,8 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-75
+            - *scratch-disk
           machine_type: n2-standard-4
           capacityPerInstance: 2
           networkInterfaces:
@@ -1040,17 +902,8 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-75
+            - *scratch-disk
           machine_type: n2-standard-2
           capacityPerInstance: 2
           networkInterfaces:
@@ -1186,17 +1039,8 @@ pools:
                 task:
                   reclaimDivisor: 2
               disks:
-                - autoDelete: true
-                  boot: true
-                  initializeParams:
-                    diskSizeGb: 75
-                    sourceImage: <image>
-                  type: PERSISTENT
-                - autoDelete: true
-                  initializeParams:
-                    diskType: diskTypes/local-ssd
-                  type: SCRATCH
-                  interface: NVME
+                - *persistent-disk-75
+                - *scratch-disk
               machine_type: n2-standard-32
               capacityPerInstance: 1
               networkInterfaces:
@@ -1208,17 +1052,8 @@ pools:
                 task:
                   reclaimDivisor: 2
               disks:
-                - autoDelete: true
-                  boot: true
-                  initializeParams:
-                    diskSizeGb: 75
-                    sourceImage: <image>
-                  type: PERSISTENT
-                - autoDelete: true
-                  initializeParams:
-                    diskType: diskTypes/local-ssd
-                  type: SCRATCH
-                  interface: NVME
+                - *persistent-disk-75
+                - *scratch-disk
               machine_type: n2-standard-2
               capacityPerInstance: 1
               networkInterfaces:
@@ -1230,17 +1065,8 @@ pools:
                 task:
                   reclaimDivisor: 2
               disks:
-                - autoDelete: true
-                  boot: true
-                  initializeParams:
-                    diskSizeGb: 75
-                    sourceImage: <image>
-                  type: PERSISTENT
-                - autoDelete: true
-                  initializeParams:
-                    diskType: diskTypes/local-ssd
-                  type: SCRATCH
-                  interface: NVME
+                - *persistent-disk-75
+                - *scratch-disk
               machine_type: n2-standard-4
               capacityPerInstance: 1
               networkInterfaces:
@@ -1444,17 +1270,8 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-75
+            - *scratch-disk
           machine_type: n2-standard-4
           networkInterfaces:
             - accessConfigs:
@@ -1481,22 +1298,9 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-75
+            - *scratch-disk
+            - *scratch-disk
           machine_type: n2-standard-16
           advancedMachineFeatures:
             enableNestedVirtualization: true
@@ -3832,17 +3636,8 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-75
+            - *scratch-disk
           machine_type: n2-standard-2
           networkInterfaces:
             - accessConfigs:
@@ -5191,22 +4986,9 @@ pools:
             task:
               reclaimDivisor: 2
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-75
+            - *scratch-disk
+            - *scratch-disk
           machine_type: n2-standard-4
           networkInterfaces:
             - accessConfigs:
