@@ -1781,6 +1781,7 @@
     - project:mozillavpn:releng:beetmover:action:push-to-releases
     - project:mozillavpn:releng:beetmover:action:direct-push-to-bucket
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
+    - queue:route:notify.slack-channel.C01DCUKG95E.*  # mozilla-vpn-release
   to:
     - project:
         alias:
@@ -1875,9 +1876,6 @@
     - project:mozillavpn:releng:signing:format:*
     - project:releng:services/tooltool/api/download/public
     - project:releng:services/tooltool/api/download/internal
-    # TODO (ahal): Temporary scope for testing out release-notify tasks in
-    # #releng-notifications
-    - queue:route:notify.slack-channel.CN77C0BUG.*
   to:
     - project:
         alias:
