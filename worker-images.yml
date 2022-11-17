@@ -486,14 +486,14 @@ ronin-t-windows10-64-2004-gpu-datadisk-test:
 ronin-t-windows11-64-2009-alpha:
   azure2:
     deployment_id: alpha
-    central-us: win11-64-2009-centralus-win11-21h2-avd
-    east-us: win11-64-2009-eastus-win11-21h2-avd
-    east-us-2: win11-64-2009-eastus2-win11-21h2-avd
-    north-central-us: win11-64-2009-northcentralus-win11-21h2-avd
-    north-europe: win11-64-2009-northeurope-win11-21h2-avd
-    south-central-us: win11-64-2009-southcentralus-win11-21h2-avd
-    west-us: win11-64-2009-westus-win11-21h2-avd
-    west-us-2: win11-64-2009-westus-win11-21h2-avd
+    central-us: win11-64-2009-centralus-win11-22h2-avd
+    east-us: win11-64-2009-eastus-win11-22h2-avd
+    east-us-2: win11-64-2009-eastus2-win11-22h2-avd
+    north-central-us: win11-64-2009-northcentralus-win11-22h2-avd
+    north-europe: win11-64-2009-northeurope-win11-22h2-avd
+    south-central-us: win11-64-2009-southcentralus-win11-22h2-avd
+    west-us: win11-64-2009-westus-win11-22h2-avd
+    west-us-2: win11-64-2009-westus-win11-22h2-avd
 ronin-t-windows11-64-2009-beta:
   azure2:
     deployment_id: 32380c6
