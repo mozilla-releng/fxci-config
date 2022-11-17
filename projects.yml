@@ -517,7 +517,7 @@ staging-firefox-android:
     beetmover-maven-nightly-phase: true
     github-publication: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     github-taskgraph: true
     mobile-roles: true
     mobile-firebase-testing: true
