@@ -741,6 +741,13 @@
     - project:
         alias: ci-configuration-try
 
+- grant:
+    # Bug 1800472: Allow try-comm-central to trigger code review bot
+    - queue:route:project.relman.codereview.*
+  to:
+    - project:
+        alias: try-comm-central
+
 ##
 # Non-gecko tree projects
 
