@@ -279,7 +279,7 @@ monopacker-docker-worker-trusted-2020-08-05t22-01-11z-bug1676214:
     us-west-2: ami-008fbf458e350fc3d
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/fxci-level3-gcp-fx0p5dw5rxruubg6rbp6
 monopacker-docker-worker-trusted-2022-11-08t21-41-15z-bug1799740:
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2022-11-18t12-14-09z
+  fxci-level3-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l3-googlecompute-2022-11-18t12-14-09z
 monopacker-docker-worker-gcp-bug1772714-20220603:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u1404-2022-06-03
 monopacker-docker-worker-gcp-bug1768865-20221110:
