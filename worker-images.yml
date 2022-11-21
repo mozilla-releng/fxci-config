@@ -496,7 +496,7 @@ ronin-t-windows11-64-2009-alpha:
     west-us-2: win11-64-2009-westus-win11-21h2-avd
 ronin-t-windows11-64-2009-beta:
   azure2:
-    deployment_id: 5709e12
+    deployment_id: beta
     central-us: win11-64-2009-centralus-win11-22h2-avd
     east-us: win11-64-2009-eastus-win11-22h2-avd
     east-us-2: win11-64-2009-eastus2-win11-22h2-avd
