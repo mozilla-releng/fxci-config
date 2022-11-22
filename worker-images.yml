@@ -369,6 +369,11 @@ ronin-b1-windows2012-prod:
     south-central-us: win2012r2-64-l1-southcentralus-2012-R2-Datacenter
     west-us: win2012r2-64-l1-westus-2012-R2-Datacenter
     west-us-2: win2012r2-64-l1-westus2-2012-R2-Datacenter
+ronin-b1-windows2012-bug1801167:
+  azure2:
+    deployment_id: alpha
+    central-us: masterwayz-win2012test-image-20221122010013
+
 occ-mpd-b-win2012-trusted-v20200226:
   aws:
     eu-central-1: ami-09a5852e0cc1edb81
