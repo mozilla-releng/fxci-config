@@ -864,6 +864,7 @@ balrog:
   features:
     github-pull-request:
       policy: public
+    github-taskgraph: true
 
 scriptworker:
   repo: https://github.com/mozilla-releng/scriptworker
