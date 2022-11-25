@@ -1466,6 +1466,28 @@
         job: [cron:nightly]
 
 - grant:
+    - secrets:get:project/mobile/focus-android/firebase
+  to:
+    - project:
+        alias: staging-firefox-android
+        job:
+          - action:*
+          - branch:*
+          - pull-request:trusted
+    - project:
+        alias: firefox-android
+        job:
+          - action:*
+          - branch:*
+          - pull-request:trusted
+    - project:
+        alias: staging-firefox-android
+        job: [cron:nightly]
+    - project:
+        alias: firefox-android
+        job: [cron:nightly]
+
+- grant:
     - secrets:get:project/mobile/github
   to:
     - project:
