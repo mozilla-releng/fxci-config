@@ -300,6 +300,18 @@ project/releng/generic-worker/datacenter-gecko-t-win-talos:
   description: Datacenter Windows 10 experimental perf  test worker.
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-win-talos
+project/releng/generic-worker/azure-gecko-t-win7-hv-dev:
+  description: Azure Windows 7 32-bit hyper-v nested virtual machines. For Testing and development.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-t-win7-hv-dev
+project/releng/generic-worker/azure-gecko-t-win7-dev:
+  description: Azure Windows 7 32-bit virtual machines. For Testing and development.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-t-win7-dev
+project/releng/generic-worker/azure-gecko-t-win7-gpu-dev:
+  description: Azure Windows 7 32-bit gpu virtual machines. For Testing and development.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-t-win7-gpu-dev
 project/releng/generic-worker/datacenter-gecko-t-win10-64-ht:
   description: Datacenter Windows testing workers. For testing and development.
   scopes:
