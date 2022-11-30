@@ -2987,7 +2987,7 @@
     - worker-manager:provider:fxci-test-gcp
     - worker-manager:provider:azure2
     - worker-manager:provider:null-provider
-    - worker-manager:remove-worker:gecko-*
+    - worker-manager:remove-worker:*
     - project:releng:services/treestatus/*
     - queue:rerun-task:gecko-level-*
     - queue:quarantine-worker:gecko-*
