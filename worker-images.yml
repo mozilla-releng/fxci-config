@@ -187,7 +187,6 @@ monopacker-docker-worker-trusted-2020-01-10t21-13-32z:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-worker-gcp-trusted-googlecompute-2020-01-10t21-13-32z
 monopacker-docker-worker-2020-02-07t09-14-17z:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-07t09-14-17z
-  fxci-level3-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-07t09-14-17z
   fxci-levelt-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-02-07t09-14-17z
 monopacker-docker-worker-2020-02-12T10-40-15Z:
   aws:
@@ -237,7 +236,6 @@ monopacker-docker-worker-2020-08-05t22-29-20z:
     us-west-1: ami-04dd8b4beade35aae
     us-west-2: ami-05386759ffd1588de
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-08-05t22-29-20z
-  fxci-level3-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-08-05t22-29-20z
   fxci-levelt-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2020-08-05t22-29-20z
 monopacker-docker-worker-2020-08-05t22-29-20z-bug1676214:
   aws:
@@ -245,7 +243,6 @@ monopacker-docker-worker-2020-08-05t22-29-20z-bug1676214:
     us-west-1: ami-0a453fd7085b8c21a
     us-west-2: ami-0a5ccc3a82b0d3cf2
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/fxci-level1-gcp-4p0xjekhzgqrab6wepis
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/fxci-level3-gcp-fx0p5dw5rxruubg6rbp6
   fxci-levelt-gcp: projects/taskcluster-imaging/global/images/fxci-level1-gcp-4p0xjekhzgqrab6wepis
 monopacker-docker-worker-2022-11-08t21-41-15z-bug1799740:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2022-11-09t23-30-29z
@@ -254,7 +251,6 @@ monopacker-docker-worker-2022-11-09t23-08-00z-bug1768865:
     us-east-1: ami-03c1455d18c76e538
     us-west-1: ami-0a453fd7085b8c21a
     us-west-2: ami-0a5ccc3a82b0d3cf2
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/fxci-level3-gcp-fx0p5dw5rxruubg6rbp6
   fxci-levelt-gcp: projects/taskcluster-imaging/global/images/fxci-level1-gcp-4p0xjekhzgqrab6wepis
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2022-11-09t23-08-00z
 monopacker-docker-worker-2022-11-30t23-30-37z-bug1245969:
