@@ -1442,6 +1442,28 @@
         job: [release, cron:*, action:release-promotion]
 
 - grant:
+    - project:mobile:{trust_project}:releng:googleplay:product:focus-android
+  to:
+    - project:
+        alias: firefox-android
+        level: 3
+        job: [release, cron:nightly, action:release-promotion]
+
+- grant:
+    - project:mobile:{trust_project}:releng:googleplay:product:focus-android:dep
+  to:
+    - project:
+        alias: firefox-android
+        job: [pull-request:*]
+    - project:
+        alias: staging-firefox-android
+        job: [pull-request:*]
+    - project:
+        alias: staging-firefox-android
+        level: 1
+        job: [release, cron:*, action:release-promotion]
+
+- grant:
     - secrets:get:project/mobile/{trust_project}/firebase
   to:
     - project:
