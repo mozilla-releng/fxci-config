@@ -1117,7 +1117,8 @@ project/taskcluster/legacy-login:
     - auth:update-client:mozilla-auth0/*
 project/taskcluster/smoketest:
   description: Run smoketests on new Taskcluster deployments
-  scopes: []
+  scopes:
+    - assume:project:taskcluster:smoketests
 project/wpt/wptsync:
   description: Created in Bug 1596469 - Secret handed to :jgraham
   scopes:
