@@ -1769,9 +1769,9 @@ pools:
             idleTimeoutSecs: 5400
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: win_2012
+        sourceBranch: cloud_windows
         sourceRepository: ronin_puppet
-        sourceOrganisation: markcor
+        sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
         - vmSize: Standard_F32s_v2
@@ -1819,9 +1819,9 @@ pools:
             idleTimeoutSecs: 5400
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: win_2012
+        sourceBranch: clouds_windows
         sourceRepository: ronin_puppet
-        sourceOrganisation: markcor
+        sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
         - vmSize: Standard_F32s_v2

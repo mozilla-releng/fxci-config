@@ -190,7 +190,7 @@ ronin-b1-windows2012-beta:
     west-us-2: win2012r2-64-l1-westus2-2012-R2-Datacenter
 ronin-b1-windows2012-prod:
   azure2:
-    deployment_id: alpha
+    deployment_id: 5016d08
     central-us: win2012r2-64-l1-centralus-2012-R2-Datacenter
     east-us: win2012r2-64-l1-eastus-2012-R2-Datacenter
     east-us-2: win2012r2-64-l1-eastus2-2012-R2-Datacenter
