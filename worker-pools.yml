@@ -1217,6 +1217,9 @@ pools:
     variants:
       - pool-group: gecko-t
         suffix: ''
+      - pool-group: gecko-3
+        suffix: ''
+        chain-of-trust: trusted
       - pool-group: comm-t
         suffix: ''
       - pool-group: gecko-t
@@ -1224,18 +1227,24 @@ pools:
       - pool-group: comm-t
         suffix: -source
     email_on_error: true
-    provider_id: fxci-level1-gcp
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
     config:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          gecko-t:
+          gecko-.*:
             by-suffix:
               '': 2500
               -source: 200
           comm-t: 10
       regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-gcp-current
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           workerConfig:
