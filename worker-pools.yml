@@ -25,6 +25,30 @@ worker-defaults:
         deviceManagement:
           hostSharedMemory: {enabled: false}
           kvm: {enabled: false}
+        artifacts:
+          # FIXME: remove after workers are updated to >= 45.0.1
+          skipCompressionExtensions:
+            - .7z
+            - .bz2
+            - .deb
+            - .dmg
+            - .flv
+            - .gif
+            - .gz
+            - .jpeg
+            - .jpg
+            - .png
+            - .swf
+            - .tbz
+            - .tgz
+            - .webp
+            - .whl
+            - .woff
+            - .woff2
+            - .xz
+            - .zip
+            - .zst
+            - lz4
       generic-worker/windows:
         genericWorker:
           config:
