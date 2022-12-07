@@ -534,59 +534,6 @@ staging-firefox-android:
     hooks_owner: releng+staging-firefox-android@mozilla.com
     notify_emails: []
 
-android-components:
-  repo: https://github.com/mozilla-mobile/android-components
-  trust_domain: mobile
-  trust_project: android-components
-  repo_type: git
-  default_branch: main
-  level: 3
-  features:
-    beetmover-maven-phase: true
-    beetmover-maven-nightly-phase: true
-    github-publication: true
-    github-taskgraph: true
-    github-pull-request:
-      policy: public
-    mobile-roles: true
-    mobile-firebase-testing: true
-    mobile-public-code-coverage: true
-    mobile-sign-phase: true
-    scriptworker: true
-    shipit: true
-    taskgraph-actions: true
-    taskgraph-cron: false
-    treeherder-reporting: true
-    trust-domain-scopes: true
-
-staging-android-components:
-  repo: https://github.com/mozilla-releng/staging-android-components
-  trust_domain: mobile
-  trust_project: android-components
-  repo_type: git
-  default_branch: main
-  level: 1
-  features:
-    beetmover-maven-phase: true
-    beetmover-maven-nightly-phase: true
-    github-publication: true
-    github-taskgraph: true
-    github-pull-request:
-      policy: public
-    mobile-roles: true
-    mobile-firebase-testing: true
-    mobile-public-code-coverage: true
-    mobile-sign-phase: true
-    scriptworker: true
-    shipit: true
-    taskgraph-actions: true
-    taskgraph-cron: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-  cron:
-    targets:
-      - nightly
-
 reference-browser:
   repo: https://github.com/mozilla-mobile/reference-browser
   trust_domain: mobile

@@ -210,47 +210,6 @@ project-relman/bugzilla-dashboard-backend-testing:
 
 # - mozilla-mobile
 # TODO Convert to cron.yml supported
-#      see https://github.com/mozilla-mobile/android-components/issues/5069
-
-# was project-mobile/android-components-api-docs-update
-project-releng/cron-task-mozilla-mobile-android-components/api-docs-update:
-  name: Android Components - API docs Update
-  description: >-
-    Hook for updating the API docs automatically.
-
-    Managed from ci-configuration's hooks.yml for now.
-  owner: skaspari@mozilla.com
-  email_on_error: true
-  scopes:
-    - queue:scheduler-id:mobile-level-3
-    - queue:create-task:lowest:mobile-3/b-linux
-    - secrets:get:project/mobile/github
-  template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/api-docs-update.yml
-  trigger_schema:
-    type: object
-    properties: {}
-    additionalProperties: false
-
-# was project-mobile/android-components-publicsuffixlist-update
-project-releng/cron-task-mozilla-mobile-android-components/suffixlist-update:
-  name: Android Components - Public Suffix List Update
-  description: >-
-    Hook for updating the Public Suffix List automatically.
-
-    Managed from ci-configuration's hooks.yml for now.
-  owner: skaspari@mozilla.com
-  email_on_error: true
-  schedule:
-    - 0 0 17 * * *
-  scopes:
-    - queue:scheduler-id:mobile-level-3
-    - queue:create-task:lowest:mobile-3/b-linux
-    - secrets:get:project/mobile/github
-  template_file: hooks/project-releng/cron-task-mozilla-mobile-android-components/publicsuffixlist-update.yml
-  trigger_schema:
-    type: object
-    properties: {}
-    additionalProperties: false
 
 # was project-mobile/focus-nightly-public
 project-releng/cron-task-mozilla-mobile-focus-android/nightly-public:
