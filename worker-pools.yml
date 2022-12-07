@@ -350,9 +350,6 @@ pools:
           default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - &persistent-disk-20
               autoDelete: true
@@ -421,9 +418,6 @@ pools:
           default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - *persistent-disk-20
             - *scratch-disk
@@ -465,9 +459,6 @@ pools:
           default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - *persistent-disk-20
             - *scratch-disk
@@ -504,9 +495,6 @@ pools:
           default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - *persistent-disk-20
             - *scratch-disk
@@ -552,9 +540,6 @@ pools:
           default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - *persistent-disk-20
             - *scratch-disk
@@ -587,9 +572,6 @@ pools:
                 value: "#!/usr/bin/awk BEGIN{system(\"sed -i s/aws/google/ /etc/start-worker.yml;sed -i s'/^&/#/' /etc/rsyslog.d/*cloud*;sleep 300\")}"
               - key: 'startup-script-url'
                 value: 'gs://relops/worker_setup.sh'
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - &persistent-disk-75
               autoDelete: true
@@ -628,9 +610,6 @@ pools:
                 value: "#!/usr/bin/awk BEGIN{system(\"sed -i s/aws/google/ /etc/start-worker.yml;sed -i s'/^&/#/' /etc/rsyslog.d/*cloud*;sleep 300\")}"
               - key: 'startup-script-url'
                 value: 'gs://relops/worker_setup.sh'
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - *persistent-disk-75
             - *scratch-disk
@@ -798,9 +777,6 @@ pools:
           default: 4
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - *persistent-disk-75
             - *scratch-disk
@@ -867,9 +843,6 @@ pools:
       maxCapacity: 10
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - *persistent-disk-75
             - *scratch-disk
@@ -1004,9 +977,6 @@ pools:
         by-pool-group:
           mobile-.*:
             - minCpuPlatform: Intel Cascadelake
-              workerConfig:
-                task:
-                  reclaimDivisor: 2
               disks:
                 - *persistent-disk-75
                 - *scratch-disk
@@ -1020,9 +990,6 @@ pools:
                     - type: ONE_TO_ONE_NAT
           (l10n|taskgraph|ci)-.*:
             - minCpuPlatform: Intel Cascadelake
-              workerConfig:
-                task:
-                  reclaimDivisor: 2
               disks:
                 - *persistent-disk-75
                 - *scratch-disk
@@ -1033,9 +1000,6 @@ pools:
                     - type: ONE_TO_ONE_NAT
           default:
             - minCpuPlatform: Intel Cascadelake
-              workerConfig:
-                task:
-                  reclaimDivisor: 2
               disks:
                 - *persistent-disk-75
                 - *scratch-disk
@@ -1247,9 +1211,6 @@ pools:
           default: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - *persistent-disk-75
             - *scratch-disk
@@ -1275,9 +1236,6 @@ pools:
           allowPrivileged: true
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - *persistent-disk-75
             - *scratch-disk
@@ -1370,9 +1328,6 @@ pools:
       image: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - autoDelete: true
               boot: true
@@ -3741,9 +3696,6 @@ pools:
       image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - autoDelete: true
               boot: true
@@ -5100,9 +5052,6 @@ pools:
           default:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
-          workerConfig:
-            task:
-              reclaimDivisor: 2
           disks:
             - *persistent-disk-75
             - *scratch-disk
