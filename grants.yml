@@ -1715,6 +1715,15 @@
         job: [release, action:release-promotion, cron:nightly]
 
 - grant:
+    - secrets:get:project/mobile/focus-android/nightly
+    - secrets:get:project/mobile/focus-android/beta
+    - secrets:get:project/mobile/focus-android/release
+  to:
+    - project:
+        alias: firefox-android
+        job: [release, action:release-promotion, cron:nightly]
+
+- grant:
     - queue:route:index.v2.project.{trust_domain}.{trust_project}.release.*
     - project:mobile:focus-android:releng:signing:cert:production-signing
   to:
