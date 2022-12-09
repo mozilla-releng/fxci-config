@@ -1760,6 +1760,14 @@
         alias: firefox-android
         job: ["*"]
 
+- grant:
+    - queue:route:index.mobile.v3.firefox-android.*
+  to:
+    - project:
+        alias: firefox-android
+        include_pull_requests: false
+        feature: trust-domain-scopes
+
 
 # L10n repositories
 - grant:
