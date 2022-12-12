@@ -994,7 +994,7 @@
   to:
     - project:
         alias: balrog
-        job: [pull-request:*, branch:master, branch:main]
+        job: [pull-request:*, branch:main]
 
 - grant:
     - queue:route:index.project.balrog.*
@@ -1003,7 +1003,7 @@
   to:
     - project:
         alias: balrog
-        job: [branch:master, branch:main]
+        job: [branch:main]
 
 - grant:
     - queue:route:index.project.balrog.*
