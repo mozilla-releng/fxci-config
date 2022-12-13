@@ -3842,10 +3842,6 @@ pools:
         - us-east-1
         - us-west-1
         - us-west-2
-      worker-config:
-        genericWorker:
-          config:
-            idleTimeoutSecs: 1
   - pool_id: nss-3/linux
     description: Worker type that can be used for nss related pushes.
     owner: release+tc-workers@mozilla.com
@@ -3862,10 +3858,6 @@ pools:
         - us-east-1
         - us-west-1
         - us-west-2
-      worker-config:
-        genericWorker:
-          config:
-            idleTimeoutSecs: 1
   - pool_id: nss-1/win2012r2
     description: Worker type that can be used for nss related pushes.
     owner: release+tc-workers@mozilla.com
