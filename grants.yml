@@ -1771,7 +1771,8 @@
         job: ["*"]
 
 - grant:
-    - queue:route:index.mobile.v3.firefox-android.*
+    - index:insert-task:mobile.v3.{alias}.*
+    - queue:route:index.mobile.v3.{alias}.*
   to:
     - project:
         alias: firefox-android
