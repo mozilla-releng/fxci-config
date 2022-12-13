@@ -1715,6 +1715,7 @@
         job: [release, action:release-promotion, cron:nightly]
 
 - grant:
+    - project:mobile:firefox-android:releng:signing:cert:production-signing
     - secrets:get:project/mobile/focus-android/nightly
     - secrets:get:project/mobile/focus-android/beta
     - secrets:get:project/mobile/focus-android/release
