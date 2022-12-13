@@ -3019,6 +3019,7 @@
     - worker-manager:provider:fxci-level1-gcp
     - worker-manager:provider:fxci-test-gcp
     - worker-manager:provider:azure2
+    - worker-manager:provider:azure_trusted
     - worker-manager:provider:null-provider
     - worker-manager:remove-worker:*
     - project:releng:services/treestatus/*
