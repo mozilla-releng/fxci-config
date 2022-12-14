@@ -24,8 +24,6 @@ firefoxci:
         implementation: aws
       azure2:
         implementation: azure
-      azure_trusted:
-        implementation: azure
       fxci-level1-gcp:
         implementation: google
       fxci-level2-gcp:
@@ -106,8 +104,7 @@ firefoxci:
         families: [m5dn]
   azure_config:
     wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
-    untrusted_subscription: 108d46d5-fe9b-4850-9a7d-8c914aa6c1f0
-    trusted_subscription: a30e97ab-734a-4f3b-a0e4-c51c0bff0701
+    subscription: 108d46d5-fe9b-4850-9a7d-8c914aa6c1f0
     location:
       - centralus
       - eastus
@@ -162,8 +159,6 @@ staging:
       aws:
         implementation: aws
       azure2:
-        implementation: azure
-      azure_trusted:
         implementation: azure
       fxci-level1-gcp:
         implementation: google
@@ -238,9 +233,7 @@ staging:
     invalid-instances: []
   azure_config:
     wst_server_url: https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/
-    untrusted_subscription: 108d46d5-fe9b-4850-9a7d-8c914aa6c1f0
-    # Staging should not touch the trusted subscription
-    trusted_subscription: 0000000-000-0000-0000-000000000000
+    subscription: 108d46d5-fe9b-4850-9a7d-8c914aa6c1f0
     location:
       - centralus
       - eastus

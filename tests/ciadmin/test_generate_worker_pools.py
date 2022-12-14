@@ -42,7 +42,7 @@ def environment():
             "subnet-id": "subnet",
         },
         google_config={"zones": ["us-east1a"]},
-        azure_config={"untrusted_subscription": "subscription_id"},
+        azure_config={"subscription": "subscription_id"},
     )
 
 
