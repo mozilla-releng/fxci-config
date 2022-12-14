@@ -80,6 +80,8 @@ async def check_level_3_worker_security():
             ("trusted" == pool.config.get("security", "untrusted"))
             # GCP workers have networker security at the project/provider level
             or ("level3" in pool.provider_id)
+            # Azure trusted workers are restricted to the azure_trusted provider
+            or ("azure_trusted" in pool.provider_id)
         )
         assert not all([not trusted_security, is_level3_worker(pool)]), (
             f"{pool.pool_id} is a level 3 worker but has "
