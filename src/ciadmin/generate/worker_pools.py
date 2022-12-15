@@ -205,7 +205,7 @@ def get_azure_provider_config(
             for vmSize in vmSizes:
                 loc = location.replace("-", "")
                 ImageId = image.image_id(provider_id, location)
-                subscription_id = azure_config["subscription"]
+                subscription_id = azure_config["untrusted_subscription"]
                 subscription_id = f"/subscriptions/{subscription_id}"
                 resource_suffix = f"{location}-{purpose}"
                 rgroup = f"rg-{resource_suffix}"
@@ -253,7 +253,10 @@ def get_azure_provider_config(
                 loc = location.replace("-", "")
                 DeploymentId = image.image_id(provider_id, "deployment_id")
                 ImageId = image.image_id(provider_id, location)
-                subscription_id = azure_config["subscription"]
+                if provider_id == "azure_trusted":
+                    subscription_id = azure_config["trusted_subscription"]
+                else:
+                    subscription_id = azure_config["untrusted_subscription"]
                 subscription_id = f"/subscriptions/{subscription_id}"
                 resource_suffix = f"{location}-{purpose}"
                 rgroup = f"rg-{resource_suffix}"
