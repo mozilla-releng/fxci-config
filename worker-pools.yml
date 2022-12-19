@@ -1985,7 +1985,7 @@ pools:
       image: ronin-b3-windows2012-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
-      worker-purpose: comm-1
+      worker-purpose: comm-3
       locations: [central-us, north-central-us, east-us-2, west-us-2]
       maxCapacity: 25
       worker-config:
@@ -2135,7 +2135,7 @@ pools:
       image: ronin-b3-windows2012-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
-      worker-purpose: vpn-1
+      worker-purpose: vpn-3
       locations: [central-us, north-central-us, east-us-2, west-us-2]
       maxCapacity: 25
       worker-config:
@@ -2285,7 +2285,7 @@ pools:
       image: ronin-b3-windows2012-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
-      worker-purpose: nss-1
+      worker-purpose: nss-3
       locations: [central-us, north-central-us, east-us-2, west-us-2]
       maxCapacity: 25
       worker-config:
