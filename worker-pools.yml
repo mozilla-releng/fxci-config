@@ -173,6 +173,37 @@ pools:
             BlockDeviceMappings:
               - DeviceName: /dev/xvdb
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+  - pool_id: infra/build-decision-gcp'
+    description: Worker for firefox-ci automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 1
+      maxCapacity: 4
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - &persistent-disk-75
+              autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 75
+                sourceImage: <image>
+              type: PERSISTENT
+            - &scratch-disk
+              autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+          machine_type: n2-standard-2
+          capacityPerInstance: 8
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux'
     description: Worker for gecko-based automation
     owner: release+tc-workers@mozilla.com
@@ -382,12 +413,7 @@ pools:
                 diskSizeGb: 20
                 sourceImage: <image>
               type: PERSISTENT
-            - &scratch-disk
-              autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *scratch-disk
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -597,13 +623,7 @@ pools:
               - key: 'startup-script-url'
                 value: 'gs://relops/worker_setup.sh'
           disks:
-            - &persistent-disk-75
-              autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
+            - *persistent-disk-75
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
