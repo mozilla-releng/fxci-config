@@ -173,7 +173,7 @@ pools:
             BlockDeviceMappings:
               - DeviceName: /dev/xvdb
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-  - pool_id: infra/build-decision-gcp'
+  - pool_id: infra/build-decision-gcp
     description: Worker for firefox-ci automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
