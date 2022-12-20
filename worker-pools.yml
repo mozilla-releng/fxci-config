@@ -1661,7 +1661,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: win_2012
@@ -1711,7 +1711,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: win_2012
@@ -1761,7 +1761,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -1811,7 +1811,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: clouds_windows
@@ -1861,7 +1861,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -1911,7 +1911,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -1961,7 +1961,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2011,7 +2011,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2061,7 +2061,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2111,7 +2111,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2161,7 +2161,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2211,7 +2211,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2261,7 +2261,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2311,7 +2311,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2361,7 +2361,7 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
+            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
