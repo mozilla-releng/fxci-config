@@ -130,53 +130,6 @@ pools:
     description: Worker for firefox-ci automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
-    provider_id: aws
-    config:
-      regions: [us-east-1, us-west-1, us-west-2]
-      image: docker-worker-hvm-builder-current
-      minCapacity: 1
-      maxCapacity: 4
-      instance_types:
-        - instanceType: c5a.large
-          capacityPerInstance: 8
-          worker-config:
-            capacityManagement:
-              diskspaceThreshold: 4000000000
-          launchConfig:
-            BlockDeviceMappings:
-              - DeviceName: /dev/xvdb
-                Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-        - instanceType: m5a.large
-          capacityPerInstance: 8
-          worker-config:
-            capacityManagement:
-              diskspaceThreshold: 4000000000
-          launchConfig:
-            BlockDeviceMappings:
-              - DeviceName: /dev/xvdb
-                Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-        - instanceType: c5.large
-          capacityPerInstance: 8
-          worker-config:
-            capacityManagement:
-              diskspaceThreshold: 4000000000
-          launchConfig:
-            BlockDeviceMappings:
-              - DeviceName: /dev/xvdb
-                Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-        - instanceType: m5.large
-          capacityPerInstance: 8
-          worker-config:
-            capacityManagement:
-              diskspaceThreshold: 4000000000
-          launchConfig:
-            BlockDeviceMappings:
-              - DeviceName: /dev/xvdb
-                Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-  - pool_id: infra/build-decision-gcp
-    description: Worker for firefox-ci automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 1
