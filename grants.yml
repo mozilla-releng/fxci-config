@@ -1520,7 +1520,9 @@
   to:
     - project:
         feature: autophone
-        job: [pull-request:*]
+        job:
+          - action:*
+          - pull-request:*
     - project:
         alias: fenix
         job: [cron:nightly, cron:nightly-test]
