@@ -5013,6 +5013,25 @@ pools:
             BlockDeviceMappings:
               - DeviceName: /dev/xvdb
                 Ebs: {DeleteOnTermination: true, VolumeSize: 10, VolumeType: gp2}
+  - pool_id: code-review/bot-gcp
+    description: Worker for the code-review bot.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-current
+      minCapacity: 1
+      maxCapacity: 100
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-20
+            - *scratch-disk
+          machine_type: n2-standard-2
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: code-coverage/bot
     description: Worker for the code-coverage bot.
     owner: release+tc-workers@mozilla.com
@@ -5112,6 +5131,25 @@ pools:
             BlockDeviceMappings:
               - DeviceName: /dev/xvdb
                 Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+  - pool_id: code-coverage/bot-gcp
+    description: Worker for the code-coverage bot.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-current
+      minCapacity: 1
+      maxCapacity: 100
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-75
+            - *scratch-disk
+          machine_type: n2-standard-4
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: taskgraph-1/images
     description: Worker for firefox-ci automation.
     owner: release+tc-workers@mozilla.com
