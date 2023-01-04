@@ -3008,37 +3008,6 @@
         # Beatrice Acasandrei - Softvision Sheriff contributor
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bacasandrei
 
-- grant:
-    - generic-worker:allow-rdp:gecko-t/t-win*
-  to:
-    - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mhentges
-
-# All kinds of scopes for migrations, releaseduty and more.
-- grant:
-    - generic-worker:allow-rdp:gecko-t/*
-    - worker-manager:manage-worker-pool:gecko-1/*
-    - worker-manager:manage-worker-pool:gecko-t/*
-    - worker-manager:manage-worker-pool:mozillavpn-1/*
-    - worker-manager:provider:fxci-level1-gcp
-    - worker-manager:provider:fxci-test-gcp
-    - worker-manager:provider:azure2
-    - worker-manager:provider:azure_trusted
-    - worker-manager:provider:null-provider
-    - worker-manager:remove-worker:*
-    - project:releng:services/treestatus/*
-    - queue:rerun-task:gecko-level-*
-    - queue:quarantine-worker:gecko-*
-    - secrets:get:project/releng/gecko/build/level-1/masterwayz*
-    - secrets:set:project/releng/gecko/build/level-1/masterwayz*
-    - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
-    - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
-    - hooks:trigger-hook:project-gecko/in-tree-action-1-*
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
-  to:
-    - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mgoossens
-
 # Bug 1738050: secret scopes to perftest
 - grant:
     - secrets:set:project/perftest/*
