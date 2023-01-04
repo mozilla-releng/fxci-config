@@ -626,63 +626,6 @@ staging-fenix:
     hooks_owner: releng+staging-fenix@mozilla.com
     notify_emails: []
 
-focus-android:
-  repo: https://github.com/mozilla-mobile/focus-android
-  trust_domain: mobile
-  trust_project: focus-android
-  repo_type: git
-  default_branch: main
-  level: 3
-  features:
-    beetmover-phase: true
-    github-taskgraph: true
-    github-pull-request:
-      policy: collaborators
-    github-publication: true
-    mobile-roles: true
-    mobile-bump-github: true
-    mobile-firebase-testing: true
-    mobile-public-code-coverage: true
-    mobile-pushapk-phase: true
-    mobile-sign-phase: true
-    scriptworker: true
-    shipit: true
-    taskgraph-actions: true
-    taskgraph-cron: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-  cron:
-    targets:
-      - nightly
-
-staging-focus-android:
-  repo: https://github.com/mozilla-releng/staging-focus-android
-  trust_domain: mobile
-  trust_project: focus-android
-  repo_type: git
-  default_branch: main
-  level: 1
-  features:
-    github-publication: true
-    github-taskgraph: true
-    github-pull-request:
-      policy: collaborators
-    mobile-roles: true
-    mobile-firebase-testing: true
-    mobile-public-code-coverage: true
-    mobile-pushapk-phase: true
-    mobile-sign-phase: true
-    scriptworker: true
-    shipit: true
-    taskgraph-actions: true
-    taskgraph-cron: true
-    treeherder-reporting: true
-  cron:
-    targets: [nightly]
-    hooks_owner: releng+staging-focus-android@mozilla.com
-    notify_emails: []
-
-
 firefox-ios:
   repo: https://github.com/mozilla-mobile/firefox-ios
   trust_domain: mobile

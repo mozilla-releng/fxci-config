@@ -1474,11 +1474,6 @@
           - cron:nightly-on-google-play
           - cron:screenshots
           - cron:legacy-api-ui-tests
-    - project:
-        # Focus PRs are restricted to collaborators, so exposing firebase is safe-enough for PRs.
-        # Focus also has some Firebase tests on nightly.
-        alias: focus-android
-        job: [cron:nightly]
 
 - grant:
     - secrets:get:project/mobile/focus-android/firebase
@@ -1691,65 +1686,6 @@
         alias: reference-browser
         job: [cron:nightly]
 
-# focus (android) scopes
-- grant:
-    - queue:scheduler-id:taskcluster-github
-    - queue:route:statuses
-  to:
-    - project:
-        alias: focus-android
-        job: [branch:*, cron:*, pull-request:*, release]
-
-- grant:
-    - queue:route:notify.irc-channel.#android-ci.on-any
-  to:
-    - project:
-        alias: focus-android
-        job: [branch:*, pull-request:*]
-
-- grant:
-    - secrets:get:project/mobile/focus-android/nightly
-    - secrets:get:project/mobile/focus-android/beta
-    - secrets:get:project/mobile/focus-android/release
-  to:
-    - project:
-        alias: focus-android
-        job: [release, action:release-promotion, cron:nightly]
-
-- grant:
-    - project:mobile:firefox-android:releng:signing:cert:production-signing
-    - secrets:get:project/mobile/focus-android/nightly
-    - secrets:get:project/mobile/focus-android/beta
-    - secrets:get:project/mobile/focus-android/release
-  to:
-    - project:
-        alias: firefox-android
-        job: [release, action:release-promotion, cron:nightly]
-
-- grant:
-    - queue:route:index.v2.project.{trust_domain}.{trust_project}.release.*
-    - project:mobile:focus-android:releng:signing:cert:production-signing
-  to:
-    - project:
-        alias: focus-android
-        job: [release, action:release-promotion]
-
-- grant:
-    - queue:route:index.v2.project.{trust_domain}.{trust_project}.nightly.*
-    - queue:route:notify.email.firefox-focus@mozilla.com.on-failed
-    - project:mobile:focus-android:releng:signing:cert:production-signing
-  to:
-    - project:
-        alias: focus-android
-        job: [cron:nightly]
-
-- grant:
-    - queue:route:index.mobile.v2.staging-focus-android.*
-    - queue:route:tc-treeherder.v2.focus-android-pr.*
-  to:
-    - project:
-        alias: staging-focus-android
-
 - grant:
     - secrets:get:project/mobile/firefox-ios/bitrise
   to:
@@ -1780,6 +1716,16 @@
         alias: firefox-android
         include_pull_requests: false
         feature: trust-domain-scopes
+
+- grant:
+    - project:mobile:firefox-android:releng:signing:cert:production-signing
+    - secrets:get:project/mobile/focus-android/nightly
+    - secrets:get:project/mobile/focus-android/beta
+    - secrets:get:project/mobile/focus-android/release
+  to:
+    - project:
+        alias: firefox-android
+        job: [release, action:release-promotion, cron:nightly]
 
 
 # L10n repositories

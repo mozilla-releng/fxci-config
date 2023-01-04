@@ -207,25 +207,3 @@ project-relman/bugzilla-dashboard-backend-testing:
   trigger_schema:
     type: object
     additionalProperties: true
-
-# - mozilla-mobile
-# TODO Convert to cron.yml supported
-
-# was project-mobile/focus-nightly-public
-project-releng/cron-task-mozilla-mobile-focus-android/nightly-public:
-  name: Focus/Klar Nightly Builds (Public)
-  description: >-
-    Public Nightly builds of Focus/Klar. Automatically signed and uploaded to "nightly"
-    track of Google Play. https://github.com/mozilla-mobile/focus-android/wiki/Release-tracks
-
-    Managed from ci-configuration's hooks.yml for now.
-  owner: skaspari@mozilla.com
-  email_on_error: true
-  schedule: []
-  scopes:
-    - assume:repo:github.com/mozilla-mobile/focus-android:cron:nightly
-  template_file: hooks/project-releng/cron-task-mozilla-mobile-focus-android/nightly-public.yml
-  trigger_schema:
-    type: object
-    properties: {}
-    additionalProperties: false
