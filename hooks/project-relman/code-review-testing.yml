@@ -55,4 +55,4 @@ scopes:
   - 'index:insert-task:project.relman.testing.code-review.*'
   - 'notify:email:*'
 tags: {}
-workerType: bot-gcp
+workerType: bot
