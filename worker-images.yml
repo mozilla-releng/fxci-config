@@ -148,29 +148,12 @@ occ-b-win2012-trusted-f3c189d:
     us-east-1: ami-0b4be552fadff3b32
     us-west-1: ami-033412e2574dff89d
     us-west-2: ami-0b4affa0b42f6c9d2
-# Delete after Azure migration
-ronin-b-windows2012-alpha:
-  azure2:
-    deployment_id: alpha
-    central-us: win2012-r2-64-centralus-2012-R2-Datacenter
-    north-central-us: win2012-r2-64-northcentralus-2012-R2-Datacenter
-# Delete after Azure migration
-ronin-b-windows2012-compare:
-  azure2:
-    deployment_id: alpha
-    central-us: win2012-r2-64-compare-centralus-2012-R2-Datacenter
-    north-central-us: win2012-r2-64-compare-northcentralus-2012-R2-Datacenter
-# Reduce regions post Azure migration
+# Azure 2012 images
 ronin-b1-windows2012-alpha:
   azure2:
     deployment_id: alpha
     central-us: win2012r2-64-l1-centralus-2012-R2-Datacenter
-    east-us: win2012r2-64-l1-eastus-2012-R2-Datacenter
-    east-us-2: win2012r2-64-l1-eastus2-2012-R2-Datacenter
     north-central-us: win2012r2-64-l1-northcentralus-2012-R2-Datacenter
-    south-central-us: win2012r2-64-l1-southcentralus-2012-R2-Datacenter
-    west-us: win2012r2-64-l1-westus-2012-R2-Datacenter
-    west-us-2: win2012r2-64-l1-westus2-2012-R2-Datacenter
 ronin-b1-windows2012-beta:
   azure2:
     deployment_id: alpha
@@ -201,6 +184,32 @@ ronin-b3-windows2012-prod:
     south-central-us: trusted-win2012r2-64-l3-southcentralus-2012-R2-Datacenter
     west-us: trusted-win2012r2-64-l3-westus-2012-R2-Datacenter
     west-us-2: trusted-win2012r2-64-l3-westus2-2012-R2-Datacenter
+# `-vs-` indicates that Visual Studio build tools are installed
+ronin-b1-windows2012-vs-alpha:
+  azure2:
+    deployment_id: alpha
+    central-us: win2012r2-64-vs-l1-centralus-2012-R2-Datacenter
+    north-central-us: win2012r2-64-vs-l1-northcentralus-2012-R2-Datacenter
+ronin-b1-windows2012-vs-prod:
+  azure2:
+    deployment_id: alpha
+    central-us: win2012r2-64-vs-l1-centralus-2012-R2-Datacenter
+    east-us: win2012r2-64-vs-l1-eastus-2012-R2-Datacenter
+    east-us-2: win2012r2-64-vs-l1-eastus2-2012-R2-Datacenter
+    north-central-us: win2012r2-64-vs-l1-northcentralus-2012-R2-Datacenter
+    south-central-us: win2012r2-64-vs-l1-southcentralus-2012-R2-Datacenter
+    west-us: win2012r2-64-vs-l1-westus-2012-R2-Datacenter
+    west-us-2: win2012r2-64-vs-l1-westus2-2012-R2-Datacenter
+ronin-b3-windows2012-vs-prod:
+  azure_trusted:
+    deployment_id: alpha
+    central-us: trusted-win2012r2-64-vs-l3-centralus-2012-R2-Datacenter
+    east-us: trusted-win2012r2-64-vs-l3-eastus-2012-R2-Datacenter
+    east-us-2: trusted-win2012r2-64-vs-l3-eastus2-2012-R2-Datacenter
+    north-central-us: trusted-win2012r2-64-vs-l3-northcentralus-2012-R2-Datacenter
+    south-central-us: trusted-win2012r2-64-vs-l3-southcentralus-2012-R2-Datacenter
+    west-us: trusted-win2012r2-64-vs-l3-westus-2012-R2-Datacenter
+    west-us-2: trusted-win2012r2-64-vs-l3-westus2-2012-R2-Datacenter
 ronin-b1-windows2012-bug1801167:
   azure2:
     deployment_id: alpha
