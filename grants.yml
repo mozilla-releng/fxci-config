@@ -1440,14 +1440,16 @@
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:focus-android
+    - project:mobile:{trust_project}:releng:googleplay:product:fenix
   to:
     - project:
         alias: firefox-android
         level: 3
-        job: [release, cron:nightly, action:release-promotion]
+        job: [release, cron:nightly, cron:nightly-on-google-play, action:release-promotion]
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:focus-android:dep
+    - project:mobile:{trust_project}:releng:googleplay:product:fenix:dep
   to:
     - project:
         alias: firefox-android
@@ -1481,6 +1483,7 @@
 
 - grant:
     - secrets:get:project/mobile/focus-android/firebase
+    - secrets:get:project/mobile/fenix/firebase
   to:
     - project:
         alias: staging-firefox-android
@@ -1496,10 +1499,18 @@
           - pull-request:trusted
     - project:
         alias: staging-firefox-android
-        job: [cron:nightly]
+        job:
+          - cron:nightly
+          - cron:nightly-on-google-play
+          - cron:screenshots
+          - cron:legacy-api-ui-tests
     - project:
         alias: firefox-android
-        job: [cron:nightly]
+        job:
+          - cron:nightly
+          - cron:nightly-on-google-play
+          - cron:screenshots
+          - cron:legacy-api-ui-tests
 
 - grant:
     - secrets:get:project/mobile/github
@@ -1526,6 +1537,12 @@
         alias: fenix
         job: [cron:nightly, cron:nightly-test]
     - project:
+        alias: staging-firefox-android
+        job: [cron:nightly, cron:nightly-test]
+    - project:
+        alias: firefox-android
+        job: [cron:nightly, cron:nightly-test]
+    - project:
         alias: reference-browser
         job: [branch:*]
 
@@ -1536,6 +1553,12 @@
         alias: fenix
         job: [cron:nightly]
     - project:
+        alias: staging-firefox-android
+        job: [cron:nightly]
+    - project:
+        alias: firefox-android
+        job: [cron:nightly]
+    - project:
         alias: reference-browser
         job: [branch:master]
 
@@ -1544,6 +1567,9 @@
   to:
     - project:
         alias: fenix
+        job: [cron:nightly]
+    - project:
+        alias: firefox-android
         job: [cron:nightly]
     - project:
         alias: reference-browser
@@ -1601,6 +1627,7 @@
         level: 3
         feature: [shipit, taskgraph-actions]
         job: [pull-request:*]
+
 # fenix specific scopes
 - grant:
     - queue:route:index.project.fenix.android.preview-builds
@@ -1723,14 +1750,24 @@
 
 - grant:
     - project:mobile:firefox-android:releng:signing:cert:production-signing
-    - secrets:get:project/mobile/focus-android/nightly
     - secrets:get:project/mobile/focus-android/beta
     - secrets:get:project/mobile/focus-android/release
+    - secrets:get:project/mobile/fenix/beta
+    - secrets:get:project/mobile/fenix/release
+    - secrets:get:project/mobile/fenix/beta-mozillaonline
+    - secrets:get:project/mobile/fenix/release-mozillaonline
   to:
     - project:
         alias: firefox-android
-        job: [release, action:release-promotion, cron:nightly]
+        job: [release, action:release-promotion]
 
+- grant:
+    - project:mobile:firefox-android:releng:signing:cert:production-signing
+    - secrets:get:project/mobile/focus-android/nightly
+  to:
+    - project:
+        alias: firefox-android
+        job: [cron:nightly]
 
 # L10n repositories
 - grant:
