@@ -91,12 +91,10 @@ monopacker-docker-worker-2022-11-09t23-08-00z-bug1768865:
     us-west-2: ami-0a5ccc3a82b0d3cf2
   fxci-levelt-gcp: projects/taskcluster-imaging/global/images/fxci-level1-gcp-4p0xjekhzgqrab6wepis
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2022-11-09t23-08-00z
-monopacker-docker-worker-trusted-gcp-2022-08-12b:
-  fxci-level3-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-trusted-u1804-2022-08-12b
 monopacker-docker-worker-gcp-bug1768865-20221110:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2022-11-10
 monopacker-docker-worker-trusted-gcp-2022-14-12:
-  fxci-level3-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l3-googlecompute-2022-12-14t18-33-09z
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2022-12-14t18-33-09z
 
 # generic-worker images
 gwci-linux:
