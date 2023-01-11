@@ -866,7 +866,7 @@
   to:
     - project:
         alias: taskgraph
-        job: [action:*, branch:*, pull-request:trusted, release]
+        job: [action:*, branch:*, pull-request:trusted, release:*]
 
 - grant:
     - secrets:get:project/releng/shipit/ci
@@ -914,7 +914,7 @@
     - project:
         alias: glean
         level: 3
-        job: [release]
+        job: [release:*]
 
 - grant:
     # TODO Bug 1631839: Remove thisu scope once project has migrated to
@@ -923,7 +923,7 @@
   to:
     - project:
         alias: glean
-        job: [branch:*, release]
+        job: [branch:*, release:*]
 
 # - application-services specific roles
 - grant:
@@ -962,7 +962,7 @@
     - project:
         alias: application-services
         level: 3
-        job: [release]
+        job: [release:*]
 
 - grant:
     - secrets:get:project/application-services/symbols-token
@@ -970,7 +970,7 @@
     - project:
         alias: application-services
         level: 3
-        job: [release, branch:*]
+        job: [release:*, branch:*]
 
 - grant:
     - hooks:trigger-hook:project-app-services/in-tree-action-1-generic/*
@@ -1023,7 +1023,7 @@
   to:
     - project:
         alias: balrog
-        job: [release]
+        job: [release:*]
 
 ##
 # mozilla-releng roles
@@ -1281,7 +1281,7 @@
   to:
     - project:
         feature: beetmover-maven-phase
-        job: [release, pull-request:*, action:release-promotion]
+        job: [release:*, pull-request:*, action:release-promotion]
     - project:
         feature: beetmover-maven-nightly-phase
         job: [cron:nightly]
@@ -1292,7 +1292,7 @@
     - project:
         feature: beetmover-maven-phase
         level: 3
-        job: [release, action:release-promotion]
+        job: [release:*, action:release-promotion]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:maven-staging
@@ -1301,7 +1301,7 @@
     - project:
         feature: beetmover-maven-phase
         level: 1
-        job: [release, action:release-promotion, cron:nightly]
+        job: [release:*, action:release-promotion, cron:nightly]
     - project:
         feature: beetmover-maven-phase
         job: [pull-request:*]
@@ -1347,14 +1347,14 @@
     - project:
         feature: beetmover-phase
         level: 3
-        job: [release, action:release-promotion]
+        job: [release:*, action:release-promotion]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:github:action:release
   to:
     - project:
         feature: github-publication
-        job: [action:release-promotion, release, pull-request:*]
+        job: [action:release-promotion, release:*, pull-request:*]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:github:project:{trust_project}
@@ -1362,7 +1362,7 @@
     - project:
         feature: github-publication
         level: 3
-        job: [action:release-promotion, release]
+        job: [action:release-promotion, release:*]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:github:project:mock
@@ -1370,7 +1370,7 @@
     - project:
         feature: github-publication
         level: 1
-        job: [release, action:release-promotion]
+        job: [release:*, action:release-promotion]
     - project:
         feature: github-publication
         job: [pull-request:*]
@@ -1381,7 +1381,7 @@
     - project:
         feature: github-publication
         level: 1
-        job: [action:release-promotion, release]
+        job: [action:release-promotion, release:*]
 
 - grant:
     - project:mobile:{trust_project}:releng:signing:cert:release-signing
@@ -1389,7 +1389,7 @@
     - project:
         feature: mobile-sign-phase
         level: 3
-        job: [release, cron:nightly, action:release-promotion]
+        job: [release:*, cron:nightly, action:release-promotion]
     - project:
         alias: fenix
         job: [cron:nightly-on-google-play]
@@ -1425,7 +1425,7 @@
     - project:
         feature: mobile-pushapk-phase
         level: 3
-        job: [release, cron:nightly, action:release-promotion]
+        job: [release:*, cron:nightly, action:release-promotion]
     - project:
         alias: fenix
         job: [cron:nightly-on-google-play]
@@ -1439,7 +1439,7 @@
     - project:
         feature: mobile-pushapk-phase
         level: 1
-        job: [release, cron:*, action:release-promotion]
+        job: [release:*, cron:*, action:release-promotion]
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:focus-android
@@ -1448,7 +1448,7 @@
     - project:
         alias: firefox-android
         level: 3
-        job: [release, cron:nightly, cron:nightly-on-google-play, action:release-promotion]
+        job: [release:*, cron:nightly, cron:nightly-on-google-play, action:release-promotion]
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:focus-android:dep
@@ -1463,7 +1463,7 @@
     - project:
         alias: staging-firefox-android
         level: 1
-        job: [release, cron:*, action:release-promotion]
+        job: [release:*, cron:*, action:release-promotion]
 
 - grant:
     - secrets:get:project/mobile/{trust_project}/firebase
@@ -1592,7 +1592,7 @@
   to:
     - project:
         feature: shipit
-        job: [release, pull-request:*]
+        job: [release:*, pull-request:*]
     - project:
         feature: [shipit, taskgraph-actions]
         job: [action:release-promotion]
@@ -1606,7 +1606,7 @@
         # then we need to support both for a smooth transition
         level: 3
         feature: shipit
-        job: [release]
+        job: [release:*]
     - project:
         level: 3
         feature: [shipit, taskgraph-actions]
@@ -1621,7 +1621,7 @@
         # section which addresses the RelEngers forks
         level: 1
         feature: shipit
-        job: [release, pull-request:*]
+        job: [release:*, pull-request:*]
     - project:
         level: 1
         feature: [shipit, taskgraph-actions]
@@ -1667,7 +1667,7 @@
   to:
     - project:
         alias: fenix
-        job: [action:release-promotion, release]
+        job: [action:release-promotion, release:*]
 
 - grant:
     # TODO Change the following scope once `production` is entirely renamed to `nightly`
@@ -1762,7 +1762,7 @@
   to:
     - project:
         alias: firefox-android
-        job: [release, action:release-promotion]
+        job: [release:*, action:release-promotion]
 
 - grant:
     - project:mobile:firefox-android:releng:signing:cert:production-signing
@@ -1821,7 +1821,7 @@
           - branch:*
           - cron:*
           - pull-request:*
-          - release
+          - release:*
 
 - grant:
     - project:mozillavpn:releng:beetmover:action:push-to-candidates
@@ -1830,7 +1830,7 @@
     - project:
         alias:
           - mozilla-vpn-client
-        job: [release, action:release-promotion]
+        job: [release:*, action:release-promotion]
 
 - grant:
     - project:mozillavpn:releng:beetmover:action:push-to-releases
@@ -1857,7 +1857,7 @@
         job:
           - branch:*
           - pull-request:*
-          - release
+          - release:*
 
 - grant:
     - project:{trust_project}:releng:signing:format:*
@@ -1870,7 +1870,7 @@
           - action:*
           - branch:*
           - pull-request:trusted
-          - release
+          - release:*
 
 - grant:
     - project:mozillavpn:releng:googleplay:product:mozillavpn
@@ -1879,7 +1879,7 @@
     - project:
         alias:
           - mozilla-vpn-client
-        job: [release]
+        job: [release:*]
 
 - grant:
     - project:mozillavpn:releng:signing:cert:release-signing
@@ -1893,7 +1893,7 @@
         job:
           - branch:main
           - branch:releases/*
-          - release
+          - release:*
 
 - grant:
     - queue:route:index.{trust_domain}.v2.mozilla-vpn-client.branch.*
@@ -1938,7 +1938,7 @@
         job:
           - branch:*
           - pull-request:trusted
-          - release
+          - release:*
           - action:release-promotion
 
 - grant:
@@ -1950,7 +1950,7 @@
         job:
           - branch:main
           - branch:releases/*
-          - release
+          - release:*
 
 # Bug 1745945: secret scopes for mozillavpn-developers
 - grant:
