@@ -50,6 +50,7 @@
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to its trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
+#   - `legacy-github-release` -- this repository relies on the assume:repo:github.com/{repo_path}:release scope (temporary, for backwards compat)
 
 ash:
   repo: https://hg.mozilla.org/projects/ash
@@ -556,6 +557,7 @@ reference-browser:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    legacy-github-release: true
   cron:
     targets:
       # Cannot name the following entry "bump-android-components" because the full hookId is larger
@@ -641,6 +643,7 @@ firefox-ios:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    legacy-github-release: true
   cron:
     targets: [l10-screenshots]
 
@@ -659,6 +662,7 @@ focus-ios:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    legacy-github-release: true
   cron:
     targets: [l10-screenshots]
 
@@ -678,6 +682,7 @@ application-services:
     scriptworker: true
     taskgraph-cron: true
     taskgraph-actions: true
+    legacy-github-release: true
 
 glean:
   repo: https://github.com/mozilla/glean
@@ -694,6 +699,7 @@ glean:
       policy: public
     scriptworker: true
     taskgraph-actions: true
+    legacy-github-release: true
 
 # mozilla-releng Github repositories
 k8s-autoscale:
@@ -756,6 +762,7 @@ balrog:
       policy: public
     github-taskgraph: true
     trust-domain-scopes: true
+    legacy-github-release: true
 
 scriptworker:
   repo: https://github.com/mozilla-releng/scriptworker
@@ -875,6 +882,7 @@ mozilla-vpn-client:
     # taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    legacy-github-release: true
 
 staging-mozilla-vpn-client:
   repo: https://github.com/mozilla-releng/staging-mozilla-vpn-client
@@ -892,6 +900,7 @@ staging-mozilla-vpn-client:
     # taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    legacy-github-release: true
 
 # Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
 # repo:github.com/mozilla-extensions/* is configured in grants.yml, under the xpi-roles feature

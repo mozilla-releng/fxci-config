@@ -69,7 +69,7 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             # Since pull-requests should be level-1, we need to explicitly
             # split based on the job
             jobs = [job for job in jobs if job != "*"]
-            jobs += ["pull-request:*", "branch:*", "release:*", "cron:*", "action:*"]
+            jobs += ["pull-request:*", "branch:*", "release*", "cron:*", "action:*"]
 
         # Only grant scopes to `cron:` or `action:` jobs if the corresponding features
         # are enabled. This allows having generic grants that don't generate unused
