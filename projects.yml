@@ -876,7 +876,7 @@ mozilla-vpn-client:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: collaborators
+      policy: public_restricted
     taskgraph-actions: true
     # Enable this after .taskcluster.yml and .cron.yml exist in the repo
     # taskgraph-cron: true
