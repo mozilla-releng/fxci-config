@@ -208,6 +208,12 @@ ronin-b3-windows2012-vs-prod:
     south-central-us: trusted-win2012r2-64-vs-l3-southcentralus-2012-R2-Datacenter
     west-us: trusted-win2012r2-64-vs-l3-westus-2012-R2-Datacenter
     west-us-2: trusted-win2012r2-64-vs-l3-westus2-2012-R2-Datacenter
+# '-py2-'  indicates Python 2 is installed
+ronin-b1-windows2012-vs-py2-alpha:
+  azure2:
+    deployment_id: alpha
+    central-us: win2012r2-64-vs-py2-l1-centralus-2012-R2-Datacenter
+    north-central-us: win2012r2-64-vs-py2-l1-northcentralus-2012-R2-Datacenter
 ronin-b1-windows2012-bug1801167:
   azure2:
     deployment_id: alpha
