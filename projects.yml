@@ -504,7 +504,10 @@ firefox-android:
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
-    targets: [nightly]
+    targets:
+      - nightly
+      - nightly-test
+      - screenshots
 
 staging-firefox-android:
   repo: https://github.com/mozilla-releng/staging-firefox-android
@@ -531,7 +534,10 @@ staging-firefox-android:
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
-    targets: [nightly]
+    targets:
+      - nightly
+      - nightly-test
+      - screenshots
     hooks_owner: releng+staging-firefox-android@mozilla.com
     notify_emails: []
 
