@@ -1955,6 +1955,10 @@
 
 # Bug 1745945: secret scopes for mozillavpn-developers
 - grant:
+    - hooks:trigger-hook:project-mozillavpn/in-tree-action-1-generic/*
+    - hooks:trigger-hook:project-mozillavpn/in-tree-action-3-generic/*
+    - hooks:trigger-hook:project-mozillavpn/in-tree-action-1-cancel-all/*
+    - hooks:trigger-hook:project-mozillavpn/in-tree-action-3-cancel-all/*
     - secrets:set:project/mozillavpn/*
     - secrets:get:project/mozillavpn/*
     - queue:rerun-task:mozillavpn-level-*
