@@ -1324,6 +1324,15 @@
     - project:
         feature: beetmover-phase
         level: 1
+        job: [action:release-promotion]
+
+- grant:
+    - project:mobile:fenix:releng:beetmover:bucket:dep
+    - project:mobile:fenix:releng:beetmover:action:direct-push-to-bucket
+  to:
+    - project:
+        feature: beetmover-phase
+        level: 1
         job: [action:release-promotion, cron:nightly]
 
 - grant:
