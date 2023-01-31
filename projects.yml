@@ -487,6 +487,7 @@ firefox-android:
   default_branch: main
   level: 3
   features:
+    beetmover-phase: true
     beetmover-maven-phase: true
     beetmover-maven-nightly-phase: true
     github-publication: true
@@ -517,6 +518,7 @@ staging-firefox-android:
   default_branch: main
   level: 1
   features:
+    beetmover-phase: true
     beetmover-maven-phase: true
     beetmover-maven-nightly-phase: true
     github-publication: true
