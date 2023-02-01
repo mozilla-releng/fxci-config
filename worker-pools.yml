@@ -680,10 +680,7 @@ pools:
         by-chain-of-trust:
           trusted: trusted
           default:
-      minCapacity:
-        by-pool-group:
-          gecko-[13]: 5
-          default: 0
+      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-1: 40
@@ -4107,7 +4104,7 @@ pools:
         by-pool-group:
           .*-3: trusted
           default:
-      minCapacity: 1
+      minCapacity: 0
       maxCapacity: 10
       instance_types:
         - instanceType: c5d.large
@@ -4142,7 +4139,7 @@ pools:
         by-pool-group:
           .*-3: trusted
           default:
-      minCapacity: 2
+      minCapacity: 0
       maxCapacity: 10
       instance_types:
         - instanceType: m5d.large
@@ -4254,7 +4251,7 @@ pools:
     provider_id: aws
     config:
       image: docker-worker-hvm-builder-current
-      minCapacity: 2
+      minCapacity: 0
       maxCapacity: 100
       instance_types:
         # XXX: we might need befier instances (e.g. c5d.4x large) for rust compilation.
@@ -4278,7 +4275,7 @@ pools:
     provider_id: aws
     config:
       image: docker-worker-hvm-builder-trusted-current
-      minCapacity: 2
+      minCapacity: 0
       maxCapacity: 100
       security: trusted
       instance_types:
@@ -4819,7 +4816,7 @@ pools:
     config:
       regions: [us-east-1, us-west-1, us-west-2]
       image: docker-worker-hvm-builder-current
-      minCapacity: 1
+      minCapacity: 0
       maxCapacity: 100
       instance_types:
         - instanceType: m5.large
@@ -4881,7 +4878,7 @@ pools:
     config:
       regions: [us-east-1, us-west-1, us-west-2]
       image: docker-worker-hvm-builder-current
-      minCapacity: 1
+      minCapacity: 0
       maxCapacity: 100
       instance_types:
         - instanceType: r5.large
