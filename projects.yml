@@ -860,16 +860,6 @@ android-l10n-tooling:
     taskgraph-actions: true
   cron:
     targets:
-      - target: update-l10n
-        bindings:
-          - exchange: exchange/taskcluster-github/v1/push
-            routing_key_pattern: primary.mozilla-mobile.fenix
-          - exchange: exchange/taskcluster-github/v1/push
-            routing_key_pattern: primary.mozilla-mobile.android-components
-          - exchange: exchange/taskcluster-github/v1/push
-            routing_key_pattern: primary.mozilla-mobile.firefox-android
-          - exchange: exchange/taskcluster-github/v1/push
-            routing_key_pattern: primary.mozilla-mobile.focus-android
       - target: update-projects
         bindings: []
 
