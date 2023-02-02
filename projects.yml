@@ -554,7 +554,7 @@ reference-browser:
     autophone: true
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     mobile-roles: true
     mobile-bump-github: true
     mobile-firebase-testing: true
