@@ -2878,7 +2878,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
+      locations: [canada-central, central-india, central-us, north-europe, south-india, north-central-us, east-us, east-us-2, west-us, west-us-2, west-us-3]
       maxCapacity: 600
       worker-config:
         genericWorker:
@@ -2925,59 +2925,12 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [central-us, north-central-us, south-central-us, north-europe]
+      locations: [central-us, east-us, east-us-2, north-central-us, north-europe, west-us, west-us-2]
       maxCapacity: 100
       worker-config:
         genericWorker:
           config:
             workerType: win11-64-2009-alpha
-            provisionerId: gecko-t
-            idleTimeoutSecs: 5400
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_F8s_v2
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 30
-                  managedDisk:
-                    storageAccountType: Standard_LRS
-                  createOption: Empty
-            hardwareProfile:
-              vmSize: Standard_F8s_v2
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-  - pool_id: gecko-t/win11-64-2009-beta
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows11-64-2009-beta
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [central-us, north-central-us, south-central-us, north-europe]
-      maxCapacity: 100
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win11-64-2009-beta
             provisionerId: gecko-t
             idleTimeoutSecs: 5400
       tags:
@@ -3019,7 +2972,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [north-central-us, south-central-us, east-us, north-europe, west-europe]
+      locations: [north-central-us, east-us, north-europe]
       maxCapacity: 600
       worker-config:
         genericWorker:
@@ -3066,58 +3019,12 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [east-us, east-us-2, north-europe, west-us, west-us-2]
+      locations: [central-us, east-us, east-us-2, north-central-us, north-europe, west-us, west-us-2]
       maxCapacity: 100
       worker-config:
         genericWorker:
           config:
             workerType: win11-64-2009-gpu-alpha
-            provisionerId: gecko-t
-            idleTimeoutSecs: 1800
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_NV12s_v3
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 30
-                  managedDisk:
-                    storageAccountType: Standard_LRS
-                  createOption: Empty
-            hardwareProfile:
-              vmSize: Standard_NV12s_v3
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-  - pool_id: gecko-t/win11-64-2009-gpu-beta
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows11-64-2009-beta
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [north-central-us, south-central-us, north-europe]
-      maxCapacity: 100
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win11-64-2009-gpu-beta
             provisionerId: gecko-t
             idleTimeoutSecs: 1800
       tags:
@@ -3158,7 +3065,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [north-central-us, south-central-us, east-us, north-europe, west-europe]
+      locations: [north-central-us, east-us, north-europe]
       maxCapacity: 600
       worker-config:
         genericWorker:
@@ -3205,7 +3112,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
+      locations: [central-us, north-central-us, east-us, east-us-2, west-us, west-us-2]
       maxCapacity: 100
       worker-config:
         genericWorker:
@@ -3252,7 +3159,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
+      locations: [central-us, north-central-us, east-us, east-us-2, west-us, west-us-2]
       maxCapacity: 100
       worker-config:
         genericWorker:
@@ -3303,7 +3210,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [central-us, north-central-us, south-central-us, east-us, east-us-2, west-us, west-us-2]
+      locations: [central-us, north-central-us, east-us, east-us-2, west-us, west-us-2]
       maxCapacity: 100
       worker-config:
         genericWorker:
@@ -3355,7 +3262,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [south-central-us, east-us, north-europe, west-europe]
+      locations: [east-us, north-europe]
       maxCapacity: 100
       worker-config:
         genericWorker:
