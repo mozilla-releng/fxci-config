@@ -42,7 +42,7 @@ payload:
   image:
     type: indexed-image
     namespace: code-analysis.v2.code-review.branch.testing
-    path: public/code-review-bot.tar
+    path: public/code-review-bot.tar.zst
   maxRunTime: 7200
 priority: lowest
 provisionerId: code-review
