@@ -1662,6 +1662,9 @@
     - project:
         alias: fenix
         job: [branch:*, cron:nightly-test]
+    - project:
+        alias: firefox-android
+        job: [branch:*, cron:nightly-test]
 
 - grant:
     # XXX `fennec-production-signing` handles beta signing too.
