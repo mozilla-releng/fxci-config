@@ -1956,6 +1956,7 @@
 
 - grant:
     - secrets:get:project/mozillavpn/tokens
+    - secrets:get:project/mozillavpn/level-1/*
   to:
     - project:
         alias:
