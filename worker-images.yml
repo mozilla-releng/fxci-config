@@ -41,7 +41,7 @@ docker-worker-hvm-builder-trusted-current: docker-worker-v20220907-hvm-builder-t
 # GCP builders level 1, 2 and misc. testers -t
 monopacker-docker-worker-current: monopacker-docker-worker-2022-11-09t23-08-00z-bug1768865
 # GCP builders level 3
-monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-gcp-2022-14-12
+monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-gcp-2023-02-10
 # GCP testers
 monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-bug1768865-20221110
 # AWS baremetal
@@ -95,6 +95,8 @@ monopacker-docker-worker-gcp-bug1768865-20221110:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2022-11-10
 monopacker-docker-worker-trusted-gcp-2022-14-12:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2022-12-14t18-33-09z
+monopacker-docker-worker-trusted-gcp-2023-02-10:
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-02-10t14-27-55z
 
 # generic-worker images
 gwci-linux:
