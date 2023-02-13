@@ -148,6 +148,7 @@ occ-b-win2012-trusted-f3c189d:
     us-east-1: ami-0f7af422c99c67e9e
     us-west-1: ami-0b496f80725794cca
     us-west-2: ami-0f8c86e615ad2481d
+    eu-central-1: ami-0700a570ce6ccf480
 # Azure 2012 images
 ronin-b1-windows2012-alpha:
   azure2:
