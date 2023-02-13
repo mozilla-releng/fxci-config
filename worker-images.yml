@@ -176,7 +176,7 @@ ronin-b1-windows2012-prod:
     west-us-2: win2012r2-64-l1-westus2-2012-R2-Datacenter
 ronin-b3-windows2012-prod:
   azure_trusted:
-    deployment_id: 21c6826
+    deployment_id: 7cde253
     central-us: trusted-win2012r2-64-l3-centralus-2012-R2-Datacenter
     east-us: trusted-win2012r2-64-l3-eastus-2012-R2-Datacenter
     east-us-2: trusted-win2012r2-64-l3-eastus2-2012-R2-Datacenter
@@ -202,7 +202,7 @@ ronin-b1-windows2012-vs-prod:
     west-us-2: win2012r2-64-vs-l1-westus2-2012-R2-Datacenter
 ronin-b3-windows2012-vs-prod:
   azure_trusted:
-    deployment_id: 21c6826
+    deployment_id: 7cde253
     central-us: trusted-win2012r2-64-vs-l3-centralus-2012-R2-Datacenter
     east-us: trusted-win2012r2-64-vs-l3-eastus-2012-R2-Datacenter
     east-us-2: trusted-win2012r2-64-vs-l3-eastus2-2012-R2-Datacenter
