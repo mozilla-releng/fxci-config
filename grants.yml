@@ -1776,6 +1776,9 @@
         feature: trust-domain-scopes
 
 - grant:
+    # XXX `fennec-production-signing` handles beta signing too.
+    - project:mobile:firefox-android:releng:signing:cert:fennec-production-signing
+    # `production-signing` handles mozillaonline signing
     - project:mobile:firefox-android:releng:signing:cert:production-signing
     - secrets:get:project/mobile/focus-android/beta
     - secrets:get:project/mobile/focus-android/release
