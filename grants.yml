@@ -1690,6 +1690,9 @@
     - project:
         alias: fenix
         job: [action:generic, cron:nightly, cron:nightly-on-google-play]
+    - project:
+        alias: firefox-android
+        job: [action:generic, cron:nightly]
 
 - grant:
     - queue:route:index.mobile.v2.staging-fenix.*
