@@ -858,10 +858,6 @@ android-l10n-tooling:
       policy: public
     taskgraph-cron: true
     taskgraph-actions: true
-  cron:
-    targets:
-      - target: update-projects
-        bindings: []
 
 # Mozilla VPN
 mozilla-vpn-client:
