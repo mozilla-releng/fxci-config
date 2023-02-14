@@ -1415,7 +1415,7 @@ pools:
       maxCapacity: 600
       additional-user-data:
         workerType: gecko-3-b-win2012
-      regions: [us-east-1, us-west-1, us-west-2, eu-central-1]
+      regions: [us-east-1, us-west-1, us-west-2]
       security: trusted
       implementation: generic-worker/occ-8047eee
       instance_types:

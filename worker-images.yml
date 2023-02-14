@@ -145,10 +145,9 @@ occ-b-win2012-beta-4384030:
     us-west-2: ami-04731c2ad4e13306b
 occ-b-win2012-trusted-f3c189d:
   aws:
-    us-east-1: ami-0f7af422c99c67e9e
-    us-west-1: ami-0b496f80725794cca
-    us-west-2: ami-0f8c86e615ad2481d
-    eu-central-1: ami-0700a570ce6ccf480
+    us-east-1: ami-00e380c9bd8333774
+    us-west-1: ami-0839334386a46283d
+    us-west-2: ami-0b0d25fe1a2a124c7
 # Azure 2012 images
 ronin-b1-windows2012-alpha:
   azure2:
