@@ -1849,6 +1849,7 @@
           - cron:*
           - pull-request:*
           - release*
+          - action:*
 
 - grant:
     - project:mozillavpn:releng:beetmover:action:push-to-candidates
