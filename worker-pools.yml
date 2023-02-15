@@ -2043,7 +2043,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
-      image: ronin-b1-windows2012-vs-prod
+      image: ronin-b1-windows2012-vs-py2-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: nss-1
@@ -2093,7 +2093,7 @@ pools:
     email_on_error: true
     provider_id: azure_trusted
     config:
-      image: ronin-b3-windows2012-vs-prod
+      image: ronin-b3-windows2012-vs-py2-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: nss-3

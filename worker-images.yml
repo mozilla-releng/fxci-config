@@ -216,6 +216,26 @@ ronin-b1-windows2012-vs-py2-alpha:
     deployment_id: alpha
     central-us: win2012r2-64-vs-py2-l1-centralus-2012-R2-Datacenter
     north-central-us: win2012r2-64-vs-py2-l1-northcentralus-2012-R2-Datacenter
+ronin-b1-windows2012-vs-py2-prod:
+  azure2:
+    deployment_id: 7aa76c6
+    central-us: win2012r2-64-vs-py2-l1-centralus-2012-R2-Datacenter
+    east-us: win2012r2-64-vs-py2-l1-eastus-2012-R2-Datacenter
+    east-us-2: win2012r2-64-vs-py2-l1-eastus2-2012-R2-Datacenter
+    north-central-us: win2012r2-64-vs-py2-l1-northcentralus-2012-R2-Datacenter
+    south-central-us: win2012r2-64-vs-py2-l1-southcentralus-2012-R2-Datacenter
+    west-us: win2012r2-64-vs-py2-l1-westus-2012-R2-Datacenter
+    west-us-2: win2012r2-64-vs-py2-l1-westus2-2012-R2-Datacenter
+ronin-b3-windows2012-vs-py2-prod:
+  azure_trusted:
+    deployment_id: 7aa76c6
+    central-us: trusted-win2012r2-64-vs-py2-l3-centralus-2012-R2-Datacenter
+    east-us: trusted-win2012r2-64-vs-py2-l3-eastus-2012-R2-Datacenter
+    east-us-2: trusted-win2012r2-64-vs-py2-l3-eastus2-2012-R2-Datacenter
+    north-central-us: trusted-win2012r2-64-vs-py2-l3-northcentralus-2012-R2-Datacenter
+    south-central-us: trusted-win2012r2-64-vs-py2-l3-southcentralus-2012-R2-Datacenter
+    west-us: trusted-win2012r2-64-vs-py2-l3-westus-2012-R2-Datacenter
+    west-us-2: trusted-win2012r2-64-vs-py2-l3-westus2-2012-R2-Datacenter
 ronin-b1-windows2012-bug1801167:
   azure2:
     deployment_id: alpha
