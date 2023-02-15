@@ -1358,6 +1358,15 @@
         job: [cron:nightly]
 
 - grant:
+    # TODO bug 1814385 - Remove these scopes
+    - project:mobile:fenix:releng:beetmover:bucket:release
+    - project:mobile:fenix:releng:beetmover:action:direct-push-to-bucket
+  to:
+    - project:
+        alias: firefox-android
+        job: [action:release-promotion]
+
+- grant:
     - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:release
     - project:{trust_domain}:{trust_project}:releng:beetmover:action:direct-push-to-bucket
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
