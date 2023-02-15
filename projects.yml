@@ -845,20 +845,6 @@ cloud-image-deploy:
     github-pull-request:
       policy: collaborators
 
-# L10n repositories
-android-l10n-tooling:
-  repo: https://github.com/mozilla-l10n/android-l10n-tooling
-  repo_type: git
-  default_branch: master
-  level: 3
-  trust_domain: l10n
-  features:
-    github-taskgraph: true
-    github-pull-request:
-      policy: public
-    taskgraph-cron: true
-    taskgraph-actions: true
-
 # Mozilla VPN
 mozilla-vpn-client:
   repo: https://github.com/mozilla-mobile/mozilla-vpn-client
