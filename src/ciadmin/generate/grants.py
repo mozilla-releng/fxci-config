@@ -166,21 +166,12 @@ async def update_resources(resources):
     environment = await Environment.current()
 
     # manage our resources..
-    if environment.name != "legacy":
-        resources.manage("Role=mozilla-group:.*")
-        resources.manage("Role=mozillians-group:.*")
-        resources.manage("Role=login-identity:.*")
-        resources.manage("Role=hook-id:.*")
-        resources.manage("Role=project:.*")
-        resources.manage("Role=repo:.*")
-    else:
-        resources.manage("Role=project:releng:ci-group:.*")
-        resources.manage("Role=repo:hg.mozilla.org/.*")
-        # TODO: once we stabilize ci-admin in the github world, we should be
-        # authorative for various github *org/users* vs. individual repos.
-        for project in projects:
-            if project.repo_type == "git":
-                resources.manage("Role={}:.*".format(project.role_prefix))
+    resources.manage("Role=mozilla-group:.*")
+    resources.manage("Role=mozillians-group:.*")
+    resources.manage("Role=login-identity:.*")
+    resources.manage("Role=hook-id:.*")
+    resources.manage("Role=project:.*")
+    resources.manage("Role=repo:.*")
 
     # calculate scopes..
     roles = {}
