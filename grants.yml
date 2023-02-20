@@ -997,7 +997,7 @@
   to:
     - project:
         alias: scriptworker
-        job: [pull-request:trusted, branch:main]
+        job: [pull-request:trusted, branch:main, action:*]
 
 # - balrog specific roles
 - grant:
