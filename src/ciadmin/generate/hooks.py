@@ -19,10 +19,11 @@ async def update_resources(resources):
 
     hooks = await HookConfig.fetch_all()
 
+    resources.manage("Hook=.*")
+    resources.manage("Role=hook-id:.*")
+
     for hook in hooks:
         hook_name = "{}/{}".format(hook.hook_group_id, hook.hook_id)
-        resources.manage("Hook=" + hook_name)
-        resources.manage("Role=hook-id:" + hook_name)
 
         task = await get_ciconfig_file(hook.template_file)
 
