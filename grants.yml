@@ -1817,7 +1817,8 @@
 - grant:
     - queue:create-task:{priority}:releng-hardware/mozillavpn-b-{level}-*
     - queue:create-task:{priority}:scriptworker-prov-v1/mozillavpn-{level}-*
-    - queue:route:index.{trust_domain}.v2.{trust_project}.cache.level-{level}.*
+    # TODO: remove extraneous 'mozillavpn' from this route
+    - queue:route:index.{trust_domain}.v2.mozillavpn.cache.level-{level}.*
     - queue:route:notify.email.*
     - queue:get-artifact:project/mozillavpn/*
   to:
@@ -1868,7 +1869,7 @@
           - release*
 
 - grant:
-    - project:{trust_project}:releng:signing:format:*
+    - project:{trust_domain}:releng:signing:format:*
     - project:releng:services/tooltool/api/download/public
     - project:releng:services/tooltool/api/download/internal
     - secrets:get:project/mozillavpn/level-1/*
@@ -1917,9 +1918,8 @@
           - branch:releases/*
 
 - grant:
-    - queue:route:index.{trust_domain}.v2.{trust_project}.cache.level-1.*
+    - queue:route:index.{trust_domain}.v2.mozillavpn.cache.level-1.*
     - queue:route:tc-treeherder.v2.{alias}.*
-    - queue:scheduler-id:{trust_domain}-level-1
     - queue:create-task:project:none
   to:
     - project:

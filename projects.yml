@@ -852,7 +852,6 @@ mozilla-vpn-client:
   default_branch: main
   level: 3
   trust_domain: mozillavpn
-  trust_project: mozillavpn
   features:
     github-taskgraph: true
     github-pull-request:
@@ -870,7 +869,6 @@ staging-mozilla-vpn-client:
   default_branch: main
   level: 1
   trust_domain: mozillavpn
-  trust_project: mozillavpn
   features:
     github-taskgraph: true
     github-pull-request:
