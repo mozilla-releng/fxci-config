@@ -1815,24 +1815,11 @@
 # Mozilla VPN
 
 - grant:
-    - queue:create-task:{priority}:built-in/*
-    - queue:create-task:{priority}:mozillavpn-{level}/*
     - queue:create-task:{priority}:releng-hardware/mozillavpn-b-{level}-*
     - queue:create-task:{priority}:scriptworker-prov-v1/mozillavpn-{level}-*
-    - queue:route:index.{trust_domain}.cache.level-{level}.*
     - queue:route:index.{trust_domain}.v2.{trust_project}.cache.level-{level}.*
-    - queue:scheduler-id:{trust_domain}-level-{level}
-    - docker-worker:cache:{trust_domain}-level-{level}-*
-    - generic-worker:cache:{trust_domain}-level-{level}-*
     - queue:route:notify.email.*
     - queue:get-artifact:project/mozillavpn/*
-    # Create level-1 scopes explicitly
-    - queue:create-task:{priority}:mozillavpn-1/*
-    - queue:create-task:{priority}:releng-hardware/mozillavpn-b-1-*
-    - queue:route:index.{trust_domain}.cache.level-1.*
-    - queue:scheduler-id:{trust_domain}-level-1
-    - docker-worker:cache:{trust_domain}-level-1-*
-    - generic-worker:cache:{trust_domain}-level-1-*
   to:
     - project:
         alias:
