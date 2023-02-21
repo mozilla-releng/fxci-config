@@ -29,7 +29,7 @@ payload:
   image:
     type: indexed-image
     namespace: code-analysis.v2.code-coverage.branch.production
-    path: public/code-coverage-bot.tar
+    path: public/code-coverage-bot.tar.zst
   maxRunTime: 14400
 priority: lowest
 retries: 5
