@@ -187,8 +187,8 @@ project/releng/generic-worker/azure-gecko-t-win10-64-gpu:
 project/releng/generic-worker/bitbar-gecko-t-osx:
   description: MacOS workers running in bitbar for developers and automation.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx-1014-power*
-    - queue:worker-id:bitbar/t-mojave*
+    - assume:worker-type:releng-hardware/gecko-t-osx-1015-power*
+    - queue:worker-id:bitbar/mbpro-*
 project/releng/generic-worker/bitbar-gecko-t-win10-64-ref-18:
   description: Windows 10 2018 reference laptop production worker. Hardware hosted
     by Bitbar
