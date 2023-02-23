@@ -29,6 +29,7 @@ class ProjectGrantee:
     trust_domain = attr.ib(type=list, converter=listify, default=None)
     job = attr.ib(type=list, converter=listify, default="*")
     include_pull_requests = attr.ib(type=bool, default=True)
+    has_trust_project = attr.ib(type=bool, default=None)
 
 
 @attr.s(frozen=True)

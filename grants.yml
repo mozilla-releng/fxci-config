@@ -805,7 +805,11 @@
     - queue:create-task:{priority}:{trust_domain}-{level}/*
     - queue:create-task:{priority}:{trust_domain}-t/*
     - queue:create-task:{priority}:built-in/*
+  to:
+    - project:
+        feature: trust-domain-scopes
 
+- grant:
     # routes to support locating tasks that create specific versions of artifacts
     # (toolchains, etc.)
     - queue:route:index.{trust_domain}.cache.level-{level}.*
@@ -820,6 +824,24 @@
   to:
     - project:
         feature: trust-domain-scopes
+        has_trust_project: false
+
+- grant:
+    # routes to support locating tasks that create specific versions of artifacts
+    # (toolchains, etc.)
+    - queue:route:index.{trust_domain}.v2.{trust_project}.cache.level-{level}.*
+    - index:insert-task:{trust_domain}.v2.{trust_project}.cache.level-{level}.*
+
+    # allow fetching secrets appropriate to this level
+    - secrets:get:project/releng/{trust_domain}/{trust_project}/build/level-{level}/*
+
+    # allow using worker caches appropriate to this trust domain and level
+    - docker-worker:cache:{trust_domain}-project-{trust_project}-level-{level}-*
+    - generic-worker:cache:{trust_domain}-project-{trust_project}-level-{level}-*
+  to:
+    - project:
+        feature: trust-domain-scopes
+        has_trust_project: true
 
 - grant:
     # routes to support indexing by product
@@ -1256,13 +1278,18 @@
     - queue:create-task:highest:mobile-t/*
     - queue:create-task:{priority}:built-in/*
     - queue:get-artifact:mobile/android-sdk/*
-    - queue:route:index.mobile.v2.{trust_project}.cache.level-{level}.*
     - queue:route:notify.*
-    - queue:scheduler-id:{trust_domain}-level-{level}
     - notify:email:*
     - notify:slack-channel:*
     - project:mobile:{trust_project}:releng:signing:cert:dep-signing
     - project:mobile:{trust_project}:releng:signing:format:*
+    # TODO Legacy non-project trust-domain scopes. Unless there is good reason
+    # to share across projects, these should be vetted and removed once no more
+    # tasks are using them.
+    - index:insert-task:mobile.cache.level-{level}.*
+    - queue:route:index.mobile.cache.level-{level}.*
+    - queue:scheduler-id:{trust_domain}-level-{level}
+    - secrets:get:project/releng/mobile/build/level-{level}/*
   to:
     - project:
         feature: mobile-roles

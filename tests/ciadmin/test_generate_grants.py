@@ -49,6 +49,7 @@ class TestAddScopesForProjects:
             repo_type="hg",
             access="scm_level_3",
             trust_domain="comm",
+            trust_project="proj3",
         ),
     ]
 
@@ -145,6 +146,31 @@ class TestAddScopesForProjects:
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
         assert add_scope.added == [("repo:hg.mozilla.org/foo/proj1:*", "sc")]
+
+    def test_match_has_trust_project_true(self, add_scope):
+        "If has_trust_project matches and is true it adds scopes"
+        grantee = ProjectGrantee(has_trust_project=True)
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        assert add_scope.added == [("repo:hg.mozilla.org/foo/proj3:*", "sc")]
+
+    def test_match_has_trust_project_false(self, add_scope):
+        "If has_trust_project matches and is false it doesn't add scopes"
+        grantees = [
+            ProjectGrantee(has_trust_project=False),
+            ProjectGrantee(),
+        ]
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=grantees),
+            grantees[0],
+            add_scope,
+            self.projects,
+        )
+        assert add_scope.added == [
+            ("repo:hg.mozilla.org/foo/proj1:*", "sc"),
+            ("repo:hg.mozilla.org/foo/proj2:*", "sc"),
+        ]
 
     def test_scope_substitution(self, add_scope):
         "Values alias, trust_domain, and level are substituted"

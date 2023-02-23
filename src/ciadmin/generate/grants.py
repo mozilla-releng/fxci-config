@@ -50,6 +50,9 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         if grantee.is_try is not None:
             if project.is_try != grantee.is_try:
                 continue
+        if grantee.has_trust_project is not None:
+            if grantee.has_trust_project != bool(project.trust_project):
+                continue
         if not match(grantee.trust_domain, project.trust_domain):
             continue
 
