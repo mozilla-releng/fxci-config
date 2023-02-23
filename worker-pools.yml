@@ -1927,7 +1927,7 @@ pools:
                     storageAccountType: Premium_LRS
                   createOption: Empty
                 - lun: 1
-                  diskSizeGB: 120
+                  diskSizeGB: 200
                   managedDisk:
                     storageAccountType: Premium_LRS
                   createOption: Empty
@@ -1977,7 +1977,7 @@ pools:
                     storageAccountType: Premium_LRS
                   createOption: Empty
                 - lun: 1
-                  diskSizeGB: 120
+                  diskSizeGB: 200
                   managedDisk:
                     storageAccountType: Premium_LRS
                   createOption: Empty
@@ -2022,7 +2022,7 @@ pools:
                 createOption: FromImage
               dataDisks:
                 - lun: 0
-                  diskSizeGB: 120
+                  diskSizeGB: 200
                   managedDisk:
                     storageAccountType: Premium_LRS
                   createOption: Empty
