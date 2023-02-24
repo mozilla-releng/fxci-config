@@ -14,7 +14,6 @@ SYMBOLIC_GROUP_LEVELS = {
     "scm_autoland": 3,
     "scm_nss": 3,
     "scm_allow_direct_push": 3,
-    "scm_kaios": 2,
     "scm_firefoxci": 3,
 }
 

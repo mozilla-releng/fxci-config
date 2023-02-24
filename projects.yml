@@ -389,35 +389,6 @@ holly:
     treeherder-reporting: true
     trust-domain-scopes: true
 
-
-kaios:
-  repo: https://hg.mozilla.org/projects/kaios
-  repo_type: hg
-  access: scm_kaios
-  trust_domain: kaios
-  features:
-    gecko-actions: true
-    gecko-cron: false
-    gecko-roles: true
-    hg-push: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-
-kaios-try:
-  repo: https://hg.mozilla.org/projects/kaios-try
-  repo_type: hg
-  access: scm_level_1
-  trust_domain: kaios
-  is_try: true
-  features:
-    gecko-actions: true
-    gecko-cron: false
-    gecko-roles: true
-    hg-push: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-
-
 # non-gecko repositories
 
 nss:

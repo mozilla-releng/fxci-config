@@ -171,8 +171,6 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
-      - pool-group: kaios-1
-      - pool-group: kaios-2
     config:
       regions: [us-east-1, us-west-1, us-west-2]
       image:
@@ -187,7 +185,6 @@ pools:
         by-pool-group:
           gecko-.*: 1000
           comm-.*: 200
-          kaios-.*: 10
       instance_types:
         - instanceType: c5.4xlarge
           launchConfig:
@@ -603,8 +600,6 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
-      - pool-group: kaios-1
-      - pool-group: kaios-2
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
@@ -668,8 +663,6 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
-      - pool-group: kaios-1
-      - pool-group: kaios-2
     config:
       regions: [us-east-1, us-west-1, us-west-2]
       image:
@@ -716,8 +709,6 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
-      - pool-group: kaios-1
-      - pool-group: kaios-2
     config:
       regions: [us-central1, us-west1]
       image:
@@ -834,8 +825,6 @@ pools:
       - pool-group: app-services-1
       - pool-group: app-services-3
         chain-of-trust: trusted
-      - pool-group: kaios-1
-      - pool-group: kaios-2
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
@@ -893,8 +882,6 @@ pools:
       - pool-group: app-services-1
       - pool-group: app-services-3
         chain-of-trust: trusted
-      - pool-group: kaios-1
-      - pool-group: kaios-2
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
@@ -1017,8 +1004,6 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
-      - pool-group: kaios-1
-      - pool-group: kaios-2
       - pool-group: mobile-1
       - pool-group: mobile-3
         chain-of-trust: trusted
@@ -1078,14 +1063,10 @@ pools:
         chain-of-trust: trusted
       - pool-group: comm-t
         suffix: ''
-      - pool-group: kaios-t
-        suffix: ''
         # Separate pool of workers with source checkout caches
       - pool-group: gecko-t
         suffix: -source
       - pool-group: comm-t
-        suffix: -source
-      - pool-group: kaios-t
         suffix: -source
     config:
       image:
@@ -1103,7 +1084,6 @@ pools:
               '': 1500
               -source: 200
           comm-t: 10
-          kaios-t: 10
           gecko-3: 10
       worker-config:
         dockerConfig: {allowPrivileged: false}
@@ -1237,7 +1217,6 @@ pools:
     variants:
       - pool-group: gecko-t
       - pool-group: comm-t
-      - pool-group: kaios-t
     config:
       image: docker-worker-hvm-builder-current
       maxCapacity: 32
@@ -1300,7 +1279,6 @@ pools:
     variants:
       - pool-group: gecko-t
       - pool-group: comm-t
-      - pool-group: kaios-t
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
@@ -4628,26 +4606,6 @@ pools:
             dockerConfig:
               allowPrivileged: true
             capacityManagement: {diskspaceThreshold: 16000000000}
-        - instanceType: m5.metal
-          capacityPerInstance: 15
-          additional-user-data:
-            tmpfsSize: 294G
-          worker-config:
-            dockerConfig:
-              allowPrivileged: true
-            capacityManagement: {diskspaceThreshold: 16000000000}
-  - pool_id: kaios-t/t-linux-metal
-    description: Monopacker metal workers for Firefox automation
-    owner: release+tc-workers@mozilla.com
-    email_on_error: false
-    provider_id: aws
-    config:
-      regions: [us-east-1, us-west-1, us-west-2]
-      image: monopacker-docker-worker-current
-      minCapacity: 0
-      maxCapacity: 15
-      spot: true
-      instance_types:
         - instanceType: m5.metal
           capacityPerInstance: 15
           additional-user-data:

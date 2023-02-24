@@ -230,7 +230,7 @@
   to:
     - project:
         feature: gecko-roles
-        trust_domain: [gecko, kaios]
+        trust_domain: [gecko]
         level: 2
 
 - grant:
@@ -2368,10 +2368,8 @@
 - grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-comm/in-tree-action-1-generic/*
-    - hooks:trigger-hook:project-kaios/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-gecko/in-tree-action-1-backfill/*
     - hooks:trigger-hook:project-comm/in-tree-action-1-backfill/*
-    - hooks:trigger-hook:project-kaios/in-tree-action-1-backfill/*
   to:
     - groups:
         - active_scm_level_1
@@ -2381,10 +2379,8 @@
 - grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-2-generic/*
     - hooks:trigger-hook:project-comm/in-tree-action-2-generic/*
-    - hooks:trigger-hook:project-kaios/in-tree-action-2-generic/*
     - hooks:trigger-hook:project-gecko/in-tree-action-2-backfill/*
     - hooks:trigger-hook:project-comm/in-tree-action-2-backfill/*
-    - hooks:trigger-hook:project-kaios/in-tree-action-2-backfill/*
   to:
     - groups:
         - active_scm_level_2
