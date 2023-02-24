@@ -44,17 +44,13 @@ monopacker-docker-worker-current: monopacker-docker-worker-2022-11-09t23-08-00z-
 monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-gcp-2023-02-10
 # GCP testers
 monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-bug1768865-20221110
-# AWS baremetal
-monopacker-docker-worker-baremetal-current: monopacker-docker-worker-2020-05-04T14-30-19Z-bug1676214
 
 monopacker-docker-worker-testing-bug1806341: monopacker-docker-worker-2022-11-08t21-41-15z-bug1806341
 
 occ-b-win2012-current: occ-b-win2012-f0280d3
 occ-b-win2012-beta: occ-b-win2012-beta-4384030
 occ-b-win2012-trusted-current: occ-b-win2012-trusted-f3c189d
-# occ-t-win7-32-current: occ-t-win7-32-b4be759
 occ-t-win7-32-beta: occ-t-win7-32-beta-4384030
-# occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-b4be759
 occ-t-win7-32-gpu-beta: occ-t-win7-32-gpu-b-4384030
 occ-t-win7-32-current: occ-t-win7-32-v20200226
 occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-v20200226
@@ -77,11 +73,6 @@ docker-worker-v20220907-hvm-builder-trusted-bug1789506:
     us-west-2: ami-0988039a161c85c08
 
 # monopacker docker-worker images
-monopacker-docker-worker-2020-05-04T14-30-19Z-bug1676214:
-  aws:
-    us-east-1: ami-05da2634276f45d19
-    us-west-1: ami-0fcf189854b467e9b
-    us-west-2: ami-0f4e3c8c96f80b2c2
 monopacker-docker-worker-2022-11-08t21-41-15z-bug1806341:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2022-12-19t00-48-25z
 monopacker-docker-worker-2022-11-09t23-08-00z-bug1768865:
@@ -93,39 +84,10 @@ monopacker-docker-worker-2022-11-09t23-08-00z-bug1768865:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2022-11-09t23-08-00z
 monopacker-docker-worker-gcp-bug1768865-20221110:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2022-11-10
-monopacker-docker-worker-trusted-gcp-2022-14-12:
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2022-12-14t18-33-09z
 monopacker-docker-worker-trusted-gcp-2023-02-10:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-02-10t14-27-55z
 
 # generic-worker images
-gwci-linux:
-  aws:
-    us-east-1: ami-0376deba0edbb4182
-    us-west-1: ami-0d2bc4a97a0aaa9d3
-    us-west-2: ami-00e7eeb8d7449b1ce
-occ-b-win2012-pre:
-  aws:
-    eu-central-1: ami-0b87f079b1cc620d6
-    us-east-1: ami-0da02e9fca7ed9571
-    us-west-1: ami-0f60c98f2480844df
-    us-west-2: ami-08766522e4f058dba
-occ-b-win2012-trusted-pre:
-  aws:
-    us-east-1: ami-0528797bdcd2ea228
-    us-west-1: ami-093f078f632dd65f1
-    us-west-2: ami-08d29be36b85571d8
-occ-t-win7-32-pre:
-  aws:
-    eu-central-1: ami-0dfab5a4f63b6a0ad
-    us-east-1: ami-060329ad97274a637
-    us-west-1: ami-08e087e85ba09f929
-    us-west-2: ami-07e0e8cc311e35b8d
-occ-t-win7-32-gpu-pre:
-  aws:
-    us-east-1: ami-05fe57b3c5b8b12b9
-    us-west-1: ami-0d943d137b0a78d5d
-    us-west-2: ami-0003e4e80ff09fd52
 nss-win2012r2-pre:
   aws:
     us-west-1: ami-0d05851ab254517de
@@ -248,24 +210,12 @@ occ-mpd-b-win2012-trusted-v20200226:
     us-west-1: ami-0c76678a5bdb06f4e
     us-west-2: ami-0520ba0d12752373c
 # Windows 7
-occ-t-win7-32-b4be759:
-  aws:
-    eu-central-1: ami-04f2ca70a0be624b5
-    us-east-1: ami-09db78425fce79b72
-    us-west-1: ami-012d76ae3b8c76c21
-    us-west-2: ami-0bc1164928c0f81c5
 occ-t-win7-32-beta-4384030:
   aws:
     eu-central-1: ami-03c5857f47d11d797
     us-east-1: ami-0800e67eddba22aa7
     us-west-1: ami-0c723de2ffe641a90
     us-west-2: ami-01e485efdaf4adc46
-occ-t-win7-32-gpu-b4be759:
-  aws:
-    eu-central-1: ami-057afa9fa80611523
-    us-east-1: ami-0adec58d534aa820e
-    us-west-1: ami-094068f4b65fe1975
-    us-west-2: ami-015f8164fcd8fc83a
 occ-t-win7-32-gpu-b-4384030:
   aws:
     eu-central-1: ami-0551fc0acf2ec062a
@@ -322,22 +272,6 @@ ronin-t-windows10-64-2004-prod:
     west-europe: win10-64-2004-westeurope-20h1-evd
     west-us: win10-64-2004-westus-20h1-evd
     west-us-2: win10-64-2004-westus2-20h1-evd
-ronin-t-windows10-64-2004-gpu-current:
-  azure2:
-    east-us: gecko-t-win10-64-2004-gpu-eastus-20h1-evd-f160361
-    north-central-us: gecko-t-win10-64-2004-gpu-northcentralus-20h1-evd-f160361
-    south-central-us: gecko-t-win10-64-2004-gpu-southcentralus-20h1-evd-f160361
-    north-europe: gecko-t-win10-64-2004-gpu-northeurope-20h1-evd-f160361
-    west-europe: gecko-t-win10-64-2004-gpu-westeurope-20h1-evd-f160361
-ronin-t-windows10-64-2004-bug1765325:
-  azure2:
-    central-us: gecko-t-win10-64-2004-base-centralus-20h1-evd-7a73724
-ronin-t-windows10-64-2004-gpu-bug1765325:
-  azure2:
-    north-central-us: gecko-t-win10-64-2004-base-northcentralus-20h1-evd-7a73724
-ronin-t-windows10-64-2004-test:
-  azure2:
-    central-us: gecko-t-win10-64-2004-test-centralus-20h1-evd-b839260
 ronin-t-windows10-64-2004-datadisk-test:
   azure2:
     central-us: gecko-t-win10-64-2004-centralus-20h1-evd-f160361
@@ -347,13 +281,6 @@ ronin-t-windows10-64-2004-datadisk-test:
     south-central-us: gecko-t-win10-64-2004-southcentralus-20h1-evd-f160361
     west-us: gecko-t-win10-64-2004-westus-20h1-evd-f160361
     west-us-2: gecko-t-win10-64-2004-westus2-20h1-evd-f160361
-ronin-t-windows10-64-2004-gpu-datadisk-test:
-  azure2:
-    east-us: gecko-t-win10-64-2004-gpu-eastus-20h1-evd-f160361
-    north-central-us: gecko-t-win10-64-2004-gpu-northcentralus-20h1-evd-f160361
-    south-central-us: gecko-t-win10-64-2004-gpu-southcentralus-20h1-evd-f160361
-    north-europe: gecko-t-win10-64-2004-gpu-northeurope-20h1-evd-f160361
-    west-europe: gecko-t-win10-64-2004-gpu-westeurope-20h1-evd-f160361
 # Windows 11
 ronin-t-windows11-64-2009-alpha:
   azure2:
