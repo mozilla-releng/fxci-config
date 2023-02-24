@@ -1357,7 +1357,7 @@
     - project:
         feature: beetmover-phase
         level: 1
-        job: [action:release-promotion]
+        job: [action:release-promotion, cron:nightly]
 
 - grant:
     - project:mobile:fenix:releng:beetmover:bucket:dep
