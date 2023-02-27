@@ -1314,7 +1314,7 @@
   to:
     - project:
         feature: beetmover-maven-phase
-        job: [release*, pull-request:*, action:release-promotion]
+        job: [pull-request:*, action:release-promotion]
     - project:
         feature: beetmover-maven-nightly-phase
         job: [cron:nightly]
@@ -1325,7 +1325,7 @@
     - project:
         feature: beetmover-maven-phase
         level: 3
-        job: [release*, action:release-promotion]
+        job: [action:release-promotion]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:maven-staging
@@ -1334,7 +1334,7 @@
     - project:
         feature: beetmover-maven-phase
         level: 1
-        job: [release*, action:release-promotion, cron:nightly]
+        job: [action:release-promotion, cron:nightly]
     - project:
         feature: beetmover-maven-phase
         job: [pull-request:*]
@@ -1407,14 +1407,14 @@
     - project:
         feature: beetmover-phase
         level: 3
-        job: [release*, action:release-promotion]
+        job: [action:release-promotion]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:github:action:release
   to:
     - project:
         feature: github-publication
-        job: [action:release-promotion, release*, pull-request:*]
+        job: [action:release-promotion, pull-request:*]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:github:project:{trust_project}
@@ -1422,7 +1422,7 @@
     - project:
         feature: github-publication
         level: 3
-        job: [action:release-promotion, release*]
+        job: [action:release-promotion]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:github:project:mock
@@ -1430,7 +1430,7 @@
     - project:
         feature: github-publication
         level: 1
-        job: [release*, action:release-promotion]
+        job: [action:release-promotion]
     - project:
         feature: github-publication
         job: [pull-request:*]
@@ -1441,7 +1441,7 @@
     - project:
         feature: github-publication
         level: 1
-        job: [action:release-promotion, release*]
+        job: [action:release-promotion]
 
 - grant:
     - project:mobile:{trust_project}:releng:signing:cert:release-signing
@@ -1449,7 +1449,7 @@
     - project:
         feature: mobile-sign-phase
         level: 3
-        job: [release*, cron:nightly, action:release-promotion]
+        job: [cron:nightly, action:release-promotion]
     - project:
         alias: fenix
         job: [cron:nightly-on-google-play]
@@ -1485,7 +1485,7 @@
     - project:
         feature: mobile-pushapk-phase
         level: 3
-        job: [release*, cron:nightly, action:release-promotion]
+        job: [cron:nightly, action:release-promotion]
     - project:
         alias: fenix
         job: [cron:nightly-on-google-play]
@@ -1499,7 +1499,7 @@
     - project:
         feature: mobile-pushapk-phase
         level: 1
-        job: [release*, cron:*, action:release-promotion]
+        job: [cron:*, action:release-promotion]
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:focus-android
@@ -1508,7 +1508,7 @@
     - project:
         alias: firefox-android
         level: 3
-        job: [release*, cron:nightly, cron:nightly-on-google-play, action:release-promotion]
+        job: [cron:nightly, cron:nightly-on-google-play, action:release-promotion]
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:focus-android:dep
@@ -1523,7 +1523,7 @@
     - project:
         alias: staging-firefox-android
         level: 1
-        job: [release*, cron:*, action:release-promotion]
+        job: [cron:*, action:release-promotion]
 
 - grant:
     - secrets:get:project/mobile/{trust_project}/firebase
@@ -1652,7 +1652,7 @@
   to:
     - project:
         feature: shipit
-        job: [release*, pull-request:*]
+        job: [pull-request:*]
     - project:
         feature: [shipit, taskgraph-actions]
         job: [action:release-promotion]
@@ -1660,13 +1660,6 @@
 - grant:
     - project:releng:ship-it:server:production
   to:
-    - project:
-        # TODO: in the glorious future when Fenix will solely be released via
-        # Ship-it we can remove the individual Github release section. But until
-        # then we need to support both for a smooth transition
-        level: 3
-        feature: shipit
-        job: [release*]
     - project:
         level: 3
         feature: [shipit, taskgraph-actions]
@@ -1681,7 +1674,7 @@
         # section which addresses the RelEngers forks
         level: 1
         feature: shipit
-        job: [release*, pull-request:*]
+        job: [pull-request:*]
     - project:
         level: 1
         feature: [shipit, taskgraph-actions]
@@ -1730,7 +1723,7 @@
   to:
     - project:
         alias: fenix
-        job: [action:release-promotion, release*]
+        job: [action:release-promotion]
 
 - grant:
     # TODO Change the following scope once `production` is entirely renamed to `nightly`
@@ -1831,7 +1824,7 @@
   to:
     - project:
         alias: firefox-android
-        job: [release*, action:release-promotion]
+        job: [action:release-promotion]
 
 - grant:
     - project:mobile:firefox-android:releng:signing:cert:production-signing
