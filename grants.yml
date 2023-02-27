@@ -945,9 +945,10 @@
         job: [release*]
 
 - grant:
-    # TODO Bug 1631839: Remove thisu scope once project has migrated to
+    # TODO Bug 1631839: Remove this scope once project has migrated to
     # `index.glean.v2.*`.
     - queue:route:index.project.glean.v2.branch.*
+    - queue:route:index.glean.v2.glean.revision.*
   to:
     - project:
         alias: glean
