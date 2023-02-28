@@ -52,8 +52,6 @@ occ-t-win7-32-gpu-beta: occ-t-win7-32-gpu-b-4384030
 occ-t-win7-32-current: occ-t-win7-32-v20200226
 occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-v20200226
 
-nss-win2012r2-current: nss-win2012r2-pre
-
 relops-image-builder-current: relops-image-builder-pre
 
 # production docker-worker AMIs
