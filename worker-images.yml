@@ -47,14 +47,10 @@ monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-bug1768865-20
 
 monopacker-docker-worker-testing-bug1806341: monopacker-docker-worker-2022-11-08t21-41-15z-bug1806341
 
-occ-b-win2012-current: occ-b-win2012-f0280d3
-occ-b-win2012-beta: occ-b-win2012-beta-4384030
-occ-b-win2012-trusted-current: occ-b-win2012-trusted-f3c189d
 occ-t-win7-32-beta: occ-t-win7-32-beta-4384030
 occ-t-win7-32-gpu-beta: occ-t-win7-32-gpu-b-4384030
 occ-t-win7-32-current: occ-t-win7-32-v20200226
 occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-v20200226
-occ-mpd001-b-win2012-trusted-current: occ-mpd-b-win2012-trusted-v20200226
 
 nss-win2012r2-current: nss-win2012r2-pre
 
@@ -88,28 +84,6 @@ monopacker-docker-worker-trusted-gcp-2023-02-10:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-02-10t14-27-55z
 
 # generic-worker images
-nss-win2012r2-pre:
-  aws:
-    us-west-1: ami-0d05851ab254517de
-    us-west-2: ami-02f981615a8102d24
-# Windows Server 2012
-occ-b-win2012-f0280d3:
-  aws:
-    eu-central-1: ami-0088f6f069a63870e
-    us-east-1: ami-09c8f4c0b88a9d335
-    us-west-1: ami-0eb7fd3631b03ab9b
-    us-west-2: ami-0a4c44377468bfa3f
-occ-b-win2012-beta-4384030:
-  aws:
-    eu-central-1: ami-0f083b98e4afaffa4
-    us-east-1: ami-009cce218d63116de
-    us-west-1: ami-050c052ed6df6a2cf
-    us-west-2: ami-04731c2ad4e13306b
-occ-b-win2012-trusted-f3c189d:
-  aws:
-    us-east-1: ami-00e380c9bd8333774
-    us-west-1: ami-0839334386a46283d
-    us-west-2: ami-0b0d25fe1a2a124c7
 # Azure 2012 images
 ronin-b1-windows2012-alpha:
   azure2:
@@ -203,12 +177,6 @@ ronin-b1-windows2012-bug1801167:
     deployment_id: alpha
     central-us: masterwayz-win2012test-image-20221122010013
 
-occ-mpd-b-win2012-trusted-v20200226:
-  aws:
-    eu-central-1: ami-09a5852e0cc1edb81
-    us-east-1: ami-08f30fc003814c298
-    us-west-1: ami-0c76678a5bdb06f4e
-    us-west-2: ami-0520ba0d12752373c
 # Windows 7
 occ-t-win7-32-beta-4384030:
   aws:
