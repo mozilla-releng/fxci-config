@@ -1361,15 +1361,6 @@
         job: [action:release-promotion, cron:nightly]
 
 - grant:
-    - project:mobile:fenix:releng:beetmover:bucket:dep
-    - project:mobile:fenix:releng:beetmover:action:direct-push-to-bucket
-  to:
-    - project:
-        feature: beetmover-phase
-        level: 1
-        job: [action:release-promotion, cron:nightly]
-
-- grant:
     - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:nightly
     - project:{trust_domain}:{trust_project}:releng:beetmover:action:direct-push-to-bucket
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
@@ -1381,24 +1372,6 @@
         feature: beetmover-phase
         level: 3
         job: [cron:nightly]
-
-- grant:
-    # TODO bug 1814385 - Remove these scopes
-    - project:mobile:fenix:releng:beetmover:bucket:nightly
-    - project:mobile:fenix:releng:beetmover:action:direct-push-to-bucket
-  to:
-    - project:
-        alias: firefox-android
-        job: [cron:nightly]
-
-- grant:
-    # TODO bug 1814385 - Remove these scopes
-    - project:mobile:fenix:releng:beetmover:bucket:release
-    - project:mobile:fenix:releng:beetmover:action:direct-push-to-bucket
-  to:
-    - project:
-        alias: firefox-android
-        job: [action:release-promotion]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:release
@@ -1751,8 +1724,6 @@
         job: [action:release-promotion]
 
 - grant:
-    # TODO Change the following scope once `production` is entirely renamed to `nightly`
-    - project:mobile:fenix:releng:signing:cert:production-signing
     - secrets:get:project/mobile/firefox-android/fenix/nightly
     # TODO bug 1804938 remove
     - secrets:get:project/mobile/fenix/nightly
