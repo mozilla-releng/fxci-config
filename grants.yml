@@ -1822,13 +1822,6 @@
 
 # firefox-android specific scopes
 - grant:
-    - secrets:get:project/mobile/firefox-android/github-clone-ssh
-  to:
-    - project:
-        alias: firefox-android
-        job: ["*"]
-
-- grant:
     - index:insert-task:mobile.v3.{alias}.*
     - queue:route:index.mobile.v3.{alias}.*
   to:
