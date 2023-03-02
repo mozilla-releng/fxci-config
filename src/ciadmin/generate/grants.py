@@ -73,7 +73,9 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             # split based on the job
             jobs = [job for job in jobs if job != "*"]
             jobs += ["pull-request:*", "branch:*", "cron:*", "action:*"]
-            if project.feature("legacy-github-release") or not project.feature("mobile-roles"):
+            if project.feature("legacy-github-release") or not project.feature(
+                "mobile-roles"
+            ):
                 jobs += ["release*"]
 
         # Only grant scopes to `cron:` or `action:` jobs if the corresponding features
