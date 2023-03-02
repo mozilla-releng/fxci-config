@@ -191,6 +191,7 @@ pools:
       - pool-group: mobile-1
       - pool-group: mobile-3
         chain-of-trust: trusted
+      - pool-group: mozilla-1
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
@@ -218,6 +219,7 @@ pools:
       maxCapacity:
         by-pool-group:
           mobile-.*: 50
+          mozilla-.*: 10
           mozillavpn-.*: 10
           default: 100
       regions: [us-central1, us-west1]
@@ -485,6 +487,7 @@ pools:
       - pool-group: mobile-1
       - pool-group: mobile-3
         chain-of-trust: trusted
+      - pool-group: mozilla-1
     config:
       regions: [us-central1, us-west1]
       image:
@@ -531,6 +534,7 @@ pools:
       - pool-group: app-services-1
       - pool-group: app-services-3
         chain-of-trust: trusted
+      - pool-group: mozilla-1
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
@@ -2776,6 +2780,7 @@ pools:
     variants:
       - pool-group: gecko-t
       - pool-group: comm-t
+      - pool-group: mozilla-t
     email_on_error: true
     config:
       minCapacity: 0
@@ -2783,6 +2788,7 @@ pools:
         by-pool-group:
           gecko-t: 2500
           comm-t: 100
+          mozilla-t: 100
       regions: [us-central1, us-west1]
       image: monopacker-docker-worker-gcp-current
       instance_types:
