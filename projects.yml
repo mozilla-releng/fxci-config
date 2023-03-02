@@ -795,6 +795,20 @@ build-mar:
     github-pull-request:
       policy: public
 
+firefox-ci-template:
+  repo: https://github.com/mozilla-releng/firefox-ci-template
+  repo_type: git
+  default_branch: main
+  trust_domain: mozilla
+  trust_project: firefox-ci-template
+  level: 1
+  features:
+    github-pull-request:
+      policy: public
+    github-taskgraph: true
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 cloud-image-builder:
   repo: https://github.com/mozilla-platform-ops/cloud-image-builder
   repo_type: git
