@@ -1503,29 +1503,15 @@
     - secrets:get:project/mobile/{trust_project}/firebase
   to:
     - project:
-        # TODO bug 1804938 restrict to reference-browser
-        feature: mobile-firebase-testing
+        alias: reference-browser
         job:
           - action:*
           - branch:*
           - pull-request:trusted
-    - project:
-        # TODO bug 1804938 remove
-        # Fenix PRs are restricted to collaborators, so exposing firebase is safe-enough for PRs.
-        # Fenix also has some Firebase tests on nightly.
-        alias: fenix
-        job:
-          - cron:nightly
-          - cron:nightly-on-google-play
-          - cron:screenshots
-          - cron:legacy-api-ui-tests
 
 - grant:
     - secrets:get:project/mobile/firefox-android/focus-android/firebase
     - secrets:get:project/mobile/firefox-android/fenix/firebase
-    # TODO bug 1804938 remove
-    - secrets:get:project/mobile/focus-android/firebase
-    - secrets:get:project/mobile/fenix/firebase
   to:
     - project:
         alias: staging-firefox-android
@@ -1697,12 +1683,7 @@
 
 - grant:
     - secrets:get:project/mobile/firefox-android/fenix/nightly-simulation
-    # TODO bug 1804938 remove
-    - secrets:get:project/mobile/fenix/nightly-simulation
   to:
-    - project:
-        alias: fenix
-        job: [branch:*, cron:nightly-test]
     - project:
         alias: firefox-android
         job: [branch:*, cron:nightly-test]
@@ -1712,12 +1693,6 @@
     - project:mobile:fenix:releng:signing:cert:fennec-production-signing
     # `production-signing` handles mozillaonline signing
     - project:mobile:fenix:releng:signing:cert:production-signing
-
-    # TODO bug 1804938 remove
-    - secrets:get:project/mobile/fenix/beta
-    - secrets:get:project/mobile/fenix/release
-    - secrets:get:project/mobile/fenix/beta-mozillaonline
-    - secrets:get:project/mobile/fenix/release-mozillaonline
   to:
     - project:
         alias: fenix
@@ -1725,13 +1700,8 @@
 
 - grant:
     - secrets:get:project/mobile/firefox-android/fenix/nightly
-    # TODO bug 1804938 remove
-    - secrets:get:project/mobile/fenix/nightly
     - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
   to:
-    - project:
-        alias: fenix
-        job: [action:generic, cron:nightly, cron:nightly-on-google-play]
     - project:
         alias: firefox-android
         job: [action:generic, cron:nightly]
@@ -1812,13 +1782,6 @@
     - secrets:get:project/mobile/firefox-android/fenix/release
     - secrets:get:project/mobile/firefox-android/fenix/beta-mozillaonline
     - secrets:get:project/mobile/firefox-android/fenix/release-mozillaonline
-    # TODO bug 1804938 remove
-    - secrets:get:project/mobile/focus-android/beta
-    - secrets:get:project/mobile/focus-android/release
-    - secrets:get:project/mobile/fenix/beta
-    - secrets:get:project/mobile/fenix/release
-    - secrets:get:project/mobile/fenix/beta-mozillaonline
-    - secrets:get:project/mobile/fenix/release-mozillaonline
   to:
     - project:
         alias: firefox-android
@@ -1827,8 +1790,6 @@
 - grant:
     - project:mobile:firefox-android:releng:signing:cert:production-signing
     - secrets:get:project/mobile/firefox-android/focus-android/nightly
-    # TODO bug 1804938 remove
-    - secrets:get:project/mobile/focus-android/nightly
   to:
     - project:
         alias: firefox-android
