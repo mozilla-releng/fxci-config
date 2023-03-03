@@ -1752,7 +1752,10 @@
   to:
     - project:
         alias: firefox-ios
-        job: [cron:l10-screenshots, action:*]
+        job:
+          - action:*
+          - cron:l10-screenshots
+          - branch:*
 
 - grant:
     - secrets:get:project/mobile/focus-ios/bitrise
