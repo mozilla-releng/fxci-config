@@ -1424,9 +1424,6 @@
         feature: mobile-sign-phase
         level: 3
         job: [cron:nightly, action:release-promotion]
-    - project:
-        alias: fenix
-        job: [cron:nightly-on-google-play]
 
 - grant:
     - queue:route:index.mobile.v2.{trust_project}.nightly.*
@@ -1435,9 +1432,6 @@
         feature: mobile-sign-phase
         level: 3
         job: [cron:nightly]
-    - project:
-        alias: fenix
-        job: [cron:nightly-on-google-play]
 
 # The trigger-nightly task in firefox-android triggers nightly cron (bug 1791748)
 - grant:
@@ -1446,6 +1440,7 @@
     - project:
         alias: staging-firefox-android
         job: [branch:main]
+
 - grant:
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-android/nightly
   to:
@@ -1460,9 +1455,6 @@
         feature: mobile-pushapk-phase
         level: 3
         job: [cron:nightly, action:release-promotion]
-    - project:
-        alias: fenix
-        job: [cron:nightly-on-google-play]
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}:dep
@@ -1578,9 +1570,6 @@
           - action:*
           - pull-request:*
     - project:
-        alias: fenix
-        job: [cron:nightly, cron:nightly-test]
-    - project:
         alias: staging-firefox-android
         job: [cron:nightly, cron:nightly-test]
     - project:
@@ -1594,9 +1583,6 @@
     - queue:route:index.{trust_domain}.v2.{trust_project}.performance-test.*
   to:
     - project:
-        alias: fenix
-        job: [cron:nightly]
-    - project:
         alias: staging-firefox-android
         job: [cron:nightly]
     - project:
@@ -1609,9 +1595,6 @@
 - grant:
     - queue:route:notify.email.perftest-alerts@mozilla.com.on-failed
   to:
-    - project:
-        alias: fenix
-        job: [cron:nightly]
     - project:
         alias: firefox-android
         job: [cron:nightly]
@@ -1665,22 +1648,6 @@
         feature: [shipit, taskgraph-actions]
         job: [pull-request:*]
 
-# fenix specific scopes
-- grant:
-    - queue:route:index.project.fenix.android.preview-builds
-    - github:create-comment:mozilla-mobile/fenix
-  to:
-    - project:
-        alias: fenix
-        job: [pull-request:*]
-
-- grant:
-    - secrets:get:project/mobile/fenix/public-tokens
-  to:
-    - project:
-        alias: fenix
-        job: [branch:*, pull-request:trusted]
-
 - grant:
     - secrets:get:project/mobile/firefox-android/fenix/nightly-simulation
   to:
@@ -1689,29 +1656,12 @@
         job: [branch:*, cron:nightly-test]
 
 - grant:
-    # XXX `fennec-production-signing` handles beta signing too.
-    - project:mobile:fenix:releng:signing:cert:fennec-production-signing
-    # `production-signing` handles mozillaonline signing
-    - project:mobile:fenix:releng:signing:cert:production-signing
-  to:
-    - project:
-        alias: fenix
-        job: [action:release-promotion]
-
-- grant:
     - secrets:get:project/mobile/firefox-android/fenix/nightly
     - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
   to:
     - project:
         alias: firefox-android
         job: [action:generic, cron:nightly]
-
-- grant:
-    - queue:route:index.mobile.v2.staging-fenix.*
-    - queue:route:tc-treeherder.v2.fenix-pr.*
-  to:
-    - project:
-        alias: staging-fenix
 
 - grant:
     - queue:scheduler-id:{trust_domain}-level-{level}
