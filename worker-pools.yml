@@ -2451,7 +2451,7 @@ pools:
                 createOption: FromImage
               dataDisks:
                 - lun: 0
-                  diskSizeGB: 30
+                  diskSizeGB: 500
                   managedDisk:
                     storageAccountType: Premium_LRS
                   createOption: Empty
