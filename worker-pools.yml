@@ -296,7 +296,7 @@ pools:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          mobile-1: 50
+          mobile-1: 200
           mobile-3: 100
           default: 10
       regions: [us-central1, us-west1]
