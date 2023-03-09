@@ -734,12 +734,12 @@ build-mar:
     github-pull-request:
       policy: public
 
-firefox-ci-template:
-  repo: https://github.com/mozilla-releng/firefox-ci-template
+firefox-ci-playground:
+  repo: https://github.com/mozilla-releng/firefox-ci-playground
   repo_type: git
   default_branch: main
   trust_domain: mozilla
-  trust_project: firefox-ci-template
+  trust_project: firefox-ci-playground
   level: 1
   features:
     github-pull-request:
