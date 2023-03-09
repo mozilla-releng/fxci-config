@@ -1,0 +1,38 @@
+---
+created:
+  $fromNow: 0 seconds
+deadline:
+  $fromNow: 2 hours
+expires:
+  $fromNow: 1 month
+extra: {}
+metadata:
+  description: Build datasets for bugzilla dashboard
+  name: Bugzilla dashboard data generation (testing)
+  owner: release-mgmt-analysis@mozilla.com
+  source: 'https://github.com/mozilla/bugzilla-dashboard-backend'
+payload:
+  artifacts:
+    project/relman/bugzilla-dashboard:
+      path: /output
+      type: directory
+  cache: {}
+  capabilities: {}
+  env:
+    BZD_OUTPUT_PATH: /output
+    TASKCLUSTER_SECRET: project/relman/bugzilla-dashboard/runtime-testing
+  features:
+    taskclusterProxy: true
+  image: 'mozilla/bugzilla-dashboard:backend-ac698238332c8974eac194e790fea4106bbcbfc9'
+  maxRunTime: 7200
+priority: lowest
+provisionerId: project-relman
+retries: 3
+routes:
+  - index.project.relman.testing.bugzilla-dashboard.latest
+schedulerId: relman
+scopes:
+  - 'index:insert-task:project.relman.testing.bugzilla-dashboard.*'
+  - 'secrets:get:project/relman/bugzilla-dashboard/runtime-testing'
+tags: {}
+workerType: relman-svc

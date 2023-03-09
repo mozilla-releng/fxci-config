@@ -169,3 +169,41 @@ project-relman/code-review-production:
   trigger_schema:
     type: object
     additionalProperties: true
+
+project-relman/bugzilla-dashboard-backend-production:
+  name: Bugzilla dashboard data generation (production)
+  description: Regularly create bugzilla dashboard datasets
+  owner: release-mgmt-analysis@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 0 */6 * * *
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository
+    - index:insert-task:project.relman.production.bugzilla-dashboard.*
+    - queue:create-task:highest:project-relman/relman-svc
+    - queue:route:index.project.relman.production.bugzilla-dashboard.*
+    - queue:scheduler-id:relman
+    - secrets:get:project/relman/bugzilla-dashboard/runtime-production
+  template_file: hooks/project-relman/bugzilla-dashboard-backend-production.yml
+  trigger_schema:
+    type: object
+    additionalProperties: true
+
+project-relman/bugzilla-dashboard-backend-testing:
+  name: Bugzilla dashboard data generation (testing)
+  description: Regularly create bugzilla dashboard datasets
+  owner: release-mgmt-analysis@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 0 */6 * * *
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository
+    - index:insert-task:project.relman.testing.bugzilla-dashboard.*
+    - queue:create-task:lowest:project-relman/relman-svc
+    - queue:route:index.project.relman.testing.bugzilla-dashboard.*
+    - queue:scheduler-id:relman
+    - secrets:get:project/relman/bugzilla-dashboard/runtime-testing
+  template_file: hooks/project-relman/bugzilla-dashboard-backend-testing.yml
+  trigger_schema:
+    type: object
+    additionalProperties: true
