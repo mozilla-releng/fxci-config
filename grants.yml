@@ -2320,6 +2320,15 @@
         - sheriff
         - perf_sheriff
 
+# Permit Thunderbird releng to retrigger Thunderbird decision tasks
+- grant:
+    - hooks:trigger-hook:project-comm/in-tree-action-1-retrigger-decision/*
+    - hooks:trigger-hook:project-comm/in-tree-action-2-retrigger-decision/*
+    - hooks:trigger-hook:project-comm/in-tree-action-3-retrigger-decision/*
+  to:
+    - groups:
+        - thunderbird-releng
+
 # In addition to the default scopes, retriggering a decision task requires
 # the scopes of a decision task.  These differ per project, so we use some
 # substitution to generate the correct values
