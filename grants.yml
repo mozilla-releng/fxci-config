@@ -1362,12 +1362,9 @@
         job: [action:release-promotion, cron:nightly]
 
 - grant:
-    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:nightly
     - project:{trust_domain}:{trust_project}:releng:beetmover:action:direct-push-to-bucket
+    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:nightly
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
-    # TODO: Remove below once beetmover landed to prod workers
-    - queue:create-task:highest:scriptworker-k8s/{trust_domain}-1-*
-    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:dep
   to:
     - project:
         feature: beetmover-phase
@@ -1375,8 +1372,8 @@
         job: [cron:nightly]
 
 - grant:
-    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:release
     - project:{trust_domain}:{trust_project}:releng:beetmover:action:direct-push-to-bucket
+    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:release
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
   to:
     - project:
@@ -1392,11 +1389,10 @@
         job: [action:release-promotion, pull-request:*]
 
 - grant:
-    - project:{trust_domain}:{trust_project}:releng:github:project:{trust_project}
+    - project:{trust_domain}:{trust_project}:releng:github:project:{alias}
   to:
     - project:
         feature: github-publication
-        level: 3
         job: [action:release-promotion]
 
 - grant:
@@ -1409,14 +1405,6 @@
     - project:
         feature: github-publication
         job: [pull-request:*]
-
-- grant:
-    - project:{trust_domain}:{trust_project}:releng:github:project:{alias}
-  to:
-    - project:
-        feature: github-publication
-        level: 1
-        job: [action:release-promotion]
 
 - grant:
     - project:mobile:{trust_project}:releng:signing:cert:release-signing
@@ -1455,7 +1443,9 @@
     - project:
         feature: mobile-pushapk-phase
         level: 3
-        job: [cron:nightly, action:release-promotion]
+        job:
+          - cron:nightly
+          - action:release-promotion
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}:dep
@@ -1466,7 +1456,9 @@
     - project:
         feature: mobile-pushapk-phase
         level: 1
-        job: [cron:*, action:release-promotion]
+        job:
+          - cron:*
+          - action:release-promotion
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:focus-android
@@ -1475,7 +1467,10 @@
     - project:
         alias: firefox-android
         level: 3
-        job: [cron:nightly, cron:nightly-on-google-play, action:release-promotion]
+        job:
+          - cron:nightly
+          - cron:nightly-on-google-play
+          - action:release-promotion
 
 - grant:
     - project:mobile:{trust_project}:releng:googleplay:product:focus-android:dep
@@ -1486,11 +1481,10 @@
         job: [pull-request:*]
     - project:
         alias: staging-firefox-android
-        job: [pull-request:*]
-    - project:
-        alias: staging-firefox-android
-        level: 1
-        job: [cron:*, action:release-promotion]
+        job:
+          - pull-request:*
+          - cron:*
+          - action:release-promotion
 
 - grant:
     - secrets:get:project/mobile/{trust_project}/firebase
@@ -1503,51 +1497,84 @@
           - pull-request:trusted
 
 - grant:
-    - secrets:get:project/mobile/firefox-android/focus-android/firebase
-    - secrets:get:project/mobile/firefox-android/fenix/firebase
+    - secrets:get:project/mobile/{trust_project}/android-components/firebase
   to:
     - project:
-        alias: staging-firefox-android
+        alias:
+          - firefox-android
+          - staging-firefox-android
         job:
           - action:*
           - branch:*
           - pull-request:trusted
+
+- grant:
+    - secrets:get:project/mobile/{trust_project}/focus-android/firebase
+    - secrets:get:project/mobile/{trust_project}/fenix/firebase
+  to:
     - project:
-        alias: firefox-android
+        alias:
+          - firefox-android
+          - staging-firefox-android
         job:
           - action:*
           - branch:*
           - pull-request:trusted
-    - project:
-        alias: staging-firefox-android
-        job:
-          - cron:nightly
-          - cron:nightly-on-google-play
-          - cron:screenshots
-          - cron:legacy-api-ui-tests
-    - project:
-        alias: firefox-android
-        job:
           - cron:nightly
           - cron:nightly-on-google-play
           - cron:screenshots
           - cron:legacy-api-ui-tests
 
 - grant:
-    - secrets:get:project/mobile/firefox-android/android-components/firebase
+    - secrets:get:project/mobile/{trust_project}/fenix/nightly
   to:
-    - project:
-        alias: staging-firefox-android
-        job:
-          - action:*
-          - branch:*
-          - pull-request:trusted
     - project:
         alias: firefox-android
         job:
-          - action:*
+          - action:generic
+          - cron:nightly
+
+- grant:
+    - secrets:get:project/mobile/{trust_project}/fenix/nightly-simulation
+  to:
+    - project:
+        alias: firefox-android
+        job:
           - branch:*
-          - pull-request:trusted
+          - cron:nightly-test
+
+- grant:
+    - index:insert-task:mobile.v3.{alias}.*
+    - queue:route:index.mobile.v3.{alias}.*
+  to:
+    - project:
+        alias: firefox-android
+        include_pull_requests: false
+        feature: trust-domain-scopes
+
+- grant:
+    # XXX `fennec-production-signing` handles beta signing too.
+    - project:mobile:{trust_project}:releng:signing:cert:fennec-production-signing
+    # `production-signing` handles mozillaonline signing
+    - project:mobile:{trust_project}:releng:signing:cert:production-signing
+    - secrets:get:project/mobile/{trust_project}/focus-android/beta
+    - secrets:get:project/mobile/{trust_project}/focus-android/release
+    - secrets:get:project/mobile/{trust_project}/fenix/beta
+    - secrets:get:project/mobile/{trust_project}/fenix/release
+    - secrets:get:project/mobile/{trust_project}/fenix/beta-mozillaonline
+    - secrets:get:project/mobile/{trust_project}/fenix/release-mozillaonline
+  to:
+    - project:
+        alias: firefox-android
+        job: [action:release-promotion]
+
+- grant:
+    - project:mobile:{trust_project}:releng:signing:cert:production-signing
+    - secrets:get:project/mobile/{trust_project}/focus-android/nightly
+  to:
+    - project:
+        alias: firefox-android
+        job: [cron:nightly]
 
 - grant:
     - secrets:get:project/mobile/github
@@ -1571,11 +1598,12 @@
           - action:*
           - pull-request:*
     - project:
-        alias: staging-firefox-android
-        job: [cron:nightly, cron:nightly-test]
-    - project:
-        alias: firefox-android
-        job: [cron:nightly, cron:nightly-test]
+        alias:
+          - firefox-android
+          - staging-firefox-android
+        job:
+          - cron:nightly
+          - cron:nightly-test
     - project:
         alias: reference-browser
         job: [branch:*]
@@ -1584,10 +1612,9 @@
     - queue:route:index.{trust_domain}.v2.{trust_project}.performance-test.*
   to:
     - project:
-        alias: staging-firefox-android
-        job: [cron:nightly]
-    - project:
-        alias: firefox-android
+        alias:
+          - firefox-android
+          - staging-firefox-android
         job: [cron:nightly]
     - project:
         alias: reference-browser
@@ -1604,13 +1631,13 @@
         job: [branch:master]
 
 - grant:
-    - queue:route:notify.email.android-components-team@mozilla.com.on-failed
-    - queue:route:notify.email.geckoview-core@mozilla.com.on-failed
+    - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
   to:
     - project:
         alias: firefox-android
-        # Used in order to warn the AC team whenever a GV update cannot be merged
-        job: [pull-request:*]
+        job:
+          - action:generic
+          - cron:nightly
 
 - grant:
     - project:releng:ship-it:action:mark-as-shipped
@@ -1648,21 +1675,6 @@
         level: 3
         feature: [shipit, taskgraph-actions]
         job: [pull-request:*]
-
-- grant:
-    - secrets:get:project/mobile/firefox-android/fenix/nightly-simulation
-  to:
-    - project:
-        alias: firefox-android
-        job: [branch:*, cron:nightly-test]
-
-- grant:
-    - secrets:get:project/mobile/firefox-android/fenix/nightly
-    - queue:route:notify.email.fenix-eng-notifications@mozilla.com.on-failed
-  to:
-    - project:
-        alias: firefox-android
-        job: [action:generic, cron:nightly]
 
 - grant:
     - queue:scheduler-id:{trust_domain}-level-{level}
@@ -1714,40 +1726,6 @@
     - project:
         alias: focus-ios
         job: [cron:l10-screenshots, action:*]
-
-# firefox-android specific scopes
-- grant:
-    - index:insert-task:mobile.v3.{alias}.*
-    - queue:route:index.mobile.v3.{alias}.*
-  to:
-    - project:
-        alias: firefox-android
-        include_pull_requests: false
-        feature: trust-domain-scopes
-
-- grant:
-    # XXX `fennec-production-signing` handles beta signing too.
-    - project:mobile:firefox-android:releng:signing:cert:fennec-production-signing
-    # `production-signing` handles mozillaonline signing
-    - project:mobile:firefox-android:releng:signing:cert:production-signing
-    - secrets:get:project/mobile/firefox-android/focus-android/beta
-    - secrets:get:project/mobile/firefox-android/focus-android/release
-    - secrets:get:project/mobile/firefox-android/fenix/beta
-    - secrets:get:project/mobile/firefox-android/fenix/release
-    - secrets:get:project/mobile/firefox-android/fenix/beta-mozillaonline
-    - secrets:get:project/mobile/firefox-android/fenix/release-mozillaonline
-  to:
-    - project:
-        alias: firefox-android
-        job: [action:release-promotion]
-
-- grant:
-    - project:mobile:firefox-android:releng:signing:cert:production-signing
-    - secrets:get:project/mobile/firefox-android/focus-android/nightly
-  to:
-    - project:
-        alias: firefox-android
-        job: [cron:nightly]
 
 # Mozilla VPN
 
