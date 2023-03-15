@@ -3380,7 +3380,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - *persistent-disk-75
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
