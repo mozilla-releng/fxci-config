@@ -3255,6 +3255,28 @@ pools:
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
           worker-config:
             capacityManagement: {diskspaceThreshold: 30000000000}
+  - pool_id: project-relman/relman-svc
+    description: Release management workers
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: aws
+    config:
+      regions: [us-east-1, us-west-1, us-west-2]
+      image: docker-worker-hvm-builder-current
+      minCapacity: 0
+      maxCapacity: 2
+      worker-config:
+        shutdown:
+          afterIdleSeconds: 15
+      instance_types:
+        - instanceType: m5.large
+          worker-config:
+            capacityManagement:
+              diskspaceThreshold: 20000000000
+          launchConfig:
+            BlockDeviceMappings:
+              - DeviceName: /dev/xvdb
+                Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
   - pool_id: code-review/bot-gcp
     description: Worker for the code-review bot.
     owner: release+tc-workers@mozilla.com
