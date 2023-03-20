@@ -14,6 +14,7 @@ from ciadmin.generate.ciconfig.environment import Environment
 from ciadmin.generate.ciconfig.worker_images import WorkerImage, WorkerImages
 from ciadmin.generate.ciconfig.worker_pools import WorkerPool
 from ciadmin.generate.worker_pools import make_worker_pool
+from ciadmin.util.templates import merge
 
 
 @pytest.fixture
@@ -79,7 +80,7 @@ def make_pool():
             )
 
         if extra_config:
-            config.update(extra_config)
+            config = merge(config, extra_config)
 
         return WorkerPool(
             pool_id="provId/my-worker-pool",
@@ -181,11 +182,36 @@ def assert_scaling_ratio(pool):
     assert pool.config["scalingRatio"] == 0.5
 
 
+def assert_guest_accelerators(pool):
+    assert pool.config["launchConfigs"][1]["guestAccelerators"][0] == {
+        "acceleratorCount": 4,
+        "acceleratorType": "zones/us-east1a/acceleratorTypes/nvidia-tesla-v100",
+    }
+
+
 @pytest.mark.parametrize(
     "provider,extra_config",
     (
         pytest.param("aws", None, id="aws_basic"),
         pytest.param("google", None, id="google_basic"),
+        pytest.param(
+            "google",
+            {
+                "instance_types": [
+                    {
+                        "disks": [],
+                        "guestAccelerators": [
+                            {
+                                "acceleratorCount": 4,
+                                "acceleratorType": "nvidia-tesla-v100",
+                            }
+                        ],
+                        "machine_type": "n1-highmem-32",
+                    }
+                ]
+            },
+            id="guest_accelerators",
+        ),
         pytest.param("azure", None, id="azure_basic"),
         pytest.param("aws", {"scalingRatio": 0.5}, id="scaling_ratio"),
     ),

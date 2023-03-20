@@ -366,9 +366,13 @@ def get_google_provider_config(
                         ].setdefault("wstServerURL", google_config["wst_server_url"])
                 launch_config[
                     "machineType"
-                ] = "zones/{zone}/machineTypes/{machine_type}".format(
-                    zone=zone, machine_type=launch_config.pop("machine_type")
-                )
+                ] = f"zones/{zone}/machineTypes/{launch_config.pop('machine_type')}"
+
+                for acc in launch_config.get("guestAccelerators", []):
+                    acc[
+                        "acceleratorType"
+                    ] = f"zones/{zone}/acceleratorTypes/{acc['acceleratorType']}"
+
                 # TODO: Add an option for requesting non-prementible instances
                 launch_config["scheduling"] = {
                     "onHostMaintenance": "terminate",
