@@ -936,3 +936,17 @@ code-coverage:
     trust-domain-scopes: true
     github-pull-request:
       policy: public
+
+# Bug 1822403: Add taskgraph support to firefox-translations-training
+firefox-translations-training:
+  repo: https://github.com/mozilla/firefox-translations-training
+  repo_type: git
+  default_branch: main
+  trust_domain: mozilla
+  level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public
+    taskgraph-actions: true
+    trust-domain-scopes: true
