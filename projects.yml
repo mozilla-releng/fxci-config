@@ -942,7 +942,7 @@ firefox-translations-training:
   repo: https://github.com/mozilla/firefox-translations-training
   repo_type: git
   default_branch: main
-  trust_domain: mozilla
+  trust_domain: translations
   level: 1
   features:
     github-taskgraph: true
