@@ -1290,8 +1290,6 @@
     # tasks are using them.
     - index:insert-task:mobile.cache.level-{level}.*
     - queue:route:index.mobile.cache.level-{level}.*
-    - queue:scheduler-id:{trust_domain}-level-{level}
-    - secrets:get:project/releng/mobile/build/level-{level}/*
   to:
     - project:
         feature: mobile-roles
