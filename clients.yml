@@ -287,14 +287,14 @@ project/releng/generic-worker/datacenter-gecko-t-win10-64-1803-hw:
     and unittest. 1803 references the os build.
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-win10-64-1803-hw
-project/releng/generic-worker/datacenter-gecko-t-win11-64-2009-hw:
+project/releng/generic-worker/win11-64-2009-hw:
   description: Datacenter Windows 11 main production worker. 2009 references the os build.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-win11-64-2009-hw
-project/releng/generic-worker/datacenter-gecko-t-win11-64-2009-hw-alpha:
+    - assume:worker-type:releng-hardware/win11-64-2009-hw
+project/releng/generic-worker/win11-64-2009-hw-alpha:
   description: Datacenter Windows 11 experimental worker. 2009 references the os build.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-win11-64-2009-hw-alpha
+    - assume:worker-type:releng-hardware/win11-64-2009-hw-alpha
 project/releng/generic-worker/datacenter-gecko-t-win10-64-dev:
   description: Windows 10 Dedicated workers for developer hardware testing.
   scopes:
