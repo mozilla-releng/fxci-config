@@ -431,6 +431,7 @@
     - project:releng:addons.mozilla.org:server:production
     - project:releng:signing:cert:nightly-signing
     - project:releng:signing:cert:release-signing
+    - project:releng:signing:cert:release-apple-notarization
     - queue:create-task:highest:proj-autophone/*
     - queue:create-task:highest:scriptworker-prov-v1/depsigning-mac-v1
     - queue:create-task:highest:scriptworker-prov-v1/signing-mac-v1
@@ -607,12 +608,14 @@
 
 - grant:
     - project:comm:thunderbird:releng:signing:cert:nightly-signing
+    - project:comm:thunderbird:releng:signing:cert:release-apple-notarization
   to:
     - project:
         alias: comm-central
 
 - grant:
     - project:comm:thunderbird:releng:signing:cert:release-signing
+    - project:comm:thunderbird:releng:signing:cert:release-apple-notarization
   to:
     - project:
         level: [3]
@@ -1806,6 +1809,7 @@
 
 - grant:
     - project:mozillavpn:releng:signing:cert:release-signing
+    - project:mozillavpn:releng:signing:cert:release-apple-notarization
     - secrets:get:project/mozillavpn/tokens
   to:
     - project:
@@ -2000,6 +2004,7 @@
 
 - grant:
     - project:adhoc:releng:signing:cert:release-signing
+    - project:adhoc:releng:signing:cert:release-apple-notarization
     - project:adhoc:releng:signing:cert:nightly-signing
     - project:adhoc:releng:ship-it:server:production
     - queue:route:index.{trust_domain}.v2.adhoc-manifest.*
@@ -2052,6 +2057,7 @@
     - project:releng:bouncer:server:production
     - project:releng:bouncer:server:production-nazgul
     - project:releng:signing:cert:nightly-signing
+    - project:releng:signing:cert:release-apple-notarization
   to:
     - project:
         feature: gecko-cron
@@ -2065,6 +2071,7 @@
     - project:comm:thunderbird:releng:beetmover:bucket:nightly
     - project:comm:thunderbird:releng:bouncer:server:production
     - project:comm:thunderbird:releng:signing:cert:nightly-signing
+    - project:comm:thunderbird:releng:signing:cert:release-apple-notarization
   to:
     - project:
         alias: comm-central
