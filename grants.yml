@@ -2103,10 +2103,6 @@
     # Allow sheriffs to terminate gecko/mobile related workers
     - worker-manager:remove-worker:gecko-*
     - worker-manager:remove-worker:mobile-*
-    # Allow sheriffs to rerun and cancel gecko tasks
-    # Allows cancelling tasks with that scheduler-id
-    - queue:cancel-task:gecko-level-*
-    - queue:rerun-task:gecko-level-*
     # Allow managing treestatus
     - project:releng:services/treestatus/*
     # Allow triggering nightlies
@@ -2118,6 +2114,16 @@
     - groups:
         - sheriff
         - perf_sheriff
+
+- grant:
+    - queue:cancel-task:gecko-level-*
+    - queue:rerun-task:gecko-level-*
+  to:
+    - groups:
+        - perf_sheriff
+        - sheriff
+        # People who trigger firefox releases should be able to cancel/rerun (release) tasks
+        - shipit_firefox
 
 - grant:
     # Allow triggering geckoview, bumps, nightlies and l10n tasks
