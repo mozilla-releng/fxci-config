@@ -94,7 +94,7 @@ def test_get_file(mocker, repository_type, repo_url, revision, raises, expected_
             repo.get_file("fake_path", revision=revision)
     else:
         repo.get_file("fake_path", revision=revision)
-        fake_session.get.assert_called_with(expected_url)
+        fake_session.get.assert_called_with(expected_url, timeout=60)
 
 
 @pytest.mark.parametrize(

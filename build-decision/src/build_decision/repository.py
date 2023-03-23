@@ -63,7 +63,7 @@ class Repository:
         else:
             raise Exception("Unknown repository_type {}!".format(self.repository_type))
 
-        res = SESSION.get(url)
+        res = SESSION.get(url, timeout=60)
         res.raise_for_status()
         tcyml = res.text
         return yaml.safe_load(tcyml)
@@ -82,7 +82,8 @@ class Repository:
             res = SESSION.get(
                 "{}/json-pushes?version=2&changeset={}&full=1".format(
                     self.repo_url, revset
-                )
+                ),
+                timeout=60,
             )
             res.raise_for_status()
             pushes = res.json()["pushes"]
@@ -132,7 +133,7 @@ class Repository:
                     f"https://api.github.com"
                     f"/repos/{self.repo_path}/git/ref/heads/{branch}"
                 )
-                res = SESSION.get(url, headers=headers)
+                res = SESSION.get(url, headers=headers, timeout=60)
                 res.raise_for_status()
                 return {
                     "branch": branch,

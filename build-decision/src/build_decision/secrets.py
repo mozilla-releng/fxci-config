@@ -17,7 +17,7 @@ def get_secret(secret_name, secret_key=None):
     #     image locally.)
     secret_url = "http://taskcluster/secrets/v1/secret/{}".format(secret_name)
     logging.info("Fetching secret at {} ...".format(secret_url))
-    res = SESSION.get(secret_url)
+    res = SESSION.get(secret_url, timeout=60)
     # This will raise an error if the secret isn't populated or we have
     # infrastructure issues. Let's die so we see there's a problem.
     res.raise_for_status()
