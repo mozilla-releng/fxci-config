@@ -2332,9 +2332,9 @@ pools:
                 createOption: FromImage
               dataDisks:
                 - lun: 0
-                  diskSizeGB: 30
+                  diskSizeGB: 500
                   managedDisk:
-                    storageAccountType: Standard_LRS
+                    storageAccountType: Premium_LRS
                   createOption: Empty
             hardwareProfile:
               vmSize: Standard_F8s_v2
@@ -2379,9 +2379,9 @@ pools:
                 createOption: FromImage
               dataDisks:
                 - lun: 0
-                  diskSizeGB: 30
+                  diskSizeGB: 500
                   managedDisk:
-                    storageAccountType: Standard_LRS
+                    storageAccountType: Premium_LRS
                   createOption: Empty
             hardwareProfile:
               vmSize: Standard_F8s_v2
