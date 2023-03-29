@@ -155,6 +155,7 @@ project/nss-nspr/macos-10-12:
   description: ''
   scopes:
     - assume:worker-type:localprovisioner/nss-macos-10-12
+    - assume:worker-type:localprovisioner/nss-macos-m1
 project/packet/docker-worker:
   description: ''
   scopes:
