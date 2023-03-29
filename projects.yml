@@ -961,6 +961,6 @@ bedrock:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: collaborators_quiet
+      policy: public
     taskgraph-actions: true
     trust-domain-scopes: true
