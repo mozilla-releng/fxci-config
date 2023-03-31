@@ -9,7 +9,7 @@ transforms:
     - taskgraph.transforms.job:transforms
     - taskgraph.transforms.task:transforms
 
-job-defaults:
+task-defaults:
     attributes:
         code-review: true
     worker-type: t-linux
@@ -29,7 +29,7 @@ job-defaults:
         checkout:
             config: {}
 
-jobs:
+tasks:
     check-staging:
         description: "Run `tc-admin check` against the staging cluster to validate the latest changes"
         treeherder:
