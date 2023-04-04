@@ -3361,3 +3361,25 @@ pools:
     email_on_error: false
     provider_id: static
     config: {}
+  - pool_id: 'gecko-1/jcristau-bug1826084'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 100
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-bug1826084
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-20
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+          machine_type: n2-custom-16-73728
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
