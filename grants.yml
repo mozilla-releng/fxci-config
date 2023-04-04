@@ -291,6 +291,7 @@
     - generic-worker:run-as-administrator:gecko-t/win10-64-2004
     - generic-worker:run-as-administrator:gecko-t/win11-64-2009-alpha
     - generic-worker:run-as-administrator:gecko-t/win11-64-2009
+    - generic-worker:run-as-administrator:releng-hardware/win11-64*
     - project:releng:addons.mozilla.org:server:staging
     - project:releng:balrog:action:*
     - project:releng:balrog:channel:*
