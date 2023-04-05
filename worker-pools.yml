@@ -1944,7 +1944,7 @@ pools:
                 createOption: FromImage
               dataDisks:
                 - lun: 0
-                  diskSizeGB: 30
+                  diskSizeGB: 250
                   managedDisk:
                     storageAccountType: Standard_LRS
                   createOption: Empty
