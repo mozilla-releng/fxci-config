@@ -964,6 +964,7 @@ firefox-translations-training:
       policy: public
     taskgraph-actions: true
     trust-domain-scopes: true
+    treeherder-reporting: true
 
 # Bug 1822403: Add taskgraph support to firefox-translations-training
 # TODO: this should be either a different trust domain or level before
@@ -980,6 +981,7 @@ staging-firefox-translations-training:
       policy: public
     taskgraph-actions: true
     trust-domain-scopes: true
+    treeherder-reporting: true
 
 # Bug 1824418: support Bedrock in Taskcluster
 bedrock:
