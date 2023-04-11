@@ -455,7 +455,7 @@ mozilla-taskgraph:
   trust_domain: taskgraph
   trust_project: mozilla-taskgraph
   default_branch: main
-  level: 1
+  level: 3
   features:
     github-taskgraph: true
     github-pull-request:
