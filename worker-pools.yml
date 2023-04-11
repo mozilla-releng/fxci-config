@@ -256,6 +256,7 @@ pools:
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
+      - pool-group: translations-1
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
