@@ -971,6 +971,7 @@
     - queue:route:index.app-services.v2.application-services.revision.*
     - queue:route:index.project.application-services.*
     - queue:create-task:highest:app-services-{level}/*
+    - queue:create-task:{priority}:releng-hardware/applicationservices-b-1-osx1015
     - queue:route:notify.email.*
     - queue:route:notify.slack-channel.*
     - project:mozilla:{trust_project}:releng:signing:cert:dep-signing
