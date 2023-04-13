@@ -91,3 +91,10 @@
     - generic
     - cancel-all
     - release-promotion
+
+- trust_domain: translations
+  levels: [1]
+  action_perms:
+    - generic
+    - cancel-all
+    - train
