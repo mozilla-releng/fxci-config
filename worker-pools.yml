@@ -2742,6 +2742,34 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: 'gecko-t/t-linux-large-hostub2204-gcp'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    email_on_error: true
+    config:
+      minCapacity: 0
+      maxCapacity: 200
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-relops528
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 75
+                sourceImage: <image>
+              type: PERSISTENT
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+          machine_type: n2-standard-2
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: relops-3/win2019
     description: build windows cloud images for taskcluster windows workloads
     owner: relops-aws-provisioning@mozilla.com
