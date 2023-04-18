@@ -62,7 +62,7 @@ payload:
     chainOfTrust: true
   # If this task does not succeed immediately, something is probably wrong.  We
   # want to avoid a storm of decision tasks when that problem is resolved, so
-  # we are conservative with the time it can possibly retry
+  # we are conservative with the time it can possibly retry.
   maxRunTime: 600
 metadata:
   owner: mozilla-taskcluster-maintenance@mozilla.com
