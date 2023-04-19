@@ -1,4 +1,4 @@
-tc-admin>=3.3.1
+tc-admin>=3.1.0
 taskcluster
 click
 blessings<2
@@ -7,7 +7,7 @@ memoized==0.3  # no semver..
 mozilla-repo-urls
 sortedcontainers<3
 aiohttp<4
-pyyaml>=5.3
+pyyaml~=5.3
 iso8601==0.1.12  # no semver..
 json-e<3
 # These are used at run-time as part of `tc-admin check`
