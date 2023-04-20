@@ -170,7 +170,6 @@ def get_aws_provider_config(
 def get_azure_provider_config(
     environment, provider_id, pool_id, config, worker_images, defaults
 ):
-
     locations = config.pop("locations")
     image_rgroup = config.pop("image_resource_group")
     vmSizes = config["vmSizes"]

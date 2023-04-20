@@ -88,7 +88,6 @@ def _check_decision_task_scopes(decision_task_id, hook_group_id, hook_id):
 
 
 def render_action(*, action_name, task_id, decision_task_id, action_input):
-
     queue = taskcluster.Queue(taskcluster.optionsFromEnvironment(), session=SESSION)
 
     logger.debug("Fetching actions.json...")

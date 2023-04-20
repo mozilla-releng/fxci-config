@@ -263,7 +263,6 @@ class TestAddScopesForGroups:
 
 
 class TestAddScopesForGithubPullRequest:
-
     projects = [
         Project(
             alias="hg",

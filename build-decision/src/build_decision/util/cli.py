@@ -45,7 +45,7 @@ class CLI:
         parser = argparse.ArgumentParser(description=self.description)
         subparsers = parser.add_subparsers(dest="command")
         subparsers.required = True
-        for (func, args, kwargs, defaults) in self._commands:
+        for func, args, kwargs, defaults in self._commands:
             subparser = subparsers.add_parser(*args, **kwargs)
             for arg in getattr(func, "args", []):
                 subparser.add_argument(*arg[0], **arg[1])
