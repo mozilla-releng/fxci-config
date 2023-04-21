@@ -1442,6 +1442,9 @@
     - project:
         alias: staging-firefox-android
         job: [branch:main]
+    - roles:
+        # Rahul Sainani https://bugzilla.mozilla.org/show_bug.cgi?id=1829402
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|rsainani
 
 - grant:
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-android/nightly
