@@ -1015,7 +1015,7 @@
     - project:
         alias: application-services
         level: 3
-        job: [release*, branch:*]
+        job: [release*, branch:*, cron:nightly]
 
 - grant:
     - hooks:trigger-hook:project-app-services/in-tree-action-1-generic/*
