@@ -993,11 +993,6 @@
     - project:mozilla:{trust_project}:releng:signing:cert:release-signing
     - secrets:get:project/application-services/gradle-plugin-publish
     - secrets:get:project/application-services/publish
-    # TODO Bug 1597329 - Remove these 4 scopes once the naming scheme is applied to the workers
-    # Scopes are kind of duplicated because of this project doesn't use "assume:" scopes on the
-    # decision task, yet.
-    - queue:create-task:highest:scriptworker-k8s/appservices-3-signing
-    - queue:create-task:highest:scriptworker-k8s/appservices-3-beetmover
     # TODO In bug 1632147 we will reorganize scriptworker scopes to re-use the
     # `beetmover-maven-phase` once we have a new `trust_project` for this and
     # `glean` project
