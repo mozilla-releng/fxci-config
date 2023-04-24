@@ -1007,7 +1007,7 @@
     - project:
         alias: application-services
         level: 3
-        job: [release*]
+        job: [release*, cron:nightly]
 
 - grant:
     - secrets:get:project/application-services/symbols-token
