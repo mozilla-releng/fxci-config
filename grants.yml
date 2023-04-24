@@ -991,8 +991,6 @@
 
 - grant:
     - project:mozilla:{trust_project}:releng:signing:cert:release-signing
-    - secrets:get:project/application-services/gradle-plugin-publish
-    - secrets:get:project/application-services/publish
     # TODO In bug 1632147 we will reorganize scriptworker scopes to re-use the
     # `beetmover-maven-phase` once we have a new `trust_project` for this and
     # `glean` project
