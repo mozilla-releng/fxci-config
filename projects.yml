@@ -619,6 +619,21 @@ application-services:
   cron:
     targets: [nightly]
 
+staging-application-services:
+  repo: https://github.com/mozilla-releng/staging-application-services
+  repo_type: git
+  level: 1
+  trust_domain: app-services
+  trust_project: app-services
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public
+    scriptworker: true
+    taskgraph-cron: true
+    taskgraph-actions: true
+    legacy-github-release: true
+
 glean:
   repo: https://github.com/mozilla/glean
   repo_type: git

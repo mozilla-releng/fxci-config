@@ -975,16 +975,23 @@
     # This docker worker cache is still used by the old decision task
     - docker-worker:cache:application-services-*
     - project:releng:services/tooltool/api/download/internal
-    - queue:route:index.app-services.v2.application-services.revision.*
-    - queue:route:index.project.application-services.*
     - queue:create-task:highest:app-services-{level}/*
     - queue:create-task:{priority}:releng-hardware/applicationservices-b-1-osx1015
-    - queue:route:notify.email.*
-    - queue:route:notify.slack-channel.*
     - project:mozilla:{trust_project}:releng:signing:cert:dep-signing
     - project:mozilla:{trust_project}:releng:signing:format:*
     - project:mozilla:{trust_project}:releng:beetmover:action:push-to-maven
     - project:mozilla:{trust_project}:releng:beetmover:bucket:maven-staging
+  to:
+    - project:
+        alias: application-services
+    - project:
+        alias: staging-application-services
+
+- grant:
+    - queue:route:index.app-services.v2.application-services.revision.*
+    - queue:route:index.project.application-services.*
+    - queue:route:notify.email.*
+    - queue:route:notify.slack-channel.*
   to:
     - project:
         alias: application-services
