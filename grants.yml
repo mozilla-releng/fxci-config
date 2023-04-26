@@ -988,8 +988,6 @@
         alias: staging-application-services
 
 - grant:
-    - queue:route:index.app-services.v2.application-services.revision.*
-    - queue:route:index.project.application-services.*
     - queue:route:notify.email.*
     - queue:route:notify.slack-channel.*
   to:
@@ -1010,6 +1008,8 @@
         job: [release*, cron:nightly]
 
 - grant:
+    - queue:route:index.app-services.v2.application-services.revision.*
+    - queue:route:index.project.application-services.*
     - secrets:get:project/application-services/symbols-token
   to:
     - project:
