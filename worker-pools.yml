@@ -208,6 +208,8 @@ pools:
       - pool-group: releng-3
         chain-of-trust: trusted
       - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
       - pool-group: bedrock-1
     provider_id:
       by-chain-of-trust:
@@ -257,6 +259,8 @@ pools:
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
       - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -494,6 +498,8 @@ pools:
         chain-of-trust: trusted
       - pool-group: mozilla-1
       - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
       - pool-group: bedrock-1
     config:
       regions: [us-central1, us-west1]
@@ -567,6 +573,8 @@ pools:
       - pool-group: scriptworker-3
         chain-of-trust: trusted
       - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
       - pool-group: bedrock-1
     config:
       image:
