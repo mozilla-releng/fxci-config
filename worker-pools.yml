@@ -728,7 +728,7 @@ pools:
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker-2023-03-27
       instance_types:
-        - minCpuPlatform: Intel Cascadelake
+        - minCpuPlatform: Intel Skylake
           disks:
             - *persistent-disk-75
             - *scratch-disk
