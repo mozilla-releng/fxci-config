@@ -78,8 +78,6 @@ monopacker-docker-worker-2023-03-16t19-54-56z:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-03-16t19-54-56z
 monopacker-docker-worker-2023-04-13-relops528:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-lt-googlecompute-2023-04-13t21-30-28z
-monopacker-translations-worker-2023-03-27:
-  fxci-translations-sandbox-gcp: projects/translations-sandbox/global/images/generic-translations-gcp-googlecompute-2023-04-03t20-41-46z
 
 # generic-worker images
 # Azure 2012 images

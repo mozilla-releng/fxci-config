@@ -34,8 +34,6 @@ firefoxci:
         implementation: google
       fxci-test-gcp:
         implementation: google
-      fxci-translations-sandbox-gcp:
-        implementation: google
   aws_config:
     wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
     availability-zones:

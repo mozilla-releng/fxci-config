@@ -717,29 +717,6 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: 'translations-1/t-linux-v100-gpu'  # Bug 1529304 - This pool is experimental
-    description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-translations-sandbox-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 2
-      regions: [us-central1, us-west1]
-      image: monopacker-translations-worker-2023-03-27
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: n1-highmem-32
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
-          guestAccelerators:
-            - acceleratorCount: 1
-              acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/misc-gcp'
     description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
       SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
