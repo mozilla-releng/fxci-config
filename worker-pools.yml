@@ -91,6 +91,24 @@ worker-defaults:
             taskclusterProxyPort: 80
             tasksDir: Z:\
             wstAudience: firefoxcitc
+      generic-worker/worker-runner-linux:
+        genericWorker:
+          config:
+            cachesDir: /home/ubuntu/caches
+            cleanUpTaskDirs: true
+            disableReboots: false
+            downloadsDir: /home/ubuntu/downloads
+            livelogExecutable: /home/ubuntu/generic_worker/livelog
+            ed25519SigningKeyLocation: /home/ubuntu/generic_worker/ed25519-private.key
+            idleTimeoutSecs: 86400  # 1 day
+            numberOfTasksToRun: 0
+            sentryProject: generic-worker
+            shutdownMachineOnIdle: true
+            shutdownMachineOnInternalError: true
+            taskclusterProxyExecutable: /home/ubuntu/generic_worker/taskcluster-proxy
+            taskclusterProxyPort: 80
+            tasksDir: /home/ubuntu/tasks
+            wstAudience: firefoxcitc
 
 pools:
   - pool_id: infra/build-decision
@@ -725,8 +743,9 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 2
+      implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
-      image: monopacker-translations-worker-2023-03-27
+      image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
