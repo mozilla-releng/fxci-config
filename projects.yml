@@ -605,7 +605,6 @@ application-services:
   repo_type: git
   level: 3
   trust_domain: app-services
-  trust_project: app-services
   features:
     # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
     # across projects.
@@ -615,6 +614,7 @@ application-services:
     scriptworker: true
     taskgraph-cron: true
     taskgraph-actions: true
+    trust-domain-scopes: true
     legacy-github-release: true
   cron:
     targets: [nightly]
@@ -624,7 +624,6 @@ staging-application-services:
   repo_type: git
   level: 1
   trust_domain: app-services
-  trust_project: app-services
   features:
     github-taskgraph: true
     github-pull-request:
