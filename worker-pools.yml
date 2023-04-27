@@ -733,7 +733,7 @@ pools:
             - *persistent-disk-75
             - *scratch-disk
             - *scratch-disk
-          machine_type: n1-highmem-32
+          machine_type: n1-highmem-8
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
