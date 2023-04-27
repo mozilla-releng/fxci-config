@@ -976,7 +976,7 @@ firefox-translations-training:
   repo_type: git
   default_branch: main
   trust_domain: translations
-  level: 1
+  level: 3
   features:
     github-taskgraph: true
     github-pull-request:
