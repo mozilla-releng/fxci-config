@@ -247,6 +247,16 @@ ronin-t-windows10-64-2004-datadisk-test:
     south-central-us: gecko-t-win10-64-2004-southcentralus-20h1-evd-f160361
     west-us: gecko-t-win10-64-2004-westus-20h1-evd-f160361
     west-us-2: gecko-t-win10-64-2004-westus2-20h1-evd-f160361
+ronin-t-windows10-64-2009-alpha:
+  azure2:
+    deployment_id: alpha
+    central-us: win10-64-2009-centralus-win10-22h2-avd
+    east-us: win10-64-2009-eastus-win10-22h2-avd
+    east-us-2: win10-64-2009-eastus2-win10-22h2-avd
+    north-central-us: win10-64-2009-northcentralus-win10-22h2-avd
+    north-europe: win10-64-2009-northeurope-win10-22h2-avd
+    west-us: win10-64-2009-westus-win10-22h2-avd
+    west-us-2: win10-64-2009-westus-win10-22h2-avd
 # Windows 11
 ronin-t-windows11-64-2009-alpha:
   azure2:
