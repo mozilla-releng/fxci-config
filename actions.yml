@@ -84,6 +84,7 @@
   action_perms:
     - generic
     - cancel-all
+    - release-promotion
 
 - trust_domain: mozillavpn
   levels: [1, 3]
