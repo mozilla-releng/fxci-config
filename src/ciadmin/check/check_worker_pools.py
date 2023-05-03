@@ -18,7 +18,7 @@ WORKER_POOL_ID_RE = re.compile(
 
 
 @pytest.mark.asyncio
-async def check_worker_pool_ids(generated):
+async def check_worker_pool_ids():
     invalid_pools = set()
 
     environment = await Environment.current()
@@ -38,7 +38,7 @@ async def check_worker_pool_ids(generated):
 
 
 @pytest.mark.asyncio
-async def check_worker_pool_tags(generated):
+async def check_worker_pool_tags():
     invalid_pools = set()
 
     environment = await Environment.current()
