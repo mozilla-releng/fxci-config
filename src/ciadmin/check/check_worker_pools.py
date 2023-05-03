@@ -62,3 +62,28 @@ async def check_worker_pool_tags(generated):
         )
 
     assert not invalid_pools
+
+
+@pytest.mark.asyncio
+async def check_providers():
+    invalid_pools = set()
+    missing_providers = set()
+
+    environment = await Environment.current()
+    worker_pools = await WorkerPoolConfig.fetch_all()
+    for pool in generate_pool_variants(worker_pools, environment):
+        if pool.provider_id == "static":
+            continue
+        if pool.provider_id not in environment.worker_manager["providers"]:
+            invalid_pools.add(pool.pool_id)
+            missing_providers.add(pool.provider_id)
+
+    if invalid_pools:
+        print(
+            f"Worker pool providers must be defined in environments.yml.\n"
+            f"The following pools use unknown providers:\n"
+            f"Pools: {', '.join(invalid_pools)}\n"
+            f"Provider ids: {', '.join(missing_providers)}\n"
+        )
+
+    assert not invalid_pools
