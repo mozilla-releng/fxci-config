@@ -7,12 +7,9 @@ from urllib.parse import urlparse
 import pytest
 from tcadmin.resources import Resources
 
-from ciadmin.generate.ciconfig.grants import (
-    Grant,
-    ProjectGrantee,
-)
-from ciadmin.generate.ciconfig.projects import Project
 from ciadmin.generate import grants
+from ciadmin.generate.ciconfig.grants import Grant, ProjectGrantee
+from ciadmin.generate.ciconfig.projects import Project
 
 
 @pytest.fixture(scope="module")
