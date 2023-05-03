@@ -675,7 +675,8 @@ pools:
             by-suffix:
               '': 2500
               -source: 200
-          default: 10
+          nss-t: 100
+          comm-t: 10
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
@@ -3510,7 +3511,10 @@ pools:
         default: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 10
+      maxCapacity:
+        by-pool-group:
+          nss-.*: 100
+          default: 10
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
