@@ -660,6 +660,8 @@ pools:
         suffix: -source
       - pool-group: comm-t
         suffix: -source
+      - pool-group: nss-t
+        suffix: ''
     email_on_error: true
     provider_id:
       by-chain-of-trust:
