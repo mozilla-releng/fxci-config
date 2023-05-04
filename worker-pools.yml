@@ -744,7 +744,7 @@ pools:
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
-      minCapacity: 1
+      minCapacity: 0
       maxCapacity: 2
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
@@ -752,7 +752,13 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Haswell
           disks:
-            - *persistent-disk-40
+            - &persistent-disk-40
+              autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 40
+                sourceImage: <image>
+              type: PERSISTENT
           machine_type: n2-standard-2
           networkInterfaces:
             - accessConfigs:
