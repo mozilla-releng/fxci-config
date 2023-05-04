@@ -750,7 +750,7 @@ pools:
       regions: [us-central1, us-west1]
       image: handbuilt-ubuntu-2204-wayland-vm
       instance_types:
-        - minCpuPlatform: Intel Haswell
+        - minCpuPlatform: Intel Cascadelake
           disks:
             - &persistent-disk-40
               autoDelete: true
