@@ -738,6 +738,27 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: 'gecko-t/t-linux-vm-2204-wayland'  # Bug 1756660 - This pool is experimental
+    description: Worker for testing Wayland and XWayland on Ubuntu 22.04
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 1
+      maxCapacity: 2
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: handbuilt-ubuntu-2204-wayland-vm
+      instance_types:
+        - minCpuPlatform: Intel Haswell
+          disks:
+            - *persistent-disk-40
+          machine_type: n2-standard-2
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+          advancedMachineFeatures:
+            enableNestedVirtualization: true
   - pool_id: 'translations-1/t-linux-v100-gpu'  # Bug 1529304 - This pool is experimental
     description: Worker for machine learning and other high GPU tasks
     owner: release+tc-workers@mozilla.com
