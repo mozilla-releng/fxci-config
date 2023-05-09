@@ -338,6 +338,10 @@ project/releng/generic-worker/datacenter-gecko-t-win10-64-hw-dev:
   description: Datacenter Windows 10 dedicated developer and automation worker.
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-win10-64-hw-dev
+project/releng/generic-worker/gcp-wayland-virtualbox:
+  description: GCP Ubuntu 22.04 Wayland VirtualBox workers.
+  scopes:
+    - assume:worker-type:gecko-t/t-linux-vm-2204-wayland
 project/releng/quarantine-worker:
   description: Self-quarantine access for hardware workers after generic-worker fails
     with code 69.
