@@ -48,11 +48,6 @@ monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-bug1768865-20
 monopacker-docker-worker-testing-bug1806341: monopacker-docker-worker-2022-11-08t21-41-15z-bug1806341
 monopacker-docker-worker-relops528: monopacker-docker-worker-2023-04-13-relops528
 
-occ-t-win7-32-beta: occ-t-win7-32-beta-4384030
-occ-t-win7-32-gpu-beta: occ-t-win7-32-gpu-b-4384030
-occ-t-win7-32-current: occ-t-win7-32-v20200226
-occ-t-win7-32-gpu-current: occ-t-win7-32-gpu-v20200226
-
 relops-image-builder-current: relops-image-builder-pre
 
 # production docker-worker AMIs
@@ -181,31 +176,6 @@ ronin-b1-windows2012-bug1801167:
     deployment_id: alpha
     central-us: masterwayz-win2012test-image-20221122010013
 
-# Windows 7
-occ-t-win7-32-beta-4384030:
-  aws:
-    eu-central-1: ami-03c5857f47d11d797
-    us-east-1: ami-0800e67eddba22aa7
-    us-west-1: ami-0c723de2ffe641a90
-    us-west-2: ami-01e485efdaf4adc46
-occ-t-win7-32-gpu-b-4384030:
-  aws:
-    eu-central-1: ami-0551fc0acf2ec062a
-    us-east-1: ami-0df9550ff5dffff81
-    us-west-1: ami-022c0b744b13e611e
-    us-west-2: ami-0d80b9acdefa73057
-occ-t-win7-32-v20200226:
-  aws:
-    eu-central-1: ami-01db0b27d4878f677
-    us-east-1: ami-04a4865797a61b24d
-    us-west-1: ami-098ffef5cf401c46d
-    us-west-2: ami-06f345a21f6faad86
-occ-t-win7-32-gpu-v20200226:
-  aws:
-    eu-central-1: ami-0b41dc6c8248c4f32
-    us-east-1: ami-02641726e4b419ba4
-    us-west-1: ami-0ebc5c792d8418b65
-    us-west-2: ami-0cecd6bf98b15e862
 # Windows Server 2022
 ronin-b-windows2022-alpha:
   azure2:
