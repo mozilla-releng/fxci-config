@@ -642,17 +642,6 @@
     - project:
         alias: [oak, cedar, pine, pine-stable]
 
-# Bug 1702054: Scopes to trigger cron hooks on pine
-- grant:
-    - hooks:trigger-hook:project-releng/cron-task-projects-pine/*
-    - hooks:trigger-hook:project-releng/cron-task-projects-pine-stable/*
-  to:
-    - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bgrinstead
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|dtownsend
-        # mkaply
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mozilla234
-
 # grant relman access to trigger mozilla-central & mozilla-releases hooks
 - grant:
     - hooks:trigger-hook:project-releng/cron-task-mozilla-central*
