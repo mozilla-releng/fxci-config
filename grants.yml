@@ -1525,6 +1525,15 @@
           - pull-request:trusted
 
 - grant:
+    - secrets:get:project/mobile/firefox-android/android-components/firebase
+    - secrets:get:project/mobile/firefox-android/focus-android/firebase
+    - secrets:get:project/mobile/firefox-android/fenix/firebase
+  to:
+    - project:
+        alias:
+          - oak
+
+- grant:
     - secrets:get:project/mobile/{trust_project}/focus-android/firebase
     - secrets:get:project/mobile/{trust_project}/fenix/firebase
   to:
