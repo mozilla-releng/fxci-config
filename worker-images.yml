@@ -272,6 +272,11 @@ ronin-t-windows11-64-2009-prod:
     west-us: win11-64-2009-westus-win11-22h2-avd
     west-us-2: win11-64-2009-westus2-win11-22h2-avd
     west-us-3: win11-64-2009-westus3-win11-22h2-avd
+ronin-t-windows11-64-2009-tc-alpha:
+  azure2:
+    deployment_id: alpha
+    central-us: win11-64-2009-tc-centralus-win11-22h2-avd
+    east-us: win11-64-2009-tc-eastus-win11-22h2-avd
 # Etc
 relops-image-builder-pre:
   aws:
