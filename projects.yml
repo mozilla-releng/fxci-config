@@ -228,6 +228,7 @@ mozilla-central:
   cron:
     targets:
       - nightly-desktop
+      - nightly-desktop-linux
       - nightly-desktop-osx
       - nightly-desktop-win32
       - nightly-desktop-win64
