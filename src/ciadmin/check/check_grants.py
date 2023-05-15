@@ -5,18 +5,10 @@ import re
 from urllib.parse import urlparse
 
 import pytest
-from tcadmin.resources import Resources
+from taskcluster.utils import scopeMatch
 
-from ciadmin.generate import grants
 from ciadmin.generate.ciconfig.grants import Grant, ProjectGrantee
 from ciadmin.generate.ciconfig.projects import Project
-
-
-@pytest.fixture(scope="module")
-async def roles():
-    roles = Resources()
-    await grants.update_resources(roles)
-    return roles
 
 
 @pytest.mark.asyncio
@@ -51,10 +43,11 @@ async def check_grant_aliases():
 
 
 @pytest.mark.asyncio
-async def check_insecure_grants(roles):
+async def check_insecure_grants(generated):
     """
     Ensures we don't grant any level 3 scopes to level 1 contexts.
     """
+    roles = generated.filter("Role=.*")
     projects = await Project.fetch_all()
 
     level_prefixes = {"level", "in-tree-action"}
@@ -100,3 +93,49 @@ async def check_insecure_grants(roles):
             + "\n  ".join(sorted(insecure_scopes))
         )
     assert not insecure_scopes
+
+
+@pytest.mark.asyncio
+async def check_inaccessible_pools(generated):
+    """
+    Checks for pools that no roles (other than root) are able to create tasks in.
+    """
+    roles = generated.filter("Role=.*")
+    # Ignore 'root' level roles.
+    ignore_roles = {
+        "mozilla-group:fxci_tc_admins",
+        "mozilla-group:releng",
+        "mozilla-group:team_relops",
+        "mozilla-group:team_taskcluster",
+    }
+    roles = [role for role in roles if all(i not in role.roleId for i in ignore_roles)]
+
+    pools = [p.workerPoolId for p in generated.filter("WorkerPool=.*")]
+    remaining_pools = set(pools)
+
+    priorities = {
+        "highest",
+        "very-high",
+        "high",
+        "medium",
+        "low",
+        "very-low",
+        "lowest",
+        "normal",
+    }
+    for pool in pools:
+        required_scopes = []
+        for priority in priorities:
+            required_scopes.append([f"queue:create-task:{priority}:{pool}"])
+
+        for role in roles:
+            if scopeMatch(role.scopes, required_scopes):
+                remaining_pools.remove(pool)
+                break
+
+    if remaining_pools:
+        print(
+            "No roles have scopes to use the following pools:\n  "
+            + "\n  ".join(sorted(remaining_pools))
+        )
+    assert not remaining_pools
