@@ -739,7 +739,7 @@ pools:
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 2
+      maxCapacity: 0
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: handbuilt-ubuntu-2204-wayland-vm
