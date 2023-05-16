@@ -5,11 +5,15 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import asyncio
+import inspect
+from collections import defaultdict
 
 import pytest
-from tcadmin import current, generate
+from tcadmin.resources import Resources
 from tcadmin.util.scopes import Resolver
 from tcadmin.util.sessions import with_aiohttp_session
+
+from ciadmin.boot import appconfig
 
 
 # Imported from pytest-asyncio, but with scope session
@@ -23,14 +27,63 @@ def event_loop(request):
 
 
 @pytest.fixture(scope="session")
-@with_aiohttp_session
-async def generated():
-    """Return the generated resources"""
-    return await generate.resources()
+async def generate_resources():
+    """Generate and return a subset of resources.
+
+    This function will generate resources lazily. Subsequent calls will return
+    cached results for the modules that have already been generated.
+    """
+    cache = {}
+
+    @with_aiohttp_session
+    async def inner(*modules):
+        callables = {
+            inspect.getmodule(func).__name__.rsplit(".", 1)[-1]: func
+            for func in appconfig.generators
+        }
+        if modules:
+            callables = {
+                name: func for name, func in callables.items() if name in modules
+            }
+
+        # Because resources are modified by the callables in-place, we
+        # need to create seperate variables to track the result of each
+        # callable.
+        resources = defaultdict(lambda: Resources())
+        tasks = []
+        for name, func in callables.items():
+            if name in cache:
+                resources[name] = cache[name]
+            else:
+                r = resources[name]
+                r.manage(".*")
+                tasks.append(asyncio.create_task(func(r)))
+
+        await asyncio.gather(*tasks)
+        # Apply modifiers.
+        for mod in appconfig.modifiers:
+            resources = {k: await mod(v) for k, v in resources.items()}
+
+        cache.update(resources)
+
+        # Gather resources from each module back together.
+        all_resources = Resources()
+        all_resources.manage(".*")
+        for r in resources.values():
+            all_resources.update(r)
+
+        return all_resources
+
+    return inner
 
 
 @pytest.fixture(scope="session")
-@with_aiohttp_session
+async def generated(generate_resources):
+    """Return the generated resources"""
+    return await generate_resources()
+
+
+@pytest.fixture(scope="session")
 async def actual(generated):
     """Return the actual resources (as fetched from Taskcluster)"""
     return await current.resources(generated.managed)

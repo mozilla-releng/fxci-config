@@ -43,11 +43,11 @@ async def check_grant_aliases():
 
 
 @pytest.mark.asyncio
-async def check_insecure_grants(generated):
+async def check_insecure_grants(generate_resources):
     """
     Ensures we don't grant any level 3 scopes to level 1 contexts.
     """
-    roles = generated.filter("Role=.*")
+    roles = (await generate_resources()).filter("Role=.*")
     projects = await Project.fetch_all()
 
     level_prefixes = {"level", "in-tree-action"}
