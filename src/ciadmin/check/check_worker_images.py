@@ -11,7 +11,7 @@ from ciadmin.generate.worker_pools import generate_pool_variants
 
 
 @pytest.mark.asyncio
-async def check_worker_images_are_used(generated):
+async def check_worker_images_are_used():
     environment = await Environment.current()
     worker_images = await WorkerImage.fetch_all()
     worker_pools = await WorkerPoolConfig.fetch_all()

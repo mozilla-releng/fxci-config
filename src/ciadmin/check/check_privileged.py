@@ -14,8 +14,7 @@ from ciadmin.generate.worker_pools import generate_pool_variants
 
 
 @pytest.mark.asyncio
-@with_aiohttp_session
-async def check_privileged_is_untrusted(generated):
+async def check_privileged_is_untrusted(generate_resources):
     """
     Ensures that any docker-worker pool with `allowPrivileged` is not
     run on a trusted image.
@@ -26,13 +25,12 @@ async def check_privileged_is_untrusted(generated):
         if "trusted" in pool.config.get("image", ""):
             trusted_pools.add(pool.pool_id)
 
-    for resource in generated:
-        if not isinstance(resource, WorkerPool):
-            continue
-        if resource.workerPoolId not in trusted_pools:
+    resources = await generate_resources("worker_pools")
+    for pool in resources.filter("WorkerPool=.*"):
+        if pool.workerPoolId not in trusted_pools:
             continue
         privileged = False
-        for launchConfig in resource.config["launchConfigs"]:
+        for launchConfig in pool.config["launchConfigs"]:
             if (
                 launchConfig.get("workerConfig", {})
                 .get("dockerConfig", {})
@@ -40,7 +38,7 @@ async def check_privileged_is_untrusted(generated):
             ):
                 privileged = True
         assert not privileged, (
-            f"{pool.pool_id} has trusted CoT keys, "
+            f"{pool.workerPoolId} has trusted CoT keys, "
             + "but permits privileged (host-root-equivalent) tasks."
         )
 
