@@ -2984,3 +2984,10 @@
     - projects:
         job: [release:*]
         feature: legacy-github-release
+
+# Scopes for running Translations training cycles
+- grant:
+    - hooks:trigger-hook:project-translations/in-tree-action-*
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|anatal
