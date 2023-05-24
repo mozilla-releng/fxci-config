@@ -9,6 +9,7 @@ import inspect
 from collections import defaultdict
 
 import pytest
+from tcadmin import current
 from tcadmin.resources import Resources
 from tcadmin.util.scopes import Resolver
 from tcadmin.util.sessions import with_aiohttp_session
