@@ -2189,6 +2189,15 @@
         - mobile_test_ops
 
 - grant:
+    # Allow connecting to interactive mobile tasks
+    - queue:get-artifact:mobile/android-sdk/*
+    - queue:scheduler-id:mobile-level-1
+    - queue:create-task:low:mobile-1/*
+  to:
+    - groups:
+        - mobile_eng_ops
+
+- grant:
     # Allow people with level-3 access to access interactive tasks
     - queue:get-artifact:private/interactive/*
     - queue:get-artifact:private/docker-worker/*
