@@ -1008,6 +1008,7 @@
 
 - grant:
     - hooks:trigger-hook:project-app-services/in-tree-action-1-generic/*
+    - hooks:trigger-hook:project-app-services/in-tree-action-1-release-promotion/*
     - hooks:trigger-hook:project-app-services/in-tree-action-3-generic/*
     - hooks:trigger-hook:project-releng/cron-task-mozilla-application-services/nightly
     - queue:create-task:highest:app-services-*
