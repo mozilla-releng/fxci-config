@@ -997,13 +997,16 @@
         job: [release*, cron:nightly]
 
 - grant:
-    - queue:route:index.app-services.v2.application-services.revision.*
-    - queue:route:index.project.application-services.*
-    - secrets:get:project/application-services/symbols-token
+    - queue:route:index.app-services.v2.{alias}.revision.*
+    - queue:route:index.project.{alias}.*
+    - secrets:get:project/{alias}/symbols-token
   to:
     - project:
         alias: application-services
         level: 3
+        job: [release*, branch:*, cron:nightly]
+    - project:
+        alias: staging-application-services
         job: [release*, branch:*, cron:nightly]
 
 - grant:
