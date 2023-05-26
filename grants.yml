@@ -2204,6 +2204,7 @@
   to:
     - groups:
         - active_scm_level_3
+        - mobile_eng_ops
 
 - grant:
     # Allow triggering thunderbird nightlies
