@@ -5,7 +5,6 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import pytest
-from tcadmin.resources import WorkerPool
 from tcadmin.util.sessions import with_aiohttp_session
 
 from ciadmin.generate.ciconfig.environment import Environment
