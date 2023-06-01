@@ -968,7 +968,10 @@
     - queue:create-task:highest:releng-hardware/applicationservices-b-1-osx1015
     - project:mozilla:{trust_domain}:releng:signing:cert:dep-signing
     - project:mozilla:{trust_domain}:releng:signing:format:*
+    - project:mozilla:{trust_domain}:releng:beetmover:action:push-to-candidates
+    - project:mozilla:{trust_domain}:releng:beetmover:action:push-to-releases
     - project:mozilla:{trust_domain}:releng:beetmover:action:push-to-maven
+    - project:mozilla:{trust_domain}:releng:beetmover:bucket:dep
     - project:mozilla:{trust_domain}:releng:beetmover:bucket:maven-staging
   to:
     - project:
@@ -988,13 +991,13 @@
     # TODO In bug 1632147 we will reorganize scriptworker scopes to re-use the
     # `beetmover-maven-phase` once we have a new `trust_project` for this and
     # `glean` project
-    - project:mozilla:{trust_domain}:releng:beetmover:action:push-to-maven
+    - project:mozilla:{trust_domain}:releng:beetmover:bucket:release
     - project:mozilla:{trust_domain}:releng:beetmover:bucket:maven-production
   to:
     - project:
         alias: application-services
         level: 3
-        job: [release*, cron:nightly]
+        job: [release*, cron:nightly, action:release-promotion]
 
 - grant:
     - queue:route:index.app-services.v2.{alias}.revision.*
