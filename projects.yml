@@ -128,11 +128,13 @@ oak:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: false
+    gecko-cron: true
     gecko-roles: true
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron:
+    targets: [nightly-android]
 pine:
   repo: https://hg.mozilla.org/projects/pine
   repo_type: hg
