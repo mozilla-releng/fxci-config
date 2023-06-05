@@ -1000,6 +1000,13 @@
 
 - grant:
     - queue:create-task:highest:releng-hardware/applicationservices-b-1-osx1015
+  to:
+    - project:
+        alias: application-services
+        level: 3
+        job: [release*, branch:*, cron:nightly]
+
+- grant:
     - queue:route:index.app-services.v2.{alias}.revision.*
     - queue:route:index.project.{alias}.*
     - secrets:get:project/{alias}/symbols-token
