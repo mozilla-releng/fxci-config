@@ -965,7 +965,6 @@
     - docker-worker:cache:application-services-*
     - project:releng:services/tooltool/api/download/internal
     - queue:create-task:highest:app-services-{level}/*
-    - queue:create-task:highest:releng-hardware/applicationservices-b-1-osx1015
     - project:mozilla:{trust_domain}:releng:signing:cert:dep-signing
     - project:mozilla:{trust_domain}:releng:signing:format:*
     - project:mozilla:{trust_domain}:releng:beetmover:action:push-to-candidates
@@ -1000,6 +999,7 @@
         job: [release*, cron:nightly, action:release-promotion]
 
 - grant:
+    - queue:create-task:highest:releng-hardware/applicationservices-b-1-osx1015
     - queue:route:index.app-services.v2.{alias}.revision.*
     - queue:route:index.project.{alias}.*
     - secrets:get:project/{alias}/symbols-token
