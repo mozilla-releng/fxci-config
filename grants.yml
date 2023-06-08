@@ -1024,6 +1024,7 @@
     - hooks:trigger-hook:project-app-services/in-tree-action-1-release-promotion/*
     - hooks:trigger-hook:project-app-services/in-tree-action-3-generic/*
     - hooks:trigger-hook:project-releng/cron-task-mozilla-application-services/nightly
+    - queue:cancel-task:app-services-level-*
     - queue:create-task:highest:app-services-1/*
     - queue:rerun-task:app-services-level-*
     - queue:get-artifact:private/docker-worker/shell.html
