@@ -969,7 +969,7 @@
     - project:mozilla:{trust_domain}:releng:signing:cert:dep-signing
     - project:mozilla:{trust_domain}:releng:signing:format:*
     - project:mozilla:{trust_domain}:releng:beetmover:action:push-to-candidates
-    - project:mozilla:{trust_domain}:releng:beetmover:action:push-to-releases
+    - project:mozilla:{trust_domain}:releng:beetmover:action:direct-push-to-bucket
     - project:mozilla:{trust_domain}:releng:beetmover:action:push-to-maven
     - project:mozilla:{trust_domain}:releng:beetmover:bucket:dep
     - project:mozilla:{trust_domain}:releng:beetmover:bucket:maven-staging
