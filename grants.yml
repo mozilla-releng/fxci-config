@@ -1526,6 +1526,8 @@
     - secrets:get:project/mobile/firefox-android/android-components/firebase
     - secrets:get:project/mobile/firefox-android/focus-android/firebase
     - secrets:get:project/mobile/firefox-android/fenix/firebase
+    - project:releng:googleplay:product:focus-android:dep
+    - project:releng:googleplay:product:fenix:dep
   to:
     - project:
         alias:
