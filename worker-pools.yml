@@ -766,7 +766,7 @@ pools:
     provider_id: fxci-translations-sandbox-gcp
     config:
       minCapacity: 0
-      maxCapacity: 2
+      maxCapacity: 10
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
