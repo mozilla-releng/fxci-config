@@ -1908,8 +1908,6 @@
 - grant:
     - hooks:trigger-hook:project-mozillavpn/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-mozillavpn/in-tree-action-3-generic/*
-    - hooks:trigger-hook:project-mozillavpn/in-tree-action-1-cancel-all/*
-    - hooks:trigger-hook:project-mozillavpn/in-tree-action-3-cancel-all/*
     - secrets:set:project/mozillavpn/*
     - secrets:get:project/mozillavpn/*
     - queue:rerun-task:mozillavpn-level-*
@@ -2188,8 +2186,6 @@
     - queue:rerun-task:mobile-level-*
     - hooks:trigger-hook:project-mobile/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-mobile/in-tree-action-3-generic/*
-    - hooks:trigger-hook:project-mobile/in-tree-action-1-cancel-all/*
-    - hooks:trigger-hook:project-mobile/in-tree-action-3-cancel-all/*
   to:
     - groups:
         - sheriff
@@ -2377,36 +2373,6 @@
     - groups:
         - sheriff
         - perf_sheriff
-
-# pretty much anyone can cancel-all at level 1 or 2, while only releng/sheriff
-# can do so at level 3
-- grant:
-    - hooks:trigger-hook:project-gecko/in-tree-action-1-cancel-all/*
-    - hooks:trigger-hook:project-comm/in-tree-action-1-cancel-all/*
-    - hooks:trigger-hook:project-gecko/in-tree-action-2-cancel-all/*
-    - hooks:trigger-hook:project-comm/in-tree-action-2-cancel-all/*
-  to:
-    - groups:
-        - active_scm_level_1
-        - active_scm_level_2
-        - active_scm_level_3
-        - sheriff
-        - perf_sheriff
-
-- grant:
-    - hooks:trigger-hook:project-gecko/in-tree-action-3-cancel-all/*
-    - hooks:trigger-hook:project-comm/in-tree-action-3-cancel-all/*
-  to:
-    - groups:
-        - sheriff
-        - perf_sheriff
-
-# Thunderbird releng can only cancel-all on comm trees
-- grant:
-    - hooks:trigger-hook:project-comm/in-tree-action-3-cancel-all/*
-  to:
-    - groups:
-        - thunderbird-releng
 
 # tooltool.mozilla-releng.net and tokens.mozilla-releng.net scopes
 
