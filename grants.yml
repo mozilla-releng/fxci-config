@@ -301,6 +301,7 @@
     - project:releng:beetmover:apt-repo:dep
     - project:releng:beetmover:bucket:dep-partner
     - project:releng:beetmover:bucket:maven-staging
+    - project:releng:beetmover:bucket:maven-nightly-staging
     - project:releng:bouncer:action:*
     - project:releng:bouncer:server:staging
     - project:releng:bouncer:server:staging-nazgul
