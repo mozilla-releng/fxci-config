@@ -39,11 +39,11 @@ docker-worker-hvm-builder-trusted-current: docker-worker-v20220907-hvm-builder-t
 # `gcloud config set project <project>` before starting.
 
 # GCP builders level 1, 2 and misc. testers -t
-monopacker-docker-worker-current: monopacker-docker-worker-2023-03-16t19-54-56z
+monopacker-docker-worker-current: monopacker-docker-worker-2023-06-13t23-47-26z
 # GCP builders level 3
 monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-gcp-2023-03-16
 # GCP testers
-monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-bug1768865-20221110
+monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-20230613
 
 monopacker-docker-worker-testing-bug1806341: monopacker-docker-worker-2022-11-08t21-41-15z-bug1806341
 monopacker-docker-worker-relops528: monopacker-docker-worker-2023-04-13-relops528
@@ -65,12 +65,12 @@ docker-worker-v20220907-hvm-builder-trusted-bug1789506:
 # monopacker docker-worker images
 monopacker-docker-worker-2022-11-08t21-41-15z-bug1806341:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2022-12-19t00-48-25z
-monopacker-docker-worker-gcp-bug1768865-20221110:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2022-11-10
+monopacker-docker-worker-gcp-20230613:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13
 monopacker-docker-worker-trusted-gcp-2023-03-16:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-03-16t20-10-06z
-monopacker-docker-worker-2023-03-16t19-54-56z:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-03-16t19-54-56z
+monopacker-docker-worker-2023-06-13t23-47-26z:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-06-13t23-47-26z
 monopacker-docker-worker-2023-04-13-relops528:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-lt-googlecompute-2023-04-13t21-30-28z
 
