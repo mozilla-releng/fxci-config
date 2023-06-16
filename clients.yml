@@ -1153,6 +1153,13 @@ project/taskcluster/smoketest:
   description: Run smoketests on new Taskcluster deployments
   scopes:
     - assume:project:taskcluster:smoketests
+project/taskcluster/audit-reports:
+  description: Used for auditing worker versions across pools.
+  scopes:
+    - queue:create-task:low:*
+    - queue:scheduler-id:smoketest
+    - queue:seal-task-group:smoketest/*
+    - queue:get-artifact:public/*
 project/wpt/wptsync:
   description: Created in Bug 1596469 - Secret handed to :jgraham
   scopes:
