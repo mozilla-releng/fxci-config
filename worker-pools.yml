@@ -228,7 +228,6 @@ pools:
       - pool-group: translations-1
       - pool-group: translations-3
         chain-of-trust: trusted
-      - pool-group: bedrock-1
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -244,7 +243,6 @@ pools:
           mozilla-.*: 10
           mozillavpn-.*: 10
           translations-.*: 10
-          bedrock-.*: 10
           default: 100
       regions: [us-central1, us-west1]
       image:
@@ -515,7 +513,6 @@ pools:
       - pool-group: translations-1
       - pool-group: translations-3
         chain-of-trust: trusted
-      - pool-group: bedrock-1
     config:
       regions: [us-central1, us-west1]
       image:
@@ -587,7 +584,6 @@ pools:
       - pool-group: translations-1
       - pool-group: translations-3
         chain-of-trust: trusted
-      - pool-group: bedrock-1
     config:
       image:
         by-chain-of-trust:
@@ -3066,7 +3062,6 @@ pools:
       - pool-group: comm-t
       - pool-group: mozilla-t
       - pool-group: translations-t
-      - pool-group: bedrock-t
     email_on_error: true
     config:
       minCapacity: 0
@@ -3076,7 +3071,6 @@ pools:
           comm-t: 100
           mozilla-t: 100
           translations-t: 1
-          bedrock-t: 5
       regions: [us-central1, us-west1]
       image: monopacker-docker-worker-gcp-current
       instance_types:
