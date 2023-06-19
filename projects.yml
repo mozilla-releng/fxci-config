@@ -1033,17 +1033,3 @@ staging-firefox-translations-training:
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
-
-# Bug 1824418: support Bedrock in Taskcluster
-bedrock:
-  repo: https://github.com/mozilla/bedrock
-  repo_type: git
-  default_branch: main
-  trust_domain: bedrock
-  level: 1
-  features:
-    github-taskgraph: true
-    github-pull-request:
-      policy: public
-    taskgraph-actions: true
-    trust-domain-scopes: true
