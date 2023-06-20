@@ -152,7 +152,7 @@ comm-esr115:
 oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
-  access: scm_level_2
+  access: scm_level_1
   trust_domain: gecko
   features:
     gecko-actions: true
