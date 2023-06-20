@@ -442,6 +442,7 @@ nss-try:
     hg-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
+    taskgraph-actions: true
 
 ci-configuration:
   repo: https://hg.mozilla.org/ci/ci-configuration
