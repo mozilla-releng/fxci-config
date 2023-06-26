@@ -76,7 +76,7 @@ monopacker-docker-worker-2023-04-13-relops528:
 
 # monopacker generic-worker vm images
 monopacker-translations-worker:
-  fxci-translations-sandbox-gcp: projects/translations-sandbox/global/images/generic-translations-gcp-googlecompute-2023-05-03t16-25-28z
+  fxci-translations-sandbox-gcp: projects/translations-sandbox/global/images/generic-translations-gcp-googlecompute-2023-06-26t15-56-39z
 
 # vm images built by hand
 handbuilt-ubuntu-2204-wayland-vm:
