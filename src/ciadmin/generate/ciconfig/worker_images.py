@@ -37,6 +37,11 @@ class WorkerImage:
         """
         Look up an image_id using the keys under the given cloud for this worker image
         """
+        if cloud not in self.clouds:
+            raise KeyError(
+                f"{cloud} not present for {self.image_name} - "
+                "maybe you need to update worker-images.yml?"
+            )
         v = self.clouds[cloud]
         for k in keys:
             v = v[k]
