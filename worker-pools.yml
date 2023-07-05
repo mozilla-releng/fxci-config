@@ -225,9 +225,6 @@ pools:
       - pool-group: releng-1
       - pool-group: releng-3
         chain-of-trust: trusted
-      - pool-group: translations-1
-      - pool-group: translations-3
-        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -242,7 +239,6 @@ pools:
           mobile-.*: 50
           mozilla-.*: 10
           mozillavpn-.*: 10
-          translations-.*: 10
           default: 100
       regions: [us-central1, us-west1]
       image:
@@ -301,6 +297,40 @@ pools:
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
+          machine_type: n2-custom-32-73728
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-large-gcp-300gb'
+    description: Big workers with big disks - intended for Firefox Translations only
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      regions: [us-central1, us-west1]
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - &persistent-disk-300
+              autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 300
+                sourceImage: <image>
+              type: PERSISTENT
           machine_type: n2-custom-32-73728
           networkInterfaces:
             - accessConfigs:
@@ -756,11 +786,18 @@ pools:
                 - type: ONE_TO_ONE_NAT
           advancedMachineFeatures:
             enableNestedVirtualization: true
-  - pool_id: 'translations-1/t-linux-v100-gpu'  # Bug 1529304 - This pool is experimental
+  - pool_id: '{pool-group}/b-linux-v100-gpu'
     description: Worker for machine learning and other high GPU tasks
     owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
     email_on_error: true
-    provider_id: fxci-translations-sandbox-gcp
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
     config:
       minCapacity: 0
       maxCapacity: 10
@@ -771,8 +808,6 @@ pools:
         - minCpuPlatform: Intel Skylake
           disks:
             - *persistent-disk-75
-            - *scratch-disk
-            - *scratch-disk
           machine_type: n1-highmem-8
           networkInterfaces:
             - accessConfigs:
@@ -780,13 +815,18 @@ pools:
           guestAccelerators:
             - acceleratorCount: 1
               acceleratorType: nvidia-tesla-v100
-  - pool_id: '{pool-group}/t-linux-v100-gpu-4'  # Bug 1529304 - This pool is experimental
+  - pool_id: '{pool-group}/b-linux-v100-gpu-4'
     description: Worker for machine learning and other high GPU tasks
     owner: release+tc-workers@mozilla.com
     variants:
       - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
     email_on_error: true
-    provider_id: fxci-translations-sandbox-gcp
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
     config:
       minCapacity: 0
       maxCapacity: 10
@@ -797,8 +837,6 @@ pools:
         - minCpuPlatform: Intel Skylake
           disks:
             - *persistent-disk-75
-            - *scratch-disk
-            - *scratch-disk
           machine_type: n1-highmem-8
           networkInterfaces:
             - accessConfigs:
@@ -806,6 +844,151 @@ pools:
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
+  - pool_id: '{pool-group}/b-linux-v100-gpu-4-300gb'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-translations-worker
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - *persistent-disk-300
+          machine_type: n1-highmem-8
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+          guestAccelerators:
+            - acceleratorCount: 4
+              acceleratorType: nvidia-tesla-v100
+  - pool_id: '{pool-group}/b-linux-v100-gpu-4-1tb'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-translations-worker
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - &persistent-disk-1024
+              autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 1024
+                sourceImage: <image>
+              type: PERSISTENT
+          machine_type: n1-highmem-8
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+          guestAccelerators:
+            - acceleratorCount: 4
+              acceleratorType: nvidia-tesla-v100
+  - pool_id: '{pool-group}/b-linux-p100-gpu-4'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-translations-worker
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - *persistent-disk-75
+          machine_type: n1-highmem-8
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+          guestAccelerators:
+            - acceleratorCount: 4
+              acceleratorType: nvidia-tesla-p100
+  - pool_id: '{pool-group}/b-linux-a100-gpu'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-translations-worker
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - *persistent-disk-75
+          machine_type: a2-highpu-1g-preemptible
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-l4-gpu'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+      - pool-group: translations-3
+        chain-of-trust: trusted
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-translations-worker
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - *persistent-disk-75
+          machine_type: g2-standard-12
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/misc-gcp'
     description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
       SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
@@ -3062,7 +3245,6 @@ pools:
       - pool-group: gecko-t
       - pool-group: comm-t
       - pool-group: mozilla-t
-      - pool-group: translations-t
     email_on_error: true
     config:
       minCapacity: 0
@@ -3071,7 +3253,6 @@ pools:
           gecko-t: 2500
           comm-t: 100
           mozilla-t: 100
-          translations-t: 1
       regions: [us-central1, us-west1]
       image: monopacker-docker-worker-gcp-current
       instance_types:
