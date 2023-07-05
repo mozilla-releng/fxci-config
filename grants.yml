@@ -1603,16 +1603,6 @@
         alias: firefox-android
         job: [cron:nightly]
 
-# TODO: Remove this grant once bug 1840665 is resolved
-- grant:
-    - project:mobile:{trust_project}:releng:signing:cert:fennec-production-signing
-    - secrets:get:project/mobile/{trust_project}/fenix/release
-  to:
-    - project:
-        alias: firefox-android
-        job: [branch:bug-1840665]
-
-
 - grant:
     - secrets:get:project/mobile/github
   to:
