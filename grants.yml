@@ -893,14 +893,14 @@
   to:
     - project:
         alias: taskgraph
-        job: [action:*, branch:*, pull-request:trusted, release*]
+        job: [action:*, branch:*, pull-request:trusted, release:*]
 
 - grant:
     - secrets:get:project/releng/taskgraph/mozilla-taskgraph/ci
   to:
     - project:
         alias: mozilla-taskgraph
-        job: [action:*, branch:*, pull-request:trusted, release*]
+        job: [action:*, branch:*, pull-request:trusted, release:*]
 
 - grant:
     - secrets:get:project/releng/shipit/ci
@@ -948,7 +948,7 @@
     - project:
         alias: glean
         level: 3
-        job: [release*]
+        job: [release:*]
 
 - grant:
     # TODO Bug 1631839: Remove this scope once project has migrated to
@@ -958,7 +958,7 @@
   to:
     - project:
         alias: glean
-        job: [branch:*, release*]
+        job: [branch:*, release:*]
 
 # - application-services specific roles
 - grant:
@@ -999,7 +999,7 @@
     - project:
         alias: application-services
         level: 3
-        job: [release*, cron:nightly, action:release-promotion]
+        job: [release:*, cron:nightly, action:release-promotion]
 
 - grant:
     - queue:route:index.app-services.v2.{alias}.revision.*
@@ -1009,10 +1009,10 @@
     - project:
         alias: application-services
         level: 3
-        job: [release*, branch:*, cron:nightly]
+        job: [release:*, branch:*, cron:nightly]
     - project:
         alias: staging-application-services
-        job: [release*, branch:*, cron:nightly]
+        job: [release:*, branch:*, cron:nightly]
 
 - grant:
     - hooks:trigger-hook:project-app-services/in-tree-action-1-generic/*
@@ -1068,7 +1068,7 @@
   to:
     - project:
         alias: balrog
-        job: [release*]
+        job: [release:*]
 
 ##
 # mozilla-releng roles
@@ -1772,7 +1772,7 @@
           - branch:*
           - cron:*
           - pull-request:*
-          - release*
+          - release:*
           - action:*
 
 - grant:
@@ -1782,7 +1782,7 @@
     - project:
         alias:
           - mozilla-vpn-client
-        job: [release*, action:release-promotion]
+        job: [release:*, action:release-promotion]
 
 - grant:
     - project:mozillavpn:releng:beetmover:action:push-to-releases
@@ -1810,7 +1810,7 @@
         job:
           - branch:*
           - pull-request:*
-          - release*
+          - release:*
 
 - grant:
     - project:{trust_domain}:releng:signing:format:*
@@ -1824,7 +1824,7 @@
           - action:*
           - branch:*
           - pull-request:trusted
-          - release*
+          - release:*
 
 - grant:
     - project:mozillavpn:releng:googleplay:product:mozillavpn
@@ -1833,7 +1833,7 @@
     - project:
         alias:
           - mozilla-vpn-client
-        job: [release*]
+        job: [release:*]
 
 - grant:
     - project:mozillavpn:releng:signing:cert:release-signing
@@ -1848,7 +1848,7 @@
         job:
           - branch:main
           - branch:releases/*
-          - release*
+          - release:*
 
 - grant:
     - queue:route:index.{trust_domain}.v2.mozilla-vpn-client.branch.*
@@ -1892,7 +1892,7 @@
         job:
           - branch:*
           - pull-request:trusted
-          - release*
+          - release:*
           - action:release-promotion
 
 - grant:
@@ -1905,7 +1905,7 @@
         job:
           - branch:main
           - branch:releases/*
-          - release*
+          - release:*
 
 - grant:
     - "queue:route:notify.matrix-room.!wGgsWXnVncJLSBYmuf:mozilla.org.*"  # releaseduty-dev
@@ -2963,14 +2963,6 @@
   to:
     - roles:
         - mozilla-group:perftest
-
-# backwards-compat for github-release scope (bug 1810118)
-- grant:
-    - assume:repo:github.com/{repo_path}:release
-  to:
-    - projects:
-        job: [release:*]
-        feature: legacy-github-release
 
 # Scopes for running Translations training cycles
 - grant:
