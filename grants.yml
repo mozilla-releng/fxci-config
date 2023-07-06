@@ -1789,6 +1789,7 @@
     - project:mozillavpn:releng:beetmover:action:direct-push-to-bucket
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
     - queue:route:notify.slack-channel.C01DCUKG95E.*  # mozilla-vpn-release
+    - "queue:route:notify.matrix-room.!tBWwNyfeKqGvkNpdDL:mozilla.org.*"  # releaseduty
   to:
     - project:
         alias:
@@ -1905,6 +1906,13 @@
           - branch:main
           - branch:releases/*
           - release*
+
+- grant:
+    - "queue:route:notify.matrix-room.!wGgsWXnVncJLSBYmuf:mozilla.org.*"  # releaseduty-dev
+  to:
+    - project:
+        alias: [staging-mozilla-vpn-client]
+        job: [action:release-promotion]
 
 # Bug 1745945: secret scopes for mozillavpn-developers
 - grant:
