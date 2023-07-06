@@ -420,38 +420,6 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: gecko-1/masterwayz-bug1806341
-    description: GCP Linux image testing pool for Firefox CI Automation
-    owner: fxci-gcp-testers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 20
-      regions: [us-central1]
-      image: monopacker-docker-worker-testing-bug1806341
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          metadata:
-            items:
-              - key: 'startup-script'
-                value: "#!/usr/bin/awk BEGIN{system(\"sed -i s/aws/google/ /etc/start-worker.yml;sed -i s'/^&/#/' /etc/rsyslog.d/*cloud*;sleep 300\")}"
-              - key: 'startup-script-url'
-                value: 'gs://relops/worker_setup.sh'
-          disks:
-            - *persistent-disk-75
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: n2-custom-16-73728
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/decision-gcp'
     description: Worker for Firefox automation
     owner: release+tc-workers@mozilla.com
@@ -703,25 +671,6 @@ pools:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-gcp-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75
-            - *scratch-disk
-          machine_type: n2-standard-4
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
-  - pool_id: 'gecko-t/t-linux-xlarge-gcp-bug1806341'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 50
-      regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
