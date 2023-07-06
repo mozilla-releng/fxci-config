@@ -1684,7 +1684,6 @@ pools:
         genericWorker:
           config:
             workerType: win2022-azure
-            provisionerId: gecko-b
             cachesDir: D:\caches
             downloadsDir: D:\downloads
             tasksDir: D:\
