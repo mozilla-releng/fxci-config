@@ -494,6 +494,20 @@ mozilla-taskgraph:
     taskgraph-actions: true
     trust-domain-scopes: true
 
+reps:
+  repo: https://github.com/mozilla-releng/reps
+  repo_type: git
+  trust_domain: mozilla
+  trust_project: reps
+  default_branch: main
+  level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public_restricted
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 # mobile Github repositories
 firefox-android:
   repo: https://github.com/mozilla-mobile/firefox-android
