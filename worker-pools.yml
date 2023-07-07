@@ -100,7 +100,10 @@ worker-defaults:
             downloadsDir: /home/ubuntu/downloads
             livelogExecutable: /home/ubuntu/generic_worker/livelog
             ed25519SigningKeyLocation: /home/ubuntu/generic_worker/ed25519-private.key
-            idleTimeoutSecs: 86400  # 1 day
+            # This timeout is set very low to avoid burning money on the GPU instances
+            # that use this configuration. If other pools need a different idle timeout
+            # we should probably split this at some point.
+            idleTimeoutSecs: 300 # 5 minutes
             numberOfTasksToRun: 0
             sentryProject: generic-worker
             shutdownMachineOnIdle: true
