@@ -103,7 +103,7 @@ worker-defaults:
             # This timeout is set very low to avoid burning money on the GPU instances
             # that use this configuration. If other pools need a different idle timeout
             # we should probably split this at some point.
-            idleTimeoutSecs: 300 # 5 minutes
+            idleTimeoutSecs: 300  # 5 minutes
             numberOfTasksToRun: 0
             sentryProject: generic-worker
             shutdownMachineOnIdle: true
@@ -732,6 +732,27 @@ pools:
                 diskSizeGb: 60
                 sourceImage: <image>
               type: PERSISTENT
+          machine_type: n2-standard-2
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+          advancedMachineFeatures:
+            enableNestedVirtualization: true
+  - pool_id: 'gecko-t/t-linux-vm-2204-wayland-aerickson-test'  # This pool is experimental
+    description: Worker for testing Wayland and XWayland on Ubuntu 22.04
+    owner: aerickson@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 1
+      maxCapacity: 1
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: handbuilt-ubuntu-2204-wayland-vm-aerickson-testing
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-60
           machine_type: n2-standard-2
           networkInterfaces:
             - accessConfigs:
