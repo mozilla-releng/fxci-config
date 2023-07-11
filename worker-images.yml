@@ -250,7 +250,7 @@ ronin-t-windows10-64-2009-alpha:
 # Windows 11
 ronin-t-windows11-64-2009-alpha-test:
   azure2:
-    deployment_id: "1416118"
+    deployment_id: 69a7ecf
     central-india: win11-64-2009-centralindia-win11-22h2-avd
     central-us: win11-64-2009-centralus-win11-22h2-avd
     east-us: win11-64-2009-eastus-win11-22h2-avd
