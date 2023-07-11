@@ -418,8 +418,6 @@
 # moz-tree:level:3:*
 - grant:
     - auth:aws-s3:read-write:public-qemu-images/repository/hg.mozilla.org/mozilla-central/*
-    - docker-worker:feature:balrogStageVPNProxy
-    - docker-worker:feature:balrogVPNProxy
     - secrets:get:project/taskcluster/gecko/build/level-3/*
     - secrets:get:project/civet/github-deploy-key
     - queue:get-artifact:project/civet/*
