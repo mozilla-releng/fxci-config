@@ -655,6 +655,7 @@ application-services:
     github-pull-request:
       policy: public
     scriptworker: true
+    shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -672,6 +673,7 @@ staging-application-services:
     github-pull-request:
       policy: public
     scriptworker: true
+    shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
     trust-domain-scopes: true
