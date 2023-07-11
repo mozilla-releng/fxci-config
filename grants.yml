@@ -408,7 +408,6 @@
 
 # moz-tree:level:2:*
 - grant:
-    - docker-worker:capability:device:phone
     - secrets:get:project/taskcluster/gecko/build/level-2/*
   to:
     - projects:
