@@ -1798,8 +1798,6 @@ pools:
       worker-config:
         genericWorker:
           config:
-        genericWorker:
-          config:
             cachesDir: D:\caches
             downloadsDir: D:\downloads
             tasksDir: D:\
