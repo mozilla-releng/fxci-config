@@ -78,7 +78,7 @@ monopacker-translations-worker:
 
 # vm images built by hand
 handbuilt-ubuntu-2204-wayland-vm:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-06-13t21-26-15z
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-07-13t20-23-55z
 handbuilt-ubuntu-2204-wayland-vm-aerickson-testing:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-aerickson-test-2023-07-11t20-51-38z
 

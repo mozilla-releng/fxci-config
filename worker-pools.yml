@@ -717,8 +717,15 @@ pools:
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
+      worker-config:
+        genericWorker:
+          config:
+            livelogExecutable: /home/ubuntu/.taskcluster/livelog
+            taskclusterProxyExecutable: /home/ubuntu/.taskcluster/taskcluster-proxy
+            numberOfTasksToRun: 1  # gw simple uses 1 to exit after one task
+            idleTimeoutSecs: 5400
       minCapacity: 0
-      maxCapacity: 0
+      maxCapacity: 4
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: handbuilt-ubuntu-2204-wayland-vm
@@ -751,7 +758,7 @@ pools:
             taskclusterProxyExecutable: /home/ubuntu/.taskcluster/taskcluster-proxy
             numberOfTasksToRun: 1  # gw simple uses 1 to exit after one task
             idleTimeoutSecs: 5400
-      minCapacity: 1
+      minCapacity: 0
       maxCapacity: 1
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
