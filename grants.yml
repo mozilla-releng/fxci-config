@@ -409,6 +409,8 @@
 # moz-tree:level:2:*
 - grant:
     - secrets:get:project/taskcluster/gecko/build/level-2/*
+    - secrets:get:project/civet/github-deploy-key
+    - queue:get-artifact:project/civet/*
   to:
     - projects:
         feature: gecko-roles
