@@ -667,7 +667,6 @@ staging-application-services:
   repo_type: git
   level: 1
   trust_domain: app-services
-  trust_project: staging-application-services
   features:
     github-taskgraph: true
     github-pull-request:
