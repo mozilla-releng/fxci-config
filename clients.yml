@@ -732,6 +732,12 @@ project/releng/scriptworker/v2/shipit/dev/firefoxci-adhoc-1:
     - project:releng:services/shipit_api/update_release_status
     - queue:claim-work:scriptworker-k8s/adhoc-1-shipit-dev
     - queue:worker-id:adhoc-1-shipit-dev/adhoc-1-shipit-dev-*
+project/releng/scriptworker/v2/shipit/dev/firefoxci-app-services-1:
+  description: App-services level 1 shipit scriptworker
+  scopes:
+    - project:releng:services/shipit_api/update_release_status
+    - queue:claim-work:scriptworker-k8s/app-services-1-shipit-dev
+    - queue:worker-id:adhoc-1-shipit-dev/app-services-1-shipit-dev-*
 project/releng/scriptworker/v2/shipit/dev/firefoxci-gecko-1:
   description: ''
   scopes:
@@ -778,6 +784,18 @@ project/releng/scriptworker/v2/shipit/prod/firefoxci-adhoc-3:
     - project:releng:services/shipit_api/update_release_status
     - queue:claim-work:scriptworker-k8s/adhoc-3-shipit
     - queue:worker-id:adhoc-3-shipit/adhoc-3-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-app-services-1:
+  description: App-services level 1 shipit scriptworker
+  scopes:
+    - project:releng:services/shipit_api/update_release_status
+    - queue:claim-work:scriptworker-k8s/app-services-1-shipit
+    - queue:worker-id:adhoc-1-shipit/app-services-1-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-app-services-3:
+  description: App-services level 3 shipit scriptworker
+  scopes:
+    - project:releng:services/shipit_api/update_release_status
+    - queue:claim-work:scriptworker-k8s/app-services-3-shipit
+    - queue:worker-id:adhoc-3-shipit/app-services-3-shipit-*
 project/releng/scriptworker/v2/shipit/prod/firefoxci-comm-1:
   description: ''
   scopes:
