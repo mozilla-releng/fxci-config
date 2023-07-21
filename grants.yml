@@ -2970,4 +2970,4 @@
     - hooks:trigger-hook:project-translations/in-tree-action-*
   to:
     - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|anatal
+        - mozillians-group:translations-developers
