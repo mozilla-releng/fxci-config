@@ -852,6 +852,7 @@
 
 - grant:
     # needed by Github service's auto-cancel feature
+    - queue:cancel-task-group:{trust_domain}-level-1/*
     - queue:seal-task-group:{trust_domain}-level-1/*
     # routes to support indexing by product
     - queue:route:index.{trust_domain}.v2.{alias}-pr.*
