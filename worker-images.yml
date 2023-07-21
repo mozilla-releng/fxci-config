@@ -13,8 +13,6 @@
 
 # AWS builders level 1 and 2, unused for GCP
 docker-worker-hvm-builder-current: docker-worker-v202004241848-hvm-builder-bug1676214
-# AWS builders level 3, unused for GCP
-docker-worker-hvm-builder-trusted-current: docker-worker-v20220907-hvm-builder-trusted-bug1789506
 
 # monopacker-docker-worker-* images are built with monopacker.
 
@@ -55,11 +53,6 @@ docker-worker-v202004241848-hvm-builder-bug1676214:
     us-east-1: ami-029998f24ee67c828
     us-west-1: ami-0023a52f54d07188e
     us-west-2: ami-0b9ad26d4f2651ee9
-docker-worker-v20220907-hvm-builder-trusted-bug1789506:
-  aws:
-    us-east-1: ami-06ff4e113eb9b82f1
-    us-west-1: ami-0f3aeed3a8934d0e3
-    us-west-2: ami-0988039a161c85c08
 
 # monopacker docker-worker images
 monopacker-docker-worker-gcp-20230613:
