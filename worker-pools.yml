@@ -3465,48 +3465,6 @@ pools:
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
               - DeviceName: /dev/sdc
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-  - pool_id: mobile-1/bitrise
-    description: Level 1 workers to interact with bitrise.io (iOS CI)
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: aws
-    config:
-      image: docker-worker-hvm-builder-current
-      minCapacity: 0
-      maxCapacity: 1  # We can only have 3 concurrent builds with the plan we pay. Let's not overload the queue with level 1 jobs
-      instance_types:
-        # No need for a big instance, it just delegates the heavy lifting to bitrise. That said, we
-        # can't use t3 instances. The AMIs aren't compatible
-        - instanceType: m5d.large
-          capacityPerInstance: 1  # capacity reduced to 1 (instead of 8), because we don't want more than 1 task for level 1
-          worker-config:
-            capacityManagement: {diskspaceThreshold: 9000000000}
-      regions:
-        - us-east-1
-        - us-west-1
-        - us-west-2
-  - pool_id: mobile-3/bitrise
-    description: Level 3 workers to interact with bitrise.io (iOS CI)
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: aws
-    config:
-      image: docker-worker-hvm-builder-trusted-current
-      minCapacity: 0
-      maxCapacity: 3  # We can only have 3 concurrent builds with the plan we pay
-      security: trusted
-      instance_types:
-        # No need for a big instance, it just delegates the heavy lifting to
-        # bitrise. That said, we can't use t3 instances. The AMIs aren't
-        # compatible
-        - instanceType: m5d.large
-          capacityPerInstance: 3  # capacity reduced to 3 (instead of 8), because we don't want more than 3 tasks for level 3
-          worker-config:
-            capacityManagement: {diskspaceThreshold: 9000000000}
-      regions:
-        - us-east-1
-        - us-west-1
-        - us-west-2
   - pool_id: mobile-1/bitrise-gcp
     description: Level 1 workers to interact with bitrise.io (iOS CI)
     owner: release+tc-workers@mozilla.com
