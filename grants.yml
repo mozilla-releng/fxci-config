@@ -2582,8 +2582,7 @@
     - groups:
         - team_moco
 
-# Bug 1607198 - grant access to coverity project. For now we start with one
-# developer but should we ever need more, we can create a Mozillians group
+# Bug 1607198 - grant access to coverity project.
 - grant:
     - secrets:set:project/relman/coverity
     - secrets:set:project/relman/coverity-nss
