@@ -1625,7 +1625,7 @@ pools:
                 enabled: false
       capacityPerInstance: 1
   # Windows Server 2022
-  - pool_id: gecko-1/win2022-alpha
+  - pool_id: gecko-1/b-win2022-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
