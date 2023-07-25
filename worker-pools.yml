@@ -725,7 +725,7 @@ pools:
             numberOfTasksToRun: 1  # gw simple uses 1 to exit after one task
             idleTimeoutSecs: 5400
       minCapacity: 0
-      maxCapacity: 4
+      maxCapacity: 20
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: handbuilt-ubuntu-2204-wayland-vm
