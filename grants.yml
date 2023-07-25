@@ -971,6 +971,7 @@
     - queue:create-task:highest:app-services-{level}/*
     - queue:create-task:highest:releng-hardware/applicationservices-b-{level}-osx1015
     - project:{trust_domain}:releng:ship-it:action:mark-as-shipped
+    - project:{trust_domain}:releng:ship-it:server:staging
     - project:mozilla:{trust_domain}:releng:signing:cert:dep-signing
     - project:mozilla:{trust_domain}:releng:signing:format:*
     - project:mozilla:{trust_domain}:releng:beetmover:action:push-to-candidates
