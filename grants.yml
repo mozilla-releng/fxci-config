@@ -999,6 +999,7 @@
     # `glean` project
     - project:mozilla:{trust_domain}:releng:beetmover:bucket:release
     - project:mozilla:{trust_domain}:releng:beetmover:bucket:maven-production
+    - project:{trust_domain}:releng:ship-it:server:production
   to:
     - project:
         alias: application-services
