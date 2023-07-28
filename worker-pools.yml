@@ -1636,7 +1636,7 @@ pools:
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-1
       locations: [central-us, north-central-us]
-      maxCapacity: 25
+      maxCapacity: 5
       worker-config:
         genericWorker:
           config:
