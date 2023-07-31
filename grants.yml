@@ -1004,7 +1004,7 @@
     - project:
         alias: application-services
         level: 3
-        job: [release:*, cron:nightly, action:release-promotion]
+        job: [cron:nightly, action:release-promotion]
 
 - grant:
     - queue:route:index.app-services.v2.{alias}.revision.*
@@ -1014,10 +1014,10 @@
     - project:
         alias: application-services
         level: 3
-        job: [release:*, branch:*, cron:nightly]
+        job: [branch:*, cron:nightly]
     - project:
         alias: staging-application-services
-        job: [release:*, branch:*, cron:nightly]
+        job: [branch:*, cron:nightly]
 
 - grant:
     - hooks:trigger-hook:project-app-services/in-tree-action-1-generic/*
