@@ -80,7 +80,7 @@ worker-defaults:
             downloadsDir: Z:\downloads
             livelogExecutable: C:\generic-worker\livelog.exe
             ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
-            idleTimeoutSecs: 960
+            idleTimeoutSecs: 600
             numberOfTasksToRun: 0
             runAfterUserCreation: C:\generic-worker\task-user-init.cmd
             runTasksAsCurrentUser: false
