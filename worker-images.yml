@@ -175,6 +175,11 @@ ronin-b-windows2022-alpha:
     deployment_id: alpha
     central-us: win2022-64-2009-centralus-2022-datacenter-azure-edition
     north-central-us: win2022-64-2009-northcentralus-2022-datacenter-azure-edition
+ronin-b-windows2022-rd-alpha:
+  azure2:
+    deployment_id: alpha
+    central-us: win2022-64-2009-rd-centralus-2022-datacenter-azure-edition
+    north-central-us: win2022-64-2009-rd-northcentralus-2022-datacenter-azure-edition
 ronin-b1-windows2022-prod:
   azure2:
     deployment_id: 70b4156

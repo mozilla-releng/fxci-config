@@ -1667,6 +1667,47 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
+  - pool_id: gecko-1/b-win2022-rd-alpha
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-b-windows2022-rd-alpha
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-1
+      locations: [central-us, north-central-us]
+      maxCapacity: 5
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win2022-azure
+            cachesDir: D:\caches
+            downloadsDir: Z:\downloads
+            tasksDir: Z:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: bug1845790
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
   - pool_id: gecko-1/b-win2022
     description: ''
     owner: relops-azure-provisioning@mozilla.com
