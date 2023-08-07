@@ -1693,7 +1693,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_F16s_v2
+        - vmSize: Standard_F32s_v2
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -1705,9 +1705,10 @@ pools:
                 createOption: FromImage
               dataDisks:
                 - lun: 0
-                  diskSizeGB: 1000
+                  diskSizeGB: 1024
                   managedDisk:
                     storageAccountType: Premium_LRS
+                  createOption: Empty
             hardwareProfile:
               vmSize: Standard_F16s_v2
             diagnosticsProfile:
