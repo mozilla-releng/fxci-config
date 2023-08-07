@@ -895,6 +895,25 @@ pools:
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
+  - pool_id: 'translations-1/b-linux-aerickson-test'
+    description: Worker for testing new Translations images.
+    owner: aerickson@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 1
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-translations-worker-testing
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - *persistent-disk-20
+          machine_type: n2-standard-2
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/misc-gcp'
     description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
       SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
