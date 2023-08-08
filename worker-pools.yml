@@ -2612,7 +2612,6 @@ pools:
           config:
             workerType: win10-64-2009
             provisionerId: gecko-t
-            idleTimeoutSecs: 5400
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2659,7 +2658,6 @@ pools:
           config:
             workerType: win10-64-2009-gpu
             provisionerId: gecko-t
-            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2705,7 +2703,6 @@ pools:
           config:
             workerType: win10-64-2009-source
             provisionerId: gecko-t
-            idleTimeoutSecs: 5400
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2893,7 +2890,6 @@ pools:
           config:
             workerType: win11-64-2009
             provisionerId: gecko-t
-            idleTimeoutSecs: 5400
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -3080,7 +3076,6 @@ pools:
           config:
             workerType: win11-64-2009-gpu
             provisionerId: gecko-t
-            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -3173,7 +3168,6 @@ pools:
           config:
             workerType: win11-64-2009-source
             provisionerId: gecko-t
-            idleTimeoutSecs: 5400
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -3267,7 +3261,6 @@ pools:
           config:
             workerType: win11-64-2009-ssd
             provisionerId: gecko-t
-            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -3317,7 +3310,6 @@ pools:
           config:
             workerType: win11-64-2009-ssd-gpu
             provisionerId: gecko-t
-            idleTimeoutSecs: 1800
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -3367,7 +3359,6 @@ pools:
           config:
             workerType: win10-64-2004
             provisionerId: comm-t
-            idleTimeoutSecs: 3600
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -3414,7 +3405,6 @@ pools:
           config:
             workerType: win11-64-2009
             provisionerId: gecko-t
-            idleTimeoutSecs: 5400
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
