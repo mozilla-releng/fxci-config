@@ -909,7 +909,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - *persistent-disk-20
+            - *persistent-disk-60
           machine_type: n2-standard-2
           networkInterfaces:
             - accessConfigs:
