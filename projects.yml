@@ -814,7 +814,7 @@ firefox-ci-playground-private:
   default_branch: main
   trust_domain: mozilla
   trust_project: firefox-ci-playground
-  level: 3
+  level: 1
   features:
     github-pull-request:
       policy: public
