@@ -1885,6 +1885,8 @@
     - project:mozillavpn:releng:beetmover:action:direct-push-to-bucket
     - project:mozillavpn:releng:beetmover:action:copy-artifacts
     - project:mozillavpn:releng:beetmover:bucket:dep
+    - project:mozillavpn:releng:beetmover:action:import-from-gcs-to-artifact-registry
+    - project:mozillavpn:releng:beetmover:apt-repo:dep
     - project:mozillavpn:releng:signing:cert:dep-signing
     - project:mozillavpn:releng:signing:format:*
     - project:releng:services/tooltool/api/download/public
