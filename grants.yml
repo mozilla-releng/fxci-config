@@ -687,7 +687,6 @@
   to:
     - project:
         alias:
-          - toolchains
           - try
 
 - grant:
