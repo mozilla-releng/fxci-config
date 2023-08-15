@@ -1941,6 +1941,7 @@
 # Bug 1745945: secret scopes for mozillavpn-developers
 - grant:
     - hooks:trigger-hook:project-mozillavpn/in-tree-action-1-generic/*
+    - hooks:trigger-hook:project-mozillavpn/in-tree-action-1-release-promotion/*
     - hooks:trigger-hook:project-mozillavpn/in-tree-action-3-generic/*
     - secrets:set:project/mozillavpn/*
     - secrets:get:project/mozillavpn/*
