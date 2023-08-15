@@ -14,6 +14,7 @@
 # translated into a region[..].launchSpec.ImageId value based on worker-pools.yml.
 worker-defaults:
   lifecycle:
+    queueInactivityTimeout: 7200
     registrationTimeout: 1800
     reregistrationTimeout: 345600
   worker-config:
