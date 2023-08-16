@@ -1442,6 +1442,12 @@
         job: [pull-request:*]
 
 - grant:
+    - secrets:get:project/releng/releng-github-clone-ssh
+  to:
+    - project:
+        feature: github-private-repo
+
+- grant:
     - project:mobile:{trust_project}:releng:signing:cert:release-signing
   to:
     - project:
