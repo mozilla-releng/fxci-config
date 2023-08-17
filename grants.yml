@@ -1856,12 +1856,20 @@
 
 - grant:
     - project:mozillavpn:releng:googleplay:product:mozillavpn
-    - queue:route:index.{trust_domain}.v2.mozilla-vpn-client.release.*
   to:
     - project:
         alias:
           - mozilla-vpn-client
         job: [release:*]
+
+- grant:
+    - queue:route:index.{trust_domain}.v2.{alias}.release.*
+  to:
+    - project:
+        alias:
+          - mozilla-vpn-client
+          - staging-mozilla-vpn-client
+        job: [release:*, action:release-promotion]
 
 - grant:
     - project:mozillavpn:releng:signing:cert:release-signing
