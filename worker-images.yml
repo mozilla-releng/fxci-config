@@ -194,7 +194,7 @@ ronin-b1-windows2022-prod:
     west-us-2: win2022-64-2009-westus2-2022-datacenter-azure-edition
 ronin-b3-windows2022-prod:
   azure_trusted:
-    deployment_id: 70b4156
+    deployment_id: d5dee60
     central-us: trusted-win2022-64-2009-centralus-2022-datacenter-azure-edition
     east-us: trusted-win2022-64-2009-eastus-2022-datacenter-azure-edition
     east-us-2: trusted-win2022-64-2009-eastus2-2022-datacenter-azure-edition
