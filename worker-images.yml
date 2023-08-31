@@ -246,7 +246,7 @@ ronin-t-windows10-64-2004-datadisk-test:
     west-us-2: gecko-t-win10-64-2004-westus2-20h1-evd-f160361
 ronin-t-windows10-64-2009-prod:
   azure2:
-    deployment_id: 669c5d9
+    deployment_id: f4ce3d6
     canada-central: win10-64-2009-canadacentral-win10-22h2-avd
     central-india: win10-64-2009-centralindia-win10-22h2-avd
     central-us: win10-64-2009-centralus-win10-22h2-avd
@@ -295,7 +295,7 @@ ronin-t-windows11-64-2009-alpha:
     uk-south: win11-64-2009-uksouth-win11-22h2-avd
 ronin-t-windows11-64-2009-prod:
   azure2:
-    deployment_id: 669c5d9
+    deployment_id: f4ce3d6
     canada-central: win11-64-2009-canadacentral-win11-22h2-avd
     central-india: win11-64-2009-centralindia-win11-22h2-avd
     central-us: win11-64-2009-centralus-win11-22h2-avd
