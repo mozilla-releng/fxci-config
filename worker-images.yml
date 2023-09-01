@@ -246,7 +246,7 @@ ronin-t-windows10-64-2004-datadisk-test:
     west-us-2: gecko-t-win10-64-2004-westus2-20h1-evd-f160361
 ronin-t-windows10-64-2009-prod:
   azure2:
-    deployment_id: 43c141a
+    deployment_id: 669c5d9
     canada-central: win10-64-2009-canadacentral-win10-22h2-avd
     central-india: win10-64-2009-centralindia-win10-22h2-avd
     central-us: win10-64-2009-centralus-win10-22h2-avd
