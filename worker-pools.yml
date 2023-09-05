@@ -1784,7 +1784,7 @@ pools:
       image: ronin-b1-windows2022-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-1
+      worker-purpose: gecko-2
       locations: [central-us, north-central-us, east-us-2, west-us-2]
       maxCapacity: 500
       worker-config:
