@@ -1540,6 +1540,9 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
+      - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: azure_trusted
@@ -1560,6 +1563,7 @@ pools:
           gecko-.*: 500
           comm-3: 50
           comm-(1|2): 25
+          mozillavpn-.*: 25
       worker-config:
         genericWorker:
           config:
