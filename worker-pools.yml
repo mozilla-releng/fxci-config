@@ -318,6 +318,11 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
       minCapacity: 0
       maxCapacity: 10
       regions: [us-central1, us-west1]
@@ -787,6 +792,11 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux
@@ -816,6 +826,11 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux
@@ -845,6 +860,11 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux
@@ -874,6 +894,11 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux
