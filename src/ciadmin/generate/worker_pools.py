@@ -173,7 +173,7 @@ def get_azure_provider_config(
     locations = config.pop("locations")
     image_rgroup = config.pop("image_resource_group")
     vmSizes = config["vmSizes"]
-    purpose = config.get("worker-purpose", pool_id.split("/")[0])
+    purpose = config.get("worker-purpose") or pool_id.split("/")[0]
     image = worker_images[config["image"]]
     implementation = config.pop(
         "implementation", "generic-worker/worker-runner-windows"
@@ -430,14 +430,15 @@ def generate_pool_variants(worker_pools, environment):
 
     def update_config(config, name, attributes):
         config = copy.deepcopy(config)
-        for key in [
+        for key in (
             "image",
             "instance_types",
             "locations",
             "maxCapacity",
             "minCapacity",
             "security",
-        ]:
+            "worker-purpose"
+        ):
             if key in config:
                 value = evaluate_keyed_by(config[key], name, attributes)
                 if value is not None:

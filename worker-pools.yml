@@ -1589,6 +1589,11 @@ pools:
           comm-3: 50
           comm-(1|2): 25
           mozillavpn-.*: 25
+      worker-purpose:
+        by-pool-group:
+          mozillavpn-1: vpn-1
+          mozillavpn-3: vpn-3
+          default: null  # defaults to pool-group
       worker-config:
         genericWorker:
           config:
