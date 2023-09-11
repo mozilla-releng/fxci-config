@@ -372,12 +372,26 @@ def get_google_provider_config(
                         "acceleratorType"
                     ] = f"zones/{zone}/acceleratorTypes/{acc['acceleratorType']}"
 
-                # TODO: Add an option for requesting non-prementible instances
-                launch_config["scheduling"] = {
-                    "onHostMaintenance": "terminate",
-                    "automaticRestart": False,
-                    "preemptible": True,
+                scheduling_options = {
+                    "preemptible": {
+                        "onHostMaintenance": "terminate",
+                        "automaticRestart": False,
+                        "preemptible": True,
+                    },
+                    "spot": {
+                        "onHostMaintenance": "terminate",
+                        "provisioningModel": "SPOT",
+                        "instanceTerminationAction": "DELETE",
+                    },
+                    "standard": {
+                        "onHostMaintenance": "terminate",
+                        "provisioningModel": "STANDARD",
+                        "instanceTerminationAction": "DELETE",
+                    },
                 }
+                scheduling_choice = launch_config.get("scheduling", "preemptible")
+                launch_config["scheduling"] = scheduling_options[scheduling_choice]
+
                 launch_configs.append(launch_config)
 
     return {
