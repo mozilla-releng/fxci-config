@@ -341,6 +341,7 @@ pools:
                 sourceImage: <image>
               type: PERSISTENT
           machine_type: n2-custom-32-73728
+          scheduling: spot
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
@@ -807,6 +808,7 @@ pools:
           disks:
             - *persistent-disk-75
           machine_type: n1-highmem-8
+          scheduling: spot
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
@@ -841,6 +843,7 @@ pools:
           disks:
             - *persistent-disk-75
           machine_type: n1-highmem-8
+          scheduling: spot
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
@@ -875,6 +878,7 @@ pools:
           disks:
             - *persistent-disk-300
           machine_type: n1-highmem-8
+          scheduling: spot
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
@@ -915,6 +919,7 @@ pools:
                 sourceImage: <image>
               type: PERSISTENT
           machine_type: n1-highmem-8
+          scheduling: spot
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
