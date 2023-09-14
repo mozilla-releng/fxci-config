@@ -122,6 +122,7 @@
     - queue:route:coalesce.v1.{alias}.*
 
     # allow fetching secrets appropriate to this level
+    # TODO: switch to trust-domain-scopes format
     - secrets:get:project/releng/{trust_domain}/build/level-{level}/*
 
     # Provide access to sccache buckets
@@ -809,6 +810,10 @@
     - secrets:get:project/taskcluster/gecko/hgfingerprint
     - secrets:get:project/taskcluster/gecko/hgmointernal
 
+    # Allow fetching secrets appropriate to this level
+    - secrets:get:project/{trust_domain}/level-{level}/*
+    - secrets:get:project/{trust_domain}/level-any/*
+
     # Allow a sensible scheduler-id
     - queue:scheduler-id:{trust_domain}-level-{level}
     # Allows cancelling tasks with that scheduler-id
@@ -830,9 +835,6 @@
     - queue:route:index.{trust_domain}.cache.level-{level}.*
     - index:insert-task:{trust_domain}.cache.level-{level}.*
 
-    # allow fetching secrets appropriate to this level
-    - secrets:get:project/releng/{trust_domain}/build/level-{level}/*
-
     # allow using worker caches appropriate to this trust domain and level
     - docker-worker:cache:{trust_domain}-level-{level}-*
     - generic-worker:cache:{trust_domain}-level-{level}-*
@@ -848,7 +850,8 @@
     - index:insert-task:{trust_domain}.v2.{trust_project}.cache.level-{level}.*
 
     # allow fetching secrets appropriate to this level
-    - secrets:get:project/releng/{trust_domain}/{trust_project}/build/level-{level}/*
+    - secrets:get:project/{trust_domain}/{trust_project}/level-{level}/*
+    - secrets:get:project/{trust_domain}/{trust_project}/level-any/*
 
     # allow using worker caches appropriate to this trust domain and level
     - docker-worker:cache:{trust_domain}-project-{trust_project}-level-{level}-*
