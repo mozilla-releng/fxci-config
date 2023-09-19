@@ -1042,3 +1042,18 @@ staging-firefox-translations-training:
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
+
+# Bug 1822403: Enable the profiler repository on taskcluster
+profiler:
+  repo: https://github.com/firefox-devtools/profiler
+  repo_type: git
+  trust_domain: mozilla
+  trust_project: profiler
+  default_branch: main
+  level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public
+    taskgraph-actions: true
+    trust-domain-scopes: true
