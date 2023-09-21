@@ -147,6 +147,24 @@ project/autophone/gecko-t-bitbar-perf-p5:
     - auth:websocktunnel-token:firefoxcitc/bitbar.*
     - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-perf-p5
     - queue:worker-id:bitbar/*
+project/autophone/gecko-t-bitbar-unit-p6:
+  description: Bitbar Google Pixel 6 Phones - Unit Pool
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/bitbar.*
+    - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-unit-p6
+    - queue:worker-id:bitbar/*
+project/autophone/gecko-t-bitbar-perf-p6:
+  description: Bitbar Google Pixel 6 Phones - Perf Pool
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/bitbar.*
+    - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-perf-p6
+    - queue:worker-id:bitbar/*
 project/nss-nspr/aarch64:
   description: Created for Franziskus to support the 64-bit ARM machines
   scopes:
