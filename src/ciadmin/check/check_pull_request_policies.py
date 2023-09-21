@@ -28,7 +28,10 @@ async def check_pull_request_policies_for_git_repos():
     """Ensures that the pull-request policy defined in projects.yml
     matches the one in-repo.
     """
-    tcyml_v0_projects = ("occ",)
+    skip = (
+        "occ",  # tc.yml v0
+        "profiler",  # not landed yet
+    )
 
     projects = await Project.fetch_all()
 
@@ -38,7 +41,7 @@ async def check_pull_request_policies_for_git_repos():
             p.repo_type == "git"
             and "private" not in p.repo
             and p.feature("github-pull-request")
-            and p.alias not in tcyml_v0_projects
+            and p.alias not in skip
         )
 
     pr_policies = {

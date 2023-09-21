@@ -451,7 +451,7 @@ def generate_pool_variants(worker_pools, environment):
             "maxCapacity",
             "minCapacity",
             "security",
-            "worker-purpose"
+            "worker-purpose",
         ):
             if key in config:
                 value = evaluate_keyed_by(config[key], name, attributes)
