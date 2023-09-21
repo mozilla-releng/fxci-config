@@ -30,7 +30,7 @@ async def check_pull_request_policies_for_git_repos():
     """
     skip = (
         "occ",  # tc.yml v0
-        "profiler",  # not landed yet
+        "firefox-profiler",  # not landed yet
     )
 
     projects = await Project.fetch_all()
