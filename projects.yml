@@ -623,15 +623,8 @@ staging-firefox-ios:
       policy: public
     mobile-roles: true
     taskgraph-actions: true
-    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-  cron:
-    targets:
-      - l10-screenshots
-      - tab-performance-test
-    hooks_owner: releng+staging-firefox-ios@mozilla.com
-    notify_emails: []
 
 focus-ios:
   repo: https://github.com/mozilla-mobile/focus-ios
