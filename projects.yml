@@ -611,6 +611,28 @@ firefox-ios:
       - l10-screenshots
       - tab-performance-test
 
+staging-firefox-ios:
+  repo: https://github.com/mozilla-releng/staging-firefox-ios
+  trust_domain: mobile
+  trust_project: firefox-ios
+  repo_type: git
+  level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public
+    mobile-roles: true
+    taskgraph-actions: true
+    taskgraph-cron: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+  cron:
+    targets:
+      - l10-screenshots
+      - tab-performance-test
+    hooks_owner: releng+staging-firefox-ios@mozilla.com
+    notify_emails: []
+
 focus-ios:
   repo: https://github.com/mozilla-mobile/focus-ios
   trust_domain: mobile
