@@ -307,6 +307,8 @@
     - project:releng:bouncer:server:staging
     - project:releng:bouncer:server:staging-nazgul
     - project:releng:flathub:firefox:mock
+    - project:releng:googleplay:product:fenix:dep
+    - project:releng:googleplay:product:focus-android:dep
     - project:releng:microsoftstore:mock
     - project:releng:ship-it:action:create-new-release
     - project:releng:ship-it:action:mark-as-shipped
@@ -1559,8 +1561,6 @@
     - secrets:get:project/mobile/firefox-android/android-components/firebase
     - secrets:get:project/mobile/firefox-android/focus-android/firebase
     - secrets:get:project/mobile/firefox-android/fenix/firebase
-    - project:releng:googleplay:product:focus-android:dep
-    - project:releng:googleplay:product:fenix:dep
   to:
     - project:
         alias:
