@@ -1009,7 +1009,8 @@ firefox-translations-training:
   repo_type: git
   default_branch: main
   trust_domain: translations
-  level: 3
+  # https://github.com/mozilla/firefox-translations-training/issues/206
+  level: 1
   features:
     github-taskgraph: true
     github-pull-request:
