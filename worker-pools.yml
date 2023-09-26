@@ -275,8 +275,6 @@ pools:
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
       - pool-group: translations-1
-      - pool-group: translations-3
-        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -311,8 +309,6 @@ pools:
     email_on_error: true
     variants:
       - pool-group: translations-1
-      - pool-group: translations-3
-        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -519,8 +515,6 @@ pools:
         chain-of-trust: trusted
       - pool-group: mozilla-1
       - pool-group: translations-1
-      - pool-group: translations-3
-        chain-of-trust: trusted
       - pool-group: nss-1
     config:
       regions: [us-central1, us-west1]
@@ -591,8 +585,6 @@ pools:
       - pool-group: scriptworker-3
         chain-of-trust: trusted
       - pool-group: translations-1
-      - pool-group: translations-3
-        chain-of-trust: trusted
     config:
       image:
         by-chain-of-trust:
@@ -785,8 +777,6 @@ pools:
     owner: release+tc-workers@mozilla.com
     variants:
       - pool-group: translations-1
-      - pool-group: translations-3
-        chain-of-trust: trusted
     email_on_error: true
     provider_id:
       by-chain-of-trust:
@@ -820,8 +810,6 @@ pools:
     owner: release+tc-workers@mozilla.com
     variants:
       - pool-group: translations-1
-      - pool-group: translations-3
-        chain-of-trust: trusted
     email_on_error: true
     provider_id:
       by-chain-of-trust:
@@ -855,8 +843,6 @@ pools:
     owner: release+tc-workers@mozilla.com
     variants:
       - pool-group: translations-1
-      - pool-group: translations-3
-        chain-of-trust: trusted
     email_on_error: true
     provider_id:
       by-chain-of-trust:
@@ -890,8 +876,6 @@ pools:
     owner: release+tc-workers@mozilla.com
     variants:
       - pool-group: translations-1
-      - pool-group: translations-3
-        chain-of-trust: trusted
     email_on_error: true
     provider_id:
       by-chain-of-trust:
