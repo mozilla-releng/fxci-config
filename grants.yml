@@ -504,7 +504,7 @@
         job: [action:release-promotion]
         trust_domain: gecko
         level: [3]
-        alias: [mozilla-esr115, mozilla-esr102, mozilla-release, mozilla-beta]
+        alias: [mozilla-esr115, mozilla-release, mozilla-beta]
 
 # pushing RCs to beta
 - grant:
@@ -599,7 +599,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr115, comm-esr102]
+        alias: [comm-esr115]
 
 - grant:
     - project:comm:thunderbird:releng:balrog:server:beta
@@ -623,7 +623,7 @@
   to:
     - project:
         level: [3]
-        alias: [comm-esr115, comm-esr102, comm-beta]
+        alias: [comm-esr115, comm-beta]
 
 - grant:
     - project:comm:thunderbird:releng:beetmover:bucket:release
@@ -635,7 +635,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr115, comm-esr102, comm-beta]
+        alias: [comm-esr115, comm-beta]
 
 - grant:
     - project:comm:thunderbird:releng:microsoftstore:release

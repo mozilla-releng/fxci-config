@@ -93,21 +93,6 @@ mozilla-release:
     targets:
       - ship-geckoview
       - periodic-update
-mozilla-esr102:
-  repo: https://hg.mozilla.org/releases/mozilla-esr102
-  repo_type: hg
-  access: scm_level_3
-  trust_domain: gecko
-  features:
-    gecko-actions: true
-    gecko-cron: true
-    gecko-roles: true
-    hg-push: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-  cron:
-    targets:
-      - periodic-update
 mozilla-esr115:
   repo: https://hg.mozilla.org/releases/mozilla-esr115
   repo_type: hg
@@ -123,19 +108,6 @@ mozilla-esr115:
   cron:
     targets:
       - periodic-update
-comm-esr102:
-  repo: https://hg.mozilla.org/releases/comm-esr102
-  repo_type: hg
-  access: scm_level_3
-  trust_domain: comm
-  parent_repo: https://hg.mozilla.org/releases/mozilla-esr102
-  features:
-    gecko-actions: true
-    gecko-cron: true
-    gecko-roles: true
-    hg-push: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
 comm-esr115:
   repo: https://hg.mozilla.org/releases/comm-esr115
   repo_type: hg
