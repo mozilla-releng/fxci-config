@@ -35,6 +35,7 @@
 #   - `beetmover-maven-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `beetmover-maven-nightly-phase` -- this https://github.com/mozilla-mobile repository should have beetmover nightly production related scopes associated
 #   - `mobile-firebase-testing` -- this https://github.com/mozilla-mobile repository has end-to-end testing involving devices hosted at Google's Firebase
+#   - `mobile-testrail` -- this https://github.com/mozilla-mobile repository uses testrail
 #   - `mobile-bump-github` -- this https://github.com/mozilla-mobile repository gets bumped.
 #   - `mobile-public-code-coverage` -- this https://github.com/mozilla-mobile repository has code coverage enabled on PRs
 #   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
@@ -486,6 +487,7 @@ firefox-android:
       policy: public_restricted
     mobile-roles: true
     mobile-firebase-testing: true
+    mobile-testrail: true
     mobile-public-code-coverage: true
     mobile-sign-phase: true
     scriptworker: true
@@ -518,6 +520,7 @@ staging-firefox-android:
     github-taskgraph: true
     mobile-roles: true
     mobile-firebase-testing: true
+    mobile-testrail: true
     mobile-public-code-coverage: true
     mobile-sign-phase: true
     scriptworker: true
@@ -574,6 +577,7 @@ firefox-ios:
     github-pull-request:
       policy: public
     mobile-roles: true
+    mobile-testrail: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -594,6 +598,7 @@ staging-firefox-ios:
     github-pull-request:
       policy: public
     mobile-roles: true
+    mobile-testrail: true
     taskgraph-actions: true
     treeherder-reporting: true
     trust-domain-scopes: true

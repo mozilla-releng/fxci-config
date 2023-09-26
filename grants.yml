@@ -1786,6 +1786,17 @@
         alias: focus-ios
         job: [cron:l10-screenshots, action:*]
 
+- grant:
+    - secrets:get:project/mobile/ci/testrail
+  to:
+    - project:
+        feature: mobile-testrail
+        job:
+          - action:*
+          - cron:*
+          - branch:*
+          - pull-request:trusted
+
 # Mozilla VPN
 
 - grant:
