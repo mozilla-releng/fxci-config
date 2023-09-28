@@ -274,7 +274,6 @@ pools:
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
-      - pool-group: translations-1
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -300,6 +299,34 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: n2-custom-32-73728
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: 'translations-1/b-linux-large-gcp'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      regions: [us-central1, us-west1]
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-20
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+          machine_type: n2-custom-32-147456
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
