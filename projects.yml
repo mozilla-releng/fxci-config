@@ -575,7 +575,7 @@ firefox-ios:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     mobile-roles: true
     mobile-testrail: true
     taskgraph-actions: true
@@ -596,7 +596,7 @@ staging-firefox-ios:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     mobile-roles: true
     mobile-testrail: true
     taskgraph-actions: true
