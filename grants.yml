@@ -1776,7 +1776,8 @@
         job:
           - action:*
           - cron:l10-screenshots
-          - cron:tab-performance-test
+          - cron:bitrise-performance-test
+          - cron:firebase-performance-test
           - branch:*
 
 - grant:
@@ -2232,7 +2233,8 @@
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/bump-android-comp
 
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/l10-screenshots
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/tab-performance-test
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/bitrise-performance-test
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/firebase-performance-test
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-ios/l10-screenshots
 
     - queue:rerun-task:mobile-level-*

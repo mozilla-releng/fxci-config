@@ -585,7 +585,8 @@ firefox-ios:
   cron:
     targets:
       - l10-screenshots
-      - tab-performance-test
+      - bitrise-performance-test
+      - firebase-performance-test
 
 staging-firefox-ios:
   repo: https://github.com/mozilla-releng/staging-firefox-ios
