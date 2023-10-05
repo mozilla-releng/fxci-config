@@ -562,7 +562,7 @@ pools:
           default:
       minCapacity:
         by-pool-group:
-          '(app-services|glean|mozillavpn|mobile|mozilla)-.': 1
+          '(app-services|glean|mozillavpn|mobile|mozilla)-1': 1
           default: 0
       maxCapacity: 10
       instance_types:
