@@ -900,7 +900,8 @@ pools:
         - minCpuPlatform: Intel Skylake
           disks:
             - *persistent-disk-300
-          machine_type: n1-highmem-8
+          # 40 CPUs, 256GB RAM
+          machine_type: n1-custom-40-262144
           scheduling: spot
           networkInterfaces:
             - accessConfigs:
@@ -939,7 +940,8 @@ pools:
                 diskSizeGb: 1024
                 sourceImage: <image>
               type: PERSISTENT
-          machine_type: n1-highmem-8
+          # 40 CPUs, 256GB RAM
+          machine_type: n1-custom-40-262144
           scheduling: spot
           networkInterfaces:
             - accessConfigs:
