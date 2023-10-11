@@ -202,6 +202,35 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-gcp-bug1797804-c2'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: gecko-1
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 50
+      regions: [us-central1, us-west1]
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-current
+      instance_types:
+        - disks:
+            - *persistent-disk-20
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+          machine_type: c2-custom-16-73728
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
