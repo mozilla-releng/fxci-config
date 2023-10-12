@@ -228,6 +228,7 @@ ronin-t-windows10-64-2009-alpha:
     north-europe: win10-64-2009-northeurope-win10-22h2-avd
     west-us: win10-64-2009-westus-win10-22h2-avd
     west-us-2: win10-64-2009-westus-win10-22h2-avd
+    uk-west: win10-64-2009-ukwest-win10-22h2-avd
 # Windows 11
 ronin-t-windows11-64-2009-alpha-test:
   azure2:
