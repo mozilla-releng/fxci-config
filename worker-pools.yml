@@ -518,7 +518,7 @@ pools:
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
-          machine_type: c2-standard-32
+          machine_type: c2-standard-60
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
