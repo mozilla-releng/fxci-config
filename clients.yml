@@ -714,6 +714,21 @@ project/releng/scriptworker/v2/pushapk/prod/firefoxci-mobile-3:
   scopes:
     - queue:claim-work:scriptworker-k8s/mobile-3-pushapk
     - queue:worker-id:mobile-3-pushapk/mobile-3-pushapk-*
+project/releng/scriptworker/v2/pushflatpak/dev/firefoxci-comm-1:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/comm-1-pushflatpak-dev
+    - queue:worker-id:comm-1-pushflatpak-dev/comm-1-pushflatpak-dev-*
+project/releng/scriptworker/v2/pushflatpak/prod/firefoxci-comm-1:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/comm-1-pushflatpak
+    - queue:worker-id:comm-1-pushflatpak/comm-1-pushflatpak-*
+project/releng/scriptworker/v2/pushflatpak/prod/firefoxci-comm-3:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/comm-3-pushflatpak
+    - queue:worker-id:comm-3-pushflatpak/comm-3-pushflatpak-*
 project/releng/scriptworker/v2/pushflatpak/dev/firefoxci-gecko-1:
   description: ''
   scopes:
