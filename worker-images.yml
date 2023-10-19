@@ -7,13 +7,6 @@
 #
 # Aliases can be defined by a simple string; this is useful for "current" images
 
-# docker-worker-hvm* are the Ubuntu-14.04 based workers, built by
-# https://github.com/taskcluster/docker-worker-deploy/.  These are deprecated but still
-# in use.
-
-# AWS builders level 1 and 2, unused for GCP
-docker-worker-hvm-builder-current: docker-worker-v202004241848-hvm-builder-bug1676214
-
 # monopacker-docker-worker-* images are built with monopacker.
 
 # For "-trusted-current", use secrets from
@@ -23,10 +16,6 @@ docker-worker-hvm-builder-current: docker-worker-v202004241848-hvm-builder-bug16
 #
 # For `-current`, use `docker-worker/yaml/firefoxci-tc-staging-l1.yaml`, and
 # builders `docker_worker_gcp` and `docker_worker_aws`.
-#
-# To build in AWS, you will need AWS credentials with permissions to run Packer; see
-# https://www.packer.io/docs/builders/amazon/#iam-task-or-instance-role.  These creds
-# should be created in the `mozilla-taskcluster` AWS account.
 #
 # To build in GCP, you will need project access to the following GCP projects:
 # - -current -> `taskcluster-imaging` (Note that there is a fxci-production-level1-workers project; it is unused)
@@ -46,13 +35,6 @@ monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-20230613
 monopacker-docker-worker-relops528: monopacker-docker-worker-2023-04-13-relops528
 
 relops-image-builder-current: relops-image-builder-pre
-
-# production docker-worker AMIs
-docker-worker-v202004241848-hvm-builder-bug1676214:
-  aws:
-    us-east-1: ami-029998f24ee67c828
-    us-west-1: ami-0023a52f54d07188e
-    us-west-2: ami-0b9ad26d4f2651ee9
 
 # monopacker docker-worker images
 monopacker-docker-worker-gcp-20230613:
