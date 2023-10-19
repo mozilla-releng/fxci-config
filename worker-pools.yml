@@ -2682,24 +2682,23 @@ pools:
     description: Release management workers
     owner: release+tc-workers@mozilla.com
     email_on_error: true
-    provider_id: aws
+    provider_id: fxci-level1-gcp
     config:
-      regions: [us-east-1, us-west-1, us-west-2]
-      image: docker-worker-hvm-builder-current
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-current
       minCapacity: 0
       maxCapacity: 2
       worker-config:
         shutdown:
           afterIdleSeconds: 15
       instance_types:
-        - instanceType: m5.large
-          worker-config:
-            capacityManagement:
-              diskspaceThreshold: 20000000000
-          launchConfig:
-            BlockDeviceMappings:
-              - DeviceName: /dev/xvdb
-                Ebs: {DeleteOnTermination: true, VolumeSize: 100, VolumeType: gp2}
+        - machine_type: n2-standard-2
+          disks:
+            - *persistent-disk-20
+            - *scratch-disk
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: code-review/bot-gcp
     description: Worker for the code-review bot.
     owner: release+tc-workers@mozilla.com
