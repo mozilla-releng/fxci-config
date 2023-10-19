@@ -348,7 +348,7 @@ pools:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
       minCapacity: 0
-      maxCapacity: 10
+      maxCapacity: 50
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
@@ -383,7 +383,7 @@ pools:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
       minCapacity: 0
-      maxCapacity: 10
+      maxCapacity: 50
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
@@ -888,7 +888,7 @@ pools:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
       minCapacity: 0
-      maxCapacity: 10
+      maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -921,7 +921,7 @@ pools:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
       minCapacity: 0
-      maxCapacity: 10
+      maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -954,7 +954,7 @@ pools:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
       minCapacity: 0
-      maxCapacity: 10
+      maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -988,7 +988,7 @@ pools:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
       minCapacity: 0
-      maxCapacity: 10
+      maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
