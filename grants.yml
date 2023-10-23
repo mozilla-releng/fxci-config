@@ -1123,86 +1123,7 @@
         alias: k8s-autoscale
         job: [branch:master, branch:production]
 
-# - occ specific roles
-- grant:
-    - queue:route:index.project.releng.opencloudconfig.v1.revision.*
-  to:
-    - project:
-        alias: occ
-        job: [branch:*, pull-request:*]
-
-- grant:
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:updatetooltoolrepo
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:updateworkertype
-  to:
-    - project:
-        alias: occ
-        job: [branch:alpha, branch:beta, branch:master]
-
-- grant:
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:cot-gecko-1-b-win2012-alpha
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2012-alpha
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2016-alpha
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-alpha
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-gpu-a
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-alpha
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-gpu-a
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2012-alpha
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2016-alpha
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-alpha
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-gpu-a
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-alpha
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-gpu-a
-  to:
-    - project:
-        alias: occ
-        job: [branch:alpha]
-
-- grant:
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:cot-gecko-1-b-win2012-beta
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2012-beta
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2016-beta
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-beta
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-gpu-b
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-beta
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-gpu-b
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2012-beta
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win2016-beta
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-beta
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win10-64-gpu-b
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-beta
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win7-32-gpu-b
-  to:
-    - project:
-        alias: occ
-        job: [branch:beta]
-
-- grant:
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:cot-*
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win*
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-2-b-win*
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-3-b-win*
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win*
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-1-b-win*
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-3-b-win*
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-1-b-win*
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-3-b-win*
-    - secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:relops*
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-1-b-win*
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-2-b-win*
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-3-b-win*
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win*
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-1-b-win*
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-3-b-win*
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-1-b-win*
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:mozillavpn-3-b-win*
-    - secrets:set:repo:github.com/mozilla-releng/OpenCloudConfig:relops*
-  to:
-    - project:
-        alias: occ
-        job: [branch:master]
-
-# - cloud-image-builder/cloud-image-deploy specific roles
+# - cloud-image-builder specific roles
 - grant:
     - auth:create-role:worker-pool:gecko-1/win*
     - auth:create-role:worker-pool:gecko-t/win*
@@ -1232,9 +1153,6 @@
   to:
     - project:
         alias: cloud-image-builder
-        job: [branch:main]
-    - project:
-        alias: cloud-image-deploy
         job: [branch:main]
   environment: staging
 

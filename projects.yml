@@ -748,16 +748,6 @@ scriptworker:
     github-pull-request:
       policy: collaborators
 
-occ:
-  repo: https://github.com/mozilla-releng/OpenCloudConfig
-  repo_type: git
-  default_branch: master
-  trust_domain: releng
-  level: 3
-  features:
-    github-pull-request:
-      policy: public
-
 winsign:
   repo: https://github.com/mozilla-releng/winsign
   repo_type: git
@@ -819,16 +809,6 @@ firefox-ci-playground-private:
 
 cloud-image-builder:
   repo: https://github.com/mozilla-platform-ops/cloud-image-builder
-  repo_type: git
-  default_branch: main
-  trust_domain: relops
-  level: 3
-  features:
-    github-pull-request:
-      policy: collaborators
-
-cloud-image-deploy:
-  repo: https://github.com/mozilla-platform-ops/cloud-image-deploy
   repo_type: git
   default_branch: main
   trust_domain: relops
