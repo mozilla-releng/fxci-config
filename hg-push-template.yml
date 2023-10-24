@@ -32,7 +32,7 @@ routes:
   - index.hg-push.v1.${alias}.pushlog-id.$${payload.payload.data.pushlog_pushes[0].pushid}
 payload:
   # built by pushes to the ci-configuration repository
-  image: mozillareleases/build-decision:92c07265a68b1a55d3512b641a8e898e921eab6c@sha256:d5f6f685789bd4e29912eec0bdae7663f343ada2920de260d02c401a167a4649
+  image: mozillareleases/build-decision:86cc5419c32996b7d78422d7fed33ce79576f8eb@sha256:f26594dc2a6fa625200b0afb84be3b884c9bf1c0bb2dacf810d4def9ef4f487f
   env:
     # pass along the hook payload, which is the Pulse message from hg (v2)
     # https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications
