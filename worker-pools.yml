@@ -198,11 +198,11 @@ pools:
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
-          machine_type: n2-custom-16-73728
+          machine_type: c2-standard-16
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: '{pool-group}/b-linux-gcp-bug1797804-c2'
+  - pool_id: '{pool-group}/b-linux-gcp-bug1797804-n2'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
@@ -227,7 +227,7 @@ pools:
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
-          machine_type: c2-standard-16
+          machine_type: n2-custom-16-73728
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
