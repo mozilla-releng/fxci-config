@@ -424,8 +424,12 @@ ci-configuration:
   features:
     hg-push: true
     taskgraph-actions: true
+    taskgraph-cron: true
     trust-domain-scopes: true
     treeherder-reporting: true
+  cron:
+    targets:
+      - test-build-decision
 
 ci-configuration-try:
   repo: https://hg.mozilla.org/ci/ci-configuration-try

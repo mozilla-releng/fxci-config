@@ -1,0 +1,8 @@
+---
+jobs:
+  - name: test-build-decision
+    job:
+      type: decision-task
+      target-tasks-method: nothing
+      treeherder-symbol: test-build-decision
+    when: []  # Manual trigger only
