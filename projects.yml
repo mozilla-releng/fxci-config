@@ -94,6 +94,19 @@ mozilla-release:
     targets:
       - ship-geckoview
       - periodic-update
+comm-release:
+  repo: https://hg.mozilla.org/releases/comm-release
+  repo_type: hg
+  access: scm_level_3
+  trust_domain: comm
+  parent_repo: https://hg.mozilla.org/releases/mozilla-release
+  features:
+    gecko-actions: true
+    gecko-cron: true
+    gecko-roles: true
+    hg-push: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
 mozilla-esr115:
   repo: https://hg.mozilla.org/releases/mozilla-esr115
   repo_type: hg

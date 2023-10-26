@@ -589,13 +589,22 @@
         alias: [autoland]
 
 - grant:
-    - project:comm:thunderbird:releng:balrog:server:release
+    - project:comm:thunderbird:releng:balrog:server:esr
   to:
     - project:
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
         alias: [comm-esr115]
+
+- grant:
+    - project:comm:thunderbird:releng:balrog:server:release
+  to:
+    - project:
+        job: [action:release-promotion]
+        trust_domain: comm
+        level: [3]
+        alias: [comm-esr115, comm-release]
 
 - grant:
     - project:comm:thunderbird:releng:balrog:server:beta
@@ -619,7 +628,7 @@
   to:
     - project:
         level: [3]
-        alias: [comm-esr115, comm-beta]
+        alias: [comm-esr115, comm-release, comm-beta]
 
 - grant:
     - project:comm:thunderbird:releng:beetmover:bucket:release
@@ -631,7 +640,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr115, comm-beta]
+        alias: [comm-esr115, comm-release, comm-beta]
 
 - grant:
     - project:comm:thunderbird:releng:microsoftstore:release
@@ -640,7 +649,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr115]
+        alias: [comm-esr115, comm-release]
 
 - grant:
     - project:comm:thunderbird:releng:microsoftstore:beta
