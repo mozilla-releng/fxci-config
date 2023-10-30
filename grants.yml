@@ -661,6 +661,24 @@
         alias: [comm-beta]
 
 - grant:
+    - project:comm:thunderbird:releng:flathub:stable
+  to:
+    - projects:
+        job: [action:release-promotion]
+        trust_domain: comm
+        level: [3]
+        alias: [comm-esr115, comm-release]
+
+- grant:
+    - project:comm:thunderbird:releng:flathub:beta
+  to:
+    - projects:
+        job: [action:release-promotion]
+        trust_domain: comm
+        level: [3]
+        alias: [comm-beta]
+
+- grant:
     - project:releng:beetmover:bucket:nightly
     - project:releng:balrog:server:nightly
   to:
