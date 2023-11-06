@@ -1364,6 +1364,13 @@
         job: [action:release-promotion]
 
 - grant:
+    - project:{trust_domain}:{alias}:treescript:action:*
+  to:
+    - project:
+        feature: treescript-phase
+        job: [action:release-promotion]
+
+- grant:
     - project:{trust_domain}:{trust_project}:releng:github:action:release
   to:
     - project:
