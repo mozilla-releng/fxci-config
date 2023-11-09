@@ -347,6 +347,7 @@ pools:
           config:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
+            enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
       regions: [us-central1, us-west1]
@@ -382,6 +383,7 @@ pools:
           config:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
+            enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
       regions: [us-central1, us-west1]
@@ -887,6 +889,7 @@ pools:
           config:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
+            enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
@@ -920,6 +923,7 @@ pools:
           config:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
+            enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
@@ -953,6 +957,7 @@ pools:
           config:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
+            enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
@@ -987,6 +992,7 @@ pools:
           config:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
+            enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
