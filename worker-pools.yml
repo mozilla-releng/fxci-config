@@ -487,7 +487,7 @@ pools:
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
-          machine_type: n2-custom-64-102400
+          machine_type: n2-custom-64-131072
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
