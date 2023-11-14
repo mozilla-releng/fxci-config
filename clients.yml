@@ -447,7 +447,7 @@ project/releng/scriptworker/v2/beetmover/dev/firefoxci-app-services-1:
   description: ''
   scopes:
     - queue:claim-work:scriptworker-k8s/app-services-1-beetmover-dev
-    - queue:worker-id:app-services-1-beetmover/app-services-1-beetmover-dev-*
+    - queue:worker-id:app-services-1-beetmover-dev/app-services-1-beetmover-dev-*
 project/releng/scriptworker/v2/beetmover/dev/firefoxci-gecko-1:
   description: ''
   scopes:
