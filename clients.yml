@@ -687,7 +687,7 @@ project/releng/scriptworker/v2/pushapk/prod/firefoxci-mozillavpn-1:
   description: ''
   scopes:
     - queue:claim-work:scriptworker-k8s/mozillavpn-1-pushapk
-    - queue:worker-id:mozillavpn-1-pushapk-dev/mozillavpn-1-pushapk-*
+    - queue:worker-id:mozillavpn-1-pushapk/mozillavpn-1-pushapk-*
 project/releng/scriptworker/v2/pushapk/prod/firefoxci-mozillavpn-3:
   description: ''
   scopes:
