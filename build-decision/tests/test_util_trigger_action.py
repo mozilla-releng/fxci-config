@@ -1,8 +1,10 @@
 # coding=utf-8
 
+import io
 import json
 import os
 import pytest
+import requests
 import taskcluster
 from . import TEST_DATA_DIR
 
@@ -192,19 +194,24 @@ def test_check_decision_task_scopes(mocker, raises):
 def test_render_action(mocker, actions, action_name, task_id, action_input, raises):
     """Add coverage to ``render_action``, largely testing the raises."""
 
-    def fake_get_actions(*args):
-        if actions is not None:
-            return actions
-        with open(TEST_DATA_DIR / "actions.json", "r") as fh:
-            actions_json = json.load(fh)
-        return actions_json
+    class fake_session:
+        def get(*args):
+            r = requests.Response()
+            r.status_code = 200
+            r.encoding = "utf-8"
+            r.headers["content-type"] = "application/json"
+            if actions is not None:
+                r.raw = io.BytesIO(json.dumps(actions).encode("utf-8"))
+            else:
+                r.raw = open(TEST_DATA_DIR / "actions.json", "rb")
+            return r
 
     fake_queue = mocker.MagicMock()
-    fake_queue.getLatestArtifact = fake_get_actions
     fake_hook = mocker.MagicMock()
     mocker.patch.object(taskcluster, "Queue", return_value=fake_queue)
     mocker.patch.object(trigger_action, "Hook", new=fake_hook)
     mocker.patch.object(trigger_action, "_check_decision_task_scopes")
+    mocker.patch.object(trigger_action, "SESSION", new=fake_session())
 
     if raises:
         with pytest.raises(raises):

@@ -91,7 +91,12 @@ def render_action(*, action_name, task_id, decision_task_id, action_input):
     queue = taskcluster.Queue(taskcluster.optionsFromEnvironment(), session=SESSION)
 
     logger.debug("Fetching actions.json...")
-    actions_json = queue.getLatestArtifact(decision_task_id, "public/actions.json")
+    actions_url = queue.buildUrl(
+        "getLatestArtifact", decision_task_id, "public/actions.json"
+    )
+    actions_response = SESSION.get(actions_url)
+    actions_response.raise_for_status()
+    actions_json = actions_response.json()
     if task_id is not None:
         task_definition = queue.task(task_id)
     else:
