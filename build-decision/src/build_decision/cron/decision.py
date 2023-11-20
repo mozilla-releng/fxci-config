@@ -9,7 +9,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import copy
 import os
-import pipes
+import shlex
 
 from ..decision import render_tc_yml
 
@@ -48,7 +48,7 @@ def run_decision_task(job_name, job, *, repository, push_info, dry_run):
         "job_name": job_name,
         "job_symbol": job["treeherder-symbol"],
         # args are shell-quoted since they are given to `bash -c`
-        "quoted_args": " ".join(pipes.quote(a) for a in arguments),
+        "quoted_args": " ".join(shlex.quote(a) for a in arguments),
     }
 
     task = render_tc_yml(
