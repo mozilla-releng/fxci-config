@@ -50,7 +50,7 @@ def build_decision(*, repository, taskcluster_yml_repo, dry_run):
     push = repository.get_push_info(revision=revision)
 
     if time.time() - push["pushdate"] > MAX_TIME_DRIFT:
-        logger.warn("Push is too old, not triggering tasks")
+        logger.warning("Push is too old, not triggering tasks")
         return
 
     if taskcluster_yml_repo is None:
