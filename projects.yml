@@ -486,6 +486,20 @@ reps:
     taskgraph-actions: true
     trust-domain-scopes: true
 
+mozilla-linux-pkg-manager:
+  repo: https://github.com/mozilla-releng/mozilla-linux-pkg-manager
+  repo_type: git
+  trust_domain: mozilla
+  trust_project: mozilla-linux-pkg-manager
+  default_branch: main
+  level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public_restricted
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 simple-github:
   repo: https://github.com/mozilla-releng/simple-github
   repo_type: git
