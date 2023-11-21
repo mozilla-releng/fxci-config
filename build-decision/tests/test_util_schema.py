@@ -1,12 +1,13 @@
 # coding=utf-8
 
 import pytest
+import referencing.exceptions
 
 import build_decision.util.schema as schema
 
 
-def test_local_ref_resolver():
-    """Add coverage to util.schema.LocalRefResolver.resolve_remote."""
-    resolver = schema.LocalRefResolver("base_uri", "referrer")
-    with pytest.raises(Exception):
-        resolver.resolve_remote("remote")
+def test_remote_ref():
+    """Ensure remote references aren't resolved."""
+    remote_schema = schema.Schema({"$ref": "http://example.com"})
+    with pytest.raises(referencing.exceptions.Unresolvable):
+        remote_schema.validate("foo")

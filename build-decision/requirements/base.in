@@ -1,8 +1,9 @@
 attrs
 json-e
-jsonschema
+jsonschema>4.18
 pyyaml
 redo
+referencing
 requests
 slugid
 taskcluster

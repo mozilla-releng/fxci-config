@@ -9,19 +9,17 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import attr
 import yaml
-from jsonschema.validators import RefResolver, validator_for
-
-
-class LocalRefResolver(RefResolver):
-    def resolve_remote(self, uri):
-        raise Exception("Can't resolve remote schema.")
+from jsonschema.validators import validator_for
+from referencing import Registry
 
 
 def _get_validator(schema):
-    resolver = LocalRefResolver.from_schema(schema)
+    # jsonschema by default allows remote references in the schema, so we
+    # override its default registry with one that does not do that.
+    registry = Registry()
     cls = validator_for(schema)
     cls.check_schema(schema)
-    return cls(schema, resolver=resolver)
+    return cls(schema, registry=registry)
 
 
 @attr.s(frozen=True)
