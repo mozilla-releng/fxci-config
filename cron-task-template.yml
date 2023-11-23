@@ -32,7 +32,7 @@ scopes:
   - assume:hook-id:${hookGroupId}/${hookId}
 payload:
   # built by pushes to the ci-configuration repository
-  image: mozillareleases/build-decision:86cc5419c32996b7d78422d7fed33ce79576f8eb@sha256:92d0987de37b04d4b9a3e76d23d43762f9e267f387b5c5b9f83536eeed789b3a
+  image: mozillareleases/build-decision:9243d4a47985e9d18fbdef0172f38889c8c800c6@sha256:d75f0f4cd40a02e035f4f4cfcb062a900ef56fa3a2b0c532634948db8ab31f78
   env:
     $merge:
       - $if: allow_input
