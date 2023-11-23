@@ -321,6 +321,10 @@
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1-dev
     - queue:get-artifact:releng/partner/*
+    # TODO(bug 1824855): move firebase secrets into the gecko namespace
+    - secrets:get:project/mobile/firefox-android/android-components/firebase
+    - secrets:get:project/mobile/firefox-android/focus-android/firebase
+    - secrets:get:project/mobile/firefox-android/fenix/firebase
   to:
     - projects:
         feature: gecko-roles
@@ -1505,16 +1509,6 @@
           - action:*
           - branch:*
           - pull-request:trusted
-
-- grant:
-    - secrets:get:project/mobile/firefox-android/android-components/firebase
-    - secrets:get:project/mobile/firefox-android/focus-android/firebase
-    - secrets:get:project/mobile/firefox-android/fenix/firebase
-  to:
-    - project:
-        alias:
-          - oak
-          - try
 
 - grant:
     - secrets:get:project/mobile/{trust_project}/focus-android/firebase
