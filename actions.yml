@@ -91,3 +91,8 @@
   action_perms:
     - generic
     - train
+
+- trust_domain: releng
+  levels: [1, 3]
+  action_perms:
+    - generic

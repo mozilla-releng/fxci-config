@@ -731,6 +731,7 @@ k8s-autoscale:
   features:
     github-pull-request:
       policy: public
+    taskgraph-actions: true
 
 product-details:
   repo: https://github.com/mozilla-releng/product-details
@@ -740,6 +741,7 @@ product-details:
   features:
     github-pull-request:
       policy: collaborators
+    taskgraph-actions: true
 
 shipit:
   repo: https://github.com/mozilla-releng/shipit
@@ -748,6 +750,7 @@ shipit:
     github-taskgraph: true
     github-pull-request:
       policy: public
+    taskgraph-actions: true
     trust-domain-scopes: true
   trust_domain: releng
   level: 3
@@ -761,6 +764,7 @@ tooltool:
   features:
     github-pull-request:
       policy: public
+    taskgraph-actions: true
 
 treestatus:
   repo: https://github.com/mozilla-releng/treestatus
@@ -771,6 +775,7 @@ treestatus:
   features:
     github-pull-request:
       policy: public
+    taskgraph-actions: true
 
 balrog:
   repo: https://github.com/mozilla-releng/balrog
@@ -781,6 +786,7 @@ balrog:
     github-pull-request:
       policy: public
     github-taskgraph: true
+    taskgraph-actions: true
     trust-domain-scopes: true
 
 scriptworker:
@@ -805,6 +811,7 @@ winsign:
   features:
     github-pull-request:
       policy: public
+    taskgraph-actions: true
 
 mozilla-version:
   repo: https://github.com/mozilla-releng/mozilla-version
@@ -815,6 +822,7 @@ mozilla-version:
   features:
     github-pull-request:
       policy: public
+    taskgraph-actions: true
 
 build-mar:
   repo: https://github.com/mozilla-releng/build-mar
@@ -825,6 +833,7 @@ build-mar:
   features:
     github-pull-request:
       policy: public
+    taskgraph-actions: true
 
 firefox-ci-playground:
   repo: https://github.com/mozilla-releng/firefox-ci-playground
