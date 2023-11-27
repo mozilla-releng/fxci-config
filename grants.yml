@@ -1980,6 +1980,7 @@
     - queue:create-task:low:xpi-t/*
     - queue:get-artifact:xpi/*
     - queue:scheduler-id:xpi-level-1
+    - queue:seal-task-group:xpi-level-1/*
     - docker-worker:cache:xpi-level-1-*
     - secrets:get:project/xpi/xpi-github-clone-ssh
     - project:xpi:releng:signing:cert:dep-signing
