@@ -54,7 +54,7 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
                 response.raise_for_status()
                 result = await response.read()
         except aiohttp.ClientResponseError as e:
-            if e.code == 404:
+            if e.status == 404:
                 result = None
             else:
                 raise e
