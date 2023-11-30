@@ -2963,9 +2963,11 @@
     - roles:
         - mozilla-group:perftest
 
-# Scopes for running Translations training cycles
+# Scopes for running Translations training cycles and debugging
 - grant:
     - hooks:trigger-hook:project-translations/in-tree-action-*
+    - queue:create-task:low:translations-1/*
+    - docker-worker:cache:translations-level-1*
   to:
     - roles:
         - mozillians-group:translations-developers
