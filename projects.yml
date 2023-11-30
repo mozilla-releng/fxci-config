@@ -720,6 +720,7 @@ glean:
       policy: public
     scriptworker: true
     taskgraph-actions: true
+    trust-domain-scopes: true
 
 # mozilla-releng Github repositories
 k8s-autoscale:
