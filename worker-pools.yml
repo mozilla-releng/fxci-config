@@ -202,6 +202,28 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: 'gecko-1/b-linux-gcp-relops757-test'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-relops757
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-20
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+          machine_type: c2-standard-16
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-gcp-bug1797804-n2'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
