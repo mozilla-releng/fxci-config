@@ -42,7 +42,7 @@ relops-image-builder-current: relops-image-builder-pre
 monopacker-docker-worker-gcp-20230613:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13
 monopacker-docker-worker-trusted-gcp-2023-03-16:
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-03-16t20-10-06z
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-12-06t15-04-40z
 monopacker-docker-worker-2023-06-13t23-47-26z:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-06-13t23-47-26z
 monopacker-docker-worker-2023-04-13-relops528:
