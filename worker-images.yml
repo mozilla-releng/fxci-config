@@ -180,12 +180,12 @@ ronin-b1-windows2022-prod:
     west-us-2: win2022-64-2009-westus2-2022-datacenter-azure-edition
 ronin-b3-windows2022-prod:
   azure_trusted:
-    deployment_id: d5dee60
+    deployment_id: 28c1765
     central-us: trusted-win2022-64-2009-centralus-2022-datacenter-azure-edition
     east-us: trusted-win2022-64-2009-eastus-2022-datacenter-azure-edition
     east-us-2: trusted-win2022-64-2009-eastus2-2022-datacenter-azure-edition
     # Image failing to build 2023-07-13. Comment out for now.
-    # north-central-us: trusted-win2022-64-2009-northcentralus-2022-datacenter-azure-edition
+    north-central-us: trusted-win2022-64-2009-northcentralus-2022-datacenter-azure-edition
     south-central-us: trusted-win2022-64-2009-southcentralus-2022-datacenter-azure-edition
     west-us: trusted-win2022-64-2009-westus-2022-datacenter-azure-edition
     west-us-2: trusted-win2022-64-2009-westus2-2022-datacenter-azure-edition
