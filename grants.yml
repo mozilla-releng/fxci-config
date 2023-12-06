@@ -2233,11 +2233,10 @@
         - thunderbird-releng
 
 - grant:
-    # Additional permissions for thunderbird-releng on comm level 3 tasks
+    # Additional permissions for thunderbird-releng:
+    # adds merge-automation, release-promotion, purge-caches, retrigger-decision
     # Merge Day Automation
-    - hooks:trigger-hook:project-comm/in-tree-action-1-merge-automation/*
-    - hooks:trigger-hook:project-comm/in-tree-action-2-merge-automation/*
-    - hooks:trigger-hook:project-comm/in-tree-action-3-merge-automation/*
+    - hooks:trigger-hook:project-comm/in-tree-action-*
     # Allow cancel
     - queue:cancel-task:comm-level-*
     # Allow rerun
@@ -2351,14 +2350,6 @@
         - sheriff
         - perf_sheriff
 
-# Permit Thunderbird releng to retrigger Thunderbird decision tasks
-- grant:
-    - hooks:trigger-hook:project-comm/in-tree-action-1-retrigger-decision/*
-    - hooks:trigger-hook:project-comm/in-tree-action-2-retrigger-decision/*
-    - hooks:trigger-hook:project-comm/in-tree-action-3-retrigger-decision/*
-  to:
-    - groups:
-        - thunderbird-releng
 
 # In addition to the default scopes, retriggering a decision task requires
 # the scopes of a decision task.  These differ per project, so we use some
