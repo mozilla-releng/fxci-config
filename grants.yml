@@ -1064,10 +1064,10 @@
     - project:
         alias: application-services
         level: 3
-        job: [branch:*, cron:nightly]
+        job: [action:*, branch:*, cron:nightly]
     - project:
         alias: staging-application-services
-        job: [branch:*, cron:nightly]
+        job: [action:*, branch:*, cron:nightly]
 
 - grant:
     - hooks:trigger-hook:project-app-services/in-tree-action-1-generic/*
