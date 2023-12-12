@@ -1039,6 +1039,11 @@ project/releng/scriptworker/v2/signing/prod/firefoxci-xpi-t:
     - queue:claim-work:scriptworker-k8s/xpi-t-signing
     - queue:get-artifact:xpi/*
     - queue:worker-id:xpi-t-signing/xpi-t-signing-*
+project/releng/scriptworker/v2/tree/dev/firefoxci-comm-1:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/comm-1-tree-dev
+    - queue:worker-id:comm-1-tree-dev/comm-1-tree-dev-*
 project/releng/scriptworker/v2/tree/dev/firefoxci-gecko-1:
   description: ''
   scopes:
