@@ -24,7 +24,7 @@ class WorkerImage:
         worker_images = await get_ciconfig_file("worker-images.yml")
 
         def mk(image_name, info):
-            if type(info) == str:
+            if isinstance(info, str):
                 return WorkerImage(image_name=image_name, alias_for=info)
             else:
                 return WorkerImage(image_name=image_name, clouds=info)

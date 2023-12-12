@@ -62,7 +62,7 @@ class Grant:
 
         # convert grantees into instances..
         def grantees(grant_to):
-            if type(grant_to) != list:
+            if not isinstance(grant_to, list):
                 raise ValueError(
                     "grant `to` property must be a list (add `-` in yaml): {}".format(
                         grant_to
@@ -78,7 +78,7 @@ class Grant:
             kind, content = list(grantee.items())[0]
 
             if kind == "project" or kind == "projects":
-                if type(content) != dict:
+                if not isinstance(content, dict):
                     raise ValueError(
                         "grant `to.{}` property must be a dictionary "
                         "(remove `-` in yaml): {}".format(kind, grantee)
