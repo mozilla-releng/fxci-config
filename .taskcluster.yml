@@ -129,7 +129,7 @@ tasks:
                                 ACTION_CALLBACK: '${action.cb_name}'
 
                   cache:
-                      ${trustDomain}-level-${repository.level}-checkouts-sparse-v2: /builds/worker/checkouts
+                      ${trustDomain}-level-${repository.level}-checkouts-sparse-v3: /builds/worker/checkouts
 
                   features:
                       taskclusterProxy: true
@@ -138,7 +138,7 @@ tasks:
                   # Note: This task is built server side without the context or tooling that
                   # exist in tree so we must hard code the hash
                   image:
-                      mozillareleases/taskgraph:decision-5483484ad45a3d27a0f5bd05f1c87d90e08df67a3713605d812b851a8a5bd854@sha256:ef132cc5741539f846a85bbe0cebc3c9ead30b8f24c1da46c55363f2170c3993
+                      mozillareleases/taskgraph:decision-c4ac262880970ca484105929e02dd12f00214d5f2603ab6ce4c0d17de5cd0280@sha256:2dd667994aa13fccdcdcede85c570a5eb4a5247e42875a9e95a135ef774ee469
 
                   maxRunTime: 1800
 
