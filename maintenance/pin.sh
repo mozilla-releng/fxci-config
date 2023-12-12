@@ -16,5 +16,6 @@
 set -e
 set -x
 
+docker run --rm -ti -v $PWD:/src -w /src python:3.11 /bin/bash -c 'pip install pip-tools && pip-compile --upgrade --generate-hashes taskcluster/requirements.in'
 docker run --rm -ti -v $PWD:/src -w /src python:3.9 maintenance/pin-helper.sh
 docker run --rm -ti -v $PWD:/src -w /src/build-decision python:3.11 ../maintenance/pin-helper.sh
