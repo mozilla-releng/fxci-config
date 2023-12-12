@@ -20,9 +20,14 @@ tasks:
         symbol: I(build-decision)
         definition: build-decision
         args:
-            PYTHON_VERSION: "3.8"
+            PYTHON_VERSION: "3.11"
     python3.9:
         symbol: I(python3.9)
         definition: python
         args:
             PYTHON_VERSION: "3.9"
+    python3.11:
+        symbol: I(python3.11)
+        definition: python
+        args:
+            PYTHON_VERSION: "3.11"

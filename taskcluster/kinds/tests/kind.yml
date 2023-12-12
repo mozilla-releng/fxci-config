@@ -71,6 +71,7 @@ tasks:
             env:
                 # fail instead of skipping tests due to missing information
                 NO_TEST_SKIP: "1"
+            docker-image: {in-tree: python3.11}
         run:
             command: >-
                 pip install --user -r build-decision/requirements/test.txt &&
