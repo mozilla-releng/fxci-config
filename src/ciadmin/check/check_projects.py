@@ -44,3 +44,25 @@ async def check_trust_domains():
             errors.append(f"{trust_domain} contains regex special characters!")
 
     assert not errors
+
+
+@pytest.mark.asyncio
+async def check_wildcard_projects():
+    """
+    Ensures that all projects containing a * only use level 1 and the mozilla
+    trust domain.
+    """
+    projects = [p for p in await Project.fetch_all() if p.repo.endswith("*")]
+    allowed_trust_domains = ("mozilla",)
+    errors = []
+
+    for p in projects:
+        if p.trust_domain not in allowed_trust_domains:
+            errors.append(f"{p.alias} uses wildcard repo ({p.repo}) with disallowed trust domain ({p.trust_domain})!")
+
+        if p.level != 1:
+            errors.append(f"{p.alias} uses wildcard repo ({p.repo}) with level {p.level}!")
+
+    if errors:
+        print("\n".join(errors))
+    assert not errors

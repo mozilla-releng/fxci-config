@@ -33,7 +33,7 @@ async def check_pull_request_policies_for_git_repos():
         "firefox-profiler",  # not landed yet
     )
 
-    projects = await Project.fetch_all()
+    projects = [p for p in await Project.fetch_all() if not p.repo.endswith("*")]
 
     def filter_project(p):
         # TODO: find a better flag to filter out private repos

@@ -42,7 +42,7 @@ async def check_default_branches_for_git_repos():
     `projects.yml` match the ones from git metadata
     """
 
-    projects = await Project.fetch_all()
+    projects = [p for p in await Project.fetch_all() if not p.repo.endswith("*")]
 
     # TODO: find a better flag to filter out private repos
     branches_in_projects = {

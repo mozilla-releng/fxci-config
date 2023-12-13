@@ -117,7 +117,10 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         # ok, this project matches!
         for job in jobs:
             suffix = job_to_role_suffix(job)
-            roleId = "{}:{}".format(project.role_prefix, suffix)
+            if project.role_prefix.endswith("*"):
+                roleId = project.role_prefix
+            else:
+                roleId = "{}:{}".format(project.role_prefix, suffix)
 
             # perform substitutions as grants.yml describes
             subs = {}
