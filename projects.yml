@@ -1089,3 +1089,19 @@ firefox-profiler:
       policy: public
     taskgraph-actions: true
     trust-domain-scopes: true
+
+###
+# WARNING: These grants apply to entire Github orgs.
+###
+mozilla-releng:
+  repo: https://github.com/mozilla-releng/*
+  repo_type: git
+  trust_domain: mozilla
+  default_branch: main
+  level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public_restricted
+    taskgraph-actions: true
+    trust-domain-scopes: true
