@@ -58,10 +58,15 @@ async def check_wildcard_projects():
 
     for p in projects:
         if p.trust_domain not in allowed_trust_domains:
-            errors.append(f"{p.alias} uses wildcard repo ({p.repo}) with disallowed trust domain ({p.trust_domain})!")
+            errors.append(
+                f"{p.alias} uses wildcard repo ({p.repo}) "
+                f"with disallowed trust domain ({p.trust_domain})!"
+            )
 
         if p.level != 1:
-            errors.append(f"{p.alias} uses wildcard repo ({p.repo}) with level {p.level}!")
+            errors.append(
+                f"{p.alias} uses wildcard repo ({p.repo}) with level {p.level}!"
+            )
 
     if errors:
         print("\n".join(errors))
