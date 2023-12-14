@@ -2960,6 +2960,12 @@
     - queue:create-task:low:translations-1/*
     - docker-worker:cache:translations-level-1*
     - queue:scheduler-id:taskcluster-ui
+    # Note: these two scopes allow accessing these private artifacts on _any_ Task,
+    # not just `translations` tasks. However, users receiving these grants can't
+    # _create_ interactive tasks for any other projects (without also having other
+    # scopes), so the risk here is low.
+    - queue:get-artifact:private/interactive/*
+    - queue:get-artifact:private/docker-worker/*
   to:
     - roles:
         - mozillians-group:translations-developers
