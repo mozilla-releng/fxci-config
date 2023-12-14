@@ -2959,6 +2959,7 @@
     - hooks:trigger-hook:project-translations/in-tree-action-*
     - queue:create-task:low:translations-1/*
     - docker-worker:cache:translations-level-1*
+    - queue:scheduler-id:taskcluster-ui
   to:
     - roles:
         - mozillians-group:translations-developers
