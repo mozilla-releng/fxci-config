@@ -892,6 +892,28 @@
         has_trust_project: true
 
 - grant:
+    # routes to support locating tasks that create specific versions of artifacts
+    # (toolchains, etc.)
+    - queue:route:index.{trust_domain}.cache.head.*
+    - index:insert-task:{trust_domain}.cache.head.*
+  to:
+    - project:
+        job: [pull-request:*]
+        feature: trust-domain-scopes
+        has_trust_project: false
+
+- grant:
+    # routes to support locating tasks that create specific versions of artifacts
+    # (toolchains, etc.)
+    - queue:route:index.{trust_domain}.v2.{trust_project}.cache.head.*
+    - index:insert-task:{trust_domain}.v2.{trust_project}.cache.head.*
+  to:
+    - project:
+        job: [pull-request:*]
+        feature: trust-domain-scopes
+        has_trust_project: true
+
+- grant:
     # routes to support indexing by product
     - queue:route:index.{trust_domain}.v2.{alias}.*
     - index:insert-task:{trust_domain}.v2.{alias}.*
