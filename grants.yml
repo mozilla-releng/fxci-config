@@ -1034,6 +1034,14 @@
         alias: glean
         job: [branch:*, release:*]
 
+- grant:
+    - index:insert-task:project.glean.cache.head.*
+    - queue:route:index.project.glean.cache.head.*
+  to:
+    - project:
+        alias: glean
+        job: [pull-request:*]
+
 # - application-services specific roles
 - grant:
     - docker-worker:taskcluster-proxy:tooltool.download.internal
