@@ -895,6 +895,40 @@ pools:
                 - type: ONE_TO_ONE_NAT
           advancedMachineFeatures:
             enableNestedVirtualization: true
+  - pool_id: '{pool-group}/b-linux-v100-gpu-relops782-test'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
+            enableInteractive: true
+      minCapacity: 0
+      maxCapacity: 50
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-translations-worker-relops782
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - *persistent-disk-75
+          machine_type: n1-highmem-8
+          scheduling: spot
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+          guestAccelerators:
+            - acceleratorCount: 1
+              acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu'
     description: Worker for machine learning and other high GPU tasks
     owner: release+tc-workers@mozilla.com

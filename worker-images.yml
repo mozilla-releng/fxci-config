@@ -34,8 +34,6 @@ monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-20230613
 
 monopacker-docker-worker-relops528: monopacker-docker-worker-2023-04-13-relops528
 
-monopacker-docker-worker-relops757: monopacker-docker-worker-2023-12-01t19-56-02z
-
 relops-image-builder-current: relops-image-builder-pre
 
 # monopacker docker-worker images
@@ -47,8 +45,8 @@ monopacker-docker-worker-2023-06-13t23-47-26z:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-06-13t23-47-26z
 monopacker-docker-worker-2023-04-13-relops528:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-lt-googlecompute-2023-04-13t21-30-28z
-monopacker-docker-worker-2023-12-01t19-56-02z:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-12-01t19-56-02z
+monopacker-docker-worker-relops757:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-12-04t22-11-57z
 
 # monopacker generic-worker vm images
 monopacker-translations-worker:
@@ -56,6 +54,8 @@ monopacker-translations-worker:
   fxci-level3-gcp: projects/taskcluster-imaging/global/images/generic-translations-gcp-googlecompute-2023-09-12t21-35-55z
 monopacker-translations-worker-testing:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-translations-gcp-googlecompute-2023-11-01t20-12-18z
+monopacker-translations-worker-relops782:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-translations-gcp-googlecompute-2023-12-19t18-58-22z
 
 # vm images built by hand
 handbuilt-ubuntu-2204-wayland-vm:
