@@ -920,14 +920,15 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - *persistent-disk-75
-          machine_type: n1-highmem-8
+            - *persistent-disk-300
+          # 40 CPUs, 256GB RAM
+          machine_type: n1-custom-40-262144
           scheduling: spot
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
           guestAccelerators:
-            - acceleratorCount: 1
+            - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu'
     description: Worker for machine learning and other high GPU tasks
