@@ -2997,6 +2997,7 @@
     # scopes), so the risk here is low.
     - queue:get-artifact:private/interactive/*
     - queue:get-artifact:private/docker-worker/*
+    - queue:get-artifact:private/generic-worker/*
   to:
     - roles:
         - mozillians-group:translations-developers
