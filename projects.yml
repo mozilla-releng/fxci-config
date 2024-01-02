@@ -886,6 +886,7 @@ mozilla-vpn-client:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
+    shipit: true
     taskgraph-actions: true
     # Enable this after .taskcluster.yml and .cron.yml exist in the repo
     # taskgraph-cron: true
@@ -902,6 +903,7 @@ staging-mozilla-vpn-client:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
+    shipit: true
     taskgraph-actions: true
     # Enable this after .taskcluster.yml and .cron.yml exist in the repo
     # taskgraph-cron: true

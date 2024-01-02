@@ -1113,6 +1113,8 @@ project/releng/shipit/production:
     - hooks:trigger-hook:project-gecko/in-tree-action-3-release-promotion/*
     - hooks:trigger-hook:project-mobile/in-tree-action-3-generic/*
     - hooks:trigger-hook:project-mobile/in-tree-action-3-release-promotion/*
+    - hooks:trigger-hook:project-mozillavpn/in-tree-action-3-generic/*
+    - hooks:trigger-hook:project-mozillavpn/in-tree-action-3-release-promotion/*
     - hooks:trigger-hook:project-xpi/in-tree-action-3-release-promotion/*
     - notify:matrix-room:!tBWwNyfeKqGvkNpdDL:mozilla.org
     - notify:matrix-room:!xPTYfLywxFMryjbnJl:mozilla.org
@@ -1129,6 +1131,8 @@ project/releng/shipit/staging:
     - hooks:trigger-hook:project-gecko/in-tree-action-1-release-promotion/*
     - hooks:trigger-hook:project-mobile/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-mobile/in-tree-action-1-release-promotion/*
+    - hooks:trigger-hook:project-mozillavpn/in-tree-action-1-generic/*
+    - hooks:trigger-hook:project-mozillavpn/in-tree-action-1-release-promotion/*
     - hooks:trigger-hook:project-xpi/in-tree-action-1-release-promotion/*
     - notify:matrix-room:!wGgsWXnVncJLSBYmuf:mozilla.org
     - project:releng:services/shipit_api/rebuild_product_details
