@@ -1793,6 +1793,16 @@
           - action:*
 
 - grant:
+    - index:insert-task:{trust_domain}.v2.mozillavpn.cache.head.*
+    - queue:route:index.{trust_domain}.v2.mozillavpn.cache.head.*
+  to:
+    - project:
+        alias:
+          - mozilla-vpn-client
+          - staging-mozilla-vpn-client
+        job: [pull-request:*]
+
+- grant:
     - project:mozillavpn:releng:beetmover:action:push-to-candidates
     - project:mozillavpn:releng:beetmover:bucket:release
   to:
