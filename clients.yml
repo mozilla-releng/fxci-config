@@ -165,6 +165,24 @@ project/autophone/gecko-t-bitbar-perf-p6:
     - auth:websocktunnel-token:firefoxcitc/bitbar.*
     - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-perf-p6
     - queue:worker-id:bitbar/*
+project/autophone/gecko-t-bitbar-unit-s21:
+  description: Bitbar Samsung Galaxy S21 Phones - Unit Pool
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/bitbar.*
+    - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-unit-s21
+    - queue:worker-id:bitbar/*
+project/autophone/gecko-t-bitbar-perf-s21:
+  description: Bitbar Samsung Galaxy S21 Phones - Perf Pool
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/bitbar.*
+    - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-perf-s21
+    - queue:worker-id:bitbar/*
 project/nss-nspr/aarch64:
   description: Created for Franziskus to support the 64-bit ARM machines
   scopes:
