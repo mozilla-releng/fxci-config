@@ -50,12 +50,10 @@ monopacker-docker-worker-relops757:
 
 # monopacker generic-worker vm images
 monopacker-translations-worker:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-translations-gcp-googlecompute-2023-09-12t21-35-55z
-  fxci-level3-gcp: projects/taskcluster-imaging/global/images/generic-translations-gcp-googlecompute-2023-09-12t21-35-55z
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-translations-gcp-googlecompute-2023-12-19t18-58-22z
+  fxci-level3-gcp: projects/taskcluster-imaging/global/images/generic-translations-gcp-googlecompute-2023-12-19t18-58-22z
 monopacker-translations-worker-testing:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-translations-gcp-googlecompute-2023-11-01t20-12-18z
-monopacker-translations-worker-relops782:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-translations-gcp-googlecompute-2023-12-19t18-58-22z
 
 # vm images built by hand
 handbuilt-ubuntu-2204-wayland-vm:
