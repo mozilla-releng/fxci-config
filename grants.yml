@@ -812,24 +812,17 @@
     - queue:create-task:{priority}:localprovisioner/nss-macos-10-12
     - queue:create-task:{priority}:localprovisioner/nss-rpi
     - queue:create-task:{priority}:localprovisioner/nss-macos-m1
-    - queue:route:index.docker.images.v1.nss.*
+    - queue:create-task:{priority}:releng-hardware/nss-{level}-b-*
+    - queue:route:index.docker.images.v1.{alias}.*
     - project:releng:services/tooltool/api/download/internal
     - project:releng:services/tooltool/api/download/public
   to:
     - project:
-        alias: nss
+        trust_domain: nss
 
 - grant:
-    - docker-worker:feature:allowPtrace
-    - queue:create-task:{priority}:localprovisioner/nss-aarch64
-    - queue:create-task:{priority}:localprovisioner/nss-macos-10-12
-    - queue:create-task:{priority}:localprovisioner/nss-macos-m1
-    - queue:create-task:{priority}:releng-hardware/nss-1-b-osx-1015
-    - queue:route:index.docker.images.v1.nss-try.*
     - queue:route:project.relman.codereview.*
     - secrets:get:project/relman/coverity-nss
-    - project:releng:services/tooltool/api/download/internal
-    - project:releng:services/tooltool/api/download/public
     - queue:route:notify.email.*
   to:
     - project:
