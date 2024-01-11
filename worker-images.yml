@@ -26,7 +26,7 @@
 # `gcloud config set project <project>` before starting.
 
 # GCP builders level 1, 2 and misc. testers -t
-monopacker-docker-worker-current: monopacker-docker-worker-2023-06-13t23-47-26z
+monopacker-docker-worker-current: monopacker-docker-worker-2023-12-04t22-11-57z
 # GCP builders level 3
 monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-gcp-2023-03-16
 # GCP testers
@@ -41,12 +41,10 @@ monopacker-docker-worker-gcp-20230613:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13
 monopacker-docker-worker-trusted-gcp-2023-03-16:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-12-06t15-04-40z
-monopacker-docker-worker-2023-06-13t23-47-26z:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-06-13t23-47-26z
+monopacker-docker-worker-2023-12-04t22-11-57z:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-12-04t22-11-57z
 monopacker-docker-worker-2023-04-13-relops528:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-lt-googlecompute-2023-04-13t21-30-28z
-monopacker-docker-worker-relops757:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-12-04t22-11-57z
 
 # monopacker generic-worker vm images
 monopacker-translations-worker:
