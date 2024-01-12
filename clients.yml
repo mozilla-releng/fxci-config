@@ -829,6 +829,12 @@ project/releng/scriptworker/v2/shipit/dev/firefoxci-mobile-1:
     - project:releng:services/shipit_api/update_release_status
     - queue:claim-work:scriptworker-k8s/mobile-1-shipit-dev
     - queue:worker-id:mobile-1-shipit-dev/mobile-1-shipit-dev-*
+project/releng/scriptworker/v2/shipit/dev/firefoxci-mozillavpn-1:
+  description: Mozillavpn level 1 shipit scriptworker
+  scopes:
+    - project:releng:services/shipit_api/update_release_status
+    - queue:claim-work:scriptworker-k8s/mozillavpn-1-shipit-dev
+    - queue:worker-id:mozillavpn-1-shipit-dev/mozillavpn-1-shipit-dev-*
 project/releng/scriptworker/v2/shipit/dev/firefoxci-xpi-1:
   description: XPI dev shipit scriptworker
   scopes:
@@ -925,6 +931,18 @@ project/releng/scriptworker/v2/shipit/prod/firefoxci-mobile-3:
     - project:releng:services/shipit_api/update_release_status
     - queue:claim-work:scriptworker-k8s/mobile-3-shipit
     - queue:worker-id:mobile-3-shipit/mobile-3-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-mozillavpn-1:
+  description: Mozillavpn level 1 shipit scriptworker
+  scopes:
+    - project:releng:services/shipit_api/update_release_status
+    - queue:claim-work:scriptworker-k8s/mozillavpn-1-shipit
+    - queue:worker-id:mozillavpn-1-shipit/mozillavpn-1-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-mozillavpn-3:
+  description: Mozillavpn level 3 shipit scriptworker
+  scopes:
+    - project:releng:services/shipit_api/update_release_status
+    - queue:claim-work:scriptworker-k8s/mozillavpn-3-shipit
+    - queue:worker-id:mozillavpn-3-shipit/mozillavpn-3-shipit-*
 project/releng/scriptworker/v2/shipit/prod/firefoxci-xpi-1:
   description: XPI level 1 shipit scriptworker
   scopes:
