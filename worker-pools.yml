@@ -845,34 +845,6 @@ pools:
                 - type: ONE_TO_ONE_NAT
           advancedMachineFeatures:
             enableNestedVirtualization: true
-  - pool_id: 'gecko-t/t-linux-vm-2204-wayland-aerickson-test'  # This pool is experimental
-    description: Worker for testing Wayland and XWayland on Ubuntu 22.04
-    owner: aerickson@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      worker-config:
-        genericWorker:
-          config:
-            livelogExecutable: /home/ubuntu/.taskcluster/livelog
-            taskclusterProxyExecutable: /home/ubuntu/.taskcluster/taskcluster-proxy
-            numberOfTasksToRun: 1  # gw simple uses 1 to exit after one task
-            idleTimeoutSecs: 5400
-      minCapacity: 0
-      maxCapacity: 10
-      implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
-      image: handbuilt-ubuntu-2204-wayland-vm-aerickson-testing
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-60
-          machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
-          advancedMachineFeatures:
-            enableNestedVirtualization: true
   - pool_id: '{pool-group}/b-linux-v100-gpu'
     description: Worker for machine learning and other high GPU tasks
     owner: release+tc-workers@mozilla.com

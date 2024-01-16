@@ -56,8 +56,6 @@ monopacker-translations-worker-testing:
 # vm images built by hand
 handbuilt-ubuntu-2204-wayland-vm:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z
-handbuilt-ubuntu-2204-wayland-vm-aerickson-testing:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-aerickson-test-2023-09-20t01-30-09z
 
 # generic-worker images
 # Azure 2012 images
