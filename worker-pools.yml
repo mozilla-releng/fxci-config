@@ -857,7 +857,7 @@ pools:
             livelogExecutable: /home/ubuntu/.taskcluster/livelog
             taskclusterProxyExecutable: /home/ubuntu/.taskcluster/taskcluster-proxy
             idleTimeoutSecs: 5400
-            ed25519SigningKeyLocation: /etc/taskcluster/secrets/worker_ed25519_cot_key
+            ed25519SigningKeyLocation: /etc/taskcluster/secrets/gw_cot_private_key
             numberOfTasksToRun: 1  # for debugging
             shutdownMachineOnInternalError: false  # for debugging
       minCapacity: 0
