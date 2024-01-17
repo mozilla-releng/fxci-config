@@ -279,10 +279,10 @@ project/releng/generic-worker/datacenter-nss-3-b-osx:
   description: Datacenter level 3 MacOS dedicated workers for the nss trust domain.
   scopes:
     - assume:worker-type:releng-hardware/nss-3-b-osx*
-project/releng/generic-worker/datacenter-pgo-1-b-osx:
+project/releng/generic-worker/datacenter-pgo-1-t-osx:
   description: MacStadium level 1 MacOS dedicated workers for the pgo trust domain.
   scopes:
-    - assume:worker-type:releng-hardware/pgo-1-b-osx*
+    - assume:worker-type:releng-hardware/pgo-1-t-osx*
 project/releng/generic-worker/datacenter-pgo-3-b-osx:
   description: AWS level 3 MacOS dedicated workers for the pgo trust domain.
   scopes:
