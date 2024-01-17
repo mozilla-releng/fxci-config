@@ -857,8 +857,10 @@ pools:
             livelogExecutable: /home/ubuntu/.taskcluster/livelog
             taskclusterProxyExecutable: /home/ubuntu/.taskcluster/taskcluster-proxy
             idleTimeoutSecs: 5400
+            numberOfTasksToRun: 1  # for debugging
+            shutdownMachineOnInternalError: false  # for debugging
       minCapacity: 0
-      maxCapacity: 100
+      maxCapacity: 1  # was 100, temporary while debugging
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
