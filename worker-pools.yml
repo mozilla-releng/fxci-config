@@ -113,6 +113,21 @@ worker-defaults:
             taskclusterProxyPort: 80
             tasksDir: /home/ubuntu/tasks
             wstAudience: firefoxcitc
+      generic-worker/worker-runner-linux-multi:  # for images built with monopacker 22.04 community configuration
+        genericWorker:
+          config:
+            cleanUpTaskDirs: true
+            disableReboots: false
+            ed25519SigningKeyLocation: /etc/taskcluster/secrets/gw_cot_private_key
+            idleTimeoutSecs: 300  # 5 minutes
+            livelogExecutable: /usr/local/bin/livelog
+            numberOfTasksToRun: 0
+            sentryProject: generic-worker
+            shutdownMachineOnIdle: true
+            shutdownMachineOnInternalError: true
+            taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
+            taskclusterProxyPort: 80
+            wstAudience: firefoxcitc
 
 pools:
   - pool_id: infra/build-decision
@@ -854,15 +869,13 @@ pools:
       worker-config:
         genericWorker:
           config:
-            livelogExecutable: /home/ubuntu/.taskcluster/livelog
-            taskclusterProxyExecutable: /home/ubuntu/.taskcluster/taskcluster-proxy
             idleTimeoutSecs: 5400
-            ed25519SigningKeyLocation: /etc/taskcluster/secrets/gw_cot_private_key
+            enableInteractive: true  # ok for l1, but not ok for l3?
             numberOfTasksToRun: 1  # for debugging
             shutdownMachineOnInternalError: false  # for debugging
       minCapacity: 0
       maxCapacity: 1  # was 100, temporary while debugging
-      implementation: generic-worker/worker-runner-linux
+      implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
       instance_types:
