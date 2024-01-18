@@ -1807,6 +1807,8 @@
 - grant:
     - project:mozillavpn:releng:beetmover:action:push-to-releases
     - project:mozillavpn:releng:beetmover:action:direct-push-to-bucket
+    - project:mozillavpn:releng:ship-it:action:mark-as-shipped
+    - project:mozillavpn:releng:ship-it:server:production
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
     - queue:route:notify.slack-channel.C01DCUKG95E.*  # mozilla-vpn-release
     - "queue:route:notify.matrix-room.!tBWwNyfeKqGvkNpdDL:mozilla.org.*"  # releaseduty
@@ -1913,6 +1915,8 @@
     - project:mozillavpn:releng:beetmover:apt-repo:dep
     - project:mozillavpn:releng:signing:cert:dep-signing
     - project:mozillavpn:releng:signing:format:*
+    - project:mozillavpn:releng:ship-it:action:mark-as-shipped
+    - project:mozillavpn:releng:ship-it:server:staging
     - project:releng:services/tooltool/api/download/public
     - project:releng:services/tooltool/api/download/internal
   to:
