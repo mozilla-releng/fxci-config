@@ -869,12 +869,9 @@ pools:
       worker-config:
         genericWorker:
           config:
-            idleTimeoutSecs: 5400
             enableInteractive: true  # ok for l1, but not ok for l3?
-            numberOfTasksToRun: 1  # for debugging
-            shutdownMachineOnInternalError: false  # for debugging
       minCapacity: 0
-      maxCapacity: 1  # was 100, temporary while debugging
+      maxCapacity: 100
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
