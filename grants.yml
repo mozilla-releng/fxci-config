@@ -321,10 +321,11 @@
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1-dev
     - queue:get-artifact:releng/partner/*
-    # TODO(bug 1824855): move firebase secrets into the gecko namespace
+    # TODO(bug 1824855): move mobile secrets into the gecko namespace
     - secrets:get:project/mobile/firefox-android/android-components/firebase
     - secrets:get:project/mobile/firefox-android/focus-android/firebase
     - secrets:get:project/mobile/firefox-android/fenix/firebase
+    - secrets:get:project/mobile/ci/testrail
   to:
     - projects:
         feature: gecko-roles
