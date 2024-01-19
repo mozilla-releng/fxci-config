@@ -1087,13 +1087,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - &persistent-disk-1024
-              autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 1024
-                sourceImage: <image>
-              type: PERSISTENT
+            - *persistent-disk-1024
           # 40 CPUs, 256GB RAM
           machine_type: n1-custom-40-262144
           scheduling: spot
