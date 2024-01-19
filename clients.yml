@@ -341,6 +341,7 @@ project/releng/generic-worker/datacenter-gecko-t-osx-staging:
     - assume:worker-type:releng-hardware/gecko-t-osx-1010-*
     - assume:worker-type:releng-hardware/gecko-t-osx-1014-*
     - assume:worker-type:releng-hardware/gecko-t-osx-1015-*
+    - assume:worker-type:releng-hardware/gecko-t-osx-1400-*
     - queue:worker-id:mdc1/mac*
     - queue:worker-id:mdc1/t-yosemite*
     - queue:worker-id:mdc1/t-mojave*
