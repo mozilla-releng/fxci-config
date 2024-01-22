@@ -54,6 +54,9 @@ monopacker-translations-worker-testing:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-translations-gcp-googlecompute-2023-11-01t20-12-18z
 monopacker-ubuntu-2204-wayland:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-01-18t23-27-40z
+monopacker-ubuntu-2204:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-googlecompute-2024-01-19t17-35-11z
+  fxci-level3-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l3-googlecompute-2024-01-19t18-10-08z
 
 # vm images built by hand
 handbuilt-ubuntu-2204-wayland-vm:

@@ -826,6 +826,34 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-2204-kvm-gcp'  # Bug 1865886, https://mozilla-hub.atlassian.net/browse/RELOPS-805
+    description: 'KVM-enabled Ubuntu 22.04 GCP builders.'
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-central1, us-west1]
+      image: monopacker-ubuntu-2204
+      minCapacity: 0
+      maxCapacity: 10
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-75
+          machine_type: n2-standard-2  # larger n2? or c2-standard-16 or c3-standard-4?
+          advancedMachineFeatures:
+            enableNestedVirtualization: true
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: 'gecko-t/t-linux-vm-2204-wayland'  # Bug 1756660 - This pool is experimental
     description: Worker for testing Wayland and XWayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
