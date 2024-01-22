@@ -841,7 +841,7 @@ pools:
     config:
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
-      image: monopacker-ubuntu-2204
+      image: monopacker-ubuntu-2204-wayland  # use temporarily until monopacker-ubuntu-2204 is working.
       minCapacity: 0
       maxCapacity: 10
       instance_types:
