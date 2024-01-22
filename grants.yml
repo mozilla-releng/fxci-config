@@ -3012,7 +3012,7 @@
 
 # allow bytesized to trigger nightly releases on pine
 - grant:
-    - hooks:trigger-hook:project-releng/cron-task-projects-pine*
+    - hooks:trigger-hook:project-releng/cron-task-projects-pine/*
   to:
     - groups:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|rsteuber
