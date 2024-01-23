@@ -259,6 +259,7 @@
 - grant:
     - docker-worker:capability:device:loopbackAudio
     - docker-worker:capability:device:loopbackVideo
+    - docker-worker:capability:device:kvm
     - docker-worker:capability:privileged
     - docker-worker:feature:allowPtrace
     - generic-worker:feature:allowPtrace
