@@ -261,6 +261,7 @@
     - docker-worker:capability:device:loopbackVideo
     - docker-worker:capability:privileged
     - docker-worker:feature:allowPtrace
+    - generic-worker:feature:allowPtrace
     - index:insert-task:garbage.*
     - notify:email:*
     - purge-cache:{trust_domain}-{level}/*
