@@ -386,7 +386,6 @@ def get_google_provider_config(
                     "standard": {
                         "onHostMaintenance": "terminate",
                         "provisioningModel": "STANDARD",
-                        "instanceTerminationAction": "DELETE",
                     },
                 }
                 scheduling_choice = launch_config.get("scheduling", "preemptible")
