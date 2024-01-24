@@ -3001,6 +3001,7 @@
     - docker-worker:cache:translations-level-1*
     - generic-worker:cache:translations-level-1*
     - queue:scheduler-id:taskcluster-ui
+    - queue:cancel-task:taskcluster-ui/*
     # Note: these two scopes allow accessing these private artifacts on _any_ Task,
     # not just `translations` tasks. However, users receiving these grants can't
     # _create_ interactive tasks for any other projects (without also having other
