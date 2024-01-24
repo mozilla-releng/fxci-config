@@ -1144,6 +1144,41 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-v100-gpu-4-300gb-relops813'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
+            enableInteractive: true
+      minCapacity: 0
+      maxCapacity: 50
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-2024-01-24-relops813
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - *persistent-disk-300
+          # 40 CPUs, 256GB RAM
+          machine_type: n1-custom-40-262144
+          scheduling: spot
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+          guestAccelerators:
+            - acceleratorCount: 4
+              acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/misc-gcp'
     description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
       SCM levels.  Used for things like indexing tasks.  Note that disk space is limited

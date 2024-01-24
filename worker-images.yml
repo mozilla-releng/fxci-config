@@ -45,6 +45,8 @@ monopacker-docker-worker-2023-12-04t22-11-57z:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-12-04t22-11-57z
 monopacker-docker-worker-2023-04-13-relops528:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-lt-googlecompute-2023-04-13t21-30-28z
+monopacker-docker-worker-2024-01-24-relops813:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-translations-gcp-googlecompute-2024-01-24t16-29-51z
 
 # monopacker generic-worker vm images
 monopacker-translations-worker:
