@@ -3017,5 +3017,5 @@
 - grant:
     - hooks:trigger-hook:project-releng/cron-task-projects-pine/*
   to:
-    - groups:
+    - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|rsteuber
