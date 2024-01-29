@@ -259,8 +259,9 @@ comm-central:
     trust-domain-scopes: true
   cron:
     targets:
-      - nightly-desktop
       - l10n-cross-channel
+      - nightly-desktop
+      - tb-rust-vendor-check
 cedar:
   repo: https://hg.mozilla.org/projects/cedar
   repo_type: hg

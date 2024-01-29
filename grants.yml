@@ -806,6 +806,13 @@
     - project:
         alias: try-comm-central
 
+- grant:
+    # Bug 1876393: Allow mozilla-central to trigger tb-rust-update-check on comm-central
+    - hooks:trigger-hook:project-releng/cron-task-comm-central/tb-rust-vendor-check
+  to:
+    - project:
+        alias: mozilla-central
+
 ##
 # Non-gecko tree projects
 
@@ -2267,6 +2274,8 @@
     - hooks:trigger-hook:project-releng/cron-task-comm-central/nightly-*
     # Allow managing treestatus (This should be limited to comm- trees, see Bug 1613551)
     - project:releng:services/treestatus/*
+    # Bug 1876393: Allow triggering tb-rust-update-check on comm-central
+    - hooks:trigger-hook:project-releng/cron-task-comm-central/tb-rust-vendor-check
   to:
     - groups:
         - thunderbird-sheriff
