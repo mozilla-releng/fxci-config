@@ -1182,8 +1182,7 @@ pools:
                 - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/misc-gcp'
     description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
-      SCM levels.  Used for things like indexing tasks.  Note that disk space is limited
-      (total 80GB, 9GB per task).
+      SCM levels.  Used for things like indexing tasks.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     variants:
