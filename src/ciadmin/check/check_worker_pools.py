@@ -145,7 +145,7 @@ async def check_gcp_ssds():
     errors = []
 
     for pool in generate_pool_variants(worker_pools, environment):
-        if "gcp" not in pool.provider_id or pool.pool_id in ignore:
+        if "gcp" not in pool.provider_id:
             continue
 
         for instance in pool.config["instance_types"]:
@@ -158,7 +158,14 @@ async def check_gcp_ssds():
             )
             min_disks = min_scratch_disks(instance["machine_type"])
 
-            if num_disks not in (0, min_disks):
+            if not num_disks:
+                continue
+            if num_disks < min_disks:
+                errors.append(
+                    f"{pool.pool_id}: defines {num_disks}, but requires at least "
+                    f"{min_disks}"
+                )
+            if num_disks > min_disks and pool.pool_id not in ignore:
                 errors.append(
                     f"{pool.pool_id}: defines {num_disks}, only needs {min_disks}"
                 )
