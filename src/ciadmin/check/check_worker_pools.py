@@ -3,6 +3,7 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import re
+from textwrap import dedent
 
 import pytest
 from tcadmin.resources import Resources
@@ -87,3 +88,94 @@ async def check_providers():
         )
 
     assert not invalid_pools
+
+
+def min_scratch_disks(machine_type):
+    """Return the minimum number of scratch disks based on machine_type.
+
+    As documented at:
+    https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds
+    """
+    family, *parts = machine_type.split("-")
+    if family not in ("n1", "n2", "c2"):
+        raise NotImplementedError(
+            f"Min scratch disks not implemented for '{machine_type}'"
+        )
+
+    if family == "n1":
+        return 1
+
+    num_cpu = int(parts[1])
+    assert family in ("c2", "n2")
+    if num_cpu <= 10:
+        return 1
+
+    if num_cpu <= 20:
+        return 2
+
+    if num_cpu <= 40:
+        return 4
+
+    if num_cpu <= 80:
+        return 8
+
+    return 16
+
+
+@pytest.mark.asyncio
+async def check_gcp_ssds():
+    """This test aims to avoid requesting unnecessary SSDs."""
+    environment = await Environment.current()
+    worker_pools = await WorkerPoolConfig.fetch_all()
+    ignore = tuple(
+        f"{group}/b-linux-gcp"
+        for group in (
+            "gecko-1",
+            "gecko-2",
+            "gecko-3",
+            "comm-1",
+            "comm-2",
+            "comm-3",
+            "app-services-1",
+            "app-services-3",
+            "mozillaonline-1",
+            "mozillaonline-3",
+        )
+    )
+    errors = []
+
+    for pool in generate_pool_variants(worker_pools, environment):
+        if "gcp" not in pool.provider_id or pool.pool_id in ignore:
+            continue
+
+        for instance in pool.config["instance_types"]:
+            num_disks = len(
+                [
+                    disk
+                    for disk in instance["disks"]
+                    if disk["type"].lower() == "scratch"
+                ]
+            )
+            min_disks = min_scratch_disks(instance["machine_type"])
+
+            if num_disks not in (0, min_disks):
+                errors.append(
+                    f"{pool.pool_id}: defines {num_disks}, only needs {min_disks}"
+                )
+
+    if errors:
+        print(
+            dedent(
+                """
+        Some pools have more SSDs than necessary!
+
+          {errors}
+
+        If these extra SSDs were added intentionally,
+        add the pool id to the ignore list of this test.
+        """
+            )
+            .format(errors="\n  ".join(sorted(errors)))
+            .lstrip()
+        )
+    assert not errors
