@@ -240,8 +240,6 @@ pools:
             - *persistent-disk-20
             - *scratch-disk
             - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
           machine_type: n2-custom-16-73728
           networkInterfaces:
             - accessConfigs:
