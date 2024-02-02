@@ -1197,32 +1197,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 20
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-20
+            - *scratch-disk
           machine_type: n2-standard-4
           capacityPerInstance: 8
           networkInterfaces:
