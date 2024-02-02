@@ -448,9 +448,6 @@ pools:
           disks:
             - *persistent-disk-20
             - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
           machine_type: n2-standard-8
           networkInterfaces:
             - accessConfigs:
