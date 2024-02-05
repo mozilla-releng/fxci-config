@@ -942,6 +942,30 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: 'gecko-t/t-linux-2204-wayland-root-exp'  # Bug 1874877
+    description: Worker for testing Wayland on Ubuntu 22.04
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            runTasksAsCurrentUser: true
+            enableInteractive: true  # ok for l1, but not ok for l3?
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-central1, us-west1]
+      image: monopacker-ubuntu-2204-wayland
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-60
+          machine_type: n2-standard-2
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-v100-gpu'
     description: Worker for machine learning and other high GPU tasks
     owner: release+tc-workers@mozilla.com
