@@ -88,10 +88,10 @@ async def hash_taskcluster_ymls():
     return rv
 
 
-def make_hook(action, tcyml_content, tcyml_hash, projects):
+def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
     hookGroupId = "project-{}".format(action.trust_domain)
-    hookId = "in-tree-action-{}-{}/{}".format(
-        action.level, action.action_perm, tcyml_hash
+    hookId = "in-tree-{}action-{}-{}/{}".format(
+        "pr-" if pr else "", action.level, action.action_perm, tcyml_hash
     )
 
     # making matching project list for description field
@@ -157,6 +157,10 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
                 url=prop("repository URL (without trailing slash)", pattern="[^/]$"),
                 project=prop('repository project name (also known as "alias")'),
                 level=prop("repository SCM level"),
+                base_url=prop(
+                    "repository URL to use when checking scopes for this action"
+                ),
+                optional={"base_url"},
             ),
             parameters={
                 "type": "object",
@@ -182,6 +186,11 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
         ),
     )
 
+    if pr:
+        scope_repo_location = "payload.decision.repository.base_url"
+    else:
+        scope_repo_location = "payload.decision.repository.url"
+
     # Given a JSON-e context value `payload` matching the above trigger schema,
     # as well as the `taskId` provided by the hooks service (giving the taskId
     # of the new task), the following JSON-e template rearranges the provided
@@ -194,7 +203,7 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
     # https://github.com/mozilla-releng/scriptworker/search?q=_wrap_action_hook_with_let
     task = {
         "$let": {
-            "tasks_for": "action",
+            "tasks_for": "{}action".format("pr-" if pr else ""),
             "action": {
                 "name": "${payload.decision.action.name}",
                 "title": "${payload.decision.action.title}",
@@ -211,7 +220,7 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
                 # calculate it directly in .taskcluster.yml, once all the other work
                 # for actions-as-hooks has finished
                 "repo_scope": "assume:repo:"
-                "${payload.decision.repository.url[8:]}:action:" + action.action_perm,
+                "${" + scope_repo_location + "[8:]}:action:" + action.action_perm,
                 "action_perm": action.action_perm,
             },
             # remaining sections are copied en masse from the hook payload
@@ -236,7 +245,7 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
         name="{}/{}".format(hookGroupId, hookId),
         description=textwrap.dedent(
             """\
-            Action task {} at level {}, with `.taskcluster.yml` hash {}.
+            {}ction task {} at level {}, with `.taskcluster.yml` hash {}.
 
             For project(s) {}
 
@@ -244,7 +253,11 @@ def make_hook(action, tcyml_content, tcyml_hash, projects):
             Gecko decision task's `actions.json`.
             """
         ).format(
-            action.action_perm, action.level, tcyml_hash, ", ".join(matching_projects)
+            "PR a" if pr else "A",
+            action.action_perm,
+            action.level,
+            tcyml_hash,
+            ", ".join(matching_projects),
         ),
         owner="taskcluster-notifications@mozilla.com",
         emailOnError=True,
@@ -275,6 +288,10 @@ async def update_resources(resources):
         resources.manage(
             "Role=hook-id:project-{}/in-tree-action-.*".format(trust_domain)
         )
+        resources.manage("Hook=project-{}/in-tree-pr-action-.*".format(trust_domain))
+        resources.manage(
+            "Role=hook-id:project-{}/in-tree-pr-action-.*".format(trust_domain)
+        )
 
     projects_by_level_and_trust_domain = {}
     for project in projects:
@@ -304,6 +321,14 @@ async def update_resources(resources):
             hook = make_hook(action, content, hash, hashed_tcymls)
             resources.add(hook)
             added_hooks.add(hook.id)
+            if action.level == 1 and any(
+                p.feature("pr-actions")
+                for p in projects
+                if p.trust_domain == action.trust_domain and p.level > 1
+            ):
+                hook = make_hook(action, content, hash, hashed_tcymls, True)
+                resources.add(hook)
+                added_hooks.add(hook.id)
 
         # use a single, star-suffixed role for all hashed versions of a hook
         role = Role(
@@ -322,6 +347,28 @@ async def update_resources(resources):
             ],
         )
         resources.add(role)
+        if action.level == 1 and any(
+            p.feature("pr-actions")
+            for p in projects
+            if p.trust_domain == action.trust_domain and p.level > 1
+        ):
+            role = Role(
+                roleId="hook-id:project-{}/in-tree-pr-action-{}-{}/*".format(
+                    action.trust_domain, action.level, action.action_perm
+                ),
+                description="Scopes associated with {} PR action `{}` "
+                "on each repo at level {}".format(
+                    action.trust_domain, action.action_perm, action.level
+                ),
+                scopes=[
+                    "assume:{}:pr-action:{}".format(p.role_prefix, action.action_perm)
+                    for p in projects
+                    if p.feature("pr-actions")
+                    and p.trust_domain == action.trust_domain
+                    and p.level > 1
+                ],
+            )
+            resources.add(role)
 
     # download all existing hooks and check the last time they were used
     hooks = Hooks(optionsFromEnvironment(), session=aiohttp_session())

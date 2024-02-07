@@ -72,7 +72,14 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             # Since pull-requests should be level-1, we need to explicitly
             # split based on the job
             jobs = [job for job in jobs if job != "*"]
-            jobs += ["pull-request:*", "branch:*", "cron:*", "action:*", "release:*"]
+            jobs += [
+                "pull-request:*",
+                "branch:*",
+                "cron:*",
+                "action:*",
+                "pr-action:*",
+                "release:*",
+            ]
 
         # Only grant scopes to `cron:` or `action:` jobs if the corresponding features
         # are enabled. This allows having generic grants that don't generate unused
@@ -83,6 +90,8 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             "gecko-actions"
         ):
             jobs = [job for job in jobs if not job.startswith("action:")]
+        if not project.feature("pr-actions"):
+            jobs = [job for job in jobs if not job.startswith("pr-action:")]
 
         # Only grant pull-request scopes where it makes sense.
         if (
@@ -90,7 +99,12 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             or not pr_policy
             or not grantee.include_pull_requests
         ):
-            jobs = [job for job in jobs if not job.startswith("pull-request")]
+            jobs = [
+                job
+                for job in jobs
+                if not job.startswith("pull-request")
+                and not job.startswith("pr-action")
+            ]
 
         if "pull-request:*" in jobs:
             jobs.remove("pull-request:*")
@@ -134,7 +148,7 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
                 subs["level"] = project.level
                 # In order to avoid granting pull-requests graphs
                 # access to the level-3 workers, we overwrite their value here
-                if job.startswith("pull-request"):
+                if job.startswith("pull-request") or job.startswith("pr-action"):
                     subs["level"] = 1
                 subs["priority"] = LEVEL_PRIORITIES[project.level]
             try:
