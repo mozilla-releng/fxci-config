@@ -2089,6 +2089,13 @@
     - project:
         feature: taskgraph-actions
 
+- grant:
+    - in-tree:hook-action:project-{trust_domain}/in-tree-pr-action-{level}-*
+  to:
+    - project:
+        feature: pr-actions
+        job: [pull-request:*]
+
 # Adhoc signing
 
 - grant:
