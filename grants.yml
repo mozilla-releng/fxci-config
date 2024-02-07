@@ -690,7 +690,7 @@
     - project:releng:balrog:server:nightly
   to:
     - project:
-        alias: [oak, cedar, pine]
+        alias: [oak, cedar, pine, larch]
 
 # grant relman access to trigger mozilla-central & mozilla-releases hooks
 - grant:

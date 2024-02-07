@@ -332,11 +332,19 @@ larch:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: false
+    gecko-cron: true
     gecko-roles: true
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+  cron:
+    targets:
+      - nightly-desktop
+      - nightly-desktop-linux
+      - nightly-desktop-osx
+      - nightly-desktop-win32
+      - nightly-desktop-win64
+      - nightly-desktop-win64-aarch64
 maple:
   repo: https://hg.mozilla.org/projects/maple
   repo_type: hg
