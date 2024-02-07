@@ -328,7 +328,7 @@ try-comm-central:
 larch:
   repo: https://hg.mozilla.org/projects/larch
   repo_type: hg
-  access: scm_level_2
+  access: scm_level_3
   trust_domain: gecko
   features:
     gecko-actions: true

@@ -964,8 +964,8 @@
     - project:
         job: [pr-action:*]
         feature:
-            - treeherder-reporting
-            - pr-actions
+          - treeherder-reporting
+          - pr-actions
 
 - grant:
     - queue:create-task:low:aws-provisioner-v1/gecko-{level}-decision
