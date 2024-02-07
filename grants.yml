@@ -958,6 +958,16 @@
         feature: treeherder-reporting
 
 - grant:
+    - queue:route:tc-treeherder-stage.v2.{alias}-pr.*
+    - queue:route:tc-treeherder.v2.{alias}-pr.*
+  to:
+    - project:
+        job: [pr-action:*]
+        feature:
+            - treeherder-reporting
+            - pr-actions
+
+- grant:
     - queue:create-task:low:aws-provisioner-v1/gecko-{level}-decision
     - queue:create-task:low:aws-provisioner-v1/gecko-misc
     - queue:create-task:low:aws-provisioner-v1/gecko-{level}-images
