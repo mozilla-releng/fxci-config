@@ -1053,8 +1053,6 @@
     - project:releng:services/tooltool/api/download/internal
     - queue:create-task:highest:app-services-{level}/*
     - queue:create-task:highest:releng-hardware/applicationservices-b-{level}-osx1015
-    - project:{trust_domain}:releng:ship-it:action:mark-as-shipped
-    - project:{trust_domain}:releng:ship-it:server:staging
     - project:mozilla:{trust_domain}:releng:signing:cert:dep-signing
     - project:mozilla:{trust_domain}:releng:signing:format:*
     - project:mozilla:{trust_domain}:releng:beetmover:action:push-to-candidates
@@ -1082,7 +1080,6 @@
     # `glean` project
     - project:mozilla:{trust_domain}:releng:beetmover:bucket:release
     - project:mozilla:{trust_domain}:releng:beetmover:bucket:maven-production
-    - project:{trust_domain}:releng:ship-it:server:production
   to:
     - project:
         alias: application-services
@@ -1675,7 +1672,7 @@
           - cron:nightly
 
 - grant:
-    - project:releng:ship-it:action:mark-as-shipped
+    - project:{trust_domain}:releng:ship-it:action:mark-as-shipped
   to:
     - project:
         feature: shipit
@@ -1685,7 +1682,7 @@
         job: [action:release-promotion]
 
 - grant:
-    - project:releng:ship-it:server:production
+    - project:{trust_domain}:releng:ship-it:server:production
   to:
     - project:
         level: 3
@@ -1693,7 +1690,7 @@
         job: [action:release-promotion]
 
 - grant:
-    - project:releng:ship-it:server:staging
+    - project:{trust_domain}:releng:ship-it:server:staging
   to:
     - project:
         # TODO: once pull-request-based staging releases are more stable and
@@ -1710,6 +1707,48 @@
         level: 3
         feature: [shipit, taskgraph-actions]
         job: [pull-request:*]
+
+# Historical grants for Firefox for Android on GitHub; should be removed when
+# this project migrates into Gecko
+- grant:
+    - project:releng:ship-it:action:mark-as-shipped
+  to:
+    - project:
+        feature: shipit
+        job: [pull-request:*]
+        alias: ["staging-firefox-android", "firefox-android"]
+    - project:
+        feature: [shipit, taskgraph-actions]
+        job: [action:release-promotion]
+        alias: ["staging-firefox-android", "firefox-android"]
+
+- grant:
+    - project:releng:ship-it:server:production
+  to:
+    - project:
+        level: 3
+        feature: [shipit, taskgraph-actions]
+        job: [action:release-promotion]
+        alias: ["staging-firefox-android", "firefox-android"]
+
+- grant:
+    - project:releng:ship-it:server:staging
+  to:
+    - project:
+        level: 1
+        feature: shipit
+        job: [pull-request:*]
+        alias: ["staging-firefox-android", "firefox-android"]
+    - project:
+        level: 1
+        feature: [shipit, taskgraph-actions]
+        job: [action:release-promotion]
+        alias: ["staging-firefox-android", "firefox-android"]
+    - project:
+        level: 3
+        feature: [shipit, taskgraph-actions]
+        job: [pull-request:*]
+        alias: ["staging-firefox-android", "firefox-android"]
 
 - grant:
     - queue:scheduler-id:{trust_domain}-level-{level}
@@ -1817,8 +1856,6 @@
 - grant:
     - project:mozillavpn:releng:beetmover:action:push-to-releases
     - project:mozillavpn:releng:beetmover:action:direct-push-to-bucket
-    - project:mozillavpn:releng:ship-it:action:mark-as-shipped
-    - project:mozillavpn:releng:ship-it:server:production
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
     - queue:route:notify.slack-channel.C01DCUKG95E.*  # mozilla-vpn-release
     - "queue:route:notify.matrix-room.!tBWwNyfeKqGvkNpdDL:mozilla.org.*"  # releaseduty
@@ -1925,8 +1962,6 @@
     - project:mozillavpn:releng:beetmover:apt-repo:dep
     - project:mozillavpn:releng:signing:cert:dep-signing
     - project:mozillavpn:releng:signing:format:*
-    - project:mozillavpn:releng:ship-it:action:mark-as-shipped
-    - project:mozillavpn:releng:ship-it:server:staging
     - project:releng:services/tooltool/api/download/public
     - project:releng:services/tooltool/api/download/internal
   to:
@@ -1976,8 +2011,6 @@
     - project:xpi:releng:github:project:mozilla-releng/staging-xpi-*
     - project:xpi:releng:github:action:release
     - project:xpi:releng:signing:cert:dep-signing
-    - project:xpi:releng:ship-it:server:staging
-    - project:xpi:releng:ship-it:action:mark-as-shipped
     - project:xpi:beetmover:action:*
     - project:xpi:beetmover:bucket:dep
     - project:xpi:balrog:action:*
@@ -2002,7 +2035,6 @@
     - project:xpi:releng:github:project:mozilla-extensions/*
     - project:xpi:releng:github:project:mozilla-rally/rally-core-addon
     - project:xpi:releng:signing:cert:release-signing
-    - project:xpi:releng:ship-it:server:production
     - project:xpi:beetmover:bucket:release
     - project:xpi:balrog:server:release
   to:
@@ -2069,8 +2101,6 @@
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac-dev
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
     - project:adhoc:releng:signing:cert:dep-signing
-    - project:adhoc:releng:ship-it:server:staging
-    - project:adhoc:releng:ship-it:action:mark-as-shipped
     - queue:route:index.{trust_domain}.v2.{alias}.*
     - queue:route:index.{trust_domain}.v2.staging-adhoc-manifest.*
     - queue:route:index.adhoc-signing.cache.level-{level}.*
@@ -2085,7 +2115,6 @@
     - project:adhoc:releng:signing:cert:release-signing
     - project:adhoc:releng:signing:cert:release-apple-notarization
     - project:adhoc:releng:signing:cert:nightly-signing
-    - project:adhoc:releng:ship-it:server:production
     - queue:route:index.{trust_domain}.v2.adhoc-manifest.*
   to:
     - project:

@@ -923,6 +923,7 @@ xpi-manifest:
     github-pull-request:
       policy: collaborators
     trust-domain-scopes: true
+    shipit: true
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
@@ -950,6 +951,7 @@ staging-xpi-manifest:
     github-pull-request:
       policy: collaborators
     trust-domain-scopes: true
+    shipit: true
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
