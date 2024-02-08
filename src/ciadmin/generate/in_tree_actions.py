@@ -324,7 +324,7 @@ async def update_resources(resources):
             if action.level == 1 and any(
                 p.feature("pr-actions")
                 for p in projects
-                if p.trust_domain == action.trust_domain and p.level > 1
+                if p.trust_domain == action.trust_domain
             ):
                 hook = make_hook(action, content, hash, hashed_tcymls, True)
                 resources.add(hook)
@@ -350,7 +350,7 @@ async def update_resources(resources):
         if action.level == 1 and any(
             p.feature("pr-actions")
             for p in projects
-            if p.trust_domain == action.trust_domain and p.level > 1
+            if p.trust_domain == action.trust_domain
         ):
             role = Role(
                 roleId="hook-id:project-{}/in-tree-pr-action-{}-{}/*".format(
@@ -365,7 +365,6 @@ async def update_resources(resources):
                     for p in projects
                     if p.feature("pr-actions")
                     and p.trust_domain == action.trust_domain
-                    and p.level > 1
                 ],
             )
             resources.add(role)
