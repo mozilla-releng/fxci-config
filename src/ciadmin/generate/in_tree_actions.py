@@ -363,8 +363,7 @@ async def update_resources(resources):
                 scopes=[
                     "assume:{}:pr-action:{}".format(p.role_prefix, action.action_perm)
                     for p in projects
-                    if p.feature("pr-actions")
-                    and p.trust_domain == action.trust_domain
+                    if p.feature("pr-actions") and p.trust_domain == action.trust_domain
                 ],
             )
             resources.add(role)
