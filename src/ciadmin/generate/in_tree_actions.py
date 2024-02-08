@@ -148,9 +148,10 @@ def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
                 base_revision=prop("revision before the push occurred"),
                 pushlog_id=prop("Mercurial pushlog ID of the original push"),
                 branch=prop("branch revision of original push is from"),
+                base_branch=prop("branch this pull request is based on, if applicable"),
                 # TODO Make "base_revision" mandatory once all repositories are
                 # on taskgraph 3.0+
-                optional={"base_revision", "branch"},
+                optional={"base_revision", "branch", "base_branch"},
             ),
             repository=obj(
                 "Information about the repository where the push occurred",
