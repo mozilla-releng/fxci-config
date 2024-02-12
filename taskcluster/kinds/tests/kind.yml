@@ -101,7 +101,7 @@ tasks:
         run:
             command: >-
                 pip install --user -r requirements/test.txt  &&
-                isort --check --diff src/ build-decision/src/
+                isort --check --diff src/ tests/ build-decision/src/ build-decision/tests/
 
     yamllint:
         description: "Run `yamllint` to validate the latest changes"
