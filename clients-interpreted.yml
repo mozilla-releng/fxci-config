@@ -27,6 +27,11 @@
               - project:releng:services/shipit_api/update_release_status
               - queue:claim-work:scriptworker-k8s/{trust_domain}-1-shipit-dev
               - queue:worker-id:{trust_domain}-1-shipit-dev/{trust_domain}-1-shipit-dev-*
+      project/releng/shipit/staging:
+          description: Shipit staging client
+          scopes:
+              - hooks:trigger-hook:project-{trust_domain}/in-tree-action-1-generic/*
+              - hooks:trigger-hook:project-{trust_domain}/in-tree-action-1-release-promotion/*
   for:
       - project:
             level: 1
@@ -49,6 +54,11 @@
               - project:releng:services/shipit_api/update_release_status
               - queue:claim-work:scriptworker-k8s/{trust_domain}-3-shipit
               - queue:worker-id:{trust_domain}-3-shipit/{trust_domain}-3-shipit-*
+      project/releng/shipit/production:
+          description: ''
+          scopes:
+              - hooks:trigger-hook:project-{trust_domain}/in-tree-action-3-generic/*
+              - hooks:trigger-hook:project-{trust_domain}/in-tree-action-3-release-promotion/*
   for:
       - project:
             level: 3
