@@ -1902,6 +1902,47 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
+  - pool_id: mozillavpn-1/b-win2022-alpha
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-b-windows2022-alpha
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: vpn-1
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
+      tags:
+        sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
   # Windows 10
   - pool_id: gecko-t/win10-64-2009
     description: ''
