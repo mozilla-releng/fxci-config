@@ -548,6 +548,7 @@ firefox-android:
     mobile-sign-phase: true
     scriptworker: true
     shipit: true
+    shipit-product-details: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -582,6 +583,7 @@ staging-firefox-android:
     mobile-sign-phase: true
     scriptworker: true
     shipit: true
+    shipit-product-details: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true

@@ -16,4 +16,70 @@
 #
 # The `for` block uses the same format as the `Project` grantee in grants.yml.
 # See the docstring in that file for a detailed description.
-{}
+
+
+# Base clients for shipitscript workers. Only scopes which are needed by
+# all shipitscript workers belong here.
+- client:
+      project/releng/scriptworker/v2/shipit/dev/firefoxci-{trust_domain}-1:
+          description: "{trust_domain} level 1 shipit scriptworker"
+          scopes:
+              - project:releng:services/shipit_api/update_release_status
+              - queue:claim-work:scriptworker-k8s/{trust_domain}-1-shipit-dev
+              - queue:worker-id:{trust_domain}-1-shipit-dev/{trust_domain}-1-shipit-dev-*
+  for:
+      - project:
+            level: 1
+            feature: [shipit]
+
+- client:
+      # It certainly looks weird that we have `-1` scriptworker clients in this
+      # level 3 block, but these clients are used to build releases off of _production_
+      # repositories on level 1 workers (eg: pull requests), thus we need in production
+      # repositories. In some other places we call these "nonprod" workers".
+      project/releng/scriptworker/v2/shipit/prod/firefoxci-{trust_domain}-1:
+          description: "{trust_domain} level 3 nonprod shipit scriptworker"
+          scopes:
+              - project:releng:services/shipit_api/update_release_status
+              - queue:claim-work:scriptworker-k8s/{trust_domain}-1-shipit
+              - queue:worker-id:{trust_domain}-1-shipit/{trust_domain}-1-shipit-*
+      project/releng/scriptworker/v2/shipit/prod/firefoxci-{trust_domain}-3:
+          description: "{trust_domain} level 3 shipit scriptworker"
+          scopes:
+              - project:releng:services/shipit_api/update_release_status
+              - queue:claim-work:scriptworker-k8s/{trust_domain}-3-shipit
+              - queue:worker-id:{trust_domain}-3-shipit/{trust_domain}-3-shipit-*
+  for:
+      - project:
+            level: 3
+            feature: [shipit]
+
+# Amendments to the shipitscript clients for those that need to be able to
+# rebuild product details.
+- client:
+      project/releng/scriptworker/v2/shipit/dev/firefoxci-{trust_domain}-1:
+          description: "{trust_domain} level 1 shipit scriptworker"
+          scopes:
+              - project:releng:services/shipit_api/rebuild_product_details
+  for:
+      - project:
+            level: 1
+            feature: [shipit, shipit-product-details]
+
+- client:
+      # It certainly looks weird that we have `-1` scriptworker clients in this
+      # level 3 block, but these clients are used to build releases off of _production_
+      # repositories on level 1 workers (eg: pull requests), thus we need in production
+      # repositories. In some other places we call these "nonprod" workers".
+      project/releng/scriptworker/v2/shipit/prod/firefoxci-{trust_domain}-1:
+          description: "{trust_domain} level 3 nonprod shipit scriptworker"
+          scopes:
+              - project:releng:services/shipit_api/rebuild_product_details
+      project/releng/scriptworker/v2/shipit/prod/firefoxci-{trust_domain}-3:
+          description: "{trust_domain} level 3 shipit scriptworker"
+          scopes:
+              - project:releng:services/shipit_api/rebuild_product_details
+  for:
+      - project:
+            level: 3
+            feature: [shipit, shipit-product-details]

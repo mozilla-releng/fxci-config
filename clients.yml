@@ -798,18 +798,6 @@ project/releng/scriptworker/v2/pushmsix/prod/firefoxci-gecko-3:
   scopes:
     - queue:claim-work:scriptworker-k8s/gecko-3-pushmsix
     - queue:worker-id:gecko-3-pushmsix/gecko-3-pushmsix-*
-project/releng/scriptworker/v2/shipit/dev/firefoxci-adhoc-1:
-  description: Adhoc level 1 shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/adhoc-1-shipit-dev
-    - queue:worker-id:adhoc-1-shipit-dev/adhoc-1-shipit-dev-*
-project/releng/scriptworker/v2/shipit/dev/firefoxci-app-services-1:
-  description: App-services level 1 shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/app-services-1-shipit-dev
-    - queue:worker-id:app-services-1-shipit-dev/app-services-1-shipit-dev-*
 project/releng/scriptworker/v2/shipit/dev/firefoxci-gecko-1:
   description: ''
   scopes:
@@ -831,49 +819,6 @@ project/releng/scriptworker/v2/shipit/dev/firefoxci-gecko-1:
     - project:releng:services/shipit_api/update_release_status
     - queue:claim-work:scriptworker-k8s/gecko-1-shipit-dev
     - queue:worker-id:gecko-1-shipit-dev/gecko-1-shipit-dev-*
-project/releng/scriptworker/v2/shipit/dev/firefoxci-mobile-1:
-  description: ''
-  scopes:
-    - project:releng:services/shipit_api/rebuild_product_details
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/mobile-1-shipit-dev
-    - queue:worker-id:mobile-1-shipit-dev/mobile-1-shipit-dev-*
-project/releng/scriptworker/v2/shipit/dev/firefoxci-mozillavpn-1:
-  description: Mozillavpn level 1 shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/mozillavpn-1-shipit-dev
-    - queue:worker-id:mozillavpn-1-shipit-dev/mozillavpn-1-shipit-dev-*
-project/releng/scriptworker/v2/shipit/dev/firefoxci-xpi-1:
-  description: XPI dev shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/xpi-1-shipit-dev
-    - queue:worker-id:xpi-1-shipit-dev/xpi-1-shipit-dev-*
-project/releng/scriptworker/v2/shipit/prod/firefoxci-adhoc-1:
-  description: Adhoc level 1 shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/adhoc-1-shipit
-    - queue:worker-id:adhoc-1-shipit/adhoc-1-shipit-*
-project/releng/scriptworker/v2/shipit/prod/firefoxci-adhoc-3:
-  description: Adhoc level 3 shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/adhoc-3-shipit
-    - queue:worker-id:adhoc-3-shipit/adhoc-3-shipit-*
-project/releng/scriptworker/v2/shipit/prod/firefoxci-app-services-1:
-  description: App-services level 1 shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/app-services-1-shipit
-    - queue:worker-id:app-services-1-shipit/app-services-1-shipit-*
-project/releng/scriptworker/v2/shipit/prod/firefoxci-app-services-3:
-  description: App-services level 3 shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/app-services-3-shipit
-    - queue:worker-id:app-services-3-shipit/app-services-3-shipit-*
 project/releng/scriptworker/v2/shipit/prod/firefoxci-comm-1:
   description: ''
   scopes:
@@ -926,44 +871,6 @@ project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-3:
     - project:releng:services/shipit_api/update_release_status
     - queue:claim-work:scriptworker-k8s/gecko-3-shipit
     - queue:worker-id:gecko-3-shipit/gecko-3-shipit-*
-project/releng/scriptworker/v2/shipit/prod/firefoxci-mobile-1:
-  description: ''
-  scopes:
-    - project:releng:services/shipit_api/rebuild_product_details
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/mobile-1-shipit
-    - queue:worker-id:mobile-1-shipit/mobile-1-shipit-*
-project/releng/scriptworker/v2/shipit/prod/firefoxci-mobile-3:
-  description: ''
-  scopes:
-    - project:releng:services/shipit_api/rebuild_product_details
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/mobile-3-shipit
-    - queue:worker-id:mobile-3-shipit/mobile-3-shipit-*
-project/releng/scriptworker/v2/shipit/prod/firefoxci-mozillavpn-1:
-  description: Mozillavpn level 1 shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/mozillavpn-1-shipit
-    - queue:worker-id:mozillavpn-1-shipit/mozillavpn-1-shipit-*
-project/releng/scriptworker/v2/shipit/prod/firefoxci-mozillavpn-3:
-  description: Mozillavpn level 3 shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/mozillavpn-3-shipit
-    - queue:worker-id:mozillavpn-3-shipit/mozillavpn-3-shipit-*
-project/releng/scriptworker/v2/shipit/prod/firefoxci-xpi-1:
-  description: XPI level 1 shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/xpi-1-shipit
-    - queue:worker-id:xpi-1-shipit/xpi-1-shipit-*
-project/releng/scriptworker/v2/shipit/prod/firefoxci-xpi-3:
-  description: XPI level 3 shipit scriptworker
-  scopes:
-    - project:releng:services/shipit_api/update_release_status
-    - queue:claim-work:scriptworker-k8s/xpi-3-shipit
-    - queue:worker-id:xpi-3-shipit/xpi-3-shipit-*
 project/releng/scriptworker/v2/signing/dev/firefoxci-adhoc-t:
   description: Adhoc signing dev signing scriptworker client
   scopes:
