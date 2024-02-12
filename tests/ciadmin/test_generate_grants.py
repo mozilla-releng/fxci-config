@@ -10,8 +10,9 @@ import pytest
 from tcadmin.resources import Resources
 
 from ciadmin.generate import grants
-from ciadmin.generate.ciconfig.grants import Grant, GroupGrantee, ProjectGrantee
+from ciadmin.generate.ciconfig.grants import Grant
 from ciadmin.generate.ciconfig.projects import Project
+from ciadmin.util.matching import GroupGrantee, ProjectGrantee
 
 
 @pytest.fixture

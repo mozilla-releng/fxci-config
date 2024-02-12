@@ -6,40 +6,8 @@
 
 import attr
 
+from ...util.matching import grantees
 from .get import get_ciconfig_file
-
-
-def listify(x):
-    "Return a list, converting single items to singleton lists; but keep None"
-    if x is None:
-        return x
-    if isinstance(x, list):
-        return x
-    return [x]
-
-
-@attr.s(frozen=True)
-class ProjectGrantee:
-    access = attr.ib(type=list, converter=listify, default=None)
-    level = attr.ib(type=list, converter=listify, default=None)
-    alias = attr.ib(type=list, converter=listify, default=None)
-    feature = attr.ib(type=list, converter=listify, default=None)
-    repo_type = attr.ib(type=list, converter=listify, default=None)
-    is_try = attr.ib(type=bool, default=None)
-    trust_domain = attr.ib(type=list, converter=listify, default=None)
-    job = attr.ib(type=list, converter=listify, default="*")
-    include_pull_requests = attr.ib(type=bool, default=True)
-    has_trust_project = attr.ib(type=bool, default=None)
-
-
-@attr.s(frozen=True)
-class GroupGrantee:
-    groups = attr.ib(type=list, converter=listify, default=None)
-
-
-@attr.s(frozen=True)
-class RoleGrantee:
-    roles = attr.ib(type=list, converter=listify, default=None)
 
 
 @attr.s(frozen=True)
@@ -59,51 +27,6 @@ class Grant:
     async def fetch_all():
         """Load project metadata from grants.yml in ci-configuration"""
         grants = await get_ciconfig_file("grants.yml")
-
-        # convert grantees into instances..
-        def grantees(grant_to):
-            if not isinstance(grant_to, list):
-                raise ValueError(
-                    "grant `to` property must be a list (add `-` in yaml): {}".format(
-                        grant_to
-                    )
-                )
-            return [grantee_instance(ge) for ge in grant_to]
-
-        def grantee_instance(grantee):
-            if len(grantee) != 1:
-                raise ValueError(
-                    "Malformed grantee (expected 1 key): {}".format(repr(grantee))
-                )
-            kind, content = list(grantee.items())[0]
-
-            if kind == "project" or kind == "projects":
-                if not isinstance(content, dict):
-                    raise ValueError(
-                        "grant `to.{}` property must be a dictionary "
-                        "(remove `-` in yaml): {}".format(kind, grantee)
-                    )
-                return ProjectGrantee(**content)
-            elif kind == "group" or kind == "groups":
-                if not isinstance(content, (list, str)):
-                    raise ValueError(
-                        "grant `to.{}` property must be a list or string (add `-` "
-                        "in yaml): {}".format(kind, grantee)
-                    )
-                return GroupGrantee(groups=content)
-            elif kind == "role" or kind == "roles":
-                if not isinstance(content, (list, str)):
-                    raise ValueError(
-                        "grant `to.{}` property must be a list or string (add `-` "
-                        "in yaml): {}".format(kind, grantee)
-                    )
-                return RoleGrantee(roles=content)
-            else:
-                raise ValueError(
-                    "Malformed grantee (invalid top-level key): {}".format(
-                        repr(grantee)
-                    )
-                )
 
         return [
             Grant(

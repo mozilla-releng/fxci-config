@@ -9,51 +9,17 @@ import re
 from tcadmin.resources import Role
 from tcadmin.util.scopes import normalizeScopes
 
+from ..util.matching import GroupGrantee, ProjectGrantee, RoleGrantee, project_match
 from .ciconfig.environment import Environment
-from .ciconfig.grants import Grant, GroupGrantee, ProjectGrantee, RoleGrantee
+from .ciconfig.grants import Grant
 from .ciconfig.projects import Project
 
 LEVEL_PRIORITIES = {1: "low", 2: "low", 3: "highest"}
 
 
 def add_scopes_for_projects(grant, grantee, add_scope, projects):
-    def match(grantee_values, proj_value):
-        if grantee_values is None:
-            return True
-        if any(proj_value == grantee_value for grantee_value in grantee_values):
-            return True
-        return False
-
-    def feature_match(features, project):
-        if features is None:
-            return True
-        for feature in features:
-            if feature.startswith("!"):
-                if project.feature(feature[1:]):
-                    return False
-            else:
-                if not project.feature(feature):
-                    return False
-        return True
-
     for project in projects:
-        if not match(grantee.access, project.access):
-            continue
-        if not match(grantee.repo_type, project.repo_type):
-            continue
-        if not match(grantee.level, project.get_level()):
-            continue
-        if not match(grantee.alias, project.alias):
-            continue
-        if not feature_match(grantee.feature, project):
-            continue
-        if grantee.is_try is not None:
-            if project.is_try != grantee.is_try:
-                continue
-        if grantee.has_trust_project is not None:
-            if grantee.has_trust_project != bool(project.trust_project):
-                continue
-        if not match(grantee.trust_domain, project.trust_domain):
+        if not project_match(grantee, project):
             continue
 
         jobs = grantee.job

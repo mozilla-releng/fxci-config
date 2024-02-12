@@ -7,8 +7,9 @@ from urllib.parse import urlparse
 import pytest
 from taskcluster.utils import scopeMatch
 
-from ciadmin.generate.ciconfig.grants import Grant, ProjectGrantee
+from ciadmin.generate.ciconfig.grants import Grant
 from ciadmin.generate.ciconfig.projects import Project
+from ciadmin.util.matching import ProjectGrantee
 
 
 @pytest.mark.asyncio

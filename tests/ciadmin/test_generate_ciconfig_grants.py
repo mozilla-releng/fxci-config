@@ -6,7 +6,8 @@
 
 import pytest
 
-from ciadmin.generate.ciconfig.grants import Grant, GroupGrantee, ProjectGrantee
+from ciadmin.generate.ciconfig.grants import Grant
+from ciadmin.util.matching import GroupGrantee, ProjectGrantee
 
 
 @pytest.mark.asyncio
