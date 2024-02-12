@@ -1,0 +1,19 @@
+---
+# Create clients with a set of scopes based on the constraints given in the
+# `for` block.
+#
+# Format:
+# - client:
+#     client/name:
+#         description: client description
+#         scopes:
+#             - foo
+#             - ...
+#   for:
+#       - project:
+#           level: 1
+#           feature: [...]
+#
+# The `for` block uses the same format as the `Project` grantee in grants.yml.
+# See the docstring in that file for a detailed description.
+{}
