@@ -2,8 +2,9 @@
 
 import json
 import os
-import pytest
 import time
+
+import pytest
 
 import build_decision.hg_push as hg_push
 

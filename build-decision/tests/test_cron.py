@@ -3,8 +3,9 @@
 import pytest
 import yaml
 
-from . import TEST_DATA_DIR
 import build_decision.cron as cron
+
+from . import TEST_DATA_DIR
 
 
 def test_load_jobs(mocker):

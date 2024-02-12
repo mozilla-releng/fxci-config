@@ -1,11 +1,11 @@
 # coding=utf-8
 
+import pytest
 import redo
 import yaml
 
-import pytest
-
 import build_decision.repository as repository
+
 from . import fake_redo_retry
 
 

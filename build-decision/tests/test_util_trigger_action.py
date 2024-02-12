@@ -3,13 +3,15 @@
 import io
 import json
 import os
+
 import pytest
 import requests
 import taskcluster
-from . import TEST_DATA_DIR
 
 import build_decision.util.scopes as scopes
 import build_decision.util.trigger_action as trigger_action
+
+from . import TEST_DATA_DIR
 
 
 @pytest.mark.parametrize(

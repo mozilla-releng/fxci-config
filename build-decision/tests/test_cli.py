@@ -1,7 +1,8 @@
 # coding=utf-8
 
-import pytest
 import sys
+
+import pytest
 
 import build_decision.cli as cli
 import build_decision.cron as cron
