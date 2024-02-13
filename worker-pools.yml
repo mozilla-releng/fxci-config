@@ -2205,7 +2205,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [east-us, east-us-2, west-us, west-us-2]
+      locations: [uk-west]
       maxCapacity: 100
       worker-config:
         genericWorker:
