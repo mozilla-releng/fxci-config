@@ -33,6 +33,7 @@ monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-g
 monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-20230613
 
 monopacker-docker-worker-relops528: monopacker-docker-worker-2023-04-13-relops528
+monopacker-docker-worker-trusted-bug1874006: monopacker-docker-worker-trusted-gcp-2024-02-05
 
 relops-image-builder-current: relops-image-builder-pre
 
@@ -41,6 +42,8 @@ monopacker-docker-worker-gcp-20230613:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13
 monopacker-docker-worker-trusted-gcp-2023-03-16:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-12-06t15-04-40z
+monopacker-docker-worker-trusted-gcp-2024-02-05:
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z
 monopacker-docker-worker-2023-12-04t22-11-57z:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-12-04t22-11-57z
 monopacker-docker-worker-2023-04-13-relops528:
