@@ -3074,3 +3074,10 @@
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|rsteuber
+
+# allow mardak to trigger nightly releases on larch
+- grant:
+    - hooks:trigger-hook:project-releng/cron-task-projects-larch/*
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|elee
