@@ -28,7 +28,7 @@
 # GCP builders level 1, 2 and misc. testers -t
 monopacker-docker-worker-current: monopacker-docker-worker-2023-12-04t22-11-57z
 # GCP builders level 3
-monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-gcp-2023-03-16
+monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-gcp-2024-02-05
 # GCP testers
 monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-20230613
 
@@ -40,8 +40,6 @@ relops-image-builder-current: relops-image-builder-pre
 # monopacker docker-worker images
 monopacker-docker-worker-gcp-20230613:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13
-monopacker-docker-worker-trusted-gcp-2023-03-16:
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-12-06t15-04-40z
 monopacker-docker-worker-trusted-gcp-2024-02-05:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z
 monopacker-docker-worker-2023-12-04t22-11-57z:
