@@ -27,6 +27,14 @@ def is_invalid_aws_instance_type(invalid_instances, zone, instance_type):
     )
 
 
+def is_invalid_gcp_instance_type(invalid_instances, zone, machine_type):
+    family, _ = machine_type.split("-", 1)
+    return any(
+        (zone in entry["zones"]) and (family in entry["families"])
+        for entry in invalid_instances
+    )
+
+
 def _validate_instance_capacity(pool_id, implementation, instance_types):
     for instance_type in instance_types:
         if "capacity" in instance_type:
@@ -329,6 +337,14 @@ def get_google_provider_config(
         zones = evaluate_keyed_by(google_config["zones"], pool_id, {"region": region})
         for zone in zones:
             for instance_type in instance_types:
+                if google_config.get(
+                    "invalid-instances"
+                ) and is_invalid_gcp_instance_type(
+                    google_config["invalid-instances"],
+                    zone,
+                    instance_type["machine_type"],
+                ):
+                    continue
                 launch_config = copy.deepcopy(instance_type)
                 launch_config.setdefault("capacityPerInstance", 1)
                 launch_config.update({"region": region, "zone": zone})

@@ -97,10 +97,14 @@ def min_scratch_disks(machine_type):
     https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds
     """
     family, *parts = machine_type.split("-")
-    if family not in ("n1", "n2", "c2"):
+    if family not in ("n1", "n2", "c2", "t2a"):
         raise NotImplementedError(
             f"Min scratch disks not implemented for '{machine_type}'"
         )
+
+    # t2a ARM64 machines don't support Local SSD disks.
+    if family == "t2a":
+        return 0
 
     if family == "n1":
         return 1
