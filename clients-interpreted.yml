@@ -93,3 +93,31 @@
       - project:
             level: 3
             feature: [shipit, shipit-product-details]
+
+# Clients for bitrisescript workers
+- client:
+      project/releng/scriptworker/v2/bitrise/dev/firefoxci-{trust_domain}-1:
+          description: "{trust_domain} level 1 bitrise scriptworker"
+          scopes:
+              - queue:claim-work:scriptworker-k8s/{trust_domain}-1-bitrise-dev
+              - queue:worker-id:{trust_domain}-1-bitrise-dev/{trust_domain}-1-bitrise-dev-*
+  for:
+      - project:
+            level: 1
+            feature: [bitrise]
+
+- client:
+      project/releng/scriptworker/v2/bitrise/prod/firefoxci-{trust_domain}-1:
+          description: "{trust_domain} level 3 nonprod bitrise scriptworker"
+          scopes:
+              - queue:claim-work:scriptworker-k8s/{trust_domain}-1-bitrise
+              - queue:worker-id:{trust_domain}-1-bitrise/{trust_domain}-1-bitrise-*
+      project/releng/scriptworker/v2/bitrise/prod/firefoxci-{trust_domain}-3:
+          description: "{trust_domain} level 3 bitrise scriptworker"
+          scopes:
+              - queue:claim-work:scriptworker-k8s/{trust_domain}-3-bitrise
+              - queue:worker-id:{trust_domain}-3-bitrise/{trust_domain}-3-bitrise-*
+  for:
+      - project:
+            level: 3
+            feature: [bitrise]
