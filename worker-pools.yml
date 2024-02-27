@@ -138,7 +138,7 @@ pools:
     config:
       minCapacity: 1
       maxCapacity: 4
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -194,7 +194,7 @@ pools:
           app-services-3: 100
           mozillaonline-.*: 10
           default: 100
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -252,7 +252,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 10
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-docker-worker-trusted-bug1874006
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -277,7 +277,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 50
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -333,7 +333,7 @@ pools:
           mozilla-.*: 10
           mozillavpn-.*: 10
           default: 100
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -374,7 +374,7 @@ pools:
           gecko-.*: 1000
           comm-.*: 20
           default: 10
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -410,7 +410,7 @@ pools:
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -446,7 +446,7 @@ pools:
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -485,7 +485,7 @@ pools:
           mobile-1: 200
           mobile-3: 100
           default: 10
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -527,7 +527,7 @@ pools:
           comm-.*: 20
           mobile-.*: 100
           default: 10
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -561,7 +561,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 10
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -599,7 +599,7 @@ pools:
       - pool-group: comm-3
         chain-of-trust: trusted
     config:
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -672,7 +672,7 @@ pools:
       - pool-group: translations-1
       - pool-group: nss-1
     config:
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -758,7 +758,7 @@ pools:
           (comm|gecko)-.*: 30
           default: 10
       worker-config: {dindImage: taskcluster/dind-service:v4.1}
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       instance_types:
         by-pool-group:
           mobile-.*:
@@ -826,7 +826,7 @@ pools:
               -source: 200
           nss-t: 100
           comm-t: 10
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -848,7 +848,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 400
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-docker-worker-gcp-current
       worker-config:
         deviceManagement:
@@ -884,7 +884,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 10
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -919,7 +919,7 @@ pools:
         default: fxci-level1-gcp
     config:
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-ubuntu-2204-wayland  # use temporarily until monopacker-ubuntu-2204 is working.
       minCapacity: 0
       maxCapacity: 10
@@ -949,7 +949,7 @@ pools:
       minCapacity: 0
       maxCapacity: 500
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: handbuilt-ubuntu-2204-wayland-vm
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -980,7 +980,7 @@ pools:
       minCapacity: 0
       maxCapacity: 100
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-ubuntu-2204-wayland
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -1004,7 +1004,7 @@ pools:
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-ubuntu-2204-wayland
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -1034,7 +1034,7 @@ pools:
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1068,7 +1068,7 @@ pools:
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1102,7 +1102,7 @@ pools:
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1137,7 +1137,7 @@ pools:
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1172,7 +1172,7 @@ pools:
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1213,7 +1213,7 @@ pools:
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1237,7 +1237,7 @@ pools:
       minCapacity: 0
       maxCapacity: 1
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-translations-worker-testing
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -1259,7 +1259,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 32
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -2850,7 +2850,7 @@ pools:
           gecko-t: 2500
           comm-t: 100
           mozilla-t: 100
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -2878,7 +2878,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 200
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-docker-worker-relops528
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -2930,7 +2930,7 @@ pools:
       image: monopacker-docker-worker-current
       minCapacity: 0
       maxCapacity: 1  # We can only have 3 concurrent builds with the plan we pay. Let's not overload the queue with level 1 jobs
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -2951,7 +2951,7 @@ pools:
       image: monopacker-docker-worker-trusted-current-gcp
       minCapacity: 0
       maxCapacity: 3  # We can only have 3 concurrent builds with the plan we pay
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       security: trusted
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -2970,7 +2970,7 @@ pools:
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-docker-worker-current
       minCapacity: 0
       maxCapacity: 2
@@ -2991,7 +2991,7 @@ pools:
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-docker-worker-current
       minCapacity: 1
       maxCapacity: 100
@@ -3010,7 +3010,7 @@ pools:
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image: monopacker-docker-worker-current
       minCapacity: 1
       maxCapacity: 100
@@ -3050,7 +3050,7 @@ pools:
         by-pool-group:
           nss-.*: 100
           default: 10
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
