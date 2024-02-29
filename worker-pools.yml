@@ -232,7 +232,7 @@ pools:
       maxCapacity:
         by-pool-group:
           gecko-.*: 10
-      implementation: generic-worker/worker-runner-linux
+      implementation: generic-worker/worker-runner-linux-multi
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
       image: monopacker-ubuntu-2204-wayland-arm64
