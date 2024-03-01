@@ -232,15 +232,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - &persistent-disk-20
-              autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 20
-                sourceImage: <image>
-              type: PERSISTENT
-            - *scratch-disk
-            - *scratch-disk
+            - *persistent-disk-20
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
