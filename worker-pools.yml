@@ -217,6 +217,36 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-gcp-test-bug-1882320'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: gecko-1
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 5
+      regions: [northamerica-northeast1]
+      image: monopacker-docker-worker-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - &persistent-disk-20
+              autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 20
+                sourceImage: <image>
+              type: PERSISTENT
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+          machine_type: c2-standard-16
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-gcp-aarch64'
     description: Linux ARM64 VM for Firefox automation.
     owner: release+tc-workers@mozilla.com
