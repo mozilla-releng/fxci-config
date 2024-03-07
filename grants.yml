@@ -448,6 +448,8 @@
     - queue:route:index.gecko.heavyprofile.*
     - queue:route:notify.email.release+tcstaging@mozilla.com.
     - queue:route:notify.email.release-automation-notifications@mozilla.com.*
+    - secrets:get:project/mobile/firefox-android/fenix/nightly
+    - secrets:get:project/mobile/firefox-android/fenix/nightly-simulation
   to:
     - projects:
         feature: gecko-roles
@@ -503,7 +505,19 @@
     - project:releng:beetmover:apt-repo:release
     - project:releng:bouncer:server:production
     - project:releng:bouncer:server:production-nazgul
+    - project:releng:googleplay:product:fenix
+    - project:releng:googleplay:product:focus-android
     - project:releng:ship-it:server:production
+    # XXX `fennec-production-signing` handles beta signing too.
+    - project:releng:signing:cert:fennec-production-signing
+    # `production-signing` handles mozillaonline signing
+    - project:releng:signing:cert:production-signing
+    - secrets:get:project/mobile/firefox-android/focus-android/beta
+    - secrets:get:project/mobile/firefox-android/focus-android/release
+    - secrets:get:project/mobile/firefox-android/fenix/beta
+    - secrets:get:project/mobile/firefox-android/fenix/release
+    - secrets:get:project/mobile/firefox-android/fenix/beta-mozillaonline
+    - secrets:get:project/mobile/firefox-android/fenix/release-mozillaonline
   to:
     - projects:
         job: [action:release-promotion]
@@ -2181,10 +2195,16 @@
     - project:releng:beetmover:bucket:nightly
     - project:releng:beetmover:apt-repo:nightly
     - project:releng:beetmover:bucket:maven-production
+    - project:releng:beetmover:bucket:maven-nightly-production
     - project:releng:bouncer:server:production
     - project:releng:bouncer:server:production-nazgul
+    - project:releng:googleplay:product:fenix
+    - project:releng:googleplay:product:focus-android
     - project:releng:signing:cert:nightly-signing
     - project:releng:signing:cert:release-apple-notarization
+    - project:releng:signing:cert:production-signing
+    - secrets:get:project/mobile/firefox-android/focus-android/nightly
+    - secrets:get:project/mobile/firefox-android/fenix/nightly
   to:
     - project:
         feature: gecko-cron
