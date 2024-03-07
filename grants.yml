@@ -289,6 +289,7 @@
     - generic-worker:os-group:gecko-t/win11-64-2009-alpha/Administrators
     - generic-worker:os-group:gecko-t/t-linux-2204-wayland-experimental/audio
     - generic-worker:os-group:gecko-t/t-linux-2204-wayland-experimental/video
+    - generic-worker:os-group:gecko-t/t-linux-2204-wayland-root-exp/snap_sudo
     - generic-worker:run-as-administrator:gecko-t/t-win10-64
     - generic-worker:run-as-administrator:gecko-t/t-win10-64-alpha
     - generic-worker:run-as-administrator:gecko-t/t-win10-64-beta

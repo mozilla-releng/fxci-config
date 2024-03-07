@@ -1093,7 +1093,6 @@ pools:
       worker-config:
         genericWorker:
           config:
-            runTasksAsCurrentUser: true
             enableInteractive: true  # ok for l1, but not ok for l3?
       minCapacity: 0
       maxCapacity: 10
