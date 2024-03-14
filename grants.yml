@@ -1825,13 +1825,6 @@
           - branch:*
 
 - grant:
-    - secrets:get:project/mobile/focus-ios/bitrise
-  to:
-    - project:
-        alias: focus-ios
-        job: [cron:l10-screenshots, action:*]
-
-- grant:
     - secrets:get:project/mobile/ci/testrail
   to:
     - project:
@@ -2297,7 +2290,6 @@
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/l10-screenshots
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/bitrise-performance-test
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/firebase-performance-test
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-ios/l10-screenshots
 
     - queue:rerun-task:mobile-level-*
   to:

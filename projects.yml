@@ -667,24 +667,6 @@ staging-firefox-ios:
     treeherder-reporting: true
     trust-domain-scopes: true
 
-focus-ios:
-  repo: https://github.com/mozilla-mobile/focus-ios
-  trust_domain: mobile
-  trust_project: focus-ios
-  repo_type: git
-  level: 3
-  features:
-    github-taskgraph: true
-    github-pull-request:
-      policy: public
-    mobile-roles: true
-    taskgraph-actions: true
-    taskgraph-cron: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-  cron:
-    targets: [l10-screenshots]
-
 # mozilla's Github repositories
 application-services:
   repo: https://github.com/mozilla/application-services
