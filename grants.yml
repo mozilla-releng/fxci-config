@@ -1824,6 +1824,27 @@
           - cron:firebase-performance-test
           - branch:*
 
+# bitrisescript grants
+- grant:
+    - project:{trust_domain}:{trust_project}:releng:bitrise:app:{alias}
+    # Explicitly approve workflows rather than use a wildcard. This guards
+    # against potentially sensitive workflows being added in the future that
+    # would then implicitly be allowed in places they shouldn't be.
+    - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:Bitrise_Performance_Test
+    - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:L10nBuild
+    - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:L10nScreenshotsTests
+    - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:Firebase_Performance_Tests
+  to:
+    - project:
+        alias:
+          - firefox-ios
+          - staging-firefox-ios
+        job:
+          - action:*
+          - cron:*
+          - branch:*
+          - pull-request:trusted
+
 - grant:
     - secrets:get:project/mobile/ci/testrail
   to:
