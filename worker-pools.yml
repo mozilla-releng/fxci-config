@@ -81,7 +81,7 @@ worker-defaults:
             downloadsDir: Z:\downloads
             livelogExecutable: C:\generic-worker\livelog.exe
             ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
-            idleTimeoutSecs: 600
+            idleTimeoutSecs: 300
             numberOfTasksToRun: 0
             runAfterUserCreation: C:\generic-worker\task-user-init.cmd
             runTasksAsCurrentUser: false
@@ -2368,7 +2368,7 @@ pools:
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
       locations: [canada-central, central-india, central-us, north-europe, south-india, north-central-us, east-us, east-us-2, west-us, west-us-2, west-us-3]
-      maxCapacity: 600
+      maxCapacity: 1200
       worker-config:
         genericWorker:
           config:
