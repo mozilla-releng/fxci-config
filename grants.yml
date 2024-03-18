@@ -3103,6 +3103,7 @@
     - queue:get-artifact:private/interactive/*
     - queue:get-artifact:private/docker-worker/*
     - queue:get-artifact:private/generic-worker/*
+    - project/translations/level-1/*
   to:
     - roles:
         - mozillians-group:translations-developers
