@@ -439,6 +439,7 @@
 # moz-tree:level:3:gecko
 - grant:
     - auth:aws-s3:read-write:tc-gp-private-1d-us-east-1/releng/mbsdiff-cache/
+    - notify:slack-channel:*
     - project:releng:addons.mozilla.org:server:production
     - project:releng:signing:cert:nightly-signing
     - project:releng:signing:cert:release-signing
