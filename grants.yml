@@ -1838,6 +1838,7 @@
     - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:L10nBuild
     - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:L10nScreenshotsTests
     - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:Firebase_Performance_Tests
+    - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
   to:
     - project:
         alias:
