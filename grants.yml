@@ -274,6 +274,7 @@
     - secrets:get:project/taskcluster/gecko/hgfingerprint
     - secrets:get:project/taskcluster/gecko/hgmointernal
     - secrets:get:project/perftest/gecko/level-{level}/*
+    - secrets:get:project/releng/gecko/build/windows-laf-tokens.data
   to:
     - projects:
         feature: gecko-roles
@@ -3121,3 +3122,14 @@
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|elee
+
+# allow desktop integrations team to manage the Limited Access Feature token
+# used in Windows builds. Unlike other build secrets (like google API keys)
+# these are tied to particular brandings (eg: unofficial, nightly, release),
+# so we do not separate them by level.
+- grant:
+    - secrets:get:project/releng/gecko/build/windows-laf-tokens.data
+    - secrets:set:project/releng/gecko/build/windows-laf-tokens.data
+  to:
+    - roles:
+        - mozillians-group:windows-laf-token-managers
