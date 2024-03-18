@@ -731,6 +731,9 @@
     - secrets:get:gecko/gfx-github-sync/token
     # Bug 1751132: Token for rlbox github sync.
     - secrets:get:gecko/rlbox-github-sync/token
+    # focus and fenix nightly builds
+    - secrets:get:project/mobile/firefox-android/focus-android/nightly
+    - secrets:get:project/mobile/firefox-android/fenix/nightly
   to:
     - project:
         alias: mozilla-central
@@ -2220,8 +2223,6 @@
     - project:releng:signing:cert:nightly-signing
     - project:releng:signing:cert:release-apple-notarization
     - project:releng:signing:cert:production-signing
-    - secrets:get:project/mobile/firefox-android/focus-android/nightly
-    - secrets:get:project/mobile/firefox-android/fenix/nightly
   to:
     - project:
         feature: gecko-cron
