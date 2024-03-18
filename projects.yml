@@ -232,6 +232,8 @@ mozilla-central:
     trust-domain-scopes: true
   cron:
     targets:
+      - nightly-all
+      - nightly-android
       - nightly-desktop
       - nightly-desktop-linux
       - nightly-desktop-osx
