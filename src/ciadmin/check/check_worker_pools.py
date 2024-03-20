@@ -162,6 +162,11 @@ async def check_gcp_ssds():
             )
             min_disks = min_scratch_disks(instance["machine_type"])
 
+            # this is in place while we test and experiment with different
+            # android emulator instance sizes
+            if 'kvm' in pool.pool_id:
+                min_disks = 2
+
             if not num_disks:
                 continue
             if num_disks < min_disks:
