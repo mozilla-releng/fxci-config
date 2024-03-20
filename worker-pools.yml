@@ -962,6 +962,62 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging8'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-current
+      worker-config:
+        deviceManagement:
+          kvm:
+            enabled: true
+        dockerConfig:
+          allowPrivileged: true
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-75
+            - *scratch-disk
+            - *scratch-disk
+          machine_type: n2-standard-8
+          advancedMachineFeatures:
+            enableNestedVirtualization: true
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging4'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-current
+      worker-config:
+        deviceManagement:
+          kvm:
+            enabled: true
+        dockerConfig:
+          allowPrivileged: true
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-75
+            - *scratch-disk
+            - *scratch-disk
+          machine_type: n2-standard-4
+          advancedMachineFeatures:
+            enableNestedVirtualization: true
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-kvm-gcp'
     description: 'KVM-enabled builders for PGO using docker-worker.'
     owner: release+tc-workers@mozilla.com
