@@ -164,7 +164,7 @@ async def check_gcp_ssds():
 
             # this is in place while we test and experiment with different
             # android emulator instance sizes
-            if 'kvm' in pool.pool_id:
+            if "kvm" in pool.pool_id:
                 min_disks = 2
 
             if not num_disks:

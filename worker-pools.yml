@@ -969,7 +969,7 @@ pools:
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 10
+      maxCapacity: 40
       regions: [us-central1, us-west1]
       image: monopacker-docker-worker-gcp-current
       worker-config:
@@ -990,7 +990,7 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging4'
+  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging8.1'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
@@ -1011,8 +1011,87 @@ pools:
           disks:
             - *persistent-disk-75
             - *scratch-disk
+          machine_type: n2-standard-8
+          advancedMachineFeatures:
+            enableNestedVirtualization: true
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging8.2'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 40
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-current
+      worker-config:
+        deviceManagement:
+          kvm:
+            enabled: true
+        dockerConfig:
+          allowPrivileged: true
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          capacityPerInstance: 2
+          disks:
+            - *persistent-disk-75
             - *scratch-disk
-          machine_type: n2-standard-4
+          machine_type: n2-standard-8
+          advancedMachineFeatures:
+            enableNestedVirtualization: true
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging8.3'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-current
+      worker-config:
+        deviceManagement:
+          kvm:
+            enabled: true
+        dockerConfig:
+          allowPrivileged: true
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-75
+          machine_type: n2-standard-8
+          advancedMachineFeatures:
+            enableNestedVirtualization: true
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging8.4'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-current
+      worker-config:
+        deviceManagement:
+          kvm:
+            enabled: true
+        dockerConfig:
+          allowPrivileged: true
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-60
+          machine_type: n2-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true
           networkInterfaces:
