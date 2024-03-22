@@ -962,7 +962,7 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging8.1'
+  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging81'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
@@ -989,7 +989,7 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging8.2'
+  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging82'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
@@ -1017,7 +1017,7 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging8.3'
+  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging83'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
