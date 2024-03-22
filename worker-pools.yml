@@ -2170,7 +2170,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [canada-central, central-india, central-us, north-europe, south-india, north-central-us, west-us, west-us-2, west-us-3]
+      locations: [canada-central, central-india, north-europe, south-india, east-us, east-us-2, west-us, west-us-2, west-us-3]
       maxCapacity: 600
       worker-config:
         genericWorker:
@@ -2216,7 +2216,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [west-us, west-us-2]
+      locations: [east-us, east-us-2, west-us, west-us-2]
       maxCapacity: 100
       worker-config:
         genericWorker:
@@ -2261,7 +2261,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [canada-central, central-india, central-us, north-europe, south-india, north-central-us, west-us, west-us-2, west-us-3]
+      locations: [canada-central, central-india, north-europe, south-india, east-us, east-us-2, west-us, west-us-2, west-us-3]
       maxCapacity: 100
       worker-config:
         genericWorker:
@@ -2354,7 +2354,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [central-us, north-central-us, west-us, west-us-2]
+      locations: [east-us, east-us-2, west-us, west-us-2]
       maxCapacity: 100
       worker-config:
         genericWorker:
@@ -2448,7 +2448,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [canada-central, central-india, central-us, north-europe, south-india, north-central-us, west-us, west-us-2, west-us-3]
+      locations: [canada-central, central-india, north-europe, south-india, east-us, east-us-2, west-us, west-us-2, west-us-3]
       maxCapacity: 1200
       worker-config:
         genericWorker:
@@ -2541,7 +2541,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [central-us, east-us, east-us-2, north-central-us, north-europe, west-us, west-us-2]
+      locations: [east-us, east-us-2, north-europe, west-us, west-us-2]
       maxCapacity: 100
       worker-config:
         genericWorker:
@@ -2634,7 +2634,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [west-us, west-us-2]
+      locations: [east-us, east-us-2, west-us, west-us-2]
       maxCapacity: 600
       worker-config:
         genericWorker:
@@ -2726,7 +2726,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [central-us, north-central-us, west-us, west-us-2]
+      locations: [east-us, east-us-2, west-us, west-us-2]
       maxCapacity: 100
       worker-config:
         genericWorker:
@@ -2819,7 +2819,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [central-us, north-central-us, west-us, west-us-2]
+      locations: [east-us, east-us-2, west-us, west-us-2]
       maxCapacity: 100
       worker-config:
         genericWorker:
@@ -2868,7 +2868,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [north-europe]
+      locations: [north-europe, east-us, east-us-2]
       maxCapacity: 100
       worker-config:
         genericWorker:
@@ -2917,7 +2917,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: comm-t
-      locations: [canada-central, central-india, central-us, north-europe, south-india, north-central-us, west-us, west-us-2, west-us-3]
+      locations: [canada-central, central-india, north-europe, south-india, east-us, east-us-2, west-us, west-us-2, west-us-3]
       maxCapacity: 600
       worker-config:
         genericWorker:
@@ -2963,7 +2963,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: comm-t
-      locations: [central-us, north-central-us, west-us, west-us-2]
+      locations: [east-us, east-us-2, west-us, west-us-2]
       maxCapacity: 50
       worker-config:
         genericWorker:
