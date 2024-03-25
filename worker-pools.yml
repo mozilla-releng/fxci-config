@@ -1114,7 +1114,7 @@ pools:
       minCapacity: 0
       maxCapacity: 10
       regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-gcp-current
+      image: handbuilt-docker-worker-tester-20240325
       worker-config:
         deviceManagement:
           kvm:
@@ -3151,7 +3151,7 @@ pools:
         by-pool-group:
           gecko-t: 10
       regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-gcp-current
+      image: handbuilt-docker-worker-tester-20240325
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -3178,7 +3178,7 @@ pools:
         by-pool-group:
           gecko-t: 10
       regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-gcp-current
+      image: handbuilt-docker-worker-tester-20240325
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:

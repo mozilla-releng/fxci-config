@@ -65,6 +65,10 @@ monopacker-ubuntu-2204-wayland-arm64:
 # vm images built by hand
 handbuilt-ubuntu-2204-wayland-vm:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z
+# d-w tester images are still handbuilt
+handbuilt-docker-worker-tester-20240325:
+  # built off of projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25
 
 # generic-worker images
 # Azure 2012 images
