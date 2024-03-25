@@ -2392,7 +2392,9 @@ pools:
           config:
             workerType: win10-64-2009-alpha
             provisionerId: gecko-t
-            idleTimeoutSecs: 5400
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2439,7 +2441,9 @@ pools:
           config:
             workerType: win10-64-2009-source-alpha
             provisionerId: gecko-t
-            idleTimeoutSecs: 5400
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2486,7 +2490,9 @@ pools:
           config:
             workerType: win10-64-2009-gpu-alpha
             provisionerId: gecko-t
-            idleTimeoutSecs: 1800
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2579,7 +2585,9 @@ pools:
           config:
             workerType: win11-64-2009-alpha
             provisionerId: gecko-t
-            idleTimeoutSecs: 5400
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2765,7 +2773,9 @@ pools:
           config:
             workerType: win11-64-2009-gpu-alpha
             provisionerId: gecko-t
-            idleTimeoutSecs: 1800
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2857,7 +2867,9 @@ pools:
           config:
             workerType: win11-64-2009-source-alpha
             provisionerId: gecko-t
-            idleTimeoutSecs: 5400
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
