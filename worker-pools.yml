@@ -588,6 +588,56 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: 'translations-1/b-linux-large-gcp-300gb-d2g'
+    description: Worker for testing docker2generic-worker for translations CPU-only workers
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            maxTaskRunTime: 2592000
+            enableInteractive: true  # ok for l1, but not ok for l3?
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-central1, us-west1]
+      image: monopacker-ubuntu-2204-wayland
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-300
+          machine_type: n2-custom-32-262144
+          scheduling: spot
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: 'translations-1/b-linux-large-gcp-1tb-d2g'
+    description: Worker for testing docker2generic-worker for translations CPU-only workers
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            maxTaskRunTime: 2592000
+            enableInteractive: true  # ok for l1, but not ok for l3?
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-central1, us-west1]
+      image: monopacker-ubuntu-2204-wayland
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-1024
+          machine_type: n2-custom-32-262144
+          scheduling: spot
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
