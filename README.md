@@ -1,7 +1,7 @@
-# CI Configuration
+# Firefox-CI Configuration
 
-This repository contains configuration for CI automation relating to the Gecko
-source code.
+This repository contains configuration for the Firefox-CI Taskcluster instance,
+the CI for Firefox and other Mozilla repositories.
 
 Specifically, this configuration does not "ride the trains".  Instead, the head
 of the default branch of this repository applies to all Gecko projects and
