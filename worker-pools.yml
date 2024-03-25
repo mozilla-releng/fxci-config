@@ -671,6 +671,72 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-medium-gcp'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-1: 200
+          gecko-3: 100
+          default: 10
+      regions: [us-central1, us-west1]
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-20
+            - *scratch-disk
+          machine_type: n2-standard-8
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-small-gcp'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-1: 200
+          gecko-3: 100
+          default: 10
+      regions: [us-central1, us-west1]
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-20
+            - *scratch-disk
+          machine_type: n2-standard-4
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-xlarge-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -1033,69 +1099,13 @@ pools:
           disks:
             - *persistent-disk-75
             - *scratch-disk
-            - *scratch-disk
-          machine_type: n2-standard-16
-          advancedMachineFeatures:
-            enableNestedVirtualization: true
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
-  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging81'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 10
-      regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-gcp-current
-      worker-config:
-        deviceManagement:
-          kvm:
-            enabled: true
-        dockerConfig:
-          allowPrivileged: true
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75
-            - *scratch-disk
           machine_type: n2-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging82'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 40
-      regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-gcp-current
-      worker-config:
-        deviceManagement:
-          kvm:
-            enabled: true
-        dockerConfig:
-          allowPrivileged: true
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          capacityPerInstance: 2
-          disks:
-            - *persistent-disk-75
-            - *scratch-disk
-          machine_type: n2-standard-8
-          advancedMachineFeatures:
-            enableNestedVirtualization: true
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
-  - pool_id: 'gecko-t/t-linux-kvm-gcp-staging83'
+  - pool_id: 'gecko-t/t-linux-kvm-gcp-nodisk'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
@@ -3125,6 +3135,60 @@ pools:
               type: SCRATCH
               interface: NVME
           machine_type: n2-standard-2
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/t-linux-large-gcp-nodisk'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+    email_on_error: true
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 10
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 40
+                sourceImage: <image>
+              type: PERSISTENT
+          machine_type: n2-standard-2
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/t-linux-xlarge-gcp-nodisk'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+    email_on_error: true
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 10
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-gcp-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 40
+                sourceImage: <image>
+              type: PERSISTENT
+          machine_type: n2-standard-4
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
