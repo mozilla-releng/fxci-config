@@ -460,7 +460,7 @@ fxci-config:
   repo: https://github.com/mozilla-releng/fxci-config
   repo_type: git
   trust_domain: ci
-  default_branch: main
+  default_branch: migration  # Bug 1887949 - Temporarily point at wip migration branch 
   level: 3
   features:
     github-taskgraph: true
