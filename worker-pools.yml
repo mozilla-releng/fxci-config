@@ -1112,7 +1112,7 @@ pools:
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 10
+      maxCapacity: 100
       regions: [us-central1, us-west1]
       image: handbuilt-docker-worker-tester-20240325
       worker-config:
@@ -3149,7 +3149,7 @@ pools:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          gecko-t: 10
+          gecko-t: 100
       regions: [us-central1, us-west1]
       image: handbuilt-docker-worker-tester-20240325
       instance_types:
@@ -3171,7 +3171,7 @@ pools:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          gecko-t: 10
+          gecko-t: 100
       regions: [us-central1, us-west1]
       image: handbuilt-docker-worker-tester-20240325
       instance_types:
