@@ -456,6 +456,21 @@ ci-configuration-try:
     trust-domain-scopes: true
     treeherder-reporting: true
 
+fxci-config:
+  repo: https://github.com/mozilla-releng/fxci-config
+  repo_type: git
+  trust_domain: ci
+  default_branch: main
+  level: 3
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public_restricted
+    pr-actions: true
+    taskgraph-actions: true
+    trust-domain-scopes: true
+    treeherder-reporting: true
+
 taskgraph:
   repo: https://github.com/taskcluster/taskgraph
   repo_type: git
