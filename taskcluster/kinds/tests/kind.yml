@@ -13,9 +13,6 @@ task-defaults:
     attributes:
         code-review: true
     worker-type: t-linux
-    run-on-projects:
-        - ci-configuration
-        - ci-configuration-try
     worker:
         docker-image: {in-tree: python3.9}
         max-run-time: 3600
@@ -26,8 +23,7 @@ task-defaults:
     run:
         cwd: '{checkout}'
         using: run-task
-        checkout:
-            config: {}
+        checkout: true
 
 tasks:
     check-staging:
