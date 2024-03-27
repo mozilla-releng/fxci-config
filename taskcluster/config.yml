@@ -10,12 +10,12 @@ task-priority: low
 
 taskgraph:
     repositories:
-        config:
-            name: ci-configuration
-            project-regex: ci-configuration.*
-            default-repository: https://hg.mozilla.org/ci/ci-configuration
-            default-ref: default
-            type: hg
+        fxci:
+            name: fxci-config
+            project-regex: fxci-config.*
+            default-repository: https://github.com/mozilla-releng/fxci-config
+            default-ref: main
+            type: git
 
 workers:
     aliases:
