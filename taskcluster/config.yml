@@ -14,7 +14,7 @@ taskgraph:
             name: fxci-config
             project-regex: fxci-config.*
             default-repository: https://github.com/mozilla-releng/fxci-config
-            default-ref: main
+            default-ref: migration
             type: git
 
 workers:
