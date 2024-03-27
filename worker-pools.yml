@@ -2232,6 +2232,9 @@ pools:
           config:
             workerType: win10-64-2009
             provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2278,6 +2281,9 @@ pools:
           config:
             workerType: win10-64-2009-gpu
             provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2323,6 +2329,9 @@ pools:
           config:
             workerType: win10-64-2009-source
             provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2516,6 +2525,9 @@ pools:
           config:
             workerType: win11-64-2009
             provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2704,6 +2716,9 @@ pools:
           config:
             workerType: win11-64-2009-gpu
             provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2798,6 +2813,9 @@ pools:
           config:
             workerType: win11-64-2009-source
             provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2893,6 +2911,9 @@ pools:
           config:
             workerType: win11-64-2009-ssd
             provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2942,6 +2963,9 @@ pools:
           config:
             workerType: win11-64-2009-ssd-gpu
             provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2991,6 +3015,9 @@ pools:
           config:
             workerType: win11-64-2009
             provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -3037,6 +3064,9 @@ pools:
           config:
             workerType: win11-64-2009-ssd
             provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
