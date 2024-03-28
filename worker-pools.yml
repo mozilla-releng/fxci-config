@@ -1041,6 +1041,51 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/t-linux-xlarge{suffix}-noscratch-gcp'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: gecko-t
+        suffix: ''
+      - pool-group: gecko-3
+        suffix: ''
+        chain-of-trust: trusted
+      - pool-group: comm-t
+        suffix: ''
+      - pool-group: gecko-t
+        suffix: -source
+      - pool-group: comm-t
+        suffix: -source
+      - pool-group: nss-t
+        suffix: ''
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-.*:
+            by-suffix:
+              '': 2500
+              -source: 200
+          nss-t: 100
+          comm-t: 10
+      regions: [us-central1, us-west1]
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: handbuilt-docker-worker-tester-20240325
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-75
+          machine_type: n2-standard-4
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: 'gecko-t/t-linux-kvm-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -1068,14 +1113,14 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: 'gecko-t/t-linux-kvm-gcp-nodisk'
+  - pool_id: 'gecko-t/t-linux-kvm-noscratch-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 100
+      maxCapacity: 400
       regions: [us-central1, us-west1]
       image: handbuilt-docker-worker-tester-20240325
       worker-config:
@@ -3127,47 +3172,34 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: '{pool-group}/t-linux-large-gcp-nodisk'
+  - pool_id: '{pool-group}/t-linux-large-noscratch-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     provider_id: fxci-level1-gcp
     variants:
       - pool-group: gecko-t
+      - pool-group: comm-t
+      - pool-group: mozilla-t
     email_on_error: true
     config:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          gecko-t: 100
+          gecko-t: 2500
+          comm-t: 100
+          mozilla-t: 100
       regions: [us-central1, us-west1]
       image: handbuilt-docker-worker-tester-20240325
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-75
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 75
+                sourceImage: <image>
+              type: PERSISTENT
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
-  - pool_id: '{pool-group}/t-linux-xlarge-gcp-nodisk'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    provider_id: fxci-level1-gcp
-    variants:
-      - pool-group: gecko-t
-    email_on_error: true
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-t: 100
-      regions: [us-central1, us-west1]
-      image: handbuilt-docker-worker-tester-20240325
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75
-          machine_type: n2-standard-4
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
