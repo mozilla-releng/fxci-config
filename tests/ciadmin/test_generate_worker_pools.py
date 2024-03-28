@@ -147,9 +147,9 @@ def assert_google_basic(pool):
         "machineType": "zones/us-east1a/machineTypes/n2-custom",
         "region": "us-east1",
         "scheduling": {
-            "automaticRestart": False,
+            "instanceTerminationAction": "DELETE",
+            "provisioningModel": "SPOT",
             "onHostMaintenance": "terminate",
-            "preemptible": True,
         },
         "workerConfig": {"capacity": 1},
         "zone": "us-east1a",

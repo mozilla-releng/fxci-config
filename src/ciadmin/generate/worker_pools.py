@@ -404,7 +404,7 @@ def get_google_provider_config(
                         "provisioningModel": "STANDARD",
                     },
                 }
-                scheduling_choice = launch_config.get("scheduling", "preemptible")
+                scheduling_choice = launch_config.get("scheduling", "spot")
                 launch_config["scheduling"] = scheduling_options[scheduling_choice]
 
                 launch_configs.append(launch_config)
