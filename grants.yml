@@ -721,11 +721,6 @@
         - shipit_firefox
 
 - grant:
-    # Bug 1527818: Coverity configuration is stored in this secret
-    - secrets:get:project/relman/coverity
-    # Bug 1527818: Coverity license is stored in this secret
-    # It should not be widely available
-    - secrets:get:project/relman/coverity-license
     # Bug 1523321: Token for mirroring webrender to github
     - secrets:get:project/webrender-ci/wrupdater-github-token
     # Bug 1604686: Token for gfx github sync.
@@ -809,8 +804,6 @@
 - grant:
     # Bug 1530376: Add scopes for Code Review bot in CI
     - queue:route:project.relman.codereview.*
-    # Bug 1541147: Coverity configuration is stored in this secret
-    - secrets:get:project/relman/coverity
   to:
     - project:
         alias: try
@@ -852,14 +845,6 @@
   to:
     - project:
         trust_domain: nss
-
-- grant:
-    - queue:route:project.relman.codereview.*
-    - secrets:get:project/relman/coverity-nss
-    - queue:route:notify.email.*
-  to:
-    - project:
-        alias: nss-try
 
 - grant:
     # These are public
@@ -2707,10 +2692,9 @@
     - groups:
         - team_moco
 
-# Bug 1607198 - grant access to coverity project.
+# Bug 1597646 - Grant access to secrets to code-review developers
+# Bug 1608262 - Grant task creation rights with the code-review/bot worker types to code-review developers.
 - grant:
-    - secrets:set:project/relman/coverity
-    - secrets:set:project/relman/coverity-nss
     - secrets:get:project/relman/code-review/*
     - secrets:set:project/relman/code-review/*
     - queue:create-task:lowest:code-review/bot
