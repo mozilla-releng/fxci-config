@@ -68,7 +68,7 @@
 # rebuild product details.
 - client:
       project/releng/scriptworker/v2/shipit/dev/firefoxci-{trust_domain}-1:
-          description: "{trust_domain} level 1 shipit scriptworker"
+          description: "{trust_domain} level 1 nonprod shipit scriptworker"
           scopes:
               - project:releng:services/shipit_api/rebuild_product_details
   for:
@@ -82,7 +82,7 @@
       # repositories on level 1 workers (eg: pull requests), thus we need in production
       # repositories. In some other places we call these "nonprod" workers".
       project/releng/scriptworker/v2/shipit/prod/firefoxci-{trust_domain}-1:
-          description: "{trust_domain} level 3 nonprod shipit scriptworker"
+          description: "{trust_domain} level 1 shipit scriptworker"
           scopes:
               - project:releng:services/shipit_api/rebuild_product_details
       project/releng/scriptworker/v2/shipit/prod/firefoxci-{trust_domain}-3:
@@ -97,7 +97,7 @@
 # Clients for bitrisescript workers
 - client:
       project/releng/scriptworker/v2/bitrise/dev/firefoxci-{trust_domain}-1:
-          description: "{trust_domain} level 1 bitrise scriptworker"
+          description: "{trust_domain} level 1 nonprod bitrise scriptworker"
           scopes:
               - queue:claim-work:scriptworker-k8s/{trust_domain}-1-bitrise-dev
               - queue:worker-id:{trust_domain}-1-bitrise-dev/{trust_domain}-1-bitrise-dev-*
@@ -108,7 +108,7 @@
 
 - client:
       project/releng/scriptworker/v2/bitrise/prod/firefoxci-{trust_domain}-1:
-          description: "{trust_domain} level 3 nonprod bitrise scriptworker"
+          description: "{trust_domain} level 1 bitrise scriptworker"
           scopes:
               - queue:claim-work:scriptworker-k8s/{trust_domain}-1-bitrise
               - queue:worker-id:{trust_domain}-1-bitrise/{trust_domain}-1-bitrise-*
