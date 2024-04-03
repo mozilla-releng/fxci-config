@@ -81,6 +81,8 @@
     - queue:get-artifact:login-identity/<..>/*
     - queue:create-task:highest:built-in/succeed
     - queue:create-task:highest:built-in/fail
+    - queue:pending-list:*
+    - queue:claimed-list:*
   to:
     - roles:
         - login-identity:*
