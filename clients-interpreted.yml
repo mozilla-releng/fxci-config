@@ -22,7 +22,7 @@
 # all shipitscript workers belong here.
 - client:
       project/releng/scriptworker/v2/shipit/dev/firefoxci-{trust_domain}-1:
-          description: "{trust_domain} level 1 shipit scriptworker"
+          description: "{trust_domain} level 1 nonprod shipit scriptworker"
           scopes:
               - project:releng:services/shipit_api/update_release_status
               - queue:claim-work:scriptworker-k8s/{trust_domain}-1-shipit-dev
@@ -43,7 +43,7 @@
       # repositories on level 1 workers (eg: pull requests), thus we need in production
       # repositories. In some other places we call these "nonprod" workers".
       project/releng/scriptworker/v2/shipit/prod/firefoxci-{trust_domain}-1:
-          description: "{trust_domain} level 3 nonprod shipit scriptworker"
+          description: "{trust_domain} level 1 shipit scriptworker"
           scopes:
               - project:releng:services/shipit_api/update_release_status
               - queue:claim-work:scriptworker-k8s/{trust_domain}-1-shipit
