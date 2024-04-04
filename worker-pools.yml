@@ -110,7 +110,7 @@ worker-defaults:
             shutdownMachineOnIdle: true
             shutdownMachineOnInternalError: true
             taskclusterProxyExecutable: /home/ubuntu/generic_worker/taskcluster-proxy
-            taskclusterProxyPort: 80
+            taskclusterProxyPort: 8081
             tasksDir: /home/ubuntu/tasks
             wstAudience: firefoxcitc
       generic-worker/worker-runner-linux-multi:  # for images built with monopacker 22.04 community configuration
