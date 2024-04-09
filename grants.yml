@@ -907,6 +907,9 @@
 - grant:
     # routes to support locating tasks that create specific versions of artifacts
     # (toolchains, etc.)
+    - queue:route:index.{trust_domain}.cache.pr.*
+    - index:insert-task:{trust_domain}.cache.pr.*
+    # Legacy routes, remove once all projects are on Taskgraph 8+
     - queue:route:index.{trust_domain}.cache.head.*
     - index:insert-task:{trust_domain}.cache.head.*
   to:
@@ -918,6 +921,9 @@
 - grant:
     # routes to support locating tasks that create specific versions of artifacts
     # (toolchains, etc.)
+    - queue:route:index.{trust_domain}.v2.{trust_project}.cache.pr.*
+    - index:insert-task:{trust_domain}.v2.{trust_project}.cache.pr.*
+    # Legacy routes, remove once all projects are on Taskgraph 8+
     - queue:route:index.{trust_domain}.v2.{trust_project}.cache.head.*
     - index:insert-task:{trust_domain}.v2.{trust_project}.cache.head.*
   to:
