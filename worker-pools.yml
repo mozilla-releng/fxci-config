@@ -558,34 +558,6 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
-  - pool_id: 'translations-1/b-linux-large-gcp-d2g'
-    description: Worker for testing docker2generic-worker for translations CPU-only workers
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      worker-config:
-        genericWorker:
-          config:
-            maxTaskRunTime: 2592000
-            enableInteractive: true  # ok for l1, but not ok for l3?
-      minCapacity: 0
-      maxCapacity: 10
-      implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
-      image: monopacker-ubuntu-2204-wayland
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-20
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: n2-custom-32-262144
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: 'translations-1/b-linux-large-gcp-300gb-d2g'
     description: Worker for testing docker2generic-worker for translations CPU-only workers
     owner: release+tc-workers@mozilla.com
@@ -601,35 +573,11 @@ pools:
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
-      image: monopacker-ubuntu-2204-wayland
+      image: monopacker-ubuntu-2204-wayland-relops896
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
             - *persistent-disk-300
-          machine_type: n2-custom-32-262144
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
-  - pool_id: 'translations-1/b-linux-large-gcp-1tb-d2g'
-    description: Worker for testing docker2generic-worker for translations CPU-only workers
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      worker-config:
-        genericWorker:
-          config:
-            maxTaskRunTime: 2592000
-            enableInteractive: true  # ok for l1, but not ok for l3?
-      minCapacity: 0
-      maxCapacity: 10
-      implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
-      image: monopacker-ubuntu-2204-wayland
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-1024
           machine_type: n2-custom-32-262144
           networkInterfaces:
             - accessConfigs:
@@ -1399,6 +1347,106 @@ pools:
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - *persistent-disk-300
+          # 40 CPUs, 256GB RAM
+          machine_type: n1-custom-40-262144
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+          guestAccelerators:
+            - acceleratorCount: 4
+              acceleratorType: nvidia-tesla-v100
+  - pool_id: '{pool-group}/b-linux-v100-gpu-relops896'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
+            enableInteractive: true
+      minCapacity: 0
+      maxCapacity: 50
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-translations-worker-relops896
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - *persistent-disk-75
+          machine_type: n1-highmem-8
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+          guestAccelerators:
+            - acceleratorCount: 1
+              acceleratorType: nvidia-tesla-v100
+  - pool_id: '{pool-group}/b-linux-v100-gpu-4-relops896'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
+            enableInteractive: true
+      minCapacity: 0
+      maxCapacity: 50
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-translations-worker-relops896
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - *persistent-disk-75
+          machine_type: n1-highmem-8
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+          guestAccelerators:
+            - acceleratorCount: 4
+              acceleratorType: nvidia-tesla-v100
+  - pool_id: '{pool-group}/b-linux-v100-gpu-4-300gb-relops896'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
+            enableInteractive: true
+      minCapacity: 0
+      maxCapacity: 50
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-translations-worker-relops896
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
