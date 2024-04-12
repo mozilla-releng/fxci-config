@@ -95,7 +95,7 @@ attrs==23.1.0 \
     --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04 \
     --hash=sha256:6279836d581513a26f1bf235f9acd333bc9115683f14f7e8fae46c98fc50e015
     # via
-    #   -r requirements/base.in
+    #   -r base.in
     #   aiohttp
     #   jsonschema
     #   referencing
@@ -260,20 +260,20 @@ frozenlist==1.4.0 \
     # via
     #   aiohttp
     #   aiosignal
-idna==3.6 \
-    --hash=sha256:9ecdbbd083b06798ae1e86adcbfe8ab1479cf864e4ee30fe4e46a003d12491ca \
-    --hash=sha256:c05567e9c24a6b9faaa835c4821bad0590fbb9d5779e7caa6e1cc4978e7eb24f
+idna==3.7 \
+    --hash=sha256:028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc \
+    --hash=sha256:82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0
     # via
     #   requests
     #   yarl
 json-e==4.6.0 \
     --hash=sha256:2ec3796a6fb40097642a0cc17ba1a0c08b637a76d32f27633fa4cd9def1e77f8 \
     --hash=sha256:c5fd5c7d98b9394fbc9041c380134f4ed8b055c487f2607ee4f306383ab4d8b8
-    # via -r requirements/base.in
+    # via -r base.in
 jsonschema==4.20.0 \
     --hash=sha256:4f614fd46d8d61258610998997743ec5492a648b33cf478c1ddc23ed4598a5fa \
     --hash=sha256:ed6231f0429ecf966f5bc8dfef245998220549cbbcf140f913b7464c52c3b6b3
-    # via -r requirements/base.in
+    # via -r base.in
 jsonschema-specifications==2023.11.2 \
     --hash=sha256:9472fc4fea474cd74bea4a2b190daeccb5a9e4db2ea80efcf7a1b582fc9a81b8 \
     --hash=sha256:e74ba7c0a65e8cb49dc26837d6cfe576557084a8b423ed16a420984228104f93
@@ -415,23 +415,23 @@ pyyaml==6.0.1 \
     --hash=sha256:fca0e3a251908a499833aa292323f32437106001d436eca0e6e7833256674585 \
     --hash=sha256:fd1592b3fdf65fff2ad0004b5e363300ef59ced41c2e6b3a99d4089fa8c5435d \
     --hash=sha256:fd66fc5d0da6d9815ba2cebeb4205f95818ff4b79c3ebe268e75d961704af52f
-    # via -r requirements/base.in
+    # via -r base.in
 redo==2.0.4 \
     --hash=sha256:81066955041c853b0e6491eb65a0877dce45131c4cfa3d42d923fc2aa8f7a043 \
     --hash=sha256:c76e4c23ab2f8840261736a851323cd98493710e7a9d36a1058535dca501f293
-    # via -r requirements/base.in
+    # via -r base.in
 referencing==0.32.0 \
     --hash=sha256:689e64fe121843dcfd57b71933318ef1f91188ffb45367332700a86ac8fd6161 \
     --hash=sha256:bdcd3efb936f82ff86f993093f6da7435c7de69a3b3a5a06678a6050184bee99
     # via
-    #   -r requirements/base.in
+    #   -r base.in
     #   jsonschema
     #   jsonschema-specifications
 requests==2.31.0 \
     --hash=sha256:58cd2187c01e70e6e26505bca751777aa9f2ee0b7f4300988b709f44e013003f \
     --hash=sha256:942c5a758f98d790eaed1a29cb6eefc7ffb0d1cf7af05c3d2791656dbd6ad1e1
     # via
-    #   -r requirements/base.in
+    #   -r base.in
     #   taskcluster
 rpds-py==0.13.2 \
     --hash=sha256:06d218e4464d31301e943b65b2c6919318ea6f69703a351961e1baaf60347276 \
@@ -546,12 +546,12 @@ slugid==2.0.0 \
     --hash=sha256:a950d98b72691178bdd4d6c52743c4a2aa039207cf7a97d71060a111ff9ba297 \
     --hash=sha256:aec8b0e01c4ad32e38e12d609eab3ec912fd129aaf6b2ded0199b56a5f8fd67c
     # via
-    #   -r requirements/base.in
+    #   -r base.in
     #   taskcluster
 taskcluster==59.1.1 \
     --hash=sha256:77b6426812d311be5dafe6ce7fdced0100ca130c2bf3c9a183c27fcf6cbc47d8 \
     --hash=sha256:f226e9579600b515b349a621364f14fdb3303582fcd48dae2ac8590e00efb9be
-    # via -r requirements/base.in
+    # via -r base.in
 taskcluster-urls==13.0.1 \
     --hash=sha256:5e25e7e6818e8877178b175ff43d2e6548afad72694aa125f404a7329ece0973 \
     --hash=sha256:b25e122ecec249c4299ac7b20b08db76e3e2025bdaeb699a9d444556de5fd367 \
