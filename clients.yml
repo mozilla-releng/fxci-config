@@ -412,6 +412,16 @@ project/releng/generic-worker/datacenter-gecko-t-osx-1300-r8:
     - queue:worker-id:mdc2/mac*
     - queue:worker-id:mdc2/t-yosemite*
     - queue:worker-id:mdc2/t-mojave*
+project/releng/generic-worker/datacenter-gecko-t-osx-1400-r8-staging:
+  description: Datacenter MacOS dedicated developer and automation worker.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-t-osx*
+    - queue:worker-id:mdc1/mac*
+    - queue:worker-id:mdc1/t-yosemite*
+    - queue:worker-id:mdc1/t-mojave*
+    - queue:worker-id:mdc2/mac*
+    - queue:worker-id:mdc2/t-yosemite*
+    - queue:worker-id:mdc2/t-mojave*
 project/releng/generic-worker/datacenter-gecko-t-osx-1400-m2:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
