@@ -1259,6 +1259,33 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: 'gecko-t/t-linux-2204-wayland-exp-a2'
+    description: Worker for testing Wayland on Ubuntu 22.04, for alissy by aerickson.
+    owner: aerickson@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            enableInteractive: true  # ok for l1, but not ok for l3?
+            # for loaner pools, we want to keep the machine around
+            shutdownMachineOnIdle: false  # stick around when idle
+            shutdownMachineOnInternalError: false  # stick around on error
+            idleTimeoutSecs: 0  # never exit g-w because idle
+      minCapacity: 1
+      maxCapacity: 1
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-central1, us-west1]
+      image: monopacker-ubuntu-2204-wayland-aerickson-testing
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-60
+          machine_type: n2-standard-2
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-v100-gpu'
     description: Worker for machine learning and other high GPU tasks
     owner: release+tc-workers@mozilla.com

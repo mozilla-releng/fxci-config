@@ -343,6 +343,7 @@
 
 - grant:
     - generic-worker:os-group:gecko-t/t-linux-2204-wayland-exp-alissy/snap_sudo # bug 1891721
+    - generic-worker:os-group:gecko-t/t-linux-2204-wayland-exp-a2/snap_sudo # bug 1891721
   to:
     - projects:
         alias: try
