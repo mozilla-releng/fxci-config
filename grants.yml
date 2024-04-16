@@ -341,6 +341,12 @@
         level: [1, 2, 3]
         trust_domain: gecko
 
+- grant:
+    - generic-worker:os-group:gecko-t/t-linux-2204-wayland-exp-alissy/snap_sudo # bug 1891721
+  to:
+    - projects:
+        alias: try
+
 # moz-tree:level:1:gecko (staging deployment)
 - grant:
     - generic-worker:allow-rdp:gecko-1/b-win*
