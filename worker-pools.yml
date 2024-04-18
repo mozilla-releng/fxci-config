@@ -1269,10 +1269,9 @@ pools:
         genericWorker:
           config:
             enableInteractive: true  # ok for l1, but not ok for l3?
+            idleTimeoutSecs: 600  # 10 minutes, double normal 5m, for debugging
             # for loaner pools, we want to keep the machine around
-            shutdownMachineOnIdle: false  # stick around when idle
             shutdownMachineOnInternalError: false  # stick around on error
-            idleTimeoutSecs: 0  # never exit g-w because idle
       minCapacity: 0
       maxCapacity: 5
       implementation: generic-worker/worker-runner-linux-multi
