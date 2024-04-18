@@ -390,6 +390,7 @@ autoland:
     trust-domain-scopes: true
   cron:
     targets:
+      - android-l10n-import
       - l10n-bumper
       - perftest-on-autoland
 holly:
