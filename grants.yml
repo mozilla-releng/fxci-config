@@ -2301,6 +2301,7 @@
 
 - grant:
     # Allow triggering geckoview, bumps, nightlies and l10n tasks
+    - hooks:trigger-hook:project-releng/cron-task-integration-autoland/android-l10n-import
     - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
     - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/android-l10n-sync
     - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
