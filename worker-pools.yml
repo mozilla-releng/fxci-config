@@ -1273,8 +1273,8 @@ pools:
             shutdownMachineOnIdle: false  # stick around when idle
             shutdownMachineOnInternalError: false  # stick around on error
             idleTimeoutSecs: 0  # never exit g-w because idle
-      minCapacity: 1
-      maxCapacity: 1
+      minCapacity: 0
+      maxCapacity: 5
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland-aerickson-testing
