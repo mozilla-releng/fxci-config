@@ -197,6 +197,7 @@ mozilla-beta:
     trust-domain-scopes: true
   cron:
     targets:
+      - android-l10n-sync
       - ship-geckoview
       - l10n-bumper
       - daily-releases
