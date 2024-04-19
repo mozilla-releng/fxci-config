@@ -1281,7 +1281,7 @@ pools:
         - minCpuPlatform: Intel Cascadelake
           disks:
             - *persistent-disk-60
-          machine_type: n2-standard-2
+          machine_type: n2-standard-4
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
