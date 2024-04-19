@@ -469,6 +469,10 @@ project/releng/generic-worker/win11-64-2009-hw-ref:
   description: Datacenter Windows 11 main production worker. 2009 references the os build.
   scopes:
     - assume:worker-type:releng-hardware/win11-64-2009-hw-ref
+project/releng/generic-worker/win11-64-2009-hw-dev:
+  description: Datacenter Windows 11 main RelSRE dev worker. 2009 references the os build.
+  scopes:
+    - assume:worker-type:releng-hardware/win11-64-2009-hw-dev
 project/releng/generic-worker/win11-64-2009-hw-ref-alpha:
   description: Datacenter Windows 11 experimental worker. 2009 references the os build.
   scopes:
