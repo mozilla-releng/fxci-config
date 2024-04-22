@@ -64,12 +64,6 @@ monopacker-ubuntu-2204-wayland-arm64:
 monopacker-ubuntu-2204-wayland-aerickson-testing:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-04-17t21-57-05z
 
-# temporary entries for testing newer generic worker
-monopacker-ubuntu-2204-wayland-relops896:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-04-08t22-14-02z
-monopacker-translations-worker-relops896:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-translations-gcp-googlecompute-2024-04-08t22-32-35z
-
 # vm images built by hand
 handbuilt-ubuntu-2204-wayland-vm:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z
