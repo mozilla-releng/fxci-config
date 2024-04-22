@@ -3117,6 +3117,11 @@
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|rsteuber
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|spohl
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|nalexander
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mpohle
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|nrishel
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|nshukla
 
 # allow mardak to trigger nightly releases on larch
 - grant:
