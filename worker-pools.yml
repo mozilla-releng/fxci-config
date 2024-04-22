@@ -413,6 +413,139 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-large-gcp-d2g'
+    description: Worker for Firefox Translations automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: translations-1
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
+            enableInteractive: true
+      minCapacity: 0
+      maxCapacity: 50
+      regions: [us-central1, us-west1]
+      image: monopacker-ubuntu-2204-wayland
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-20
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+            - *scratch-disk
+          machine_type: n2-custom-32-262144
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-large-gcp-d2g-1tb'
+    description: Big workers with big disks - intended for Firefox Translations only
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: translations-1
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
+            enableInteractive: true
+      minCapacity: 0
+      maxCapacity: 50
+      regions: [us-central1, us-west1]
+      image: monopacker-ubuntu-2204-wayland
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - &persistent-disk-1024
+              autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 1024
+                sourceImage: <image>
+              type: PERSISTENT
+          machine_type: n2-custom-32-262144
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-large-gcp-d2g-1tb-standard'
+    description: Big workers with big disks - intended for Firefox Translations only
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: translations-1
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
+            enableInteractive: true
+      minCapacity: 0
+      maxCapacity: 50
+      regions: [us-central1, us-west1]
+      image: monopacker-ubuntu-2204-wayland
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-1024
+          machine_type: n2-custom-32-262144
+          scheduling: standard
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-large-gcp-d2g-300gb'
+    description: Big workers with big disks - intended for Firefox Translations only
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: translations-1
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
+            enableInteractive: true
+      minCapacity: 0
+      maxCapacity: 50
+      regions: [us-central1, us-west1]
+      image: monopacker-ubuntu-2204-wayland
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - &persistent-disk-300
+              autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 300
+                sourceImage: <image>
+              type: PERSISTENT
+          machine_type: n2-custom-32-262144
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp'
     description: Worker for Firefox Translations automation.
     owner: release+tc-workers@mozilla.com
@@ -476,13 +609,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - &persistent-disk-1024
-              autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 1024
-                sourceImage: <image>
-              type: PERSISTENT
+            - *persistent-disk-1024
           machine_type: n2-custom-32-262144
           networkInterfaces:
             - accessConfigs:
@@ -547,13 +674,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - &persistent-disk-300
-              autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 300
-                sourceImage: <image>
-              type: PERSISTENT
+            - *persistent-disk-300
           machine_type: n2-custom-32-262144
           networkInterfaces:
             - accessConfigs:
