@@ -432,6 +432,7 @@ pools:
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
+      implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
       instance_types:
@@ -465,6 +466,7 @@ pools:
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
+      implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
       instance_types:
@@ -500,6 +502,7 @@ pools:
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
+      implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
       instance_types:
@@ -530,6 +533,7 @@ pools:
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
+      implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
       instance_types:
