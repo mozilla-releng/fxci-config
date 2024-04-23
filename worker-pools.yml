@@ -438,7 +438,13 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - &persistent-disk-60
+              autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 60
+                sourceImage: <image>
+              type: PERSISTENT
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -1274,13 +1280,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - &persistent-disk-60
-              autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 60
-                sourceImage: <image>
-              type: PERSISTENT
+            - *persistent-disk-60
           machine_type: n2-standard-2
           networkInterfaces:
             - accessConfigs:
