@@ -744,6 +744,7 @@ k8s-autoscale:
   repo_type: git
   default_branch: master
   trust_domain: releng
+  trust_project: k8s-autoscale
   level: 3
   features:
     github-pull-request:
