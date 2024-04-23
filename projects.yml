@@ -748,7 +748,9 @@ k8s-autoscale:
   features:
     github-pull-request:
       policy: public
+    github-taskgraph: true
     taskgraph-actions: true
+    trust-domain-scopes: true
 
 product-details:
   repo: https://github.com/mozilla-releng/product-details
