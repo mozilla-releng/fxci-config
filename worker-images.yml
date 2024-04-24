@@ -181,7 +181,7 @@ ronin-b-windows2022-rd-alpha:
     north-central-us: win2022-64-2009-rd-northcentralus-2022-datacenter-azure-edition
 ronin-b1-windows2022-prod:
   azure2:
-    deployment_id: 1734abb
+    deployment_id: b1285eb
     central-us: win2022-64-2009-centralus-2022-datacenter-azure-edition
     east-us: win2022-64-2009-eastus-2022-datacenter-azure-edition
     east-us-2: win2022-64-2009-eastus2-2022-datacenter-azure-edition
@@ -191,7 +191,7 @@ ronin-b1-windows2022-prod:
     west-us-2: win2022-64-2009-westus2-2022-datacenter-azure-edition
 ronin-b3-windows2022-prod:
   azure_trusted:
-    deployment_id: 1734abb
+    deployment_id: b1285eb
     central-us: trusted-win2022-64-2009-centralus-2022-datacenter-azure-edition
     east-us: trusted-win2022-64-2009-eastus-2022-datacenter-azure-edition
     east-us-2: trusted-win2022-64-2009-eastus2-2022-datacenter-azure-edition
@@ -203,7 +203,7 @@ ronin-b3-windows2022-prod:
 # Windows 10
 ronin-t-windows10-64-2009-prod:
   azure2:
-    deployment_id: 801fce5
+    deployment_id: b1285eb
     canada-central: win10-64-2009-canadacentral-win10-22h2-avd
     central-india: win10-64-2009-centralindia-win10-22h2-avd
     central-us: win10-64-2009-centralus-win10-22h2-avd
@@ -254,7 +254,7 @@ ronin-t-windows11-64-2009-alpha:
     uk-south: win11-64-2009-uksouth-win11-22h2-avd
 ronin-t-windows11-64-2009-prod:
   azure2:
-    deployment_id: 801fce5
+    deployment_id: b1285eb
     canada-central: win11-64-2009-canadacentral-win11-22h2-avd
     central-india: win11-64-2009-centralindia-win11-22h2-avd
     central-us: win11-64-2009-centralus-win11-22h2-avd
