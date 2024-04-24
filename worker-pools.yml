@@ -2671,12 +2671,6 @@ pools:
               osDisk:
                 osType: Windows
                 createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 30
-                  managedDisk:
-                    storageAccountType: Standard_LRS
-                  createOption: Empty
             hardwareProfile:
               vmSize: Standard_F8s_v2
             diagnosticsProfile:
@@ -2720,12 +2714,6 @@ pools:
               osDisk:
                 osType: Windows
                 createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 500
-                  managedDisk:
-                    storageAccountType: Premium_LRS
-                  createOption: Empty
             hardwareProfile:
               vmSize: Standard_F8s_v2
             diagnosticsProfile:
@@ -2769,12 +2757,6 @@ pools:
               osDisk:
                 osType: Windows
                 createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 30
-                  managedDisk:
-                    storageAccountType: Standard_LRS
-                  createOption: Empty
             hardwareProfile:
               vmSize: Standard_NV12s_v3
             diagnosticsProfile:
@@ -2867,12 +2849,6 @@ pools:
               osDisk:
                 osType: Windows
                 createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 30
-                  managedDisk:
-                    storageAccountType: StandardSSD_LRS
-                  createOption: Empty
             hardwareProfile:
               vmSize: Standard_F8s_v2
             diagnosticsProfile:
@@ -3058,12 +3034,6 @@ pools:
               osDisk:
                 osType: Windows
                 createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 30
-                  managedDisk:
-                    storageAccountType: Standard_LRS
-                  createOption: Empty
             hardwareProfile:
               vmSize: Standard_NV12s_v3
             diagnosticsProfile:
@@ -3155,12 +3125,6 @@ pools:
               osDisk:
                 osType: Windows
                 createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 500
-                  managedDisk:
-                    storageAccountType: Premium_LRS
-                  createOption: Empty
             hardwareProfile:
               vmSize: Standard_F8s_v2
             diagnosticsProfile:
