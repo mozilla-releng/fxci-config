@@ -1836,10 +1836,15 @@
     # against potentially sensitive workflows being added in the future that
     # would then implicitly be allowed in places they shouldn't be.
     - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:Bitrise_Performance_Test
+    - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:build_and_test_*
     - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:L10nBuild
     - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:L10nScreenshotsTests
     - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:Firebase_Performance_Test
     - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:firefox_configure_build
+    - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:focus_configure_build
+    - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:focus_ui_test
+    - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:focus_unit_test
+    - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:klar_unit_test
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
   to:
     - project:
