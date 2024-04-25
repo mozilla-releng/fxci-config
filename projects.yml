@@ -1072,7 +1072,7 @@ firefox-translations-training:
   default_branch: main
   trust_domain: translations
   # https://github.com/mozilla/firefox-translations-training/issues/206
-  level: 1
+  level: 3
   features:
     github-taskgraph: true
     github-pull-request:
