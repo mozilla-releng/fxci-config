@@ -1081,6 +1081,7 @@ firefox-translations-training:
     trust-domain-scopes: true
     treeherder-reporting: true
     pr-actions: true
+    beetmover: true
 
 # Bug 1822403: Add taskgraph support to firefox-translations-training
 # TODO: this should be either a different trust domain or level before
@@ -1099,6 +1100,7 @@ staging-firefox-translations-training:
     trust-domain-scopes: true
     treeherder-reporting: true
     pr-actions: true
+    beetmover: true
 
 # Bug 1822403: Enable the profiler repository on taskcluster
 firefox-profiler:
