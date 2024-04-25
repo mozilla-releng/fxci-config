@@ -242,7 +242,6 @@ mozilla-central:
       - nightly-desktop-win64
       - nightly-desktop-win64-aarch64
       - periodic-update
-      - ship-geckoview
       - system-symbols
       - l10n-bumper
       - l10n-cross-channel
