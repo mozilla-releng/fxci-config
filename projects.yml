@@ -703,6 +703,7 @@ application-services:
     taskgraph-cron: true
     taskgraph-actions: true
     trust-domain-scopes: true
+    beetmover: true
   cron:
     targets: [nightly]
 
@@ -720,6 +721,7 @@ staging-application-services:
     taskgraph-cron: true
     taskgraph-actions: true
     trust-domain-scopes: true
+    beetmover: true
 
 glean:
   repo: https://github.com/mozilla/glean
@@ -737,6 +739,7 @@ glean:
     scriptworker: true
     taskgraph-actions: true
     trust-domain-scopes: true
+    beetmover: true
 
 # mozilla-releng Github repositories
 k8s-autoscale:
@@ -911,6 +914,8 @@ mozilla-vpn-client:
     # taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    beetmover: true
+    beetmover-get-artifact-scope: true
 
 staging-mozilla-vpn-client:
   repo: https://github.com/mozilla-releng/staging-mozilla-vpn-client
@@ -928,6 +933,8 @@ staging-mozilla-vpn-client:
     # taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    beetmover: true
+    beetmover-get-artifact-scope: true
 
 # Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
 # repo:github.com/mozilla-extensions/* is configured in grants.yml, under the xpi-roles feature
@@ -945,6 +952,8 @@ xpi-manifest:
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
+    beetmover: true
+    beetmover-get-artifact-scope: true
 
 rally-core-addon:
   repo: https://github.com/mozilla-rally/rally-core-addon
@@ -973,6 +982,8 @@ staging-xpi-manifest:
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
+    beetmover: true
+    beetmover-get-artifact-scope: true
 
 staging-xpi-public:
   repo: https://github.com/mozilla-releng/staging-xpi-public

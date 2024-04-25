@@ -150,3 +150,27 @@
       - project:
             level: 3
             feature: [beetmover]
+# Clients for beetmoverscript workers
+- client:
+      project/releng/scriptworker/v2/beetmover/dev/firefoxci-{trust_domain}-1:
+          description: "{trust_domain} level 1 nonprod beetmover scriptworker"
+          scopes:
+              - queue:get-artifact:{trust_domain}/*
+  for:
+      - project:
+            level: 1
+            feature: [beetmover-get-artifact-scope]
+
+- client:
+      project/releng/scriptworker/v2/beetmover/prod/firefoxci-{trust_domain}-1:
+          description: "{trust_domain} level 1 beetmover scriptworker"
+          scopes:
+              - queue:get-artifact:{trust_domain}/*
+      project/releng/scriptworker/v2/beetmover/prod/firefoxci-{trust_domain}-3:
+          description: "{trust_domain} level 3 beetmover scriptworker"
+          scopes:
+              - queue:get-artifact:{trust_domain}/*
+  for:
+      - project:
+            level: 3
+            feature: [beetmover-get-artifact-scope]
