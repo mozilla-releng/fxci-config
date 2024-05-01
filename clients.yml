@@ -317,6 +317,15 @@ project/releng/generic-worker/datacenter-gecko-t-loaner:
     - assume:worker-type:releng-hardware/gecko-t-linux-talos-*
     - assume:worker-type:releng-hardware/gecko-t-osx-1014-*
     - assume:worker-type:releng-hardware/gecko-t-osx-1015-*
+project/releng/generic-worker/snakepit-titanxp:
+    - assume:worker-type:translations-1/*
+    - queue:worker-id:snakepit/mlc*
+project/releng/generic-worker/snakepit-2080ti:
+    - assume:worker-type:translations-1/*
+    - queue:worker-id:snakepit/mlc*
+project/releng/generic-worker/snakepit-quadro6k:
+    - assume:worker-type:translations-1/*
+    - queue:worker-id:snakepit/mlc*
 project/releng/generic-worker/datacenter-mozillavpn-1-b-osx:
   description: Datacenter level 1 MacOS build machines for Mozilla VPN
   scopes:
