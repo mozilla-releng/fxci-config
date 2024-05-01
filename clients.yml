@@ -318,12 +318,18 @@ project/releng/generic-worker/datacenter-gecko-t-loaner:
     - assume:worker-type:releng-hardware/gecko-t-osx-1014-*
     - assume:worker-type:releng-hardware/gecko-t-osx-1015-*
 project/releng/generic-worker/snakepit-titanxp:
+  description: snakepit TitanXP workers
+  scopes:
     - assume:worker-type:translations-1/*
     - queue:worker-id:snakepit/mlc*
 project/releng/generic-worker/snakepit-2080ti:
+  description: snakepit 2080ti workers
+  scopes:
     - assume:worker-type:translations-1/*
     - queue:worker-id:snakepit/mlc*
 project/releng/generic-worker/snakepit-quadro6k:
+  description: snakepit Quadro6k workers
+  scopes:
     - assume:worker-type:translations-1/*
     - queue:worker-id:snakepit/mlc*
 project/releng/generic-worker/datacenter-mozillavpn-1-b-osx:
