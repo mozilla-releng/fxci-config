@@ -1215,7 +1215,7 @@
   to:
     - project:
         alias: k8s-autoscale
-        job: [branch:master, branch:production]
+        job: [branch:dev, branch:master, branch:production]
 
 # - cloud-image-builder specific roles
 - grant:
