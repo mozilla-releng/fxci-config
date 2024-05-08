@@ -471,6 +471,8 @@
 
 # moz-tree:level:3:comm
 - grant:
+    # Thunderbird Sheriff's room
+    - notify:matrix-room:!TWztIhgqLawNpRBZTC:mozilla.org.*
     - queue:create-task:highest:scriptworker-prov-v1/tb-depsigning-mac-v1
     - queue:create-task:highest:scriptworker-prov-v1/tb-signing-mac-v1
     - queue:create-task:highest:scriptworker-prov-v1/tb-mac-notarization-poller
