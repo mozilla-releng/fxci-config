@@ -1073,8 +1073,11 @@
         job: [branch:*, release:*]
 
 - grant:
+    # TODO Make glean use the standard cached task routes
     - index:insert-task:project.glean.cache.head.*
     - queue:route:index.project.glean.cache.head.*
+    - index:insert-task:project.glean.cache.pr.*
+    - queue:route:index.project.glean.cache.pr.*
   to:
     - project:
         alias: glean
