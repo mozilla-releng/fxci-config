@@ -413,8 +413,32 @@ pools:
           networkInterfaces:
             - accessConfigs:
                 - type: ONE_TO_ONE_NAT
+  - pool_id: '{pool-group}/b-linux-gcp-gw'
+    description: Workers using generic-worker on Linux with D2G capability.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: mozillavpn-1
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-central1, us-west1]
+      image: monopacker-ubuntu-2204-wayland
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-20
+          machine_type: n2-standard-4
+          networkInterfaces:
+            - accessConfigs:
+                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g'
-    description: Worker for Firefox Translations automation.
+    description: Workers using generic-worker on Linux with D2G capability.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     variants:
