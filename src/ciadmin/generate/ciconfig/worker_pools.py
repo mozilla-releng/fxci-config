@@ -17,6 +17,7 @@ class WorkerPool:
     email_on_error = attr.ib(type=bool)
     provider_id = attr.ib(type=str)
     config = attr.ib()
+    attributes = attr.ib(factory=dict)
     variants = attr.ib(factory=lambda: [{}])
 
     @pool_id.validator

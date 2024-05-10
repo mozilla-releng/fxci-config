@@ -484,15 +484,18 @@ def generate_pool_variants(worker_pools, environment):
 
     for wp in worker_pools:
         for variant in wp.variants:
-            name = wp.pool_id.format(**variant)
-            attributes = {"environment": environment}
+            attributes = wp.attributes.copy()
+            attributes["environment"] = environment
             attributes.update(variant)
+
+            name = wp.pool_id.format(**attributes)
 
             yield attr.evolve(
                 wp,
                 pool_id=name,
                 provider_id=evaluate_keyed_by(wp.provider_id, name, attributes),
                 config=update_config(wp.config, name, attributes),
+                attributes={},
                 variants=[{}],
             )
 
