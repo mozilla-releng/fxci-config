@@ -1775,107 +1775,36 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
-  - pool_id: nss-1/b-win2012-azure
+  - pool_id: '{pool-group}/b-win2012-azure{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
-    provider_id: azure2
+    attributes:
+      suffix: ''
+      track: prod
+    variants:
+      - pool-group: nss-1
+      - pool-group: nss-1
+        track: alpha
+        suffix: -alpha
+      - pool-group: nss-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: azure_trusted
+        default: azure2
     config:
-      image: ronin-b1-windows2012-vs-py2-prod
+      image:
+        by-chain-of-trust:
+          trusted: ronin-b3-windows2012-vs-py2-{track}
+          default: ronin-b1-windows2012-vs-py2-{track}
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
-      worker-purpose: nss-1
-      locations: [central-us, north-central-us, east-us-2, west-us-2]
-      maxCapacity: 25
-      worker-config:
-        genericWorker:
-          config:
-            idleTimeoutSecs: 1800
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_F32s_v2
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 120
-                  managedDisk:
-                    storageAccountType: Premium_LRS
-                  createOption: Empty
-            hardwareProfile:
-              vmSize: Standard_F32s_v2
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-  - pool_id: nss-3/b-win2012-azure
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure_trusted
-    config:
-      image: ronin-b3-windows2012-vs-py2-prod
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: nss-3
-      locations: [central-us, north-central-us, east-us-2, west-us-2]
-      maxCapacity: 25
-      worker-config:
-        genericWorker:
-          config:
-            idleTimeoutSecs: 1800
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_F32s_v2
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-              dataDisks:
-                - lun: 0
-                  diskSizeGB: 120
-                  managedDisk:
-                    storageAccountType: Premium_LRS
-                  createOption: Empty
-            hardwareProfile:
-              vmSize: Standard_F32s_v2
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-  - pool_id: nss-1/b-win2012-azure-alpha
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-b1-windows2012-vs-py2-alpha
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: nss-1
-      locations: [central-us, north-central-us]
+      worker-purpose: '{pool-group}'
+      locations:
+        by-track:
+          alpha: [central-us, north-central-us]
+          default: [central-us, north-central-us, east-us-2, west-us-2]
       maxCapacity: 25
       worker-config:
         genericWorker:
