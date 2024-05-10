@@ -314,6 +314,9 @@ pools:
         chain-of-trust: trusted
       - pool-group: mozilla-1
       - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-1
+        suffix: "-gcp-gw"
+        implementation: generic-worker/worker-runner-linux-multi
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
       - pool-group: adhoc-1
@@ -345,17 +348,29 @@ pools:
           default: 100
       regions: [us-central1, us-west1]
       image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
+        by-implementation:
+          docker-worker:
+            by-chain-of-trust:
+              trusted: monopacker-docker-worker-trusted-current-gcp
+              default: monopacker-docker-worker-current
+          generic-worker/.*: monopacker-ubuntu-2204-wayland
       implementation: "{implementation}"
       instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
-            - *scratch-disk
-          machine_type: n2-standard-4
+        by-implementation:
+          # Scratch disks aren't configured on generic-worker images yet.
+          generic-worker/.*:
+            - minCpuPlatform: Intel Cascadelake
+              disks:
+                - <<: *persistent-disk
+                  diskSizeGb: 60
+              machine_type: n2-standard-4
+          default:
+            - minCpuPlatform: Intel Cascadelake
+              disks:
+                - <<: *persistent-disk
+                  diskSizeGb: 20
+                - *scratch-disk
+              machine_type: n2-standard-4
   - pool_id: '{pool-group}/b-linux-large{suffix}'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -402,28 +417,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: n2-custom-32-73728
-  - pool_id: '{pool-group}/b-linux-gcp-gw'
-    description: Workers using generic-worker on Linux with D2G capability.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: mozillavpn-1
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 10
-      implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
-      image: monopacker-ubuntu-2204-wayland
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
-          machine_type: n2-standard-4
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g'
     description: Workers using generic-worker on Linux with D2G capability.
     owner: release+tc-workers@mozilla.com
