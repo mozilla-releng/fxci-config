@@ -347,6 +347,10 @@ def get_google_provider_config(
                     continue
                 launch_config = copy.deepcopy(instance_type)
                 launch_config.setdefault("capacityPerInstance", 1)
+                launch_config.setdefault(
+                    "networkInterfaces",
+                    [{"accessConfigs": [{"type": "ONE_TO_ONE_NAT"}]}],
+                )
                 launch_config.update({"region": region, "zone": zone})
 
                 # When using anchors and aliases, PyYaml re-uses the same

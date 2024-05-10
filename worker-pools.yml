@@ -162,9 +162,6 @@ pools:
             - *scratch-disk
           machine_type: n2-standard-2
           capacityPerInstance: 8
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -213,9 +210,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-gcp-test-bug-1882320'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -236,9 +230,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-gcp-aarch64'
     description: Linux ARM64 VM for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -264,9 +255,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 75
           machine_type: t2a-standard-16
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: 'gecko-3/b-linux-gcp-bug1874006'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -285,9 +273,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-gcp-bug1797804-n2'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -313,9 +298,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: n2-custom-16-73728
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -370,9 +352,6 @@ pools:
               diskSizeGb: 20
             - *scratch-disk
           machine_type: n2-standard-4
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -415,9 +394,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: n2-custom-32-73728
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-gcp-gw'
     description: Workers using generic-worker on Linux with D2G capability.
     owner: release+tc-workers@mozilla.com
@@ -440,9 +416,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: n2-standard-4
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g'
     description: Workers using generic-worker on Linux with D2G capability.
     owner: release+tc-workers@mozilla.com
@@ -475,9 +448,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: n2-custom-32-262144
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g-1tb'
     description: Big workers with big disks - intended for Firefox Translations only
     owner: release+tc-workers@mozilla.com
@@ -506,9 +476,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 1024
           machine_type: n2-custom-32-262144
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g-1tb-standard'
     description: Big workers with big disks - intended for Firefox Translations only
     owner: release+tc-workers@mozilla.com
@@ -538,9 +505,6 @@ pools:
               diskSizeGb: 1024
           machine_type: n2-custom-32-262144
           scheduling: standard
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g-300gb'
     description: Big workers with big disks - intended for Firefox Translations only
     owner: release+tc-workers@mozilla.com
@@ -569,9 +533,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 300
           machine_type: n2-custom-32-262144
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp'
     description: Worker for Firefox Translations automation.
     owner: release+tc-workers@mozilla.com
@@ -606,9 +567,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: n2-custom-32-262144
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp-1tb'
     description: Big workers with big disks - intended for Firefox Translations only
     owner: release+tc-workers@mozilla.com
@@ -639,9 +597,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 1024
           machine_type: n2-custom-32-262144
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp-1tb-standard'
     description: Big workers with big disks - intended for Firefox Translations only
     owner: release+tc-workers@mozilla.com
@@ -673,9 +628,6 @@ pools:
               diskSizeGb: 1024
           machine_type: n2-custom-32-262144
           scheduling: standard
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp-300gb'
     description: Big workers with big disks - intended for Firefox Translations only
     owner: release+tc-workers@mozilla.com
@@ -706,9 +658,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 300
           machine_type: n2-custom-32-262144
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-large-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -740,9 +689,6 @@ pools:
               diskSizeGb: 20
             - *scratch-disk
           machine_type: n2-standard-8
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-medium-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -774,9 +720,6 @@ pools:
               diskSizeGb: 20
             - *scratch-disk
           machine_type: n2-standard-8
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-xlarge-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -824,9 +767,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: n2-custom-64-131072
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-xlarge-gcp-bug1797804-c2'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -858,9 +798,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-60
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/decision-gcp'
     description: Worker for Firefox automation
     owner: release+tc-workers@mozilla.com
@@ -905,9 +842,6 @@ pools:
             - *scratch-disk
           machine_type: n2-standard-4
           capacityPerInstance: 2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/decision-gcp'
     description: Worker for Firefox automation
     owner: release+tc-workers@mozilla.com
@@ -975,9 +909,6 @@ pools:
             - *scratch-disk
           machine_type: n2-standard-2
           capacityPerInstance: 2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/images-gcp'
     description: 'Builds docker images; NOTE: capacity set to 1 instead of 3
       to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
@@ -1054,9 +985,6 @@ pools:
                 - *scratch-disk
               machine_type: n2-standard-32
               capacityPerInstance: 1
-              networkInterfaces:
-                - accessConfigs:
-                    - type: ONE_TO_ONE_NAT
           (taskgraph|ci)-.*:
             - minCpuPlatform: Intel Cascadelake
               disks:
@@ -1065,9 +993,6 @@ pools:
                 - *scratch-disk
               machine_type: n2-standard-2
               capacityPerInstance: 1
-              networkInterfaces:
-                - accessConfigs:
-                    - type: ONE_TO_ONE_NAT
           default:
             - minCpuPlatform: Intel Cascadelake
               disks:
@@ -1076,9 +1001,6 @@ pools:
                 - *scratch-disk
               machine_type: n2-standard-4
               capacityPerInstance: 1
-              networkInterfaces:
-                - accessConfigs:
-                    - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/t-linux-xlarge{suffix}-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -1123,9 +1045,6 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-4
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/t-linux-xlarge{suffix}-noscratch-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -1169,9 +1088,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 75
           machine_type: n2-standard-4
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: 'gecko-t/t-linux-kvm-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -1197,9 +1113,6 @@ pools:
           machine_type: n2-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: 'gecko-t/t-linux-kvm-noscratch-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -1224,9 +1137,6 @@ pools:
           machine_type: n2-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-kvm-gcp'
     description: 'KVM-enabled builders for PGO using docker-worker.'
     owner: release+tc-workers@mozilla.com
@@ -1262,9 +1172,6 @@ pools:
           machine_type: n2-standard-16
           advancedMachineFeatures:
             enableNestedVirtualization: true
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-2204-kvm-gcp'  # Bug 1865886, https://mozilla-hub.atlassian.net/browse/RELOPS-805
     description: 'KVM-enabled Ubuntu 22.04 GCP builders.'
     owner: release+tc-workers@mozilla.com
@@ -1291,9 +1198,6 @@ pools:
           machine_type: n2-standard-2  # larger n2? or c2-standard-16 or c3-standard-4?
           advancedMachineFeatures:
             enableNestedVirtualization: true
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: 'gecko-t/t-linux-vm-2204-wayland'  # Bug 1756660 - This pool is experimental
     description: Worker for testing Wayland and XWayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
@@ -1318,9 +1222,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
           advancedMachineFeatures:
             enableNestedVirtualization: true
   - pool_id: 'gecko-t/t-linux-2204-wayland-experimental'  # Bug 1874877
@@ -1344,9 +1245,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: 'gecko-t/t-linux-2204-wayland-root-exp'  # Bug 1874877
     description: Worker for testing Wayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
@@ -1368,9 +1266,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: 'gecko-t/t-linux-2204-wayland-exp-alissy'
     description: Worker for testing Wayland on Ubuntu 22.04, for alissy by aerickson.
     owner: aerickson@mozilla.com
@@ -1396,9 +1291,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: 'gecko-t/t-linux-2204-wayland-exp-a2'
     description: Worker for testing Wayland on Ubuntu 22.04, for alissy by aerickson.
     owner: aerickson@mozilla.com
@@ -1423,9 +1315,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: n2-standard-4
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/b-linux-v100-gpu'
     description: Worker for machine learning and other high GPU tasks
     owner: release+tc-workers@mozilla.com
@@ -1454,9 +1343,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 75
           machine_type: n1-highmem-8
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
           guestAccelerators:
             - acceleratorCount: 1
               acceleratorType: nvidia-tesla-v100
@@ -1488,9 +1374,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 75
           machine_type: n1-highmem-8
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
@@ -1523,9 +1406,6 @@ pools:
               diskSizeGb: 300
           # 40 CPUs, 256GB RAM
           machine_type: n1-custom-40-262144
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
@@ -1559,9 +1439,6 @@ pools:
           # 40 CPUs, 256GB RAM
           machine_type: n1-custom-40-262144
           scheduling: standard
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
@@ -1595,9 +1472,6 @@ pools:
           # 40 CPUs, 256GB RAM
           machine_type: n1-custom-40-262144
           scheduling: standard
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
@@ -1630,9 +1504,6 @@ pools:
               diskSizeGb: 1024
           # 40 CPUs, 256GB RAM
           machine_type: n1-custom-40-262144
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
@@ -1653,9 +1524,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/misc-gcp'
     description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
       SCM levels.  Used for things like indexing tasks.
@@ -1678,9 +1546,6 @@ pools:
             - *scratch-disk
           machine_type: n2-standard-4
           capacityPerInstance: 8
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: gecko-1/b-win2012-azure-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -3223,9 +3088,6 @@ pools:
               type: SCRATCH
               interface: NVME
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/t-linux-large-noscratch-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -3254,9 +3116,6 @@ pools:
                 sourceImage: <image>
               type: PERSISTENT
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: 'gecko-t/t-linux-large-hostub2204-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -3282,9 +3141,6 @@ pools:
               type: SCRATCH
               interface: NVME
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: relops-3/win2019
     description: build windows cloud images for taskcluster windows workloads
     owner: relops-aws-provisioning@mozilla.com
@@ -3327,9 +3183,6 @@ pools:
           # No need for a big instance, it just delegates the heavy lifting to
           # bitrise.
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: mobile-3/bitrise-gcp
     description: Level 3 workers to interact with bitrise.io (iOS CI)
     owner: release+tc-workers@mozilla.com
@@ -3350,9 +3203,6 @@ pools:
           # No need for a big instance, it just delegates the heavy lifting to
           # bitrise.
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: project-relman/relman-svc
     description: Release management workers
     owner: release+tc-workers@mozilla.com
@@ -3372,9 +3222,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 20
             - *scratch-disk
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: code-review/bot-gcp
     description: Worker for the code-review bot.
     owner: release+tc-workers@mozilla.com
@@ -3392,9 +3239,6 @@ pools:
               diskSizeGb: 20
             - *scratch-disk
           machine_type: n2-standard-2
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: code-coverage/bot-gcp
     description: Worker for the code-coverage bot.
     owner: release+tc-workers@mozilla.com
@@ -3412,9 +3256,6 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-4
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: '{pool-group}/linux-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -3458,9 +3299,6 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-4
-          networkInterfaces:
-            - accessConfigs:
-                - type: ONE_TO_ONE_NAT
   - pool_id: performance-hardware/gecko-t-fxrecorder
     description: Desktop startup recorder machines
     owner: barret@mozilla.com

@@ -145,6 +145,7 @@ def assert_google_basic(pool):
         "capacityPerInstance": 1,
         "disks": [],
         "machineType": "zones/us-east1a/machineTypes/n2-custom",
+        "networkInterfaces": [{"accessConfigs": [{"type": "ONE_TO_ONE_NAT"}]}],
         "region": "us-east1",
         "scheduling": {
             "instanceTerminationAction": "DELETE",
