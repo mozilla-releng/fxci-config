@@ -304,6 +304,7 @@ pools:
     email_on_error: true
     attributes:
       suffix: "-gcp"
+      implementation: "docker-worker"
     variants:
       - pool-group: glean-1
       - pool-group: glean-3
@@ -347,6 +348,7 @@ pools:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
+      implementation: "{implementation}"
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -360,6 +362,7 @@ pools:
     email_on_error: true
     attributes:
       suffix: "-gcp"
+      implementation: "docker-worker"
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-2
@@ -388,6 +391,7 @@ pools:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
+      implementation: "{implementation}"
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:

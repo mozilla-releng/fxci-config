@@ -480,6 +480,13 @@ def generate_pool_variants(worker_pools, environment):
                     config[key] = value
                 else:
                     del config[key]
+
+        for key in (
+            "implementation",
+        ):
+            if key in config:
+                config[key] = config[key].format(**attributes)
+
         return config
 
     for wp in worker_pools:
