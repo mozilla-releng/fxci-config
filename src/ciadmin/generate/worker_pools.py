@@ -356,6 +356,8 @@ def get_google_provider_config(
                     copy.deepcopy(d) for d in launch_config["disks"]
                 ]
                 for disk in launch_config["disks"]:
+                    if "diskSizeGb" in disk:
+                        disk["initializeParams"]["diskSizeGb"] = disk.pop("diskSizeGb")
                     if disk["initializeParams"].get("sourceImage") == "<image>":
                         disk["initializeParams"]["sourceImage"] = image_name
                     if disk["initializeParams"].get("diskType"):

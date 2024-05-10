@@ -129,6 +129,20 @@ worker-defaults:
             taskclusterProxyPort: 80
             wstAudience: firefoxcitc
 
+meta:
+  - &persistent-disk
+    autoDelete: true
+    boot: true
+    initializeParams:
+      sourceImage: <image>
+    type: PERSISTENT
+  - &scratch-disk
+    autoDelete: true
+    initializeParams:
+      diskType: diskTypes/local-ssd
+    type: SCRATCH
+    interface: NVME
+
 pools:
   - pool_id: infra/build-decision
     description: Worker for firefox-ci automation.
@@ -143,19 +157,9 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - &persistent-disk-75
-              autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-            - &scratch-disk
-              autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - <<: *persistent-disk
+              diskSizeGb: 75
+            - *scratch-disk
           machine_type: n2-standard-2
           capacityPerInstance: 8
           networkInterfaces:
@@ -202,13 +206,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - &persistent-disk-20
-              autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 20
-                sourceImage: <image>
-              type: PERSISTENT
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -232,7 +231,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
@@ -261,7 +261,8 @@ pools:
       instance_types:
         - minCpuPlatform: Ampere Altra
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
           machine_type: t2a-standard-16
           networkInterfaces:
             - accessConfigs:
@@ -279,7 +280,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
@@ -306,7 +308,8 @@ pools:
           default: monopacker-docker-worker-current
       instance_types:
         - disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
             - *scratch-disk
           machine_type: n2-custom-16-73728
@@ -363,7 +366,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
           machine_type: n2-standard-4
           networkInterfaces:
@@ -404,7 +408,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -432,13 +437,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - &persistent-disk-60
-              autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 60
-                sourceImage: <image>
-              type: PERSISTENT
+            - <<: *persistent-disk
+              diskSizeGb: 60
           machine_type: n2-standard-4
           networkInterfaces:
             - accessConfigs:
@@ -468,7 +468,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-60
+            - <<: *persistent-disk
+              diskSizeGb: 60
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -502,13 +503,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - &persistent-disk-1024
-              autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 1024
-                sourceImage: <image>
-              type: PERSISTENT
+            - <<: *persistent-disk
+              diskSizeGb: 1024
           machine_type: n2-custom-32-262144
           networkInterfaces:
             - accessConfigs:
@@ -538,7 +534,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-1024
+            - <<: *persistent-disk
+              diskSizeGb: 1024
           machine_type: n2-custom-32-262144
           scheduling: standard
           networkInterfaces:
@@ -569,13 +566,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - &persistent-disk-300
-              autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 300
-                sourceImage: <image>
-              type: PERSISTENT
+            - <<: *persistent-disk
+              diskSizeGb: 300
           machine_type: n2-custom-32-262144
           networkInterfaces:
             - accessConfigs:
@@ -607,7 +599,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -643,7 +636,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-1024
+            - <<: *persistent-disk
+              diskSizeGb: 1024
           machine_type: n2-custom-32-262144
           networkInterfaces:
             - accessConfigs:
@@ -675,7 +669,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-1024
+            - <<: *persistent-disk
+              diskSizeGb: 1024
           machine_type: n2-custom-32-262144
           scheduling: standard
           networkInterfaces:
@@ -708,7 +703,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-300
+            - <<: *persistent-disk
+              diskSizeGb: 300
           machine_type: n2-custom-32-262144
           networkInterfaces:
             - accessConfigs:
@@ -740,7 +736,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
           machine_type: n2-standard-8
           networkInterfaces:
@@ -773,7 +770,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
           machine_type: n2-standard-8
           networkInterfaces:
@@ -815,7 +813,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -848,7 +847,8 @@ pools:
           default: monopacker-docker-worker-current
       instance_types:
         - disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -900,7 +900,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-4
           capacityPerInstance: 2
@@ -969,7 +970,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-2
           capacityPerInstance: 2
@@ -1044,7 +1046,8 @@ pools:
           mobile-.*:
             - minCpuPlatform: Intel Cascadelake
               disks:
-                - *persistent-disk-75
+                - <<: *persistent-disk
+                  diskSizeGb: 75
                 - *scratch-disk
                 - *scratch-disk
                 - *scratch-disk
@@ -1057,7 +1060,8 @@ pools:
           (taskgraph|ci)-.*:
             - minCpuPlatform: Intel Cascadelake
               disks:
-                - *persistent-disk-75
+                - <<: *persistent-disk
+                  diskSizeGb: 75
                 - *scratch-disk
               machine_type: n2-standard-2
               capacityPerInstance: 1
@@ -1067,7 +1071,8 @@ pools:
           default:
             - minCpuPlatform: Intel Cascadelake
               disks:
-                - *persistent-disk-75
+                - <<: *persistent-disk
+                  diskSizeGb: 75
                 - *scratch-disk
               machine_type: n2-standard-4
               capacityPerInstance: 1
@@ -1114,7 +1119,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-4
           networkInterfaces:
@@ -1160,7 +1166,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
           machine_type: n2-standard-4
           networkInterfaces:
             - accessConfigs:
@@ -1184,7 +1191,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-8
           advancedMachineFeatures:
@@ -1211,7 +1219,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
           machine_type: n2-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true
@@ -1248,7 +1257,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
           machine_type: n2-standard-16
           advancedMachineFeatures:
             enableNestedVirtualization: true
@@ -1276,7 +1286,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
           machine_type: n2-standard-2  # larger n2? or c2-standard-16 or c3-standard-4?
           advancedMachineFeatures:
             enableNestedVirtualization: true
@@ -1304,7 +1315,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-60
+            - <<: *persistent-disk
+              diskSizeGb: 60
           machine_type: n2-standard-2
           networkInterfaces:
             - accessConfigs:
@@ -1329,7 +1341,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-60
+            - <<: *persistent-disk
+              diskSizeGb: 60
           machine_type: n2-standard-2
           networkInterfaces:
             - accessConfigs:
@@ -1352,7 +1365,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-60
+            - <<: *persistent-disk
+              diskSizeGb: 60
           machine_type: n2-standard-2
           networkInterfaces:
             - accessConfigs:
@@ -1379,7 +1393,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-60
+            - <<: *persistent-disk
+              diskSizeGb: 60
           machine_type: n2-standard-2
           networkInterfaces:
             - accessConfigs:
@@ -1405,7 +1420,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-60
+            - <<: *persistent-disk
+              diskSizeGb: 60
           machine_type: n2-standard-4
           networkInterfaces:
             - accessConfigs:
@@ -1435,7 +1451,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
           machine_type: n1-highmem-8
           networkInterfaces:
             - accessConfigs:
@@ -1468,7 +1485,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
           machine_type: n1-highmem-8
           networkInterfaces:
             - accessConfigs:
@@ -1501,7 +1519,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - *persistent-disk-300
+            - <<: *persistent-disk
+              diskSizeGb: 300
           # 40 CPUs, 256GB RAM
           machine_type: n1-custom-40-262144
           networkInterfaces:
@@ -1535,7 +1554,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - *persistent-disk-300
+            - <<: *persistent-disk
+              diskSizeGb: 300
           # 40 CPUs, 256GB RAM
           machine_type: n1-custom-40-262144
           scheduling: standard
@@ -1570,7 +1590,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - *persistent-disk-1024
+            - <<: *persistent-disk
+              diskSizeGb: 1024
           # 40 CPUs, 256GB RAM
           machine_type: n1-custom-40-262144
           scheduling: standard
@@ -1605,7 +1626,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - *persistent-disk-1024
+            - <<: *persistent-disk
+              diskSizeGb: 1024
           # 40 CPUs, 256GB RAM
           machine_type: n1-custom-40-262144
           networkInterfaces:
@@ -1628,7 +1650,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-60
+            - <<: *persistent-disk
+              diskSizeGb: 60
           machine_type: n2-standard-2
           networkInterfaces:
             - accessConfigs:
@@ -1650,7 +1673,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
           machine_type: n2-standard-4
           capacityPerInstance: 8
@@ -3297,7 +3321,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
           # No need for a big instance, it just delegates the heavy lifting to
           # bitrise.
@@ -3319,7 +3344,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
           # No need for a big instance, it just delegates the heavy lifting to
           # bitrise.
@@ -3343,7 +3369,8 @@ pools:
       instance_types:
         - machine_type: n2-standard-2
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
           networkInterfaces:
             - accessConfigs:
@@ -3361,7 +3388,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-20
+            - <<: *persistent-disk
+              diskSizeGb: 20
             - *scratch-disk
           machine_type: n2-standard-2
           networkInterfaces:
@@ -3380,7 +3408,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-4
           networkInterfaces:
@@ -3425,7 +3454,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-75
+            - <<: *persistent-disk
+              diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-4
           networkInterfaces:
