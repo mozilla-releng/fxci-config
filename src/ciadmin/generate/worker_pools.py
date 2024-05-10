@@ -482,6 +482,7 @@ def generate_pool_variants(worker_pools, environment):
                     del config[key]
 
         for key in (
+            "image",
             "implementation",
         ):
             if key in config:
