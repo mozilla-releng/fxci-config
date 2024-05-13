@@ -32,6 +32,7 @@ async def check_pull_request_policies_for_git_repos():
         "occ",  # tc.yml v0
         "firefox-profiler",  # not landed yet
         "fx-desktop-qa-automation",  # not landed yet
+        "neqo",  # not landed yet
     )
 
     projects = [p for p in await Project.fetch_all() if not p.repo.endswith("*")]
