@@ -3131,6 +3131,26 @@
     - roles:
         - mozillians-group:translations-developers
 
+# Beetmover scopes for Translations
+- grant:
+    - project:translations:releng:beetmover:bucket:dep
+  to:
+    - project:
+        alias:
+          - firefox-translations-training
+        job:
+          - branch:*
+          - pull-request:*
+
+- grant:
+    - project:translations:releng:beetmover:bucket:release
+  to:
+    - project:
+        alias:
+          - firefox-translations-training
+        job:
+          - branch:*
+
 # allow bytesized to trigger nightly releases on pine
 - grant:
     - hooks:trigger-hook:project-releng/cron-task-projects-pine/*
