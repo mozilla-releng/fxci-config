@@ -1032,7 +1032,16 @@
 ##
 # mozilla roles
 #
-#
+
+# Grant everyone in MoCo the ability to create interactive tasks in the
+# 'mozilla' trust domain.
+- grant:
+    - queue:scheduler-id:mozilla-level-1
+    - queue:create-task:low:mozilla-1/*
+    - queue:create-task:low:mozilla-t/*
+  to:
+    - groups:
+        - team_moco
 
 # FIXME: Bug 1632147 - app-services and glean should be merged under the same
 # `trust_domain` so that scopes are bulked together like in the mobile world
