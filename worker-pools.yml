@@ -941,6 +941,9 @@ pools:
       - pool-group: mobile-1
       - pool-group: mobile-3
         chain-of-trust: trusted
+      - pool-group: nss-1
+      - pool-group: nss-3
+        chain-of-trust: trusted
       - pool-group: glean-1
       - pool-group: glean-3
         chain-of-trust: trusted
