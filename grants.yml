@@ -3114,6 +3114,7 @@
 # Scopes for running Translations training cycles and debugging
 - grant:
     - hooks:trigger-hook:project-translations/in-tree-action-*
+    - hooks:trigger-hook:project-translations/in-tree-pr-action-*
     - queue:create-task:low:translations-1/*
     - docker-worker:cache:translations-level-1*
     - generic-worker:cache:translations-level-1*
