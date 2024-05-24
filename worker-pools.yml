@@ -2426,7 +2426,10 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
+                caching: ReadOnly
                 createOption: FromImage
+                diffDiskSettings:
+                  option: Local
             hardwareProfile:
               vmSize: Standard_F8s_v2
             diagnosticsProfile:
