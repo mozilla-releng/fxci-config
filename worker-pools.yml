@@ -319,6 +319,10 @@ pools:
         implementation: generic-worker/worker-runner-linux-multi
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
+      - pool-group: mozillavpn-3
+        suffix: "-gcp-gw"
+        implementation: generic-worker/worker-runner-linux-multi
+        chain-of-trust: trusted
       - pool-group: adhoc-1
       - pool-group: adhoc-3
         chain-of-trust: trusted
