@@ -3000,45 +3000,6 @@ pools:
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
               - DeviceName: /dev/sdc
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-  - pool_id: mobile-1/bitrise-gcp
-    description: Level 1 workers to interact with bitrise.io (iOS CI)
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      image: monopacker-docker-worker-current
-      minCapacity: 0
-      maxCapacity: 1  # We can only have 3 concurrent builds with the plan we pay. Let's not overload the queue with level 1 jobs
-      regions: [us-central1, us-west1]
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
-            - *scratch-disk
-          # No need for a big instance, it just delegates the heavy lifting to
-          # bitrise.
-          machine_type: n2-standard-2
-  - pool_id: mobile-3/bitrise-gcp
-    description: Level 3 workers to interact with bitrise.io (iOS CI)
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level3-gcp
-    config:
-      image: monopacker-docker-worker-trusted-current-gcp
-      minCapacity: 0
-      maxCapacity: 3  # We can only have 3 concurrent builds with the plan we pay
-      regions: [us-central1, us-west1]
-      security: trusted
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
-            - *scratch-disk
-          # No need for a big instance, it just delegates the heavy lifting to
-          # bitrise.
-          machine_type: n2-standard-2
   - pool_id: project-relman/relman-svc
     description: Release management workers
     owner: release+tc-workers@mozilla.com
