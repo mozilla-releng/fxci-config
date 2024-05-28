@@ -2387,7 +2387,10 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
+                caching: ReadOnly
                 createOption: FromImage
+                diffDiskSettings:
+                  option: Local
             hardwareProfile:
               vmSize: Standard_F8s_v2
             diagnosticsProfile:
@@ -2569,7 +2572,10 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
+                caching: ReadOnly
                 createOption: FromImage
+                diffDiskSettings:
+                  option: Local
             hardwareProfile:
               vmSize: Standard_NV12s_v3
             diagnosticsProfile:
@@ -2657,7 +2663,10 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
+                caching: ReadOnly
                 createOption: FromImage
+                diffDiskSettings:
+                  option: Local
             hardwareProfile:
               vmSize: Standard_F8s_v2
             diagnosticsProfile:
@@ -2745,11 +2754,11 @@ pools:
                 enableAutomaticUpdates: false
             storageProfile:
               osDisk:
-                diskSizeGB: 500
                 osType: Windows
-                managedDisk:
-                  storageAccountType: Premium_LRS
+                caching: ReadOnly
                 createOption: FromImage
+                diffDiskSettings:
+                  option: Local
             hardwareProfile:
               vmSize: Standard_F8s_v2
             diagnosticsProfile:
@@ -2791,11 +2800,11 @@ pools:
                 enableAutomaticUpdates: false
             storageProfile:
               osDisk:
-                diskSizeGB: 500
                 osType: Windows
-                managedDisk:
-                  storageAccountType: Premium_LRS
+                caching: ReadOnly
                 createOption: FromImage
+                diffDiskSettings:
+                  option: Local
             hardwareProfile:
               vmSize: Standard_NV12s_v3
             diagnosticsProfile:
