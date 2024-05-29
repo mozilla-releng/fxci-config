@@ -540,6 +540,16 @@
         level: [3]
         alias: [mozilla-esr115, mozilla-release, mozilla-beta]
 
+- grant:
+    - project:releng:googleplay:product:fenix
+    - project:releng:googleplay:product:focus-android
+  to:
+    - projects:
+        job: [action:googleplay]
+        trust_domain: gecko
+        level: [3]
+        alias: [mozilla-central]
+
 # pushing RCs to beta
 - grant:
     - project:releng:flathub:firefox:stable

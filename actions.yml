@@ -25,6 +25,7 @@
     - release-promotion
     - retrigger-decision
     - scriptworker-canary
+    - googleplay
 
 - trust_domain: comm
   levels: [1, 2, 3]
