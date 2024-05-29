@@ -741,6 +741,13 @@
     - groups:
         - shipit_firefox
 
+# bug 1899553: grant relman access to trigger google play pushes
+- grant:
+    - hooks:trigger-hook:project-gecko/in-tree-action-3-googleplay/*
+  to:
+    - groups:
+        - shipit_firefox
+
 - grant:
     # Bug 1523321: Token for mirroring webrender to github
     - secrets:get:project/webrender-ci/wrupdater-github-token
