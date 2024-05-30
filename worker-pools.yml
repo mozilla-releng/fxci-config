@@ -22,7 +22,7 @@ worker-defaults:
       docker-worker:
         shutdown:
           enabled: true
-          afterIdleSeconds: 900
+          afterIdleSeconds: 120
         deviceManagement:
           hostSharedMemory: {enabled: false}
           kvm: {enabled: false}
