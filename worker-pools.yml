@@ -439,7 +439,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 1000
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
@@ -471,7 +471,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 1000
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
@@ -499,7 +499,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 1000
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
@@ -528,7 +528,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 1000
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
@@ -556,7 +556,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 1000
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
@@ -590,7 +590,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 1000
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
@@ -620,7 +620,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 1000
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
@@ -651,7 +651,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 1000
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
@@ -1341,7 +1341,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 400
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -1372,7 +1372,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 400
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -1403,7 +1403,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 400
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -1435,7 +1435,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 400
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -1468,7 +1468,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 400
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -1501,7 +1501,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 400
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
