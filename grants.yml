@@ -1957,6 +1957,8 @@
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-t-*
     - project:mozillavpn:releng:beetmover:action:push-to-candidates
     - project:mozillavpn:releng:beetmover:bucket:dep
+    - project:mozillavpn:releng:beetmover:action:import-from-gcs-to-artifact-registry
+    - project:mozillavpn:releng:beetmover:apt-repo:dep
     - project:mozillavpn:releng:signing:cert:dep-signing
   to:
     - project:
