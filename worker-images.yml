@@ -62,7 +62,7 @@ monopacker-ubuntu-2204-wayland-arm64:
 #   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-googlecompute-2024-01-19t17-35-11z
 #   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-googlecompute-2024-01-19t18-10-08z
 monopacker-ubuntu-2204-wayland-aerickson-testing:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-05-15t21-40-31z
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-05-31t15-18-14z
 
 # vm images built by hand
 handbuilt-ubuntu-2204-wayland-vm:
