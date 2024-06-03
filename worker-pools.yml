@@ -2007,7 +2007,10 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
+                caching: ReadOnly
                 createOption: FromImage
+                diffDiskSettings:
+                  option: Local
             hardwareProfile:
               vmSize: Standard_F32s_v2
             diagnosticsProfile:
