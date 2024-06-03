@@ -601,7 +601,7 @@ pools:
           disks:
             - <<: *persistent-disk
               diskSizeGb: 1024
-          machine_type: n2-custom-32-262144
+          machine_type: n2-custom-32-524288
   - pool_id: '{pool-group}/b-linux-large-gcp-1tb-standard'
     description: Big workers with big disks - intended for Firefox Translations only
     owner: release+tc-workers@mozilla.com
@@ -631,7 +631,7 @@ pools:
           disks:
             - <<: *persistent-disk
               diskSizeGb: 1024
-          machine_type: n2-custom-32-262144
+          machine_type: n2-custom-32-524288
           scheduling: standard
   - pool_id: '{pool-group}/b-linux-large-gcp-300gb'
     description: Big workers with big disks - intended for Firefox Translations only
