@@ -1232,8 +1232,11 @@ pools:
           machine_type: n2-standard-2
           advancedMachineFeatures:
             enableNestedVirtualization: true
-  - pool_id: 'gecko-t/t-linux-2204-wayland'  # Bug 1874877
-    description: Worker for testing Wayland on Ubuntu 22.04
+  - pool_id: '{pool-group}/t-linux-2204-wayland'  # Bug 1874877
+    variants:
+      - pool-group: gecko-t
+      - pool-group: mozilla-t
+    description: Worker for Wayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
