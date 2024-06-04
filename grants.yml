@@ -320,6 +320,7 @@
     - project:releng:ship-it:action:create-new-release
     - project:releng:ship-it:action:mark-as-shipped
     - project:releng:ship-it:action:mark-as-started
+    - project:releng:ship-it:action:update-product-channel-version
     - project:releng:ship-it:server:staging
     - project:releng:signing:cert:dep-signing
     - project:releng:signing:format:*
@@ -383,6 +384,7 @@
     - project:releng:ship-it:action:create-new-release
     - project:releng:ship-it:action:mark-as-shipped
     - project:releng:ship-it:action:mark-as-started
+    - project:releng:ship-it:action:update-product-channel-version
     - project:releng:ship-it:server:staging
     - project:releng:signing:cert:dep-signing
     - project:releng:signing:format:*
