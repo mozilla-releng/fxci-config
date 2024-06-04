@@ -258,7 +258,6 @@
 # in these grants, prefer to add new grants as separate stanzas in this file,
 # and remove scopes from these grants.
 
-# moz-tree:level:1:*
 - grant:
     - docker-worker:capability:device:loopbackAudio
     - docker-worker:capability:device:loopbackVideo
@@ -282,7 +281,6 @@
         feature: gecko-roles
         level: [1, 2, 3]
 
-# moz-tree:level:1:gecko
 - grant:
     - generic-worker:os-group:gecko-t/t-win7-32/Administrators
     - generic-worker:os-group:gecko-t/t-win7-32-beta/Administrators
@@ -349,7 +347,6 @@
     - projects:
         alias: try
 
-# moz-tree:level:1:gecko (staging deployment)
 - grant:
     - generic-worker:allow-rdp:gecko-1/b-win*
     - generic-worker:allow-rdp:gecko-t/t-win*
@@ -402,7 +399,6 @@
         trust_domain: gecko
   environments: staging
 
-# moz-tree:level:1:comm
 - grant:
     - project:comm:thunderbird:releng:balrog:action:*
     - project:comm:thunderbird:releng:balrog:server:dep
@@ -428,7 +424,6 @@
         level: [1, 2, 3]
         trust_domain: comm
 
-# moz-tree:level:2:*
 - grant:
     - secrets:get:project/taskcluster/gecko/build/level-2/*
     - secrets:get:project/civet/github-deploy-key
