@@ -832,7 +832,7 @@ pools:
           default:
       minCapacity:
         by-pool-group:
-          gecko-[13]: 5
+          gecko-[13]: 1
           default: 0
       maxCapacity:
         by-pool-group:
