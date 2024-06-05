@@ -343,10 +343,7 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      minCapacity:
-        by-pool-group:
-          glean-.*: 2
-          default: 0
+      minCapacity: 0
       maxCapacity:
         by-pool-group:
           mobile-.*: 50
