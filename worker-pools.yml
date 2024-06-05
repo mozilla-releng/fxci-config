@@ -162,6 +162,9 @@ pools:
             - *scratch-disk
           machine_type: n2-standard-2
           capacityPerInstance: 8
+      worker-config:
+        shutdown:
+          afterIdleSeconds: 86400
   - pool_id: '{pool-group}/b-linux-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
