@@ -847,6 +847,12 @@ pools:
             - *scratch-disk
           machine_type: n2-standard-4
           capacityPerInstance: 2
+      worker-config:
+        shutdown:
+          afterIdleSeconds:
+            by-pool-group:
+                gecko-[13]: 600
+                default: 120
   - pool_id: '{pool-group}/decision-gcp'
     description: Worker for Firefox automation
     owner: release+tc-workers@mozilla.com
@@ -914,6 +920,12 @@ pools:
             - *scratch-disk
           machine_type: n2-standard-2
           capacityPerInstance: 2
+      worker-config:
+        shutdown:
+          afterIdleSeconds:
+            by-pool-group:
+              '(app-services|glean|mozillavpn|mobile|mozilla)-1': 600
+              default: 120
   - pool_id: '{pool-group}/images-gcp'
     description: 'Builds docker images; NOTE: capacity set to 1 instead of 3
       to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
