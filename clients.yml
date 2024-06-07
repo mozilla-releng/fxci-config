@@ -301,6 +301,13 @@ project/releng/generic-worker/datacenter-gecko-t-linux:
     - queue:worker-id:mdc2/t-linux*
     - queue:worker-id:mdc2/ms*
     - queue:worker-id:mdc2/moon*
+project/releng/generic-worker/datacenter-gecko-t-linux-netperf:
+  description: Datacenter Linux64 worker for network performance testing.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-t-linux*
+    - queue:worker-id:mdc1/t-linux*
+    - queue:worker-id:mdc1/ms*
+    - queue:worker-id:mdc1/moon*
 project/releng/generic-worker/datacenter-gecko-t-linux-beta:
   description: testing non-perf tasks on linux hardware workers
   scopes:
