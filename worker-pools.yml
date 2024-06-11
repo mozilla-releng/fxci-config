@@ -448,10 +448,6 @@ pools:
           disks:
             - <<: *persistent-disk
               diskSizeGb: 60
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
           machine_type: n2-custom-32-262144
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g-1tb'
     description: Big workers with big disks - intended for Firefox Translations only
