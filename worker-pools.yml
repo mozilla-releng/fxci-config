@@ -3113,6 +3113,34 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-4
+  - pool_id: '{pool-group}/linux-gw-gcp'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: code-analysis-1
+      - pool-group: code-analysis-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-central1, us-west1]
+      image: monopacker-ubuntu-2204-wayland
+      security:
+        by-chain-of-trust:
+          trusted: trusted
+          default:
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 75
+          machine_type: n2-standard-4
   - pool_id: performance-hardware/gecko-t-fxrecorder
     description: Desktop startup recorder machines
     owner: barret@mozilla.com
