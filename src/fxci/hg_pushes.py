@@ -67,9 +67,11 @@ async def replay_hg_push(*, alias, revision):
                 "heads": [revision],
                 "pushlog_pushes": [
                     {
-                        "user": push_info["user"]
-                        if "@" in push_info["user"]
-                        else push_info["user"] + "@noreply.mozilla.org",
+                        "user": (
+                            push_info["user"]
+                            if "@" in push_info["user"]
+                            else push_info["user"] + "@noreply.mozilla.org"
+                        ),
                         "pushid": int(push_id),
                         "time": push_info["date"],
                     }

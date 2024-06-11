@@ -385,14 +385,14 @@ def get_google_provider_config(
                         launch_config["workerConfig"]["genericWorker"][
                             "config"
                         ].setdefault("wstServerURL", google_config["wst_server_url"])
-                launch_config[
-                    "machineType"
-                ] = f"zones/{zone}/machineTypes/{launch_config.pop('machine_type')}"
+                launch_config["machineType"] = (
+                    f"zones/{zone}/machineTypes/{launch_config.pop('machine_type')}"
+                )
 
                 for acc in launch_config.get("guestAccelerators", []):
-                    acc[
-                        "acceleratorType"
-                    ] = f"zones/{zone}/acceleratorTypes/{acc['acceleratorType']}"
+                    acc["acceleratorType"] = (
+                        f"zones/{zone}/acceleratorTypes/{acc['acceleratorType']}"
+                    )
 
                 scheduling_options = {
                     "preemptible": {
