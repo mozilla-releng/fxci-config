@@ -851,8 +851,8 @@ pools:
         shutdown:
           afterIdleSeconds:
             by-pool-group:
-                gecko-[13]: 600
-                default: 120
+              gecko-[13]: 600
+              default: 120
   - pool_id: '{pool-group}/decision-gcp'
     description: Worker for Firefox automation
     owner: release+tc-workers@mozilla.com
@@ -1223,8 +1223,8 @@ pools:
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     variants:
-        - suffix: ''
-        - suffix: '-snap'
+      - suffix: ''
+      - suffix: '-snap'
     provider_id: fxci-level1-gcp
     config:
       worker-config:
