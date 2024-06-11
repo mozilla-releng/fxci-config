@@ -924,6 +924,7 @@ project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-1:
 project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-3:
   description: ''
   scopes:
+    - project:releng:services/shipit_api/update_product_channel_version/firefox
     - project:releng:services/shipit_api/add_release/devedition
     - project:releng:services/shipit_api/add_release/fennec
     - project:releng:services/shipit_api/add_release/firefox
