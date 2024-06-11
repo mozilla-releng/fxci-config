@@ -291,7 +291,7 @@
     - generic-worker:os-group:gecko-t/win11-64-2009-alpha/Administrators
     - generic-worker:os-group:gecko-t/t-linux-2204-wayland-experimental/audio
     - generic-worker:os-group:gecko-t/t-linux-2204-wayland-experimental/video
-    - generic-worker:os-group:gecko-t/t-linux-2204-wayland-root-exp/snap_sudo
+    - generic-worker:os-group:gecko-t/t-linux-2204-wayland-snap/snap_sudo
     - generic-worker:run-as-administrator:gecko-t/t-win10-64
     - generic-worker:run-as-administrator:gecko-t/t-win10-64-alpha
     - generic-worker:run-as-administrator:gecko-t/t-win10-64-beta
@@ -339,13 +339,6 @@
         feature: gecko-roles
         level: [1, 2, 3]
         trust_domain: gecko
-
-- grant:
-    - generic-worker:os-group:gecko-t/t-linux-2204-wayland-exp-alissy/snap_sudo # bug 1891721
-    - generic-worker:os-group:gecko-t/t-linux-2204-wayland-exp-a2/snap_sudo # bug 1891721
-  to:
-    - projects:
-        alias: try
 
 - grant:
     - generic-worker:allow-rdp:gecko-1/b-win*
