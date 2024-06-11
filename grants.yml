@@ -3162,6 +3162,16 @@
         job:
           - branch:*
 
+- grant:
+    - project:translations:releng:beetmover:action:upload-translations-artifacts
+  to:
+    - project:
+        alias:
+          - firefox-translations-training
+    - project:
+        alias:
+          - staging-firefox-translations-training
+
 # allow bytesized to trigger nightly releases on pine
 - grant:
     - hooks:trigger-hook:project-releng/cron-task-projects-pine/*
