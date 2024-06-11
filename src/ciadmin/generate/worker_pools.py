@@ -481,8 +481,16 @@ def generate_pool_variants(worker_pools, environment):
                 else:
                     del config[key]
 
-        if config.get("worker-config", {}).get("shutdown", {}).get("afterIdleSeconds", None):
-            value = evaluate_keyed_by(config["worker-config"]["shutdown"]["afterIdleSeconds"], "worker-config.shutdown.afterIdleSeconds", attributes)
+        if (
+            config.get("worker-config", {})
+            .get("shutdown", {})
+            .get("afterIdleSeconds", None)
+        ):
+            value = evaluate_keyed_by(
+                config["worker-config"]["shutdown"]["afterIdleSeconds"],
+                "worker-config.shutdown.afterIdleSeconds",
+                attributes,
+            )
             if value is not None:
                 config["worker-config"]["shutdown"]["afterIdleSeconds"] = value
             else:
