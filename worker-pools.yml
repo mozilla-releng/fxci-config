@@ -3011,25 +3011,6 @@ pools:
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
               - DeviceName: /dev/sdc
                 Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-  - pool_id: project-relman/relman-svc
-    description: Release management workers
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-current
-      minCapacity: 0
-      maxCapacity: 2
-      worker-config:
-        shutdown:
-          afterIdleSeconds: 15
-      instance_types:
-        - machine_type: n2-standard-2
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
-            - *scratch-disk
   - pool_id: code-review/bot-gcp
     description: Worker for the code-review bot.
     owner: release+tc-workers@mozilla.com

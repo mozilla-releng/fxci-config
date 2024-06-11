@@ -2719,26 +2719,6 @@
     - roles:
         - mozillians-group:code-coverage-developers
 
-# Bugzilla dashboard runtime roles
-- grant:
-    - hooks:trigger-hook:project-relman/bugzilla-dashboard-backend-testing
-    - hooks:trigger-hook:project-relman/bugzilla-dashboard-backend-production
-    - secrets:get:project/relman/bugzilla-dashboard/*
-    - secrets:set:project/relman/bugzilla-dashboard/*
-  to:
-    - roles:
-        - mozillians-group:bugzilla-dashboard-developers
-
-# Grant access to Bugzilla dashboard's specific private artifacts such as
-# `product_component_data.json` to all Mozilla employees
-# Also grand access to the org payload as a secret
-- grant:
-    - queue:get-artifact:project/relman/bugzilla-dashboard/*
-    - secrets:get:project/relman/bugzilla-dashboard/org
-  to:
-    - groups:
-        - team_moco
-
 # Bug 1597646 - Grant access to secrets to code-review developers
 # Bug 1608262 - Grant task creation rights with the code-review/bot worker types to code-review developers.
 - grant:
