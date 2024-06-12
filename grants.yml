@@ -528,7 +528,7 @@
         job: [action:release-promotion]
         trust_domain: gecko
         level: [3]
-        alias: [mozilla-esr115, mozilla-release, mozilla-beta]
+        alias: [mozilla-esr128, mozilla-esr115, mozilla-release, mozilla-beta]
 
 - grant:
     - project:releng:googleplay:product:fenix
