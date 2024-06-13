@@ -402,6 +402,7 @@
     - project:comm:thunderbird:releng:bouncer:server:staging-nazgul
     - project:comm:thunderbird:releng:ship-it:action:mark-as-shipped
     - project:comm:thunderbird:releng:ship-it:action:mark-as-started
+    - project:comm:thunderbird:releng:ship-it:action:update-product-channel-version
     - project:comm:thunderbird:releng:ship-it:server:staging
     - project:comm:thunderbird:releng:signing:cert:dep-signing
     - project:comm:thunderbird:releng:signing:format:*

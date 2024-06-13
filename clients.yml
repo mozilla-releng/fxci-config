@@ -898,6 +898,7 @@ project/releng/scriptworker/v2/shipit/dev/firefoxci-gecko-1:
 project/releng/scriptworker/v2/shipit/prod/firefoxci-comm-1:
   description: ''
   scopes:
+    - project:releng:services/shipit_api/update_product_channel_version/thunderbird
     - project:releng:services/shipit_api/rebuild_product_details
     - project:releng:services/shipit_api/update_release_status
     - queue:claim-work:scriptworker-k8s/comm-1-shipit
@@ -905,6 +906,7 @@ project/releng/scriptworker/v2/shipit/prod/firefoxci-comm-1:
 project/releng/scriptworker/v2/shipit/prod/firefoxci-comm-3:
   description: ''
   scopes:
+    - project:releng:services/shipit_api/update_product_channel_version/thunderbird
     - project:releng:services/shipit_api/rebuild_product_details
     - project:releng:services/shipit_api/update_release_status
     - queue:claim-work:scriptworker-k8s/comm-3-shipit
