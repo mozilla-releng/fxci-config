@@ -199,7 +199,7 @@ ronin-b3-windows2022-prod:
 # Windows 10
 ronin-t-windows10-64-2009-prod:
   azure2:
-    deployment_id: 72a3479
+    deployment_id: 9108af2
     canada-central: win10-64-2009-canadacentral-win10-22h2-avd
     central-india: win10-64-2009-centralindia-win10-22h2-avd
     central-us: win10-64-2009-centralus-win10-22h2-avd
@@ -250,7 +250,7 @@ ronin-t-windows11-64-2009-alpha:
     uk-south: win11-64-2009-uksouth-win11-22h2-avd
 ronin-t-windows11-64-2009-prod:
   azure2:
-    deployment_id: 72a3479
+    deployment_id: 9108af2
     canada-central: win11-64-2009-canadacentral-win11-22h2-avd
     central-india: win11-64-2009-centralindia-win11-22h2-avd
     central-us: win11-64-2009-centralus-win11-22h2-avd
