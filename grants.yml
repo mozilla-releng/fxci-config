@@ -1048,6 +1048,7 @@
     - queue:create-task:low:mozilla-1/*
     - queue:create-task:low:mozilla-t/*
     - queue:get-artifact:private/docker-worker/shell.html
+    - queue:get-artifact:private/generic-worker/shell.html
   to:
     - groups:
         - team_moco
