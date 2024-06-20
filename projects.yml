@@ -537,6 +537,20 @@ reps:
     taskgraph-actions: true
     trust-domain-scopes: true
 
+redo:
+  repo: https://github.com/mozilla-releng/redo
+  repo_type: git
+  trust_domain: mozilla
+  trust_project: redo
+  default_branch: main
+  level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 mozilla-linux-pkg-manager:
   repo: https://github.com/mozilla-releng/mozilla-linux-pkg-manager
   repo_type: git
