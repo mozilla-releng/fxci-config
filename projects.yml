@@ -750,6 +750,7 @@ tooltool:
   features:
     github-pull-request:
       policy: public
+    github-taskgraph: true
     taskgraph-actions: true
 
 treestatus:
