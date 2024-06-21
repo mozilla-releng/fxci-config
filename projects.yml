@@ -746,12 +746,14 @@ tooltool:
   repo_type: git
   default_branch: master
   trust_domain: releng
+  trust_project: tooltool
   level: 3
   features:
     github-pull-request:
       policy: public
     github-taskgraph: true
     taskgraph-actions: true
+    trust-domain-scopes: true
 
 treestatus:
   repo: https://github.com/mozilla-releng/treestatus
