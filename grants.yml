@@ -2993,3 +2993,11 @@
   to:
     - roles:
         - mozillians-group:windows-laf-token-managers
+
+- grant:
+    - notify:slack-channel:*
+    - queue:route:notify.slack-channel.*
+  to:
+    - project:
+        alias:
+          - fx-desktop-qa-automation
