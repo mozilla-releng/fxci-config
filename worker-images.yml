@@ -35,6 +35,10 @@ monopacker-docker-worker-gcp-current: monopacker-docker-worker-gcp-20230613
 monopacker-docker-worker-relops528: monopacker-docker-worker-2023-04-13-relops528
 monopacker-docker-worker-trusted-bug1874006: monopacker-docker-worker-trusted-gcp-2024-02-05
 
+monopacker-docker-worker-relops993: monopacker-docker-worker-2024-06-14-relops993
+monopacker-docker-worker-trusted-relops993: monopacker-docker-worker-trusted-2024-06-14-relops993
+handbuild-docker-worker-tester-relops993: handbuilt-docker-worker-tester-20240614
+
 relops-image-builder-current: relops-image-builder-pre
 
 # monopacker docker-worker images
@@ -42,6 +46,10 @@ monopacker-docker-worker-gcp-20230613:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13
 monopacker-docker-worker-trusted-gcp-2024-02-05:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z
+monopacker-docker-worker-trusted-2024-06-14-relops993:
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-06-14t20-09-34z
+monopacker-docker-worker-2024-06-14-relops993:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2024-06-14t19-52-20z
 monopacker-docker-worker-2023-12-04t22-11-57z:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2023-12-04t22-11-57z
 monopacker-docker-worker-2023-04-13-relops528:
@@ -68,7 +76,13 @@ handbuilt-ubuntu-2204-wayland-vm:
 # d-w tester images are still handbuilt
 handbuilt-docker-worker-tester-20240325:
   # built off of projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13
+  # includes fixes to handle instances with no scratch disks attached
+  # - see https://github.com/mozilla-platform-ops/relops-infra/tree/master/docker-worker-test-image
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25
+handbuilt-docker-worker-tester-20240614:
+  # built off of projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25
+  # includes new livelog certificate, see https://mozilla-hub.atlassian.net/browse/RELOPS-993
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14
 
 # generic-worker images
 # Azure 2012 images

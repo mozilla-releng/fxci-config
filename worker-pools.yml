@@ -3019,6 +3019,61 @@ pools:
               type: SCRATCH
               interface: NVME
           machine_type: n2-standard-2
+  # relops993(aerickson): d-w tester (with scratch disk)
+  - pool_id: '{pool-group}/t-linux-large-gcp-relops993'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+    email_on_error: true
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 500
+      regions: [us-central1, us-west1]
+      image: handbuild-docker-worker-tester-relops993
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 75
+                sourceImage: <image>
+              type: PERSISTENT
+            - autoDelete: true
+              initializeParams:
+                diskType: diskTypes/local-ssd
+              type: SCRATCH
+              interface: NVME
+          machine_type: n2-standard-2
+  # relops993(aerickson): d-w tester (without scratch disk)
+  - pool_id: '{pool-group}/t-linux-large-noscratch-gcp-relops993'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+    email_on_error: true
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 500
+      regions: [us-central1, us-west1]
+      image: handbuild-docker-worker-tester-relops993
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - autoDelete: true
+              boot: true
+              initializeParams:
+                diskSizeGb: 75
+                sourceImage: <image>
+              type: PERSISTENT
+          machine_type: n2-standard-2
   - pool_id: '{pool-group}/t-linux-large-noscratch-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -3167,6 +3222,38 @@ pools:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
+      security:
+        by-chain-of-trust:
+          trusted: trusted
+          default:
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 75
+            - *scratch-disk
+          machine_type: n2-standard-4
+  # relops993(aerickson): d-w builders (l1 and l3)
+  - pool_id: '{pool-group}/linux-gcp-relops993'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: releng-1
+      - pool-group: releng-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      regions: [us-central1, us-west1]
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-relops993
+          default: monopacker-docker-worker-relops993
       security:
         by-chain-of-trust:
           trusted: trusted
