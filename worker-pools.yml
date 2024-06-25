@@ -1568,6 +1568,37 @@ pools:
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
+  - pool_id: '{pool-group}/b-linux-v100-gpu-4-bug1904569'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
+            enableInteractive: true
+      minCapacity: 0
+      maxCapacity: 20
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1]
+      image: monopacker-translations-worker-bug1904569
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 75
+          machine_type: n1-highmem-8
+          guestAccelerators:
+            - acceleratorCount: 4
+              acceleratorType: nvidia-tesla-v100
   - pool_id: 'translations-1/b-linux-aerickson-test'
     description: Worker for testing new Translations images.
     owner: aerickson@mozilla.com
