@@ -26,26 +26,6 @@ task-defaults:
         checkout: true
 
 tasks:
-    check-staging:
-        description: "Run `tc-admin check` against the staging cluster to validate the latest changes"
-        treeherder:
-            symbol: check(staging)
-        run:
-            command: >-
-                pip install --user -r requirements/base.txt &&
-                pip install --user --no-deps . &&
-                TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.cloudops.mozgcp.net
-                tc-admin check --environment staging
-    check-firefoxci:
-        description: "Run `tc-admin check` against the firefoxci cluster to validate the latest changes"
-        treeherder:
-            symbol: check(firefoxci)
-        run:
-            command: >-
-                pip install --user -r requirements/base.txt &&
-                pip install --user --no-deps . &&
-                TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com
-                tc-admin check --environment firefoxci
     unit-ciadmin:
         description: "Run ciadmin `unit tests` to validate the latest changes"
         treeherder:
