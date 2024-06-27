@@ -1,0 +1,48 @@
+name: deploy
+on:
+  push:
+    branches: ["main", "migration"]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    environment: check-${{matrix.environment}}
+    strategy:
+      matrix:
+        environment: ["staging", "firefoxci"]
+    env:
+      TASKCLUSTER_ROOT_URL: ${{vars.TASKCLUSTER_ROOT_URL}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements/test.txt
+      - name: Run checks
+        run: tc-admin check --environment ${{matrix.environment}}
+
+  apply:
+    runs-on: ubuntu-latest
+    needs: check
+    environment: apply-${{matrix.environment}}
+    strategy:
+      matrix:
+        environment: ["staging", "firefoxci"]
+    env:
+      TASKCLUSTER_ROOT_URL: ${{vars.TASKCLUSTER_ROOT_URL}}
+      TASKCLUSTER_CLIENT_ID: ${{vars.TASKCLUSTER_CLIENT_ID}}
+      TASKCLUSTER_ACCESS_TOKEN: ${{secrets.TASKCLUSTER_ACCESS_TOKEN}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements/base.txt
+      - name: Deploy environment
+        run: tc-admin apply --environment ${{matrix.environment}}
