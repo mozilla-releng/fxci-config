@@ -807,37 +807,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 300
           machine_type: n2-custom-32-262144
-  - pool_id: '{pool-group}/b-linux-large-gcp'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: mobile-1
-      - pool-group: mobile-3
-        chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          mobile-1: 200
-          mobile-3: 100
-          default: 10
-      regions: [us-central1, us-west1]
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
-            - *scratch-disk
-          machine_type: n2-standard-8
   - pool_id: '{pool-group}/b-linux-medium-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -882,9 +851,6 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
-      - pool-group: mobile-1
-      - pool-group: mobile-3
-        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -895,7 +861,6 @@ pools:
         by-pool-group:
           gecko-.*: 1000
           comm-.*: 20
-          mobile-.*: 100
           default: 10
       regions: [us-central1, us-west1]
       image:
