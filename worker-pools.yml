@@ -1138,17 +1138,6 @@ pools:
       regions: [us-central1, us-west1]
       instance_types:
         by-pool-group:
-          mobile-.*:
-            - minCpuPlatform: Intel Cascadelake
-              disks:
-                - <<: *persistent-disk
-                  diskSizeGb: 75
-                - *scratch-disk
-                - *scratch-disk
-                - *scratch-disk
-                - *scratch-disk
-              machine_type: n2-standard-32
-              capacityPerInstance: 1
           (taskgraph|ci)-.*:
             - minCpuPlatform: Intel Cascadelake
               disks:
