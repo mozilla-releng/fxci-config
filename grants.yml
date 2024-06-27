@@ -2064,6 +2064,7 @@
     - project:releng:bouncer:server:production-nazgul
     - project:releng:googleplay:product:fenix
     - project:releng:googleplay:product:focus-android
+    - project:releng:ship-it:server:production
     - project:releng:signing:cert:nightly-signing
     - project:releng:signing:cert:release-apple-notarization
     - project:releng:signing:cert:production-signing
@@ -2079,6 +2080,7 @@
     - project:comm:thunderbird:releng:balrog:server:nightly
     - project:comm:thunderbird:releng:beetmover:bucket:nightly
     - project:comm:thunderbird:releng:bouncer:server:production
+    - project:comm:thunderbird:releng:ship-it:server:production
     - project:comm:thunderbird:releng:signing:cert:nightly-signing
     - project:comm:thunderbird:releng:signing:cert:release-apple-notarization
   to:
