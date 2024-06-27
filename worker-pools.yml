@@ -210,8 +210,6 @@ pools:
               diskSizeGb: 20
             - *scratch-disk
             - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
           machine_type: c2-standard-16
   - pool_id: '{pool-group}/b-linux-gcp-test-bug-1882320'
     description: Worker for Firefox automation.

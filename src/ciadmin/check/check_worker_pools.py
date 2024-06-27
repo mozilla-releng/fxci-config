@@ -131,21 +131,7 @@ async def check_gcp_ssds():
     """This test aims to avoid requesting unnecessary SSDs."""
     environment = await Environment.current()
     worker_pools = await WorkerPoolConfig.fetch_all()
-    ignore = tuple(
-        f"{group}/b-linux-gcp"
-        for group in (
-            "gecko-1",
-            "gecko-2",
-            "gecko-3",
-            "comm-1",
-            "comm-2",
-            "comm-3",
-            "app-services-1",
-            "app-services-3",
-            "mozillaonline-1",
-            "mozillaonline-3",
-        )
-    )
+    ignore = ()
     errors = []
 
     for pool in generate_pool_variants(worker_pools, environment):
