@@ -369,14 +369,14 @@ pools:
               disks:
                 - <<: *persistent-disk
                   diskSizeGb: 60
-              machine_type: n2-standard-4
+              machine_type: c2-standard-4
           default:
             - minCpuPlatform: Intel Cascadelake
               disks:
                 - <<: *persistent-disk
                   diskSizeGb: 20
                 - *scratch-disk
-              machine_type: n2-standard-4
+              machine_type: c2-standard-4
   - pool_id: '{pool-group}/b-linux-large{suffix}'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
