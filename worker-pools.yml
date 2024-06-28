@@ -866,7 +866,7 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 20
             - *scratch-disk
-          machine_type: n2-standard-8
+          machine_type: c2-standard-8
   - pool_id: '{pool-group}/b-linux-xlarge-gcp'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
