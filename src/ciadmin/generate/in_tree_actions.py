@@ -4,7 +4,9 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+import asyncio
 import datetime
+import functools
 import hashlib
 import textwrap
 
@@ -48,69 +50,59 @@ async def hash_taskcluster_ymls():
         else:
             return False
 
-    tcyml_projects = list(filter(should_hash, projects))
-    futures = []
-    for p in tcyml_projects:
-        branch_futures = {}
-        for b in p.branches:
-            # Can't fetch a .taskcluster.yml for a globbed branch
-            # TODO: perhaps we should do this for partly globbed branches,
-            # eg: release* ?
-            # we'd have to fetch that list from the server to do that
-            if "*" not in b.name:
-                branch_futures[b.name] = tcyml.get(
-                    p.repo, repo_type=p.repo_type, default_branch=b.name
-                )
-
-        if p.default_branch not in branch_futures:
-            branch_futures[p.default_branch] = tcyml.get(
-                p.repo, repo_type=p.repo_type, default_branch=p.default_branch
-            )
-
-        futures.append(branch_futures)
-
-    tcymls = []
-    for branches in futures:
-        branch_tcymls = {}
-        for b in branches:
-            branch_tcymls[b] = await branches[b]
-
-        tcymls.append(branch_tcymls)
-
     # hash the value of this .taskcluster.yml.  Note that this must match the
     # hashing in taskgraph/actions/registry.py
     def hash(val):
         return hashlib.sha256(val).hexdigest()[:10]
 
+    tcyml_projects = list(filter(should_hash, projects))
+    futures = []
     rv = {}
-    for project, branch_tcymls in zip(tcyml_projects, tcymls):
-        for branch_name, tcy in branch_tcymls.items():
-            # some ancient projects have no .taskcluster.yml
-            if not tcy:
-                continue
+    for p in tcyml_projects:
+        rv[p.alias] = {}
 
-            # some old projects have .taskcluster.yml's that are not valid YAML
-            # (back in the day, mozilla-taskcluster used mustache to templatize
-            # the text before parsing it..). Ignore those projects.
-            try:
-                parsed = yaml.safe_load(tcy)
-            except Exception:
-                continue
+        for b in set([b.name for b in p.branches] + [p.default_branch]):
+            # Can't fetch a .taskcluster.yml for a globbed branch
+            # TODO: perhaps we should do this for partly globbed branches,
+            # eg: release* ?
+            # we'd have to fetch that list from the server to do that
+            if "*" not in b:
 
-            # some slightly less old projects have {tasks: $let: .., in: [..]} instead
-            # of the expected {tasks: [{$let: .., in: ..}]}.  Those can be ignored too.
-            if not isinstance(parsed["tasks"], list):
-                continue
+                def process(project, branch_name, task):
+                    tcy = task.result()
 
-            if project.alias not in rv:
-                rv[project.alias] = {}
+                    # some ancient projects have no .taskcluster.yml
+                    if not tcy:
+                        return
 
-            rv[project.alias][branch_name] = {
-                "parsed": parsed,
-                "hash": hash(tcy),
-                "level": project.get_level(branch_name),
-                "alias": project.alias,
-            }
+                    # some old projects have .taskcluster.yml's that are not valid YAML
+                    # (back in the day, mozilla-taskcluster used mustache to templatize
+                    # the text before parsing it..). Ignore those projects.
+                    try:
+                        parsed = yaml.safe_load(tcy)
+                    except Exception:
+                        return
+
+                    # some slightly less old projects have
+                    # {tasks: $let: .., in: [..]} instead of the expected
+                    # {tasks: [{$let: .., in: ..}]}.  Those can be ignored too.
+                    if not isinstance(parsed["tasks"], list):
+                        return
+
+                    rv[project.alias][branch_name] = {
+                        "parsed": parsed,
+                        "hash": hash(tcy),
+                        "level": project.get_level(branch_name),
+                        "alias": project.alias,
+                    }
+
+                future = asyncio.ensure_future(
+                    tcyml.get(p.repo, repo_type=p.repo_type, default_branch=b)
+                )
+                future.add_done_callback(functools.partial(process, p, b))
+                futures.append(future)
+
+    await asyncio.gather(*futures)
     return rv
 
 
@@ -352,6 +344,10 @@ async def update_resources(resources):
                     continue
                 if project.trust_domain != action.trust_domain:
                     continue
+                if branch_name not in hashed_tcymls[project.alias]:
+                    # Branch didn't exist, or doesn't have a parseable tcyml
+                    continue
+
                 content, hash = (
                     hashed_tcymls[project.alias][branch_name]["parsed"],
                     hashed_tcymls[project.alias][branch_name]["hash"],
