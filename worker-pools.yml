@@ -1434,7 +1434,7 @@ pools:
           disks:
             - <<: *persistent-disk
               diskSizeGb: 75
-          machine_type: n2-standard-16
+          machine_type: c2-standard-16
           advancedMachineFeatures:
             enableNestedVirtualization: true
   - pool_id: '{pool-group}/b-linux-2204-kvm-gcp'  # Bug 1865886, https://mozilla-hub.atlassian.net/browse/RELOPS-805
@@ -1460,7 +1460,7 @@ pools:
           disks:
             - <<: *persistent-disk
               diskSizeGb: 75
-          machine_type: n2-standard-2  # larger n2? or c2-standard-16 or c3-standard-4?
+          machine_type: c2-standard-4
           advancedMachineFeatures:
             enableNestedVirtualization: true
   - pool_id: 'gecko-t/t-linux-vm-2204-wayland{suffix}'  # Bug 1756660 - These pools are experimental
