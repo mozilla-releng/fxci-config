@@ -616,7 +616,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 1000
+      maxCapacity: 16
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
@@ -673,7 +673,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 1000
+      maxCapacity: 8
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
@@ -732,7 +732,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 1000
+      maxCapacity: 16
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
@@ -793,7 +793,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 1000
+      maxCapacity: 8
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
