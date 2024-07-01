@@ -1464,7 +1464,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 400
+      maxCapacity: 200
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -1495,7 +1495,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 400
+      maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -1526,7 +1526,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 400
+      maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -1558,7 +1558,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 400
+      maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -1591,7 +1591,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 400
+      maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
@@ -1624,7 +1624,7 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 400
+      maxCapacity: 50
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1]
       image: monopacker-translations-worker
