@@ -3448,7 +3448,7 @@ pools:
           disks:
             - <<: *persistent-disk
               diskSizeGb: 75
-          machine_type: n2-standard-4
+          machine_type: c2-standard-4
   - pool_id: performance-hardware/gecko-t-fxrecorder
     description: Desktop startup recorder machines
     owner: barret@mozilla.com
