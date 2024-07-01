@@ -3420,7 +3420,7 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 75
             - *scratch-disk
-          machine_type: n2-standard-4
+          machine_type: c2-standard-4
   - pool_id: '{pool-group}/linux-gw-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
