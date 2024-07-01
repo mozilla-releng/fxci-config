@@ -1192,6 +1192,41 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-4
+  - pool_id: '{pool-group}/t-linux-xlarge{suffix}-gcp-b1862675'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: gecko-t
+        suffix: ''
+      - pool-group: gecko-t
+        suffix: -source
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-.*:
+            by-suffix:
+              '': 2500
+              -source: 200
+          nss-t: 100
+          comm-t: 10
+      regions: [us-central1, us-west1]
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-gcp-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 75
+            - *scratch-disk
+          machine_type: c2-standard-8
   - pool_id: '{pool-group}/t-linux-xlarge{suffix}-noscratch-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -1235,6 +1270,40 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 75
           machine_type: n2-standard-4
+  - pool_id: '{pool-group}/t-linux-xlarge{suffix}-ns-gcp-b1862675'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: gecko-t
+        suffix: ''
+      - pool-group: gecko-t
+        suffix: -source
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-.*:
+            by-suffix:
+              '': 2500
+              -source: 200
+          nss-t: 100
+          comm-t: 10
+      regions: [us-central1, us-west1]
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: handbuilt-docker-worker-tester-20240325
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 75
+          machine_type: c2-standard-8
   - pool_id: 'gecko-t/t-linux-kvm-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
