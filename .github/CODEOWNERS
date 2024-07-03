@@ -1,0 +1,3 @@
+worker-images.yml @mozilla-releng/relops
+worker-pools.yml @mozilla-releng/relops @mozilla-releng/releng
+* @mozilla-releng/releng
