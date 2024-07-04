@@ -3290,6 +3290,27 @@ pools:
                 sourceImage: <image>
               type: PERSISTENT
           machine_type: n2-standard-2
+  - pool_id: '{pool-group}/t-dagger-experimental'  # bug 1906337
+    description: Worker for running dagger.io pipelines in Taskcluster
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: mozilla-t
+    email_on_error: true
+    config:
+      minCapacity: 0
+      maxCapacity: 2
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-current
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 75
+          machine_type: n2-standard-2
+      worker-config:
+        dockerConfig:
+          allowPrivileged: true
   - pool_id: 'gecko-t/t-linux-large-hostub2204-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
