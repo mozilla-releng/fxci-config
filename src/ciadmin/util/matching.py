@@ -75,28 +75,26 @@ def grantee_instance(grantee):
         )
 
 
-def match(grantee_values, proj_value):
-    if grantee_values is None:
-        return True
-    if any(proj_value == grantee_value for grantee_value in grantee_values):
-        return True
-    return False
-
-
-def feature_match(features, project):
-    if features is None:
-        return True
-    for feature in features:
-        if feature.startswith("!"):
-            if project.feature(feature[1:]):
-                return False
-        else:
-            if not project.feature(feature):
-                return False
-    return True
-
-
 def project_match(grantee, project):
+    def match(grantee_values, proj_value):
+        if grantee_values is None:
+            return True
+        if any(proj_value == grantee_value for grantee_value in grantee_values):
+            return True
+        return False
+
+    def feature_match(features, project):
+        if features is None:
+            return True
+        for feature in features:
+            if feature.startswith("!"):
+                if project.feature(feature[1:]):
+                    return False
+            else:
+                if not project.feature(feature):
+                    return False
+        return True
+
     if not match(grantee.access, project.access):
         return False
     if not match(grantee.repo_type, project.repo_type):

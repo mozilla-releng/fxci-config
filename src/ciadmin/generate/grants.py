@@ -17,43 +17,6 @@ from .ciconfig.projects import Project
 LEVEL_PRIORITIES = {1: "low", 2: "low", 3: "highest"}
 
 
-def format_roleId(project, job, pr_policy):
-    def job_to_role_suffix(job_):
-        # Normalize any `pull-request:` jobs to their appropriate role
-        # suffix.
-        if job_ == "pull-request:untrusted" and pr_policy == "public_restricted":
-            return "pull-request-untrusted"
-        elif job_.startswith("pull-request"):
-            return "pull-request"
-        return job_
-
-    suffix = job_to_role_suffix(job)
-    if project.role_prefix.endswith("*"):
-        return project.role_prefix
-    else:
-        return "{}:{}".format(project.role_prefix, suffix)
-
-
-def format_scope(project, scope, level):
-    # perform substitutions as grants.yml describes
-    subs = {}
-    subs["alias"] = project.alias
-    if level:
-        subs["level"] = level
-        subs["priority"] = LEVEL_PRIORITIES[level]
-    if project.trust_domain:
-        subs["trust_domain"] = project.trust_domain
-    if project.trust_project:
-        subs["trust_project"] = project.trust_project
-
-    try:
-        subs["repo_path"] = project.repo_path
-    except AttributeError:
-        pass  # not an known supported repo..
-
-    return scope.format(**subs)
-
-
 def add_scopes_for_projects(grant, grantee, add_scope, projects):
     for project in projects:
         if not project_match(grantee, project):
@@ -122,19 +85,45 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         elif pr_policy.startswith("collaborators"):
             jobs = [job for job in jobs if job != "pull-request:untrusted"]
 
+        def job_to_role_suffix(job):
+            # Normalize any `pull-request:` jobs to their appropriate role
+            # suffix.
+            if job == "pull-request:untrusted" and pr_policy == "public_restricted":
+                return "pull-request-untrusted"
+            elif job.startswith("pull-request"):
+                return "pull-request"
+            return job
+
         # ok, this project matches!
         for job in jobs:
-            roleId = format_roleId(project, job, pr_policy)
+            suffix = job_to_role_suffix(job)
+            if project.role_prefix.endswith("*"):
+                roleId = project.role_prefix
+            else:
+                roleId = "{}:{}".format(project.role_prefix, suffix)
+
+            # perform substitutions as grants.yml describes
+            subs = {}
+            subs["alias"] = project.alias
+            if project.trust_domain:
+                subs["trust_domain"] = project.trust_domain
+            if project.trust_project:
+                subs["trust_project"] = project.trust_project
             level = project.get_level()
-            # In order to avoid granting pull-requests graphs
-            # access to the level-3 workers, we overwrite their value here
-            if level is not None and (
-                job.startswith("pull-request") or job.startswith("pr-action")
-            ):
-                level = 1
+            if level is not None:
+                subs["level"] = project.level
+                # In order to avoid granting pull-requests graphs
+                # access to the level-3 workers, we overwrite their value here
+                if job.startswith("pull-request") or job.startswith("pr-action"):
+                    subs["level"] = 1
+                subs["priority"] = LEVEL_PRIORITIES[project.level]
+            try:
+                subs["repo_path"] = project.repo_path
+            except AttributeError:
+                pass  # not an known supported repo..
 
             for scope in grant.scopes:
-                add_scope(roleId, format_scope(project, scope, level))
+                add_scope(roleId, scope.format(**subs))
 
 
 def add_scopes_for_groups(grant, grantee, add_scope):
