@@ -1895,6 +1895,16 @@
     - roles:
         - mozillians-group:mozillavpn-developers
 
+# Firefox-CI Playground
+
+- grant:
+    - docker-worker:capability:privileged
+  to:
+    - project:
+        alias:
+          - firefox-ci-playground
+          - firefox-ci-playground-private
+
 # XPI
 
 - grant:
