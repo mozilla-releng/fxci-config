@@ -3216,17 +3216,15 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 2
+      implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-current
+      image: monopacker-ubuntu-2204-wayland
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
             - <<: *persistent-disk
               diskSizeGb: 75
           machine_type: n2-standard-2
-      worker-config:
-        dockerConfig:
-          allowPrivileged: true
   - pool_id: 'gecko-t/t-linux-large-hostub2204-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
