@@ -17,6 +17,45 @@ from .ciconfig.projects import Project
 LEVEL_PRIORITIES = {1: "low", 2: "low", 3: "highest"}
 
 
+def job_to_role_suffix(job, pr_policy):
+    # Normalize any `pull-request:` jobs to their appropriate role
+    # suffix.
+    if job == "pull-request:untrusted" and pr_policy == "public_restricted":
+        return "pull-request-untrusted"
+    elif job.startswith("pull-request"):
+        return "pull-request"
+    return job
+
+
+def format_role_id(project, job, pr_policy):
+    suffix = job_to_role_suffix(job, pr_policy)
+    if project.role_prefix.endswith("*"):
+        return project.role_prefix
+    else:
+        return "{}:{}".format(project.role_prefix, suffix)
+
+
+def format_scope(project, scope, level, priority):
+    # perform substitutions as grants.yml describes
+    subs = {}
+    subs["alias"] = project.alias
+    if level:
+        subs["level"] = level
+    if priority:
+        subs["priority"] = priority
+    if project.trust_domain:
+        subs["trust_domain"] = project.trust_domain
+    if project.trust_project:
+        subs["trust_project"] = project.trust_project
+
+    try:
+        subs["repo_path"] = project.repo_path
+    except AttributeError:
+        pass  # not an known supported repo..
+
+    return scope.format(**subs)
+
+
 def add_scopes_for_projects(grant, grantee, add_scope, projects):
     for project in projects:
         if not project_match(grantee, project):
@@ -85,45 +124,25 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         elif pr_policy.startswith("collaborators"):
             jobs = [job for job in jobs if job != "pull-request:untrusted"]
 
-        def job_to_role_suffix(job):
-            # Normalize any `pull-request:` jobs to their appropriate role
-            # suffix.
-            if job == "pull-request:untrusted" and pr_policy == "public_restricted":
-                return "pull-request-untrusted"
-            elif job.startswith("pull-request"):
-                return "pull-request"
-            return job
-
         # ok, this project matches!
         for job in jobs:
-            suffix = job_to_role_suffix(job)
-            if project.role_prefix.endswith("*"):
-                roleId = project.role_prefix
-            else:
-                roleId = "{}:{}".format(project.role_prefix, suffix)
-
-            # perform substitutions as grants.yml describes
-            subs = {}
-            subs["alias"] = project.alias
-            if project.trust_domain:
-                subs["trust_domain"] = project.trust_domain
-            if project.trust_project:
-                subs["trust_project"] = project.trust_project
+            roleId = format_role_id(project, job, pr_policy)
             level = project.get_level()
-            if level is not None:
-                subs["level"] = project.level
-                # In order to avoid granting pull-requests graphs
-                # access to the level-3 workers, we overwrite their value here
-                if job.startswith("pull-request") or job.startswith("pr-action"):
-                    subs["level"] = 1
-                subs["priority"] = LEVEL_PRIORITIES[project.level]
-            try:
-                subs["repo_path"] = project.repo_path
-            except AttributeError:
-                pass  # not an known supported repo..
+            # This is explicitly fetched before we override level for pull
+            # requests due to us granting them `highest` priority in the past.
+            # Ideally we'd stop doing this, but it requires all GitHub repositories
+            # to start using a different priority for their PR tasks before
+            # we can do so.
+            priority = LEVEL_PRIORITIES[level]
+            # In order to avoid granting pull-requests graphs
+            # access to the level-3 workers, we overwrite their value here
+            if level is not None and (
+                job.startswith("pull-request") or job.startswith("pr-action")
+            ):
+                level = 1
 
             for scope in grant.scopes:
-                add_scope(roleId, scope.format(**subs))
+                add_scope(roleId, format_scope(project, scope, level, priority))
 
 
 def add_scopes_for_groups(grant, grantee, add_scope):
