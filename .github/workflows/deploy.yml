@@ -51,4 +51,30 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements/base.txt
       - name: Deploy environment
+        id: apply_config
         run: tc-admin apply --environment ${{matrix.environment}}
+
+  notify:
+    if: github.event_name == 'push' && always()
+    runs-on: ubuntu-latest
+    needs: [check, apply]
+    steps:
+      - name: Notify Slack
+        if: always()
+        run: |
+          WORKFLOW_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          SLACK_MESSAGE="*Deploy ${{ github.repository }}* (<${WORKFLOW_URL}|view workflow>)"
+
+          if [ "${{ needs.check.result }}" == "success" ]; then
+            SLACK_MESSAGE="${SLACK_MESSAGE}\n:white_check_mark: *check* succeeded"
+          else
+            SLACK_MESSAGE="${SLACK_MESSAGE}\n:x: *check* failed"
+          fi
+
+          if [ "${{ needs.apply.result }}" == "success" ]; then
+            SLACK_MESSAGE="${SLACK_MESSAGE}\n:white_check_mark: *apply* succeeded"
+          else
+            SLACK_MESSAGE="${SLACK_MESSAGE}\n:x: *apply* failed"
+          fi
+
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"${SLACK_MESSAGE}\"}" ${{ secrets.SLACK_WEBHOOK_URL }}
