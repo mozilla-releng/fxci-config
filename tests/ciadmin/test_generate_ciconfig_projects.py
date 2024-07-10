@@ -7,7 +7,7 @@
 import attr
 import pytest
 
-from ciadmin.generate.ciconfig.projects import Project
+from ciadmin.generate.ciconfig.projects import Branch, Project
 
 
 @pytest.mark.asyncio
@@ -31,14 +31,23 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                 "access": "scm_level_2",
                 "trust_domain": "gecko",
                 "trust_project": None,
-                "default_branch": "default",
+                "branches": [
+                    {
+                        "name": "default",
+                    },
+                ],
             },
             {
-                "_level": None,
                 "access": "scm_level_2",
                 "alias": "ash",
-                "cron": {"targets": []},
+                "branches": [
+                    {
+                        "name": "default",
+                        "level": None,
+                    },
+                ],
                 "default_branch": "default",
+                "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
                 "parent_repo": None,
@@ -57,14 +66,24 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
             {
                 "repo": "https://github.com/mozilla-mobile/fenix/",
                 "repo_type": "git",
-                "level": 3,
+                "branches": [
+                    {
+                        "name": "main",
+                        "level": 3,
+                    },
+                ],
             },
             {
-                "_level": 3,
                 "access": None,
                 "alias": "fenix",
-                "cron": {"targets": []},
+                "branches": [
+                    {
+                        "name": "main",
+                        "level": 3,
+                    },
+                ],
                 "default_branch": "main",
+                "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
                 "parent_repo": None,
@@ -98,12 +117,16 @@ async def test_fetch_defaults(
             "ash",
             {
                 "access": "scm_level_2",
+                "branches": [
+                    {
+                        "name": "default",
+                    },
+                ],
                 "cron": {
                     "email_when_trigger_failure": True,
                     "notify_emails": [],
                     "targets": ["a", "b"],
                 },
-                "default_branch": "default",
                 "features": {
                     "hg-push": {"enabled": True},
                     "gecko-cron": {"enabled": False},
@@ -116,9 +139,14 @@ async def test_fetch_defaults(
                 "trust_project": None,
             },
             {
-                "_level": None,
                 "access": "scm_level_2",
                 "alias": "ash",
+                "branches": [
+                    {
+                        "name": "default",
+                        "level": None,
+                    },
+                ],
                 "cron": {
                     "email_when_trigger_failure": True,
                     "notify_emails": [],
@@ -146,18 +174,22 @@ async def test_fetch_defaults(
         (
             "beetmoverscript",  # git project but not mobile
             {
+                "branches": [
+                    {
+                        "name": "main",
+                        "level": 3,
+                    },
+                ],
                 "cron": {
                     "email_when_trigger_failure": True,
                     "notify_emails": [],
                     "targets": ["a", "b"],
                 },
-                "default_branch": "main",
                 "features": {
                     "hg-push": {"enabled": True},
                     "gecko-cron": {"enabled": False},
                 },
                 "is_try": False,
-                "level": 3,
                 "parent_repo": "https://github.com/mozilla-releng/",
                 "repo_type": "git",
                 "repo": "https://github.com/mozilla-releng/beetmoverscript/",
@@ -165,9 +197,14 @@ async def test_fetch_defaults(
                 "trust_project": None,
             },
             {
-                "_level": 3,
                 "access": None,
                 "alias": "beetmoverscript",
+                "branches": [
+                    {
+                        "name": "main",
+                        "level": 3,
+                    },
+                ],
                 "cron": {
                     "email_when_trigger_failure": True,
                     "notify_emails": [],
@@ -210,6 +247,7 @@ def test_project_feature():
     "Test the feature method"
     prj = Project(
         alias="prj",
+        branches=[{"name": "default"}],
         repo="https://hg.mozilla.org/prj",
         repo_type="hg",
         access="scm_level_3",
@@ -232,6 +270,7 @@ def test_project_enabled_features():
     "Test enabled_features"
     prj = Project(
         alias="prj",
+        branches=[{"name": "default"}],
         repo="https://hg.mozilla.org/prj",
         repo_type="hg",
         access="scm_level_3",
@@ -242,81 +281,114 @@ def test_project_enabled_features():
 
 
 @pytest.mark.parametrize(
-    "project_data,expected_level",
+    "project_data,expected_branches",
     (
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "default",
+                    },
+                ],
                 "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
                 "access": "scm_level_3",
                 "trust_domain": "gecko",
             },
-            3,
+            [
+                Branch(name="default", level=None),
+            ],
         ),
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "default",
+                    },
+                ],
                 "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
                 "access": "scm_level_2",
                 "trust_domain": "gecko",
             },
-            2,
+            [
+                Branch(name="default", level=None),
+            ],
         ),
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "default",
+                    },
+                ],
                 "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
                 "access": "scm_level_1",
                 "trust_domain": "gecko",
             },
-            1,
+            [
+                Branch(name="default", level=None),
+            ],
         ),
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "default",
+                    },
+                ],
                 "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
                 "access": "scm_autoland",
                 "trust_domain": "gecko",
             },
-            3,
+            [
+                Branch(name="default", level=None),
+            ],
         ),
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "main",
+                        "level": 3,
+                    },
+                ],
                 "repo": "https://github.com/some-owner/prj",
                 "repo_type": "git",
-                "level": 3,
             },
-            3,
+            [
+                Branch(name="main", level=3),
+            ],
         ),
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "main",
+                        "level": 1,
+                    },
+                ],
                 "repo": "https://github.com/some-owner/prj",
                 "repo_type": "git",
-                "level": 1,
             },
-            1,
-        ),
-        (
-            {
-                "alias": "prj",
-                "repo": "https://github.com/some-owner/prj",
-                "repo_type": "git",
-                "level": 1,
-            },
-            1,
+            [
+                Branch(name="main", level=1),
+            ],
         ),
     ),
 )
-def test_project_level_property(project_data, expected_level):
+def test_project_level_property(project_data, expected_branches):
     "Test the level attribute"
     prj = Project(**project_data)
-    assert prj.level == expected_level
+    assert prj.branches == expected_branches
 
 
 @pytest.mark.parametrize(
@@ -327,6 +399,7 @@ def test_project_level_property(project_data, expected_level):
                 "alias": "prj",
                 "repo": "https://github.com/some-owner/prj",
                 "repo_type": "git",
+                "default_branch": "main",
                 "access": 10,
             },
             TypeError,
@@ -334,18 +407,28 @@ def test_project_level_property(project_data, expected_level):
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "main",
+                        "level": "10",
+                    },
+                ],
                 "repo": "https://github.com/some-owner/prj",
                 "repo_type": "git",
-                "level": "10",
             },
             TypeError,
         ),
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "main",
+                        "level": 4,
+                    },
+                ],
                 "repo": "https://github.com/some-owner/prj",
                 "repo_type": "git",
-                "level": 4,
             },
             ValueError,
         ),
@@ -361,31 +444,52 @@ def test_project_level_failing_validators(project_data, error_type):
     "project_data,error_type",
     (
         (
-            {"alias": "prj", "repo": "https://hg.mozilla.org/prj", "repo_type": "git"},
+            {
+                "alias": "prj",
+                "repo": "https://hg.mozilla.org/prj",
+                "repo_type": "git",
+                "branches": [{"name": "main"}],
+            },
             RuntimeError,
         ),
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "default",
+                        "level": 3,
+                    },
+                ],
                 "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
-                "level": 3,
             },
             ValueError,
         ),
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "default",
+                        "level": 3,
+                    },
+                ],
                 "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "hg",
                 "access": "scm_level_3",
-                "level": 3,
             },
             ValueError,
         ),
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "default",
+                        "level": 3,
+                    },
+                ],
                 "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "git",
                 "access": "scm_level_3",
@@ -395,70 +499,34 @@ def test_project_level_failing_validators(project_data, error_type):
         (
             {
                 "alias": "prj",
+                "branches": [
+                    {
+                        "name": "default",
+                        "level": 3,
+                    },
+                ],
                 "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "git",
                 "access": "scm_level_3",
-                "level": 3,
             },
             ValueError,
-        ),
-        (
-            {
-                "alias": "prj",
-                "repo": "https://hg.mozilla.org/prj",
-                "repo_type": "hg",
-                "access": "scm_mobile???",
-            },
-            RuntimeError,
         ),
     ),
 )
 def test_project_level_failing_post_init_checks(project_data, error_type):
     "Test the level attribute"
     with pytest.raises(error_type):
-        prj = Project(**project_data)
-        prj.level
+        Project(**project_data)
 
 
 def test_project_repo_path_property():
     "Test the repo_path property"
     prj = Project(
         alias="prj",
+        branches=[{"name": "default"}],
         repo="https://hg.mozilla.org/a/b/",
         repo_type="hg",
         access="scm_level_3",
         trust_domain="gecko",
     )
     assert prj.repo_path == "a/b"
-
-
-@pytest.mark.parametrize(
-    "repo_type, repo, expected_result",
-    (
-        ("hg", "https://hg.mozilla.org/prj", "default"),
-        ("git", "https://github.com/someowner/somerepo", "main"),
-    ),
-)
-def test_project_branch_property(repo_type, repo, expected_result):
-    prj = Project(
-        alias="prj",
-        repo=repo,
-        repo_type=repo_type,
-        access="scm_level_3" if repo_type == "hg" else None,
-        level=None if repo_type == "hg" else 3,
-        trust_domain="gecko",
-    )
-    assert prj.default_branch == expected_result
-
-
-def test_project_set_branch_property():
-    prj = Project(
-        alias="prj",
-        repo="https://github.com/someowner/somerepo",
-        repo_type="git",
-        access=None,
-        level=3,
-        trust_domain="gecko",
-        default_branch="master",
-    )
-    assert prj.default_branch == "master"

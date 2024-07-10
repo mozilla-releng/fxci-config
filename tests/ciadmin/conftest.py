@@ -10,6 +10,7 @@ import pytest
 from tcadmin.appconfig import AppConfig
 
 from ciadmin.generate.ciconfig import get
+from ciadmin.generate.ciconfig.projects import Project
 
 
 @pytest.fixture
@@ -35,3 +36,56 @@ def set_environment():
             yield
 
     yield set_env
+
+
+@pytest.fixture
+def sample_projects():
+    return [
+        Project(
+            alias="hg",
+            branches=[
+                {
+                    "name": "default",
+                },
+            ],
+            repo="https://hg.mozilla.org/hg",
+            repo_type="hg",
+            access="scm_level_1",
+            trust_domain="foo",
+        ),
+        Project(
+            alias="limited_branches",
+            branches=[
+                {
+                    "name": "main",
+                    "level": 3,
+                },
+                {
+                    "name": "release*",
+                    "level": 3,
+                },
+                {
+                    "name": "default",
+                    "level": 1,
+                },
+            ],
+            repo="https://github.com/mozilla/example",
+            repo_type="git",
+            trust_domain="foo",
+        ),
+        # note: this schema does not allow for a "fallback" level that only applies
+        # to branches not explicitly named
+        Project(
+            alias="star_only",
+            branches=[
+                {
+                    "name": "*",
+                    "level": 3,
+                },
+            ],
+            default_branch="main",
+            repo="https://github.com/mozilla/example2",
+            repo_type="git",
+            trust_domain="foo",
+        ),
+    ]

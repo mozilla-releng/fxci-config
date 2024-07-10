@@ -18,9 +18,9 @@ from ciadmin.util.matching import GroupGrantee, ProjectGrantee
 @pytest.fixture
 def add_scope():
     def add_scope(roleId, scope):
-        add_scope.added.append((roleId, scope))
+        add_scope.added.add((roleId, scope))
 
-    add_scope.added = []
+    add_scope.added = set()
     return add_scope
 
 
@@ -33,6 +33,11 @@ class TestAddScopesForProjects:
             repo="https://hg.mozilla.org/foo/proj1",
             repo_type="hg",
             access="scm_level_1",
+            branches=[
+                {
+                    "name": "default",
+                },
+            ],
             trust_domain="gecko",
             features={"buildbot": False, "travis-ci": True},
         ),
@@ -41,6 +46,11 @@ class TestAddScopesForProjects:
             repo="https://hg.mozilla.org/foo/proj2",
             repo_type="hg",
             access="scm_nss",
+            branches=[
+                {
+                    "name": "default",
+                },
+            ],
             trust_domain="nss",
             is_try=True,
         ),
@@ -49,6 +59,11 @@ class TestAddScopesForProjects:
             repo="https://hg.mozilla.org/foo/proj3",
             repo_type="hg",
             access="scm_level_3",
+            branches=[
+                {
+                    "name": "default",
+                },
+            ],
             trust_domain="comm",
             trust_project="proj3",
         ),
@@ -60,7 +75,7 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == []
+        assert add_scope.added == set()
 
     def test_no_scopes(self, add_scope):
         "If a projects matches, but no scopes are granted, nothing happens"
@@ -68,7 +83,7 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=[], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == []
+        assert add_scope.added == set()
 
     def test_match_access(self, add_scope):
         "If access matches, it adds scopes"
@@ -76,7 +91,12 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == [("repo:hg.mozilla.org/foo/proj2:*", "sc")]
+        assert add_scope.added == set(
+            [
+                ("repo:hg.mozilla.org/foo/proj2:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj2:branch:default", "sc"),
+            ]
+        )
 
     def test_match_level(self, add_scope):
         "If levels match, it adds scopes"
@@ -84,7 +104,7 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == [("repo:hg.mozilla.org/foo/proj1:*", "sc")]
+        assert add_scope.added == set([("repo:hg.mozilla.org/foo/proj1:*", "sc")])
 
     def test_match_levels(self, add_scope):
         "If levels match (with multiple options) it adds scopes"
@@ -92,7 +112,7 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == [("repo:hg.mozilla.org/foo/proj1:*", "sc")]
+        assert add_scope.added == set([("repo:hg.mozilla.org/foo/proj1:*", "sc")])
 
     def test_match_alias(self, add_scope):
         "If alias matches it adds scopes"
@@ -100,7 +120,12 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == [("repo:hg.mozilla.org/foo/proj1:*", "sc")]
+        assert add_scope.added == set(
+            [
+                ("repo:hg.mozilla.org/foo/proj1:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj1:branch:default", "sc"),
+            ]
+        )
 
     def test_match_feature(self, add_scope):
         "If feature matches it adds scopes"
@@ -108,7 +133,12 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == [("repo:hg.mozilla.org/foo/proj1:*", "sc")]
+        assert add_scope.added == set(
+            [
+                ("repo:hg.mozilla.org/foo/proj1:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj1:branch:default", "sc"),
+            ]
+        )
 
     def test_match_not_feature(self, add_scope):
         "If !feature matches it adds scopes"
@@ -116,10 +146,14 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == [
-            ("repo:hg.mozilla.org/foo/proj2:*", "sc"),
-            ("repo:hg.mozilla.org/foo/proj3:*", "sc"),
-        ]
+        assert add_scope.added == set(
+            [
+                ("repo:hg.mozilla.org/foo/proj2:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj2:branch:default", "sc"),
+                ("repo:hg.mozilla.org/foo/proj3:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj3:branch:default", "sc"),
+            ]
+        )
 
     def test_match_is_try_false(self, add_scope):
         "If is_try matches and is false it adds scopes"
@@ -127,10 +161,14 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == [
-            ("repo:hg.mozilla.org/foo/proj1:*", "sc"),
-            ("repo:hg.mozilla.org/foo/proj3:*", "sc"),
-        ]
+        assert add_scope.added == set(
+            [
+                ("repo:hg.mozilla.org/foo/proj1:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj1:branch:default", "sc"),
+                ("repo:hg.mozilla.org/foo/proj3:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj3:branch:default", "sc"),
+            ]
+        )
 
     def test_match_is_try_true(self, add_scope):
         "If is_try matches and is true it adds scopes"
@@ -138,7 +176,12 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == [("repo:hg.mozilla.org/foo/proj2:*", "sc")]
+        assert add_scope.added == set(
+            [
+                ("repo:hg.mozilla.org/foo/proj2:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj2:branch:default", "sc"),
+            ]
+        )
 
     def test_match_trust_domain(self, add_scope):
         "If trust_domain matches it adds scopes"
@@ -146,7 +189,12 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == [("repo:hg.mozilla.org/foo/proj1:*", "sc")]
+        assert add_scope.added == set(
+            [
+                ("repo:hg.mozilla.org/foo/proj1:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj1:branch:default", "sc"),
+            ]
+        )
 
     def test_match_has_trust_project_true(self, add_scope):
         "If has_trust_project matches and is true it adds scopes"
@@ -154,7 +202,12 @@ class TestAddScopesForProjects:
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == [("repo:hg.mozilla.org/foo/proj3:*", "sc")]
+        assert add_scope.added == set(
+            [
+                ("repo:hg.mozilla.org/foo/proj3:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj3:branch:default", "sc"),
+            ]
+        )
 
     def test_match_has_trust_project_false(self, add_scope):
         "If has_trust_project matches and is false it doesn't add scopes"
@@ -168,10 +221,14 @@ class TestAddScopesForProjects:
             add_scope,
             self.projects,
         )
-        assert add_scope.added == [
-            ("repo:hg.mozilla.org/foo/proj1:*", "sc"),
-            ("repo:hg.mozilla.org/foo/proj2:*", "sc"),
-        ]
+        assert add_scope.added == set(
+            [
+                ("repo:hg.mozilla.org/foo/proj1:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj1:branch:default", "sc"),
+                ("repo:hg.mozilla.org/foo/proj2:*", "sc"),
+                ("repo:hg.mozilla.org/foo/proj2:branch:default", "sc"),
+            ]
+        )
 
     def test_scope_substitution(self, add_scope):
         "Values alias, trust_domain, and level are substituted"
@@ -185,11 +242,13 @@ class TestAddScopesForProjects:
             add_scope,
             self.projects,
         )
-        assert add_scope.added == [
-            ("repo:hg.mozilla.org/foo/proj1:*", "foo:gecko:level:1:proj1:low"),
-            ("repo:hg.mozilla.org/foo/proj2:*", "foo:nss:level:3:proj2:highest"),
-            ("repo:hg.mozilla.org/foo/proj3:*", "foo:comm:level:3:proj3:highest"),
-        ]
+        assert add_scope.added == set(
+            [
+                ("repo:hg.mozilla.org/foo/proj1:*", "foo:gecko:level:1:proj1:low"),
+                ("repo:hg.mozilla.org/foo/proj2:*", "foo:nss:level:3:proj2:highest"),
+                ("repo:hg.mozilla.org/foo/proj3:*", "foo:comm:level:3:proj3:highest"),
+            ]
+        )
 
     def test_scope_substitution_invalid_key(self, add_scope):
         "Substituting an unknown thing into a scope fails"
@@ -211,6 +270,11 @@ class TestAddScopesForProjects:
                 repo="https://hg.mozilla.org/foo/proj1",
                 repo_type="hg",
                 access="scm_unknown",
+                branches=[
+                    {
+                        "name": "default",
+                    },
+                ],
                 trust_domain="crazy",
                 features={},
             )
@@ -241,7 +305,7 @@ class TestAddScopesForGroups:
         grants.add_scopes_for_groups(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope
         )
-        assert add_scope.added == []
+        assert add_scope.added == set()
 
     def test_scopes_added(self, add_scope):
         "scopes are granted to groups, yay"
@@ -249,10 +313,12 @@ class TestAddScopesForGroups:
         grants.add_scopes_for_groups(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope
         )
-        assert add_scope.added == [
-            ("project:releng:ci-group:group1", "sc"),
-            ("project:releng:ci-group:group2", "sc"),
-        ]
+        assert add_scope.added == set(
+            [
+                ("project:releng:ci-group:group1", "sc"),
+                ("project:releng:ci-group:group2", "sc"),
+            ]
+        )
 
     def test_substitution_fails(self, add_scope):
         "{..} in scopes is an error for groups"
@@ -274,16 +340,26 @@ class TestAddScopesForGithubPullRequest:
         ),
         Project(
             alias="no-prs",
+            branches=[
+                {
+                    "name": "main",
+                    "level": 3,
+                }
+            ],
             repo="https://github.com/mozilla/no-prs",
             repo_type="git",
-            level=3,
             trust_domain="foo",
         ),
         Project(
             alias="public",
+            branches=[
+                {
+                    "name": "main",
+                    "level": 3,
+                }
+            ],
             repo="https://github.com/mozilla/public",
             repo_type="git",
-            level=3,
             trust_domain="foo",
             features={
                 "github-pull-request": {
@@ -294,9 +370,14 @@ class TestAddScopesForGithubPullRequest:
         ),
         Project(
             alias="public-restricted",
+            branches=[
+                {
+                    "name": "main",
+                    "level": 3,
+                }
+            ],
             repo="https://github.com/mozilla/public-restricted",
             repo_type="git",
-            level=3,
             trust_domain="foo",
             features={
                 "github-pull-request": {
@@ -307,9 +388,14 @@ class TestAddScopesForGithubPullRequest:
         ),
         Project(
             alias="collaborators",
+            branches=[
+                {
+                    "name": "main",
+                    "level": 3,
+                }
+            ],
             repo="https://github.com/mozilla/collaborators",
             repo_type="git",
-            level=3,
             trust_domain="foo",
             features={
                 "github-pull-request": {
@@ -327,10 +413,12 @@ class TestAddScopesForGithubPullRequest:
         )
         # Dump expected for copy/paste.
         pprint(add_scope.added)
-        assert add_scope.added == [
-            ("repo:github.com/mozilla/public-restricted:pull-request", "sc"),
-            ("repo:github.com/mozilla/collaborators:pull-request", "sc"),
-        ]
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/public-restricted:pull-request", "sc"),
+                ("repo:github.com/mozilla/collaborators:pull-request", "sc"),
+            ]
+        )
 
     def test_grant_to_pull_request_untrusted(self, add_scope):
         grantee = ProjectGrantee(job=["pull-request:untrusted"])
@@ -339,10 +427,15 @@ class TestAddScopesForGithubPullRequest:
         )
         # Dump expected for copy/paste.
         pprint(add_scope.added)
-        assert add_scope.added == [
-            ("repo:github.com/mozilla/public:pull-request", "sc"),
-            ("repo:github.com/mozilla/public-restricted:pull-request-untrusted", "sc"),
-        ]
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/public:pull-request", "sc"),
+                (
+                    "repo:github.com/mozilla/public-restricted:pull-request-untrusted",
+                    "sc",
+                ),
+            ]
+        )
 
     def test_grant_to_pull_request_star(self, add_scope):
         grantee = ProjectGrantee(job=["pull-request:*"])
@@ -351,35 +444,45 @@ class TestAddScopesForGithubPullRequest:
         )
         # Dump expected for copy/paste.
         pprint(add_scope.added)
-        assert add_scope.added == [
-            ("repo:github.com/mozilla/public:pull-request", "sc"),
-            ("repo:github.com/mozilla/public-restricted:pull-request", "sc"),
-            ("repo:github.com/mozilla/public-restricted:pull-request-untrusted", "sc"),
-            ("repo:github.com/mozilla/collaborators:pull-request", "sc"),
-        ]
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/public:pull-request", "sc"),
+                ("repo:github.com/mozilla/public-restricted:pull-request", "sc"),
+                (
+                    "repo:github.com/mozilla/public-restricted:pull-request-untrusted",
+                    "sc",
+                ),
+                ("repo:github.com/mozilla/collaborators:pull-request", "sc"),
+            ]
+        )
 
     def test_grant_to_star(self, add_scope):
         grantee = ProjectGrantee(job=["*"])
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        pr_grants = [g for g in add_scope.added if "pull-request" in g[0]]
+        pr_grants = set([g for g in add_scope.added if "pull-request" in g[0]])
 
         # Dump expected for copy/paste.
         pprint(pr_grants)
-        assert pr_grants == [
-            ("repo:github.com/mozilla/public:pull-request", "sc"),
-            ("repo:github.com/mozilla/public-restricted:pull-request", "sc"),
-            ("repo:github.com/mozilla/public-restricted:pull-request-untrusted", "sc"),
-            ("repo:github.com/mozilla/collaborators:pull-request", "sc"),
-        ]
+        assert pr_grants == set(
+            [
+                ("repo:github.com/mozilla/public:pull-request", "sc"),
+                ("repo:github.com/mozilla/public-restricted:pull-request", "sc"),
+                (
+                    "repo:github.com/mozilla/public-restricted:pull-request-untrusted",
+                    "sc",
+                ),
+                ("repo:github.com/mozilla/collaborators:pull-request", "sc"),
+            ]
+        )
 
     def test_include_pull_requests_false(self, add_scope):
         grantee = ProjectGrantee(job=["pull-request:*"], include_pull_requests=False)
         grants.add_scopes_for_projects(
             Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
         )
-        assert add_scope.added == []
+        assert add_scope.added == set()
 
     def test_invalid_grantee(self):
         grantee = ProjectGrantee(job=["pull-request"])
@@ -392,6 +495,90 @@ class TestAddScopesForGithubPullRequest:
             )
 
 
+class TestAddScopesForGithubPush:
+    def test_grant_to_all_branches(self, add_scope, sample_projects):
+        grantee = ProjectGrantee(alias="limited_branches")
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc-{level}"], grantees=[grantee]),
+            grantee,
+            add_scope,
+            sample_projects,
+        )
+        pprint(add_scope.added)
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/example:branch:main", "sc-3"),
+                ("repo:github.com/mozilla/example:branch:release*", "sc-3"),
+                ("repo:github.com/mozilla/example:branch:default", "sc-1"),
+                ("repo:github.com/mozilla/example:release:*", "sc-3"),
+            ]
+        )
+
+    def test_grant_to_specific_branch(self, add_scope, sample_projects):
+        grantee = ProjectGrantee(alias="limited_branches", job=["branch:main"])
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]),
+            grantee,
+            add_scope,
+            sample_projects,
+        )
+        pprint(add_scope.added)
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/example:branch:main", "sc"),
+            ]
+        )
+
+    def test_grant_to_level(self, add_scope, sample_projects):
+        grantee = ProjectGrantee(alias="limited_branches", level=[3])
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]),
+            grantee,
+            add_scope,
+            sample_projects,
+        )
+        pprint(add_scope.added)
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/example:branch:main", "sc"),
+                ("repo:github.com/mozilla/example:branch:release*", "sc"),
+                ("repo:github.com/mozilla/example:release:*", "sc"),
+            ]
+        )
+
+    def test_grant_to_branch_and_level(self, add_scope, sample_projects):
+        grantee = ProjectGrantee(
+            alias="limited_branches", job=["branch:main", "branch:default"], level=[3]
+        )
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]),
+            grantee,
+            add_scope,
+            sample_projects,
+        )
+        pprint(add_scope.added)
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/example:branch:main", "sc"),
+            ]
+        )
+
+    def test_grant_to_all_branches_with_star(self, add_scope, sample_projects):
+        grantee = ProjectGrantee(alias="star_only", job=["branch:*"], level=[3])
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc-{level}"], grantees=[grantee]),
+            grantee,
+            add_scope,
+            sample_projects,
+        )
+        pprint(add_scope.added)
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/example2:branch:*", "sc-3"),
+            ]
+        )
+
+
 @pytest.mark.asyncio
 async def test_update_resources(mock_ciconfig_file, set_environment):
     mock_ciconfig_file(
@@ -401,6 +588,11 @@ async def test_update_resources(mock_ciconfig_file, set_environment):
                 repo="https://hg.mozilla.org/foo/proj1",
                 repo_type="hg",
                 access="scm_level_1",
+                branches=[
+                    {
+                        "name": "default",
+                    },
+                ],
                 trust_domain="gecko",
             )
         },
@@ -434,7 +626,7 @@ async def test_update_resources(mock_ciconfig_file, set_environment):
 
     for resource in resources:
         if resource.id == "Role=repo:hg.mozilla.org/foo/proj1:*":
-            assert sorted(resource.scopes) == ["scope1:*", "scope2:*"]
+            assert set(resource.scopes) == set(["scope1:*", "scope2:*"])
             break
     else:
         assert 0, "no role defined"
