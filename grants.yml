@@ -1295,21 +1295,7 @@
         alias: tooltool
         job: [branch:dev, branch:staging, branch:production]
 
-# - treestatus specific roles
-- grant:
-    - secrets:get:project/releng/treestatus/ci
-  to:
-    - projects:
-        alias: treestatus
-        job: [branch:*, pull-request:*]
-
-- grant:
-    - secrets:get:project/releng/treestatus/deploy
-  to:
-    - projects:
-        alias: treestatus
-        job: [branch:dev, branch:staging, branch:production]
-
+# generic github checks
 - grant:
     - queue:route:checks
   to:
@@ -2101,8 +2087,6 @@
     # Allow sheriffs to terminate gecko/mobile related workers
     - worker-manager:remove-worker:gecko-*
     - worker-manager:remove-worker:mobile-*
-    # Allow managing treestatus
-    - project:releng:services/treestatus/*
     # Allow triggering nightlies
     - hooks:trigger-hook:project-releng/cron-task-mozilla-central/nightly-*
     # Allow sheriffs to force schedule a decision task, whenever one has gone
@@ -2185,8 +2169,6 @@
 - grant:
     # Allow triggering thunderbird nightlies
     - hooks:trigger-hook:project-releng/cron-task-comm-central/nightly-*
-    # Allow managing treestatus (This should be limited to comm- trees, see Bug 1613551)
-    - project:releng:services/treestatus/*
     # Bug 1876393: Allow triggering tb-rust-update-check on comm-central
     - hooks:trigger-hook:project-releng/cron-task-comm-central/tb-rust-vendor-check
   to:

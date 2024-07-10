@@ -915,25 +915,6 @@ tooltool:
     taskgraph-actions: true
     trust-domain-scopes: true
 
-treestatus:
-  repo: https://github.com/mozilla-releng/treestatus
-  repo_type: git
-  branches:
-    - name: master
-      level: 3
-    - name: production
-      level: 3
-    - name: staging
-      level: 3
-    - name: dev
-      level: 3
-  default_branch: master
-  trust_domain: releng
-  features:
-    github-pull-request:
-      policy: public
-    taskgraph-actions: true
-
 balrog:
   repo: https://github.com/mozilla-releng/balrog
   repo_type: git
