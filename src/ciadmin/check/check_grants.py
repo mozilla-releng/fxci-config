@@ -69,8 +69,15 @@ async def check_insecure_grants(generate_resources):
                 if project.access == "scm_level_1":
                     return True
 
-                if project.level == 1:
-                    return True
+                # Technically this doesn't make the whole repo level 1
+                # A better test here would be to examine the role more
+                # thoroughly to see if the role corresponds to an L1
+                # branch or something else. This will become relevant
+                # if/when we have projects that contain branches across
+                # more than one level.
+                for branch in project.branches:
+                    if branch.level == 1:
+                        return True
 
             # Check whether the role corresponds to a pull request.
             if pr.search(role):

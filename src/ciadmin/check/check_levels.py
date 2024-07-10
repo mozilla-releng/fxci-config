@@ -64,6 +64,11 @@ async def check_elevated_privileges_for_staging_repos():
     projects = await Project.fetch_all()
     elevated_staging_repos = {}
     for project in projects:
-        if project.alias.startswith("staging-") and project.level not in (1, None):
-            elevated_staging_repos[project.alias] = project.level
+        if not project.alias.startswith("staging-"):
+            continue
+
+        for branch in project.branches:
+            if branch.level not in (1, None):
+                elevated_staging_repos[f"{project.alias}-{branch.name}"] = branch.level
+
     assert not elevated_staging_repos

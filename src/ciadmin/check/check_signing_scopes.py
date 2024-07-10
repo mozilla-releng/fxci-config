@@ -25,8 +25,9 @@ async def project_scopes(resolver, level):
     projects = await Project.fetch_all()
     scopes = ["assume:mozilla-group:active_scm_level_{}".format(level)]
     for project in projects:
-        if project.level == level:
-            scopes.append("assume:{}:*".format(project.role_prefix))
+        for branch in project.branches:
+            if project.get_level(branch.name) == level:
+                scopes.append("assume:{}:*".format(project.role_prefix))
     return resolver.expandScopes(scopes)
 
 
