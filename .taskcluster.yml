@@ -120,7 +120,7 @@ tasks:
                             source: "${repoUrl}/raw/${head_sha}/.taskcluster.yml"
                           - $switch:
                                 'tasks_for in ["github-push", "github-release"] || isPullRequest':
-                                    name: "Decision Task (${tasks_for[7:]})" # strip out "github-" from tasks_for
+                                    name: "Decision Task (${tasks_for[7:]})"  # strip out "github-" from tasks_for
                                     description: 'The task that creates all of the other tasks in the task graph'
                                 'tasks_for == "action"':
                                     name: "Action: ${action.title}"
