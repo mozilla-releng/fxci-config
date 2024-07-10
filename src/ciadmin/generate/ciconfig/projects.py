@@ -7,6 +7,7 @@
 import attr
 from mozilla_repo_urls import parse
 
+from ...util.matching import glob_match
 from .get import get_ciconfig_file
 
 SYMBOLIC_GROUP_LEVELS = {
@@ -30,6 +31,19 @@ def _convert_cron_targets(values):
 
 
 @attr.s(frozen=True)
+class Branch:
+    name = attr.ib(type=str)
+    level = attr.ib(
+        type=int,
+        default=None,
+        validator=[
+            attr.validators.optional(attr.validators.instance_of(int)),
+            attr.validators.optional(attr.validators.in_([1, 2, 3])),
+        ],
+    )
+
+
+@attr.s(frozen=True)
 class Project:
     alias = attr.ib(type=str)
     repo = attr.ib(type=str)
@@ -39,13 +53,15 @@ class Project:
         default=None,
         validator=attr.validators.optional(attr.validators.instance_of(str)),
     )
-    _level = attr.ib(
-        type=int,
-        default=None,
-        validator=[
-            attr.validators.optional(attr.validators.instance_of(int)),
-            attr.validators.optional(attr.validators.in_([1, 2, 3])),
-        ],
+    branches = attr.ib(
+        type=list, default=[], converter=lambda b: [Branch(**d) for d in b]
+    )
+    default_branch = attr.ib(
+        type=str,
+        default=attr.Factory(
+            lambda self: "main" if self.repo_type == "git" else "default",
+            takes_self=True,
+        ),
     )
     trust_domain = attr.ib(type=str, default=None)
     trust_project = attr.ib(type=str, default=None)
@@ -54,13 +70,6 @@ class Project:
     features = attr.ib(type=dict, factory=lambda: {})
     cron = attr.ib(type=dict, factory=lambda: {})
     taskcluster_yml_project = attr.ib(type=str, default=None)
-    default_branch = attr.ib(
-        type=str,
-        default=attr.Factory(
-            lambda self: "main" if self.repo_type == "git" else "default",
-            takes_self=True,
-        ),
-    )
 
     _parsed_url = attr.ib(
         eq=False,
@@ -86,7 +95,7 @@ class Project:
         self.cron["targets"] = _convert_cron_targets(self.cron.get("targets", []))
 
         # if neither `access` nor `level` are present, bail out
-        if not self.access and not self._level:
+        if not self.access and any([b.level is None for b in self.branches]):
             raise RuntimeError(
                 "No access or level specified for project {}".format(self.alias)
             )
@@ -98,13 +107,13 @@ class Project:
                     "Mercurial repo {} needs to provide an input for "
                     "its `access` value".format(self.alias)
                 )
-            if self._level:
+            if any([b.level is not None for b in self.branches]):
                 raise ValueError(
                     "Mercurial repo {} cannot define a `level` "
                     "property".format(self.alias)
                 )
         else:
-            if not self._level:
+            if any([b.level is None for b in self.branches]):
                 raise ValueError(
                     "Non-hg repo {} needs to provide an input for "
                     "its `level` value".format(self.alias)
@@ -153,22 +162,19 @@ class Project:
         "The list of enabled features"
         return [f for f, val in self.features.items() if val["enabled"]]
 
-    def get_level(self):
+    def get_level(self, branch):
         "Get the level, or None if the access level does not define a level"
         if self.access and self.access.startswith("scm_level_"):
             return int(self.access[-1])
         elif self.access and self.access in SYMBOLIC_GROUP_LEVELS:
             return SYMBOLIC_GROUP_LEVELS[self.access]
-        elif self._level:
-            return self._level
         else:
+            for b in self.branches:
+                if glob_match([b.name], branch):
+                    return b.level
+
             return None
 
     @property
-    def level(self):
-        level = self.get_level()
-        if level is None:
-            raise RuntimeError(
-                "unknown access {} for project {}".format(self.access, self.alias)
-            )
-        return level
+    def default_branch_level(self):
+        return self.get_level(self.default_branch)

@@ -7,6 +7,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 from tcadmin.resources import Role
+from tcadmin.resources.role import normalizeScopes
 
 from .ciconfig.projects import Project
 
@@ -34,8 +35,16 @@ async def update_resources(resources):
 
         # include an `assume:` scope for each project at level 1
         for project in projects:
-            if project.level == 1 and project.repo_type == "hg":
-                scopes.append("assume:{}:*".format(project.role_prefix))
+            if project.repo_type == "hg":
+                for branch in project.branches:
+                    if project.get_level(branch.name) == 1:
+                        scopes.append("assume:{}:*".format(project.role_prefix))
 
         if scopes:
-            resources.add(Role(roleId=roleId, description=description, scopes=scopes))
+            resources.add(
+                Role(
+                    roleId=roleId,
+                    description=description,
+                    scopes=normalizeScopes(scopes),
+                )
+            )

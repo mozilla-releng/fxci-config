@@ -31,7 +31,7 @@ async def make_hooks(project, environment):
         raise Exception("Unknown cron task type.")
 
     context = {
-        "level": project.level,
+        "level": project.default_branch_level,
         "trust_domain": project.trust_domain,
         "hookGroupId": hookGroupId,
         "hookId": hookId,

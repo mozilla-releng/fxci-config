@@ -9,7 +9,14 @@ import re
 from tcadmin.resources import Role
 from tcadmin.util.scopes import normalizeScopes
 
-from ..util.matching import GroupGrantee, ProjectGrantee, RoleGrantee, project_match
+from ..util.matching import (
+    GroupGrantee,
+    ProjectGrantee,
+    RoleGrantee,
+    branch_match,
+    glob_match,
+    project_match,
+)
 from .ciconfig.environment import Environment
 from .ciconfig.grants import Grant
 from .ciconfig.projects import Project
@@ -61,25 +68,37 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         if not project_match(grantee, project):
             continue
 
-        jobs = grantee.job
+        branch_jobs = []
+        non_branch_jobs = []
+        for job in grantee.job:
+            if job == "*":
+                branch_jobs.append("branch:*")
+                non_branch_jobs.append(job)
+            elif job.startswith("branch"):
+                branch_jobs.append(job)
+            else:
+                non_branch_jobs.append(job)
 
         # Force being explicit with pull-request policies. Otherwise, the `pull-request`
         # job would be equivalent to `pull-request:trusted`, which may not be intended.
-        if "pull-request" in jobs:
+        if "pull-request" in non_branch_jobs:
             raise RuntimeError(
                 "Invalid job 'pull-request'! Use 'pull-request:*' instead."
             )
 
         pr_policy = (project.feature("github-pull-request", key="policy") or "").strip()
 
-        if "*" in jobs and project.repo_type == "git" and project.level != 1:
+        if (
+            "*" in non_branch_jobs
+            and project.repo_type == "git"
+            and project.default_branch_level != 1
+        ):
             # Github mixes pull-requests and other tasks under the same prefix
             # Since pull-requests should be level-1, we need to explicitly
             # split based on the job
-            jobs = [job for job in jobs if job != "*"]
-            jobs += [
+            non_branch_jobs = [job for job in non_branch_jobs if job != "*"]
+            non_branch_jobs += [
                 "pull-request:*",
-                "branch:*",
                 "cron:*",
                 "action:*",
                 "pr-action:*",
@@ -90,13 +109,19 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         # are enabled. This allows having generic grants that don't generate unused
         # roles
         if not project.feature("taskgraph-cron") and not project.feature("gecko-cron"):
-            jobs = [job for job in jobs if not job.startswith("cron:")]
+            non_branch_jobs = [
+                job for job in non_branch_jobs if not job.startswith("cron:")
+            ]
         if not project.feature("taskgraph-actions") and not project.feature(
             "gecko-actions"
         ):
-            jobs = [job for job in jobs if not job.startswith("action:")]
+            non_branch_jobs = [
+                job for job in non_branch_jobs if not job.startswith("action:")
+            ]
         if not project.feature("pr-actions"):
-            jobs = [job for job in jobs if not job.startswith("pr-action:")]
+            non_branch_jobs = [
+                job for job in non_branch_jobs if not job.startswith("pr-action:")
+            ]
 
         # Only grant pull-request scopes where it makes sense.
         if (
@@ -104,30 +129,33 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             or not pr_policy
             or not grantee.include_pull_requests
         ):
-            jobs = [
+            non_branch_jobs = [
                 job
-                for job in jobs
+                for job in non_branch_jobs
                 if not job.startswith("pull-request")
                 and not job.startswith("pr-action")
             ]
 
-        if "pull-request:*" in jobs:
-            jobs.remove("pull-request:*")
-            jobs.extend(["pull-request:trusted", "pull-request:untrusted"])
+        if "pull-request:*" in non_branch_jobs:
+            non_branch_jobs.remove("pull-request:*")
+            non_branch_jobs.extend(["pull-request:trusted", "pull-request:untrusted"])
 
         # Remove any 'pull-request:trusted' jobs for projects using the 'public' policy.
         # Similarly, remove any 'pull-request:untrusted' jobs for projects using the
         # 'collaborators' policy. Only the 'public_restricted' policy supports both at
         # the same time.
         if pr_policy == "public":
-            jobs = [job for job in jobs if job != "pull-request:trusted"]
+            non_branch_jobs = [
+                job for job in non_branch_jobs if job != "pull-request:trusted"
+            ]
         elif pr_policy.startswith("collaborators"):
-            jobs = [job for job in jobs if job != "pull-request:untrusted"]
+            non_branch_jobs = [
+                job for job in non_branch_jobs if job != "pull-request:untrusted"
+            ]
 
-        # ok, this project matches!
-        for job in jobs:
+        for job in non_branch_jobs:
             roleId = format_role_id(project, job, pr_policy)
-            level = project.get_level()
+            level = project.default_branch_level
             # This is explicitly fetched before we override level for pull
             # requests due to us granting them `highest` priority in the past.
             # Ideally we'd stop doing this, but it requires all GitHub repositories
@@ -136,13 +164,35 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             priority = LEVEL_PRIORITIES[level]
             # In order to avoid granting pull-requests graphs
             # access to the level-3 workers, we overwrite their value here
-            if level is not None and (
-                job.startswith("pull-request") or job.startswith("pr-action")
-            ):
+            if job.startswith("pull-request") or job.startswith("pr-action"):
                 level = 1
 
             for scope in grant.scopes:
                 add_scope(roleId, format_scope(project, scope, level, priority))
+
+        for branch in project.branches:
+            if not branch_match(grantee, branch):
+                continue
+
+            for job in branch_jobs:
+                # skip jobs that don't match the current branch. this avoids cases
+                # where we have things like:
+                # grantee.jobs = ["branch:main", "branch:other"]
+                # ...and "branch:other" jobs get added while we're in the "main"
+                # branch loop
+                if not glob_match([job.split(":")[1]], branch.name):
+                    continue
+                # We always use the branch name from the `project` even if the job is
+                # `branch:*`. This is to ensure that we don't grant things to all
+                # branches in a block that is also conditional on level. All branches
+                # can _still_ be granted things, but only if there is a branch named `*`
+                # in the project configuration.
+                roleId = format_role_id(project, f"branch:{branch.name}", "")
+                level = project.get_level(branch.name)
+                priority = LEVEL_PRIORITIES[level]
+
+                for scope in grant.scopes:
+                    add_scope(roleId, format_scope(project, scope, level, priority))
 
 
 def add_scopes_for_groups(grant, grantee, add_scope):

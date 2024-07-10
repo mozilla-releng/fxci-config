@@ -96,12 +96,30 @@ def feature_match(features, project):
     return True
 
 
+def glob_match(grantee_values, proj_value):
+    if grantee_values is None:
+        return True
+
+    for grantee_value in grantee_values:
+        if grantee_value == "*":
+            return True
+        elif grantee_value.endswith("*"):
+            grantee_prefix = grantee_value[:-1]
+            if proj_value.startswith(grantee_prefix):
+                return True
+        else:
+            if proj_value == grantee_value:
+                return True
+
+    return False
+
+
 def project_match(grantee, project):
     if not match(grantee.access, project.access):
         return False
     if not match(grantee.repo_type, project.repo_type):
         return False
-    if not match(grantee.level, project.get_level()):
+    if not match(grantee.level, project.get_level(project.default_branch)):
         return False
     if not match(grantee.alias, project.alias):
         return False
@@ -114,6 +132,13 @@ def project_match(grantee, project):
         if grantee.has_trust_project != bool(project.trust_project):
             return False
     if not match(grantee.trust_domain, project.trust_domain):
+        return False
+
+    return True
+
+
+def branch_match(grantee, branch):
+    if not match(grantee.level, branch.level):
         return False
 
     return True

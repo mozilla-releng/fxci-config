@@ -4,7 +4,6 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
-import asyncio
 import datetime
 import hashlib
 import textwrap
@@ -16,6 +15,7 @@ from taskcluster.aio import Hooks
 from taskcluster.exceptions import TaskclusterRestFailure
 from tcadmin.resources import Hook, Role
 from tcadmin.util.matchlist import MatchList
+from tcadmin.util.scopes import normalizeScopes
 from tcadmin.util.sessions import aiohttp_session
 
 from . import tcyml
@@ -49,12 +49,33 @@ async def hash_taskcluster_ymls():
             return False
 
     tcyml_projects = list(filter(should_hash, projects))
-    tcymls = await asyncio.gather(
-        *(
-            tcyml.get(p.repo, repo_type=p.repo_type, default_branch=p.default_branch)
-            for p in tcyml_projects
-        )
-    )
+    futures = []
+    for p in tcyml_projects:
+        branch_futures = {}
+        for b in p.branches:
+            # Can't fetch a .taskcluster.yml for a globbed branch
+            # TODO: perhaps we should do this for partly globbed branches,
+            # eg: release* ?
+            # we'd have to fetch that list from the server to do that
+            if "*" not in b.name:
+                branch_futures[b.name] = tcyml.get(
+                    p.repo, repo_type=p.repo_type, default_branch=b.name
+                )
+
+        if p.default_branch not in branch_futures:
+            branch_futures[p.default_branch] = tcyml.get(
+                p.repo, repo_type=p.repo_type, default_branch=p.default_branch
+            )
+
+        futures.append(branch_futures)
+
+    tcymls = []
+    for branches in futures:
+        branch_tcymls = {}
+        for b in branches:
+            branch_tcymls[b] = await branches[b]
+
+        tcymls.append(branch_tcymls)
 
     # hash the value of this .taskcluster.yml.  Note that this must match the
     # hashing in taskgraph/actions/registry.py
@@ -62,29 +83,34 @@ async def hash_taskcluster_ymls():
         return hashlib.sha256(val).hexdigest()[:10]
 
     rv = {}
-    for project, tcy in zip(tcyml_projects, tcymls):
-        # some ancient projects have no .taskcluster.yml
-        if not tcy:
-            continue
+    for project, branch_tcymls in zip(tcyml_projects, tcymls):
+        for branch_name, tcy in branch_tcymls.items():
+            # some ancient projects have no .taskcluster.yml
+            if not tcy:
+                continue
 
-        # some old projects have .taskcluster.yml's that are not valid YAML
-        # (back in the day, mozilla-taskcluster used mustache to templatize
-        # the text before parsing it..). Ignore those projects.
-        try:
-            parsed = yaml.safe_load(tcy)
-        except Exception:
-            continue
+            # some old projects have .taskcluster.yml's that are not valid YAML
+            # (back in the day, mozilla-taskcluster used mustache to templatize
+            # the text before parsing it..). Ignore those projects.
+            try:
+                parsed = yaml.safe_load(tcy)
+            except Exception:
+                continue
 
-        # some slightly less old projects have {tasks: $let: .., in: [..]} instead of
-        # the expected {tasks: [{$let: .., in: ..}]}.  Those can be ignored too.
-        if not isinstance(parsed["tasks"], list):
-            continue
-        rv[project.alias] = {
-            "parsed": parsed,
-            "hash": hash(tcy),
-            "level": project.level,
-            "alias": project.alias,
-        }
+            # some slightly less old projects have {tasks: $let: .., in: [..]} instead
+            # of the expected {tasks: [{$let: .., in: ..}]}.  Those can be ignored too.
+            if not isinstance(parsed["tasks"], list):
+                continue
+
+            if project.alias not in rv:
+                rv[project.alias] = {}
+
+            rv[project.alias][branch_name] = {
+                "parsed": parsed,
+                "hash": hash(tcy),
+                "level": project.get_level(branch_name),
+                "alias": project.alias,
+            }
     return rv
 
 
@@ -98,8 +124,13 @@ def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
 
     matching_projects = []
     for project in projects.values():
-        if project["hash"] == tcyml_hash and str(action.level) == str(project["level"]):
-            matching_projects.append(project["alias"])
+        for branch in project:
+            if project[branch]["hash"] == tcyml_hash and str(action.level) == str(
+                project[branch]["level"]
+            ):
+                matching_projects.append(
+                    f"{project[branch]['alias']}, branch: '{branch}'"
+                )
 
     # schema-generation utilities
 
@@ -248,7 +279,8 @@ def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
             """\
             {}ction task {} at level {}, with `.taskcluster.yml` hash {}.
 
-            For project(s) {}
+            For (project, branch) combinations:
+            {}
 
             This hook is fired in response to actions defined in a
             Gecko decision task's `actions.json`.
@@ -258,7 +290,7 @@ def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
             action.action_perm,
             action.level,
             tcyml_hash,
-            ", ".join(matching_projects),
+            "\n".join(matching_projects),
         ),
         owner="taskcluster-notifications@mozilla.com",
         emailOnError=True,
@@ -296,9 +328,10 @@ async def update_resources(resources):
 
     projects_by_level_and_trust_domain = {}
     for project in projects:
-        projects_by_level_and_trust_domain.setdefault(
-            (project.trust_domain, project.level), []
-        ).append(project)
+        for branch in project.branches:
+            projects_by_level_and_trust_domain.setdefault(
+                (project.trust_domain, project.get_level(branch.name)), []
+            ).append(project)
 
     # generate the hooks themselves and corresponding hook-id roles
     added_hooks = set()
@@ -306,17 +339,24 @@ async def update_resources(resources):
         # gather the hashes at the action's level or higher
         hooks_to_make = {}  # {hash: content}, for uniqueness
         for project in projects:
-            if project.alias not in hashed_tcymls:
-                continue
-            if project.level < action.level:
-                continue
-            if project.trust_domain != action.trust_domain:
-                continue
-            content, hash = (
-                hashed_tcymls[project.alias]["parsed"],
-                hashed_tcymls[project.alias]["hash"],
-            )
-            hooks_to_make[hash] = content
+            for branch_name in set(
+                [b.name for b in project.branches] + [project.default_branch]
+            ):
+                # We don't have taskcluster.ymls from globbed branches;
+                # see comment in hash_taskcluster_ymls
+                if "*" in branch_name:
+                    continue
+                if project.alias not in hashed_tcymls:
+                    continue
+                if project.get_level(branch_name) < action.level:
+                    continue
+                if project.trust_domain != action.trust_domain:
+                    continue
+                content, hash = (
+                    hashed_tcymls[project.alias][branch_name]["parsed"],
+                    hashed_tcymls[project.alias][branch_name]["hash"],
+                )
+                hooks_to_make[hash] = content
 
         for hash, content in hooks_to_make.items():
             hook = make_hook(action, content, hash, hashed_tcymls)
@@ -340,12 +380,14 @@ async def update_resources(resources):
             "on each repo at level {}".format(
                 action.trust_domain, action.action_perm, action.level
             ),
-            scopes=[
-                "assume:{}:action:{}".format(p.role_prefix, action.action_perm)
-                for p in projects_by_level_and_trust_domain.get(
-                    (action.trust_domain, action.level), []
-                )
-            ],
+            scopes=normalizeScopes(
+                [
+                    "assume:{}:action:{}".format(p.role_prefix, action.action_perm)
+                    for p in projects_by_level_and_trust_domain.get(
+                        (action.trust_domain, action.level), []
+                    )
+                ]
+            ),
         )
         resources.add(role)
         if action.level == 1 and any(
@@ -361,11 +403,16 @@ async def update_resources(resources):
                 "on each repo at level {}".format(
                     action.trust_domain, action.action_perm, action.level
                 ),
-                scopes=[
-                    "assume:{}:pr-action:{}".format(p.role_prefix, action.action_perm)
-                    for p in projects
-                    if p.feature("pr-actions") and p.trust_domain == action.trust_domain
-                ],
+                scopes=normalizeScopes(
+                    [
+                        "assume:{}:pr-action:{}".format(
+                            p.role_prefix, action.action_perm
+                        )
+                        for p in projects
+                        if p.feature("pr-actions")
+                        and p.trust_domain == action.trust_domain
+                    ]
+                ),
             )
             resources.add(role)
 

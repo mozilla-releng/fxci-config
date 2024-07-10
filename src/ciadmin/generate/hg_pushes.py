@@ -40,7 +40,7 @@ async def make_hook(project):
     task = jsone.render(
         task_template,
         {
-            "level": project.level,
+            "level": project.default_branch_level,
             "trust_domain": project.trust_domain,
             "hookGroupId": hookGroupId,
             "hookId": hookId,
