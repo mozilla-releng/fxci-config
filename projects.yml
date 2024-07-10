@@ -177,6 +177,9 @@ comm-esr128:
   repo: https://hg.mozilla.org/releases/comm-esr128
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/releases/mozilla-esr128
   features:
