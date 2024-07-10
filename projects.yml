@@ -59,6 +59,9 @@ ash:
   repo: https://hg.mozilla.org/projects/ash
   repo_type: hg
   access: scm_level_2
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/mozilla-central
   features:
@@ -72,6 +75,9 @@ elm:
   repo: https://hg.mozilla.org/projects/elm
   repo_type: hg
   access: scm_level_2
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -84,6 +90,9 @@ mozilla-release:
   repo: https://hg.mozilla.org/releases/mozilla-release
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -100,6 +109,9 @@ comm-release:
   repo: https://hg.mozilla.org/releases/comm-release
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/releases/mozilla-release
   features:
@@ -113,6 +125,9 @@ mozilla-esr115:
   repo: https://hg.mozilla.org/releases/mozilla-esr115
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -128,6 +143,9 @@ mozilla-esr128:
   repo: https://hg.mozilla.org/releases/mozilla-esr128
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -143,6 +161,9 @@ comm-esr115:
   repo: https://hg.mozilla.org/releases/comm-esr115
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/releases/mozilla-esr115
   features:
@@ -169,6 +190,9 @@ oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
   access: scm_level_1
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -183,6 +207,9 @@ pine:
   repo: https://hg.mozilla.org/projects/pine
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -203,6 +230,9 @@ toolchains:
   repo: https://hg.mozilla.org/projects/toolchains
   repo_type: hg
   access: scm_level_2
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -215,6 +245,9 @@ mozilla-beta:
   repo: https://hg.mozilla.org/releases/mozilla-beta
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -234,6 +267,9 @@ comm-beta:
   repo: https://hg.mozilla.org/releases/comm-beta
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/releases/mozilla-beta
   features:
@@ -250,6 +286,9 @@ mozilla-central:
   repo: https://hg.mozilla.org/mozilla-central
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -279,6 +318,9 @@ comm-central:
   repo: https://hg.mozilla.org/comm-central
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/mozilla-central
   features:
@@ -298,6 +340,9 @@ cedar:
   repo: https://hg.mozilla.org/projects/cedar
   repo_type: hg
   access: scm_level_2
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -315,6 +360,9 @@ birch:
   repo: https://hg.mozilla.org/projects/birch
   repo_type: hg
   access: scm_level_2
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -329,6 +377,9 @@ cypress:
   repo: https://hg.mozilla.org/projects/cypress
   repo_type: hg
   access: scm_level_2
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -341,6 +392,9 @@ try:
   repo: https://hg.mozilla.org/try
   repo_type: hg
   access: scm_level_1
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   is_try: true
   features:
@@ -354,6 +408,9 @@ try-comm-central:
   repo: https://hg.mozilla.org/try-comm-central
   repo_type: hg
   access: scm_level_1
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: comm
   is_try: true
   features:
@@ -367,6 +424,9 @@ larch:
   repo: https://hg.mozilla.org/projects/larch
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -387,6 +447,9 @@ maple:
   repo: https://hg.mozilla.org/projects/maple
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -402,6 +465,9 @@ jamun:
   repo: https://hg.mozilla.org/projects/jamun
   repo_type: hg
   access: scm_level_2
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: comm
   features:
     gecko-actions: true
@@ -414,6 +480,9 @@ autoland:
   repo: https://hg.mozilla.org/integration/autoland
   repo_type: hg
   access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -432,6 +501,9 @@ holly:
   repo: https://hg.mozilla.org/projects/holly
   repo_type: hg
   access: scm_level_2
+  branches:
+    - name: "*"
+    - name: default
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -447,6 +519,8 @@ nss:
   repo: https://hg.mozilla.org/projects/nss
   repo_type: hg
   access: scm_nss
+  branches:
+    - name: default
   trust_domain: nss
   features:
     hg-push: true
@@ -457,6 +531,8 @@ nss-try:
   repo: https://hg.mozilla.org/projects/nss-try
   repo_type: hg
   access: scm_level_1
+  branches:
+    - name: default
   trust_domain: nss
   is_try: true
   features:
@@ -469,6 +545,8 @@ ci-configuration:
   repo: https://hg.mozilla.org/ci/ci-configuration
   repo_type: hg
   access: scm_firefoxci
+  branches:
+    - name: default
   trust_domain: ci
   features:
     hg-push: true
@@ -484,6 +562,8 @@ ci-configuration-try:
   repo: https://hg.mozilla.org/ci/ci-configuration-try
   repo_type: hg
   access: scm_level_1
+  branches:
+    - name: default
   trust_domain: ci
   is_try: true
   features:
@@ -496,8 +576,12 @@ fxci-config:
   repo: https://github.com/mozilla-releng/fxci-config
   repo_type: git
   trust_domain: ci
-  default_branch: migration  # Bug 1887949 - Temporarily point at wip migration branch
-  level: 3
+  branches:
+    - name: "*"
+      level: 3
+    - name: migration
+      level: 3
+  default_branch: "migration"
   features:
     github-taskgraph: true
     github-pull-request:
@@ -511,8 +595,11 @@ taskgraph:
   repo: https://github.com/taskcluster/taskgraph
   repo_type: git
   trust_domain: taskgraph
-  default_branch: main
-  level: 3
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
   features:
     github-taskgraph: true
     github-pull-request:
@@ -527,8 +614,11 @@ mozilla-taskgraph:
   repo_type: git
   trust_domain: taskgraph
   trust_project: mozilla-taskgraph
-  default_branch: main
-  level: 3
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
   features:
     github-taskgraph: true
     github-pull-request:
@@ -541,8 +631,9 @@ reps:
   repo_type: git
   trust_domain: mozilla
   trust_project: reps
-  default_branch: main
-  level: 1
+  branches:
+    - name: main
+      level: 1
   features:
     github-taskgraph: true
     github-pull-request:
@@ -555,8 +646,10 @@ redo:
   repo_type: git
   trust_domain: mozilla
   trust_project: redo
+  branches:
+    - name: master
+      level: 1
   default_branch: master
-  level: 1
   features:
     github-taskgraph: true
     github-pull-request:
@@ -569,8 +662,9 @@ mozilla-linux-pkg-manager:
   repo_type: git
   trust_domain: mozilla
   trust_project: mozilla-linux-pkg-manager
-  default_branch: main
-  level: 1
+  branches:
+    - name: main
+      level: 1
   features:
     github-taskgraph: true
     github-pull-request:
@@ -583,8 +677,9 @@ simple-github:
   repo_type: git
   trust_domain: mozilla
   trust_project: simple-github
-  default_branch: main
-  level: 1
+  branches:
+    - name: main
+      level: 1
   features:
     github-taskgraph: true
     github-pull-request:
@@ -598,8 +693,12 @@ reference-browser:
   trust_domain: mobile
   trust_project: reference-browser
   repo_type: git
+  branches:
+    - name: "*"
+      level: 3
+    - name: master
+      level: 3
   default_branch: master
-  level: 3
   features:
     autophone: true
     github-taskgraph: true
@@ -627,7 +726,11 @@ firefox-ios:
   trust_domain: mobile
   trust_project: firefox-ios
   repo_type: git
-  level: 3
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
   features:
     bitrise: true
     github-taskgraph: true
@@ -650,7 +753,11 @@ staging-firefox-ios:
   trust_domain: mobile
   trust_project: firefox-ios
   repo_type: git
-  level: 1
+  branches:
+    - name: "*"
+      level: 1
+    - name: main
+      level: 1
   features:
     bitrise: true
     github-taskgraph: true
@@ -666,7 +773,11 @@ staging-firefox-ios:
 application-services:
   repo: https://github.com/mozilla/application-services
   repo_type: git
-  level: 3
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
   trust_domain: app-services
   features:
     # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
@@ -686,7 +797,11 @@ application-services:
 staging-application-services:
   repo: https://github.com/mozilla-releng/staging-application-services
   repo_type: git
-  level: 1
+  branches:
+    - name: "*"
+      level: 1
+    - name: main
+      level: 1
   trust_domain: app-services
   features:
     github-taskgraph: true
@@ -702,10 +817,13 @@ staging-application-services:
 glean:
   repo: https://github.com/mozilla/glean
   repo_type: git
-  level: 3
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
   trust_domain: glean
   trust_project: glean
-  default_branch: main
   features:
     # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
     # across projects.
@@ -721,10 +839,18 @@ glean:
 k8s-autoscale:
   repo: https://github.com/mozilla-releng/k8s-autoscale
   repo_type: git
+  branches:
+    - name: "*"
+      level: 3
+    - name: master
+      level: 3
+    - name: production
+      level: 3
+    - name: dev
+      level: 3
   default_branch: master
   trust_domain: releng
   trust_project: k8s-autoscale
-  level: 3
   features:
     github-pull-request:
       policy: public
@@ -736,7 +862,17 @@ product-details:
   repo: https://github.com/mozilla-releng/product-details
   repo_type: git
   trust_domain: releng
-  level: 3
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
+    - name: production
+      level: 3
+    - name: staging
+      level: 3
+    - name: testing
+      level: 3
   features:
     github-pull-request:
       policy: collaborators
@@ -752,15 +888,33 @@ shipit:
     taskgraph-actions: true
     trust-domain-scopes: true
   trust_domain: releng
-  level: 3
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
+    - name: production
+      level: 3
+    - name: dev
+      level: 3
 
 tooltool:
   repo: https://github.com/mozilla-releng/tooltool
   repo_type: git
+  branches:
+    - name: "*"
+      level: 3
+    - name: master
+      level: 3
+    - name: production
+      level: 3
+    - name: staging
+      level: 3
+    - name: dev
+      level: 3
   default_branch: master
   trust_domain: releng
   trust_project: tooltool
-  level: 3
   features:
     github-pull-request:
       policy: public
@@ -771,9 +925,19 @@ tooltool:
 treestatus:
   repo: https://github.com/mozilla-releng/treestatus
   repo_type: git
+  branches:
+    - name: "*"
+      level: 3
+    - name: master
+      level: 3
+    - name: production
+      level: 3
+    - name: staging
+      level: 3
+    - name: dev
+      level: 3
   default_branch: master
   trust_domain: releng
-  level: 3
   features:
     github-pull-request:
       policy: public
@@ -783,7 +947,11 @@ balrog:
   repo: https://github.com/mozilla-releng/balrog
   repo_type: git
   trust_domain: releng
-  level: 3
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
   features:
     github-pull-request:
       policy: public
@@ -794,9 +962,12 @@ balrog:
 scriptworker:
   repo: https://github.com/mozilla-releng/scriptworker
   repo_type: git
-  default_branch: main
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
   trust_domain: scriptworker
-  level: 3
   features:
     trust-domain-scopes: true
     taskgraph-actions: true
@@ -807,9 +978,10 @@ scriptworker:
 winsign:
   repo: https://github.com/mozilla-releng/winsign
   repo_type: git
-  default_branch: main
+  branches:
+    - name: main
+      level: 1
   trust_domain: releng
-  level: 1
   features:
     github-pull-request:
       policy: public
@@ -818,9 +990,10 @@ winsign:
 mozilla-version:
   repo: https://github.com/mozilla-releng/mozilla-version
   repo_type: git
-  default_branch: main
+  branches:
+    - name: main
+      level: 1
   trust_domain: releng
-  level: 1
   features:
     github-pull-request:
       policy: public
@@ -829,9 +1002,11 @@ mozilla-version:
 build-mar:
   repo: https://github.com/mozilla-releng/build-mar
   repo_type: git
+  branches:
+    - name: master
+      level: 1
   default_branch: master
   trust_domain: releng
-  level: 1
   features:
     github-pull-request:
       policy: public
@@ -840,10 +1015,11 @@ build-mar:
 firefox-ci-playground:
   repo: https://github.com/mozilla-releng/firefox-ci-playground
   repo_type: git
-  default_branch: main
+  branches:
+    - name: main
+      level: 1
   trust_domain: mozilla
   trust_project: firefox-ci-playground
-  level: 1
   features:
     github-pull-request:
       policy: public
@@ -854,10 +1030,11 @@ firefox-ci-playground:
 firefox-ci-playground-private:
   repo: https://github.com/mozilla-releng/firefox-ci-playground-private
   repo_type: git
-  default_branch: main
+  branches:
+    - name: main
+      level: 1
   trust_domain: mozilla
   trust_project: firefox-ci-playground
-  level: 1
   features:
     github-private-repo: true
     github-pull-request:
@@ -869,9 +1046,12 @@ firefox-ci-playground-private:
 cloud-image-builder:
   repo: https://github.com/mozilla-platform-ops/cloud-image-builder
   repo_type: git
-  default_branch: main
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
   trust_domain: relops
-  level: 3
   features:
     github-pull-request:
       policy: collaborators
@@ -880,8 +1060,13 @@ cloud-image-builder:
 mozilla-vpn-client:
   repo: https://github.com/mozilla-mobile/mozilla-vpn-client
   repo_type: git
-  default_branch: main
-  level: 3
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
+    - name: "releases/*"
+      level: 3
   trust_domain: mozillavpn
   features:
     github-taskgraph: true
@@ -899,8 +1084,13 @@ mozilla-vpn-client:
 staging-mozilla-vpn-client:
   repo: https://github.com/mozilla-releng/staging-mozilla-vpn-client
   repo_type: git
-  default_branch: main
-  level: 1
+  branches:
+    - name: "*"
+      level: 1
+    - name: main
+      level: 1
+    - name: "releases/*"
+      level: 1
   trust_domain: mozillavpn
   features:
     github-taskgraph: true
@@ -920,9 +1110,12 @@ staging-mozilla-vpn-client:
 xpi-manifest:
   repo: https://github.com/mozilla-extensions/xpi-manifest
   repo_type: git
-  default_branch: main
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
   trust_domain: xpi
-  level: 3
   features:
     github-pull-request:
       policy: collaborators
@@ -937,9 +1130,13 @@ xpi-manifest:
 rally-core-addon:
   repo: https://github.com/mozilla-rally/rally-core-addon
   repo_type: git
+  branches:
+    - name: "*"
+      level: 1
+    - name: master
+      level: 1
   default_branch: master
   trust_domain: xpi
-  level: 1
   features:
     github-pull-request:
       policy: collaborators
@@ -950,9 +1147,12 @@ rally-core-addon:
 staging-xpi-manifest:
   repo: https://github.com/mozilla-releng/staging-xpi-manifest
   repo_type: git
-  default_branch: main
+  branches:
+    - name: "*"
+      level: 1
+    - name: main
+      level: 1
   trust_domain: xpi
-  level: 1
   features:
     github-pull-request:
       policy: collaborators
@@ -967,9 +1167,12 @@ staging-xpi-manifest:
 staging-xpi-public:
   repo: https://github.com/mozilla-releng/staging-xpi-public
   repo_type: git
-  default_branch: main
+  branches:
+    - name: "*"
+      level: 1
+    - name: main
+      level: 1
   trust_domain: xpi
-  level: 1
   features:
     github-pull-request:
       policy: public
@@ -979,9 +1182,13 @@ staging-xpi-public:
 staging-xpi-private:
   repo: https://github.com/mozilla-releng/staging-xpi-private
   repo_type: git
+  branches:
+    - name: "*"
+      level: 1
+    - name: master
+      level: 1
   default_branch: master
   trust_domain: xpi
-  level: 1
   features:
     github-pull-request:
       policy: collaborators
@@ -992,9 +1199,13 @@ staging-xpi-private:
 staging-adhoc-signing:
   repo: https://github.com/mozilla-releng/staging-adhoc-signing
   repo_type: git
+  branches:
+    - name: "*"
+      level: 1
+    - name: master
+      level: 1
   default_branch: master
   trust_domain: adhoc
-  level: 1
   features:
     trust-domain-scopes: true
     adhoc-roles: true
@@ -1006,9 +1217,12 @@ staging-adhoc-signing:
 adhoc-signing:
   repo: https://github.com/mozilla-releng/adhoc-signing
   repo_type: git
-  default_branch: main
+  branches:
+    - name: "*"
+      level: 3
+    - name: main
+      level: 3
   trust_domain: adhoc
-  level: 3
   features:
     trust-domain-scopes: true
     adhoc-roles: true
@@ -1021,9 +1235,13 @@ adhoc-signing:
 code-review:
   repo: https://github.com/mozilla/code-review
   repo_type: git
+  branches:
+    - name: "*"
+      level: 3
+    - name: master
+      level: 3
   default_branch: master
   trust_domain: code-analysis
-  level: 3
   features:
     trust-domain-scopes: true
     github-pull-request:
@@ -1033,9 +1251,17 @@ code-review:
 scriptworker-scripts:
   repo: https://github.com/mozilla-releng/scriptworker-scripts
   repo_type: git
+  branches:
+    - name: "*"
+      level: 3
+    - name: master
+      level: 3
+    - name: production*
+      level: 3
+    - name: dev*
+      level: 3
   default_branch: master
   trust_domain: scriptworker
-  level: 3
   features:
     trust-domain-scopes: true
     taskgraph-actions: true
@@ -1047,9 +1273,13 @@ scriptworker-scripts:
 code-coverage:
   repo: https://github.com/mozilla/code-coverage
   repo_type: git
+  branches:
+    - name: "*"
+      level: 3
+    - name: master
+      level: 3
   default_branch: master
   trust_domain: code-analysis
-  level: 3
   features:
     trust-domain-scopes: true
     github-pull-request:
@@ -1059,10 +1289,13 @@ code-coverage:
 firefox-translations-training:
   repo: https://github.com/mozilla/firefox-translations-training
   repo_type: git
-  default_branch: main
+  branches:
+    - name: "*"
+      level: 1
+    - name: main
+      level: 1
   trust_domain: translations
   # https://github.com/mozilla/firefox-translations-training/issues/206
-  level: 1
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1080,9 +1313,10 @@ firefox-translations-training:
 staging-firefox-translations-training:
   repo: https://github.com/mozilla-releng/staging-firefox-translations-training
   repo_type: git
-  default_branch: main
+  branches:
+    - name: main
+      level: 1
   trust_domain: translations
-  level: 1
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1099,8 +1333,9 @@ firefox-profiler:
   repo_type: git
   trust_domain: mozilla
   trust_project: firefox-profiler
-  default_branch: main
-  level: 1
+  branches:
+    - name: main
+      level: 1
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1114,8 +1349,9 @@ fx-desktop-qa-automation:
   repo_type: git
   trust_domain: mozilla
   trust_project: fx-desktop-qa-automation
-  default_branch: main
-  level: 1
+  branches:
+    - name: main
+      level: 1
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1129,8 +1365,9 @@ neqo:
   repo_type: git
   trust_domain: mozilla
   trust_project: neqo
-  default_branch: main
-  level: 1
+  branches:
+    - name: main
+      level: 1
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1145,8 +1382,9 @@ mozilla-releng:
   repo: https://github.com/mozilla-releng/*
   repo_type: git
   trust_domain: mozilla
-  default_branch: main
-  level: 1
+  branches:
+    - name: main
+      level: 1
   features:
     github-taskgraph: true
     github-pull-request:
