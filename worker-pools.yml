@@ -1555,7 +1555,7 @@ pools:
       minCapacity: 0
       maxCapacity: 200
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1584,9 +1584,9 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 96
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1615,9 +1615,9 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 96
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1713,9 +1713,9 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 50
+      maxCapacity: 96
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
