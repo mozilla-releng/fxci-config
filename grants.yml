@@ -1723,6 +1723,10 @@
           - action:*
 
 - grant:
+    - index:insert-task:{trust_domain}.v2.mozillavpn.cache.pr.*
+    - queue:route:index.{trust_domain}.v2.mozillavpn.cache.pr.*
+    # TODO: Remove below once all mozilla-vpn-client release branches are using
+    # Taskgraph 8+
     - index:insert-task:{trust_domain}.v2.mozillavpn.cache.head.*
     - queue:route:index.{trust_domain}.v2.mozillavpn.cache.head.*
   to:
