@@ -207,6 +207,10 @@ project/performance/desktop-startup-recorder:
   description: Recorder machine for fxrecord project. Hardware hosted in Toronto.
   scopes:
     - assume:worker-type:performance-hardware/gecko-t-fxrecorder*
+project/releng/fxci-config/apply:
+  description: Used to run `tc-admin apply` in mozilla-releng/fxci-config.
+  scopes:
+    - "*"
 project/releng/generic-worker/azure-gecko-1-b-win2012:
   description: Windows 2012 experimental production worker.
   scopes:
