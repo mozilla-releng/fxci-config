@@ -1,3 +1,7 @@
+[![CI](https://firefox-ci-tc.services.mozilla.com/api/github/v1/repository/mozilla-releng/fxci-config/main/badge.svg)](https://firefox-ci-tc.services.mozilla.com/api/github/v1/repository/mozilla-releng/fxci-config/main/latest)
+[![Deploy](https://github.com/mozilla-releng/fxci-config/actions/workflows/deploy.yml/badge.svg)](https://github.com/mozilla-releng/fxci-config/actions/workflows/deploy.yml)
+[![License](https://img.shields.io/badge/license-MPL%202.0-orange.svg)](http://mozilla.org/MPL/2.0)
+
 # Firefox-CI Configuration
 
 This repository contains configuration for the Firefox-CI Taskcluster instance,
