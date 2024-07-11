@@ -3282,7 +3282,7 @@ pools:
       regions: [us-central1, us-west1]
       image: monopacker-docker-worker-current
       minCapacity: 1
-      maxCapacity: 10
+      maxCapacity: 100
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
