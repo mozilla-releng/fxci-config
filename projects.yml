@@ -396,8 +396,8 @@ try:
   repo_type: hg
   access: scm_level_1
   branches:
+    # Try pushes on branches of any name are supported
     - name: "*"
-    - name: default
   trust_domain: gecko
   is_try: true
   features:
@@ -870,8 +870,6 @@ product-details:
     - name: production
       level: 3
     - name: staging
-      level: 3
-    - name: testing
       level: 3
   features:
     github-pull-request:
