@@ -183,6 +183,42 @@ project/autophone/gecko-t-bitbar-perf-s21:
     - auth:websocktunnel-token:firefoxcitc/bitbar.*
     - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-perf-s21
     - queue:worker-id:bitbar/*
+project/autophone/gecko-t-bitbar-unit-a55:
+  description: Bitbar Samsung Galaxy A55 Phones - Unit Pool
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/bitbar.*
+    - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-unit-a55
+    - queue:worker-id:bitbar/*
+project/autophone/gecko-t-bitbar-perf-a55:
+  description: Bitbar Samsung Galaxy A55 Phones - Perf Pool
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/bitbar.*
+    - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-perf-a55
+    - queue:worker-id:bitbar/*
+project/autophone/gecko-t-bitbar-unit-s24:
+  description: Bitbar Samsung Galaxy S24 Phones - Unit Pool
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/bitbar.*
+    - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-unit-s24
+    - queue:worker-id:bitbar/*
+project/autophone/gecko-t-bitbar-perf-s24:
+  description: Bitbar Samsung Galaxy S24 Phones - Perf Pool
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/bitbar.*
+    - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-perf-s24
+    - queue:worker-id:bitbar/*
 project/nss-nspr/aarch64:
   description: Created for Franziskus to support the 64-bit ARM machines
   scopes:
