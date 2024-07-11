@@ -577,11 +577,8 @@ fxci-config:
   repo_type: git
   trust_domain: ci
   branches:
-    - name: "*"
+    - name: main
       level: 3
-    - name: migration
-      level: 3
-  default_branch: "migration"
   features:
     github-taskgraph: true
     github-pull-request:
