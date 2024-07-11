@@ -73,15 +73,51 @@ jobs:
           SLACK_MESSAGE="*Deploy ${{ github.repository }}* (<${WORKFLOW_URL}|view workflow>)"
 
           if [ "${{ needs.check.result }}" == "success" ]; then
-            SLACK_MESSAGE="${SLACK_MESSAGE}\n:white_check_mark: *check* succeeded"
+            CHECK_EMOJI=":white_check_mark:"
+            CHECK_VERB="succeeded"
           else
-            SLACK_MESSAGE="${SLACK_MESSAGE}\n:x: *check* failed"
+            CHECK_EMOJI=":x:"
+            CHECK_VERB="failed"
           fi
 
           if [ "${{ needs.apply.result }}" == "success" ]; then
-            SLACK_MESSAGE="${SLACK_MESSAGE}\n:white_check_mark: *apply* succeeded"
+            APPLY_EMOJI=":white_check_mark:"
+            APPLY_VERB="succeeded"
           else
-            SLACK_MESSAGE="${SLACK_MESSAGE}\n:x: *apply* failed"
+            APPLY_EMOJI=":x:"
+            APPLY_VERB="failed"
           fi
 
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"${SLACK_MESSAGE}\"}" ${{ secrets.SLACK_WEBHOOK_URL }}
+          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          SLACK_MESSAGE=$(cat <<-EOF
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Deploy of <https://github.com/${{ github.repository }}|${{ github.repository }}> from <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${SHORT_SHA}> is resolved"
+                  }
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${CHECK_EMOJI} check ${CHECK_VERB}\n${APPLY_EMOJI} apply ${APPLY_VERB}"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>"
+                  }
+                }
+              ]
+            }
+          EOF
+          )
+          curl -X POST -H 'Content-type: application/json' --data "${SLACK_MESSAGE}" ${{ secrets.SLACK_WEBHOOK_URL }}
