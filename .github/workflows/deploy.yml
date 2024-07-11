@@ -12,7 +12,6 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-    environment: check-${{matrix.environment}}
     strategy:
       matrix:
         environment: ["staging", "firefoxci"]
@@ -27,6 +26,13 @@ jobs:
           cache: pip
       - name: Install dependencies
         run: pip install -r requirements/test.txt
+      - name: Set root url
+        run: |
+          if [ "${{ matrix.environment }}" == "staging" ]; then
+            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.cloudops.mozgcp.net" >> $GITHUB_ENV;
+          elif [ "${{ matrix.environment }}" == "firefoxci" ]; then
+            echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> $GITHUB_ENV;
+          fi
       - name: Run checks
         run: tc-admin check --environment ${{matrix.environment}}
 
