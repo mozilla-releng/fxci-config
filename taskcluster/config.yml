@@ -1,10 +1,7 @@
 ---
 trust-domain: ci
 treeherder:
-    group-names:
-        'I': 'Docker Image Builds'
-        'check': 'config checks'
-        'unit': 'unit tests'
+    group-names: {}
 
 task-priority: low
 

@@ -16,10 +16,6 @@ task-defaults:
     worker:
         docker-image: {in-tree: python3.9}
         max-run-time: 3600
-    treeherder:
-        kind: test
-        platform: tests/opt
-        tier: 1
     run:
         cwd: '{checkout}'
         using: run-task
@@ -28,8 +24,6 @@ task-defaults:
 tasks:
     unit-ciadmin:
         description: "Run ciadmin `unit tests` to validate the latest changes"
-        treeherder:
-            symbol: unit(ciadmin)
         worker:
             env:
                 # fail instead of skipping tests due to missing information
@@ -41,8 +35,6 @@ tasks:
                 py.test tests/
     unit-build-decision:
         description: "Run build-decision `unit tests` to validate the latest changes"
-        treeherder:
-            symbol: unit(build-decision)
         worker:
             env:
                 # fail instead of skipping tests due to missing information
@@ -55,16 +47,12 @@ tasks:
                 py.test build-decision/tests/
     flake8:
         description: "Run `flake8` to validate the latest changes"
-        treeherder:
-            symbol: f8
         run:
             command: >-
                 pip install --user -r requirements/test.txt  &&
                 flake8
     black:
         description: "Run `black` to validate the latest changes"
-        treeherder:
-            symbol: black
         run:
             command: >-
                 pip install --user -r requirements/test.txt  &&
@@ -72,8 +60,6 @@ tasks:
 
     isort:
         description: "Run `isort` to validate the latest changes"
-        treeherder:
-            symbol: isort
         run:
             command: >-
                 pip install --user -r requirements/test.txt  &&
@@ -81,8 +67,6 @@ tasks:
 
     yamllint:
         description: "Run `yamllint` to validate the latest changes"
-        treeherder:
-            symbol: yaml
         run:
             command: >-
                 pip install --user -r requirements/test.txt  &&
