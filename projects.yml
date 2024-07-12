@@ -313,7 +313,6 @@ mozilla-central:
       - nightly-desktop-win64-aarch64
       - periodic-update
       - system-symbols
-      - l10n-bumper
       - l10n-cross-channel
       - target: scriptworker-canary
         allow-input: true
