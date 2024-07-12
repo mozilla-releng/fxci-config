@@ -126,6 +126,7 @@ firefoxci:
         us-west1: [us-west1-a, us-west1-b]
         us-east1: [us-east1-c]
         northamerica-northeast1: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
+        europe-west4: [europe-west4-a, europe-west4-b, europe-west4-c]
     invalid-instances:
       - zones: [us-central1-c]
         families: [t2a]
@@ -262,6 +263,7 @@ staging:
         us-west1: [us-west1-a, us-west1-b]
         us-east1: [us-east1-c]
         northamerica-northeast1: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
+        europe-west4: [europe-west4-a, europe-west4-b, europe-west4-c]
   cron:
     gecko:
       hooks_owner: release+tc-hooks-staging@mozilla.com

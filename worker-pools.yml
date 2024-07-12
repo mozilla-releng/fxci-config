@@ -1584,9 +1584,9 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 96
+      maxCapacity: 97
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1]
+      regions: [us-central1, us-west1, us-east1, europe-west4]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
