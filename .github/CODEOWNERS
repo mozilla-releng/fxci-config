@@ -1,4 +1,7 @@
+# Per https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#   the last match wins, so put the default at the top.
+* @mozilla-releng/releng
+
 clients.yml @mozilla-releng/relops @mozilla-releng/releng
 worker-images.yml @mozilla-releng/relops
 worker-pools.yml @mozilla-releng/relops @mozilla-releng/releng
-* @mozilla-releng/releng
