@@ -10,6 +10,7 @@ import functools
 import hashlib
 import textwrap
 
+import aiohttp
 import iso8601
 import yaml
 from taskcluster import optionsFromEnvironment
@@ -66,10 +67,17 @@ async def hash_taskcluster_ymls():
             # TODO: perhaps we should do this for partly globbed branches,
             # eg: release* ?
             # we'd have to fetch that list from the server to do that
-            if "*" not in b:
+            if "*" not in b and "*" not in p.repo:
 
                 def process(project, branch_name, task):
-                    tcy = task.result()
+                    try:
+                        tcy = task.result()
+                    except aiohttp.ClientResponseError as e:
+                        # .taskcluster.yml doesn't exist. This can happen if
+                        # a project owner moves it away to disable Taskcluster.
+                        if e.status == 404:
+                            return
+                        raise e
 
                     # some ancient projects have no .taskcluster.yml
                     if not tcy:
@@ -102,7 +110,7 @@ async def hash_taskcluster_ymls():
                 future.add_done_callback(functools.partial(process, p, b))
                 futures.append(future)
 
-    await asyncio.gather(*futures)
+    await asyncio.gather(*futures, return_exceptions=True)
     return rv
 
 
