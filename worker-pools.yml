@@ -1584,7 +1584,10 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 97
+      # We use 4 GPUs per instance across 4 regions with a limit of 128
+      # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
+      # 512 GPUs / 4 per instance = 128 instances possibly running at once.
+      maxCapacity: 128
       implementation: generic-worker/worker-runner-linux
       regions: [us-central1, us-west1, us-east1, europe-west4]
       image: monopacker-translations-worker
@@ -1615,9 +1618,12 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 96
+      # We use 4 GPUs per instance across 4 regions with a limit of 128
+      # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
+      # 512 GPUs / 4 per instance = 128 instances possibly running at once.
+      maxCapacity: 128
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1]
+      regions: [us-central1, us-west1, us-east1, europe-west4]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1713,9 +1719,12 @@ pools:
             maxTaskRunTime: 2592000
             enableInteractive: true
       minCapacity: 0
-      maxCapacity: 96
+      # We use 4 GPUs per instance across 4 regions with a limit of 128
+      # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
+      # 512 GPUs / 4 per instance = 128 instances possibly running at once.
+      maxCapacity: 128
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1]
+      regions: [us-central1, us-west1, us-east1, europe-west4]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
