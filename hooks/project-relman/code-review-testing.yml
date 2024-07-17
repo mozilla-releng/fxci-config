@@ -16,12 +16,15 @@ payload:
     public/results:
       path: /tmp/results
       type: directory
-  cache: {}
+  cache:
+    code-review-testing-checkout: '/checkouts'
   capabilities: {}
   command:
     - code-review-bot
     - '--taskcluster-secret'
     - project/relman/code-review/runtime-testing
+    - '--mercurial-repository'
+    - '/checkouts'
   env:
     $merge:
       - $if: firedBy == 'triggerHook'
@@ -54,5 +57,6 @@ scopes:
   - 'secrets:get:project/relman/code-review/runtime-testing'
   - 'index:insert-task:project.relman.testing.code-review.*'
   - 'notify:email:*'
+  - 'generic-worker:cache:code-review-testing-checkout'
 tags: {}
 workerType: bot-gcp
