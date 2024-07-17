@@ -7,6 +7,7 @@
 from asyncio import Lock
 
 import aiohttp
+from aiohttp_retry import ExponentialRetry, RetryClient
 from tcadmin.util.sessions import aiohttp_session
 
 _cache = {}
@@ -49,14 +50,19 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
         if repo_path in _cache:
             return _cache[repo_path]
 
-        try:
-            async with aiohttp_session().get(url) as response:
+        client = RetryClient(
+            client_session=aiohttp_session(),
+            # Despite only setting 404 here, 5xx statuses will still be retried
+            # for. See https://github.com/inyutin/aiohttp_retry?tab=readme-ov-file
+            # for details.
+            retry_options=ExponentialRetry(attempts=5, statuses={404}),
+        )
+        async with client.get(url) as response:
+            try:
                 response.raise_for_status()
                 result = await response.read()
-        except aiohttp.ClientResponseError as e:
-            if e.status == 404:
-                result = None
-            else:
+            except aiohttp.ClientResponseError as e:
+                print(f"Got error when querying {url}: {e}")
                 raise e
 
         _cache[repo_path] = result
