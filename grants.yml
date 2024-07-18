@@ -2583,6 +2583,7 @@
 - grant:
     - secrets:get:project/relman/code-review/runtime-testing
     - hooks:trigger-hook:project-relman/code-review-testing
+    - generic-worker:cache:code-review-testing-checkout
   to:
     - roles:
         - project:relman:code-review/runtime/testing
