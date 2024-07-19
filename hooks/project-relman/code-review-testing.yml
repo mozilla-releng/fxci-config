@@ -57,6 +57,6 @@ scopes:
   - 'secrets:get:project/relman/code-review/runtime-testing'
   - 'index:insert-task:project.relman.testing.code-review.*'
   - 'notify:email:*'
-  - 'generic-worker:cache:code-review-testing-checkout'
+  - 'docker-worker:cache:code-review-testing-checkout'
 tags: {}
 workerType: bot-gcp

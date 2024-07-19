@@ -138,7 +138,7 @@ project-relman/code-review-testing:
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-review/runtime-testing
-    - generic-worker:cache:code-review-testing-checkout
+    - docker-worker:cache:code-review-testing-checkout
   template_file: hooks/project-relman/code-review-testing.yml
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
