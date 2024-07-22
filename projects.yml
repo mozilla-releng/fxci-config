@@ -15,7 +15,8 @@
 # - `repo` -- the https repository URL
 # - `repo_type` -- `hg` or `git` so far (for later expansion)
 # - `access` -- the name of the group with access to this repository; typically `scm_level_{1,2,3}`.
-# - `level` -- the level access to this repository; typically `{1,2,3}`.
+# - `branches` -- a list of dicts with the names and levels of branches used by this project.
+#                 for example: [{"name": "main", "level": 3}, {"name": "dev", "level": 1}]
 # - `trust_domain` -- separation within an access level of projects with different organizations
 # - `parent_repo` -- for projects like comm where the repo is checked out within a "parent" repo
 # - 'is_try' -- if present and true, this is a "try" repo, meaning that users typically push new heads
