@@ -20,10 +20,10 @@ DEFAULT_INPUT_SCHEMA = {
 
 @attr.s(frozen=True)
 class Action:
-    trust_domain = attr.ib(type=str)
-    level = attr.ib(type=int)
-    action_perm = attr.ib(type=str)
-    input_schema = attr.ib(default=DEFAULT_INPUT_SCHEMA)
+    trust_domain: str = attr.ib(type=str)
+    level: int = attr.ib(type=int)
+    action_perm: str = attr.ib(type=str)
+    input_schema: dict = attr.ib(default=DEFAULT_INPUT_SCHEMA)
 
     @staticmethod
     async def fetch_all():

@@ -12,26 +12,26 @@ def listify(x):
 
 @attr.s(frozen=True)
 class ProjectGrantee:
-    access = attr.ib(type=list, converter=listify, default=None)
-    level = attr.ib(type=list, converter=listify, default=None)
-    alias = attr.ib(type=list, converter=listify, default=None)
-    feature = attr.ib(type=list, converter=listify, default=None)
-    repo_type = attr.ib(type=list, converter=listify, default=None)
-    is_try = attr.ib(type=bool, default=None)
-    trust_domain = attr.ib(type=list, converter=listify, default=None)
-    job = attr.ib(type=list, converter=listify, default="*")
-    include_pull_requests = attr.ib(type=bool, default=True)
-    has_trust_project = attr.ib(type=bool, default=None)
+    access: list = attr.ib(type=list, converter=listify, default=None)
+    level: list = attr.ib(type=list, converter=listify, default=None)
+    alias: list = attr.ib(type=list, converter=listify, default=None)
+    feature: list = attr.ib(type=list, converter=listify, default=None)
+    repo_type: list = attr.ib(type=list, converter=listify, default=None)
+    is_try: bool = attr.ib(type=bool, default=None)
+    trust_domain: list = attr.ib(type=list, converter=listify, default=None)
+    job: list = attr.ib(type=list, converter=listify, default="*")
+    include_pull_requests: bool = attr.ib(type=bool, default=True)
+    has_trust_project: bool = attr.ib(type=bool, default=None)
 
 
 @attr.s(frozen=True)
 class GroupGrantee:
-    groups = attr.ib(type=list, converter=listify, default=None)
+    groups: list = attr.ib(type=list, converter=listify, default=None)
 
 
 @attr.s(frozen=True)
 class RoleGrantee:
-    roles = attr.ib(type=list, converter=listify, default=None)
+    roles: list = attr.ib(type=list, converter=listify, default=None)
 
 
 # convert grantees into instances..

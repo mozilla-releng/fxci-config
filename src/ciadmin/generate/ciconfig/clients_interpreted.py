@@ -12,11 +12,11 @@ from .get import get_ciconfig_file
 
 @attr.s(frozen=True)
 class Client:
-    client_id = attr.ib(type=str)
-    scopes = attr.ib(type=list)
-    description = attr.ib(type=str)
-    grantee = attr.ib(type=ProjectGrantee)
-    environments = attr.ib(type=list, default=None)
+    client_id: str = attr.ib(type=str)
+    scopes: list = attr.ib(type=list)
+    description: str = attr.ib(type=str)
+    grantee: ProjectGrantee = attr.ib(type=ProjectGrantee)
+    environments: list = attr.ib(type=list, default=None)
 
     @staticmethod
     async def fetch_all():

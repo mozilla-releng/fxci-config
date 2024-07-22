@@ -14,8 +14,8 @@ import attr
 
 @attr.s(cmp=False)
 class CLI:
-    description = attr.ib(type=str)
-    _commands = attr.ib(default=[], init=False)
+    description: str = attr.ib(type=str)
+    _commands: list = attr.ib(default=[], init=False)
 
     def command(self, *args, **kwargs):
         defaults = kwargs.pop("defaults", {})

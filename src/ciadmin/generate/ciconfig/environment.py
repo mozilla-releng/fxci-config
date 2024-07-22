@@ -13,21 +13,21 @@ from .get import get_ciconfig_file
 @attr.s(frozen=True)
 class Environment:
     # Environment name
-    name = attr.ib(type=str)
+    name: str = attr.ib(type=str)
 
     # Root URL for this environment
-    root_url = attr.ib(type=str)
+    root_url: str = attr.ib(type=str)
 
     # List of modifications to make to the generated resources for this
     # environment.  This is useful, for example, for modifying staging
     # environments to consume fewer resources.
-    modify_resources = attr.ib(type=list)
+    modify_resources: list = attr.ib(type=list)
 
-    worker_manager = attr.ib(type=dict)
-    aws_config = attr.ib(type=dict, factory=lambda: {})
-    azure_config = attr.ib(type=dict, factory=lambda: {})
-    google_config = attr.ib(type=dict, factory=lambda: {})
-    cron = attr.ib(type=dict, factory=lambda: {})
+    worker_manager: dict = attr.ib(type=dict)
+    aws_config: dict = attr.ib(type=dict, factory=lambda: {})
+    azure_config: dict = attr.ib(type=dict, factory=lambda: {})
+    google_config: dict = attr.ib(type=dict, factory=lambda: {})
+    cron: dict = attr.ib(type=dict, factory=lambda: {})
 
     @staticmethod
     async def fetch_all():

@@ -11,9 +11,9 @@ from .get import get_ciconfig_file
 
 @attr.s(frozen=True)
 class WorkerImage:
-    image_name = attr.ib(type=str)
-    alias_for = attr.ib(type=str, default=None)
-    clouds = attr.ib(type=dict, default={})
+    image_name: str = attr.ib(type=str)
+    alias_for: str = attr.ib(type=str, default=None)
+    clouds: dict = attr.ib(type=dict, default={})
 
     @staticmethod
     async def fetch_all():

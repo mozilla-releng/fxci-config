@@ -12,9 +12,9 @@ from .get import get_ciconfig_file
 
 @attr.s(frozen=True)
 class Grant:
-    scopes = attr.ib(type=list, factory=lambda: [])
-    grantees = attr.ib(type=list, factory=lambda: [])
-    environments = attr.ib(type=list, default=None)
+    scopes: list = attr.ib(type=list, factory=lambda: [])
+    grantees: list = attr.ib(type=list, factory=lambda: [])
+    environments: list = attr.ib(type=list, default=None)
 
     @scopes.validator
     def validate_scopes(self, attribute, value):

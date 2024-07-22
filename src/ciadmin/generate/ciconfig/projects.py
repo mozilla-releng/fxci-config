@@ -4,8 +4,10 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+from typing import List
 import attr
 from mozilla_repo_urls import parse
+from mozilla_repo_urls.parser import RepoUrlParsed
 
 from ...util.matching import glob_match
 from .get import get_ciconfig_file
@@ -32,8 +34,8 @@ def _convert_cron_targets(values):
 
 @attr.s(frozen=True)
 class Branch:
-    name = attr.ib(type=str)
-    level = attr.ib(
+    name: str = attr.ib(type=str)
+    level: int = attr.ib(
         type=int,
         default=None,
         validator=[
@@ -45,42 +47,42 @@ class Branch:
 
 @attr.s(frozen=True)
 class Project:
-    alias = attr.ib(type=str)
-    repo = attr.ib(type=str)
-    repo_type = attr.ib(type=str)
-    access = attr.ib(
+    alias: str = attr.ib(type=str)
+    repo: str = attr.ib(type=str)
+    repo_type: str = attr.ib(type=str)
+    access: str = attr.ib(
         type=str,
         default=None,
         validator=attr.validators.optional(attr.validators.instance_of(str)),
     )
-    branches = attr.ib(
+    branches: List[Branch] = attr.ib(
         type=list, default=[], converter=lambda b: [Branch(**d) for d in b]
     )
-    default_branch = attr.ib(
+    default_branch: str = attr.ib(
         type=str,
         default=attr.Factory(
             lambda self: "main" if self.repo_type == "git" else "default",
             takes_self=True,
         ),
     )
-    trust_domain = attr.ib(type=str, default=None)
-    trust_project = attr.ib(type=str, default=None)
-    parent_repo = attr.ib(type=str, default=None)
-    is_try = attr.ib(type=bool, default=False)
-    features = attr.ib(type=dict, factory=lambda: {})
-    cron = attr.ib(type=dict, factory=lambda: {})
-    taskcluster_yml_project = attr.ib(type=str, default=None)
+    trust_domain: str = attr.ib(type=str, default=None)
+    trust_project: str = attr.ib(type=str, default=None)
+    parent_repo: str = attr.ib(type=str, default=None)
+    is_try: bool = attr.ib(type=bool, default=False)
+    features: dict = attr.ib(type=dict, factory=lambda: {})
+    cron: dict = attr.ib(type=dict, factory=lambda: {})
+    taskcluster_yml_project: str = attr.ib(type=str, default=None)
 
-    _parsed_url = attr.ib(
+    _parsed_url: RepoUrlParsed = attr.ib(
         eq=False,
         init=False,
         default=attr.Factory(lambda self: parse(self.repo), takes_self=True),
     )
-    repo_path = attr.ib(
+    repo_path: str = attr.ib(
         init=False,
         default=attr.Factory(lambda self: self._parsed_url.repo_path, takes_self=True),
     )
-    role_prefix = attr.ib(
+    role_prefix: str = attr.ib(
         init=False,
         default=attr.Factory(
             lambda self: self._parsed_url.taskcluster_role_prefix, takes_self=True

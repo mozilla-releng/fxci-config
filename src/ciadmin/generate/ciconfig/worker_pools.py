@@ -11,14 +11,14 @@ from .get import get_ciconfig_file
 
 @attr.s(frozen=True)
 class WorkerPool:
-    pool_id = attr.ib(type=str)
-    description = attr.ib(type=str)
-    owner = attr.ib(type=str)
-    email_on_error = attr.ib(type=bool)
-    provider_id = attr.ib(type=str)
-    config = attr.ib()
-    attributes = attr.ib(factory=dict)
-    variants = attr.ib(factory=lambda: [{}])
+    pool_id: str = attr.ib(type=str)
+    description: str = attr.ib(type=str)
+    owner: str = attr.ib(type=str)
+    email_on_error: bool = attr.ib(type=bool)
+    provider_id: str = attr.ib(type=str)
+    config: dict = attr.ib(type=dict)
+    attributes: dict = attr.ib(factory=dict)
+    variants: list = attr.ib(factory=lambda: [{}])
 
     @pool_id.validator
     def _check_pool_id(self, attribute, value):
