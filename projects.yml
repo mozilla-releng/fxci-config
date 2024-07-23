@@ -450,6 +450,7 @@ maple:
   repo_type: hg
   access: scm_level_3
   branches:
+    - name: "*"
     - name: default
   trust_domain: gecko
   features:
@@ -1046,8 +1047,6 @@ mozilla-vpn-client:
   repo: https://github.com/mozilla-mobile/mozilla-vpn-client
   repo_type: git
   branches:
-    - name: "*"
-      level: 3
     - name: main
       level: 3
     - name: "releases/*"
@@ -1070,8 +1069,6 @@ staging-mozilla-vpn-client:
   repo: https://github.com/mozilla-releng/staging-mozilla-vpn-client
   repo_type: git
   branches:
-    - name: "*"
-      level: 1
     - name: main
       level: 1
     - name: "releases/*"
