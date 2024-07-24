@@ -1127,6 +1127,9 @@ pools:
     owner: release+tc-workers@mozilla.com
     variants:
       - pool-group: gecko-1
+      - pool-group: gecko-2
+      - pool-group: gecko-3
+        chain-of-trust: trusted
     email_on_error: false
     provider_id:
       by-chain-of-trust:
