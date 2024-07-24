@@ -12,3 +12,7 @@ dist
 __pycache__
 .pytest_cache
 .python-version
+
+diff.out
+check.out
+apply.out
