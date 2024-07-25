@@ -1261,30 +1261,6 @@ project/releng/treeherder/production:
   description: Treeherder production client
   scopes:
     - notify:email:*
-project/releng/treestatus/dev:
-  description: ''
-  scopes:
-    - notify:email:*
-    - notify:irc-channel:*
-    - notify:irc-user:*
-project/releng/treestatus/localdev:
-  description: ''
-  scopes:
-    - notify:email:*
-    - notify:irc-channel:*
-    - notify:irc-user:*
-project/releng/treestatus/production:
-  description: ''
-  scopes:
-    - notify:email:*
-    - notify:irc-channel:*
-    - notify:irc-user:*
-project/releng/treestatus/staging:
-  description: ''
-  scopes:
-    - notify:email:*
-    - notify:irc-channel:*
-    - notify:irc-user:*
 project/relman/code-coverage/backend-production:
   description: See [bug 1593751](https://bugzilla.mozilla.org/show_bug.cgi?id=1593751#c20)
   scopes:
