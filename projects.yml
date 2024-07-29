@@ -336,6 +336,7 @@ comm-central:
     trust-domain-scopes: true
   cron:
     targets:
+      - l10n-bumper
       - l10n-cross-channel
       - nightly-desktop
       - tb-rust-vendor-check
