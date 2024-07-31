@@ -2,6 +2,7 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 import re
+from collections import defaultdict
 from urllib.parse import urlparse
 
 import pytest
@@ -69,14 +70,9 @@ async def check_insecure_grants(generate_resources):
                 if project.access == "scm_level_1":
                     return True
 
-                # Technically this doesn't make the whole repo level 1
-                # A better test here would be to examine the role more
-                # thoroughly to see if the role corresponds to an L1
-                # branch or something else. This will become relevant
-                # if/when we have projects that contain branches across
-                # more than one level.
-                for branch in project.branches:
-                    if branch.level == 1:
+                if ":branch:" in role:
+                    branch = role.split(":")[-1]
+                    if project.get_level(branch) == 1:
                         return True
 
             # Check whether the role corresponds to a pull request.
@@ -86,20 +82,21 @@ async def check_insecure_grants(generate_resources):
         # Fallback to whether the level-1 regex matches.
         return bool(level_1.search(role))
 
-    insecure_scopes = set()
+    insecure_scopes = defaultdict(set)
     for role in roles:
         if not is_level_1(role.roleId):
             continue
 
         level_3_scopes = {s for s in role.scopes if level_3.search(s)}
         if level_3_scopes:
-            insecure_scopes.update(level_3_scopes)
+            insecure_scopes[role.roleId].update(level_3_scopes)
 
     if insecure_scopes:
-        print(
-            "Level 3 scopes are granted to level 1 contexts:\n  "
-            + "\n  ".join(sorted(insecure_scopes))
-        )
+        print("Level 3 scopes are granted to level 1 contexts:")
+        for roleId, scopes in insecure_scopes.items():
+            print(f"{roleId} is granted the follow scopes that are considered level 3:")
+            print(sorted(scopes))
+            print()
     assert not insecure_scopes
 
 
