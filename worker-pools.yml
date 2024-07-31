@@ -1771,6 +1771,41 @@ pools:
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
+  - pool_id: '{pool-group}/b-linux-v100-gpu-4-2tb'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592000s is 30 days.
+            maxTaskRunTime: 2592000
+            enableInteractive: true
+      minCapacity: 0
+      # We use 4 GPUs per instance across 4 regions with a limit of 128
+      # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
+      # 512 GPUs / 4 per instance = 128 instances possibly running at once.
+      maxCapacity: 128
+      implementation: generic-worker/worker-runner-linux
+      regions: [us-central1, us-west1, us-east1, europe-west4]
+      image: monopacker-translations-worker
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 2048
+          # 40 CPUs, 256GB RAM
+          machine_type: n1-custom-40-262144
+          guestAccelerators:
+            - acceleratorCount: 4
+              acceleratorType: nvidia-tesla-v100
   - pool_id: 'translations-1/b-linux-aerickson-test'
     description: Worker for testing new Translations images.
     owner: aerickson@mozilla.com
