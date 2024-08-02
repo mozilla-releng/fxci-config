@@ -3,8 +3,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # %ARG PYTHON_VERSION
-FROM          python:$PYTHON_VERSION
-MAINTAINER    Tom Prince <tom.prince@mozilla.com>
+FROM python:$PYTHON_VERSION
+LABEL maintainer="Mozilla Release Engineering <release+fxci-config@mozilla.com>"
 
 # Add worker user
 RUN mkdir /builds && \
