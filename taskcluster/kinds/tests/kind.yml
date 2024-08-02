@@ -45,29 +45,3 @@ tasks:
                 pip install --user -r build-decision/requirements/test.txt &&
                 pip install --user --no-deps build-decision/. &&
                 py.test build-decision/tests/
-    flake8:
-        description: "Run `flake8` to validate the latest changes"
-        run:
-            command: >-
-                pip install --user -r requirements/test.txt  &&
-                flake8
-    black:
-        description: "Run `black` to validate the latest changes"
-        run:
-            command: >-
-                pip install --user -r requirements/test.txt  &&
-                black --check .
-
-    isort:
-        description: "Run `isort` to validate the latest changes"
-        run:
-            command: >-
-                pip install --user -r requirements/test.txt  &&
-                isort --check --diff src/ tests/ build-decision/src/ build-decision/tests/
-
-    yamllint:
-        description: "Run `yamllint` to validate the latest changes"
-        run:
-            command: >-
-                pip install --user -r requirements/test.txt  &&
-                yamllint .
