@@ -14,7 +14,7 @@ task-defaults:
         code-review: true
     worker-type: t-linux
     worker:
-        docker-image: {in-tree: python3.9}
+        docker-image: {in-tree: python3.11}
         max-run-time: 3600
     run:
         cwd: '{checkout}'
