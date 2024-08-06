@@ -1,5 +1,3 @@
-# coding=utf-8
-
 import pytest
 
 import build_decision.util.cli as cli

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -80,14 +78,12 @@ async def modify_resources(resources):
     root_url = await get_root_url()
     if root_url.rstrip("/") != environment.root_url.rstrip("/"):
         raise RuntimeError(
-            "Environment {} expects rootUrl {}"
-            ", but active credentials are for {}".format(
-                environment.name, environment.root_url, root_url
-            )
+            f"Environment {environment.name} expects rootUrl {environment.root_url}"
+            f", but active credentials are for {root_url}"
         )
 
     for mod in environment.modify_resources:
         if mod not in MODIFIERS:
-            raise KeyError("No modify_resources function named {}".format(mod))
+            raise KeyError(f"No modify_resources function named {mod}")
         resources = MODIFIERS[mod](resources)
     return resources

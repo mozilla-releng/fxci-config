@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-
-from __future__ import absolute_import, print_function, unicode_literals
 
 import datetime
 import logging
@@ -39,7 +35,7 @@ def match_utc(*, time, sched):
         return False
 
     if isinstance(sched.get("weekday"), str):
-        if sched.get("weekday", str()).lower() != time.strftime("%A").lower():
+        if sched.get("weekday", "").lower() != time.strftime("%A").lower():
             return False
     elif sched.get("weekday") is not None:
         # don't accept other values.
@@ -74,5 +70,5 @@ def calculate_time():
     # round down to the nearest 15m
     minute = time.minute - (time.minute % 15)
     time = time.replace(minute=minute, second=0, microsecond=0)
-    logger.info("calculated cron schedule time is {}".format(time))
+    logger.info(f"calculated cron schedule time is {time}")
     return time

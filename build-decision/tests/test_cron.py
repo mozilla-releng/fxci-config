@@ -1,5 +1,3 @@
-# coding=utf-8
-
 import pytest
 import yaml
 
@@ -10,7 +8,7 @@ from . import TEST_DATA_DIR
 
 def test_load_jobs(mocker):
     """Add cron load_jobs coverage."""
-    with open(TEST_DATA_DIR / "cron.yml", "r") as fh:
+    with open(TEST_DATA_DIR / "cron.yml") as fh:
         cron_yml = yaml.safe_load(fh)
 
     fake_repo = mocker.MagicMock()

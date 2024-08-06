@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -62,7 +60,7 @@ async def make_hooks(project, environment):
         Hook(
             hookGroupId=hookGroupId,
             hookId=hookId,
-            name="{}/{}".format(hookGroupId, hookId),
+            name=f"{hookGroupId}/{hookId}",
             description=textwrap.dedent(
                 """\
         Cron task for repository {}.
@@ -84,15 +82,13 @@ async def make_hooks(project, environment):
             },
         ),
         Role(
-            roleId="hook-id:{}/{}".format(hookGroupId, hookId),
-            description="Scopes associated with cron tasks for project `{}`".format(
-                project.alias
-            ),
+            roleId=f"hook-id:{hookGroupId}/{hookId}",
+            description=f"Scopes associated with cron tasks for project `{project.alias}`",
             # this task has the scopes of *all* cron tasks in this project;
             # the tasks it creates will have the scopes for a specific cron task
             # (replacing * with the task name)
             scopes=[
-                "assume:{}:cron:*".format(project.role_prefix),
+                f"assume:{project.role_prefix}:cron:*",
                 "queue:route:notify.email.*",
                 "queue:create-task:highest:infra/build-decision",
             ],
@@ -107,25 +103,25 @@ async def make_hooks(project, environment):
         branch = target_desc.get("branch", project.default_branch)
 
         target_context = copy.deepcopy(context)
-        target_context["cron_options"] += ["--force-run={}".format(cron_target)]
-        target_context["hookId"] = "{}/{}".format(hookId, cron_target)
+        target_context["cron_options"] += [f"--force-run={cron_target}"]
+        target_context["hookId"] = f"{hookId}/{cron_target}"
         target_context["allow_input"] = allow_input
         target_context["branch"] = branch
         task = jsone.render(task_template, target_context)
         scopes = [
-            "assume:{}:cron:{}".format(project.role_prefix, cron_target),
+            f"assume:{project.role_prefix}:cron:{cron_target}",
             "queue:route:notify.email.*",
             "queue:create-task:highest:infra/build-decision",
         ]
         if "github.com" in project.repo:
-            scopes.append("secrets:get:{}".format(GITHUB_TOKEN_SECRET))
+            scopes.append(f"secrets:get:{GITHUB_TOKEN_SECRET}")
 
         resources.extend(
             [
                 Hook(
                     hookGroupId=hookGroupId,
-                    hookId="{}/{}".format(hookId, cron_target),
-                    name="{}/{}/{}".format(hookGroupId, hookId, cron_target),
+                    hookId=f"{hookId}/{cron_target}",
+                    name=f"{hookGroupId}/{hookId}/{cron_target}",
                     description="""FIXME""",
                     owner=target_context["hooks_owner"],
                     emailOnError=True,
@@ -146,9 +142,9 @@ async def make_hooks(project, environment):
                     },
                 ),
                 Role(
-                    roleId="hook-id:{}/{}/{}".format(hookGroupId, hookId, cron_target),
+                    roleId=f"hook-id:{hookGroupId}/{hookId}/{cron_target}",
                     description="Scopes associated with cron tasks "
-                    "for project `{}`".format(project.alias),
+                    f"for project `{project.alias}`",
                     scopes=scopes,
                 ),
             ]

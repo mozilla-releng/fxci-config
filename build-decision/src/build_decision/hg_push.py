@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -30,12 +28,12 @@ def get_revision_from_pulse_message():
 
     push_count = len(pulse_payload["data"]["pushlog_pushes"])
     if push_count != 1:
-        print("Message has {} pushes; only one supported".format(push_count))
+        print(f"Message has {push_count} pushes; only one supported")
         return
 
     head_count = len(pulse_payload["data"]["heads"])
     if head_count != 1:
-        print("Message has {} heads; only one supported".format(head_count))
+        print(f"Message has {head_count} heads; only one supported")
         return
 
     return pulse_payload["data"]["heads"][0]

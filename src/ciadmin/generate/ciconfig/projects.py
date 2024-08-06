@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -25,7 +23,7 @@ def _convert_cron_targets(values):
             return {"target": value, "bindings": []}
         elif isinstance(value, dict):
             return value
-        raise ValueError("Unknowon type of cron target: {!r}".format(value))
+        raise ValueError(f"Unknowon type of cron target: {value!r}")
 
     return list(map(convert, values))
 
@@ -96,34 +94,28 @@ class Project:
 
         # if neither `access` nor `level` are present, bail out
         if not self.access and any([b.level is None for b in self.branches]):
-            raise RuntimeError(
-                "No access or level specified for project {}".format(self.alias)
-            )
+            raise RuntimeError(f"No access or level specified for project {self.alias}")
         # `access` is mandatory while `level` forbidden for hg based projects
         # and vice-versa for non-hg repositories
         if self.repo_type == "hg":
             if not self.access:
                 raise ValueError(
-                    "Mercurial repo {} needs to provide an input for "
-                    "its `access` value".format(self.alias)
+                    f"Mercurial repo {self.alias} needs to provide an input for "
+                    "its `access` value"
                 )
             if any([b.level is not None for b in self.branches]):
                 raise ValueError(
-                    "Mercurial repo {} cannot define a `level` " "property".format(
-                        self.alias
-                    )
+                    f"Mercurial repo {self.alias} cannot define a `level` " "property"
                 )
         else:
             if any([b.level is None for b in self.branches]):
                 raise ValueError(
-                    "Non-hg repo {} needs to provide an input for "
-                    "its `level` value".format(self.alias)
+                    f"Non-hg repo {self.alias} needs to provide an input for "
+                    "its `level` value"
                 )
             if self.access:
                 raise ValueError(
-                    "Non-hg repo {} cannot define an `access` " "property".format(
-                        self.alias
-                    )
+                    f"Non-hg repo {self.alias} cannot define an `access` " "property"
                 )
 
         # Convert boolean features into a dict of the form {"enabled": <val>}
@@ -133,7 +125,7 @@ class Project:
             elif isinstance(val, bool):
                 self.features[name] = {"enabled": val}
             else:
-                raise ValueError("Feature {} must be a dict or boolean".format(name))
+                raise ValueError(f"Feature {name} must be a dict or boolean")
 
     @staticmethod
     async def fetch_all():
@@ -149,7 +141,7 @@ class Project:
             if project.alias == alias:
                 return project
         else:
-            raise KeyError("Project {} is not defined".format(alias))
+            raise KeyError(f"Project {alias} is not defined")
 
     # The `features` property is designed for ease of use in yaml, with true and false
     # values for each feature; the `feature()` and `enabled_features` attributes provide

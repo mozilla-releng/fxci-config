@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -64,7 +62,7 @@ async def create_worker_secrets(*, update):
 
     expiry = fromNow("1000y")
     for worker_pool in sorted(docker_pools):
-        secret_name = "worker-pool:{}".format(worker_pool)
+        secret_name = f"worker-pool:{worker_pool}"
         try:
             old_secret = await secrets_api.get(secret_name)
             if old_secret["secret"] == docker_worker_secret:
@@ -74,9 +72,9 @@ async def create_worker_secrets(*, update):
                     secret_name, {"secret": docker_worker_secret, "expires": expiry}
                 )
             else:
-                print("{} secret is different".format(secret_name))
+                print(f"{secret_name} secret is different")
         except Exception:
-            print("Creating {}".format(secret_name))
+            print(f"Creating {secret_name}")
             await secrets_api.set(
                 secret_name, {"secret": docker_worker_secret, "expires": expiry}
             )
@@ -90,7 +88,7 @@ async def check_worker_secrets():
     missing_secrets = set()
 
     for worker_pool in docker_pools:
-        secret_name = "worker-pool:{}".format(worker_pool)
+        secret_name = f"worker-pool:{worker_pool}"
         if secret_name not in secrets:
             missing_secrets.add(secret_name)
 

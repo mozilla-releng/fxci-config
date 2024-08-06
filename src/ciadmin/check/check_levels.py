@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -23,7 +21,7 @@ async def get_hg_repo_owner(project):
     ), "Only hg repos can be queried for group_owner metadata"
 
     session = aiohttp_session()
-    async with session.get("{}/json-repoinfo".format(project.repo)) as response:
+    async with session.get(f"{project.repo}/json-repoinfo") as response:
         response.raise_for_status()
         result = await response.read()
     owner = json.loads(result)["group_owner"]

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -30,9 +28,7 @@ def render_tc_yml(tc_yml, **context):
 
     task_count = len(rendered["tasks"])
     if task_count != 1:
-        logger.critical(
-            "Rendered result has {} tasks; only one supported".format(task_count)
-        )
+        logger.critical(f"Rendered result has {task_count} tasks; only one supported")
         raise Exception()
 
     [task] = rendered["tasks"]

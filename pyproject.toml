@@ -8,6 +8,7 @@ select = [
     "F",            # pyflakes
     "I",            # isort
     "PLC", "PLE",   # pylint
+    "UP",           # pyupgrade
 ]
 ignore = [
     "E402",
