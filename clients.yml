@@ -410,7 +410,7 @@ project/releng/generic-worker/datacenter-gecko-t-osx-1015-r8:
 project/releng/generic-worker/datacenter-mozilla-b-1-osx:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
+    - assume:worker-type:releng-hardware/mozilla-b-1-osx*
     - queue:worker-id:mdc1/mac*
     - queue:worker-id:mdc1/t-yosemite*
     - queue:worker-id:mdc1/t-mojave*
@@ -420,7 +420,7 @@ project/releng/generic-worker/datacenter-mozilla-b-1-osx:
 project/releng/generic-worker/datacenter-mozilla-b-3-osx:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
+    - assume:worker-type:releng-hardware/mozilla-b-3-osx*
     - queue:worker-id:mdc1/mac*
     - queue:worker-id:mdc1/t-yosemite*
     - queue:worker-id:mdc1/t-mojave*
