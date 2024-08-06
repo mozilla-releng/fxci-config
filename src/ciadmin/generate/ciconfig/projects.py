@@ -109,8 +109,9 @@ class Project:
                 )
             if any([b.level is not None for b in self.branches]):
                 raise ValueError(
-                    "Mercurial repo {} cannot define a `level` "
-                    "property".format(self.alias)
+                    "Mercurial repo {} cannot define a `level` " "property".format(
+                        self.alias
+                    )
                 )
         else:
             if any([b.level is None for b in self.branches]):
@@ -120,8 +121,9 @@ class Project:
                 )
             if self.access:
                 raise ValueError(
-                    "Non-hg repo {} cannot define an `access` "
-                    "property".format(self.alias)
+                    "Non-hg repo {} cannot define an `access` " "property".format(
+                        self.alias
+                    )
                 )
 
         # Convert boolean features into a dict of the form {"enabled": <val>}

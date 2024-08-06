@@ -52,8 +52,9 @@ class Repository:
                 url = f"{repo_url}/raw/{revision}/{path}"
             elif repo_url.startswith("git@github.com:"):
                 raise Exception(
-                    "Don't know how to get file from private github "
-                    "repo: {}".format(repo_url)
+                    "Don't know how to get file from private github " "repo: {}".format(
+                        repo_url
+                    )
                 )
             else:
                 raise Exception(
