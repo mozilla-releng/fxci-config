@@ -46,8 +46,9 @@ async def replay_hg_push(*, alias, revision):
 
     if len(pushes) != 1:
         print(
-            "Changeset {} has {} associated pushes; "
-            "only one expected".format(revision, len(pushes))
+            "Changeset {} has {} associated pushes; " "only one expected".format(
+                revision, len(pushes)
+            )
         )
         sys.exit(1)
     [(push_id, push_info)] = pushes.items()
