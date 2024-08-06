@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -115,7 +113,7 @@ async def hash_taskcluster_ymls():
 
 
 def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
-    hookGroupId = "project-{}".format(action.trust_domain)
+    hookGroupId = f"project-{action.trust_domain}"
     hookId = "in-tree-{}action-{}-{}/{}".format(
         "pr-" if pr else "", action.level, action.action_perm, tcyml_hash
     )
@@ -274,7 +272,7 @@ def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
     return Hook(
         hookGroupId=hookGroupId,
         hookId=hookId,
-        name="{}/{}".format(hookGroupId, hookId),
+        name=f"{hookGroupId}/{hookId}",
         description=textwrap.dedent(
             """\
             {}ction task {} at level {}, with `.taskcluster.yml` hash {}.
@@ -317,14 +315,10 @@ async def update_resources(resources):
     # manage the in-tree-action-* hooks, and corresponding roles, for each trust domain
     trust_domains = set(action.trust_domain for action in actions)
     for trust_domain in trust_domains:
-        resources.manage("Hook=project-{}/in-tree-action-.*".format(trust_domain))
-        resources.manage(
-            "Role=hook-id:project-{}/in-tree-action-.*".format(trust_domain)
-        )
-        resources.manage("Hook=project-{}/in-tree-pr-action-.*".format(trust_domain))
-        resources.manage(
-            "Role=hook-id:project-{}/in-tree-pr-action-.*".format(trust_domain)
-        )
+        resources.manage(f"Hook=project-{trust_domain}/in-tree-action-.*")
+        resources.manage(f"Role=hook-id:project-{trust_domain}/in-tree-action-.*")
+        resources.manage(f"Hook=project-{trust_domain}/in-tree-pr-action-.*")
+        resources.manage(f"Role=hook-id:project-{trust_domain}/in-tree-pr-action-.*")
 
     projects_by_level_and_trust_domain = {}
     for project in projects:
@@ -377,16 +371,12 @@ async def update_resources(resources):
 
         # use a single, star-suffixed role for all hashed versions of a hook
         role = Role(
-            roleId="hook-id:project-{}/in-tree-action-{}-{}/*".format(
-                action.trust_domain, action.level, action.action_perm
-            ),
-            description="Scopes associated with {} action `{}` "
-            "on each repo at level {}".format(
-                action.trust_domain, action.action_perm, action.level
-            ),
+            roleId=f"hook-id:project-{action.trust_domain}/in-tree-action-{action.level}-{action.action_perm}/*",
+            description=f"Scopes associated with {action.trust_domain} action `{action.action_perm}` "
+            f"on each repo at level {action.level}",
             scopes=normalizeScopes(
                 [
-                    "assume:{}:action:{}".format(p.role_prefix, action.action_perm)
+                    f"assume:{p.role_prefix}:action:{action.action_perm}"
                     for p in projects_by_level_and_trust_domain.get(
                         (action.trust_domain, action.level), []
                     )
@@ -400,18 +390,12 @@ async def update_resources(resources):
             if p.trust_domain == action.trust_domain
         ):
             role = Role(
-                roleId="hook-id:project-{}/in-tree-pr-action-{}-{}/*".format(
-                    action.trust_domain, action.level, action.action_perm
-                ),
-                description="Scopes associated with {} PR action `{}` "
-                "on each repo at level {}".format(
-                    action.trust_domain, action.action_perm, action.level
-                ),
+                roleId=f"hook-id:project-{action.trust_domain}/in-tree-pr-action-{action.level}-{action.action_perm}/*",
+                description=f"Scopes associated with {action.trust_domain} PR action `{action.action_perm}` "
+                f"on each repo at level {action.level}",
                 scopes=normalizeScopes(
                     [
-                        "assume:{}:pr-action:{}".format(
-                            p.role_prefix, action.action_perm
-                        )
+                        f"assume:{p.role_prefix}:pr-action:{action.action_perm}"
                         for p in projects
                         if p.feature("pr-actions")
                         and p.trust_domain == action.trust_domain
@@ -423,11 +407,11 @@ async def update_resources(resources):
     # download all existing hooks and check the last time they were used
     hooks = Hooks(optionsFromEnvironment(), session=aiohttp_session())
     interesting = MatchList(
-        "Hook=project-{}/in-tree-action-*".format(trust_domain)
+        f"Hook=project-{trust_domain}/in-tree-action-*"
         for trust_domain in trust_domains
     )
     for trust_domain in trust_domains:
-        hookGroupId = "project-{}".format(trust_domain)
+        hookGroupId = f"project-{trust_domain}"
         try:
             res = await hooks.listHooks(hookGroupId)
         except TaskclusterRestFailure as e:

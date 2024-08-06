@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -23,11 +21,11 @@ PRIORITIES = (
 
 async def project_scopes(resolver, level):
     projects = await Project.fetch_all()
-    scopes = ["assume:mozilla-group:active_scm_level_{}".format(level)]
+    scopes = [f"assume:mozilla-group:active_scm_level_{level}"]
     for project in projects:
         for branch in project.branches:
             if project.get_level(branch.name) == level:
-                scopes.append("assume:{}:*".format(project.role_prefix))
+                scopes.append(f"assume:{project.role_prefix}:*")
     return resolver.expandScopes(scopes)
 
 

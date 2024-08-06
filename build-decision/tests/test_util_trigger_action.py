@@ -1,5 +1,3 @@
-# coding=utf-8
-
 import io
 import json
 import os
@@ -105,7 +103,7 @@ def test_is_task_in_context(context, task_tags, expected):
 )
 def test_filter_relevant_actions(original_task, expected_action_names):
     """Compare task tags against action.json's actions."""
-    with open(TEST_DATA_DIR / "actions.json", "r") as fh:
+    with open(TEST_DATA_DIR / "actions.json") as fh:
         actions_json = json.load(fh)
     relevant_actions = trigger_action._filter_relevant_actions(
         actions_json, original_task

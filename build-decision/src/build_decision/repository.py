@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -52,17 +50,16 @@ class Repository:
                 url = f"{repo_url}/raw/{revision}/{path}"
             elif repo_url.startswith("git@github.com:"):
                 raise Exception(
-                    "Don't know how to get file from private github " "repo: {}".format(
-                        repo_url
-                    )
+                    "Don't know how to get file from private github "
+                    f"repo: {repo_url}"
                 )
             else:
                 raise Exception(
                     "Don't know how to determine get file for non-github "
-                    "repo: {}".format(repo_url)
+                    f"repo: {repo_url}"
                 )
         else:
-            raise Exception("Unknown repository_type {}!".format(self.repository_type))
+            raise Exception(f"Unknown repository_type {self.repository_type}!")
 
         res = SESSION.get(url, timeout=60)
         res.raise_for_status()
@@ -81,9 +78,7 @@ class Repository:
             else:
                 revset = "default"
             res = SESSION.get(
-                "{}/json-pushes?version=2&changeset={}&full=1".format(
-                    self.repo_url, revset
-                ),
+                f"{self.repo_url}/json-pushes?version=2&changeset={revset}&full=1",
                 timeout=60,
             )
             res.raise_for_status()
@@ -108,9 +103,7 @@ class Repository:
             tip_revision = changesets[-1]["node"]
             if revision and revision != tip_revision:
                 raise ValueError(
-                    "Changeset {} is not the tip {} of the associated push.".format(
-                        revision, tip_revision
-                    )
+                    f"Changeset {revision} is not the tip {tip_revision} of the associated push."
                 )
 
             return {
@@ -128,7 +121,7 @@ class Repository:
             repo_url = self.repo_url
             headers = {}
             if self.github_token:
-                headers["Authorization"] = "token {}".format(self.github_token)
+                headers["Authorization"] = f"token {self.github_token}"
             if repo_url.startswith("https://github.com/"):
                 url = (
                     f"https://api.github.com"
@@ -143,15 +136,15 @@ class Repository:
             elif repo_url.startswith("git@github.com:"):
                 raise Exception(
                     "Don't know how to determine revision for private github "
-                    "repo: {}".format(repo_url)
+                    f"repo: {repo_url}"
                 )
             else:
                 raise Exception(
                     "Don't know how to determine revision for for non-github "
-                    "repo: {}".format(repo_url)
+                    f"repo: {repo_url}"
                 )
         else:
-            raise Exception("Unknown repository_type {}!".format(self.repository_type))
+            raise Exception(f"Unknown repository_type {self.repository_type}!")
 
     @property
     def repo_path(self):
@@ -164,9 +157,7 @@ class Repository:
         ):
             return self.repo_url.replace("https://github.com/", "", 1).rstrip("/")
         else:
-            raise AttributeError(
-                "no repo_path available for project {}".format(self.alias)
-            )
+            raise AttributeError(f"no repo_path available for project {self.alias}")
 
     def to_json(self):
         return {

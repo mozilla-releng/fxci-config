@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -39,7 +37,7 @@ def format_role_id(project, job, pr_policy):
     if project.role_prefix.endswith("*"):
         return project.role_prefix
     else:
-        return "{}:{}".format(project.role_prefix, suffix)
+        return f"{project.role_prefix}:{suffix}"
 
 
 def format_scope(project, scope, level, priority):
@@ -197,7 +195,7 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
 
 def add_scopes_for_groups(grant, grantee, add_scope):
     for group in grantee.groups:
-        roleId = "project:releng:ci-group:{}".format(group)
+        roleId = f"project:releng:ci-group:{group}"
         for scope in grant.scopes:
             # use an empty format() to catch any stray {..} in the scope
             add_scope(roleId, scope.format())
@@ -250,7 +248,7 @@ async def update_resources(resources):
 
     # ..and add the roles
     for roleId, scopes in roles.items():
-        resources.manage("Role={}".format(re.escape(roleId)))
+        resources.manage(f"Role={re.escape(roleId)}")
         role = Role(
             roleId=roleId,
             scopes=normalizeScopes(scopes),

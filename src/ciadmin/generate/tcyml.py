@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -25,14 +23,14 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
     if repo_type == "hg":
         if revision is None:
             revision = default_branch or "default"
-        url = "{}/raw-file/{}/.taskcluster.yml".format(repo_path, revision)
+        url = f"{repo_path}/raw-file/{revision}/.taskcluster.yml"
     elif repo_type == "git":
         if revision is None:
             revision = default_branch or "master"
         if repo_path.startswith("https://github.com/"):
             if repo_path.endswith("/"):
                 repo_path = repo_path[:-1]
-            url = "{}/raw/{}/.taskcluster.yml".format(repo_path, revision)
+            url = f"{repo_path}/raw/{revision}/.taskcluster.yml"
         elif repo_path.startswith("git@github.com:"):
             if repo_path.endswith(".git"):
                 repo_path = repo_path[:-4]
@@ -42,10 +40,10 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
         else:
             raise Exception(
                 "Don't know how to determine file URL for non-github "
-                "repo: {}".format(repo_path)
+                f"repo: {repo_path}"
             )
     else:
-        raise Exception("Unknown repo_type {}!".format(repo_type))
+        raise Exception(f"Unknown repo_type {repo_type}!")
     async with _lock.setdefault(repo_path, Lock()):
         if repo_path in _cache:
             return _cache[repo_path]

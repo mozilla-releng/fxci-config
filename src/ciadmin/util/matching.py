@@ -38,41 +38,39 @@ class RoleGrantee:
 def grantees(grant_to):
     if not isinstance(grant_to, list):
         raise ValueError(
-            "grant `to` property must be a list (add `-` in yaml): {}".format(grant_to)
+            f"grant `to` property must be a list (add `-` in yaml): {grant_to}"
         )
     return [grantee_instance(ge) for ge in grant_to]
 
 
 def grantee_instance(grantee):
     if len(grantee) != 1:
-        raise ValueError("Malformed grantee (expected 1 key): {}".format(repr(grantee)))
+        raise ValueError(f"Malformed grantee (expected 1 key): {repr(grantee)}")
     kind, content = list(grantee.items())[0]
 
     if kind == "project" or kind == "projects":
         if not isinstance(content, dict):
             raise ValueError(
-                "grant `to.{}` property must be a dictionary "
-                "(remove `-` in yaml): {}".format(kind, grantee)
+                f"grant `to.{kind}` property must be a dictionary "
+                f"(remove `-` in yaml): {grantee}"
             )
         return ProjectGrantee(**content)
     elif kind == "group" or kind == "groups":
-        if not isinstance(content, (list, str)):
+        if not isinstance(content, list | str):
             raise ValueError(
-                "grant `to.{}` property must be a list or string (add `-` "
-                "in yaml): {}".format(kind, grantee)
+                f"grant `to.{kind}` property must be a list or string (add `-` "
+                f"in yaml): {grantee}"
             )
         return GroupGrantee(groups=content)
     elif kind == "role" or kind == "roles":
-        if not isinstance(content, (list, str)):
+        if not isinstance(content, list | str):
             raise ValueError(
-                "grant `to.{}` property must be a list or string (add `-` "
-                "in yaml): {}".format(kind, grantee)
+                f"grant `to.{kind}` property must be a list or string (add `-` "
+                f"in yaml): {grantee}"
             )
         return RoleGrantee(roles=content)
     else:
-        raise ValueError(
-            "Malformed grantee (invalid top-level key): {}".format(repr(grantee))
-        )
+        raise ValueError(f"Malformed grantee (invalid top-level key): {repr(grantee)}")
 
 
 def match(grantee_values, proj_value):

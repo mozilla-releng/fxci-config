@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -23,7 +21,7 @@ async def update_resources(resources):
     resources.manage("Role=hook-id:.*")
 
     for hook in hooks:
-        hook_name = "{}/{}".format(hook.hook_group_id, hook.hook_id)
+        hook_name = f"{hook.hook_group_id}/{hook.hook_id}"
 
         task = await get_ciconfig_file(hook.template_file)
 

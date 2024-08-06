@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-
-from __future__ import absolute_import, print_function, unicode_literals
 
 import copy
 import os
@@ -28,7 +24,7 @@ def make_arguments(job):
         arguments.append("--include-push-tasks")
     if "rebuild-kinds" in job:
         for kind in job["rebuild-kinds"]:
-            arguments.append("--rebuild-kind={}".format(kind))
+            arguments.append(f"--rebuild-kind={kind}")
     return arguments
 
 

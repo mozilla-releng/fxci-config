@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -21,11 +19,11 @@ async def replay_hg_push(*, alias, revision):
     try:
         project = await Project.get(alias)
     except KeyError:
-        sys.stderr.write("Unknown project alias: {}\n".format(alias))
+        sys.stderr.write(f"Unknown project alias: {alias}\n")
         sys.exit(1)
 
     if not project.feature("hg-push"):
-        sys.stderr.write("Project {} does not have hg-push feature.\n".format(alias))
+        sys.stderr.write(f"Project {alias} does not have hg-push feature.\n")
         sys.exit(1)
 
     target_options = optionsFromEnvironment()
@@ -46,9 +44,8 @@ async def replay_hg_push(*, alias, revision):
 
     if len(pushes) != 1:
         print(
-            "Changeset {} has {} associated pushes; " "only one expected".format(
-                revision, len(pushes)
-            )
+            f"Changeset {revision} has {len(pushes)} associated pushes; "
+            "only one expected"
         )
         sys.exit(1)
     [(push_id, push_info)] = pushes.items()
@@ -85,7 +82,7 @@ async def replay_hg_push(*, alias, revision):
     try:
         response = await target_hooks_api.triggerHook("hg-push", alias, pulse_message)
     except Exception as e:
-        sys.stderr.write("Could not get create hg-push task: {}\n".format(e))
+        sys.stderr.write(f"Could not get create hg-push task: {e}\n")
         sys.exit(1)
 
     print(

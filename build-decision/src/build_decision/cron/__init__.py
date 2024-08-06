@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-
-from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
 import traceback
@@ -67,7 +63,7 @@ def run_job(job_name, job, *, repository, push_info, dry_run=False):
             dry_run=dry_run,
         )
     else:
-        raise Exception("job type {} not recognized".format(job_type))
+        raise Exception(f"job type {job_type} not recognized")
 
 
 def run(*, repository, branch, force_run, dry_run):
@@ -79,7 +75,7 @@ def run(*, repository, branch, force_run, dry_run):
 
     if force_run:
         job_name = force_run
-        logger.info('force-running cron job "{}"'.format(job_name))
+        logger.info(f'force-running cron job "{job_name}"')
         run_job(
             job_name,
             jobs[job_name],
@@ -92,7 +88,7 @@ def run(*, repository, branch, force_run, dry_run):
     failed_jobs = []
     for job_name, job in sorted(jobs.items()):
         if should_run(job, time=time, project=repository.project):
-            logger.info('running cron job "{}"'.format(job_name))
+            logger.info(f'running cron job "{job_name}"')
             try:
                 run_job(
                     job_name,
@@ -107,11 +103,11 @@ def run(*, repository, branch, force_run, dry_run):
                 failed_jobs.append((job_name, exc))
                 traceback.print_exc()
                 logger.error(
-                    'cron job "{}" run failed; continuing to next job'.format(job_name)
+                    f'cron job "{job_name}" run failed; continuing to next job'
                 )
 
         else:
-            logger.info('not running cron job "{}"'.format(job_name))
+            logger.info(f'not running cron job "{job_name}"')
 
     _format_and_raise_error_if_any(failed_jobs)
 
@@ -120,7 +116,7 @@ def _format_and_raise_error_if_any(failed_jobs):
     if failed_jobs:
         failed_job_names = [job_name for job_name, _ in failed_jobs]
         failed_job_names_with_exceptions = (
-            '"{}": "{}"'.format(job_name, exc) for job_name, exc in failed_jobs
+            f'"{job_name}": "{exc}"' for job_name, exc in failed_jobs
         )
         raise RuntimeError(
             "Cron jobs {} couldn't be triggered properly. "

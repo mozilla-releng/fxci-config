@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -46,7 +44,7 @@ class Environment:
             if environment.name == environment_name:
                 return environment
         else:
-            raise KeyError("Environment {} is not defined".format(environment_name))
+            raise KeyError(f"Environment {environment_name} is not defined")
 
     @staticmethod
     def current():

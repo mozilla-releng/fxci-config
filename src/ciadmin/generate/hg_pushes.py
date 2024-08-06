@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -21,13 +19,8 @@ async def make_hook(project):
         taskcluster_yml_project = await Project.get(project.taskcluster_yml_project)
         if project.level > taskcluster_yml_project.level:
             raise ValueError(
-                "Cannot use `.taskcluster.yml` from {} which has level {}, "
-                "for {} which has level {}.".format(
-                    project.taskcluster_yml_project,
-                    taskcluster_yml_project.level,
-                    project.alias,
-                    project.level,
-                )
+                f"Cannot use `.taskcluster.yml` from {project.taskcluster_yml_project} which has level {taskcluster_yml_project.level}, "
+                f"for {project.alias} which has level {project.level}."
             )
         taskcluster_yml_repo = taskcluster_yml_project.repo
     else:
@@ -54,7 +47,7 @@ async def make_hook(project):
     return Hook(
         hookGroupId=hookGroupId,
         hookId=hookId,
-        name="{}/{}".format(hookGroupId, hookId),
+        name=f"{hookGroupId}/{hookId}",
         description=textwrap.dedent(
             """\
             On-push task for repository {}.
@@ -168,13 +161,11 @@ async def update_resources(resources):
         resources.add(hook)
 
         role = Role(
-            roleId="hook-id:{}/{}".format(hook.hookGroupId, hook.hookId),
-            description="Scopes associated with hg pushes for project `{}`".format(
-                project.alias
-            ),
+            roleId=f"hook-id:{hook.hookGroupId}/{hook.hookId}",
+            description=f"Scopes associated with hg pushes for project `{project.alias}`",
             scopes=[
-                "assume:{}:branch:*".format(project.role_prefix),
-                "queue:route:index.hg-push.v1.{alias}.*".format(alias=project.alias),
+                f"assume:{project.role_prefix}:branch:*",
+                f"queue:route:index.hg-push.v1.{project.alias}.*",
                 # all hg-push tasks use the same workerType,
                 # and branches do not have permission to create tasks on that workerType
                 "queue:create-task:highest:infra/build-decision",

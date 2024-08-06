@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
-
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
-from __future__ import absolute_import, print_function, unicode_literals
 
 from tcadmin.resources import Role
 from tcadmin.resources.role import normalizeScopes
@@ -26,19 +23,17 @@ async def update_resources(resources):
     projects = await Project.fetch_all()
 
     for level in [1, 2, 3]:
-        group = "active_scm_level_{}".format(level)
+        group = f"active_scm_level_{level}"
         roleId = "mozilla-group:" + group
-        description = "Scopes automatically available to users at SCM level {}".format(
-            level
-        )
-        scopes = ["assume:project:releng:ci-group:{}".format(group)]
+        description = f"Scopes automatically available to users at SCM level {level}"
+        scopes = [f"assume:project:releng:ci-group:{group}"]
 
         # include an `assume:` scope for each project at level 1
         for project in projects:
             if project.repo_type == "hg":
                 for branch in project.branches:
                     if project.get_level(branch.name) == 1:
-                        scopes.append("assume:{}:*".format(project.role_prefix))
+                        scopes.append(f"assume:{project.role_prefix}:*")
 
         if scopes:
             resources.add(
