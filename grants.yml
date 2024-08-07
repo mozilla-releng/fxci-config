@@ -507,6 +507,14 @@
         level: [3]
         alias: [mozilla-esr128, mozilla-esr115, mozilla-release, mozilla-beta]
 
+# temporarily enable beta builds on oak, for bug 1912032
+- grant:
+    - project:releng:signing:cert:fennec-production-signing
+    - secrets:get:project/mobile/firefox-android/fenix/beta
+  to:
+    - projects:
+        alias: [oak]
+
 - grant:
     - project:releng:googleplay:product:fenix
     - project:releng:googleplay:product:focus-android
