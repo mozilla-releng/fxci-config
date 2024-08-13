@@ -1092,23 +1092,6 @@ xpi-manifest:
     beetmover: true
     beetmover-get-artifact-scope: true
 
-rally-core-addon:
-  repo: https://github.com/mozilla-rally/rally-core-addon
-  repo_type: git
-  branches:
-    - name: "*"
-      level: 1
-    - name: master
-      level: 1
-  default_branch: master
-  trust_domain: xpi
-  features:
-    github-pull-request:
-      policy: collaborators
-    trust-domain-scopes: true
-    taskgraph-actions: true
-    xpi-roles: true
-
 staging-xpi-manifest:
   repo: https://github.com/mozilla-releng/staging-xpi-manifest
   repo_type: git
