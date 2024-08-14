@@ -19,7 +19,9 @@ from tcadmin.util.matchlist import MatchList
 from tcadmin.util.scopes import normalizeScopes
 from tcadmin.util.sessions import aiohttp_session
 
-from . import tcyml
+from ciadmin.util.matching import glob_match
+
+from . import branches, tcyml
 from .ciconfig.actions import Action
 from .ciconfig.projects import Project
 
@@ -30,33 +32,43 @@ from .ciconfig.projects import Project
 HOOK_RETENTION_TIME = datetime.timedelta(days=60)
 
 
+def should_hash(project):
+    if project.feature("gecko-actions"):
+        if not project.feature("hg-push") and not project.feature("gecko-cron"):
+            return False
+        if project.is_try:
+            return False
+        return True
+    elif project.feature("taskgraph-actions"):
+        # globbed projects (those with "*" in p.repo) could theoretically
+        # support in tree actions if we looked up the full repository
+        # list matching the glob. it's probably not worth doing though.
+        if "*" in project.repo:
+            return False
+        # At this time, we don't support fetching tcymls from private
+        # repos, so we can't generate action hooks for them.
+        if project.feature("github-private-repo"):
+            return False
+        return True
+    else:
+        return False
+
+
+async def get_project_branches(project):
+    if project.repo_type == "git":
+        return await branches.get(project.repo_path)
+    elif project.repo_type == "hg":
+        return ["default"]
+
+    raise Exception(f"unsupported repo type {project.repo_type} for {project.alias}")
+
+
 async def hash_taskcluster_ymls():
     """
     Download and hash .taskcluster.yml from every project repository.  Returns
     {alias: (parsed content, hash)}.
     """
     projects = await Project.fetch_all()
-
-    def should_hash(project):
-        if project.feature("gecko-actions"):
-            if not project.feature("hg-push") and not project.feature("gecko-cron"):
-                return False
-            if project.is_try:
-                return False
-            return True
-        elif project.feature("taskgraph-actions"):
-            # globbed projects (those with "*" in p.repo) could theoretically
-            # support in tree actions if we looked up the full repository
-            # list matching the glob. it's probably not worth doing though.
-            if "*" in project.repo:
-                return False
-            # At this time, we don't support fetching tcymls from private
-            # repos, so we can't generate action hooks for them.
-            if project.feature("github-private-repo"):
-                return False
-            return True
-        else:
-            return False
 
     # hash the value of this .taskcluster.yml.  Note that this must match the
     # hashing in taskgraph/actions/registry.py
@@ -69,12 +81,18 @@ async def hash_taskcluster_ymls():
     for p in tcyml_projects:
         rv[p.alias] = {}
 
-        for b in set([b.name for b in p.branches] + [p.default_branch]):
-            # Can't fetch a .taskcluster.yml for a globbed branch
-            # TODO: perhaps we should do this for partly globbed branches,
-            # eg: release* ?
-            # we'd have to fetch that list from the server to do that
-            if "*" not in b and "*" not in p.repo:
+        # If "*" is a configured branch we explicitly ignore it; otherwise
+        # we could end up fetching 100s or 1000s of tcymls and generating
+        # hooks for them. Substring globs may still exist, and are
+        # supported.
+        configured_branches = [b.name for b in p.branches if b.name != "*"]
+        # The default branch is considered to be _always_ configured, even if
+        # not explicitly named in `branches`. This is primarily to ensure that
+        # cases where `*` is the only branch explicitly listed, that we still
+        # generate actions for the default branch.
+        configured_branches.append(p.default_branch)
+        for b in await get_project_branches(p):
+            if glob_match(configured_branches, b):
 
                 def process(project, branch_name, task):
                     try:
@@ -140,9 +158,7 @@ def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
             if project[branch]["hash"] == tcyml_hash and str(action.level) == str(
                 project[branch]["level"]
             ):
-                matching_projects.append(
-                    f"{project[branch]['alias']}, branch: '{branch}'"
-                )
+                matching_projects.append(f"{key}, branch: '{branch}'")
 
     # schema-generation utilities
 
@@ -347,21 +363,18 @@ async def update_resources(resources):
         # gather the hashes at the action's level or higher
         hooks_to_make = {}  # {hash: content}, for uniqueness
         for project in projects:
-            for branch_name in set(
-                [b.name for b in project.branches] + [project.default_branch]
-            ):
-                # We don't have taskcluster.ymls from globbed branches;
-                # see comment in hash_taskcluster_ymls
-                if "*" in branch_name:
-                    continue
+            if not should_hash(project):
+                continue
+
+            for branch_name in await get_project_branches(project):
                 if project.alias not in hashed_tcymls:
+                    continue
+                if branch_name not in hashed_tcymls[project.alias]:
+                    # Branch didn't exist, or doesn't have a parseable tcyml
                     continue
                 if project.get_level(branch_name) < action.level:
                     continue
                 if project.trust_domain != action.trust_domain:
-                    continue
-                if branch_name not in hashed_tcymls[project.alias]:
-                    # Branch didn't exist, or doesn't have a parseable tcyml
                     continue
 
                 content, hash = (
