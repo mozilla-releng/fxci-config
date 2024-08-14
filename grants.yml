@@ -977,14 +977,6 @@
           - pr-actions
 
 - grant:
-    - queue:create-task:low:aws-provisioner-v1/gecko-{level}-decision
-    - queue:create-task:low:aws-provisioner-v1/gecko-misc
-    - queue:create-task:low:aws-provisioner-v1/gecko-{level}-images
-  to:
-    - project:
-        trust_domain: [taskgraph, ci]
-
-- grant:
     - secrets:get:project/releng/taskgraph/ci
   to:
     - project:
