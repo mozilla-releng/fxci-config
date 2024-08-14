@@ -1089,6 +1089,7 @@ staging-xpi-private:
   default_branch: master
   trust_domain: xpi
   features:
+    github-private-repo: true
     github-pull-request:
       policy: collaborators
     trust-domain-scopes: true
