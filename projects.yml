@@ -545,37 +545,6 @@ nss-try:
     treeherder-reporting: true
     taskgraph-actions: true
 
-ci-configuration:
-  repo: https://hg.mozilla.org/ci/ci-configuration
-  repo_type: hg
-  access: scm_firefoxci
-  branches:
-    - name: default
-  trust_domain: ci
-  features:
-    hg-push: true
-    taskgraph-actions: true
-    taskgraph-cron: true
-    trust-domain-scopes: true
-    treeherder-reporting: true
-  cron:
-    targets:
-      - test-build-decision
-
-ci-configuration-try:
-  repo: https://hg.mozilla.org/ci/ci-configuration-try
-  repo_type: hg
-  access: scm_level_1
-  branches:
-    - name: default
-  trust_domain: ci
-  is_try: true
-  features:
-    hg-push: true
-    taskgraph-actions: true
-    trust-domain-scopes: true
-    treeherder-reporting: true
-
 fxci-config:
   repo: https://github.com/mozilla-releng/fxci-config
   repo_type: git
