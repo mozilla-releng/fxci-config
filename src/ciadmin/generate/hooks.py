@@ -11,7 +11,7 @@ from .ciconfig.hooks import Hook as HookConfig
 
 async def update_resources(resources):
     """
-    Manage custom hooks.  This file interprets `hooks.yml` in ci-configuration.
+    Manage custom hooks.  This file interprets `hooks.yml` in fxci-config.
     Its behavior is largely documented in the comment in that file.
     """
 

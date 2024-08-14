@@ -22,7 +22,7 @@ async def _read_file(filename, **test_kwargs):
 
 async def get_ciconfig_file(filename):
     """
-    Get the named file from the ci-configuration repository, parsing .yml if necessary.
+    Get the named file from the fxci-config repository, parsing .yml if necessary.
 
     Fetches are cached, so it's safe to call this many times for the same file.
     """

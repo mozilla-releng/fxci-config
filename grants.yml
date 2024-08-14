@@ -804,13 +804,6 @@
         alias: try
 
 - grant:
-    # Bug 1616786 : Allow ci projects to trigger code review bot
-    - queue:route:project.relman.codereview.*
-  to:
-    - project:
-        alias: ci-configuration-try
-
-- grant:
     # Bug 1800472: Allow try-comm-central to trigger code review bot
     - queue:route:project.relman.codereview.*
   to:

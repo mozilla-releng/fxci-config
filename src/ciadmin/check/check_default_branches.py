@@ -36,7 +36,7 @@ async def _get_git_default_branch(project):
 @with_aiohttp_session
 async def check_default_branches_for_git_repos():
     """
-    Ensures that the default branch present in the ci-configuration's
+    Ensures that the default branch present in the fxci-config's
     `projects.yml` match the ones from git metadata
     """
 

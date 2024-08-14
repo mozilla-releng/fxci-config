@@ -28,7 +28,7 @@ class WorkerPool:
 
     @staticmethod
     async def fetch_all():
-        """Load worker-type metadata from worker-pools.yml in ci-configuration"""
+        """Load worker-type metadata from worker-pools.yml in fxci-config"""
         config = await get_ciconfig_file("worker-pools.yml")
 
         return [WorkerPool(**info) for info in config["pools"]]

@@ -36,7 +36,7 @@ async def get_hg_repo_owner(project):
 @with_aiohttp_session
 async def check_scopes_for_hg_repos():
     """
-    Ensures that the access levels present in the ci-configuration's
+    Ensures that the access levels present in the fxci-config's
     `projects.yml` match the ones from hg.mozilla.org metadata
     """
 

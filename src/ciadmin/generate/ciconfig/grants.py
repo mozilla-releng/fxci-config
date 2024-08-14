@@ -23,7 +23,7 @@ class Grant:
 
     @staticmethod
     async def fetch_all():
-        """Load project metadata from grants.yml in ci-configuration"""
+        """Load project metadata from grants.yml in fxci-config"""
         grants = await get_ciconfig_file("grants.yml")
 
         return [

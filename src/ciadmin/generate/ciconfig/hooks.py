@@ -23,7 +23,7 @@ class Hook:
 
     @staticmethod
     async def fetch_all():
-        """Load hook metadata from hooks.yml in ci-configuration"""
+        """Load hook metadata from hooks.yml in fxci-config"""
         hooks = await get_ciconfig_file("hooks.yml")
 
         for hook_name in hooks:

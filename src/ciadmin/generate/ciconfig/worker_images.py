@@ -16,7 +16,7 @@ class WorkerImage:
     @staticmethod
     async def fetch_all():
         """
-        Load worker-image metadata from worker-images.yml in ci-configuration,
+        Load worker-image metadata from worker-images.yml in fxci-config,
         returning a WorkerImages instance that will resolve aliases.
         """
         worker_images = await get_ciconfig_file("worker-images.yml")

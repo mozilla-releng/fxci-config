@@ -26,7 +26,7 @@ async def make_hook(project):
     else:
         taskcluster_yml_repo = None
 
-    # use the hg-push-template.yml from the ci-configuration repository, rendering it
+    # use the hg-push-template.yml from the fxci-config repository, rendering it
     # with the context values described there
     task_template = await get_ciconfig_file("hg-push-template.yml")
 

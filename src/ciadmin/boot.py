@@ -42,7 +42,7 @@ appconfig.modifiers.register(modify.modify_resources)
 
 appconfig.description_prefix = (
     "*DO NOT EDIT* - This resource is configured automatically by "
-    + "[ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\n"
+    + "[ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n"
 )
 
 

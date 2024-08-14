@@ -1,6 +1,6 @@
 ---
 # This file contains configuration for each of the environments in which
-# ci-configuration applies.
+# fxci-config applies.
 #
 # Structure
 # ---------
