@@ -51,9 +51,9 @@ def create_task_scopes(queue_priorities):
     All scopes that could allow creating a task on the hg-push workerType
     """
     return [
-        f"queue:create-task:{priority}:aws-provisioner-v1/hg-push"
+        f"queue:create-task:{priority}:infra/build-decision"
         for priority in queue_priorities
-    ] + ["queue:create-task:aws-provisioner-v1/hg-push"]
+    ] + ["queue:create-task:infra/build-decision"]
 
 
 def check_ci_groups_create_task(ci_group_roles, create_task_scopes):
