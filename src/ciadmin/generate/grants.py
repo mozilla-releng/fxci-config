@@ -211,7 +211,7 @@ def add_scopes_for_roles(grant, grantee, add_scope):
 async def update_resources(resources):
     """
     Manage the scopes granted to projects.  This file interprets `grants.yml`
-    in ci-configuration. Its behavior is largely documented in the comment in that file.
+    in fxci-config. Its behavior is largely documented in the comment in that file.
     """
 
     grants = await Grant.fetch_all()
@@ -253,7 +253,7 @@ async def update_resources(resources):
             roleId=roleId,
             scopes=normalizeScopes(scopes),
             description="Scopes in this role are defined in "
-            "[ci-configuration/grants.yml]"
-            "(https://hg.mozilla.org/ci/ci-configuration/file/tip/grants.yml).",
+            "[fxci-config/grants.yml]"
+            "(https://github.com/mozilla-releng/fxci-config/blob/main/grants.yml).",
         )
         resources.add(role)

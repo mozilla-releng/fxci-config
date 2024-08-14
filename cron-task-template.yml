@@ -31,7 +31,7 @@ routes:
 scopes:
   - assume:hook-id:${hookGroupId}/${hookId}
 payload:
-  # built by pushes to the ci-configuration repository
+  # built by pushes to the fxci-config repository
   image: mozillareleases/build-decision:d8eb09a395864e905f67d07330cc5dc6cc569b04@sha256:53ea2055b5b811b45ed856523aac992b5551faa6201cfc1d934f33bd0efb1ae0
   env:
     $merge:

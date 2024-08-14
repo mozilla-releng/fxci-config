@@ -25,7 +25,7 @@ class Action:
 
     @staticmethod
     async def fetch_all():
-        """Load project metadata from actions.yml in ci-configuration"""
+        """Load project metadata from actions.yml in fxci-config"""
 
         def build_actions(trust_domain, levels, action_perms, **kwargs):
             """

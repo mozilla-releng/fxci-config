@@ -76,7 +76,7 @@ provided here.
 
 ## Starting Concepts
 
-This tool examines the contents of the `ci-configuration` repository, as well
+This tool examines the contents of the `fxci-config` repository, as well
 as examining and applying changes to the running taskcluster configuration.
 
 The `environment` describes the cluster being affected, such as `firefoxci` or
@@ -127,7 +127,7 @@ To apply changes locally (not recommended):
 * **`tc-admin diff --environment=firefoxci`**
 
    Generate a diff of the currently running taskcluster configuration, and the
-   one generated from the tip of the ci-configuration repository.
+   one generated from the tip of the fxci-config repository.
 
 * **`tc-admin diff --environment=firefoxci --grep somestring`**
 

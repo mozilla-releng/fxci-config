@@ -16,7 +16,7 @@ class Client:
 
     @staticmethod
     async def fetch_all():
-        """Load hook metadata from hooks.yml in ci-configuration"""
+        """Load hook metadata from hooks.yml in fxci-config"""
         clients = await get_ciconfig_file("clients.yml")
 
         return [Client(client_id, **info) for client_id, info in clients.items()]

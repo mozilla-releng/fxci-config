@@ -29,7 +29,7 @@ class Environment:
 
     @staticmethod
     async def fetch_all():
-        """Load project metadata from projects.yml in ci-configuration"""
+        """Load project metadata from projects.yml in fxci-config"""
         environments = await get_ciconfig_file("environments.yml")
         return [
             Environment(environment_name, **info)

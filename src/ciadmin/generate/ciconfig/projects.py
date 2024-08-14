@@ -129,7 +129,7 @@ class Project:
 
     @staticmethod
     async def fetch_all():
-        """Load project metadata from projects.yml in ci-configuration"""
+        """Load project metadata from projects.yml in fxci-config"""
         projects = await get_ciconfig_file("projects.yml")
         return [Project(alias, **info) for alias, info in projects.items()]
 
