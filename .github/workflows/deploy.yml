@@ -17,6 +17,7 @@ jobs:
         environment: ["staging", "firefoxci"]
     env:
       TASKCLUSTER_ROOT_URL: ${{vars.TASKCLUSTER_ROOT_URL}}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -48,6 +49,7 @@ jobs:
       TASKCLUSTER_ROOT_URL: ${{vars.TASKCLUSTER_ROOT_URL}}
       TASKCLUSTER_CLIENT_ID: ${{vars.TASKCLUSTER_CLIENT_ID}}
       TASKCLUSTER_ACCESS_TOKEN: ${{secrets.TASKCLUSTER_ACCESS_TOKEN}}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
