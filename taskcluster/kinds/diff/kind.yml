@@ -1,0 +1,40 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+
+loader: taskgraph.loader.transform:loader
+
+transforms:
+    - taskgraph.transforms.task_context
+    - taskgraph.transforms.run
+    - taskgraph.transforms.task
+
+task-defaults:
+    description: "Run tc-admin diff on {environment}"
+    worker-type: t-linux
+    worker:
+        docker-image: {in-tree: python3.11}
+        env:
+            ENVIRONMENT: "{environment}"
+        max-run-time: 1800
+    run:
+        cwd: '{checkout}'
+        using: run-task
+        checkout: true
+        command: ./taskcluster/scripts/run-diff.sh
+    task-context:
+        substitution-fields:
+            - description
+            - worker.env.ENVIRONMENT
+
+tasks:
+    firefoxci:
+        task-context:
+            from-object:
+                environment: firefoxci
+
+    staging:
+        task-context:
+            from-object:
+                environment: staging
