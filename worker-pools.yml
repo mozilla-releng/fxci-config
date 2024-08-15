@@ -2266,6 +2266,7 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
+      - pool-group: mozilla-1
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
@@ -2293,6 +2294,7 @@ pools:
           comm-3: 50
           comm-(1|2): 25
           mozillavpn-.*: 25
+          mozilla-.*: 25
           relops-.*: 12
       worker-purpose:
         by-pool-group:
