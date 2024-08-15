@@ -857,8 +857,6 @@ tooltool:
   repo: https://github.com/mozilla-releng/tooltool
   repo_type: git
   branches:
-    - name: main
-      level: 3
     - name: master
       level: 3
     - name: production
