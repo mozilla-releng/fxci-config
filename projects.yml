@@ -826,8 +826,6 @@ product-details:
     # set for it.
     - name: main
       level: 1
-    - name: testing
-      level: 3
     - name: production
       level: 3
     - name: staging
