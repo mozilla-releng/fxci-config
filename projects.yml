@@ -1268,20 +1268,21 @@ fx-desktop-qa-automation:
     trust-domain-scopes: true
 
 # Bug 1896432: Add taskcluster to mozilla/neqo
-neqo:
-  repo: https://github.com/mozilla/neqo
-  repo_type: git
-  trust_domain: mozilla
-  trust_project: neqo
-  branches:
-    - name: main
-      level: 1
-  features:
-    github-taskgraph: true
-    github-pull-request:
-      policy: public
-    taskgraph-actions: true
-    trust-domain-scopes: true
+# currently disabled, see https://github.com/mozilla/neqo/pull/1949
+# neqo:
+#   repo: https://github.com/mozilla/neqo
+#   repo_type: git
+#   trust_domain: mozilla
+#   trust_project: neqo
+#   branches:
+#     - name: main
+#       level: 1
+#   features:
+#     github-taskgraph: true
+#     github-pull-request:
+#       policy: public
+#     taskgraph-actions: true
+#     trust-domain-scopes: true
 
 ###
 # WARNING: These grants apply to entire Github orgs.
