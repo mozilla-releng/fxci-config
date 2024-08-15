@@ -117,7 +117,11 @@ async def hash_taskcluster_ymls():
                 future.add_done_callback(functools.partial(process, p, b))
                 futures.append(future)
 
-    await asyncio.gather(*futures, return_exceptions=True)
+    # `return_exceptions` is set to False to ensure any errors fetching
+    # tcymls are bubbled up. Any issue retrieving them will result in
+    # incomplete action hook generation, and attempts to generate or deploy
+    # changes should be aborted because of this.
+    await asyncio.gather(*futures, return_exceptions=False)
     return rv
 
 
