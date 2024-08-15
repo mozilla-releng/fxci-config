@@ -121,8 +121,9 @@ def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
     # making matching project list for description field
 
     matching_projects = []
-    for project in projects.values():
-        for branch in project:
+    for key in sorted(projects):
+        project = projects[key]
+        for branch in sorted(project):
             if project[branch]["hash"] == tcyml_hash and str(action.level) == str(
                 project[branch]["level"]
             ):
