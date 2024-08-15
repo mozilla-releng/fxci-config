@@ -45,6 +45,15 @@ async def hash_taskcluster_ymls():
                 return False
             return True
         elif project.feature("taskgraph-actions"):
+            # globbed projects (those with "*" in p.repo) could theoretically
+            # support in tree actions if we looked up the full repository
+            # list matching the glob. it's probably not worth doing though.
+            if "*" in project.repo:
+                return False
+            # At this time, we don't support fetching tcymls from private
+            # repos, so we can't generate action hooks for them.
+            if project.feature("github-private-repo"):
+                return False
             return True
         else:
             return False
