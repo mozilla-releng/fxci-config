@@ -2046,12 +2046,6 @@
     - project:releng:beetmover:bucket:maven-production
   to:
     - project:
-        alias:
-          - mozilla-central
-          - mozilla-beta
-          - mozilla-release
-        job: cron:ship-geckoview
-    - project:
         # We still support RELBRANCHes on mozilla-release. Geckoview gets automatically shipped on
         # GECKOVIEW_\d+_RELBRANCH (\d+ being the major version)
         alias: mozilla-release
@@ -2096,16 +2090,9 @@
 - grant:
     # Allow triggering geckoview, bumps, nightlies and l10n tasks
     - hooks:trigger-hook:project-releng/cron-task-integration-autoland/android-l10n-import
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-central/ship-geckoview
     - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/android-l10n-sync
-    - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/ship-geckoview
-    - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-release/ship-geckoview
 
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-fenix/nightly
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-android/nightly
-    - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-focus-android/nightly
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/nightly
-
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-reference-browser/bump-android-comp
 
     - hooks:trigger-hook:project-releng/cron-task-mozilla-mobile-firefox-ios/l10-screenshots

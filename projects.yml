@@ -104,7 +104,6 @@ mozilla-release:
     trust-domain-scopes: true
   cron:
     targets:
-      - ship-geckoview
       - periodic-update
 comm-release:
   repo: https://hg.mozilla.org/releases/comm-release
@@ -263,7 +262,6 @@ mozilla-beta:
   cron:
     targets:
       - android-l10n-sync
-      - ship-geckoview
       - l10n-bumper
       - daily-releases
       - periodic-update
