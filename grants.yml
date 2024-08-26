@@ -2422,6 +2422,8 @@
     # Grant mobile the ability to see and modify their secrets
     - secrets:get:project/mobile/*
     - secrets:set:project/mobile/*
+    - secrets:get:project/gecko/level-any/firefox-android/*
+    - secrets:set:project/gecko/level-any/firefox-android/*
   to:
     - groups:
         - mobile_releases
