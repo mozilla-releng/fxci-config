@@ -1717,10 +1717,6 @@
     - project:
         alias:
           - mozilla-vpn-client
-        job:
-          - branch:*
-          - pull-request:*
-          - release:*
 
 - grant:
     - project:{trust_domain}:releng:signing:format:*
