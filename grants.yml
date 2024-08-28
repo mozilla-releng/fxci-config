@@ -1599,6 +1599,7 @@
         alias: reference-browser
         job: [cron:nightly]
 
+# firefox-ios specific scopes
 - grant:
     - secrets:get:project/mobile/firefox-ios/bitrise
   to:
@@ -1610,6 +1611,22 @@
           - cron:bitrise-performance-test
           - cron:firebase-performance-test
           - branch:*
+
+# Bug 1915421 - Granted for experimentation, remove when finished
+- grant:
+    - queue:create-task:{priority}:releng-hardware/mozilla-b-1-osx
+  to:
+    - project:
+        alias: firefox-ios
+        job:
+          - pull-request:trusted
+    - project:
+        alias: staging-firefox-ios
+        job:
+          - action:*
+          - cron:*
+          - branch:*
+          - pull-request:trusted
 
 # bitrisescript grants
 - grant:
