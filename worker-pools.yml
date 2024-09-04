@@ -503,12 +503,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
-            enableInteractive: true
       minCapacity: 0
       maxCapacity: 1000
       regions: [us-central1, us-west1]
@@ -651,12 +645,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
-            enableInteractive: true
       minCapacity: 0
       maxCapacity: 1000
       regions: [us-central1, us-west1]
@@ -681,12 +669,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
-            enableInteractive: true
       minCapacity: 0
       maxCapacity: 16
       regions: [us-central1, us-west1]
@@ -712,12 +694,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
-            enableInteractive: true
       minCapacity: 0
       maxCapacity: 1000
       regions: [us-central1, us-west1]
@@ -742,12 +718,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
-            enableInteractive: true
       minCapacity: 0
       maxCapacity: 8
       regions: [us-central1, us-west1]
@@ -773,12 +743,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
-            enableInteractive: true
       minCapacity: 0
       maxCapacity: 1000
       regions: [us-central1, us-west1]
