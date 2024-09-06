@@ -47,4 +47,8 @@ appconfig.description_prefix = (
 
 
 def boot():
+    if not os.environ.get("GITHUB_TOKEN"):
+        print(
+            "WARNING: GITHUB_TOKEN is not present in the environment; you may run into rate limits querying for GitHub branches"
+        )
     main(appconfig)
