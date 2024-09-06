@@ -1280,6 +1280,22 @@ fx-desktop-qa-automation:
 #     taskgraph-actions: true
 #     trust-domain-scopes: true
 
+# Bug 1917007: Please setup `afranchuk/process-top-crashes` with taskcluster
+process-top-crashes:
+  repo: https://github.com/afranchuk/process-top-crashes
+  repo_type: git
+  trust_domain: mozilla
+  trust_project: process-top-crashes
+  branches:
+    - name: main
+      level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 ###
 # WARNING: These grants apply to entire Github orgs.
 ###
