@@ -1294,7 +1294,6 @@ process-top-crashes:
     github-pull-request:
       policy: public
     taskgraph-actions: true
-    taskgraph-cron: true
     trust-domain-scopes: true
 
 ###
