@@ -1,6 +1,6 @@
 import pytest
-import yaml
 import requests.exceptions
+import yaml
 
 import build_decision.cron as cron
 
@@ -25,7 +25,9 @@ def test_load_jobs_404(mocker):
     fake_repo = mocker.MagicMock()
     fake_response = mocker.MagicMock()
     fake_response.status_code = 404
-    fake_repo.get_file.side_effect = requests.exceptions.HTTPError(response=fake_response)
+    fake_repo.get_file.side_effect = requests.exceptions.HTTPError(
+        response=fake_response
+    )
     assert cron.load_jobs(fake_repo, "rev") == {}
 
 
