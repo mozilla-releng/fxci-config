@@ -1,5 +1,6 @@
 import pytest
 import yaml
+import requests.exceptions
 
 import build_decision.cron as cron
 
@@ -18,6 +19,14 @@ def test_load_jobs(mocker):
         expected[job["name"]] = job
 
     assert cron.load_jobs(fake_repo, "rev") == expected
+
+
+def test_load_jobs_404(mocker):
+    fake_repo = mocker.MagicMock()
+    fake_response = mocker.MagicMock()
+    fake_response.status_code = 404
+    fake_repo.get_file.side_effect = requests.exceptions.HTTPError(response=fake_response)
+    assert cron.load_jobs(fake_repo, "rev") == {}
 
 
 @pytest.mark.parametrize(
