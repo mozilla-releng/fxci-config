@@ -7,6 +7,8 @@ import logging
 import traceback
 from pathlib import Path
 
+from requests.exceptions import HTTPError
+
 from ..util.keyed_by import evaluate_keyed_by
 from ..util.schema import Schema
 from . import action, decision
@@ -27,7 +29,12 @@ _cron_yml_schema = Schema.from_file(Path(__file__).with_name("schema.yml"))
 
 
 def load_jobs(repository, revision):
-    cron_yml = repository.get_file(".cron.yml", revision=revision)
+    try:
+        cron_yml = repository.get_file(".cron.yml", revision=revision)
+    except HTTPError as e:
+        if e.response.status_code == 404:
+            return {}
+        raise
     _cron_yml_schema.validate(cron_yml)
 
     # resolve keyed_by fields in each job
