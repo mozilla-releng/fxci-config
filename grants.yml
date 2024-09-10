@@ -2587,6 +2587,20 @@
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mh
 
+# Bug 1917007: Secrets for afranchuk/process-top-crashes
+- grant:
+    - secrets:get:project/mozilla/process-top-crashes/ci
+  to:
+    - project:
+        alias: taskgraph
+        job: [action:*, branch:*, pull-request:trusted, release:*]
+
+- grant:
+    - secrets:get:project/mozilla/process-top-crashes/*
+    - secrets:set:project/mozilla/process-top-crashes/*
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|afranchuk
 
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
