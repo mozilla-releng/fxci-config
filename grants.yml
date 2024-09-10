@@ -2592,7 +2592,7 @@
     - secrets:get:project/mozilla/process-top-crashes/ci
   to:
     - project:
-        alias: taskgraph
+        alias: process-top-crashes
         job: [action:*, branch:*, pull-request:trusted, release:*]
 
 - grant:
