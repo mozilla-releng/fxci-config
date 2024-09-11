@@ -1474,7 +1474,7 @@ pools:
           machine_type: c2-standard-4
   - pool_id: 'gecko-t/t-linux-2204-wayland-relsre-image-qual'
     description: Worker for Wayland on Ubuntu 22.04. Used by RelSRE to qualify images.
-    owner: release+tc-workers@mozilla.com
+    owner: aerickson@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
