@@ -34,7 +34,8 @@ monopacker-docker-worker-gcp-current: handbuilt-docker-worker-tester-20240614
 
 # 'image qualification' pool aliases
 monopacker-docker-worker-relops528: monopacker-docker-worker-2023-04-13-relops528
-monopacker-gw-gcp-l1-gui-relops1071: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-08-22t22-48-09z
+monopacker-gw-gcp-l1-gui-relops1071:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-08-22t22-48-09z
 
 # not used any longer?
 relops-image-builder-current: relops-image-builder-pre
