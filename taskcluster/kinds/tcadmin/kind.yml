@@ -1,0 +1,36 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+
+loader: taskgraph.loader.transform:loader
+
+transforms:
+    - fxci_config_taskgraph.transforms.environment
+    - taskgraph.transforms.run
+    - taskgraph.transforms.task
+
+task-defaults:
+    worker-type: t-linux
+    worker:
+        docker-image: {in-tree: python3.11}
+        env:
+            ENVIRONMENT: "{environment}"
+        max-run-time: 1800
+        artifacts:
+            - type: directory
+              name: public/
+              path: /builds/worker/artifacts/
+    run:
+        cwd: '{checkout}'
+        using: run-task
+        checkout: true
+
+tasks:
+    gen:
+        description: "Run tc-admin generate on {environment}"
+        environments: ["firefoxci"]
+        run:
+            command: >-
+                pip install -r requirements/test.txt &&
+                tc-admin generate --json --environment $ENVIRONMENT > /builds/worker/artifacts/fxci-config.json
