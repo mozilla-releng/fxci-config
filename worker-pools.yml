@@ -1386,6 +1386,8 @@ pools:
           disks:
             - <<: *persistent-disk
               diskSizeGb: 75
+            - *scratch-disk
+            - *scratch-disk
           machine_type: c2-standard-16
           advancedMachineFeatures:
             enableNestedVirtualization: true
