@@ -54,7 +54,7 @@ monopacker-docker-worker-2024-06-14-relops993:
 monopacker-translations-worker:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-translations-gcp-googlecompute-2024-04-22t18-22-42z
 monopacker-ubuntu-2204-wayland:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-05-31t15-18-14z
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-08-22t22-48-09z
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-05-14t00-44-32z
 monopacker-ubuntu-2204-wayland-arm64:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-arm64-gui-googlecompute-2024-03-01t17-45-17z
