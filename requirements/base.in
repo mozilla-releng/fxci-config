@@ -11,6 +11,7 @@ pyyaml>=5.3
 iso8601==0.1.12  # no semver..
 json-e<3
 aiohttp-retry
+simple-github>=2.1.0
 # These are used at run-time as part of `tc-admin check`
 pytest
 pytest-asyncio

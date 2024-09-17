@@ -4,10 +4,10 @@
 
 import os
 from asyncio import Lock
+from functools import partial
 
 import aiohttp
-from aiohttp_retry import ExponentialRetry, RetryClient
-from tcadmin.util.sessions import aiohttp_session
+from simple_github import AppClient, PublicClient, TokenClient
 
 _cache = {}
 _lock = {}
@@ -23,29 +23,35 @@ async def get(repo_path, repo_type="git"):
 
     if repo_path.endswith("/"):
         repo_path = repo_path[:-1]
-    branches_url = f"https://api.github.com/repos/{repo_path}/branches"
+    branches_endpoint = f"/repos/{repo_path}/branches"
 
     # 100 is the maximum allowed
     # https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28#list-branches
     params = {"per_page": 100}
     headers = {}
     if "GITHUB_TOKEN" in os.environ:
-        github_token = os.environ["GITHUB_TOKEN"]
-        headers["Authorization"] = f"Bearer {github_token}"
+        client_cls = partial(TokenClient, os.environ["GITHUB_TOKEN"])
+    elif "GITHUB_APP_ID" in os.environ and "GITHUB_APP_PRIVKEY" in os.environ:
+        client_cls = partial(
+            AppClient,
+            os.environ["GITHUB_APP_ID"],
+            os.environ["GITHUB_APP_PRIVKEY"],
+            owner="mozilla-releng",
+            repositories=["fxci-config"],
+        )
+    else:
+        client_cls = PublicClient
 
     async with _lock.setdefault(repo_path, Lock()):
         if repo_path in _cache:
             return _cache[repo_path]
 
-        branches = []
-        client = RetryClient(
-            client_session=aiohttp_session(),
-            retry_options=ExponentialRetry(attempts=5),
-        )
-        while branches_url:
-            async with client.get(
-                branches_url, headers=headers, params=params
-            ) as response:
+        async with client_cls() as client:
+            branches = []
+            while branches_endpoint:
+                response = await client.request(
+                    "GET", branches_endpoint, headers=headers, params=params
+                )
                 try:
                     response.raise_for_status()
                     result = await response.json()
@@ -60,13 +66,16 @@ async def get(repo_path, repo_type="git"):
                     # client at that point.
                     for l in response.headers.get("link", "").split(","):
                         if 'rel="next"' in l:
-                            branches_url = l.split(">")[0].split("<")[1]
+                            branches_endpoint = l.split(">")[0].split("<")[1]
+                            branches_endpoint = branches_endpoint[
+                                len("https://api.github.com") :
+                            ]
                             break
                     else:
-                        branches_url = None
+                        branches_endpoint = None
                 except aiohttp.ClientResponseError as e:
-                    print(f"Got error when querying {branches_url}: {e}")
+                    print(f"Got error when querying {branches_endpoint}: {e}")
                     raise e
 
-        _cache[repo_path] = branches
-        return _cache[repo_path]
+            _cache[repo_path] = branches
+            return _cache[repo_path]
