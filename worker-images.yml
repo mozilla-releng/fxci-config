@@ -76,42 +76,6 @@ handbuilt-docker-worker-tester-20240614:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14
 
 # generic-worker images
-# Azure 2012 images
-ronin-b1-windows2012-alpha:
-  azure2:
-    deployment_id: alpha
-    central-us: win2012r2-64-l1-centralus-2012-R2-Datacenter
-    north-central-us: win2012r2-64-l1-northcentralus-2012-R2-Datacenter
-ronin-b1-windows2012-beta:
-  azure2:
-    deployment_id: alpha
-    central-us: win2012r2-64-l1-centralus-2012-R2-Datacenter
-    east-us: win2012r2-64-l1-eastus-2012-R2-Datacenter
-    east-us-2: win2012r2-64-l1-eastus2-2012-R2-Datacenter
-    north-central-us: win2012r2-64-l1-northcentralus-2012-R2-Datacenter
-    south-central-us: win2012r2-64-l1-southcentralus-2012-R2-Datacenter
-    west-us: win2012r2-64-l1-westus-2012-R2-Datacenter
-    west-us-2: win2012r2-64-l1-westus2-2012-R2-Datacenter
-ronin-b1-windows2012-prod:
-  azure2:
-    deployment_id: 75bd9ed
-    central-us: win2012r2-64-l1-centralus-2012-R2-Datacenter
-    east-us: win2012r2-64-l1-eastus-2012-R2-Datacenter
-    east-us-2: win2012r2-64-l1-eastus2-2012-R2-Datacenter
-    north-central-us: win2012r2-64-l1-northcentralus-2012-R2-Datacenter
-    south-central-us: win2012r2-64-l1-southcentralus-2012-R2-Datacenter
-    west-us: win2012r2-64-l1-westus-2012-R2-Datacenter
-    west-us-2: win2012r2-64-l1-westus2-2012-R2-Datacenter
-ronin-b3-windows2012-prod:
-  azure_trusted:
-    deployment_id: 7cde253
-    central-us: trusted-win2012r2-64-l3-centralus-2012-R2-Datacenter
-    east-us: trusted-win2012r2-64-l3-eastus-2012-R2-Datacenter
-    east-us-2: trusted-win2012r2-64-l3-eastus2-2012-R2-Datacenter
-    north-central-us: trusted-win2012r2-64-l3-northcentralus-2012-R2-Datacenter
-    south-central-us: trusted-win2012r2-64-l3-southcentralus-2012-R2-Datacenter
-    west-us: trusted-win2012r2-64-l3-westus-2012-R2-Datacenter
-    west-us-2: trusted-win2012r2-64-l3-westus2-2012-R2-Datacenter
 ronin-b1-windows2012-vs-py2-alpha:
   azure2:
     deployment_id: alpha
