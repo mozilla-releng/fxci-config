@@ -1797,12 +1797,66 @@ pools:
             - *scratch-disk
           machine_type: c2-standard-4
           capacityPerInstance: 8
+  - pool_id: gecko-1/b-win2012-azure-{suffix}
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    variants:
+      - suffix: alpha
+      - suffix: beta
+    config:
+      image: "ronin-b1-windows2012-{suffix}"
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-1
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 1800
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: win_2012
+        sourceRepository: ronin_puppet
+        sourceOrganisation: markcor
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
   - pool_id: '{pool-group}/b-win2012-azure'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
     variants:
-      - pool-group: nss-3
+      - pool-group: gecko-1
+      - pool-group: gecko-2
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+      - pool-group: comm-1
+      - pool-group: comm-2
+      - pool-group: comm-3
         chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
@@ -1821,6 +1875,187 @@ pools:
           gecko-.*: 500
           comm-3: 50
           comm-(1|2): 25
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 1800
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: mozillavpn-1/masterwayz-win2012-azure
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin-b1-windows2012-bug1801167
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: vpn-1
+      locations: [central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 1800
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+                - lun: 1
+                  diskSizeGB: 120
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: '{pool-group}/b-win2012-azure{suffix}'
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    attributes:
+      suffix: ''
+      track: prod
+    variants:
+      - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-1
+        track: alpha
+        suffix: -alpha
+      - pool-group: mozillavpn-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: azure_trusted
+        default: azure2
+    config:
+      image:
+        by-chain-of-trust:
+          trusted: ronin-b3-windows2012-vs-{track}
+          default: ronin-b1-windows2012-vs-{track}
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose:
+        by-pool-group:
+          mozillavpn-1: vpn-1
+          mozillavpn-3: vpn-3
+      locations:
+        by-track:
+          alpha: [central-us, north-central-us]
+          default: [central-us, north-central-us, east-us-2, west-us-2]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 1800
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F32s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+              dataDisks:
+                - lun: 0
+                  diskSizeGB: 250
+                  managedDisk:
+                    storageAccountType: Premium_LRS
+                  createOption: Empty
+            hardwareProfile:
+              vmSize: Standard_F32s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: '{pool-group}/b-win2012-azure{suffix}'
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    attributes:
+      suffix: ''
+      track: prod
+    variants:
+      - pool-group: nss-1
+      - pool-group: nss-1
+        track: alpha
+        suffix: -alpha
+      - pool-group: nss-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: azure_trusted
+        default: azure2
+    config:
+      image:
+        by-chain-of-trust:
+          trusted: ronin-b3-windows2012-vs-py2-{track}
+          default: ronin-b1-windows2012-vs-py2-{track}
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: '{pool-group}'
+      locations:
+        by-track:
+          alpha: [central-us, north-central-us]
+          default: [central-us, north-central-us, east-us-2, west-us-2]
+      maxCapacity: 25
       worker-config:
         genericWorker:
           config:
@@ -3095,6 +3330,29 @@ pools:
               type: SCRATCH
               interface: NVME
           machine_type: n2-standard-2
+  - pool_id: relops-3/win2019
+    description: build windows cloud images for taskcluster windows workloads
+    owner: relops-aws-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: aws
+    config:
+      image: relops-image-builder-current
+      maxCapacity: 12
+      regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
+      security: trusted
+      implementation: generic-worker/windows
+      additional-user-data:
+        workerType: relops-image-builder
+      instance_types:
+        - instanceType: c5.4xlarge
+          launchConfig:
+            BlockDeviceMappings:
+              - DeviceName: /dev/sda1
+                Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
+              - DeviceName: /dev/sdb
+                Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
+              - DeviceName: /dev/sdc
+                Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
   - pool_id: code-review/bot-gcp
     description: Worker for the code-review bot.
     owner: release+tc-workers@mozilla.com
