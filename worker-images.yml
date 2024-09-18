@@ -37,9 +37,6 @@ monopacker-docker-worker-relops528: monopacker-docker-worker-2023-04-13-relops52
 monopacker-gw-gcp-wayland-gui-relops1071:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-08-22t22-48-09z
 
-# not used any longer?
-relops-image-builder-current: relops-image-builder-pre
-
 # monopacker docker-worker images (chronologically ordered)
 monopacker-docker-worker-trusted-gcp-2024-02-05:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z
