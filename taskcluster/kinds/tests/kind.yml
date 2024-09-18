@@ -30,18 +30,14 @@ tasks:
                 NO_TEST_SKIP: "1"
         run:
             command: >-
-                pip install --user -r requirements/test.txt &&
-                pip install --user --no-deps . &&
-                py.test tests/
+                uv run pytest tests/
     unit-build-decision:
         description: "Run build-decision `unit tests` to validate the latest changes"
         worker:
             env:
                 # fail instead of skipping tests due to missing information
                 NO_TEST_SKIP: "1"
-            docker-image: {in-tree: python3.11}
         run:
+            cwd: '{checkout}/build-decision'
             command: >-
-                pip install --user -r build-decision/requirements/test.txt &&
-                pip install --user --no-deps build-decision/. &&
-                py.test build-decision/tests/
+                uv run pytest
