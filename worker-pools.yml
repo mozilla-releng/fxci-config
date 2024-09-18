@@ -3236,29 +3236,6 @@ pools:
               type: SCRATCH
               interface: NVME
           machine_type: n2-standard-2
-  - pool_id: relops-3/win2019
-    description: build windows cloud images for taskcluster windows workloads
-    owner: relops-aws-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: aws
-    config:
-      image: relops-image-builder-current
-      maxCapacity: 12
-      regions: [eu-central-1, us-east-1, us-west-1, us-west-2]
-      security: trusted
-      implementation: generic-worker/windows
-      additional-user-data:
-        workerType: relops-image-builder
-      instance_types:
-        - instanceType: c5.4xlarge
-          launchConfig:
-            BlockDeviceMappings:
-              - DeviceName: /dev/sda1
-                Ebs: {DeleteOnTermination: true, VolumeSize: 40, VolumeType: gp2}
-              - DeviceName: /dev/sdb
-                Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
-              - DeviceName: /dev/sdc
-                Ebs: {DeleteOnTermination: true, VolumeSize: 120, VolumeType: gp2}
   - pool_id: code-review/bot-gcp
     description: Worker for the code-review bot.
     owner: release+tc-workers@mozilla.com
