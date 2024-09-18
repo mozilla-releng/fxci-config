@@ -1797,18 +1797,11 @@ pools:
             - *scratch-disk
           machine_type: c2-standard-4
           capacityPerInstance: 8
-  - pool_id: '{pool-group}/b-win2012-azure{suffix}'
+  - pool_id: '{pool-group}/b-win2012-azure'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
-    attributes:
-      suffix: ''
-      track: prod
     variants:
-      - pool-group: nss-1
-      - pool-group: nss-1
-        track: alpha
-        suffix: -alpha
       - pool-group: nss-3
         chain-of-trust: trusted
     provider_id:
@@ -1818,16 +1811,16 @@ pools:
     config:
       image:
         by-chain-of-trust:
-          trusted: ronin-b3-windows2012-vs-py2-{track}
-          default: ronin-b1-windows2012-vs-py2-{track}
+          trusted: ronin-b3-windows2012-prod
+          default: ronin-b1-windows2012-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
-      worker-purpose: '{pool-group}'
-      locations:
-        by-track:
-          alpha: [central-us, north-central-us]
-          default: [central-us, north-central-us, east-us-2, west-us-2]
-      maxCapacity: 25
+      locations: [central-us, north-central-us, east-us-2, west-us-2]
+      maxCapacity:
+        by-pool-group:
+          gecko-.*: 500
+          comm-3: 50
+          comm-(1|2): 25
       worker-config:
         genericWorker:
           config:
