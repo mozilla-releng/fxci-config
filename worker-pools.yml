@@ -1509,7 +1509,7 @@ pools:
       - pool-group: gecko-t
       - pool-group: gecko-3
         chain-of-trust: trusted
-    email_on_error: false
+    email_on_error: true
     provider_id:
       by-chain-of-trust:
         default: fxci-level1-gcp
