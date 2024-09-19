@@ -36,6 +36,10 @@ monopacker-docker-worker-gcp-current: handbuilt-docker-worker-tester-20240614
 monopacker-docker-worker-relops528: monopacker-docker-worker-2023-04-13-relops528
 monopacker-gw-gcp-wayland-gui-relops1071:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-08-22t22-48-09z
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-09-18t05-46-31z
+monopacker-gw-gcp-wayland-gui-arm64-relops1071:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-arm64-gui-googlecompute-2024-09-18t14-57-52z
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-arm64-gui-googlecompute-2024-09-18t19-02-58z
 
 # monopacker docker-worker images (chronologically ordered)
 monopacker-docker-worker-trusted-gcp-2024-02-05:
