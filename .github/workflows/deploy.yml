@@ -20,13 +20,12 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v2
         with:
-          python-version: '3.11'
-          cache: pip
-      - name: Install dependencies
-        run: pip install -r requirements/test.txt
+          version: "0.4.13"
+      - name: Set up Python
+        run: uv python install 3.11
       - name: Set root url
         run: |
           if [ "${{ matrix.environment }}" == "staging" ]; then
@@ -35,7 +34,7 @@ jobs:
             echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> $GITHUB_ENV;
           fi
       - name: Run checks
-        run: tc-admin check --environment ${{matrix.environment}}
+        run: uv run tc-admin check --environment ${{matrix.environment}}
 
   apply:
     if: github.event_name == 'push'
@@ -52,16 +51,15 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v2
         with:
-          python-version: '3.11'
-          cache: pip
-      - name: Install dependencies
-        run: pip install -r requirements/base.txt
+          version: "0.4.13"
+      - name: Set up Python
+        run: uv python install 3.11
       - name: Deploy environment
         id: apply_config
-        run: tc-admin apply --environment ${{matrix.environment}}
+        run: uv run tc-admin apply --environment ${{matrix.environment}}
 
   notify:
     if: github.event_name == 'push' && always()

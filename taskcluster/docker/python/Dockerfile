@@ -6,8 +6,11 @@
 FROM python:$PYTHON_VERSION
 LABEL maintainer="Mozilla Release Engineering <release+fxci-config@mozilla.com>"
 
+VOLUME /builds/worker/checkouts
+VOLUME /builds/worker/.cache
+
 # Add worker user
-RUN mkdir /builds && \
+RUN mkdir -p /builds && \
     useradd -d /builds/worker -s /bin/bash -m worker && \
     mkdir /builds/worker/artifacts && \
     chown worker:worker /builds/worker/artifacts
@@ -21,8 +24,7 @@ ENV SHELL=/bin/bash \
     HOME=/builds/worker \
     PATH=/builds/worker/.local/bin:$PATH
 
-VOLUME /builds/worker/checkouts
-VOLUME /builds/worker/.cache
+COPY --from=ghcr.io/astral-sh/uv:0.4.13 /uv /bin/uv
 
 # Set a default command useful for debugging
 CMD ["/bin/bash", "--login"]
