@@ -1474,27 +1474,63 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: c2-standard-4
-  - pool_id: 'gecko-t/t-linux-2204-wayland-relsre-image-qual'
-    description: Worker for Wayland on Ubuntu 22.04. Used by RelSRE to qualify images.
+  - pool_id: '{pool-group}/t-linux-2204-wayland-relsre'
+    description: Workers for Wayland on Ubuntu 22.04. Used by RelSRE to qualify images.
     owner: aerickson@mozilla.com
     email_on_error: true
-    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        default: fxci-level1-gcp
+        trusted: fxci-level3-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true  # ok for l1, but not ok for l3?
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-gw-gcp-wayland-gui-relops1071
+      security:
+        by-chain-of-trust:
+          trusted: trusted
+          default:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: c2-standard-4
+  - pool_id: '{pool-group}/t-linux-2204-wayland-arm64-relsre'
+    description: Workers for Wayland on Ubuntu 22.04 ARM64. Used by RelSRE to qualify images.
+    owner: aerickson@mozilla.com
+    variants:
+      - pool-group: gecko-t
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        default: fxci-level1-gcp
+        trusted: fxci-level3-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux-multi
+      # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
+      regions: [us-central1]
+      image: monopacker-gw-gcp-wayland-gui-arm64-relops1071
+      security:
+        by-chain-of-trust:
+          trusted: trusted
+          default:
+      instance_types:
+        - minCpuPlatform: Ampere Altra
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 60
+          machine_type: t2a-standard-4
   - pool_id: 'gecko-t/t-linux-2204-wayland-root-exp'  # Bug 1874877
     description: Worker for testing Wayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
