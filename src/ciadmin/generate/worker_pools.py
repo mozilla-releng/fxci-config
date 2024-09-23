@@ -228,7 +228,7 @@ def get_azure_provider_config(
                 f"{subscription_id}/resourceGroups/{rgroup}/providers/"
                 f"Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
             )
-            if 'version' in locals() and version:
+            if "version" in locals() and version:
                 ImageId = image.image_id(provider_id, "name")
                 imageReference_id = (
                     f"{subscription_id}/resourceGroups/rg-packer-worker-images/providers/"
@@ -240,9 +240,9 @@ def get_azure_provider_config(
                     f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
                     f"Microsoft.Compute/images/{ImageId}-{DeploymentId}"
                 )
-            #if 'manifest' in locals() and manifest:
-                #print(manifest)
-                #input("Press Enter to continue...")
+            # if 'manifest' in locals() and manifest:
+            # print(manifest)
+            # input("Press Enter to continue...")
             tags["deploymentId"] = DeploymentId
 
             launch_config = {
