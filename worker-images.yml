@@ -56,10 +56,10 @@ monopacker-translations-worker:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-translations-gcp-googlecompute-2024-04-22t18-22-42z
 monopacker-ubuntu-2204-wayland:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-08-22t22-48-09z
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-05-14t00-44-32z
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-09-18t05-46-31z
 monopacker-ubuntu-2204-wayland-arm64:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-arm64-gui-googlecompute-2024-03-01t17-45-17z
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-arm64-gui-googlecompute-2024-03-01t18-01-03z
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-arm64-gui-googlecompute-2024-09-18t14-57-52z
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-arm64-gui-googlecompute-2024-09-18t19-02-58z
 # monopacker-ubuntu-2204:  # non-gui, not working yet. see https://github.com/taskcluster/taskcluster/issues/6786
 #   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-googlecompute-2024-01-19t17-35-11z
 #   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-googlecompute-2024-01-19t18-10-08z
