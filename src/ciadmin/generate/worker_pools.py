@@ -201,109 +201,77 @@ def get_azure_provider_config(
             "wstServerURL", azure_config["wst_server_url"]
         )
     tags = config.get("tags", {})
-    # Temporary conditional language while we move pools over to the newer
-    # method that is in the else clause
-    # Refrence https://mozilla-hub.atlassian.net/browse/RELOPS-212
-    if config.get("old-style-worker-config"):
-        launch_configs = []
-        for location in locations:
-            for vmSize in vmSizes:
-                loc = location.replace("-", "")
-                ImageId = image.image_id(provider_id, location)
+
+    launch_configs = []
+    for location in locations:
+        for vmSize in vmSizes:
+            loc = location.replace("-", "")
+            DeploymentId = image.image_id(provider_id, "deployment_id")
+            try:
+                manifest = image.image_id(provider_id, "manifest")
+            except:
+                pass
+            try:
+                version = image.image_id(provider_id, "version")
+            except:
+                pass
+            if provider_id == "azure_trusted":
+                subscription_id = azure_config["trusted_subscription"]
+            else:
                 subscription_id = azure_config["untrusted_subscription"]
-                subscription_id = f"/subscriptions/{subscription_id}"
-                resource_suffix = f"{location}-{purpose}"
-                rgroup = f"rg-{resource_suffix}"
-                vnet = f"vn-{resource_suffix}"
-                snet = f"sn-{resource_suffix}"
-                subnetId = (
-                    f"{subscription_id}/resourceGroups/{rgroup}/providers/"
-                    f"Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
-                )
+            subscription_id = f"/subscriptions/{subscription_id}"
+            resource_suffix = f"{location}-{purpose}"
+            rgroup = f"rg-{resource_suffix}"
+            vnet = f"vn-{resource_suffix}"
+            snet = f"sn-{resource_suffix}"
+            subnetId = (
+                f"{subscription_id}/resourceGroups/{rgroup}/providers/"
+                f"Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
+            )
+            if 'version' in locals() and version:
+                ImageId = image.image_id(provider_id, "name")
                 imageReference_id = (
-                    f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
-                    f"Microsoft.Compute/images/{ImageId}"
+                    f"{subscription_id}/resourceGroups/rg-packer-worker-images/providers/"
+                    f"Microsoft.Compute/galleries/{ImageId}/images/{ImageId}/versions/{version}"
                 )
-                launch_config = {
-                    "location": loc,
-                    "subnetId": subnetId,
-                    "tags": merge(
-                        tags,
-                    ),
-                    "workerConfig": merge(
-                        worker_config,
-                    ),
-                    "hardwareProfile": {"vmSize": vmSize},
-                    "priority": "spot",
-                    "billingProfile": {"maxPrice": -1},
-                    "evictionPolicy": "Delete",
-                    "capacityPerInstance": 1,
-                    "storageProfile": {"imageReference": {"id": imageReference_id}},
-                }
-
-            launch_config = merge(launch_config, vmSize.get("launchConfig", {}))
-            launch_configs.append(launch_config)
-
-        return {
-            "minCapacity": config.get("minCapacity", 0),
-            "maxCapacity": config["maxCapacity"],
-            "scalingRatio": config.get("scalingRatio", 1),
-            "lifecycle": lifecycle,
-            "launchConfigs": launch_configs,
-        }
-    else:
-        launch_configs = []
-        for location in locations:
-            for vmSize in vmSizes:
-                loc = location.replace("-", "")
-                DeploymentId = image.image_id(provider_id, "deployment_id")
+            else:
                 ImageId = image.image_id(provider_id, location)
-                if provider_id == "azure_trusted":
-                    subscription_id = azure_config["trusted_subscription"]
-                else:
-                    subscription_id = azure_config["untrusted_subscription"]
-                subscription_id = f"/subscriptions/{subscription_id}"
-                resource_suffix = f"{location}-{purpose}"
-                rgroup = f"rg-{resource_suffix}"
-                vnet = f"vn-{resource_suffix}"
-                snet = f"sn-{resource_suffix}"
-                subnetId = (
-                    f"{subscription_id}/resourceGroups/{rgroup}/providers/"
-                    f"Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
-                )
                 imageReference_id = (
                     f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
                     f"Microsoft.Compute/images/{ImageId}-{DeploymentId}"
                 )
-                tags["deploymentId"] = DeploymentId
+            #if 'manifest' in locals() and manifest:
+                #print(manifest)
+                #input("Press Enter to continue...")
+            tags["deploymentId"] = DeploymentId
 
-                launch_config = {
-                    "location": loc,
-                    "subnetId": subnetId,
-                    "tags": merge(
-                        tags,
-                    ),
-                    "workerConfig": merge(
-                        worker_config,
-                    ),
-                    "hardwareProfile": {"vmSize": vmSize},
-                    "priority": "spot",
-                    "billingProfile": {"maxPrice": -1},
-                    "evictionPolicy": "Delete",
-                    "capacityPerInstance": 1,
-                    "storageProfile": {"imageReference": {"id": imageReference_id}},
-                }
+            launch_config = {
+                "location": loc,
+                "subnetId": subnetId,
+                "tags": merge(
+                    tags,
+                ),
+                "workerConfig": merge(
+                    worker_config,
+                ),
+                "hardwareProfile": {"vmSize": vmSize},
+                "priority": "spot",
+                "billingProfile": {"maxPrice": -1},
+                "evictionPolicy": "Delete",
+                "capacityPerInstance": 1,
+                "storageProfile": {"imageReference": {"id": imageReference_id}},
+            }
 
-                launch_config = merge(launch_config, vmSize.get("launchConfig", {}))
-                launch_configs.append(launch_config)
+            launch_config = merge(launch_config, vmSize.get("launchConfig", {}))
+            launch_configs.append(launch_config)
 
-        return {
-            "minCapacity": config.get("minCapacity", 0),
-            "maxCapacity": config["maxCapacity"],
-            "scalingRatio": config.get("scalingRatio", 1),
-            "lifecycle": lifecycle,
-            "launchConfigs": launch_configs,
-        }
+    return {
+        "minCapacity": config.get("minCapacity", 0),
+        "maxCapacity": config["maxCapacity"],
+        "scalingRatio": config.get("scalingRatio", 1),
+        "lifecycle": lifecycle,
+        "launchConfigs": launch_configs,
+    }
 
 
 def get_google_provider_config(

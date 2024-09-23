@@ -156,6 +156,12 @@ ronin-t-windows10-64-2009-alpha:
     uk-west: win10-64-2009-ukwest-win10-22h2-avd
     uk-south: win10-64-2009-uksouth-win10-22h2-avd
 # Windows 11
+ronin_b_windows11_a64_24h2_builder_alpha:
+  azure2:
+    deployment_id: alpha
+    version: 0.0.1
+    manifiest: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-builder-alpha.md
+    name: win11_a64_24h2_builder_alpha
 ronin-t-windows11-64-24h2-alpha:
   azure2:
     deployment_id: alpha
