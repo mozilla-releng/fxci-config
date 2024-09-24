@@ -1702,6 +1702,8 @@
         job: [pull-request:*]
 
 - grant:
+    - project:mozillavpn:beetmover:action:import-from-gcs-to-artifact-registry
+    - project:mozillavpn:beetmover:apt-repo:release
     - project:mozillavpn:releng:beetmover:action:push-to-candidates
     - project:mozillavpn:releng:beetmover:bucket:release
   to:
