@@ -32,7 +32,7 @@ from . import fake_redo_retry
             "https://github.com/org/repo",
             None,
             False,
-            "https://github.com/org/repo/raw/master/fake_path",
+            "https://api.github.com/repos/org/repo/contents/fake_path",
         ),
         (
             # Git, no revision, trailing slash
@@ -40,7 +40,7 @@ from . import fake_redo_retry
             "https://github.com/org/repo/",
             None,
             False,
-            "https://github.com/org/repo/raw/master/fake_path",
+            "https://api.github.com/repos/org/repo/contents/fake_path",
         ),
         (
             # Git, revision
@@ -48,7 +48,7 @@ from . import fake_redo_retry
             "https://github.com/org/repo",
             "rev",
             False,
-            "https://github.com/org/repo/raw/rev/fake_path",
+            "https://api.github.com/repos/org/repo/contents/fake_path?ref=rev",
         ),
         (
             # Raise on private git url
@@ -80,6 +80,7 @@ def test_get_file(mocker, repository_type, repo_url, revision, raises, expected_
     """Add coverage to ``Repository.get_file``."""
 
     fake_session = mocker.MagicMock()
+
     mocker.patch.object(repository, "SESSION", new=fake_session)
     mocker.patch.object(yaml, "safe_load")
 
@@ -92,7 +93,12 @@ def test_get_file(mocker, repository_type, repo_url, revision, raises, expected_
             repo.get_file("fake_path", revision=revision)
     else:
         repo.get_file("fake_path", revision=revision)
-        fake_session.get.assert_called_with(expected_url, timeout=60)
+        expected_headers = {}
+        if repo_url.startswith("https://github.com"):
+            expected_headers = {"Accept": "application/vnd.github.raw+json"}
+        fake_session.get.assert_called_with(
+            expected_url, headers=expected_headers, timeout=60
+        )
 
 
 @pytest.mark.parametrize(
