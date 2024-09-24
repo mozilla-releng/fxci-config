@@ -219,15 +219,6 @@ project/autophone/gecko-t-bitbar-perf-s24:
     - auth:websocktunnel-token:firefoxcitc/bitbar.*
     - queue:claim-work:proj-autophone/gecko-t-bitbar-gw-perf-s24
     - queue:worker-id:bitbar/*
-project/nss-nspr/aarch64:
-  description: Created for Franziskus to support the 64-bit ARM machines
-  scopes:
-    - assume:worker-type:localprovisioner/nss-aarch64
-project/nss-nspr/macos-10-12:
-  description: ''
-  scopes:
-    - assume:worker-type:localprovisioner/nss-macos-10-12
-    - assume:worker-type:localprovisioner/nss-macos-m1
 project/packet/docker-worker:
   description: ''
   scopes:
