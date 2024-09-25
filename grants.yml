@@ -823,10 +823,6 @@
 
 - grant:
     - docker-worker:feature:allowPtrace
-    - queue:create-task:{priority}:localprovisioner/nss-aarch64
-    - queue:create-task:{priority}:localprovisioner/nss-macos-10-12
-    - queue:create-task:{priority}:localprovisioner/nss-rpi
-    - queue:create-task:{priority}:localprovisioner/nss-macos-m1
     - queue:create-task:{priority}:releng-hardware/nss-{level}-b-*
     - queue:route:index.docker.images.v1.{alias}.*
     - project:releng:services/tooltool/api/download/internal
@@ -2543,13 +2539,6 @@
   to:
     - roles:
         - project:relman:code-review/runtime/production
-
-- grant:
-    # Grant taskcluster team permission to reset access tokens for nss workers
-    - auth:reset-access-token:project/nss-nspr/*
-  to:
-    - group:
-        - team_taskcluster
 
 # Non-Moco Sheriffs-basic
 # contributors in the Sheriffs group that need:
