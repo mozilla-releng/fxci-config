@@ -83,9 +83,9 @@ handbuilt-docker-worker-tester-20240614:
 relsre-gw-fxci-gcp-l1-2404-amd64-gui:
   ## alpha pool that relsre can use to rebuild and test 2404 gui ubuntu images
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-alpha
-relsre-gw-fxci-gcp-l1-2404-amd64:
+#relsre-gw-fxci-gcp-l1-2404-amd64:
   ## alpha pool that relsre can use to rebuild and test 2404 non-gui ubuntu images
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-googlecompute-alpha
+  #fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-googlecompute-alpha
 
 # generic-worker images
 ronin-b1-windows2012-vs-py2-alpha:
