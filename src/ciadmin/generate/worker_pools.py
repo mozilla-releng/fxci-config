@@ -207,7 +207,11 @@ def get_azure_provider_config(
         for vmSize in vmSizes:
             loc = location.replace("-", "")
             DeploymentId = image.image_id(provider_id, "deployment_id")
-            ImageId = image.image_id(provider_id, location)
+            try:
+                version = image.image_id(provider_id, "version")
+            except Exception:
+                version = None
+            DeploymentId = image.image_id(provider_id, "deployment_id")
             if provider_id == "azure_trusted":
                 subscription_id = azure_config["trusted_subscription"]
             else:
@@ -221,10 +225,18 @@ def get_azure_provider_config(
                 f"{subscription_id}/resourceGroups/{rgroup}/providers/"
                 f"Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
             )
-            imageReference_id = (
-                f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
-                f"Microsoft.Compute/images/{ImageId}-{DeploymentId}"
-            )
+            if version is not None:
+                ImageId = image.image_id(provider_id, "name")
+                imageReference_id = (
+                    f"{subscription_id}/resourceGroups/rg-packer-worker-images/providers/"
+                    f"Microsoft.Compute/galleries/{ImageId}/images/{ImageId}/versions/{version}"
+                )
+            else:
+                ImageId = image.image_id(provider_id, location)
+                imageReference_id = (
+                    f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
+                    f"Microsoft.Compute/images/{ImageId}-{DeploymentId}"
+                )
             tags["deploymentId"] = DeploymentId
 
             launch_config = {
