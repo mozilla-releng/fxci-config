@@ -1548,7 +1548,7 @@ pools:
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
-      image: gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-alpha
+      image: relsre-gw-fxci-gcp-l1-2404-amd64-gui-alpha
       security:
         by-chain-of-trust:
           trusted: trusted
