@@ -1537,22 +1537,12 @@ pools:
     email_on_error: true
     variants:
       - pool-group: gecko-t
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        default: fxci-level1-gcp
-        trusted: fxci-level3-gcp
     config:
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: relsre-gw-fxci-gcp-2404-amd64-gui-alpha
-      security:
-        by-chain-of-trust:
-          trusted: trusted
-          default:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
