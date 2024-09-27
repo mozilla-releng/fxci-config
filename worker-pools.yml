@@ -1535,6 +1535,7 @@ pools:
     description: Workers for Wayland on Ubuntu 24.04. Used by RelSRE to qualify images.
     owner: jmoss@mozilla.com
     email_on_error: true
+    provider_id: fxci-level1-gcp
     variants:
       - pool-group: gecko-t
     config:
