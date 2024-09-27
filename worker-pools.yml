@@ -1543,6 +1543,7 @@ pools:
         genericWorker:
           config:
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
+            enableD2G: true
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
