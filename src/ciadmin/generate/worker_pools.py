@@ -221,8 +221,6 @@ def get_azure_provider_config(
                 f"{subscription_id}/resourceGroups/{rgroup}/providers/"
                 f"Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
             )
-            print(pool_id)
-            print(version)
             if version != "NA":
                 ImageId = image.image_id(provider_id, "name")
                 imageReference_id = (
