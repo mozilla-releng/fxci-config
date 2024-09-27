@@ -1539,6 +1539,10 @@ pools:
     variants:
       - pool-group: gecko-t
     config:
+      worker-config:
+        genericWorker:
+          config:
+            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
