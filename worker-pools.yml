@@ -2457,7 +2457,6 @@ pools:
     provider_id: azure2
     config:
       image: ronin_b_windows11_a64_24h2_builder_alpha
-      image_resource_group: rg-packer-worker-images
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-1
       locations: [east-us-2, west-us-3, north-central-us, central-us]

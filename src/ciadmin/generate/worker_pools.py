@@ -177,7 +177,6 @@ def get_azure_provider_config(
     environment, provider_id, pool_id, config, worker_images, defaults
 ):
     locations = config.pop("locations")
-    image_rgroup = config.pop("image_resource_group")
     vmSizes = config["vmSizes"]
     purpose = config.get("worker-purpose") or pool_id.split("/")[0]
     image = worker_images[config["image"]]
@@ -205,17 +204,14 @@ def get_azure_provider_config(
     launch_configs = []
     for location in locations:
         for vmSize in vmSizes:
-            loc = location.replace("-", "")
-            DeploymentId = image.image_id(provider_id, "deployment_id")
-            try:
-                version = image.image_id(provider_id, "version")
-            except Exception:
-                version = None
-            DeploymentId = image.image_id(provider_id, "deployment_id")
             if provider_id == "azure_trusted":
                 subscription_id = azure_config["trusted_subscription"]
             else:
                 subscription_id = azure_config["untrusted_subscription"]
+            loc = location.replace("-", "")
+            version = image.image_id(provider_id, "version")
+            image_rgroup = image.image_id(provider_id, "resource_group")
+            DeploymentId = image.image_id(provider_id, "deployment_id")
             subscription_id = f"/subscriptions/{subscription_id}"
             resource_suffix = f"{location}-{purpose}"
             rgroup = f"rg-{resource_suffix}"
@@ -225,10 +221,12 @@ def get_azure_provider_config(
                 f"{subscription_id}/resourceGroups/{rgroup}/providers/"
                 f"Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
             )
-            if version is not None:
+            print(pool_id)
+            print(version)
+            if version != "NA":
                 ImageId = image.image_id(provider_id, "name")
                 imageReference_id = (
-                    f"{subscription_id}/resourceGroups/rg-packer-worker-images/providers/"
+                    f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
                     f"Microsoft.Compute/galleries/{ImageId}/images/{ImageId}/versions/{version}"
                 )
             else:
