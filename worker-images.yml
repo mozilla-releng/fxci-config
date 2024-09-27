@@ -79,6 +79,14 @@ handbuilt-docker-worker-tester-20240614:
   # includes new livelog certificate, see https://mozilla-hub.atlassian.net/browse/RELOPS-993
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14
 
+# worker-images generic-worker vm images
+relsre-gw-fxci-gcp-2404-amd64-gui-alpha:
+  ## alpha pool that relsre can use to rebuild and test 2404 gui ubuntu images
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-alpha
+#relsre-gw-fxci-gcp-l1-2404-amd64-alpha:
+  ## alpha pool that relsre can use to rebuild and test 2404 non-gui ubuntu images
+  #fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-googlecompute-alpha
+
 # generic-worker images
 ronin-b1-windows2012-vs-py2-alpha:
   azure2:
