@@ -183,6 +183,28 @@ def assert_azure_basic(pool):
     }
 
 
+def assert_azure_version(pool):
+    assert_common(pool)
+
+    config = pool.config
+    assert config["launchConfigs"][0] == {
+        "billingProfile": {"maxPrice": -1},
+        "capacityPerInstance": 1,
+        "evictionPolicy": "Delete",
+        "hardwareProfile": {"vmSize": {"vmSize": "Standard_F8s_v2"}},
+        "location": "useast1",
+        "priority": "spot",
+        "storageProfile": {
+            "imageReference": {
+                "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/rgroup_id/rg-packer-worker-images/providers/Microsoft.Compute/galleries/name/images/name/versions/ver_id"  # noqa: E501
+            }
+        },
+        "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
+        "tags": {"deploymentId": "d_id"},
+        "workerConfig": {},
+    }
+
+
 def assert_scaling_ratio(pool):
     assert pool.config["scalingRatio"] == 0.5
 
@@ -217,18 +239,8 @@ def assert_guest_accelerators(pool):
             },
             id="guest_accelerators",
         ),
+        pytest.param("azure", {"version": "ver_id"}, id="azure_version"),
         pytest.param("azure", None, id="azure_basic"),
-        pytest.param(
-            "azure",
-            {
-                "storageProfile": {
-                    "imageReference": {
-                        "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/rgroup_id/rg-packer-worker-images/providers/Microsoft.Compute/galleries/name_id/images/name_id/versions/ver_id"
-                    }
-                },
-            },
-            id="azure_new_format",
-        ),
         pytest.param("aws", {"scalingRatio": 0.5}, id="scaling_ratio"),
     ),
 )
