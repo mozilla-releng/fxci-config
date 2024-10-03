@@ -335,7 +335,6 @@ comm-central:
   cron:
     targets:
       - l10n-bumper
-      - l10n-cross-channel
       - nightly-desktop
       - tb-rust-vendor-check
 cedar:
