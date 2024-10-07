@@ -93,19 +93,26 @@ def make_pool():
 
 
 @pytest.fixture
-def images():
-    return WorkerImages(
-        [
-            WorkerImage(
-                "image-1",
-                clouds={
-                    "google": {},
-                    "aws": {"us-east1": "id"},
-                    "azure": {"deployment_id": "d_id", "us-east1": "ue1_id"},
-                },
-            ),
-        ]
-    )
+def make_images():
+    def inner(extra_config=None):
+        cloud_config = {
+            "google": {},
+            "aws": {"us-east1": "id"},
+            "azure": {"deployment_id": "d_id", "us-east1": "ue1_id"},
+        }
+        if extra_config:
+            cloud_config = merge(cloud_config, extra_config)
+
+        return WorkerImages(
+            [
+                WorkerImage(
+                    "image-1",
+                    clouds=cloud_config,
+                ),
+            ]
+        )
+
+    return inner
 
 
 def assert_common(pool):
@@ -189,10 +196,10 @@ def assert_guest_accelerators(pool):
 
 
 @pytest.mark.parametrize(
-    "provider,extra_config",
+    "provider,extra_pool_config,extra_cloud_config",
     (
-        pytest.param("aws", None, id="aws_basic"),
-        pytest.param("google", None, id="google_basic"),
+        pytest.param("aws", None, None, id="aws_basic"),
+        pytest.param("google", None, None, id="google_basic"),
         pytest.param(
             "google",
             {
@@ -209,20 +216,31 @@ def assert_guest_accelerators(pool):
                     }
                 ]
             },
+            None,
             id="guest_accelerators",
         ),
-        pytest.param("azure", None, id="azure_basic"),
-        pytest.param("aws", {"scalingRatio": 0.5}, id="scaling_ratio"),
+        pytest.param("azure", None, None, id="azure_basic"),
+        pytest.param("aws", {"scalingRatio": 0.5}, None, id="scaling_ratio"),
     ),
 )
 @pytest.mark.asyncio
 async def test_make_worker_pool(
-    request, mocker, environment, make_pool, images, provider, extra_config
+    request,
+    mocker,
+    environment,
+    make_pool,
+    make_images,
+    provider,
+    extra_pool_config,
+    extra_cloud_config,
 ):
     m = mocker.patch("tcadmin.appconfig.AppConfig.current")
     m.return_value = Namespace(description_prefix="PREFIX - ")
 
-    pool = make_pool(provider, extra_config)
+    pool = make_pool(provider, extra_pool_config)
+    if extra_cloud_config:
+        extra_cloud_config = {provider: extra_cloud_config}
+    images = make_images(extra_cloud_config)
     result = await make_worker_pool(environment, Resources(), pool, images, {})
     print(result)
     assert result.workerPoolId == "provId/my-worker-pool"
