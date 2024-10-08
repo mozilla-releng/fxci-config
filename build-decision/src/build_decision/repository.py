@@ -36,18 +36,25 @@ class Repository:
 
         If the file is not found, this returns None.
         """
+        headers = {}
+
         if self.repository_type == "hg":
             if revision is None:
                 revision = "default"
             url = f"{self.repo_url}/raw-file/{revision}/{path}"
         elif self.repository_type == "git":
             repo_url = self.repo_url
-            if revision is None:
-                revision = "master"  # FIXME: Use api to get default branch
+
+            ref_param = ""
+            # If no ref is given, the github API will default to the default branch
+            if revision is not None:
+                ref_param = f"?ref={revision}"
+
             if repo_url.startswith("https://github.com/"):
-                if repo_url.endswith("/"):
-                    repo_url = repo_url[:-1]
-                url = f"{repo_url}/raw/{revision}/{path}"
+                url = f"https://api.github.com/repos/{self.repo_path}/contents/{path}{ref_param}"
+                if self.github_token:
+                    headers["Authorization"] = f"token {self.github_token}"
+                headers["Accept"] = "application/vnd.github.raw+json"
             elif repo_url.startswith("git@github.com:"):
                 raise Exception(
                     "Don't know how to get file from private github "
@@ -61,9 +68,10 @@ class Repository:
         else:
             raise Exception(f"Unknown repository_type {self.repository_type}!")
 
-        res = SESSION.get(url, timeout=60)
+        res = SESSION.get(url, headers=headers, timeout=60)
         res.raise_for_status()
         tcyml = res.text
+
         return yaml.safe_load(tcyml)
 
     @redo.retriable(attempts=5, sleeptime=10, retry_exceptions=(RetryableError,))
