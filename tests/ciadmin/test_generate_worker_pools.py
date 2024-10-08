@@ -98,7 +98,13 @@ def make_images():
         cloud_config = {
             "google": {},
             "aws": {"us-east1": "id"},
-            "azure": {"deployment_id": "d_id", "us-east1": "ue1_id"},
+            "azure": {
+                "deployment_id": "d_id",
+                "us-east1": "ue1_id",
+                "version": "ver_id",
+                "resource_group": "rgroup_id",
+                "name": "name_id",
+            },
         }
         if extra_config:
             cloud_config = merge(cloud_config, extra_config)
@@ -175,7 +181,29 @@ def assert_azure_basic(pool):
         "priority": "spot",
         "storageProfile": {
             "imageReference": {
-                "id": "/subscriptions/subscription_id/resourceGroups/rg/providers/Microsoft.Compute/images/ue1_id-d_id"  # noqa: E501
+                "id": "/subscriptions/subscription_id/resourceGroups/rgroup_id/providers/Microsoft.Compute/images/ue1_id-d_id"  # noqa: E501
+            }
+        },
+        "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
+        "tags": {"deploymentId": "d_id"},
+        "workerConfig": {},
+    }
+
+
+def assert_azure_version(pool):
+    assert_common(pool)
+
+    config = pool.config
+    assert config["launchConfigs"][0] == {
+        "billingProfile": {"maxPrice": -1},
+        "capacityPerInstance": 1,
+        "evictionPolicy": "Delete",
+        "hardwareProfile": {"vmSize": {"vmSize": "Standard_F8s_v2"}},
+        "location": "useast1",
+        "priority": "spot",
+        "storageProfile": {
+            "imageReference": {
+                "id": "/subscriptions/subscription_id/resourceGroups/rgroup_id/providers/Microsoft.Compute/galleries/name_id/images/name_id/versions/ver_id"  # noqa: E501
             }
         },
         "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
@@ -219,7 +247,8 @@ def assert_guest_accelerators(pool):
             None,
             id="guest_accelerators",
         ),
-        pytest.param("azure", None, None, id="azure_basic"),
+        pytest.param("azure", None, {"version": "NA"}, id="azure_basic"),
+        pytest.param("azure", None, None, id="azure_version"),
         pytest.param("aws", {"scalingRatio": 0.5}, None, id="scaling_ratio"),
     ),
 )
