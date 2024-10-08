@@ -174,7 +174,7 @@ def assert_azure_basic(pool):
         "priority": "spot",
         "storageProfile": {
             "imageReference": {
-                "id": "/subscriptions/subscription_id/rgroup_id/rg/providers/Microsoft.Compute/images/ue1_id-d_id"  # noqa: E501
+                "id": "/subscriptions/subscription_id/resourceGroups/rg/providers/Microsoft.Compute/images/ue1_id-d_id"  # noqa: E501
             }
         },
         "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
@@ -196,7 +196,7 @@ def assert_azure_version(pool):
         "priority": "spot",
         "storageProfile": {
             "imageReference": {
-                "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/rgroup_id/rg-packer-worker-images/providers/Microsoft.Compute/galleries/name/images/name/versions/ver_id"  # noqa: E501
+                "id": "/subscriptions/subscription_id/resourceGroups/rgroup_id/providers/Microsoft.Compute/galleries/name_id/images/name_id/versions/ver_id"  # noqa: E501
             }
         },
         "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
@@ -239,8 +239,16 @@ def assert_guest_accelerators(pool):
             },
             id="guest_accelerators",
         ),
+        pytest.param(
+            "azure",
+            None,
+            id="azure_basic",
+            marks=pytest.mark.skipif(
+                {"version": "ver_id"} in [{"version": "ver_id"}],
+                reason="Skipping azure_basic because azure_version is present",
+            ),
+        ),
         pytest.param("azure", {"version": "ver_id"}, id="azure_version"),
-        pytest.param("azure", None, id="azure_basic"),
         pytest.param("aws", {"scalingRatio": 0.5}, id="scaling_ratio"),
     ),
 )
