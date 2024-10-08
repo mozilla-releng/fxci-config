@@ -93,25 +93,32 @@ def make_pool():
 
 
 @pytest.fixture
-def images():
-    return WorkerImages(
-        [
-            WorkerImage(
-                "image-1",
-                clouds={
-                    "google": {},
-                    "aws": {"us-east1": "id"},
-                    "azure": {
-                        "deployment_id": "d_id",
-                        "us-east1": "ue1_id",
-                        "version": "ver_id",
-                        "resource_group": "rgroup_id",
-                        "name": "name_id",
-                    },
-                },
-            ),
-        ]
-    )
+def make_images():
+    def inner(extra_config=None):
+        cloud_config = {
+            "google": {},
+            "aws": {"us-east1": "id"},
+            "azure": {
+                "deployment_id": "d_id",
+                "us-east1": "ue1_id",
+                "version": "ver_id",
+                "resource_group": "rgroup_id",
+                "name": "name_id",
+            },
+        }
+        if extra_config:
+            cloud_config = merge(cloud_config, extra_config)
+
+        return WorkerImages(
+            [
+                WorkerImage(
+                    "image-1",
+                    clouds=cloud_config,
+                ),
+            ]
+        )
+
+    return inner
 
 
 def assert_common(pool):
@@ -174,7 +181,7 @@ def assert_azure_basic(pool):
         "priority": "spot",
         "storageProfile": {
             "imageReference": {
-                "id": "/subscriptions/subscription_id/resourceGroups/rg/providers/Microsoft.Compute/images/ue1_id-d_id"  # noqa: E501
+                "id": "/subscriptions/subscription_id/resourceGroups/rgroup_id/providers/Microsoft.Compute/images/ue1_id-d_id"  # noqa: E501
             }
         },
         "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
@@ -217,10 +224,10 @@ def assert_guest_accelerators(pool):
 
 
 @pytest.mark.parametrize(
-    "provider,extra_config",
+    "provider,extra_pool_config,extra_cloud_config",
     (
-        pytest.param("aws", None, id="aws_basic"),
-        pytest.param("google", None, id="google_basic"),
+        pytest.param("aws", None, None, id="aws_basic"),
+        pytest.param("google", None, None, id="google_basic"),
         pytest.param(
             "google",
             {
@@ -237,29 +244,32 @@ def assert_guest_accelerators(pool):
                     }
                 ]
             },
+            None,
             id="guest_accelerators",
         ),
-        pytest.param(
-            "azure",
-            None,
-            id="azure_basic",
-            marks=pytest.mark.skipif(
-                {"version": "ver_id"} in [{"version": "ver_id"}],
-                reason="Skipping azure_basic because azure_version is present",
-            ),
-        ),
-        pytest.param("azure", {"version": "ver_id"}, id="azure_version"),
-        pytest.param("aws", {"scalingRatio": 0.5}, id="scaling_ratio"),
+        pytest.param("azure", None, {"version": "NA"}, id="azure_basic"),
+        pytest.param("azure", None, None, id="azure_version"),
+        pytest.param("aws", {"scalingRatio": 0.5}, None, id="scaling_ratio"),
     ),
 )
 @pytest.mark.asyncio
 async def test_make_worker_pool(
-    request, mocker, environment, make_pool, images, provider, extra_config
+    request,
+    mocker,
+    environment,
+    make_pool,
+    make_images,
+    provider,
+    extra_pool_config,
+    extra_cloud_config,
 ):
     m = mocker.patch("tcadmin.appconfig.AppConfig.current")
     m.return_value = Namespace(description_prefix="PREFIX - ")
 
-    pool = make_pool(provider, extra_config)
+    pool = make_pool(provider, extra_pool_config)
+    if extra_cloud_config:
+        extra_cloud_config = {provider: extra_cloud_config}
+    images = make_images(extra_cloud_config)
     result = await make_worker_pool(environment, Resources(), pool, images, {})
     print(result)
     assert result.workerPoolId == "provId/my-worker-pool"

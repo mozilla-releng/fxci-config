@@ -2683,6 +2683,96 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
+  - pool_id: gecko-t/win11-a64-24h2-alpha
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin_t_windows11_a64_24h2_tester_alpha
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [uk-south]
+      maxCapacity: 500
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-a64-24h2-alpha
+            provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize:
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                caching: ReadOnly
+                createOption: FromImage
+                diffDiskSettings:
+                  option: Local
+            hardwareProfile:
+              vmSize: Standard_E8pds_v5
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: comm-t/win11-a64-24h2-alpha
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin_t_windows11_a64_24h2_tester_alpha
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [uk-south]
+      maxCapacity: 500
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-a64-24h2-alpha
+            provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: cloud_windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize:
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                caching: ReadOnly
+                createOption: FromImage
+                diffDiskSettings:
+                  option: Local
+            hardwareProfile:
+              vmSize: Standard_E8pds_v5
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
   - pool_id: gecko-t/win11-64-2009-alpha-test
     description: ''
     owner: relops-azure-provisioning@mozilla.com
