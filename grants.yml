@@ -2585,7 +2585,7 @@
   to:
     - project:
         alias: process-top-crashes
-        job: [action:*, branch:*, pull-request:trusted, release:*]
+        job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
 
 - grant:
     - secrets:get:project/mozilla/process-top-crashes/*
