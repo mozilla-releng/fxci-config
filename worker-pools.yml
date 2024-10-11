@@ -1614,7 +1614,7 @@ pools:
   - pool_id: '{pool-group}/t-linux-xlarge-2404-wayland'  # Bug 1902716
     variants:
       - pool-group: gecko-t
-    description: Worker for Wayland on Ubuntu 22.04
+    description: Worker for Wayland on Ubuntu 24.04
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
