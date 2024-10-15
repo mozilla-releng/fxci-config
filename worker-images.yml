@@ -94,7 +94,7 @@ ubuntu-2404-wayland:
 ubuntu-2404-x11-alpha:
   ## alpha pool that relsre can use to rebuild and test 2404 x11 ubuntu images
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-x11-googlecompute-alpha
-ubuntu-2404-x11:
+#ubuntu-2404-x11:
   ## 2404 ubuntu image with x11
   #fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2024-10-11
 
