@@ -1581,6 +1581,31 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: c2-standard-4
+  - pool_id: '{pool-group}/t-linux-2404-x11-relsre'
+    description: Workers for x11 on Ubuntu 24.04. Used by RelSRE to qualify images.
+    owner: jmoss@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
+            enableD2G: true
+            enableInteractive: true
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-central1, us-west1]
+      image: ubuntu-2404-x11-alpha
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 60
+          machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-2404-wayland{suffix}'  # Bug 1902716
     variants:
       - pool-group: gecko-t
