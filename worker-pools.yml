@@ -2610,7 +2610,7 @@ pools:
         sourceBranch: win11Aarch64
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot: false
+      spot: true
       vmSizes:
         - vmSize:
           launchConfig:
@@ -2626,7 +2626,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize: Standard_E8pds_v5
+              vmSize: Standard_D16ps_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
