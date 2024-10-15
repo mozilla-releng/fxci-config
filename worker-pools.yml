@@ -2610,7 +2610,7 @@ pools:
         sourceBranch: win11Aarch64
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot: true
+      spot: false
       vmSizes:
         - vmSize:
           launchConfig:
