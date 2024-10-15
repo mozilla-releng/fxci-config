@@ -160,6 +160,6 @@ To apply changes locally (not recommended):
 
 # Development
 
-To update dependencies, make changes to `requirements/*.in`, then install
-`pip-compile-multi` from PyPI and run `pip-compile-multi -s -g
-requirements/base.in`.
+To update dependencies, [install
+uv](https://docs.astral.sh/uv/getting-started/installation/), make changes to
+`pyproject.toml`, then run `uv lock`.
