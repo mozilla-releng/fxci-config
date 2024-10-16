@@ -2803,7 +2803,7 @@ pools:
                 osType: Windows
                 createOption: FromImage
             hardwareProfile:
-              vmSize: Standard_E8pds_v5
+              vmSize: Standard_D8ps_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2845,7 +2845,7 @@ pools:
                 osType: Windows
                 createOption: FromImage
             hardwareProfile:
-              vmSize: Standard_E8pds_v5
+              vmSize: Standard_D8ps_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
