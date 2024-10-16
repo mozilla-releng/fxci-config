@@ -2766,7 +2766,7 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
-  - pool_id: gecko-t/win11-a64-24h2-alpha
+  - pool_id: gecko-t/win11-a64-24h2-tester-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
@@ -2782,9 +2782,9 @@ pools:
           config:
             workerType: win11-a64-24h2-alpha
             provisionerId: gecko-t
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2801,17 +2801,14 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
-                caching: ReadOnly
                 createOption: FromImage
-                diffDiskSettings:
-                  option: Local
             hardwareProfile:
               vmSize: Standard_E8pds_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
-  - pool_id: comm-t/win11-a64-24h2-alpha
+  - pool_id: comm-t/win11-a64-24h2-tester-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
@@ -2827,9 +2824,9 @@ pools:
           config:
             workerType: win11-a64-24h2-alpha
             provisionerId: gecko-t
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: cloud_windows
@@ -2846,10 +2843,7 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
-                caching: ReadOnly
                 createOption: FromImage
-                diffDiskSettings:
-                  option: Local
             hardwareProfile:
               vmSize: Standard_E8pds_v5
             diagnosticsProfile:
