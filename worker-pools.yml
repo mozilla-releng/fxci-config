@@ -2602,9 +2602,9 @@ pools:
           config:
             workerType: win11-a64-24h2-builder-alpha
             provisionerId: gecko-1
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: win11Aarch64
