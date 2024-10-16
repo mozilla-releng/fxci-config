@@ -1583,7 +1583,7 @@ pools:
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-2404-x11-relsre'
     description: Workers for x11 on Ubuntu 24.04. Used by RelSRE to qualify images.
-    owner: jmoss@mozilla.com
+    owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
     variants:
