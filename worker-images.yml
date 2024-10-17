@@ -227,6 +227,13 @@ ronin_b_windows11_a64_24h2_builder_alpha:
     deployment_id: alpha
     SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-builder-alpha.md
     name: win11_a64_24h2_builder_alpha
+ronin_b_windows11_a64_24h2_builder:
+  azure2:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: alpha
+    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-builder.md
+    name: win11_a64_24h2_builder
 ronin_t_windows11_a64_24h2_tester_alpha:
   azure2:
     version: 0.0.1
@@ -234,6 +241,13 @@ ronin_t_windows11_a64_24h2_tester_alpha:
     deployment_id: alpha
     SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-tester-alpha.md
     name: win11_a64_24h2_tester_alpha
+ronin_t_windows11_a64_24h2_tester:
+  azure2:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: alpha
+    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-tester.md
+    name: win11_a64_24h2_tester
 ronin-t-windows11-64-24h2-alpha:
   azure2:
     version: NA
