@@ -89,7 +89,7 @@ relsre-gw-fxci-gcp-2404-amd64-gui-alpha:
 ubuntu-2404-wayland:
   ## Bug 1902716
   ## 2404 ubuntu image with wayland
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2024-10-11
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2024-10-17
 
 relsre-gw-fxci-gcp-2404-amd64-alpha:
   ## alpha pool that relsre can use to rebuild and test 2404 ubuntu images
