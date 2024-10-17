@@ -95,6 +95,10 @@ relsre-gw-fxci-gcp-2404-amd64-alpha:
   ## alpha pool that relsre can use to rebuild and test 2404 ubuntu images
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-googlecompute-alpha
 
+ubuntu-2404-headless-alpha:
+  ## alpha pool that relsre can use to rebuild and test 2404 headless ubuntu images
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha
+
 # generic-worker images
 ronin-b1-windows2012-vs-py2-alpha:
   azure2:
