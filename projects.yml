@@ -1260,6 +1260,7 @@ fx-desktop-qa-automation:
     github-pull-request:
       policy: public
     taskgraph-actions: true
+    taskgraph-cron: true
     trust-domain-scopes: true
 
 # Bug 1896432: Add taskcluster to mozilla/neqo
