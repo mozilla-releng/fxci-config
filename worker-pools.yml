@@ -1533,7 +1533,7 @@ pools:
           machine_type: t2a-standard-4
   - pool_id: '{pool-group}/t-linux-2404-wayland-relsre'
     description: Workers for Wayland on Ubuntu 24.04. Used by RelSRE to qualify images.
-    owner: jmoss@mozilla.com
+    owner: release+tc-workers@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
     variants:
@@ -1558,7 +1558,7 @@ pools:
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-2404-relsre'
     description: Workers running Ubuntu 24.04. Used by RelSRE to qualify images.
-    owner: jmoss@mozilla.com
+    owner: release+tc-workers@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
     variants:
@@ -1583,7 +1583,7 @@ pools:
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-2404-headless-alpha'
     description: Workers running Ubuntu 24.04. Used by RelSRE to qualify images.
-    owner: relops-azure-provisioning@mozilla.com
+    owner: release+tc-workers@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
     variants:
