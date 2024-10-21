@@ -2647,6 +2647,8 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
+                managedDisk:
+                  storageAccountType: Premium_LRS
                 createOption: FromImage
             hardwareProfile:
               vmSize: Standard_D16ps_v5
@@ -2689,6 +2691,8 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
+                managedDisk:
+                  storageAccountType: Premium_LRS
                 createOption: FromImage
             hardwareProfile:
               vmSize: Standard_D16ps_v5
