@@ -274,6 +274,8 @@ pools:
       - pool-group: mobile-3
         chain-of-trust: trusted
       - pool-group: mozilla-1
+      - pool-group: mozilla-3
+        chain-of-trust: trusted
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-1
         suffix: "-gcp-gw"
@@ -953,6 +955,8 @@ pools:
       - pool-group: mobile-3
         chain-of-trust: trusted
       - pool-group: mozilla-1
+      - pool-group: mozilla-3
+        chain-of-trust: trusted
       - pool-group: translations-1
       - pool-group: nss-1
     config:
@@ -1009,6 +1013,8 @@ pools:
       - pool-group: app-services-3
         chain-of-trust: trusted
       - pool-group: mozilla-1
+      - pool-group: mozilla-3
+        chain-of-trust: trusted
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
@@ -2182,6 +2188,8 @@ pools:
       - pool-group: comm-3
         chain-of-trust: trusted
       - pool-group: mozilla-1
+      - pool-group: mozilla-3
+        chain-of-trust: trusted
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
