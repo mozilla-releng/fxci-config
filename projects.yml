@@ -1254,7 +1254,7 @@ fx-desktop-qa-automation:
   trust_project: fx-desktop-qa-automation
   branches:
     - name: main
-      level: 1
+      level: 3
   features:
     github-taskgraph: true
     github-pull-request:
