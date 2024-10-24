@@ -2954,6 +2954,7 @@
     - roles:
         - mozillians-group:windows-laf-token-managers
 
+# mozilla/fx-desktop-qa-automation
 - grant:
     - notify:slack-channel:*
     - queue:route:notify.slack-channel.*
@@ -2961,3 +2962,10 @@
     - project:
         alias:
           - fx-desktop-qa-automation
+
+- grant:
+    - secrets:get:project/mozilla/fx-desktop-qa-automation/level-*
+    - secrets:set:project/mozilla/fx-desktop-qa-automation/level-*
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
