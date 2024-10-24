@@ -1127,7 +1127,6 @@
     - queue:rerun-task:app-services-level-*
     - queue:get-artifact:private/docker-worker/shell.html
     - queue:scheduler-id:app-services-level-*
-    - secrets:get:project/application-services/*
   to:
     - roles:
         - mozillians-group:application-services
