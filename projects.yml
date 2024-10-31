@@ -1187,8 +1187,8 @@ code-coverage:
       policy: public
 
 # Bug 1822403: Add taskgraph support to firefox-translations-training
-firefox-translations-training:
-  repo: https://github.com/mozilla/firefox-translations-training
+translations:
+  repo: https://github.com/mozilla/translations
   repo_type: git
   branches:
     - name: main
@@ -1198,7 +1198,7 @@ firefox-translations-training:
     - name: "dev*"
       level: 1
   trust_domain: translations
-  # https://github.com/mozilla/firefox-translations-training/issues/206
+  # https://github.com/mozilla/translations/issues/206
   features:
     github-taskgraph: true
     github-pull-request:
