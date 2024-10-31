@@ -1712,6 +1712,9 @@
 - grant:
     - project:mozillavpn:releng:beetmover:action:push-to-releases
     - project:mozillavpn:releng:beetmover:action:direct-push-to-bucket
+    # Temporary until we stop using `dep` beetmover for production vpn releases
+    # in the promote phase.
+    - queue:create-task:highest:scriptworker-k8s/{trust_domain}-1-*
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
     - queue:route:notify.slack-channel.C01DCUKG95E.*  # mozilla-vpn-release
     - "queue:route:notify.matrix-room.!tBWwNyfeKqGvkNpdDL:mozilla.org.*"  # releaseduty
