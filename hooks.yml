@@ -163,6 +163,7 @@ project-relman/code-review-production:
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-review/runtime-production
+    - docker-worker:cache:code-review-production-checkout
   template_file: hooks/project-relman/code-review-production.yml
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
