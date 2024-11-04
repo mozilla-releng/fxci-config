@@ -2556,6 +2556,7 @@
 - grant:
     - secrets:get:project/relman/code-review/runtime-production
     - hooks:trigger-hook:project-relman/code-review-production
+    - docker-worker:cache:code-review-production-checkout
   to:
     - roles:
         - project:relman:code-review/runtime/production
