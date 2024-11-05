@@ -177,7 +177,7 @@ ronin-b1-windows2022-prod:
     west-us-2: win2022-64-2009-westus2-2022-datacenter-azure-edition
 ronin-b3-windows2022-prod:
   azure_trusted:
-    deployment_id: db0c108
+    deployment_id: "8346140"
     version: NA
     resource_group: rg-packer-through-cib
     central-us: trusted-win2022-64-2009-centralus-2022-datacenter-azure-edition
