@@ -168,7 +168,7 @@ ronin-b1-windows2022-prod:
   azure2:
     version: NA
     resource_group: rg-packer-through-cib
-    deployment_id: db0c108
+    deployment_id: "8346140"
     central-us: win2022-64-2009-centralus-2022-datacenter-azure-edition
     east-us: win2022-64-2009-eastus-2022-datacenter-azure-edition
     east-us-2: win2022-64-2009-eastus2-2022-datacenter-azure-edition
