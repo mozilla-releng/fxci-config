@@ -192,7 +192,7 @@ comm-esr128:
 oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
-  access: scm_level_1
+  access: scm_level_2
   branches:
     - name: "*"
     - name: default
