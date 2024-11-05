@@ -2232,7 +2232,7 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2276,7 +2276,7 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2320,7 +2320,7 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2367,7 +2367,7 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2413,7 +2413,7 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2458,7 +2458,7 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2504,7 +2504,7 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2550,7 +2550,7 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2596,7 +2596,7 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2850,7 +2850,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
-      image: ronin-t-windows11-64-24h2-alpha
+      image: ronin_t_windows11_64_24h2_alpha
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
@@ -2866,7 +2866,53 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_F8s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                caching: ReadOnly
+                createOption: FromImage
+                diffDiskSettings:
+                  option: Local
+            hardwareProfile:
+              vmSize: Standard_F8s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      capacityPerInstance: 1
+  - pool_id: gecko-t/win11-64-24h2
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin_t_windows11_64_24h2
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: gecko-t
+      locations: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
+      maxCapacity: 500
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-64-24h2
+            provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2911,7 +2957,7 @@ pools:
             tasksDir: C:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2995,7 +3041,7 @@ pools:
             tasksDir: C:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -3037,7 +3083,7 @@ pools:
             tasksDir: C:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -3079,7 +3125,7 @@ pools:
             tasksDir: C:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -3121,7 +3167,7 @@ pools:
             tasksDir: C:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -3162,7 +3208,7 @@ pools:
             idleTimeoutSecs: 5400
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
