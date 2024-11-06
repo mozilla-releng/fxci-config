@@ -10,4 +10,5 @@ pip>=21.2
 pytest
 pytest-cov
 pytest-mock
+taskcluster-taskgraph
 yamllint
