@@ -257,7 +257,7 @@ ronin_t_windows11_a64_24h2_tester:
     name: win11_a64_24h2_tester
 ronin_t_windows11_64_24h2:
   azure2:
-    version: 1.0.0
+    version: 1.0.1
     resource_group: rg-packer-worker-images
     deployment_id: "8346140"
     SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-64-24h2.md
