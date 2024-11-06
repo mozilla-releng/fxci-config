@@ -24,6 +24,7 @@ tasks:
         description: "Run `tc-admin apply --environment=staging` to apply config to Taskcluster stage"
         scopes:
             - auth:reset-access-token:project/releng/fxci-config/apply
+            - secrets:get:project/releng/tc-github-private-key
         run-on-tasks-for: []
         run:
             command: >-

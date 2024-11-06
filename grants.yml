@@ -1200,6 +1200,9 @@
     # project/releng/fxci-config/apply access token each time to get the necessary
     # credentials.
     - auth:reset-access-token:project/releng/fxci-config/apply
+    # This is only used to authenticate as the taskcluster-staging app to avoid
+    # Github rate limits.
+    - secrets:get:project/releng/tc-github-private-key
     # We grant ability to create `gecko-t` tasks in the staging instance so we
     # can validate image changes before they land.
     - queue:create-task:low:gecko-t/*
