@@ -1,64 +1,22 @@
-#!/usr/bin/env python3
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import json
 import os
-from functools import cache
+import shlex
 from typing import Any
 
-import requests
-import taskcluster
 from taskgraph.transforms.base import TransformSequence
 
-FIREFOXCI_ROOT_URL = "https://firefox-ci-tc.services.mozilla.com"
-STAGING_ROOT_URL = "https://stage.taskcluster.nonprod.cloudops.mozgcp.net"
-
+from fxci_config_taskgraph.util.integration import (
+    FIREFOXCI_ROOT_URL,
+    STAGING_ROOT_URL,
+    find_tasks,
+    get_taskcluster_client,
+)
 
 transforms = TransformSequence()
-
-
-@cache
-def get_taskcluster_client(service: str):
-    options = {"rootUrl": FIREFOXCI_ROOT_URL}
-    return getattr(taskcluster, service.capitalize())(options)
-
-
-def find_tasks(decision_index_paths: list[str]) -> list[dict[str, Any]]:
-    """Find tasks targetted by the Decision task(s) pointed to by index_paths.
-
-    Defaults to the os-integration cron Decision task in Gecko.
-    """
-    queue = get_taskcluster_client("queue")
-    index = get_taskcluster_client("index")
-
-    tasks = []
-    for path in decision_index_paths:
-        data = index.findTask(path)
-        assert data
-        task_id = data["taskId"]
-
-        response = queue.getLatestArtifact(task_id, "public/task-graph.json")
-        assert response
-
-        if "url" in response:
-            r = requests.get(response["url"])
-            r.raise_for_status()
-            task_graph = r.json()
-        else:
-            task_graph = response
-
-        for task in task_graph.values():
-            assert isinstance(task, dict)
-            if task.get("attributes", {}).get("unittest_variant") != "os-integration":
-                continue
-
-            if (
-                task["task"].get("tags", {}).get("worker-implementation")
-                != "generic-worker"
-            ):
-                continue
-
-            tasks.append(task["task"])
-
-    return tasks
 
 
 def patch_root_url(task_def):
@@ -75,17 +33,22 @@ def patch_root_url(task_def):
     """
     if "MOZ_FETCHES" in task_def["payload"].get("env", {}):
         tags = task_def["tags"]
+        command = task_def["payload"]["command"]
         if tags.get("os") == "windows":
-            command = task_def["payload"]["command"]
             command[0] = (
                 f'set "TASKCLUSTER_ROOT_URL={FIREFOXCI_ROOT_URL}" & {command[0]}'
             )
-        else:
-            command = task_def["payload"]["command"]
+        elif tags.get("worker-implementation") == "generic-worker":
             command[1] = [
                 "bash",
                 "-c",
-                f"TASKCLUSTER_ROOT_URL={FIREFOXCI_ROOT_URL} {' '.join(command[1])}",
+                f"TASKCLUSTER_ROOT_URL={FIREFOXCI_ROOT_URL} {shlex.join(command[1])}",
+            ]
+        else:
+            command[:] = [
+                "bash",
+                "-c",
+                f"TASKCLUSTER_ROOT_URL={FIREFOXCI_ROOT_URL} {shlex.join(command)}",
             ]
 
 
@@ -121,17 +84,55 @@ def rewrite_mounts(task_def: dict[str, Any]) -> None:
             del content["taskId"]
 
 
-def make_task_description(task_def: dict[str, Any]):
+def rewrite_docker_cache(task_def: dict[str, Any]) -> None:
+    """Adjust docker caches to ci-level-1."""
+    cache = task_def["payload"].get("cache")
+    if not cache:
+        return
+
+    for name, value in cache.copy().items():
+        del cache[name]
+        name = name.replace("gecko-level-3", "ci-level-1")
+        cache[name] = value
+
+    for i, scope in enumerate(task_def.get("scopes", [])):
+        task_def["scopes"][i] = scope.replace("gecko-level-3", "ci-level-1")
+
+
+def rewrite_docker_image(taskdesc: dict[str, Any]) -> None:
+    """Re-write the docker-image task id to the equivalent `firefoxci-artifact`
+    task.
+    """
+    payload = taskdesc["task"]["payload"]
+    if "image" not in payload or "taskId" not in payload["image"]:
+        return
+
+    task_id = payload["image"]["taskId"]
+    deps = taskdesc.setdefault("dependencies", {})
+    deps["docker-image"] = f"firefoxci-artifact-{task_id}"
+
+    payload["image"] = {
+        "path": "public/image.tar.zst",
+        "taskId": {"task-reference": "<docker-image>"},
+        "type": "task-image",
+    }
+
+
+def make_integration_test_description(task_def: dict[str, Any]):
     """Schedule a task on the staging Taskcluster instance.
 
     Typically task_def will come from the firefox-ci instance and will be
     modified to work with staging.
     """
     assert "TASK_ID" in os.environ
-    task_def["schedulerId"] = "ci-level-1"
-    task_def["taskGroupId"] = os.environ["TASK_ID"]
-    task_def["priority"] = "low"
-    task_def["routes"] = ["checks"]
+    task_def.update(
+        {
+            "schedulerId": "ci-level-1",
+            "taskGroupId": os.environ["TASK_ID"],
+            "priority": "low",
+            "routes": ["checks"],
+        }
+    )
 
     del task_def["dependencies"]
     if "treeherder" in task_def["extra"]:
@@ -139,6 +140,7 @@ def make_task_description(task_def: dict[str, Any]):
 
     patch_root_url(task_def)
     rewrite_mounts(task_def)
+    rewrite_docker_cache(task_def)
 
     # Drop down to level 1 to match the current context.
     for key in ("taskQueueId", "provisionerId", "worker-type"):
@@ -155,17 +157,26 @@ def make_task_description(task_def: dict[str, Any]):
         },
         "attributes": {"integration": "gecko"},
     }
+    rewrite_docker_image(taskdesc)
     return taskdesc
 
 
 @transforms.add
 def schedule_tasks_at_index(config, tasks):
-    if (
-        os.environ["TASKCLUSTER_ROOT_URL"]
-        != "https://stage.taskcluster.nonprod.cloudops.mozgcp.net"
-    ):
+    # Filter out tasks here rather than the target phase because generating
+    # their definitions makes a bunch of Taskcluster API calls that aren't
+    # necessary in the common case.
+    if os.environ["TASKCLUSTER_ROOT_URL"] != STAGING_ROOT_URL:
         return
 
     for task in tasks:
-        for task_def in find_tasks(task.pop("decision-index-paths")):
-            yield make_task_description(task_def)
+        for decision_index_path in task.pop("decision-index-paths"):
+            for task_def in find_tasks(decision_index_path):
+                # Tasks that depend on private artifacts are not yet supported.
+                fetches = json.loads(
+                    task_def["payload"].get("env", {}).get("MOZ_FETCHES", {})
+                )
+                if any(not fetch["artifact"].startswith("public") for fetch in fetches):
+                    continue
+
+                yield make_integration_test_description(task_def)

@@ -5,10 +5,10 @@
 loader: taskgraph.loader.transform:loader
 
 kind-dependencies:
-  - tc-admin
+  - firefoxci-artifact
 
 transforms:
-  - fxci_config_taskgraph.transforms.schedule_integration
+  - fxci_config_taskgraph.transforms.integration_test
 
 tasks:
   gecko:

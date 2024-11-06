@@ -1,0 +1,39 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+loader: taskgraph.loader.transform:loader
+
+transforms:
+  - fxci_config_taskgraph.transforms.firefoxci_artifact
+  - taskgraph.transforms.run
+  - taskgraph.transforms.task
+
+task-defaults:
+  worker-type: t-linux
+  worker:
+    artifacts:
+      - type: directory
+        name: public
+        path: /builds/worker/artifacts
+    docker-image: {in-tree: python3.11}
+    env:
+      MOZ_ARTIFACT_DIR: /builds/worker/artifacts
+    max-run-time: 3600
+  run:
+    using: run-task
+    cwd: '{checkout}'
+    command: >-
+      mkdir -p $MOZ_ARTIFACT_DIR &&
+      for url in $FETCH_URLS; do
+        name=${url##*/};
+        curl --fail --location --retry 3 -o $MOZ_ARTIFACT_DIR/$name $url;
+      done
+
+tasks:
+  gecko:
+    description: "Fetch artifacts from Firefox-CI for the integration tests"
+    decision-index-paths:
+      - gecko.v2.mozilla-central.latest.taskgraph.decision-os-integration
+    fetch-artifacts:
+      - public/image.tar.zst
