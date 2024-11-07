@@ -989,6 +989,13 @@
     - project:
         alias: shipit
 
+- grant:
+    - secrets:get:project/releng/fxci-config/taskcluster-stage-client
+  to:
+    - project:
+        alias: fxci-config
+        job: [pull-request:trusted]
+
 ##
 # feature-specific roles
 
