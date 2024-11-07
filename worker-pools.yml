@@ -3725,7 +3725,8 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 75
             - *scratch-disk
-          machine_type: c2-standard-8
+            - *scratch-disk
+          machine_type: c2-standard-16
       worker-config:
         shutdown:
           afterIdleSeconds: 900
