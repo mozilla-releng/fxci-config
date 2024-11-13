@@ -1198,13 +1198,20 @@
     # We grant a client for Taskcluster stage so `fxci-config` PRs can
     # deploy themselves there for testing.
     - secrets:get:project/releng/fxci-config/taskcluster-stage-client
-    # We grant ability to create `gecko-t` tasks so we can validate image
-    # changes before they land.
+  to:
+    - project:
+        alias: fxci-config
+        job: [pull-request:trusted]
+
+- grant:
+    # We grant ability to create `gecko-t` tasks in the staging instance so we
+    # can validate image changes before they land.
     - queue:create-task:{priority}:gecko-t/*
   to:
     - project:
         alias: fxci-config
         job: [pull-request:trusted]
+  environment: staging
 
 # - k8s-autoscale roles
 - grant:
