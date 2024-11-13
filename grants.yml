@@ -989,13 +989,6 @@
     - project:
         alias: shipit
 
-- grant:
-    - secrets:get:project/releng/fxci-config/taskcluster-stage-client
-  to:
-    - project:
-        alias: fxci-config
-        job: [pull-request:trusted]
-
 ##
 # feature-specific roles
 
@@ -1199,6 +1192,19 @@
   to:
     - project:
         trust_domain: releng
+
+# - fxci-config specific roles
+- grant:
+    # We grant a client for Taskcluster stage so `fxci-config` PRs can
+    # deploy themselves there for testing.
+    - secrets:get:project/releng/fxci-config/taskcluster-stage-client
+    # We grant ability to create `gecko-t` tasks so we can validate image
+    # changes before they land.
+    - queue:create-task:{priority}:gecko-t/*
+  to:
+    - project:
+        alias: fxci-config
+        job: [pull-request:trusted]
 
 # - k8s-autoscale roles
 - grant:
