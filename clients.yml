@@ -401,8 +401,8 @@ project/releng/generic-worker/datacenter-gecko-t-osx-1015-r8:
 project/releng/generic-worker/datacenter-gecko-t-osx-bug1927416:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-       - assume:worker-type:releng-hardware/gecko-t-osx*
-       - queue:worker-id:mdc1/mac*
+    - assume:worker-type:releng-hardware/gecko-t-osx*
+    - queue:worker-id:mdc1/mac*
 project/releng/generic-worker/datacenter-mozilla-b-1-osx:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
