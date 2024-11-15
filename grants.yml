@@ -1211,7 +1211,7 @@
     - project:
         alias: fxci-config
         job: [pull-request:trusted]
-  environment: staging
+  environments: staging
 
 # - k8s-autoscale roles
 - grant:
