@@ -1195,18 +1195,14 @@
 
 # - fxci-config specific roles
 - grant:
-    # We grant a client for Taskcluster stage so `fxci-config` PRs can
-    # deploy themselves there for testing.
-    - secrets:get:project/releng/fxci-config/taskcluster-stage-client
-  to:
-    - project:
-        alias: fxci-config
-        job: [pull-request:trusted]
-
-- grant:
+    # There's a task in the staging instance that runs on fxci-config pull requests
+    # which applies the config directly from a pull request. This task resets the
+    # project/releng/fxci-config/apply access token each time to get the necessary
+    # credentials.
+    - auth:reset-access-token:project/releng/fxci-config/apply
     # We grant ability to create `gecko-t` tasks in the staging instance so we
     # can validate image changes before they land.
-    - queue:create-task:{priority}:gecko-t/*
+    - queue:create-task:low:gecko-t/*
   to:
     - project:
         alias: fxci-config

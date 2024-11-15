@@ -6,6 +6,7 @@ treeherder:
 task-priority: low
 
 taskgraph:
+    register: fxci_config_taskgraph:register
     repositories:
         fxci:
             name: fxci-config
