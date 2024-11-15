@@ -10,6 +10,10 @@ policy:
 tasks:
     - $let:
           trustDomain: ci
+          taskclusterInstance:
+              $switch:
+                  'taskcluster_root_url == "https://firefox-ci-tc.services.mozilla.com"': "firefoxci"
+                  'taskcluster_root_url == "https://stage.taskcluster.nonprod.cloudops.mozgcp.net"': "staging"
           isPullRequest:
               $eval: 'tasks_for[:19] == "github-pull-request" || tasks_for == "github-issue-comment"'
           pullRequestAction:
@@ -102,11 +106,13 @@ tasks:
                           $default: '${head_ref}'
               in:
                   $if: >
-                    tasks_for in ["action", "pr-action", "cron"]
-                    || (tasks_for == "github-release" && releaseAction == "published")
-                    || (tasks_for == "github-push" && short_head_ref == "main")
-                    || (isPullRequest && pullRequestAction in ["opened", "reopened", "synchronize"])
-                    || (isPullRequest && issueCommentAction in ["created", "edited"])
+                    (taskclusterInstance == "firefoxci"
+                     && (tasks_for in ["action", "pr-action", "cron"]
+                         || (tasks_for == "github-release" && releaseAction == "published")
+                         || (tasks_for == "github-push" && short_head_ref == "main")
+                         || (isPullRequest && pullRequestAction in ["opened", "reopened", "synchronize"])))
+                    || (taskclusterInstance == "staging"
+                        && (isPullRequest && issueCommentAction in ["created", "edited"]))
                   then:
                       taskId: {$if: 'tasks_for != "action"', then: '${ownTaskId}'}
                       taskGroupId:
