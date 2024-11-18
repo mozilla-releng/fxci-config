@@ -223,6 +223,7 @@ tasks:
                                     FXCI_HEAD_REF: '${head_ref}'
                                     FXCI_HEAD_REV: '${head_sha}'
                                     FXCI_REPOSITORY_TYPE: git
+                                    FXCI_PIP_REQUIREMENTS: taskcluster/requirements.txt
                                     REPOSITORIES: {$json: {fxci: "Firefox-CI Config"}}
                                   - $if: 'tasks_for == "action"'
                                     then:
