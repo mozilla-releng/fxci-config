@@ -45,7 +45,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        environment: ["staging", "firefoxci"]
+        environment: ["firefoxci"]
     env:
       TASKCLUSTER_ROOT_URL: ${{vars.TASKCLUSTER_ROOT_URL}}
       TASKCLUSTER_CLIENT_ID: ${{vars.TASKCLUSTER_CLIENT_ID}}
