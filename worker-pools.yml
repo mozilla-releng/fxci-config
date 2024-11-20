@@ -2462,9 +2462,9 @@ pools:
       - pool-group: gecko-t
         suffix: alpha
       - pool-group: gecko-t
-        suffix: gpu 
+        suffix: gpu
       - pool-group: gecko-t
-        suffix: gpu-alpha 
+        suffix: gpu-alpha
       - pool-group: gecko-t
         suffix: source
       - pool-group: gecko-t
@@ -2605,154 +2605,43 @@ pools:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
-  - pool_id: gecko-t/win11-a64-24h2-alpha
+  - pool_id: '{pool-group}/win11-a64-24h2-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
     provider_id: azure2
+    attributes:
+      suffix: ''
+    variants:
+      - pool-group: gecko-t
+      - pool-group: gecko-t
+        suffix: alpha
+      - pool-group: comm-t
+      - pool-group: comm-t
+        suffix: alpha
     config:
-      image: ronin_t_windows11_a64_24h2_tester_alpha
+      image: ronin_t_windows11_a64_24h2_tester_{suffix}
       implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
+      worker-purpose: '{pool-group}'
       locations: [east-us-2, north-central-us, central-us]
       maxCapacity: 500
       worker-config:
         genericWorker:
           config:
-            workerType: win11-a64-24h2-alpha
-            provisionerId: gecko-t
+            workerType: 'win11-a64-24h2-{suffix}'
+            provisionerId: '{pool-group}'
             cachesDir: C:\caches
             downloadsDir: C:\downloads
             tasksDir: C:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize:
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-            hardwareProfile:
-              vmSize: Standard_D8ps_v5
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-  - pool_id: gecko-t/win11-a64-24h2
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin_t_windows11_a64_24h2_tester
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [east-us-2, north-central-us, central-us]
-      maxCapacity: 500
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win11-a64-24h2
-            provisionerId: gecko-t
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: cloud_windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize:
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-            hardwareProfile:
-              vmSize: Standard_D8ps_v5
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-  - pool_id: comm-t/win11-a64-24h2-alpha
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin_t_windows11_a64_24h2_tester_alpha
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: comm-t
-      locations: [east-us-2, north-central-us, central-us]
-      maxCapacity: 500
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win11-a64-24h2-alpha
-            provisionerId: comm-t
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize:
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                createOption: FromImage
-            hardwareProfile:
-              vmSize: Standard_D8ps_v5
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-  - pool_id: comm-t/win11-a64-24h2
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin_t_windows11_a64_24h2_tester
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: comm-t
-      locations: [east-us-2, north-central-us, central-us]
-      maxCapacity: 500
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win11-a64-24h2
-            provisionerId: comm-t
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
+        sourceBranch:
+          by-pool-group:
+            comm-t: windows
+            default:
+              by-suffix:
+                alpha: windows
+                default: cloud_windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true

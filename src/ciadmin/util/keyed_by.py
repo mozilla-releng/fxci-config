@@ -42,7 +42,6 @@ def iter_dot_path(container, subfield):
                 yield from iter_dot_path(item, subfield)
             return
 
-
         container = container[f]
 
     if subfield in container:
