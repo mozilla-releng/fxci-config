@@ -464,7 +464,7 @@ def generate_pool_variants(worker_pools, environment):
                 container[subkey] = container[subkey].format(**attributes)
                 # Some pools append a suffix to the value. Strip "-" for cases
                 # where the suffix was empty.
-                container[subkey] = container[subkey].rstrip("-")
+                container[subkey] = container[subkey].rstrip("-_")
 
         return config
 
