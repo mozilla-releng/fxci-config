@@ -27,6 +27,28 @@ def keymatch(attributes, target):
     return []
 
 
+def iter_dot_path(container, subfield):
+    while "." in subfield:
+        f, subfield = subfield.split(".", 1)
+
+        if f not in container:
+            return
+
+        if isinstance(container[f], list):
+            if f not in container:
+                return
+
+            for item in container[f]:
+                yield from iter_dot_path(item, subfield)
+            return
+
+
+        container = container[f]
+
+    if subfield in container:
+        yield container, subfield
+
+
 def evaluate_keyed_by(value, item_name, attributes):
     """
     For values which can either accept a literal value, or be keyed by some
