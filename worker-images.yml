@@ -225,7 +225,7 @@ ronin_b1_windows11_a64_24h2_builder_alpha:
     version: 0.0.1
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    workerTypeMetaData: 
+    workerTypeMetaData:
       - sbom: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-builder-alpha.md
     name: win11_a64_24h2_builder_alpha
 ronin_b1_windows11_a64_24h2_builder:
@@ -233,7 +233,7 @@ ronin_b1_windows11_a64_24h2_builder:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: a03478d
-    workerTypeMetaData: 
+    workerTypeMetaData:
       - sbom: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-builder.md
     name: win11_a64_24h2_builder
 ronin_b3_windows11_a64_24h2_builder:
@@ -241,7 +241,7 @@ ronin_b3_windows11_a64_24h2_builder:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: a03478d
-    workerTypeMetaData: 
+    workerTypeMetaData:
       - sbom: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/trusted-win11-a64-24h2-builder.md
     name: win11_a64_24h2_builder
 ronin_t_windows11_a64_24h2_tester_alpha:
@@ -249,7 +249,7 @@ ronin_t_windows11_a64_24h2_tester_alpha:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    workerTypeMetaData: 
+    workerTypeMetaData:
       - sbom: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-tester-alpha.md
     name: win11_a64_24h2_tester_alpha
 ronin_t_windows11_a64_24h2_tester:
@@ -257,7 +257,7 @@ ronin_t_windows11_a64_24h2_tester:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: a03478d
-    workerTypeMetaData: 
+    workerTypeMetaData:
       - sbom: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-tester.md
     name: win11_a64_24h2_tester
 ronin_t_windows11_64_24h2:
@@ -265,7 +265,7 @@ ronin_t_windows11_64_24h2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: "8346140"
-    workerTypeMetaData: 
+    workerTypeMetaData:
       - sbom: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-64-24h2.md
     name: win11_a64_24h2
 ronin_t_windows11_64_24h2_alpha:
@@ -273,7 +273,7 @@ ronin_t_windows11_64_24h2_alpha:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    workerTypeMetaData: 
+    workerTypeMetaData:
       - sbom: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-64-24h2-alpha.md
     name: win11_64_24h2_alpha
 ronin-t-windows11-64-2009-alpha-test:
