@@ -462,6 +462,9 @@ def generate_pool_variants(worker_pools, environment):
         ):
             for container, subkey in iter_dot_path(config, key):
                 container[subkey] = container[subkey].format(**attributes)
+                # Some pools append a suffix to the value. Strip "-" for cases
+                # where the suffix was empty.
+                container[subkey] = container[subkey].rstrip("-")
 
         return config
 
@@ -472,6 +475,9 @@ def generate_pool_variants(worker_pools, environment):
             attributes.update(variant)
 
             name = wp.pool_id.format(**attributes)
+            # Some pools append a suffix to the name. Strip "-" for cases where
+            # the suffix was empty.
+            name = name.rstrip("-")
 
             yield attr.evolve(
                 wp,

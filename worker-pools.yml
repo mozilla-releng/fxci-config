@@ -2314,22 +2314,49 @@ pools:
                 enabled: false
       capacityPerInstance: 1
   # Windows 10
-  - pool_id: gecko-t/win10-64-2009
+  - pool_id: '{pool-group}/win10-64-2009-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
     provider_id: azure2
+    attributes:
+      suffix: ''
+    variants:
+      - pool-group: gecko-t
+      - pool-group: gecko-t
+        suffix: gpu
+      - pool-group: gecko-t
+        suffix: source
+      - pool-group: gecko-t
+        suffix: alpha
+      - pool-group: gecko-t
+        suffix: source-alpha
+      - pool-group: gecko-t
+        suffix: gpu-alpha
     config:
-      image: ronin-t-windows10-64-2009-prod
+      image:
+        by-suffix:
+          .*alpha: ronin-t-windows10-64-2009-alpha
+          default: ronin-t-windows10-64-2009-prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
-      locations: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
-      maxCapacity: 600
+      locations:
+        by-suffix:
+          alpha: [uk-west]
+          source-alpha: [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+          gpu-alpha: [uk-south]
+          gpu: [east-us, east-us-2, west-us, west-us-2]
+          default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
+      maxCapacity:
+        by-suffix:
+          '': 600
+          alpha: 500
+          default: 100
       worker-config:
         genericWorker:
           config:
-            workerType: win10-64-2009
+            workerType: 'win10-64-2009-{suffix}'
             provisionerId: gecko-t
             cachesDir: D:\caches
             downloadsDir: D:\downloads
@@ -2341,7 +2368,10 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_F8s_v2
+        - vmSize:
+            by-suffix:
+              gpu(-alpha)?: Standard_NV12s_v3
+              default: Standard_F8s_v2
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2355,239 +2385,14 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize: Standard_F8s_v2
+              vmSize:
+                by-suffix:
+                  gpu(-alpha)?: Standard_NV12s_v3
+                  default: Standard_F8s_v2
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
       capacityPerInstance: 1
-  - pool_id: gecko-t/win10-64-2009-gpu
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows10-64-2009-prod
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [east-us, east-us-2, west-us, west-us-2]
-      maxCapacity: 100
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win10-64-2009-gpu
-            provisionerId: gecko-t
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_NV12s_v3
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_NV12s_v3
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-  - pool_id: gecko-t/win10-64-2009-source
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows10-64-2009-prod
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
-      maxCapacity: 100
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win10-64-2009-source
-            provisionerId: gecko-t
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_F8s_v2
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_F8s_v2
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-  - pool_id: gecko-t/win10-64-2009-alpha
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows10-64-2009-alpha
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [uk-west]
-      maxCapacity: 500
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win10-64-2009-alpha
-            provisionerId: gecko-t
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_F8s_v2
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_F8s_v2
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-  - pool_id: gecko-t/win10-64-2009-source-alpha
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows10-64-2009-alpha
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
-      maxCapacity: 100
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win10-64-2009-source-alpha
-            provisionerId: gecko-t
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_F8s_v2
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_F8s_v2
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      capacityPerInstance: 1
-  - pool_id: gecko-t/win10-64-2009-gpu-alpha
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin-t-windows10-64-2009-alpha
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
-      locations: [uk-south]
-      maxCapacity: 100
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win10-64-2009-gpu-alpha
-            provisionerId: gecko-t
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_NV12s_v3
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_NV12s_v3
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
   # Windows 11
   - pool_id: gecko-1/win11-a64-24h2-builder-alpha
     description: ''
