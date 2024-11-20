@@ -9,7 +9,7 @@ import pprint
 import attr
 from tcadmin.resources import WorkerPool
 
-from ..util.keyed_by import evaluate_keyed_by
+from ..util.keyed_by import evaluate_keyed_by, iter_dot_path
 from ..util.templates import merge
 from .ciconfig.environment import Environment
 from .ciconfig.get import get_ciconfig_file
@@ -428,14 +428,16 @@ def generate_pool_variants(worker_pools, environment):
             "maxCapacity",
             "minCapacity",
             "security",
+            "vmSizes.vmSize",
+            "vmSizes.launchConfig.hardwareProfile.vmSize",
             "worker-purpose",
         ):
-            if key in config:
-                value = evaluate_keyed_by(config[key], name, attributes)
+            for container, subkey in iter_dot_path(config, key):
+                value = evaluate_keyed_by(container[subkey], name, attributes)
                 if value is not None:
-                    config[key] = value
+                    container[subkey] = value
                 else:
-                    del config[key]
+                    del container[subkey]
 
         if (
             config.get("worker-config", {})
@@ -456,9 +458,10 @@ def generate_pool_variants(worker_pools, environment):
             "image",
             "implementation",
             "worker-purpose",
+            "worker-config.genericWorker.config.workerType",
         ):
-            if key in config:
-                config[key] = config[key].format(**attributes)
+            for container, subkey in iter_dot_path(config, key):
+                container[subkey] = container[subkey].format(**attributes)
 
         return config
 
