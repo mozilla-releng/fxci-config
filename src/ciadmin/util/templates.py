@@ -51,7 +51,7 @@ def merge(*objects):
     return merge_to(objects[-1], merge(*objects[:-1]))
 
 
-def deep_get(dict_: dict[str, Any], field: str, default: Any|None=None) -> Any:
+def deep_get(dict_: dict[str, Any], field: str, default: Any | None = None) -> Any:
     """
     Return a key from nested dictionaries using dot path notation
     (e.g "key.subkey").

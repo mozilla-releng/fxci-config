@@ -195,10 +195,27 @@ def get_azure_provider_config(
         {"implementation": implementation},
     )
     worker_config = merge(worker_config, config.get("worker-config", {}))
+    gw_config = worker_config["genericWorker"]["config"]
     if azure_config.get("wst_server_url"):
-        worker_config["genericWorker"]["config"].setdefault(
-            "wstServerURL", azure_config["wst_server_url"]
-        )
+        gw_config.setdefault("wstServerURL", azure_config["wst_server_url"])
+
+    # Populate some generic-worker metadata.
+    metadata = {}
+    has_sbom = image.get(provider_id, "sbom") in (None, True)  # defaults None to True
+    if has_sbom and "sbom_url_tmpl" in azure_config:
+        context = image.clouds[provider_id].copy()
+
+        # The SBOM urls use dashes in the name, whereas the names defined in
+        # worker-images.yml can use underscores. This can be removed if these
+        # two places ever use the same format.
+        if "name" in context:
+            context["name"] = context["name"].replace("_", "-")
+
+        metadata["sbom"] = azure_config["sbom_url_tmpl"].format(**context)
+
+    if metadata:
+        gw_config.setdefault("workerTypeMetaData", {}).update(metadata)
+
     tags = config.get("tags", {})
 
     launch_configs = []

@@ -103,6 +103,7 @@ ubuntu-2404-headless:
 ronin-b1-windows2012-vs-py2-alpha:
   azure2:
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     deployment_id: alpha
     central-us: win2012r2-64-vs-py2-l1-centralus-2012-R2-Datacenter
@@ -110,6 +111,7 @@ ronin-b1-windows2012-vs-py2-alpha:
 ronin-b1-windows2012-vs-py2-prod:
   azure2:
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     deployment_id: 7aa76c6
     central-us: win2012r2-64-vs-py2-l1-centralus-2012-R2-Datacenter
@@ -122,6 +124,7 @@ ronin-b1-windows2012-vs-py2-prod:
 ronin-b3-windows2012-vs-py2-prod:
   azure_trusted:
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     deployment_id: 7aa76c6
     central-us: trusted-win2012r2-64-vs-py2-l3-centralus-2012-R2-Datacenter
@@ -134,6 +137,7 @@ ronin-b3-windows2012-vs-py2-prod:
 ronin-b1-windows2012-prod:
   azure2:
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     deployment_id: 75bd9ed
     central-us: win2012r2-64-l1-centralus-2012-R2-Datacenter
@@ -146,6 +150,7 @@ ronin-b1-windows2012-prod:
 ronin-b3-windows2012-prod:
   azure_trusted:
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     deployment_id: 7cde253
     central-us: trusted-win2012r2-64-l3-centralus-2012-R2-Datacenter
@@ -162,19 +167,18 @@ ronin_b1_windows2022_64_2009_alpha:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win2022-64-2009-alpha.md
     name: win2022_64_2009_alpha
 ronin_b1_windows2022_64_2009:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: "8346140"
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win2022-64-2009.md
     name: win2022_64_2009
 ronin-b3-windows2022-prod:
   azure_trusted:
     deployment_id: "8346140"
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     central-us: trusted-win2022-64-2009-centralus-2022-datacenter-azure-edition
     east-us: trusted-win2022-64-2009-eastus-2022-datacenter-azure-edition
@@ -190,14 +194,12 @@ ronin_t_windows10_64_2009_prod:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: "8346140"
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win10-64-2009.md
     name: win10_64_2009
 ronin_t_windows10_64_2009_alpha:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win10-64-2009-alpha.md
     name: win10_64_2009_alpha
 # Windows 11
 ronin_b1_windows11_a64_24h2_builder_alpha:
@@ -205,61 +207,55 @@ ronin_b1_windows11_a64_24h2_builder_alpha:
     version: 0.0.1
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-builder-alpha.md
     name: win11_a64_24h2_builder_alpha
 ronin_b1_windows11_a64_24h2_builder:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: a03478d
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-builder.md
     name: win11_a64_24h2_builder
+    sbom: false
 ronin_b3_windows11_a64_24h2_builder:
   azure_trusted:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: a03478d
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-builder.md
     name: win11_a64_24h2_builder
+    sbom: false
 ronin_t_windows11_a64_24h2_tester_alpha:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-tester-alpha.md
     name: win11_a64_24h2_tester_alpha
 ronin_t_windows11_a64_24h2_tester:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: a03478d
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-a64-24h2-tester.md
     name: win11_a64_24h2_tester
+    sbom: false
 ronin_t_windows11_64_24h2:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: "8346140"
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-64-24h2.md
     name: win11_64_24h2
 ronin_t_windows11_64_24h2_alpha:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-64-24h2-alpha.md
     name: win11_64_24h2_alpha
 ronin_t_windows11_64_2009_alpha:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-64-2009-alpha.md
     name: win11_64_2009_alpha
 ronin_t_windows11_64_2009:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: "8346140"
-    SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win11-64-2009.md
     name: win11_64_2009

@@ -34,7 +34,9 @@ class WorkerImage:
             [mk(image_name, info) for image_name, info in worker_images.items()]
         )
 
-    def get(self, cloud: str, key: str | None=None, default: Any|None=None) -> Any:
+    def get(
+        self, cloud: str, key: str | None = None, default: Any | None = None
+    ) -> Any:
         """
         Look up a key under the given cloud config for this worker image.
 
