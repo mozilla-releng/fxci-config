@@ -428,6 +428,7 @@ def generate_pool_variants(worker_pools, environment):
             "maxCapacity",
             "minCapacity",
             "security",
+            "tags.sourceBranch",
             "vmSizes.vmSize",
             "vmSizes.launchConfig.hardwareProfile.vmSize",
             "worker-purpose",
@@ -459,6 +460,7 @@ def generate_pool_variants(worker_pools, environment):
             "implementation",
             "worker-purpose",
             "worker-config.genericWorker.config.workerType",
+            "worker-config.genericWorker.config.provisionerId",
         ):
             for container, subkey in iter_dot_path(config, key):
                 container[subkey] = container[subkey].format(**attributes)
