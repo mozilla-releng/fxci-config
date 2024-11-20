@@ -56,7 +56,9 @@ def boot():
             "WARNING: GITHUB_TOKEN is not present in the environment; you may run into rate limits querying for GitHub branches"
         )
 
-    @click.command(context_settings={"ignore_unknown_options": True, "allow_extra_args": True})
+    @click.command(
+        context_settings={"ignore_unknown_options": True, "allow_extra_args": True}
+    )
     @click.option(
         "--resources",
         required=False,
@@ -79,7 +81,7 @@ def boot():
         # Remove the --resources arguments from sys.argv so inner "click.command"s don't complain
         if "--resources" in sys.argv:
             reso_arg_index = sys.argv.index("--resources")
-            sys.argv = sys.argv[:reso_arg_index] + sys.argv[reso_arg_index+2:]
+            sys.argv = sys.argv[:reso_arg_index] + sys.argv[reso_arg_index + 2 :]
 
         main(appconfig)
 
@@ -89,7 +91,7 @@ def boot():
             "--resources",
             required=False,
             default="all",
-            help=f"Comma-separated list of resources to generate. Allowed values are: all,{','.join(RESOURCES.keys())}"
+            help=f"Comma-separated list of resources to generate. Allowed values are: all,{','.join(RESOURCES.keys())}",
         )
         main(appconfig)
     else:
