@@ -195,10 +195,17 @@ def get_azure_provider_config(
         {"implementation": implementation},
     )
     worker_config = merge(worker_config, config.get("worker-config", {}))
+    gw_config = worker_config["genericWorker"]["config"]
     if azure_config.get("wst_server_url"):
-        worker_config["genericWorker"]["config"].setdefault(
-            "wstServerURL", azure_config["wst_server_url"]
+        gw_config.setdefault("wstServerURL", azure_config["wst_server_url"])
+
+    # Populate some generic-worker metadata.
+    metadata = gw_config.setdefault("workerTypeMetaData", {})
+    if image.get(provider_id, "sbom", default=True) and "sbom_url_tmpl" in azure_config:
+        metadata["SBOM"] = azure_config["sbom_url_tmpl"].format(
+            **image.clouds[provider_id]
         )
+
     tags = config.get("tags", {})
 
     launch_configs = []
