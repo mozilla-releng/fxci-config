@@ -8,6 +8,8 @@ import aiohttp
 from aiohttp_retry import ExponentialRetry, RetryClient
 from tcadmin.util.sessions import aiohttp_session
 
+from ciadmin import USER_AGENT
+
 _cache = {}
 _lock = {}
 
@@ -55,7 +57,8 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
             # for details.
             retry_options=ExponentialRetry(attempts=5, statuses={404}),
         )
-        async with client.get(url) as response:
+        headers = {"User-Agent": USER_AGENT}
+        async with client.get(url, headers=headers) as response:
             try:
                 response.raise_for_status()
                 result = await response.read()

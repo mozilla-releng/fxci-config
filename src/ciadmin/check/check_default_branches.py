@@ -8,6 +8,7 @@ import pytest
 from tcadmin.util.sessions import aiohttp_session, with_aiohttp_session
 
 from ciadmin.generate.ciconfig.projects import Project
+from ciadmin import USER_AGENT
 
 _HEAD_REGEX = re.compile(r" symref=HEAD:([^ ]+) ")
 _GIT_UPLOAD_PACK_URL = "{repo_base_url}/info/refs?service=git-upload-pack"
@@ -17,7 +18,7 @@ async def _get_git_default_branch(project):
     git_url = _GIT_UPLOAD_PACK_URL.format(repo_base_url=project.repo)
     # XXX You must set a git-like user agent otherwise Git http endpoints don't
     # return any data.
-    headers = {"User-Agent": "git/mozilla-ci-admin"}
+    headers = {"User-Agent": f"git/{USER_AGENT}"}
     session = aiohttp_session()
     async with session.get(git_url, headers=headers) as response:
         response.raise_for_status()
