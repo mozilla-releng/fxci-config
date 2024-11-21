@@ -2997,14 +2997,14 @@ pools:
     config:
       image: ronin_t_windows11_a64_24h2_tester_alpha
       implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
+      worker-purpose: comm-t
       locations: [east-us-2, north-central-us, central-us]
       maxCapacity: 500
       worker-config:
         genericWorker:
           config:
             workerType: win11-a64-24h2-alpha
-            provisionerId: gecko-t
+            provisionerId: comm-t
             cachesDir: C:\caches
             downloadsDir: C:\downloads
             tasksDir: C:\
@@ -3039,14 +3039,14 @@ pools:
     config:
       image: ronin_t_windows11_a64_24h2_tester_alpha
       implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
+      worker-purpose: comm-t
       locations: [east-us-2, north-central-us, central-us]
       maxCapacity: 500
       worker-config:
         genericWorker:
           config:
             workerType: win11-a64-24h2-alpha
-            provisionerId: gecko-t
+            provisionerId: comm-t
             cachesDir: C:\caches
             downloadsDir: C:\downloads
             tasksDir: C:\
@@ -3081,14 +3081,14 @@ pools:
     config:
       image: ronin_t_windows11_a64_24h2_tester_alpha
       implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
+      worker-purpose: comm-t
       locations: [uk-south]
       maxCapacity: 500
       worker-config:
         genericWorker:
           config:
             workerType: win11-a64-24h2-tester-alpha
-            provisionerId: gecko-t
+            provisionerId: comm-t
             cachesDir: C:\caches
             downloadsDir: C:\downloads
             tasksDir: C:\
@@ -3123,14 +3123,14 @@ pools:
     config:
       image: ronin_t_windows11_a64_24h2_tester
       implementation: generic-worker/worker-runner-windows
-      worker-purpose: gecko-t
+      worker-purpose: comm-t
       locations: [uk-south]
       maxCapacity: 500
       worker-config:
         genericWorker:
           config:
             workerType: win11-a64-24h2-tester
-            provisionerId: gecko-t
+            provisionerId: comm-t
             cachesDir: C:\caches
             downloadsDir: C:\downloads
             tasksDir: C:\
@@ -3495,7 +3495,7 @@ pools:
         genericWorker:
           config:
             workerType: win11-64-2009
-            provisionerId: gecko-t
+            provisionerId: comm-t
             cachesDir: D:\caches
             downloadsDir: D:\downloads
             tasksDir: D:\
@@ -3541,7 +3541,7 @@ pools:
         genericWorker:
           config:
             workerType: win11-64-2009-ssd
-            provisionerId: gecko-t
+            provisionerId: comm-t
             cachesDir: D:\caches
             downloadsDir: D:\downloads
             tasksDir: D:\
