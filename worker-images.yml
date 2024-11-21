@@ -54,9 +54,6 @@ monopacker-docker-worker-2024-06-14-relops993:
 # monopacker generic-worker vm images (chronologically ordered)
 monopacker-translations-worker:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-translations-gcp-googlecompute-2024-04-22t18-22-42z
-# temporary test image that includes https://github.com/mozilla-platform-ops/monopacker/pull/149
-monopacker-translations-worker-issue149:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-translations-gcp-googlecompute-2024-10-11t18-26-57z
 monopacker-ubuntu-2204-wayland:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-08-22t22-48-09z
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-09-18t05-46-31z
