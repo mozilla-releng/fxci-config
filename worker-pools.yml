@@ -400,6 +400,7 @@ pools:
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
+            headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
@@ -431,6 +432,7 @@ pools:
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
+            headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
@@ -462,6 +464,7 @@ pools:
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
+            headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
@@ -494,6 +497,7 @@ pools:
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
+            headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
@@ -553,6 +557,7 @@ pools:
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
+            headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
@@ -584,6 +589,7 @@ pools:
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
+            headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 16
@@ -616,6 +622,7 @@ pools:
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
+            headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
@@ -647,6 +654,7 @@ pools:
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
+            headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 8
@@ -1991,6 +1999,7 @@ pools:
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
+            headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
@@ -2028,6 +2037,7 @@ pools:
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
+            headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
