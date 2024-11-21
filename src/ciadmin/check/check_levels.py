@@ -23,7 +23,9 @@ async def get_hg_repo_owner(project):
 
     session = aiohttp_session()
     headers = {"User-Agent": USER_AGENT}
-    async with session.get(f"{project.repo}/json-repoinfo", headers=headers) as response:
+    async with session.get(
+        f"{project.repo}/json-repoinfo", headers=headers
+    ) as response:
         response.raise_for_status()
         result = await response.read()
     owner = json.loads(result)["group_owner"]

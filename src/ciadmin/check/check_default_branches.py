@@ -7,8 +7,8 @@ import re
 import pytest
 from tcadmin.util.sessions import aiohttp_session, with_aiohttp_session
 
-from ciadmin.generate.ciconfig.projects import Project
 from ciadmin import USER_AGENT
+from ciadmin.generate.ciconfig.projects import Project
 
 _HEAD_REGEX = re.compile(r" symref=HEAD:([^ ]+) ")
 _GIT_UPLOAD_PACK_URL = "{repo_base_url}/info/refs?service=git-upload-pack"
