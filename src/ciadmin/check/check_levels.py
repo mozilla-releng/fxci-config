@@ -7,6 +7,7 @@ import json
 import pytest
 from tcadmin.util.sessions import aiohttp_session, with_aiohttp_session
 
+from ciadmin import USER_AGENT
 from ciadmin.generate.ciconfig.projects import Project
 
 
@@ -21,7 +22,10 @@ async def get_hg_repo_owner(project):
     ), "Only hg repos can be queried for group_owner metadata"
 
     session = aiohttp_session()
-    async with session.get(f"{project.repo}/json-repoinfo") as response:
+    headers = {"User-Agent": USER_AGENT}
+    async with session.get(
+        f"{project.repo}/json-repoinfo", headers=headers
+    ) as response:
         response.raise_for_status()
         result = await response.read()
     owner = json.loads(result)["group_owner"]
