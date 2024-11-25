@@ -4,34 +4,14 @@
 ---
 loader: taskgraph.loader.transform:loader
 
-# kind-dependencies:
-#   - tc-admin
+kind-dependencies:
+  - tc-admin
 
 transforms:
   - fxci_config_taskgraph.transforms.schedule_integration
 
-task-defaults:
-  run-on-tasks-for: []  # these tasks should only be triggered manually
-  run:
-    checkout: true
-    cwd: '{checkout}'
-    using: run-task
-  worker-type: t-linux
-  worker:
-    docker-image: {in-tree: python3.11}
-    max-run-time: 600
-
 tasks:
   gecko:
     description: "Run Gecko integration tests"
-    # dependencies:
-    #   apply: tc-admin-apply-staging
     decision-index-paths:
       - gecko.v2.mozilla-central.latest.taskgraph.decision-os-integration
-    scopes:
-      - queue:create-task:low:gecko-t/*
-      - queue:scheduler-id:ci-level-1
-    run:
-      command: >-
-        pip install --user -r requirements/test.txt &&
-        python taskcluster/scripts/schedule-tasks.py
