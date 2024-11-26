@@ -2,7 +2,7 @@ tc-admin>=3.3.1
 taskcluster
 attrs  # http://www.attrs.org/en/stable/backward-compatibility.html
 mozilla-repo-urls
-aiohttp<4
+aiohttp[speedups]<4
 pyyaml>=5.3
 iso8601==0.1.12  # no semver..
 json-e<3
