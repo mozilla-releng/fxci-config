@@ -6,7 +6,11 @@ import json
 import os
 import shlex
 from typing import Any
+import yaml
 
+import jsone
+import requests
+import slugid
 from taskgraph.transforms.base import TransformSequence
 
 from fxci_config_taskgraph.util.integration import (
@@ -155,10 +159,56 @@ def make_integration_test_description(task_def: dict[str, Any]):
         "dependencies": {
             "apply": "tc-admin-apply-staging",
         },
+        # TODO: remove gecko hardcodes here
         "attributes": {"integration": "gecko"},
     }
     rewrite_docker_image(taskdesc)
     return taskdesc
+
+
+def create_action_task(action: dict):
+    repo = action.pop("repo")
+    branch = action.pop("branch")
+    project = action.pop("project")
+    name = action.pop("name")
+    perm = action.pop("perm")
+    action_input = action.pop("input")
+    taskid = slugid.v4()
+
+    r = requests.get(f"{repo}/raw/{branch}/.taskcluster.yml")
+    r.raise_for_status()
+    tcyml = yaml.safe_load(r.text)
+
+    context = {
+        "tasks_for": "action",
+        "repository": {
+            "url": repo,
+            "project": project,
+        },
+        "push": {
+            "branch": branch,
+            "revision": branch,
+        },
+        "ownTaskId": taskid,
+        "taskId": taskid,
+        "action": {
+            "taskGroupId": taskid,
+            "title": name,
+            "cb_name": name,
+            "name": name,
+            "symbol": name,
+            "description": f"test of {name} action",
+            "action_perm": perm,
+        },
+        "clientId": "fxci-config",
+        "input": action_input,
+    }
+
+    # This ends up returning a full on task definition rather than the intermediate
+    # representation that later transforms need...not sure what to do about this.
+    # Maybe we can move _this_ form out to a different kind and skip the `task`
+    # transform altogether?
+    return jsone.render(tcyml, context)["tasks"]
 
 
 @transforms.add
@@ -170,13 +220,17 @@ def schedule_tasks_at_index(config, tasks):
         return
 
     for task in tasks:
-        for decision_index_path in task.pop("decision-index-paths"):
-            for task_def in find_tasks(decision_index_path):
-                # Tasks that depend on private artifacts are not yet supported.
-                fetches = json.loads(
-                    task_def["payload"].get("env", {}).get("MOZ_FETCHES", {})
-                )
-                if any(not fetch["artifact"].startswith("public") for fetch in fetches):
-                    continue
+        if "decision-index-paths" in task:
+            for decision_index_path in task.pop("decision-index-paths"):
+                for task_def in find_tasks(decision_index_path):
+                    # Tasks that depend on private artifacts are not yet supported.
+                    fetches = json.loads(
+                        task_def["payload"].get("env", {}).get("MOZ_FETCHES", {})
+                    )
+                    if any(not fetch["artifact"].startswith("public") for fetch in fetches):
+                        continue
 
+                    yield make_integration_test_description(task_def)
+        if "action" in task:
+            for task_def in create_action_task(task.pop("action")):
                 yield make_integration_test_description(task_def)

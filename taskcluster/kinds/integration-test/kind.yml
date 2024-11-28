@@ -11,6 +11,17 @@ transforms:
   - fxci_config_taskgraph.transforms.integration_test
 
 tasks:
+  translations:
+    description: "Run translations pipeline test"
+    action:
+      repo: https://github.com/mozilla/translations
+      branch: main
+      project: translations
+      name: train
+      perm: train
+      # This action has sane defaults for all required values
+      input: ""
+
   gecko:
     description: "Run Gecko integration tests"
     decision-index-paths:
