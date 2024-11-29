@@ -16,15 +16,12 @@ payload:
     public/results:
       path: /tmp/results
       type: directory
-  cache:
-    code-review-production-checkout: '/checkouts'
+  cache: {}
   capabilities: {}
   command:
     - code-review-bot
     - '--taskcluster-secret'
     - project/relman/code-review/runtime-production
-    - '--mercurial-repository'
-    - '/checkouts'
   env:
     $merge:
       - $if: firedBy == 'triggerHook'
@@ -57,6 +54,5 @@ scopes:
   - 'secrets:get:project/relman/code-review/runtime-production'
   - 'index:insert-task:project.relman.production.code-review.*'
   - 'notify:email:*'
-  - 'docker-worker:cache:code-review-production-checkout'
 tags: {}
 workerType: bot-gcp
