@@ -380,7 +380,7 @@ pools:
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
-          machine_type: n2-custom-32-73728
+          machine_type: n2-standard-32
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g'
     description: Workers using generic-worker on Linux with D2G capability.
     owner: release+tc-workers@mozilla.com
