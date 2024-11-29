@@ -863,7 +863,7 @@ pools:
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
-          machine_type: n2-custom-64-131072
+          machine_type: n2-standard-64
   - pool_id: '{pool-group}/b-linux-xlarge-gcp-bug1797804-c2'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
