@@ -1203,6 +1203,9 @@
     # We grant ability to create `gecko-t` tasks in the staging instance so we
     # can validate image changes before they land.
     - queue:create-task:low:gecko-t/*
+    # Similarly, we grant enough scopes to be able to run translations training actions
+    - assume:repo:github.com/mozilla/translations:action:train
+    - queue:create-task:low:translations-1/decision-gcp
   to:
     - project:
         alias: fxci-config
