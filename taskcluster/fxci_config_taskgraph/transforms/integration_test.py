@@ -173,6 +173,8 @@ def create_action_task(action: dict):
     name = action.pop("name")
     perm = action.pop("perm")
     action_input = action.pop("input")
+    # TODO: we need a fake decision task, and for this to point at that
+    # because we need to pull parameters.yml and probably other things
     taskid = slugid.v4()
 
     r = requests.get(f"{repo}/raw/{branch}/.taskcluster.yml")
