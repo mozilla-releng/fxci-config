@@ -298,7 +298,7 @@ ronin-t-windows11-64-2009-prod:
   azure2:
     version: NA
     resource_group: rg-packer-through-cib
-    deployment_id: db0c108
+    deployment_id: "8346140"
     canada-central: win11-64-2009-canadacentral-win11-22h2-avd
     central-india: win11-64-2009-centralindia-win11-22h2-avd
     central-us: win11-64-2009-centralus-win11-22h2-avd
