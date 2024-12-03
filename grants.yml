@@ -2543,6 +2543,8 @@
     - assume:repo:github.com/mozilla/code-review:pull-request
     # Allow code-review developers to trigger their hooks
     - hooks:trigger-hook:project-relman/code-review-*
+    # Allow code-review developers to get the trigger token for their hooks
+    - hooks:get-trigger-token:project-relman/code-review-*
   to:
     - group:
         - code-review-developers
