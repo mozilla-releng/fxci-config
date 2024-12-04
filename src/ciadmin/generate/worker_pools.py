@@ -195,10 +195,16 @@ def get_azure_provider_config(
         {"implementation": implementation},
     )
     worker_config = merge(worker_config, config.get("worker-config", {}))
+    gw_config = worker_config["genericWorker"]["config"]
     if azure_config.get("wst_server_url"):
-        worker_config["genericWorker"]["config"].setdefault(
-            "wstServerURL", azure_config["wst_server_url"]
-        )
+        gw_config.setdefault("wstServerURL", azure_config["wst_server_url"])
+
+    try:
+        metadata = image.image_id(provider_id, "generic_worker_metadata")
+        gw_config.setdefault("workerTypeMetaData", metadata)
+    except KeyError:
+        pass
+
     tags = config.get("tags", {})
 
     launch_configs = []
