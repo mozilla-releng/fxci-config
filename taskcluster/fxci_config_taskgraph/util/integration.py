@@ -41,7 +41,11 @@ def find_tasks(decision_index_path: str) -> list[dict[str, Any]]:
     tasks = []
     for task in task_graph.values():
         assert isinstance(task, dict)
-        if task.get("attributes", {}).get("unittest_variant") != "os-integration":
+        attributes = task.get("attributes", {})
+        if attributes.get("unittest_variant") != "os-integration":
+            continue
+
+        if attributes.get("test_platform", "").startswith(("android-hw", "macosx")):
             continue
 
         tasks.append(task["task"])
