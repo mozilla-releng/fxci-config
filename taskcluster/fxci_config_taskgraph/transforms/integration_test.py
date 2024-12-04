@@ -109,13 +109,40 @@ def rewrite_docker_image(taskdesc: dict[str, Any]) -> None:
 
     task_id = payload["image"]["taskId"]
     deps = taskdesc.setdefault("dependencies", {})
-    deps["docker-image"] = f"firefoxci-artifact-{task_id}"
+    deps["docker-image"] = (
+        f"firefoxci-artifact-{taskdesc['attributes']['integration']}-{task_id}"
+    )
 
     payload["image"] = {
         "path": "public/image.tar.zst",
         "taskId": {"task-reference": "<docker-image>"},
         "type": "task-image",
     }
+
+
+def rewrite_private_fetches(taskdesc: dict[str, Any]) -> None:
+    """Re-write fetches that use private artifacts to the equivalent `firefoxci-artifact`
+    task.
+    """
+    payload = taskdesc["task"]["payload"]
+    deps = taskdesc.setdefault("dependencies", {})
+
+    if "MOZ_FETCHES" in payload.get("env", {}):
+        fetches = json.loads(payload.get("env", {}).get("MOZ_FETCHES", {}))
+        modified = False
+        for fetch in fetches:
+            if fetch["artifact"].startswith("public"):
+                continue
+
+            modified = True
+            task_id = fetch["task"]
+            deps[f"fetch-{task_id}"] = (
+                f"firefoxci-artifact-{taskdesc['attributes']['integration']}-{task_id}"
+            )
+            fetch["task"] = f"<fetch-{task_id}>"
+
+        if modified:
+            payload["env"]["MOZ_FETCHES"] = {"task-reference": json.dumps(fetches)}
 
 
 def make_integration_test_description(task_def: dict[str, Any]):
@@ -158,6 +185,7 @@ def make_integration_test_description(task_def: dict[str, Any]):
         "attributes": {"integration": "gecko"},
     }
     rewrite_docker_image(taskdesc)
+    rewrite_private_fetches(taskdesc)
     return taskdesc
 
 
@@ -172,11 +200,4 @@ def schedule_tasks_at_index(config, tasks):
     for task in tasks:
         for decision_index_path in task.pop("decision-index-paths"):
             for task_def in find_tasks(decision_index_path):
-                # Tasks that depend on private artifacts are not yet supported.
-                fetches = json.loads(
-                    task_def["payload"].get("env", {}).get("MOZ_FETCHES", {})
-                )
-                if any(not fetch["artifact"].startswith("public") for fetch in fetches):
-                    continue
-
                 yield make_integration_test_description(task_def)
