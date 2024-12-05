@@ -32,7 +32,7 @@ tasks:
       name: train
       perm: train
       # This action has sane defaults for all required values
-      input: ""
+      input: "{}"
 
   gecko:
     description: "Run Gecko integration tests"
