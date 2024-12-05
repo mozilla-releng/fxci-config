@@ -152,6 +152,7 @@ def make_integration_test_description(task_def: dict[str, Any]):
         if key in task_def:
             task_def[key] = task_def[key].replace("3", "1")
 
+    # TODO: remove gecko hardcode here
     task_def["metadata"]["name"] = f"gecko-{task_def['metadata']['name']}"
     taskdesc = {
         "label": task_def["metadata"]["name"],
