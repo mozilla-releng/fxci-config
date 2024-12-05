@@ -168,13 +168,23 @@ def make_integration_test_description(task_def: dict[str, Any], additional_depen
     return taskdesc
 
 
-def create_decision_task(repo_url: str, repo_name: str, branch: str) -> dict[str, Any]:
+def create_decision_task(decision) -> dict[str, Any]:
+    repo_url = decision["repo"]
+    branch = decision["branch"]
+    repo_name = decision["project"]
+
+    r = requests.get(f"{repo_url}/raw/{branch}/.taskcluster.yml")
+    r.raise_for_status()
+    tcyml = yaml.safe_load(r.text)
+
     context = {
+        "tasks_for": "github-push",
         "event": {
             # branch isn't technically accurate here...but it's good enough
             "after": branch,
             "before": branch,
-            "ref": branch,
+            "base_ref": None,
+            "ref": f"refs/heads/{branch}",
             "repository": {
                 "html_url": repo_url,
                 "name": repo_name,
@@ -184,11 +194,12 @@ def create_decision_task(repo_url: str, repo_name: str, branch: str) -> dict[str
                 "email": "no one",
             },
         },
+        "as_slugid": lambda _: "nothing",
     }
-    return {}
+    return jsone.render(tcyml, context)["tasks"][0]
 
 
-def create_action_task(action: dict):
+def create_action_task(action: dict) -> dict[str, Any]:
     """Creates an action task specified by the inputs given. This necessarily
     creates a decision task as well, because action tasks depend on them at
     runtime."""
@@ -199,17 +210,13 @@ def create_action_task(action: dict):
     name = action.pop("name")
     perm = action.pop("perm")
     action_input = action.pop("input")
-    # TODO: we need a fake decision task, and for this to point at that
-    # because we need to pull parameters.yml and probably other things
-
-    decision_taskdef = create_decision_task(repo, project, branch)
-    yield decision_taskdef
-
-    taskid = decision_taskdef["taskId"]
 
     r = requests.get(f"{repo}/raw/{branch}/.taskcluster.yml")
     r.raise_for_status()
     tcyml = yaml.safe_load(r.text)
+
+    # probably need to use task reference for this...maybe just put the <label> here and then wrap the entire damn thing in task-reference?
+    decision_taskid = "nothing"
 
     context = {
         "tasks_for": "action",
@@ -218,13 +225,13 @@ def create_action_task(action: dict):
             "project": project,
         },
         "push": {
-            "branch": branch,
+            "branch": f"refs/heads/{branch}",
             "revision": branch,
         },
-        "ownTaskId": taskid,
-        "taskId": taskid,
+        "ownTaskId": decision_taskid,
+        "taskId": decision_taskid,
         "action": {
-            "taskGroupId": taskid,
+            "taskGroupId": decision_taskid,
             "title": name,
             "cb_name": name,
             "name": name,
@@ -236,7 +243,7 @@ def create_action_task(action: dict):
         "input": action_input,
     }
 
-    yield jsone.render(tcyml, context)["tasks"]
+    return jsone.render(tcyml, context)["tasks"][0]
 
 
 @transforms.add
@@ -259,8 +266,16 @@ def schedule_tasks_at_index(config, tasks):
                         continue
 
                     yield make_integration_test_description(task_def)
+        if "decision" in task:
+            decision = task.pop("decision")
+            taskdef = create_decision_task(decision)
+            # keep the original name to allow other tasks to reference it
+            taskdef["metadata"]["name"] = f"{config.kind}-{task['name']}"
+            yield make_integration_test_description(taskdef)
+
         if "action" in task:
-            for task_def in create_action_task(task.pop("action")):
-                from pprint import pprint
-                pprint(task_def)
-                yield make_integration_test_description(task_def)
+            action = task.pop("action")
+            taskdef = create_action_task(action)
+            # keep the original name to allow other tasks to reference it
+            taskdef["metadata"]["name"] = f"{config.kind}-{task['name']}"
+            yield make_integration_test_description(taskdef, action["depends"])

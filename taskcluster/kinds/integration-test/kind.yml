@@ -11,9 +11,20 @@ transforms:
   - fxci_config_taskgraph.transforms.integration_test
 
 tasks:
-  translations:
+  translations-decision:
+    # needed to run the action, which is the thing we actually care about
+    description: "Run translations decision task"
+    decision:
+      repo: https://github.com/mozilla/translations
+      branch: main
+      project: translations
+
+  translations-action:
     description: "Run translations pipeline test"
     action:
+      depends:
+        # TODO: shouldn't be gecko here
+        decision: gecko-integration-test-translations-decision
       repo: https://github.com/mozilla/translations
       branch: main
       project: translations
