@@ -10,7 +10,6 @@ import yaml
 
 import jsone
 import requests
-import slugid
 from taskgraph.transforms.base import TransformSequence
 
 from fxci_config_taskgraph.util.integration import (
