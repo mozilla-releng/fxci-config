@@ -196,7 +196,9 @@ def create_decision_task(decision) -> dict[str, Any]:
         },
         "as_slugid": lambda _: "nothing",
     }
-    return jsone.render(tcyml, context)["tasks"][0]
+    taskdef = jsone.render(tcyml, context)["tasks"][0]
+    del taskdef["taskId"]
+    return taskdef
 
 
 def create_action_task(action: dict) -> dict[str, Any]:
