@@ -25,7 +25,8 @@ tasks:
       depends:
         # TODO: shouldn't be gecko here
         decision: gecko-integration-test-translations-decision
-      repo: https://github.com/mozilla/translations
+      # TODO: real repo
+      repo: https://github.com/mozilla-releng/staging-firefox-translations-training
       branch: main
       project: translations
       name: train
