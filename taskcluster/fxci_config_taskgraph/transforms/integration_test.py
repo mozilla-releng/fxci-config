@@ -122,7 +122,7 @@ def rewrite_docker_image(taskdesc: dict[str, Any]) -> None:
     }
 
 
-def make_integration_test_description(task_def: dict[str, Any]):
+def make_integration_test_description(task_def: dict[str, Any], additional_dependencies={}):
     """Schedule a task on the staging Taskcluster instance.
 
     Typically task_def will come from the firefox-ci instance and will be
@@ -154,13 +154,13 @@ def make_integration_test_description(task_def: dict[str, Any]):
 
     # TODO: remove gecko hardcode here
     task_def["metadata"]["name"] = f"gecko-{task_def['metadata']['name']}"
+    dependencies = additional_dependencies.copy()
+    dependencies["apply"] = "tc-admin-apply-staging"
     taskdesc = {
         "label": task_def["metadata"]["name"],
         "description": task_def["metadata"]["description"],
         "task": task_def,
-        "dependencies": {
-            "apply": "tc-admin-apply-staging",
-        },
+        "dependencies": dependencies,
         # TODO: remove gecko hardcodes here
         "attributes": {"integration": "gecko"},
     }
