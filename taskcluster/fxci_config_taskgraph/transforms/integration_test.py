@@ -255,6 +255,8 @@ def create_action_task(action: dict) -> dict[str, Any]:
     for k, v in taskdef["payload"]["env"].items():
         if "SENTINEL" in v:
             env[k] = {"task-reference": v.replace("SENTINEL", "<translations-decision>")}
+        else:
+            env[k] = v
     taskdef["taskGroupId"] = {"task-reference": taskGroupId}
     taskdef["payload"]["env"] = env
     return taskdef
