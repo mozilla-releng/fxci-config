@@ -1217,6 +1217,9 @@
     # Similarly, we grant enough scopes to be able to run translations training actions
     - assume:repo:github.com/mozilla/translations:action:train
     - queue:create-task:low:translations-1/decision-gcp
+    # temp: use staging
+    - assume:repo:github.com/mozilla-releng/firefox-translations-training:action:decision
+    - assume:repo:github.com/mozilla-releng/firefox-translations-training:action:train
   to:
     - project:
         alias: fxci-config
