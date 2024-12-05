@@ -193,6 +193,8 @@ def create_decision_task(decision) -> dict[str, Any]:
                 "email": "no one",
             },
         },
+        # This is only used to set `taskId`, which we remove because taskgraph
+        # sets it later.
         "as_slugid": lambda _: "nothing",
     }
     taskdef = jsone.render(tcyml, context)["tasks"][0]
@@ -217,7 +219,7 @@ def create_action_task(action: dict) -> dict[str, Any]:
     tcyml = yaml.safe_load(r.text)
 
     # probably need to use task reference for this...maybe just put the <label> here and then wrap the entire damn thing in task-reference?
-    decision_taskid = "nothing"
+    decision_taskid = "SENTINEL"
 
     context = {
         "tasks_for": "action",
@@ -244,7 +246,18 @@ def create_action_task(action: dict) -> dict[str, Any]:
         "input": action_input,
     }
 
-    return jsone.render(tcyml, context)["tasks"][0]
+    taskdef = jsone.render(tcyml, context)["tasks"][0]
+    # action tasks reference a decision task id in a couple of places; we need
+    # to turn these into `task-reference` entries that taskgraph will replace
+    # later
+    taskGroupId = taskdef["taskGroupId"].replace("SENTINEL", "<translations-decision>")
+    env = {}
+    for k, v in taskdef["payload"]["env"].items():
+        if "SENTINEL" in v:
+            env[k] = {"task-reference": v.replace("SENTINEL", "<translations-decision>")}
+    taskdef["taskGroupId"] = {"task-reference": taskGroupId}
+    taskdef["payload"]["env"] = env
+    return taskdef
 
 
 @transforms.add
