@@ -15,7 +15,7 @@ tasks:
     # needed to run the action, which is the thing we actually care about
     description: "Run translations decision task"
     decision:
-      repo: https://github.com/mozilla/translations
+      repo: https://github.com/mozilla-releng/staging-firefox-translations-training
       branch: main
       project: translations
 
