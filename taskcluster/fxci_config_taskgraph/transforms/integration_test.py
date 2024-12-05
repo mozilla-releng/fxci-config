@@ -167,7 +167,31 @@ def make_integration_test_description(task_def: dict[str, Any]):
     return taskdesc
 
 
+def create_decision_task(repo_url: str, repo_name: str, branch: str) -> dict[str, Any]:
+    context = {
+        "event": {
+            # branch isn't technically accurate here...but it's good enough
+            "after": branch,
+            "before": branch,
+            "ref": branch,
+            "repository": {
+                "html_url": repo_url,
+                "name": repo_name,
+            },
+            "pusher": {
+                # TODO: should be inherited from parameters
+                "email": "no one",
+            },
+        },
+    }
+    return {}
+
+
 def create_action_task(action: dict):
+    """Creates an action task specified by the inputs given. This necessarily
+    creates a decision task as well, because action tasks depend on them at
+    runtime."""
+
     repo = action.pop("repo")
     branch = action.pop("branch")
     project = action.pop("project")
@@ -176,7 +200,11 @@ def create_action_task(action: dict):
     action_input = action.pop("input")
     # TODO: we need a fake decision task, and for this to point at that
     # because we need to pull parameters.yml and probably other things
-    taskid = slugid.v4()
+
+    decision_taskdef = create_decision_task(repo, project, branch)
+    yield decision_taskdef
+
+    taskid = decision_taskdef["taskId"]
 
     r = requests.get(f"{repo}/raw/{branch}/.taskcluster.yml")
     r.raise_for_status()
@@ -207,11 +235,7 @@ def create_action_task(action: dict):
         "input": action_input,
     }
 
-    # This ends up returning a full on task definition rather than the intermediate
-    # representation that later transforms need...not sure what to do about this.
-    # Maybe we can move _this_ form out to a different kind and skip the `task`
-    # transform altogether?
-    return jsone.render(tcyml, context)["tasks"]
+    yield jsone.render(tcyml, context)["tasks"]
 
 
 @transforms.add
@@ -236,4 +260,6 @@ def schedule_tasks_at_index(config, tasks):
                     yield make_integration_test_description(task_def)
         if "action" in task:
             for task_def in create_action_task(task.pop("action")):
+                from pprint import pprint
+                pprint(task_def)
                 yield make_integration_test_description(task_def)
