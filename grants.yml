@@ -1218,7 +1218,7 @@
     - assume:repo:github.com/mozilla/translations:action:train
     - queue:create-task:low:translations-1/decision-gcp
     # temp: use staging
-    - assume:repo:github.com/mozilla-releng/firefox-translations-training:action:train
+    - assume:repo:github.com/mozilla-releng/staging-firefox-translations-training:action:train
     - assume:repo:github.com/mozilla-releng/staging-firefox-translations-training:branch:main
   to:
     - project:
