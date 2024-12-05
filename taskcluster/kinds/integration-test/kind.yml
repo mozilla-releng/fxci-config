@@ -17,7 +17,7 @@ tasks:
     decision:
       repo: https://github.com/mozilla-releng/staging-firefox-translations-training
       branch: main
-      project: translations
+      project: staging-firefox-translations-training
 
   translations-action:
     description: "Run translations pipeline test"
@@ -28,7 +28,7 @@ tasks:
       # TODO: real repo
       repo: https://github.com/mozilla-releng/staging-firefox-translations-training
       branch: main
-      project: translations
+      project: staging-firefox-translations-training
       name: train
       perm: train
       # This action has sane defaults for all required values
