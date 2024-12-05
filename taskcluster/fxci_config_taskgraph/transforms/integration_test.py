@@ -138,8 +138,9 @@ def make_integration_test_description(task_def: dict[str, Any]):
         }
     )
 
-    del task_def["dependencies"]
-    if "treeherder" in task_def["extra"]:
+    if "dependencies" in task_def:
+        del task_def["dependencies"]
+    if "treeherder" in task_def.get("extra", {}):
         del task_def["extra"]["treeherder"]
 
     patch_root_url(task_def)
