@@ -7,6 +7,9 @@ import os
 import shlex
 from typing import Any
 
+import jsone
+import requests
+import yaml
 from taskgraph.transforms.base import TransformSequence
 
 from fxci_config_taskgraph.util.integration import (
@@ -118,7 +121,9 @@ def rewrite_docker_image(taskdesc: dict[str, Any]) -> None:
     }
 
 
-def make_integration_test_description(task_def: dict[str, Any]):
+def make_integration_test_description(
+    task_def: dict[str, Any], additional_dependencies={}
+):
     """Schedule a task on the staging Taskcluster instance.
 
     Typically task_def will come from the firefox-ci instance and will be
@@ -134,8 +139,9 @@ def make_integration_test_description(task_def: dict[str, Any]):
         }
     )
 
-    del task_def["dependencies"]
-    if "treeherder" in task_def["extra"]:
+    if "dependencies" in task_def:
+        del task_def["dependencies"]
+    if "treeherder" in task_def.get("extra", {}):
         del task_def["extra"]["treeherder"]
 
     patch_root_url(task_def)
@@ -147,18 +153,117 @@ def make_integration_test_description(task_def: dict[str, Any]):
         if key in task_def:
             task_def[key] = task_def[key].replace("3", "1")
 
+    # TODO: remove gecko hardcode here
     task_def["metadata"]["name"] = f"gecko-{task_def['metadata']['name']}"
+    dependencies = additional_dependencies.copy()
+    dependencies["apply"] = "tc-admin-apply-staging"
     taskdesc = {
         "label": task_def["metadata"]["name"],
         "description": task_def["metadata"]["description"],
         "task": task_def,
-        "dependencies": {
-            "apply": "tc-admin-apply-staging",
-        },
+        "dependencies": dependencies,
+        # TODO: remove gecko hardcodes here
         "attributes": {"integration": "gecko"},
     }
     rewrite_docker_image(taskdesc)
     return taskdesc
+
+
+def create_decision_task(decision) -> dict[str, Any]:
+    repo_url = decision["repo"]
+    branch = decision["branch"]
+    repo_name = decision["project"]
+
+    r = requests.get(f"{repo_url}/raw/{branch}/.taskcluster.yml")
+    r.raise_for_status()
+    tcyml = yaml.safe_load(r.text)
+
+    context = {
+        "tasks_for": "github-push",
+        "event": {
+            # branch isn't technically accurate here...but it's good enough
+            "after": branch,
+            "before": branch,
+            "base_ref": None,
+            "ref": f"refs/heads/{branch}",
+            "repository": {
+                "html_url": repo_url,
+                "name": repo_name,
+            },
+            "pusher": {
+                # TODO: should be inherited from parameters
+                "email": "no one",
+            },
+        },
+        # This is only used to set `taskId`, which we remove because taskgraph
+        # sets it later.
+        "as_slugid": lambda _: "nothing",
+    }
+    taskdef = jsone.render(tcyml, context)["tasks"][0]
+    del taskdef["taskId"]
+    return taskdef
+
+
+def create_action_task(action: dict) -> dict[str, Any]:
+    """Creates an action task specified by the inputs given. This necessarily
+    creates a decision task as well, because action tasks depend on them at
+    runtime."""
+
+    repo = action.pop("repo")
+    branch = action.pop("branch")
+    project = action.pop("project")
+    name = action.pop("name")
+    perm = action.pop("perm")
+    action_input = action.pop("input")
+
+    r = requests.get(f"{repo}/raw/{branch}/.taskcluster.yml")
+    r.raise_for_status()
+    tcyml = yaml.safe_load(r.text)
+
+    # probably need to use task reference for this...maybe just put the <label> here and then wrap the entire damn thing in task-reference?
+    decision_taskid = "SENTINEL"
+
+    context = {
+        "tasks_for": "action",
+        "repository": {
+            "url": repo,
+            "project": project,
+        },
+        "push": {
+            "branch": f"refs/heads/{branch}",
+            "revision": branch,
+        },
+        "ownTaskId": decision_taskid,
+        "taskId": decision_taskid,
+        "action": {
+            "taskGroupId": decision_taskid,
+            "title": name,
+            "cb_name": name,
+            "name": name,
+            "symbol": name,
+            "description": f"test of {name} action",
+            "action_perm": perm,
+        },
+        "clientId": "fxci-config",
+        "input": action_input,
+    }
+
+    taskdef = jsone.render(tcyml, context)["tasks"][0]
+    # action tasks reference a decision task id in a couple of places; we need
+    # to turn these into `task-reference` entries that taskgraph will replace
+    # later
+    taskGroupId = taskdef["taskGroupId"].replace("SENTINEL", "<translations-decision>")
+    env = {}
+    for k, v in taskdef["payload"]["env"].items():
+        if "SENTINEL" in v:
+            env[k] = {
+                "task-reference": v.replace("SENTINEL", "<translations-decision>")
+            }
+        else:
+            env[k] = v
+    taskdef["taskGroupId"] = {"task-reference": taskGroupId}
+    taskdef["payload"]["env"] = env
+    return taskdef
 
 
 @transforms.add
@@ -170,13 +275,29 @@ def schedule_tasks_at_index(config, tasks):
         return
 
     for task in tasks:
-        for decision_index_path in task.pop("decision-index-paths"):
-            for task_def in find_tasks(decision_index_path):
-                # Tasks that depend on private artifacts are not yet supported.
-                fetches = json.loads(
-                    task_def["payload"].get("env", {}).get("MOZ_FETCHES", {})
-                )
-                if any(not fetch["artifact"].startswith("public") for fetch in fetches):
-                    continue
+        if "decision-index-paths" in task:
+            for decision_index_path in task.pop("decision-index-paths"):
+                for task_def in find_tasks(decision_index_path):
+                    # Tasks that depend on private artifacts are not yet supported.
+                    fetches = json.loads(
+                        task_def["payload"].get("env", {}).get("MOZ_FETCHES", {})
+                    )
+                    if any(
+                        not fetch["artifact"].startswith("public") for fetch in fetches
+                    ):
+                        continue
 
-                yield make_integration_test_description(task_def)
+                    yield make_integration_test_description(task_def)
+        if "decision" in task:
+            decision = task.pop("decision")
+            taskdef = create_decision_task(decision)
+            # keep the original name to allow other tasks to reference it
+            taskdef["metadata"]["name"] = f"{config.kind}-{task['name']}"
+            yield make_integration_test_description(taskdef)
+
+        if "action" in task:
+            action = task.pop("action")
+            taskdef = create_action_task(action)
+            # keep the original name to allow other tasks to reference it
+            taskdef["metadata"]["name"] = f"{config.kind}-{task['name']}"
+            yield make_integration_test_description(taskdef, action["depends"])
