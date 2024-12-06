@@ -6,10 +6,10 @@ import json
 import os
 import shlex
 from typing import Any
-import yaml
 
 import jsone
 import requests
+import yaml
 from taskgraph.transforms.base import TransformSequence
 
 from fxci_config_taskgraph.util.integration import (
@@ -121,7 +121,9 @@ def rewrite_docker_image(taskdesc: dict[str, Any]) -> None:
     }
 
 
-def make_integration_test_description(task_def: dict[str, Any], additional_dependencies={}):
+def make_integration_test_description(
+    task_def: dict[str, Any], additional_dependencies={}
+):
     """Schedule a task on the staging Taskcluster instance.
 
     Typically task_def will come from the firefox-ci instance and will be
@@ -254,7 +256,9 @@ def create_action_task(action: dict) -> dict[str, Any]:
     env = {}
     for k, v in taskdef["payload"]["env"].items():
         if "SENTINEL" in v:
-            env[k] = {"task-reference": v.replace("SENTINEL", "<translations-decision>")}
+            env[k] = {
+                "task-reference": v.replace("SENTINEL", "<translations-decision>")
+            }
         else:
             env[k] = v
     taskdef["taskGroupId"] = {"task-reference": taskGroupId}
@@ -278,7 +282,9 @@ def schedule_tasks_at_index(config, tasks):
                     fetches = json.loads(
                         task_def["payload"].get("env", {}).get("MOZ_FETCHES", {})
                     )
-                    if any(not fetch["artifact"].startswith("public") for fetch in fetches):
+                    if any(
+                        not fetch["artifact"].startswith("public") for fetch in fetches
+                    ):
                         continue
 
                     yield make_integration_test_description(task_def)
