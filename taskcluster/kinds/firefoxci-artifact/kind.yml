@@ -35,5 +35,3 @@ tasks:
     description: "Fetch artifacts from Firefox-CI for the integration tests"
     decision-index-paths:
       - gecko.v2.mozilla-central.latest.taskgraph.decision-os-integration
-    fetch-artifacts:
-      - public/image.tar.zst
