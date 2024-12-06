@@ -234,6 +234,11 @@ project/releng/fxci-config/apply:
   description: Used to run `tc-admin apply` in mozilla-releng/fxci-config.
   scopes:
     - "*"
+project/releng/fxci-config/fetch-firefoxci-artifacts:
+  description: Used to fetch certain private artifacts from firefoxci to staging
+  scopes:
+    - queue:get-artifact:project/gecko/android-emulator/*
+    - queue:get-artifact:project/gecko/android-system-images/*
 project/releng/fxci-config/generate:
   description: Used to run `tc-admin {generate|diff}` in mozilla-releng/fxci-config.
   scopes:
