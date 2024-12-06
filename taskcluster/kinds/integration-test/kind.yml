@@ -31,8 +31,11 @@ tasks:
       project: staging-firefox-translations-training
       name: train
       perm: train
-      # This action has sane defaults for all required values
-      input: {}
+      # This action has sane defaults for most values
+      input:
+        # We disable publication to weights & biases to avoid cluttering up
+        # dashboards that we rely on.
+        wandb-publication: false
 
   gecko:
     description: "Run Gecko integration tests"

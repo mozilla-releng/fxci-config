@@ -243,7 +243,7 @@ def create_action_task(action: dict) -> dict[str, Any]:
             "action_perm": perm,
         },
         "clientId": "fxci-config",
-        "input": action_input,
+        "input": json.dumps(action_input),
     }
 
     taskdef = jsone.render(tcyml, context)["tasks"][0]
