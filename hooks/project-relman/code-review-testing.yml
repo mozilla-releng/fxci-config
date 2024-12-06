@@ -31,6 +31,13 @@ payload:
         else: {}
         then:
           $eval: payload
+      - $if: firedBy == 'triggerHookWithToken'
+        else: {}
+        then:
+          PHABRICATOR_OBJECT_TYPE:
+            $eval: payload.object.type
+          PHABRICATOR_OBJECT_PHID:
+            $eval: payload.object.phid
       - $if: firedBy == 'pulseMessage'
         else: {}
         then:
