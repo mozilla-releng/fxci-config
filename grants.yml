@@ -2970,6 +2970,14 @@
         alias:
           - staging-firefox-translations-training
 
+- grant:
+    - hooks:trigger-hook:project-{trust_domain}/in-tree-action-{level}-train/*
+  to:
+    - projects:
+        job: [cron:run-pipeline]
+        trust_domain: translations
+        level: [1, 2, 3]
+
 # allow bytesized to trigger nightly releases on pine
 - grant:
     - hooks:trigger-hook:project-releng/cron-task-projects-pine/*
