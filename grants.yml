@@ -1214,6 +1214,8 @@
     # project/releng/fxci-config/apply access token each time to get the necessary
     # credentials.
     - auth:reset-access-token:project/releng/fxci-config/apply
+    # This is used to fetch private artifacts from the fxci instance.
+    - secrets:get:project/releng/fxci-config/firefoxci-artifact-client
     # This is only used to authenticate as the taskcluster-staging app to avoid
     # Github rate limits.
     - secrets:get:project/releng/tc-github-private-key
