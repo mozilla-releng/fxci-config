@@ -2741,14 +2741,8 @@
     - assume:project:releng:ci-group:thunderbird-sheriff
   to:
     - roles:
-        # Geoff Lankow (https://bugzilla.mozilla.org/show_bug.cgi?id=1520433)
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|geoff
-        # Magnus Melin (https://bugzilla.mozilla.org/show_bug.cgi?id=1605714)
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mkmelin
-        # Patrick Cloke (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|clokep
-        # Ian Neal (https://bugzilla.mozilla.org/show_bug.cgi?id=1595942)
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|iann_cvs
+        # Thunderbird sheriffs, Magnus Melin manager - Bug 1936108
+        - mozilla-group:thunderbird_sheriff
 - grant:
     - assume:project:releng:ci-group:thunderbird-releng
   to:
