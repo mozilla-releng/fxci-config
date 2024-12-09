@@ -571,6 +571,20 @@
         alias: [mozilla-beta]
 
 - grant:
+    - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
+  to:
+    - project:
+        job: [cron:merge-beta-to-release-dry-run]
+        trust_domain: gecko
+        level: [3]
+        alias: [mozilla-beta]
+    - project:
+        job: [cron:merge-central-to-beta-dry-run]
+        trust_domain: gecko
+        level: [3]
+        alias: [mozilla-central]
+
+- grant:
     - queue:create-task:{priority}:scriptworker-k8s/gecko-3-tree
   to:
     - project:
