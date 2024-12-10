@@ -174,7 +174,7 @@ def schedule_tasks_at_index(config, tasks):
             for task_def in find_tasks(decision_index_path):
                 # Tasks that depend on private artifacts are not yet supported.
                 fetches = json.loads(
-                    task_def["payload"].get("env", {}).get("MOZ_FETCHES", {})
+                    task_def["payload"].get("env", {}).get("MOZ_FETCHES", "{}")
                 )
                 if any(not fetch["artifact"].startswith("public") for fetch in fetches):
                     continue
