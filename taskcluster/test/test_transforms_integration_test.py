@@ -7,11 +7,12 @@ from typing import Any
 
 import pytest
 from taskgraph.util.copy import deepcopy
+from taskgraph.util.taskcluster import _get_deps, get_task_definition
 from taskgraph.util.templates import merge
 
 from fxci_config_taskgraph.transforms.integration_test import transforms
 from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
-from fxci_config_taskgraph.util.integration import _fetch_task_graph
+from fxci_config_taskgraph.util.integration import _fetch_task_graph, _queue_task
 
 
 @pytest.fixture
@@ -53,22 +54,39 @@ def run_test(monkeypatch, run_transform, responses):
     # is irrelevant to many tests anyways.
     def inner(
         task: dict[str, Any],
+        ancestors: dict[str, Any] = {},
         include_attrs: dict[str, list[str]] = {"unittest_variant": ["os-integration"]},
         exclude_attrs: dict[str, list[str]] = {
             "test_platform": ["android-hw", "macosx"]
         },
+        include_deps: list[str] = [],
         name: str = task_label,
     ) -> dict[str, Any] | None:
         _fetch_task_graph.cache_clear()
+        _queue_task.cache_clear()
+        _get_deps.cache_clear()
+        get_task_definition.cache_clear()
 
         task = merge(deepcopy(base_task), task)
-        task_graph = {task_label: task}
+        task_graph = {decision_task_id: task}
 
         responses.upsert(
             responses.GET,
             f"{FIREFOXCI_ROOT_URL}/api/queue/v1/task/{decision_task_id}/artifacts/public%2Ftask-graph.json",
             json=task_graph,
         )
+        if include_deps:
+            responses.upsert(
+                responses.GET,
+                f"{FIREFOXCI_ROOT_URL}/api/queue/v1/task/{decision_task_id}",
+                json=task["task"],
+            )
+            for upstream_task_id, upstream_task in ancestors.items():
+                responses.upsert(
+                    responses.GET,
+                    f"{FIREFOXCI_ROOT_URL}/api/queue/v1/task/{upstream_task_id}",
+                    json=upstream_task,
+                )
 
         result = run_transform(
             transforms,
@@ -76,14 +94,13 @@ def run_test(monkeypatch, run_transform, responses):
                 "decision-index-paths": [index],
                 "include-attrs": include_attrs,
                 "exclude-attrs": exclude_attrs,
+                "include-deps": include_deps,
                 "name": name,
             },
         )
         if not result:
             return None
 
-        assert len(result) == 1
-        result = result[0]
         print("Dumping for copy/paste:")
         pprint(result, indent=2)
         return result
@@ -131,6 +148,8 @@ def test_basic(run_test):
     result = run_test(
         {"attributes": {"unittest_variant": "os-integration"}}, name="gecko"
     )
+    assert len(result) == 1
+    result = result[0]
     assert result == {
         "attributes": {"integration": "gecko"},
         "dependencies": {"apply": "tc-admin-apply-staging"},
@@ -164,6 +183,8 @@ def test_docker_image(run_test):
         },
         name="gecko",
     )
+    assert len(result) == 1
+    result = result[0]
     assert result["dependencies"] == {
         "apply": "tc-admin-apply-staging",
         "docker-image": "firefoxci-artifact-gecko-def",
@@ -190,6 +211,8 @@ def test_public_fetch_generic_worker(run_test):
             },
         }
     )
+    assert len(result) == 1
+    result = result[0]
     assert result["dependencies"] == {"apply": "tc-admin-apply-staging"}
     assert result["task"]["payload"]["command"] == [
         ["chmod", "+x", "run-task"],
@@ -216,6 +239,8 @@ def test_public_fetch_generic_worker_windows(run_test):
             },
         }
     )
+    assert len(result) == 1
+    result = result[0]
     assert result["dependencies"] == {"apply": "tc-admin-apply-staging"}
     assert result["task"]["payload"]["command"] == [
         'set "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" & cmd'
@@ -236,6 +261,8 @@ def test_public_fetch_docker_worker(run_test):
             },
         }
     )
+    assert len(result) == 1
+    result = result[0]
     assert result["dependencies"] == {"apply": "tc-admin-apply-staging"}
     assert result["task"]["payload"]["command"] == [
         "bash",
@@ -257,6 +284,8 @@ def test_private_artifact(run_test):
         },
         name="gecko",
     )
+    assert len(result) == 1
+    result = result[0]
     assert result["dependencies"] == {
         "apply": "tc-admin-apply-staging",
         "fetch-def": "firefoxci-artifact-gecko-def",
@@ -279,6 +308,8 @@ def test_mounts_task_id(run_test):
             },
         }
     )
+    assert len(result) == 1
+    result = result[0]
     assert result["task"]["payload"]["mounts"] == [
         {
             "content": {
@@ -306,6 +337,8 @@ def test_mounts_namespace(run_test):
             },
         }
     )
+    assert len(result) == 1
+    result = result[0]
     assert result["task"]["payload"]["mounts"] == [
         {
             "content": {
@@ -325,5 +358,136 @@ def test_docker_cache(run_test):
             },
         }
     )
+    assert len(result) == 1
+    result = result[0]
     assert result["task"]["payload"]["cache"] == {"ci-level-1": "path"}
     assert result["task"]["scopes"] == ["cache:ci-level-1"]
+
+
+def run_include_deps_test(run_test, *args, **kwargs):
+    ancestors = {
+        "dep1": {
+            "dependencies": [],
+            "extra": {},
+            "metadata": {"name": "build-thing", "description": "build"},
+            "payload": {
+                "image": {
+                    "taskId": "ghi",
+                    "path": "public/image.tar.zst",
+                },
+            },
+            "tags": {},
+        },
+        "dep2": {
+            "dependencies": [
+                "dep1",
+            ],
+            "extra": {},
+            "metadata": {"name": "test-thing", "description": "test"},
+            "payload": {
+                "image": {
+                    "taskId": "jkl",
+                    "path": "public/image.tar.zst",
+                },
+            },
+            "tags": {},
+        },
+        "dep3": {
+            "dependencies": [
+                "dep2",
+            ],
+            "extra": {},
+            "metadata": {"name": "sign-thing", "description": "sign"},
+            "payload": {
+                "image": {
+                    "taskId": "mno",
+                    "path": "public/image.tar.zst",
+                },
+            },
+            "tags": {},
+        },
+    }
+    return run_test(*args, ancestors=ancestors, **kwargs)
+
+
+def test_include_all_deps(run_test):
+    task_id = "def"
+    artifact = "public/image.tar.zst"
+    result = run_include_deps_test(
+        run_test,
+        {
+            "attributes": {"unittest_variant": "os-integration"},
+            "task": {
+                "dependencies": [
+                    "dep3",
+                ],
+                "payload": {
+                    "image": {
+                        "taskId": task_id,
+                        "path": artifact,
+                    }
+                },
+            },
+        },
+        include_deps=["^.*"],
+        name="gecko",
+    )
+    expected = set(
+        ["gecko-foo", "gecko-build-thing", "gecko-test-thing", "gecko-sign-thing"]
+    )
+    got = set([t["label"] for t in result])
+    assert expected == got
+
+
+def test_include_some_deps(run_test):
+    task_id = "def"
+    artifact = "public/image.tar.zst"
+    result = run_include_deps_test(
+        run_test,
+        {
+            "attributes": {"unittest_variant": "os-integration"},
+            "task": {
+                "dependencies": [
+                    "dep3",
+                ],
+                "payload": {
+                    "image": {
+                        "taskId": task_id,
+                        "path": artifact,
+                    }
+                },
+            },
+        },
+        include_deps=["^sign", "^test"],
+        name="gecko",
+    )
+    expected = set(["gecko-foo", "gecko-test-thing", "gecko-sign-thing"])
+    got = set([t["label"] for t in result])
+    assert expected == got
+
+
+def test_no_deps(run_test):
+    task_id = "def"
+    artifact = "public/image.tar.zst"
+    result = run_include_deps_test(
+        run_test,
+        {
+            "attributes": {"unittest_variant": "os-integration"},
+            "task": {
+                "dependencies": [
+                    "dep3",
+                ],
+                "payload": {
+                    "image": {
+                        "taskId": task_id,
+                        "path": artifact,
+                    }
+                },
+            },
+        },
+        include_deps=["^toolchain"],
+        name="gecko",
+    )
+    expected = set(["gecko-foo"])
+    got = set([t["label"] for t in result])
+    assert expected == got
