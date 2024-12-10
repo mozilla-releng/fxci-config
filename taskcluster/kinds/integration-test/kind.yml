@@ -6,6 +6,7 @@ loader: taskgraph.loader.transform:loader
 
 kind-dependencies:
   - firefoxci-artifact
+  - tc-admin
 
 transforms:
   - fxci_config_taskgraph.transforms.integration_test
