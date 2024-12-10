@@ -157,14 +157,14 @@ project-relman/code-review-testing:
         properties:
           type:
             type: string
-            descritpion: Phabricator object's type triggering the hook
+            description: Phabricator object's type triggering the hook
           phid:
             type: string
-            descritpion: Phabricator object's PHID triggering the hook
+            description: Phabricator object's PHID triggering the hook
 
       # Trigger hook from pulse for analyzing results
       runId:
-        type: string
+        type: int
         description: Taskcluster Task Run ID triggering the hook (should be a Try Task run)
       status:
         type: object
