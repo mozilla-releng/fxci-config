@@ -9,10 +9,8 @@ from copy import deepcopy
 
 from taskgraph.transforms.base import TransformSequence
 
-from fxci_config_taskgraph.util.integration import (
-    STAGING_ROOT_URL,
-    find_tasks,
-)
+from fxci_config_taskgraph.util.constants import STAGING_ROOT_URL
+from fxci_config_taskgraph.util.integration import find_tasks
 
 transforms = TransformSequence()
 

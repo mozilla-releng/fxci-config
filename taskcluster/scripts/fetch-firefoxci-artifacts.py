@@ -8,7 +8,7 @@ import os
 import requests
 import taskcluster
 
-from fxci_config_taskgraph.util.integration import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
+from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
 
 if "TASKCLUSTER_PROXY_URL" in os.environ:
     options = {"rootUrl": os.environ["TASKCLUSTER_PROXY_URL"]}
