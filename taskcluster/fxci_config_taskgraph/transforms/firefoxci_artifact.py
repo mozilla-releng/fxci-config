@@ -42,7 +42,7 @@ def make_firefoxci_artifact_tasks(config, tasks):
                 # Add private artifacts
                 if "MOZ_FETCHES" in task_def["payload"].get("env", {}):
                     fetches = json.loads(
-                        task_def["payload"].get("env", {}).get("MOZ_FETCHES", {})
+                        task_def["payload"].get("env", {}).get("MOZ_FETCHES", "{}")
                     )
                     for fetch in fetches:
                         if fetch["artifact"].startswith("public"):
