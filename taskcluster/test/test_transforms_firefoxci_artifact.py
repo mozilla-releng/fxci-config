@@ -10,11 +10,8 @@ from taskgraph.util.copy import deepcopy
 from taskgraph.util.templates import merge
 
 from fxci_config_taskgraph.transforms.firefoxci_artifact import transforms
-from fxci_config_taskgraph.util.integration import (
-    FIREFOXCI_ROOT_URL,
-    STAGING_ROOT_URL,
-    find_tasks,
-)
+from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
+from fxci_config_taskgraph.util.integration import find_tasks
 
 
 @pytest.fixture
