@@ -20,7 +20,9 @@ def get_taskcluster_client(service: str):
 
 
 @cache
-def find_tasks(decision_index_path: str, include_deps: bool = False) -> list[dict[str, Any]]:
+def find_tasks(
+    decision_index_path: str, include_deps: bool = False
+) -> list[dict[str, Any]]:
     """Find tasks targeted by the Decision task pointed to by `decision_index_path`."""
     queue = get_taskcluster_client("queue")
     index = get_taskcluster_client("index")
@@ -54,6 +56,7 @@ def find_tasks(decision_index_path: str, include_deps: bool = False) -> list[dic
         if include_deps:
             # TODO: remove hack
             import os
+
             orig = os.environ["TASKCLUSTER_ROOT_URL"]
             os.environ["TASKCLUSTER_ROOT_URL"] = FIREFOXCI_ROOT_URL
             for label, task_id in get_ancestors(task["task_id"]).items():
