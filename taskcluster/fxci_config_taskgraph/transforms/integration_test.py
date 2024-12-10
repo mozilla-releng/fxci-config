@@ -63,6 +63,9 @@ def rewrite_mounts(task_def: dict[str, Any]) -> None:
     index = get_taskcluster_client("index")
 
     for mount in task_def["payload"].get("mounts", []):
+        if "content" not in mount:
+            continue
+
         content = mount["content"]
         if "artifact" not in content:
             continue
