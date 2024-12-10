@@ -32,3 +32,9 @@ tasks:
     description: "Fetch artifacts from Firefox-CI for the integration tests"
     decision-index-paths:
       - gecko.v2.mozilla-central.latest.taskgraph.decision-os-integration
+
+  translations:
+    description: "Fetch artifacts from Firefox-CI for translations pipeline tests"
+    decision-index-paths:
+      # TODO: switch to production translations repo
+      - translations.v2.staging-firefox-translations-training.latest.taskgraph.decision-run-pipeline
