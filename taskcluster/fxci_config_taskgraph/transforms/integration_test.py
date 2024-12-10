@@ -193,5 +193,6 @@ def schedule_tasks_at_index(config, tasks):
 
     for task in tasks:
         for decision_index_path in task.pop("decision-index-paths"):
-            for task_def in find_tasks(decision_index_path):
+            include_deps = task.pop("include-deps", False)
+            for task_def in find_tasks(decision_index_path, include_deps):
                 yield make_integration_test_description(task_def)
