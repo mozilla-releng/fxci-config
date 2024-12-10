@@ -15,3 +15,9 @@ tasks:
     description: "Run Gecko integration tests"
     decision-index-paths:
       - gecko.v2.mozilla-central.latest.taskgraph.decision-os-integration
+
+  translations:
+    description: "Run translations pipeline integration tests"
+    decision-index-paths:
+      - translations.v2.staging-firefox-translations-training.latest.taskgraph.decision-run-pipeline
+    include-deps: true
