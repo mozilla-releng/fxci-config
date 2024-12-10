@@ -174,7 +174,8 @@ def schedule_tasks_at_index(config, tasks):
 
     for task in tasks:
         for decision_index_path in task.pop("decision-index-paths"):
-            for task_def in find_tasks(decision_index_path):
+            include_dependencies = task.pop("include-deps", False)
+            for task_def in find_tasks(decision_index_path, include_dependencies):
                 # Tasks that depend on private artifacts are not yet supported.
                 fetches = json.loads(
                     task_def["payload"].get("env", {}).get("MOZ_FETCHES", "{}")
