@@ -175,7 +175,7 @@ project-relman/code-review-testing:
 
       # Trigger hook from pulse for analyzing results
       runId:
-        type: int
+        type: integer
         description: Taskcluster Task Run ID triggering the hook (should be a Try Task run)
       status:
         type: object
