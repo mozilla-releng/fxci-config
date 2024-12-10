@@ -5,6 +5,7 @@
 import json
 import os
 import shlex
+from sys import orig_argv
 from typing import Any
 
 from taskgraph.transforms.base import TransformSequence
@@ -206,8 +207,28 @@ def schedule_tasks_at_index(config, tasks):
     for task in tasks:
         include_attrs = task.pop("include-attrs", {})
         exclude_attrs = task.pop("exclude-attrs", {})
+        include_deps = task.pop("include-deps", [])
         for decision_index_path in task.pop("decision-index-paths"):
-            for task_def in find_tasks(
-                decision_index_path, include_attrs, exclude_attrs
-            ):
-                yield make_integration_test_description(task_def, task["name"])
+            # `find_tasks` can return tasks with duplicate labels when
+            # `include_deps` is used (eg: graphs with leaf nodes that have
+            # different instances of the same ancestor task due to caching).
+            # To deal with this, we keep track of task names we create and
+            # ensure we only create each once.
+            created_tasks = set()
+
+            for _, task_def in find_tasks(
+                decision_index_path,
+                include_attrs,
+                exclude_attrs,
+                include_deps,
+            ).items():
+                # `task_def` will be modified by the function called below;
+                # we need a copy of the original name to add it to
+                # `created_tasks` afterwards
+                orig_name = task_def["metadata"]["name"]
+                if orig_name not in created_tasks:
+                    # task_def is copied to avoid modifying the version in `tasks`, which
+                    # may be used to modify parts of the new task description
+                    yield make_integration_test_description(task_def, task["name"])
+
+                created_tasks.add(orig_name)
