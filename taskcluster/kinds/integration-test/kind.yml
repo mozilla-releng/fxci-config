@@ -20,3 +20,4 @@ tasks:
     description: "Run translations pipeline integration tests"
     decision-index-paths:
       - translations.v2.staging-firefox-translations-training.latest.taskgraph.decision-run-pipeline
+    include-deps: true
