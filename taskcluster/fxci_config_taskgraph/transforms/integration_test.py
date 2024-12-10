@@ -9,12 +9,8 @@ from typing import Any
 
 from taskgraph.transforms.base import TransformSequence
 
-from fxci_config_taskgraph.util.integration import (
-    FIREFOXCI_ROOT_URL,
-    STAGING_ROOT_URL,
-    find_tasks,
-    get_taskcluster_client,
-)
+from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
+from fxci_config_taskgraph.util.integration import find_tasks, get_taskcluster_client
 
 transforms = TransformSequence()
 
@@ -63,6 +59,9 @@ def rewrite_mounts(task_def: dict[str, Any]) -> None:
     index = get_taskcluster_client("index")
 
     for mount in task_def["payload"].get("mounts", []):
+        if "content" not in mount:
+            continue
+
         content = mount["content"]
         if "artifact" not in content:
             continue
@@ -109,13 +108,35 @@ def rewrite_docker_image(taskdesc: dict[str, Any]) -> None:
 
     task_id = payload["image"]["taskId"]
     deps = taskdesc.setdefault("dependencies", {})
-    deps["docker-image"] = f"firefoxci-artifact-{task_id}"
+    deps["docker-image"] = (
+        f"firefoxci-artifact-{taskdesc['attributes']['integration']}-{task_id}"
+    )
 
     payload["image"] = {
         "path": "public/image.tar.zst",
         "taskId": {"task-reference": "<docker-image>"},
         "type": "task-image",
     }
+
+
+def rewrite_private_fetches(taskdesc: dict[str, Any]) -> None:
+    """Re-write fetches that use private artifacts to the equivalent `firefoxci-artifact`
+    task.
+    """
+    payload = taskdesc["task"]["payload"]
+    deps = taskdesc.setdefault("dependencies", {})
+
+    if "MOZ_FETCHES" in payload.get("env", {}):
+        fetches = json.loads(payload.get("env", {}).get("MOZ_FETCHES", "{}"))
+        for fetch in fetches:
+            if fetch["artifact"].startswith("public"):
+                continue
+
+            task_id = fetch["task"]
+            deps[f"fetch-{task_id}"] = (
+                f"firefoxci-artifact-{taskdesc['attributes']['integration']}-{task_id}"
+            )
+            fetch["task"] = {"task-reference": f"<fetch-{task_id}>"}
 
 
 def make_integration_test_description(task_def: dict[str, Any]):
@@ -158,6 +179,7 @@ def make_integration_test_description(task_def: dict[str, Any]):
         "attributes": {"integration": "gecko"},
     }
     rewrite_docker_image(taskdesc)
+    rewrite_private_fetches(taskdesc)
     return taskdesc
 
 
@@ -171,12 +193,6 @@ def schedule_tasks_at_index(config, tasks):
 
     for task in tasks:
         for decision_index_path in task.pop("decision-index-paths"):
-            for task_def in find_tasks(decision_index_path):
-                # Tasks that depend on private artifacts are not yet supported.
-                fetches = json.loads(
-                    task_def["payload"].get("env", {}).get("MOZ_FETCHES", {})
-                )
-                if any(not fetch["artifact"].startswith("public") for fetch in fetches):
-                    continue
-
+            include_deps = task.pop("include-deps", False)
+            for task_def in find_tasks(decision_index_path, include_deps):
                 yield make_integration_test_description(task_def)

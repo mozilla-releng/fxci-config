@@ -1,0 +1,5 @@
+- add translations integration test to integration-test kind
+  - include_deps needs a regex or regexes now
+- add translations artifact fetching to firefoxci-artifact kind
+- figure out how firefoxci-artifact will accurately select tasks and artifacts when walking dependency tree
+- implement dependency rewriting in integration_test.py transform so that newly scheduled tasks that depend on other newly scheduled tasks work
