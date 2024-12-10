@@ -161,6 +161,17 @@ project-relman/code-review-testing:
           phid:
             type: string
             description: Phabricator object's PHID triggering the hook
+      transactions:
+        type: array
+        description: Phabricator transactions leading to this trigger
+        items:
+          type: object
+          required:
+            - phid
+          properties:
+            phid:
+              type: string
+              description: Phabricator transaction's PHID
 
       # Trigger hook from pulse for analyzing results
       runId:
