@@ -68,7 +68,7 @@ def rewrite_mounts(task_def: dict[str, Any]) -> None:
             continue
 
         if "namespace" in content:
-            task_id = index.findTask(content["namespace"])
+            task_id = index.findTask(content["namespace"])["taskId"]
         else:
             assert "taskId" in content
             task_id = content["taskId"]

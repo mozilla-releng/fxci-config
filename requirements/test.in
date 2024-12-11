@@ -6,4 +6,6 @@ pip>=21.2
 pytest
 pytest-cov
 pytest-mock
-taskcluster-taskgraph
+pytest-taskgraph >= 0.1.0
+responses >= 0.25.3
+taskcluster-taskgraph >= 12.1.0

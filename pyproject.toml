@@ -19,3 +19,6 @@ ignore = [
 [tool.ruff.lint.isort]
 known-first-party = ["ciadmin", "build_decision", "fxci_config_taskgraph"]
 known-third-party = ["taskcluster", "tcadmin", "taskgraph"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "taskcluster/test"]

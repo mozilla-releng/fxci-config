@@ -1149,6 +1149,7 @@ pytest==8.3.3 \
     #   pytest-asyncio
     #   pytest-cov
     #   pytest-mock
+    #   pytest-taskgraph
     #   tc-admin
 pytest-asyncio==0.24.0 \
     --hash=sha256:a811296ed596b69bf0b6f3dc40f83bcaf341b155a269052d82efa2b25ac7037b \
@@ -1161,6 +1162,10 @@ pytest-cov==6.0.0 \
 pytest-mock==3.14.0 \
     --hash=sha256:0b72c38033392a5f4621342fe11e9219ac11ec9d375f8e2a0c164539e0d70f6f \
     --hash=sha256:2719255a1efeceadbc056d6bf3df3d1c5015530fb40cf347c0f9afac88410bd0
+    # via -r test.in
+pytest-taskgraph==0.1.0 \
+    --hash=sha256:1e75f83df177c4794b37725dccf6944430331fb46d5e900cd2bab7c9cfdafa81 \
+    --hash=sha256:bd2a93aafaefc3accc769a6fc2ed86679829a0b0e7b12867aeb46e2fd8a4cae4
     # via -r test.in
 python-dateutil==2.9.0.post0 \
     --hash=sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3 \
@@ -1288,10 +1293,12 @@ taskcluster==67.0.1 \
     # via
     #   -r base.in
     #   tc-admin
-taskcluster-taskgraph==12.0.0 \
-    --hash=sha256:7554e8709552918a66f03029134aa99a5c9414a839962d84c00e84ee848ab97e \
-    --hash=sha256:96a6b04bb349621664d15bbb5856018175ce85999d6e0293374603f804c7234b
-    # via -r test.in
+taskcluster-taskgraph==12.1.0 \
+    --hash=sha256:222ba9f729e6d970de8c177251e3a5f29010332d7cc6ca8967fd8c8b73fa2c1b \
+    --hash=sha256:c37b0ff65ab6ae3ae322bf1ecd4d3453db01b37f22164d9a33ab77e634a34d9a
+    # via
+    #   -r test.in
+    #   pytest-taskgraph
 taskcluster-urls==13.0.1 \
     --hash=sha256:5e25e7e6818e8877178b175ff43d2e6548afad72694aa125f404a7329ece0973 \
     --hash=sha256:b25e122ecec249c4299ac7b20b08db76e3e2025bdaeb699a9d444556de5fd367 \
