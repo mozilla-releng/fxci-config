@@ -11,7 +11,7 @@ from taskgraph.util.templates import merge
 
 from fxci_config_taskgraph.transforms.firefoxci_artifact import transforms
 from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
-from fxci_config_taskgraph.util.integration import find_tasks
+from fxci_config_taskgraph.util.integration import _fetch_task_graph
 
 
 @pytest.fixture
@@ -47,8 +47,14 @@ def run_test(monkeypatch, run_transform, responses):
         json={"taskId": decision_task_id},
     )
 
-    def inner(task: dict[str, Any]) -> dict[str, Any] | None:
-        find_tasks.cache_clear()
+    def inner(
+        task: dict[str, Any],
+        include_attrs: dict[str, list[str]] = {"unittest_variant": ["os-integration"]},
+        exclude_attrs: dict[str, list[str]] = {
+            "test_platform": ["android-hw", "macosx"]
+        },
+    ) -> dict[str, Any] | None:
+        _fetch_task_graph.cache_clear()
 
         task = merge(deepcopy(base_task), task)
         task_graph = {task_label: task}
@@ -62,6 +68,8 @@ def run_test(monkeypatch, run_transform, responses):
         transform_task = {
             "name": "gecko",
             "decision-index-paths": [index],
+            "include-attrs": include_attrs,
+            "exclude-attrs": exclude_attrs,
             "worker": {
                 "env": {
                     "MOZ_ARTIFACT_DIR": "/builds/worker/artifacts",
