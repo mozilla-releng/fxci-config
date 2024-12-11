@@ -510,7 +510,7 @@ click==8.1.7 \
     # via
     #   cookiecutter
     #   tc-admin
-colorama==0.4.6 ; (platform_system != 'Windows' and sys_platform == 'win32') or platform_system == 'Windows' or os_name == 'nt' \
+colorama==0.4.6 ; os_name == 'nt' or (platform_system == 'Windows' and sys_platform != 'win32') or sys_platform == 'win32' \
     --hash=sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44 \
     --hash=sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6
     # via
@@ -1118,6 +1118,7 @@ pytest==8.3.3 \
     #   pytest-asyncio
     #   pytest-cov
     #   pytest-mock
+    #   pytest-taskgraph
     #   tc-admin
 pytest-asyncio==0.24.0 \
     --hash=sha256:a811296ed596b69bf0b6f3dc40f83bcaf341b155a269052d82efa2b25ac7037b \
@@ -1130,6 +1131,10 @@ pytest-cov==6.0.0 \
 pytest-mock==3.14.0 \
     --hash=sha256:0b72c38033392a5f4621342fe11e9219ac11ec9d375f8e2a0c164539e0d70f6f \
     --hash=sha256:2719255a1efeceadbc056d6bf3df3d1c5015530fb40cf347c0f9afac88410bd0
+    # via -r test.in
+pytest-taskgraph==0.1.0 \
+    --hash=sha256:1e75f83df177c4794b37725dccf6944430331fb46d5e900cd2bab7c9cfdafa81 \
+    --hash=sha256:bd2a93aafaefc3accc769a6fc2ed86679829a0b0e7b12867aeb46e2fd8a4cae4
     # via -r test.in
 python-dateutil==2.9.0.post0 \
     --hash=sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3 \
@@ -1198,6 +1203,7 @@ pyyaml==6.0.2 \
     # via
     #   -r base.in
     #   cookiecutter
+    #   responses
     #   taskcluster-taskgraph
     #   tc-admin
 redo==3.0.0 \
@@ -1211,6 +1217,7 @@ requests==2.32.3 \
     #   cookiecutter
     #   gql
     #   requests-toolbelt
+    #   responses
     #   simple-github
     #   taskcluster
     #   taskcluster-taskgraph
@@ -1218,6 +1225,10 @@ requests-toolbelt==1.0.0 \
     --hash=sha256:7681a0a3d047012b5bdc0ee37d7f8f07ebe76ab08caeccfc3921ce23c88d5bc6 \
     --hash=sha256:cccfdd665f0a24fcf4726e690f65639d272bb0637b9b92dfd91a5568ccf6bd06
     # via gql
+responses==0.25.3 \
+    --hash=sha256:521efcbc82081ab8daa588e08f7e8a64ce79b91c39f6e62199b19159bea7dbcb \
+    --hash=sha256:617b9247abd9ae28313d57a75880422d55ec63c29d33d629697590a034358dba
+    # via -r test.in
 rich==13.9.4 \
     --hash=sha256:439594978a49a09530cff7ebc4b5c7103ef57baf48d5ea3184f21d9a2befa098 \
     --hash=sha256:6049d5e6ec054bf2779ab3358186963bac2ea89175919d699e378b99738c2a90
@@ -1257,10 +1268,12 @@ taskcluster==67.0.1 \
     # via
     #   -r base.in
     #   tc-admin
-taskcluster-taskgraph==12.0.0 \
-    --hash=sha256:7554e8709552918a66f03029134aa99a5c9414a839962d84c00e84ee848ab97e \
-    --hash=sha256:96a6b04bb349621664d15bbb5856018175ce85999d6e0293374603f804c7234b
-    # via -r test.in
+taskcluster-taskgraph==12.1.0 \
+    --hash=sha256:222ba9f729e6d970de8c177251e3a5f29010332d7cc6ca8967fd8c8b73fa2c1b \
+    --hash=sha256:c37b0ff65ab6ae3ae322bf1ecd4d3453db01b37f22164d9a33ab77e634a34d9a
+    # via
+    #   -r test.in
+    #   pytest-taskgraph
 taskcluster-urls==13.0.1 \
     --hash=sha256:5e25e7e6818e8877178b175ff43d2e6548afad72694aa125f404a7329ece0973 \
     --hash=sha256:b25e122ecec249c4299ac7b20b08db76e3e2025bdaeb699a9d444556de5fd367 \
@@ -1283,7 +1296,9 @@ types-python-dateutil==2.9.0.20241003 \
 urllib3==2.2.3 \
     --hash=sha256:ca899ca043dcb1bafa3e262d73aa25c465bfb49e0bd9dd5d59f1d0acba2f8fac \
     --hash=sha256:e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9
-    # via requests
+    # via
+    #   requests
+    #   responses
 voluptuous==0.15.2 \
     --hash=sha256:016348bc7788a9af9520b1764ebd4de0df41fe2138ebe9e06fa036bf86a65566 \
     --hash=sha256:6ffcab32c4d3230b4d2af3a577c87e1908a714a11f6f95570456b1849b0279aa
