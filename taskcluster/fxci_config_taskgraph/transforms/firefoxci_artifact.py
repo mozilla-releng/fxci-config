@@ -52,8 +52,18 @@ def make_firefoxci_artifact_tasks(config, tasks):
                         tasks_to_create[task_id].append(fetch["artifact"])
 
         for task_id, artifacts in tasks_to_create.items():
+            name = f"{task['name']}-{task_id}"
             new_task = deepcopy(task)
-            new_task["label"] = f"firefoxci-artifact-{task['name']}-{task_id}"
+            new_task["label"] = f"firefoxci-artifact-{name}"
+
+            # Used by cached_tasks transforms. It's ok for digest-data to be
+            # empty because all the information that could impact this task is
+            # already in the "name", which is already part of the index path.
+            new_task["cache"] = {
+                "digest-data": [],
+                "name": name,
+                "type": "firefoxci-artifact.v1",
+            }
 
             env = new_task["worker"]["env"]
             env["FETCH_FIREFOXCI_TASK_ID"] = task_id
@@ -62,12 +72,12 @@ def make_firefoxci_artifact_tasks(config, tasks):
             artifact_dir = env["MOZ_ARTIFACT_DIR"]
             new_task["worker"]["artifacts"] = []
             for artifact in artifacts:
-                name = artifact.rsplit("/", 1)[-1]
+                artifact_name = artifact.rsplit("/", 1)[-1]
                 new_task["worker"]["artifacts"].append(
                     {
                         "type": "file",
                         "name": artifact,
-                        "path": f"{artifact_dir}/{name}",
+                        "path": f"{artifact_dir}/{artifact_name}",
                     }
                 )
             yield new_task
