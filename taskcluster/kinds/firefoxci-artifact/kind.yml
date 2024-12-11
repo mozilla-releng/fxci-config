@@ -6,10 +6,12 @@ loader: taskgraph.loader.transform:loader
 
 transforms:
   - fxci_config_taskgraph.transforms.firefoxci_artifact
+  - taskgraph.transforms.cached_tasks
   - taskgraph.transforms.run
   - taskgraph.transforms.task
 
 task-defaults:
+  attributes: {}  # cached_tasks transforms assume this exists
   worker-type: t-linux
   worker:
     docker-image: {in-tree: python3.11}
