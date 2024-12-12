@@ -2575,6 +2575,11 @@ pools:
       - pool-group: gecko-t
         suffix: gpu-alpha
       - pool-group: gecko-t
+        suffix: large
+      - pool-group: gecko-t
+        suffix: large-alpha
+      - pool-group: gecko-t
+      - pool-group: gecko-t
         suffix: source
       - pool-group: gecko-t
         suffix: source-alpha
@@ -2604,6 +2609,7 @@ pools:
               (source-)?alpha: [uk-south]
               gpu: [east-us, east-us-2, west-us, west-us-2]
               gpu-alpha: [west-us, west-us-2]
+              large: [west-us, west-us-2]
               (ssd|source): [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
               default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
@@ -2636,6 +2642,7 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
+              .*large.*: Standard_E8ads_v5
               .*gpu.*: Standard_NV12s_v3
               default: Standard_F8s_v2
           launchConfig:
@@ -2653,6 +2660,7 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
+                  .*large.*: Standard_E8ads_v5
                   .*gpu.*: Standard_NV12s_v3
                   default: Standard_F8s_v2
             diagnosticsProfile:
@@ -2670,6 +2678,10 @@ pools:
       - pool-group: gecko-t
       - pool-group: gecko-t
         suffix: alpha
+      - pool-group: gecko-t
+        suffix: large
+      - pool-group: gecko-t
+        suffix: large-alpha
       - pool-group: gecko-t
         suffix: gpu
       - pool-group: gecko-t
@@ -2704,6 +2716,7 @@ pools:
               (source-)?alpha: [uk-south]
               gpu: [east-us, east-us-2, west-us, west-us-2]
               gpu-alpha: [west-us, west-us-2]
+              large: [west-us, west-us-2]
               (ssd|source): [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
               default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
@@ -2736,6 +2749,7 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
+              .*large.*: Standard_E8ads_v5
               .*gpu.*: Standard_NV12s_v3
               default: Standard_F8s_v2
           launchConfig:
@@ -2753,6 +2767,7 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
+                  .*large*: Standard_E8ads_v5
                   .*gpu.*: Standard_NV12s_v3
                   default: Standard_F8s_v2
             diagnosticsProfile:
