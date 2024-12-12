@@ -23,3 +23,22 @@ tasks:
       test_platform:
         - android-hw
         - macosx
+
+  translations:
+    description: "Run translations pipeline integration tests"
+    decision-index-paths:
+      - translations.v2.translations.latest.taskgraph.decision-run-pipeline
+    include-attrs:
+      # Corresponds to https://github.com/mozilla/translations/blob/main/taskcluster/kinds/all-pipeline/kind.yml
+      stage:
+        - all-pipeline
+    include-deps:
+      # Decision and Action tasks are excluded because we'll be creating the
+      # tasks they normally would be.
+      # docker-image tasks are excluded because there's no value in rerunning
+      # them as part of integration tests.
+      # fetch tasks are excluded because there's no value in rerunning them,
+      # and also because they live forever, and depend on docker images which
+      # expire, which causes us to try to mirror expired docker image tasks
+      # into the staging cluster
+      - ^(?!(Decision|Action|PR action|build-docker-image|fetch)).*
