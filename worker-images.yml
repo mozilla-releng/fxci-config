@@ -298,6 +298,7 @@ ronin-t-windows11-64-2009-alpha:
     north-europe: win11-64-2009-northeurope-win11-22h2-avd
     west-us: win11-64-2009-westus-win11-22h2-avd
     west-us-2: win11-64-2009-westus2-win11-22h2-avd
+    west-us-3: win11-64-2009-westus3-win11-22h2-avd
     uk-south: win11-64-2009-uksouth-win11-22h2-avd
 ronin-t-windows11-64-2009-prod:
   azure2:
