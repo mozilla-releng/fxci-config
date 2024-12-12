@@ -2575,8 +2575,6 @@ pools:
       - pool-group: gecko-t
         suffix: gpu-alpha
       - pool-group: gecko-t
-        suffix: large
-      - pool-group: gecko-t
         suffix: source
       - pool-group: gecko-t
         suffix: source-alpha
@@ -2638,7 +2636,6 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
-              .*large.*: Standard_E8ads_v5
               .*gpu.*: Standard_NV12s_v3
               default: Standard_F8s_v2
           launchConfig:
@@ -2656,7 +2653,6 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
-                  .*large.*: Standard_E8ads_v5
                   .*gpu.*: Standard_NV12s_v3
                   default: Standard_F8s_v2
             diagnosticsProfile:
