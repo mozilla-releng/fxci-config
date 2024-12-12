@@ -2,6 +2,7 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+import json
 from pprint import pprint
 from typing import Any
 
@@ -389,6 +390,17 @@ def run_include_deps_test(run_test, *args, **kwargs):
                     "taskId": "jkl",
                     "path": "public/image.tar.zst",
                 },
+                "env": {
+                    "MOZ_FETCHES": json.dumps(
+                        [
+                            {
+                                "artifact": "public/build/build.zip",
+                                "extract": False,
+                                "task": "dep1",
+                            },
+                        ]
+                    )
+                },
             },
             "tags": {},
         },
@@ -402,6 +414,17 @@ def run_include_deps_test(run_test, *args, **kwargs):
                 "image": {
                     "taskId": "mno",
                     "path": "public/image.tar.zst",
+                },
+                "env": {
+                    "MOZ_FETCHES": json.dumps(
+                        [
+                            {
+                                "artifact": "public/build/test-results.txt",
+                                "extract": False,
+                                "task": "dep2",
+                            },
+                        ]
+                    )
                 },
             },
             "tags": {},
@@ -437,6 +460,18 @@ def test_include_all_deps(run_test):
     )
     got = set([t["label"] for t in result])
     assert expected == got
+    sign_task = next(t for t in result if t["label"] == "gecko-sign-thing")
+    test_task = next(t for t in result if t["label"] == "gecko-test-thing")
+    assert sign_task["dependencies"]["gecko-test-thing"] == "gecko-test-thing"
+    assert test_task["dependencies"]["gecko-build-thing"] == "gecko-build-thing"
+    assert (
+        "<gecko-test-thing>"
+        in sign_task["task"]["payload"]["env"]["MOZ_FETCHES"]["task-reference"]
+    )
+    assert (
+        "<gecko-build-thing>"
+        in test_task["task"]["payload"]["env"]["MOZ_FETCHES"]["task-reference"]
+    )
 
 
 def test_include_some_deps(run_test):
@@ -464,6 +499,12 @@ def test_include_some_deps(run_test):
     expected = set(["gecko-foo", "gecko-test-thing", "gecko-sign-thing"])
     got = set([t["label"] for t in result])
     assert expected == got
+    sign_task = next(t for t in result if t["label"] == "gecko-sign-thing")
+    assert sign_task["dependencies"]["gecko-test-thing"] == "gecko-test-thing"
+    assert (
+        "<gecko-test-thing>"
+        in sign_task["task"]["payload"]["env"]["MOZ_FETCHES"]["task-reference"]
+    )
 
 
 def test_no_deps(run_test):

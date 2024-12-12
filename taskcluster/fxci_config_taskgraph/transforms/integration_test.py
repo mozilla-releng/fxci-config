@@ -2,8 +2,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import copy
 import json
 import os
+import re
 import shlex
 from typing import Any
 
@@ -119,6 +121,15 @@ def rewrite_docker_image(taskdesc: dict[str, Any]) -> None:
     }
 
 
+def load_fetches(moz_fetches: dict | str) -> list[dict[str, Any]]:
+    if isinstance(moz_fetches, str):
+        return json.loads(moz_fetches)
+    elif isinstance(moz_fetches, dict) and moz_fetches.get("task-reference"):
+        return json.loads(moz_fetches["task-reference"])
+    else:
+        return []
+
+
 def rewrite_private_fetches(taskdesc: dict[str, Any]) -> None:
     """Re-write fetches that use private artifacts to the equivalent `firefoxci-artifact`
     task.
@@ -127,7 +138,7 @@ def rewrite_private_fetches(taskdesc: dict[str, Any]) -> None:
     deps = taskdesc.setdefault("dependencies", {})
 
     if "MOZ_FETCHES" in payload.get("env", {}):
-        fetches = json.loads(payload.get("env", {}).get("MOZ_FETCHES", "{}"))
+        fetches = load_fetches(payload.get("env", {}).get("MOZ_FETCHES", "{}"))
         modified = False
         for fetch in fetches:
             if fetch["artifact"].startswith("public"):
@@ -144,7 +155,51 @@ def rewrite_private_fetches(taskdesc: dict[str, Any]) -> None:
             payload["env"]["MOZ_FETCHES"] = {"task-reference": json.dumps(fetches)}
 
 
-def make_integration_test_description(task_def: dict[str, Any], name_prefix: str):
+def rewrite_mirrored_dependencies(
+    taskdesc: dict[str, Any],
+    prefix: str,
+    dependencies: dict[str, str],
+    tasks: dict[str, Any],
+    include_deps: list[str],
+):
+    modified_deps = set()
+    patterns = [re.compile(p) for p in include_deps]
+    # First, update any dependencies that are also being run as part of this integration test
+    for upstream_task_id in dependencies:
+        if upstream_task_id in tasks:
+            name = tasks[upstream_task_id]["metadata"]["name"]
+            if any([pat.match(name) for pat in patterns]):
+                modified_deps.add(upstream_task_id)
+                upstream_task_label = f"{prefix}-{name}"
+                taskdesc["dependencies"][upstream_task_label] = upstream_task_label
+
+    # Second, update any fetches that point to dependencies that are also being run as part
+    # of this integration test
+    updated_fetches = []
+    fetches = load_fetches(
+        taskdesc["task"]["payload"].get("env", {}).get("MOZ_FETCHES", "{}")
+    )
+
+    if fetches:
+        for fetch in fetches:
+            fetch_task_id = fetch["task"]
+            if fetch_task_id in modified_deps:
+                fetch_task_label = tasks[fetch_task_id]["metadata"]["name"]
+                fetch["task"] = f"<{prefix}-{fetch_task_label}>"
+
+            updated_fetches.append(fetch)
+
+        taskdesc["task"]["payload"]["env"]["MOZ_FETCHES"] = {
+            "task-reference": json.dumps(updated_fetches)
+        }
+
+
+def make_integration_test_description(
+    task_def: dict[str, Any],
+    name_prefix: str,
+    tasks: dict[str, Any],
+    include_deps: list[str],
+):
     """Schedule a task on the staging Taskcluster instance.
 
     Typically task_def will come from the firefox-ci instance and will be
@@ -160,11 +215,19 @@ def make_integration_test_description(task_def: dict[str, Any], name_prefix: str
         }
     )
 
+    orig_dependencies = task_def["dependencies"]
     del task_def["dependencies"]
     if "treeherder" in task_def["extra"]:
         del task_def["extra"]["treeherder"]
 
-    patch_root_url(task_def)
+    # When we're including dependencies, we assume that upstream tasks are in
+    # the staging cluster, whether because they've been rerun in staging or
+    # depend on a `firefoxci-artifact` task.
+    # In an ideal world this would be more granular, and only tasks that
+    # we know are in the staging cluster would avoid patching the root url.
+    # This case has not come up yet though!
+    if not include_deps:
+        patch_root_url(task_def)
     rewrite_mounts(task_def)
     rewrite_docker_cache(task_def)
 
@@ -192,6 +255,9 @@ def make_integration_test_description(task_def: dict[str, Any], name_prefix: str
     }
     rewrite_docker_image(taskdesc)
     rewrite_private_fetches(taskdesc)
+    rewrite_mirrored_dependencies(
+        taskdesc, name_prefix, orig_dependencies, tasks, include_deps
+    )
     return taskdesc
 
 
@@ -208,10 +274,15 @@ def schedule_tasks_at_index(config, tasks):
         exclude_attrs = task.pop("exclude-attrs", {})
         include_deps = task.pop("include-deps", [])
         for decision_index_path in task.pop("decision-index-paths"):
-            for _, task_def in find_tasks(
+            found_tasks = find_tasks(
                 decision_index_path,
                 include_attrs,
                 exclude_attrs,
                 include_deps,
-            ).items():
-                yield make_integration_test_description(task_def, task["name"])
+            )
+            for task_def in found_tasks.values():
+                # task_def is copied to avoid modifying the version in `tasks`, which
+                # may be used to modify parts of the new task description
+                yield make_integration_test_description(
+                    copy.deepcopy(task_def), task["name"], found_tasks, include_deps
+                )
