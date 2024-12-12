@@ -50,7 +50,11 @@ def run_test(monkeypatch, run_transform, responses):
         json={"taskId": decision_task_id},
     )
 
-    def inner(task: dict[str, Any]) -> dict[str, Any] | None:
+    # `name` may seem like an awkard identifier here, but outside of tests
+    # this comes from the keys in a `kind`. `task_label` is not really
+    # an ideal default, but it's the best option we have here, and this value
+    # is irrelevant to many tests anyways.
+    def inner(task: dict[str, Any], name: str = task_label) -> dict[str, Any] | None:
         find_tasks.cache_clear()
 
         task = merge(deepcopy(base_task), task)
@@ -62,7 +66,9 @@ def run_test(monkeypatch, run_transform, responses):
             json=task_graph,
         )
 
-        result = run_transform(transforms, {"decision-index-paths": [index]})
+        result = run_transform(
+            transforms, {"decision-index-paths": [index], "name": name}
+        )
         if not result:
             return None
 
@@ -112,7 +118,7 @@ def test_android_hw_skipped(run_test):
 
 
 def test_basic(run_test):
-    result = run_test({"attributes": {"unittest_variant": "os-integration"}})
+    result = run_test({"attributes": {"unittest_variant": "os-integration"}}, "gecko")
     assert result == {
         "attributes": {"integration": "gecko"},
         "dependencies": {"apply": "tc-admin-apply-staging"},
@@ -136,7 +142,8 @@ def test_docker_image(run_test):
         {
             "attributes": {"unittest_variant": "os-integration"},
             "task": {"payload": {"image": {"taskId": "def"}}},
-        }
+        },
+        "gecko",
     )
     assert result["dependencies"] == {
         "apply": "tc-admin-apply-staging",
@@ -228,7 +235,8 @@ def test_private_artifact(run_test):
                     "env": {"MOZ_FETCHES": '[{"task": "def", "artifact": "foo.txt"}]'},
                 }
             },
-        }
+        },
+        "gecko",
     )
     assert result["dependencies"] == {
         "apply": "tc-admin-apply-staging",
