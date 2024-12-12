@@ -2,6 +2,7 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+import json
 from pprint import pprint
 from typing import Any
 
@@ -16,7 +17,7 @@ from fxci_config_taskgraph.util.integration import _fetch_task_graph, _queue_tas
 
 
 @pytest.fixture
-def run_test(monkeypatch, run_transform, responses):
+def run_test(monkeypatch, run_transform, make_transform_config, responses):
     """This fixture returns a function that will execute the test.
 
     Input to the function is a JSON object representing extra task config of a
@@ -61,6 +62,7 @@ def run_test(monkeypatch, run_transform, responses):
         },
         include_deps: list[str] = [],
         name: str = task_label,
+        kind_dependencies_tasks: dict[str, Any] = {},
     ) -> dict[str, Any] | None:
         _fetch_task_graph.cache_clear()
         _queue_task.cache_clear()
@@ -97,6 +99,7 @@ def run_test(monkeypatch, run_transform, responses):
                 "include-deps": include_deps,
                 "name": name,
             },
+            make_transform_config(kind_dependencies_tasks=kind_dependencies_tasks),
         )
         if not result:
             return None
@@ -408,6 +411,18 @@ def run_include_deps_test(run_test, *args, **kwargs):
                     "taskId": "ghi",
                     "path": "public/image.tar.zst",
                 },
+                "command": ["run-task", "build-a-thing"],
+                "env": {
+                    "MOZ_FETCHES": json.dumps(
+                        [
+                            {
+                                "artifact": "public/build/toolchain.zip",
+                                "extract": False,
+                                "task": "toolchain1",
+                            },
+                        ]
+                    )
+                },
             },
             "tags": {},
         },
@@ -432,6 +447,23 @@ def run_include_deps_test(run_test, *args, **kwargs):
                         "expires": "2026-01-23T16:11:46.810Z",
                     },
                 ],
+                "command": ["run-task", "test-a-thing"],
+                "env": {
+                    "MOZ_FETCHES": json.dumps(
+                        [
+                            {
+                                "artifact": "public/build/build.zip",
+                                "extract": False,
+                                "task": "dep1",
+                            },
+                            {
+                                "artifact": "public/build/toolchain.zip",
+                                "extract": False,
+                                "task": "toolchain2",
+                            },
+                        ]
+                    )
+                },
             },
             "tags": {},
         },
@@ -453,6 +485,18 @@ def run_include_deps_test(run_test, *args, **kwargs):
                     "arti": {
                         "expires": "2026-01-23T16:11:46.810Z",
                     },
+                },
+                "command": ["run-task", "sign-a-thing"],
+                "env": {
+                    "MOZ_FETCHES": json.dumps(
+                        [
+                            {
+                                "artifact": "public/build/test-results.txt",
+                                "extract": False,
+                                "task": "dep2",
+                            },
+                        ]
+                    )
                 },
             },
             "tags": {},
@@ -520,6 +564,32 @@ def test_include_all_deps(run_test):
     ]
     got = [t["label"] for t in result]
     assert sorted(expected) == sorted(got)
+    toolchain_task = next(t for t in result if t["label"] == "gecko-build-thing")
+    build_task = next(t for t in result if t["label"] == "gecko-build-thing")
+    sign_task = next(t for t in result if t["label"] == "gecko-sign-thing")
+    test_task = next(t for t in result if t["label"] == "gecko-test-thing")
+    foo_task = next(t for t in result if t["label"] == "gecko-foo")
+    assert build_task["dependencies"]["gecko-toolchain"] == "gecko-toolchain"
+    assert sign_task["dependencies"]["gecko-test-thing"] == "gecko-test-thing"
+    assert test_task["dependencies"]["gecko-build-thing"] == "gecko-build-thing"
+    assert (
+        "<gecko-toolchain>"
+        in build_task["task"]["payload"]["env"]["MOZ_FETCHES"]["task-reference"]
+    )
+    assert (
+        "<gecko-test-thing>"
+        in sign_task["task"]["payload"]["env"]["MOZ_FETCHES"]["task-reference"]
+    )
+    assert (
+        "<gecko-build-thing>"
+        in test_task["task"]["payload"]["env"]["MOZ_FETCHES"]["task-reference"]
+    )
+    assert (
+        "<gecko-toolchain>"
+        in test_task["task"]["payload"]["env"]["MOZ_FETCHES"]["task-reference"]
+    )
+    for t in toolchain_task, build_task, sign_task, test_task, foo_task:
+        assert "TASKCLUSTER_ROOT_URL" not in t["task"]["payload"]["command"]
 
 
 def test_include_some_deps(run_test):
@@ -537,16 +607,31 @@ def test_include_some_deps(run_test):
                     "image": {
                         "taskId": task_id,
                         "path": artifact,
-                    }
+                    },
+                    "command": ["run-task", "foo"],
                 },
             },
         },
-        include_deps=["^sign", "^test"],
+        include_deps=["^toolchain", "^build"],
         name="gecko",
     )
-    expected = ["gecko-foo", "gecko-test-thing", "gecko-sign-thing"]
+    expected = [
+        "gecko-foo",
+        "gecko-toolchain",
+        "gecko-build-thing",
+    ]
     got = [t["label"] for t in result]
     assert sorted(expected) == sorted(got)
+    toolchain_task = next(t for t in result if t["label"] == "gecko-build-thing")
+    build_task = next(t for t in result if t["label"] == "gecko-build-thing")
+    foo_task = next(t for t in result if t["label"] == "gecko-foo")
+    assert build_task["dependencies"]["gecko-toolchain"] == "gecko-toolchain"
+    assert (
+        "<gecko-toolchain>"
+        in build_task["task"]["payload"]["env"]["MOZ_FETCHES"]["task-reference"]
+    )
+    for t in toolchain_task, build_task, foo_task:
+        assert "TASKCLUSTER_ROOT_URL" not in t["task"]["payload"]["command"]
 
 
 def test_no_deps(run_test):
@@ -574,3 +659,40 @@ def test_no_deps(run_test):
     expected = ["gecko-foo"]
     got = [t["label"] for t in result]
     assert expected == got
+
+
+def test_include_deps_stage_and_prod_fetches(run_test):
+    task_id = "def"
+    artifact = "public/image.tar.zst"
+    try:
+        run_include_deps_test(
+            run_test,
+            {
+                "attributes": {"unittest_variant": "os-integration"},
+                "task": {
+                    "dependencies": [
+                        "dep3",
+                    ],
+                    "payload": {
+                        "image": {
+                            "taskId": task_id,
+                            "path": artifact,
+                        },
+                        "command": ["run-task", "foo"],
+                    },
+                },
+            },
+            include_deps=["^sign", "^test"],
+            name="gecko",
+            kind_dependencies_tasks={
+                "firefoxci-artifact-gecko-toolchain1": {},
+                "firefoxci-artifact-gecko-dep1": {},
+            },
+        )
+    except Exception as exc:
+        assert (
+            "Cannot run a task with fetches from stage and production clusters"
+            in exc.args[0]
+        )
+    else:
+        assert False, "should've raised"
