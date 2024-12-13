@@ -10,11 +10,15 @@ from taskgraph.util.copy import deepcopy
 from taskgraph.util.templates import merge
 
 from fxci_config_taskgraph.transforms.integration_test import transforms
-from fxci_config_taskgraph.util.integration import FIREFOXCI_ROOT_URL, find_tasks
+from fxci_config_taskgraph.util.integration import (
+    FIREFOXCI_ROOT_URL,
+    STAGING_ROOT_URL,
+    find_tasks,
+)
 
 
 @pytest.fixture
-def run_test(run_transform, responses):
+def run_test(monkeypatch, run_transform, responses):
     """This fixture returns a function that will execute the test.
 
     Input to the function is a JSON object representing extra task config of a
@@ -25,6 +29,8 @@ def run_test(run_transform, responses):
     """
     index = "foo.bar.baz"
     decision_task_id = "abc"
+    monkeypatch.setenv("TASKCLUSTER_ROOT_URL", STAGING_ROOT_URL)
+    monkeypatch.setenv("TASK_ID", decision_task_id)
 
     task_label = "foo"
     base_task = {
