@@ -16,6 +16,9 @@ task-defaults:
     worker:
         docker-image: {in-tree: python3.11}
         max-run-time: 3600
+        env:
+            # fail instead of skipping tests due to missing information
+            NO_TEST_SKIP: "1"
     run:
         cwd: '{checkout}'
         using: run-task
@@ -24,24 +27,28 @@ task-defaults:
 tasks:
     unit-ciadmin:
         description: "Run ciadmin `unit tests` to validate the latest changes"
-        worker:
-            env:
-                # fail instead of skipping tests due to missing information
-                NO_TEST_SKIP: "1"
         run:
             command: >-
                 pip install --user -r requirements/test.txt &&
                 pip install --user --no-deps . &&
-                py.test tests/
+                pytest tests/ -vv
+
     unit-build-decision:
         description: "Run build-decision `unit tests` to validate the latest changes"
-        worker:
-            env:
-                # fail instead of skipping tests due to missing information
-                NO_TEST_SKIP: "1"
-            docker-image: {in-tree: python3.11}
         run:
             command: >-
                 pip install --user -r build-decision/requirements/test.txt &&
                 pip install --user --no-deps build-decision/. &&
-                py.test build-decision/tests/
+                pytest build-decision/tests/ -vv
+        when:
+            files-changed: ["build-decision/**"]
+
+    unit-fxci-config-taskgraph:
+        description: "Run fxci_config_taskgraph unit tests to validate the latest changes"
+        run:
+            command: >-
+                pip install --user -r requirements/test.txt &&
+                pip install --user --no-deps . &&
+                pytest taskcluster/test/ -vv
+        when:
+            files-changed: ["taskcluster/**"]
