@@ -121,6 +121,13 @@ def test_basic(run_test):
         "dependencies": {"apply": "tc-admin-apply-staging"},
         "description": "test",
         "label": "gecko-foo",
+        "optimization": {
+            "integration-test": [
+                "taskcluster/fxci_config_taskgraph/**",
+                "taskcluster/kinds/firefoxci-artifact/kind.yml",
+                "taskcluster/kinds/integration-test/kind.yml",
+            ],
+        },
         "task": {
             "extra": {},
             "metadata": {"description": "test", "name": "gecko-foo"},

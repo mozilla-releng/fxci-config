@@ -7,6 +7,7 @@ def register(graph_config):
     # Import sibling modules, triggering decorators in the process
     _import_modules(
         [
+            "optimizations",
             "target_tasks",
         ]
     )
