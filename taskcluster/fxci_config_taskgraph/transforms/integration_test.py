@@ -182,6 +182,13 @@ def make_integration_test_description(task_def: dict[str, Any], name_prefix: str
             "apply": "tc-admin-apply-staging",
         },
         "attributes": {"integration": name_prefix},
+        "optimization": {
+            "integration-test": [
+                "taskcluster/fxci_config_taskgraph/**",
+                "taskcluster/kinds/firefoxci-artifact/kind.yml",
+                "taskcluster/kinds/integration-test/kind.yml",
+            ]
+        },
     }
     rewrite_docker_image(taskdesc)
     rewrite_private_fetches(taskdesc)
