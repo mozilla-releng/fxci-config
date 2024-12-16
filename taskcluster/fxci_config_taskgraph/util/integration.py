@@ -8,8 +8,7 @@ from typing import Any
 import requests
 import taskcluster
 
-FIREFOXCI_ROOT_URL = "https://firefox-ci-tc.services.mozilla.com"
-STAGING_ROOT_URL = "https://stage.taskcluster.nonprod.cloudops.mozgcp.net"
+from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL
 
 
 @cache

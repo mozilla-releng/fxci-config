@@ -9,12 +9,8 @@ from typing import Any
 
 from taskgraph.transforms.base import TransformSequence
 
-from fxci_config_taskgraph.util.integration import (
-    FIREFOXCI_ROOT_URL,
-    STAGING_ROOT_URL,
-    find_tasks,
-    get_taskcluster_client,
-)
+from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
+from fxci_config_taskgraph.util.integration import find_tasks, get_taskcluster_client
 
 transforms = TransformSequence()
 

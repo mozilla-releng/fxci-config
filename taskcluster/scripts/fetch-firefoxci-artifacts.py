@@ -8,7 +8,7 @@ import os
 import requests
 import taskcluster
 
-from fxci_config_taskgraph.util.integration import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
+from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
 
 
 def get_firefoxci_credentials() -> dict[str, str]:
