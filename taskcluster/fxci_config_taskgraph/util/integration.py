@@ -7,6 +7,7 @@ from typing import Any
 
 import requests
 import taskcluster
+from taskgraph.util.attributes import attrmatch
 
 from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL
 
@@ -18,8 +19,11 @@ def get_taskcluster_client(service: str):
 
 
 @cache
-def find_tasks(decision_index_path: str) -> list[dict[str, Any]]:
-    """Find tasks targeted by the Decision task pointed to by `decision_index_path`."""
+def _fetch_task_graph(decision_index_path: str) -> list[dict[str, Any]]:
+    """Fetch a decision task's `task-graph.json` given by the
+    `decision-index-path`. This is done separately from `find_tasks`
+    because the @cache decorator does not work with the `dict` parameters
+    in `find_tasks`."""
     queue = get_taskcluster_client("queue")
     index = get_taskcluster_client("index")
 
@@ -37,14 +41,29 @@ def find_tasks(decision_index_path: str) -> list[dict[str, Any]]:
     else:
         task_graph = response
 
+    return task_graph.values()
+
+
+def find_tasks(
+    decision_index_path: str,
+    include_attrs: dict[str, list[str]],
+    exclude_attrs: dict[str, list[str]],
+) -> list[dict[str, Any]]:
+    """Find tasks targeted by the Decision task pointed to by `decision_index_path`
+    that match the the included and excluded attributes given.
+    """
     tasks = []
-    for task in task_graph.values():
+
+    for task in _fetch_task_graph(decision_index_path):
         assert isinstance(task, dict)
         attributes = task.get("attributes", {})
-        if attributes.get("unittest_variant") != "os-integration":
-            continue
-
-        if attributes.get("test_platform", "").startswith(("android-hw", "macosx")):
+        excludes = {
+            key: lambda attr: any([attr.startswith(v) for v in values])
+            for key, values in exclude_attrs.items()
+        }
+        if not attrmatch(attributes, **include_attrs) or attrmatch(
+            attributes, **excludes
+        ):
             continue
 
         tasks.append(task["task"])

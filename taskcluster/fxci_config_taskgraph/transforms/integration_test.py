@@ -204,6 +204,10 @@ def schedule_tasks_at_index(config, tasks):
         return
 
     for task in tasks:
+        include_attrs = task.pop("include-attrs", {})
+        exclude_attrs = task.pop("exclude-attrs", {})
         for decision_index_path in task.pop("decision-index-paths"):
-            for task_def in find_tasks(decision_index_path):
+            for task_def in find_tasks(
+                decision_index_path, include_attrs, exclude_attrs
+            ):
                 yield make_integration_test_description(task_def, task["name"])

@@ -11,7 +11,7 @@ from taskgraph.util.templates import merge
 
 from fxci_config_taskgraph.transforms.integration_test import transforms
 from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
-from fxci_config_taskgraph.util.integration import find_tasks
+from fxci_config_taskgraph.util.integration import _fetch_task_graph
 
 
 @pytest.fixture
@@ -51,8 +51,15 @@ def run_test(monkeypatch, run_transform, responses):
     # this comes from the keys in a `kind`. `task_label` is not really
     # an ideal default, but it's the best option we have here, and this value
     # is irrelevant to many tests anyways.
-    def inner(task: dict[str, Any], name: str = task_label) -> dict[str, Any] | None:
-        find_tasks.cache_clear()
+    def inner(
+        task: dict[str, Any],
+        include_attrs: dict[str, list[str]] = {"unittest_variant": ["os-integration"]},
+        exclude_attrs: dict[str, list[str]] = {
+            "test_platform": ["android-hw", "macosx"]
+        },
+        name: str = task_label,
+    ) -> dict[str, Any] | None:
+        _fetch_task_graph.cache_clear()
 
         task = merge(deepcopy(base_task), task)
         task_graph = {task_label: task}
@@ -64,7 +71,13 @@ def run_test(monkeypatch, run_transform, responses):
         )
 
         result = run_transform(
-            transforms, {"decision-index-paths": [index], "name": name}
+            transforms,
+            {
+                "decision-index-paths": [index],
+                "include-attrs": include_attrs,
+                "exclude-attrs": exclude_attrs,
+                "name": name,
+            },
         )
         if not result:
             return None
@@ -115,7 +128,9 @@ def test_android_hw_skipped(run_test):
 
 
 def test_basic(run_test):
-    result = run_test({"attributes": {"unittest_variant": "os-integration"}}, "gecko")
+    result = run_test(
+        {"attributes": {"unittest_variant": "os-integration"}}, name="gecko"
+    )
     assert result == {
         "attributes": {"integration": "gecko"},
         "dependencies": {"apply": "tc-admin-apply-staging"},
@@ -147,7 +162,7 @@ def test_docker_image(run_test):
             "attributes": {"unittest_variant": "os-integration"},
             "task": {"payload": {"image": {"taskId": "def"}}},
         },
-        "gecko",
+        name="gecko",
     )
     assert result["dependencies"] == {
         "apply": "tc-admin-apply-staging",
@@ -240,7 +255,7 @@ def test_private_artifact(run_test):
                 }
             },
         },
-        "gecko",
+        name="gecko",
     )
     assert result["dependencies"] == {
         "apply": "tc-admin-apply-staging",

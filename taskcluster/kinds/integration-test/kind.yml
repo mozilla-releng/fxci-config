@@ -16,3 +16,10 @@ tasks:
     description: "Run Gecko integration tests"
     decision-index-paths:
       - gecko.v2.mozilla-central.latest.taskgraph.decision-os-integration
+    include-attrs:
+      unittest_variant:
+        - os-integration
+    exclude-attrs:
+      test_platform:
+        - android-hw
+        - macosx

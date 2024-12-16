@@ -23,8 +23,12 @@ def make_firefoxci_artifact_tasks(config, tasks):
     for task in tasks:
         # Format: { <task id>: [<artifact name>]}
         tasks_to_create = defaultdict(list)
+        include_attrs = task.pop("include-attrs", {})
+        exclude_attrs = task.pop("exclude-attrs", {})
         for decision_index_path in task.pop("decision-index-paths"):
-            for task_def in find_tasks(decision_index_path):
+            for task_def in find_tasks(
+                decision_index_path, include_attrs, exclude_attrs
+            ):
                 # Add docker images
                 if "image" in task_def["payload"]:
                     image = task_def["payload"]["image"]
