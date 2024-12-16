@@ -144,7 +144,7 @@ def rewrite_private_fetches(taskdesc: dict[str, Any]) -> None:
             payload["env"]["MOZ_FETCHES"] = {"task-reference": json.dumps(fetches)}
 
 
-def make_integration_test_description(task_def: dict[str, Any]):
+def make_integration_test_description(task_def: dict[str, Any], name_prefix: str):
     """Schedule a task on the staging Taskcluster instance.
 
     Typically task_def will come from the firefox-ci instance and will be
@@ -173,7 +173,7 @@ def make_integration_test_description(task_def: dict[str, Any]):
         if key in task_def:
             task_def[key] = task_def[key].replace("3", "1")
 
-    task_def["metadata"]["name"] = f"gecko-{task_def['metadata']['name']}"
+    task_def["metadata"]["name"] = f"{name_prefix}-{task_def['metadata']['name']}"
     taskdesc = {
         "label": task_def["metadata"]["name"],
         "description": task_def["metadata"]["description"],
@@ -181,7 +181,7 @@ def make_integration_test_description(task_def: dict[str, Any]):
         "dependencies": {
             "apply": "tc-admin-apply-staging",
         },
-        "attributes": {"integration": "gecko"},
+        "attributes": {"integration": name_prefix},
     }
     rewrite_docker_image(taskdesc)
     rewrite_private_fetches(taskdesc)
@@ -199,4 +199,4 @@ def schedule_tasks_at_index(config, tasks):
     for task in tasks:
         for decision_index_path in task.pop("decision-index-paths"):
             for task_def in find_tasks(decision_index_path):
-                yield make_integration_test_description(task_def)
+                yield make_integration_test_description(task_def, task["name"])
