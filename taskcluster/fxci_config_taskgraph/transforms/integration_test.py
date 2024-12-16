@@ -128,7 +128,7 @@ def rewrite_private_fetches(taskdesc: dict[str, Any]) -> None:
     deps = taskdesc.setdefault("dependencies", {})
 
     if "MOZ_FETCHES" in payload.get("env", {}):
-        fetches = json.loads(payload.get("env", {}).get("MOZ_FETCHES", {}))
+        fetches = json.loads(payload.get("env", {}).get("MOZ_FETCHES", "{}"))
         modified = False
         for fetch in fetches:
             if fetch["artifact"].startswith("public"):
