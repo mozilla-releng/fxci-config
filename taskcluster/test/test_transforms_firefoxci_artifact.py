@@ -150,6 +150,24 @@ def test_private_fetch_no_attribute(run_test):
     assert result == []
 
 
+def test_no_exclude_attr_doesnt_reject_all_tasks(run_test):
+    result = run_test(
+        {
+            "attributes": {"unittest_variant": "os-integration"},
+            "task": {
+                "payload": {
+                    "image": {
+                        "taskId": "abc",
+                        "path": "public/build/image.tar.zst",
+                    }
+                }
+            },
+        },
+        exclude_attrs={},
+    )
+    assert len(result) == 1
+
+
 def assert_result(expected_tasks: dict[str, str], prefix, result):
     expected = []
     for task_id, artifact in expected_tasks.items():
