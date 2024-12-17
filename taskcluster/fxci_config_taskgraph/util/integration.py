@@ -119,14 +119,16 @@ def find_tasks(
     for task_id, task in _fetch_task_graph(decision_index_path).items():
         assert isinstance(task, dict)
         attributes = task.get("attributes", {})
-        excludes = {
-            key: lambda attr: any([attr.startswith(v) for v in values])
-            for key, values in exclude_attrs.items()
-        }
-        if not attrmatch(attributes, **include_attrs) or attrmatch(
-            attributes, **excludes
-        ):
+        if not attrmatch(attributes, **include_attrs):
             continue
+
+        if exclude_attrs:
+            excludes = {
+                key: lambda attr: any([attr.startswith(v) for v in values])
+                for key, values in exclude_attrs.items()
+            }
+            if attrmatch(attributes, **excludes):
+                continue
 
         tasks[task_id] = task["task"]
         # get_ancestors can be expensive; don't run it unless we might actually
