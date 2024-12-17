@@ -13,6 +13,11 @@ class IntegrationTestStrategy(OptimizationStrategy):
     @cache
     def _get_modified_worker_pools(self) -> set[str]:
         cmd = [
+            "uv",
+            "tool",
+            "run",
+            "--with",
+            os.getcwd(),
             "tc-admin",
             "diff",
             "--environment",
