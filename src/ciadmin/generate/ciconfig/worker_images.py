@@ -31,7 +31,7 @@ class WorkerImage:
             [mk(image_name, info) for image_name, info in worker_images.items()]
         )
 
-    def get(self, cloud, *keys):
+    def get(self, cloud, *keys, default=None):
         """
         Look up a key under the given cloud for this worker image.
         """
@@ -41,9 +41,12 @@ class WorkerImage:
                 "maybe you need to update worker-images.yml?"
             )
         v = self.clouds[cloud]
-        for k in keys:
+        if not keys:
+            return v
+
+        for k in keys[:-1]:
             v = v[k]
-        return v
+        return v.get(keys[-1], default)
 
 
 class WorkerImages:
