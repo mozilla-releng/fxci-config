@@ -7,12 +7,62 @@ import json
 import os
 import re
 import shlex
+from textwrap import dedent
 from typing import Any
 
 from taskgraph.transforms.base import TransformSequence
+from taskgraph.util.schema import Schema
+from voluptuous import Optional, Required
 
 from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
 from fxci_config_taskgraph.util.integration import find_tasks, get_taskcluster_client
+
+SCHEMA = Schema(
+    {
+        Required(
+            "decision-index-paths",
+            description=dedent(
+                """
+            A list of index paths in the Firefox CI (production) Taskcluster
+            instance index whose created tasks should be rerun in the staging
+            instance (subject to the filtering provided to this transform).
+            """.lstrip(),
+            ),
+        ): [str],
+        Optional(
+            "include-attrs",
+            description=dedent(
+                """
+            A dict of attribute key/value pairs that tasks created by a
+            `decision-index-paths` task will be filtered on. Any tasks that
+            don't match all of the given attributes will be ignored.
+            """.lstrip(),
+            ),
+        ): {str: [str]},
+        Optional(
+            "exclude-attrs",
+            description=dedent(
+                """
+            A dict of attribute key/value pairs that tasks created by a
+            `decision-index-paths` task will be filtered on. Any tasks that
+            contain an attribute that matches any of the given prefixes
+            will be ignored.
+            """.lstrip(),
+            ),
+        ): {str: [str]},
+        Optional(
+            "include-deps",
+            description=dedent(
+                """
+            If provided, dependencies of selected tasks will have their
+            upstream dependencies recursively walked to find additional tasks
+            to rerun in the staging instance. Any tasks matching one of the
+            given regex patterns will be rerun in the staging instance.
+            """.lstrip(),
+            ),
+        ): [str],
+    }
+)
 
 transforms = TransformSequence()
 
