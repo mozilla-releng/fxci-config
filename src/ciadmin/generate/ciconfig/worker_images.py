@@ -31,9 +31,9 @@ class WorkerImage:
             [mk(image_name, info) for image_name, info in worker_images.items()]
         )
 
-    def image_id(self, cloud, *keys):
+    def get(self, cloud, *keys):
         """
-        Look up an image_id using the keys under the given cloud for this worker image
+        Look up a key under the given cloud for this worker image.
         """
         if cloud not in self.clouds:
             raise KeyError(
