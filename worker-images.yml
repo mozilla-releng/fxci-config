@@ -103,6 +103,7 @@ ubuntu-2404-headless:
 ronin-b1-windows2012-vs-py2-alpha:
   azure2:
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     deployment_id: alpha
     central-us: win2012r2-64-vs-py2-l1-centralus-2012-R2-Datacenter
@@ -110,6 +111,7 @@ ronin-b1-windows2012-vs-py2-alpha:
 ronin-b1-windows2012-vs-py2-prod:
   azure2:
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     deployment_id: 7aa76c6
     central-us: win2012r2-64-vs-py2-l1-centralus-2012-R2-Datacenter
@@ -122,6 +124,7 @@ ronin-b1-windows2012-vs-py2-prod:
 ronin-b3-windows2012-vs-py2-prod:
   azure_trusted:
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     deployment_id: 7aa76c6
     central-us: trusted-win2012r2-64-vs-py2-l3-centralus-2012-R2-Datacenter
@@ -134,6 +137,7 @@ ronin-b3-windows2012-vs-py2-prod:
 ronin-b1-windows2012-prod:
   azure2:
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     deployment_id: 75bd9ed
     central-us: win2012r2-64-l1-centralus-2012-R2-Datacenter
@@ -146,6 +150,7 @@ ronin-b1-windows2012-prod:
 ronin-b3-windows2012-prod:
   azure_trusted:
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     deployment_id: 7cde253
     central-us: trusted-win2012r2-64-l3-centralus-2012-R2-Datacenter
@@ -175,6 +180,7 @@ ronin-b3-windows2022-prod:
   azure_trusted:
     deployment_id: "8346140"
     version: NA
+    sbom: false
     resource_group: rg-packer-through-cib
     central-us: trusted-win2022-64-2009-centralus-2022-datacenter-azure-edition
     east-us: trusted-win2022-64-2009-eastus-2022-datacenter-azure-edition
