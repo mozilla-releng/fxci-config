@@ -157,14 +157,14 @@ ronin-b3-windows2012-prod:
     west-us-2: trusted-win2012r2-64-l3-westus2-2012-R2-Datacenter
 
 # Windows Server 2022
-ronin_b_windows2022_64_2009_alpha:
+ronin_b1_windows2022_64_2009_alpha:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
     SBOM: https://github.com/mozilla-platform-ops/worker-images/blob/main/config/win2022-64-2009-alpha.md
     name: win2022_64_2009_alpha
-ronin_b_windows2022_64_2009:
+ronin_b1_windows2022_64_2009:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
