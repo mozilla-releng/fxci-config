@@ -2446,7 +2446,7 @@ pools:
       image:
         by-suffix:
           .*alpha: ronin_t_windows10_64_2009_alpha
-          default: ronin-t-windows10-64-2009-prod
+          default: ronin_t_windows10_64_2009_prod
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-t
