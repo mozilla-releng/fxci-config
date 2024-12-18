@@ -2588,8 +2588,8 @@ pools:
     config:
       image:
         by-suffix:
-          .*alpha: ronin-t-windows11-64-2009-alpha
-          default: ronin-t-windows11-64-2009-prod
+          .*alpha: ronin_t_windows11_64_2009_alpha
+          default: ronin_t_windows11_64_2009
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: '{pool-group}'
