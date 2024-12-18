@@ -2,9 +2,12 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+from typing import Any
+
 import attr
 
-from .get import get_ciconfig_file
+from ciadmin.generate.ciconfig.get import get_ciconfig_file
+from ciadmin.util.templates import deep_get
 
 
 @attr.s(frozen=True)
@@ -31,19 +34,32 @@ class WorkerImage:
             [mk(image_name, info) for image_name, info in worker_images.items()]
         )
 
-    def get(self, cloud, *keys):
+    def get(self, cloud: str, key: str | None=None, default: Any|None=None) -> Any:
         """
-        Look up a key under the given cloud for this worker image.
+        Look up a key under the given cloud config for this worker image.
+
+        Args:
+            cloud (str): The cloud provider (provider_id) to obtain data from.
+            key (str): The key to obtain a value from (optional).
+                If not specified then the entire value of the specified cloud is returned. If
+                specified, the value of the matching key will be obtained. This can optionally
+                use dot path notation (e.g "key.subkey") to obtain a value from nested
+                dictionaries. If the key or any nested subkey along the dot path does not exist,
+                `None` is returned.
+
+        Returns:
+            Any: The value defined under the specified cloud.
         """
         if cloud not in self.clouds:
             raise KeyError(
                 f"{cloud} not present for {self.image_name} - "
                 "maybe you need to update worker-images.yml?"
             )
-        v = self.clouds[cloud]
-        for k in keys:
-            v = v[k]
-        return v
+        cfg = self.clouds[cloud]
+        if not key:
+            return cfg
+
+        return deep_get(cfg, key, default)
 
 
 class WorkerImages:
