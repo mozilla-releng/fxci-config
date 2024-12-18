@@ -1,9 +1,10 @@
 import os
 import subprocess
 from functools import cache
+from pprint import pformat
 
 from taskgraph.optimize.base import OptimizationStrategy, register_strategy
-from taskgraph.optimize.strategies import SkipUnlessChanged
+from taskgraph.optimize.strategies import SkipUnlessChanged, logger
 
 from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL
 
@@ -38,6 +39,7 @@ class IntegrationTestStrategy(OptimizationStrategy):
             line = line.split("=", 1)[1]
             worker_pools.add(line)
 
+        logger.debug(f"Modified worker pools:\n{pformat(worker_pools)}")
         return worker_pools
 
     def should_remove_task(self, task, params, files_changed):
