@@ -136,7 +136,7 @@ def get_aws_provider_config(
                         instance_worker_config["genericWorker"]["config"].setdefault(
                             "wstServerURL", aws_config["wst_server_url"]
                         )
-                image_id = image.image_id(provider_id, region)
+                image_id = image.get(provider_id, region)
                 _populate_deployment_id(instance_worker_config, image_id)
                 launch_config = {
                     "capacityPerInstance": instance_type.get("capacityPerInstance", 1),
@@ -209,9 +209,9 @@ def get_azure_provider_config(
             else:
                 subscription_id = azure_config["untrusted_subscription"]
             loc = location.replace("-", "")
-            version = image.image_id(provider_id, "version")
-            image_rgroup = image.image_id(provider_id, "resource_group")
-            DeploymentId = image.image_id(provider_id, "deployment_id")
+            version = image.get(provider_id, "version")
+            image_rgroup = image.get(provider_id, "resource_group")
+            DeploymentId = image.get(provider_id, "deployment_id")
             subscription_id = f"/subscriptions/{subscription_id}"
             resource_suffix = f"{location}-{purpose}"
             rgroup = f"rg-{resource_suffix}"
@@ -222,13 +222,13 @@ def get_azure_provider_config(
                 f"Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
             )
             if version != "NA":
-                ImageId = image.image_id(provider_id, "name")
+                ImageId = image.get(provider_id, "name")
                 imageReference_id = (
                     f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
                     f"Microsoft.Compute/galleries/{ImageId}/images/{ImageId}/versions/{version}"
                 )
             else:
-                ImageId = image.image_id(provider_id, location)
+                ImageId = image.get(provider_id, location)
                 imageReference_id = (
                     f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
                     f"Microsoft.Compute/images/{ImageId}-{DeploymentId}"
@@ -284,7 +284,7 @@ def get_google_provider_config(
     )
     worker_config = merge(worker_config, config.get("worker-config", {}))
 
-    image_name = image.image_id(provider_id)
+    image_name = image.get(provider_id)
 
     _validate_instance_capacity(pool_id, implementation, instance_types)
 
