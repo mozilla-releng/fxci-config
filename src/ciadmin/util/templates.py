@@ -4,6 +4,7 @@
 
 
 import copy
+from typing import Any
 
 
 def merge_to(source, dest):
@@ -48,3 +49,25 @@ def merge(*objects):
     if len(objects) == 1:
         return copy.deepcopy(objects[0])
     return merge_to(objects[-1], merge(*objects[:-1]))
+
+
+def deep_get(dict_: dict[str, Any], field: str, default: Any|None=None) -> Any:
+    """
+    Return a key from nested dictionaries using dot path notation
+    (e.g "key.subkey").
+
+    Args:
+        dict_: The dictionary to retrieve a value from.
+        field: The key to retrieve, can use dot path notation.
+        default: A default value to return if key does not exist
+            (default: None).
+    """
+    container, subfield = dict_, field
+    while "." in subfield:
+        f, subfield = subfield.split(".", 1)
+        if f not in container:
+            return default
+
+        container = container[f]
+
+    return container.get(subfield, default)
