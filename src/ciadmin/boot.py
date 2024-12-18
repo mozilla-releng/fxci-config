@@ -81,8 +81,10 @@ def boot():
                     click.echo(f"Ignoring invalid resource: {reso}.")
             if "clients" not in resources_list:
                 from tcadmin.current import clients
+
                 async def fetch_clients(resources):
                     return
+
                 clients.fetch_clients = fetch_clients
 
         # Remove the --resources arguments from sys.argv so inner "click.command"s don't complain
