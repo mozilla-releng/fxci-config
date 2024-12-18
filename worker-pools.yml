@@ -1997,8 +1997,10 @@ pools:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
             enableInteractive: true
-            enableD2G: true
-            containerEngine: docker
+            d2gConfig:
+              enableD2G: true
+              allowGPUs: true
+              containerEngine: docker
             headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
@@ -2008,7 +2010,7 @@ pools:
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1, us-east1, europe-west4]
-      image: ubuntu-2404-headless
+      image: ubuntu-2404-headless-alpha
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
@@ -2035,8 +2037,10 @@ pools:
             # 2592000s is 30 days.
             maxTaskRunTime: 2592000
             enableInteractive: true
-            enableD2G: true
-            containerEngine: docker
+            d2gConfig:
+              enableD2G: true
+              allowGPUs: true
+              containerEngine: docker
             headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
@@ -2046,7 +2050,7 @@ pools:
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1, us-east1, europe-west4]
-      image: ubuntu-2404-headless
+      image: ubuntu-2404-headless-alpha
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
