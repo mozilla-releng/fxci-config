@@ -2213,7 +2213,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
-      image: ronin_b1_windows2022_64_2009_alpha
+      image: ronin_b_windows2022_64_2009_alpha
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-1
@@ -2340,7 +2340,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
-      image: ronin_b1_windows2022_64_2009_alpha
+      image: ronin_b_windows2022_64_2009_alpha
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: nss-1
@@ -2384,7 +2384,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
-      image: ronin_b1_windows2022_64_2009_alpha
+      image: ronin_b_windows2022_64_2009_alpha
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: vpn-1
