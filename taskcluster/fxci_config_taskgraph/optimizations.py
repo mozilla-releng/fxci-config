@@ -28,7 +28,7 @@ class IntegrationTestStrategy(OptimizationStrategy):
         ]
         env = os.environ.copy()
         env["TASKCLUSTER_ROOT_URL"] = FIREFOXCI_ROOT_URL
-        proc = subprocess.run(cmd, capture_output=True, text=True, env=env)
+        proc = subprocess.run(cmd, stdout=subprocess.PIPE, text=True, env=env)
         lines = [line for line in proc.stdout.splitlines() if line.startswith("!")]
 
         worker_pools = set()
