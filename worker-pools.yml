@@ -1581,7 +1581,8 @@ pools:
         genericWorker:
           config:
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
-            enableD2G: true
+            d2gConfig:
+              enableD2G: true
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 10
@@ -1606,7 +1607,8 @@ pools:
         genericWorker:
           config:
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
-            enableD2G: true
+            d2gConfig:
+              enableD2G: true
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 10
@@ -1631,7 +1633,8 @@ pools:
         genericWorker:
           config:
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
-            enableD2G: true
+            d2gConfig:
+              enableD2G: true
             enableInteractive: true
             headlessTasks: true
       minCapacity: 0
