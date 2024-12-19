@@ -14,4 +14,7 @@ if [ -f requirements/local.in ]; then
     ARGS="$ARGS -g local"
 fi
 pip-compile-multi -o "$SUFFIX" $ARGS
+if [ -f taskcluster/requirements.in ]; then
+    pip-compile-multi -d taskcluster -s -g taskcluster/requirements.in
+fi
 chmod 644 requirements/*.txt
