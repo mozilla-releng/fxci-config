@@ -1,4 +1,4 @@
-tc-admin>=3.3.1
+tc-admin>=4.0.2
 taskcluster
 attrs  # http://www.attrs.org/en/stable/backward-compatibility.html
 mozilla-repo-urls

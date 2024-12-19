@@ -29,9 +29,12 @@ class IntegrationTestStrategy(OptimizationStrategy):
         ]
         env = os.environ.copy()
         if "TASKCLUSTER_PROXY_URL" in env:
+            # Force tc-admin diff to look at fxci even when we're running on stage
             del env["TASKCLUSTER_PROXY_URL"]
         env["TASKCLUSTER_ROOT_URL"] = FIREFOXCI_ROOT_URL
         proc = subprocess.run(cmd, stdout=subprocess.PIPE, text=True, env=env)
+        if proc.returncode not in (0, 2):
+            proc.check_returncode()
         lines = [line for line in proc.stdout.splitlines() if line.startswith("!")]
 
         worker_pools = set()
