@@ -73,6 +73,7 @@ def make_pool():
                     "locations": ["us-east1"],
                     "image_resource_group": "rg",
                     "vmSizes": [{"vmSize": "Standard_F8s_v2"}],
+                    "worker-config": {"genericWorker": {"config": {}}},
                     "worker-purpose": "test",
                 }
             )
@@ -186,7 +187,7 @@ def assert_azure_basic(pool):
         },
         "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
         "tags": {"deploymentId": "d_id"},
-        "workerConfig": {},
+        "workerConfig": {"genericWorker": {"config": {}}},
     }
 
 
@@ -208,7 +209,7 @@ def assert_azure_version(pool):
         },
         "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
         "tags": {"deploymentId": "d_id"},
-        "workerConfig": {},
+        "workerConfig": {"genericWorker": {"config": {}}},
     }
 
 

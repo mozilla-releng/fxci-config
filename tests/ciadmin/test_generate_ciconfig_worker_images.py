@@ -39,9 +39,9 @@ async def test_fetch_alias_entry(mock_ciconfig_file):
     )
 
 
-def test_worker_image_image_id():
+def test_worker_image_get():
     img = WorkerImage("img", clouds={"ec2": {"aa-polar-1": "ami-123"}})
-    assert img.image_id("ec2", "aa-polar-1") == "ami-123"
+    assert img.get("ec2", "aa-polar-1") == "ami-123"
 
 
 def test_worker_images_get():
