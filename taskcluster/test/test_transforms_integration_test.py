@@ -424,7 +424,8 @@ def run_include_deps_test(run_test, *args, **kwargs):
                                 "task": "toolchain1",
                             },
                         ]
-                    )
+                    ),
+                    "FOO_REV": "abc123",
                 },
             },
             "tags": {},
@@ -532,6 +533,10 @@ def run_include_deps_test(run_test, *args, **kwargs):
             for a in artifacts:
                 assert isinstance(a["expires"], dict)
                 assert "relative-datestamp" in a["expires"]
+
+        # verify that `FOO_REV` is gone
+        if t["payload"].get("env", {}).get("FOO_REV"):
+            assert False, "FOO_REV should've been removed"
 
     return ret
 

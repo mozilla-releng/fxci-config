@@ -101,6 +101,20 @@ def _rewrite_task_datestamps(task_def):
     return task_def
 
 
+def _remove_task_revisions(task_def):
+    """Rewrite revisions in task payloads to ensure that tasks do not refer to
+    out of date revisions."""
+    to_remove = set()
+    for k in task_def.get("payload", {}).get("env", {}):
+        if k.endswith("_REV"):
+            to_remove.add(k)
+
+    for k in to_remove:
+        del task_def["payload"]["env"][k]
+
+    return task_def
+
+
 def find_tasks(
     decision_index_path: str,
     include_attrs: dict[str, list[str]],
@@ -153,6 +167,11 @@ def find_tasks(
                     # All datestamps come in as absolute ones, many of which
                     # will be in the past. We need to rewrite these to relative
                     # ones to make the task reschedulable.
-                    tasks[upstream_task_id] = _rewrite_task_datestamps(task_def)
+                    # We also need to remove absolute revisions from payloads
+                    # to avoid issues with revisions not matching the refs
+                    # that are given.
+                    tasks[upstream_task_id] = _remove_task_revisions(
+                        _rewrite_task_datestamps(task_def)
+                    )
 
     return tasks
