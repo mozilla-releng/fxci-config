@@ -130,7 +130,7 @@ def find_tasks(
             if attrmatch(attributes, **excludes):
                 continue
 
-        tasks[task_id] = task["task"]
+        tasks[task_id] = _rewrite_task_datestamps(task["task"])
         # get_ancestors can be expensive; don't run it unless we might actually
         # use the results.
         if include_deps:
