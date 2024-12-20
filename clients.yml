@@ -984,6 +984,21 @@ project/releng/scriptworker/v2/pushmsix/prod/firefoxci-gecko-3:
   scopes:
     - queue:claim-work:scriptworker-k8s/gecko-3-pushmsix
     - queue:worker-id:gecko-3-pushmsix/gecko-3-pushmsix-*
+project/releng/scriptworker/v2/pushmsix/dev/firefoxci-comm-1:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/comm-1-pushmsix-dev
+    - queue:worker-id:comm-1-pushmsix-dev/comm-1-pushmsix-dev-*
+project/releng/scriptworker/v2/pushmsix/prod/firefoxci-comm-1:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/comm-1-pushmsix
+    - queue:worker-id:comm-1-pushmsix/comm-1-pushmsix-*
+project/releng/scriptworker/v2/pushmsix/prod/firefoxci-comm-3:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/comm-3-pushmsix
+    - queue:worker-id:comm-3-pushmsix/comm-3-pushmsix-*
 project/releng/scriptworker/v2/shipit/dev/firefoxci-gecko-1:
   description: ''
   scopes:
