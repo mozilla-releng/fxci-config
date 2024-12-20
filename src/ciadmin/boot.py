@@ -3,6 +3,7 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
+import re
 import sys
 
 import click
@@ -88,7 +89,11 @@ def boot():
                 clients.fetch_clients = fetch_clients
 
         # Remove the --resources arguments from sys.argv so inner "click.command"s don't complain
-        if "--resources" in sys.argv:
+        # Handle parameter with =
+        arg_regex = re.compile(r"^--resources\=.*")
+        sys.argv = [arg for arg in sys.argv if not arg_regex.match(arg)]
+        # Handle parameter with space
+        while "--resources" in sys.argv:
             reso_arg_index = sys.argv.index("--resources")
             sys.argv = sys.argv[:reso_arg_index] + sys.argv[reso_arg_index + 2 :]
 
