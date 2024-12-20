@@ -166,6 +166,9 @@ def test_basic(run_test):
             ],
         },
         "task": {
+            "created": {"relative-datestamp": "0 seconds"},
+            "deadline": {"relative-datestamp": "1 day"},
+            "expires": {"relative-datestamp": "1 month"},
             "extra": {},
             "metadata": {"description": "test", "name": "gecko-foo"},
             "payload": {"command": ""},
