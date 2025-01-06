@@ -1801,7 +1801,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1835,7 +1835,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1936,7 +1936,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1971,7 +1971,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -2012,7 +2012,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless-alpha
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -2052,7 +2052,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless-alpha
       instance_types:
         - minCpuPlatform: Intel Skylake
