@@ -395,8 +395,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -427,8 +427,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -459,8 +459,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -489,11 +489,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -549,11 +552,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -581,11 +587,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -614,11 +623,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -646,11 +658,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -679,6 +694,9 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       minCapacity: 0
       maxCapacity: 1000
       regions: [us-central1, us-west1]
@@ -703,6 +721,9 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       minCapacity: 0
       maxCapacity: 16
       regions: [us-central1, us-west1]
@@ -728,6 +749,9 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       minCapacity: 0
       maxCapacity: 1000
       regions: [us-central1, us-west1]
@@ -752,6 +776,9 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       minCapacity: 0
       maxCapacity: 8
       regions: [us-central1, us-west1]
@@ -777,6 +804,9 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       minCapacity: 0
       maxCapacity: 1000
       regions: [us-central1, us-west1]
@@ -1758,11 +1788,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 200
@@ -1789,11 +1822,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
@@ -1801,7 +1837,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1823,11 +1859,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
@@ -1835,7 +1874,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1858,11 +1897,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
@@ -1891,11 +1933,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
@@ -1924,11 +1969,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
@@ -1936,7 +1984,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1959,11 +2007,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
@@ -1971,7 +2022,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: monopacker-translations-worker
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -1994,11 +2045,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             d2gConfig:
               enableD2G: true
@@ -2012,7 +2066,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless-alpha
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -2034,11 +2088,14 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
+      lifecycle:
+        # low inactivity timeout because these workers are very expensive
+        queueInactivityTimeout: 300
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             d2gConfig:
               enableD2G: true
@@ -2052,7 +2109,7 @@ pools:
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1, us-east1, europe-west4]
+      regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless-alpha
       instance_types:
         - minCpuPlatform: Intel Skylake

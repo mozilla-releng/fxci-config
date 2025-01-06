@@ -118,6 +118,7 @@ firefoxci:
       - westus
       - westus2
       - westeurope
+    sbom_url_tmpl: https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/{name}-{version}.md
   google_config:
     wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
     zones:
@@ -255,6 +256,7 @@ staging:
       - southcentralus
       - westus
       - westus2
+    sbom_url_tmpl: https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/{name}-{version}.md
   google_config:
     wst_server_url: https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/
     zones:
