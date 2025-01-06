@@ -395,8 +395,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -427,8 +427,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -459,8 +459,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -492,8 +492,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -552,8 +552,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -584,8 +584,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -617,8 +617,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -649,8 +649,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             enableD2G: true
             containerEngine: docker
@@ -1761,8 +1761,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 200
@@ -1792,8 +1792,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
@@ -1826,8 +1826,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
@@ -1861,8 +1861,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
@@ -1894,8 +1894,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 50
@@ -1927,8 +1927,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
@@ -1962,8 +1962,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
@@ -1997,8 +1997,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             d2gConfig:
               enableD2G: true
@@ -2037,8 +2037,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # 2592000s is 30 days.
-            maxTaskRunTime: 2592000
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
             enableInteractive: true
             d2gConfig:
               enableD2G: true
