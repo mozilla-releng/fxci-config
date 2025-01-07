@@ -6,10 +6,12 @@
 FROM python:$PYTHON_VERSION
 LABEL maintainer="Mozilla Release Engineering <release+fxci-config@mozilla.com>"
 
+
 # Add worker user
 RUN mkdir -p /builds && \
     useradd -d /builds/worker -s /bin/bash -m worker && \
     mkdir /builds/worker/artifacts && \
+    mkdir -p /builds/worker/.cache && \
     chown worker:worker /builds/worker /builds/worker/artifacts
 
 # %include-run-task
@@ -22,7 +24,10 @@ ENV SHELL=/bin/bash \
     PATH=/builds/worker/.local/bin:$PATH
 
 VOLUME /builds/worker/checkouts
-VOLUME /builds/worker/.cache
+VOLUME /builds/worker/.cache/cargo
+VOLUME /builds/worker/.cache/uv
+VOLUME /builds/worker/.cache/npm
+VOLUME /builds/worker/.cache/pip
 
 # Set a default command useful for debugging
 CMD ["/bin/bash", "--login"]

@@ -1,1 +1,2 @@
 taskcluster
+taskcluster-taskgraph@git+https://github.com/taskcluster/taskgraph@refs/pull/623/head
