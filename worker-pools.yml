@@ -2338,6 +2338,9 @@ pools:
       - pool-group: relops-1
       - pool-group: relops-3
         chain-of-trust: trusted
+      - pool-group: nss-1
+      - pool-group: nss-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: azure_trusted
