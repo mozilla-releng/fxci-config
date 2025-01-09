@@ -86,7 +86,7 @@ relsre-gw-fxci-gcp-2404-amd64-gui-alpha:
 ubuntu-2404-wayland:
   ## Bug 1902716
   ## 2404 ubuntu image with wayland
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2024-10-31
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2025-01-09
 
 relsre-gw-fxci-gcp-2404-amd64-alpha:
   ## alpha pool that relsre can use to rebuild and test 2404 ubuntu images
@@ -97,7 +97,7 @@ ubuntu-2404-headless-alpha:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha
 ubuntu-2404-headless:
   ## Headless Image for Ubuntu 24.04
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2024-12-10
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-01-09
 
 # generic-worker images
 ronin-b1-windows2012-vs-py2-alpha:
