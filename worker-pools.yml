@@ -2364,6 +2364,7 @@ pools:
           mozillavpn-.*: 25
           mozilla-.*: 25
           relops-.*: 12
+          nss-.*: 25
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
