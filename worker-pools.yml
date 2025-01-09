@@ -491,7 +491,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -554,7 +554,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -589,7 +589,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -625,7 +625,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -660,7 +660,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -696,7 +696,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       minCapacity: 0
       maxCapacity: 1000
       regions: [us-central1, us-west1]
@@ -723,7 +723,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       minCapacity: 0
       maxCapacity: 16
       regions: [us-central1, us-west1]
@@ -751,7 +751,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       minCapacity: 0
       maxCapacity: 1000
       regions: [us-central1, us-west1]
@@ -778,7 +778,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       minCapacity: 0
       maxCapacity: 8
       regions: [us-central1, us-west1]
@@ -806,7 +806,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       minCapacity: 0
       maxCapacity: 1000
       regions: [us-central1, us-west1]
@@ -1790,7 +1790,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -1824,7 +1824,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -1861,7 +1861,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -1899,7 +1899,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -1935,7 +1935,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -1971,7 +1971,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -2009,7 +2009,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -2047,7 +2047,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -2090,7 +2090,7 @@ pools:
     config:
       lifecycle:
         # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 300
+        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
