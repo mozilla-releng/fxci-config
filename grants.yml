@@ -2646,6 +2646,21 @@
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|afranchuk
 
+# Bug 1940195: Secrets for mozilla/crash-ping-ingest
+- grant:
+    - secrets:get:project/mozilla/crash-ping-ingest/ci
+  to:
+    - project:
+        alias: crash-ping-ingest
+        job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
+
+- grant:
+    - secrets:get:project/mozilla/crash-ping-ingest/*
+    - secrets:set:project/mozilla/crash-ping-ingest/*
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|afranchuk
+
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
 # access to the root credentials.

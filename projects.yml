@@ -1307,6 +1307,23 @@ process-top-crashes:
     taskgraph-cron: true
     trust-domain-scopes: true
 
+# Bug 1940195: Please setup `mozilla/crash-ping-ingest` with taskcluster
+crash-ping-ingest:
+  repo: https://github.com/mozilla/crash-ping-ingest
+  repo_type: git
+  trust_domain: mozilla
+  trust_project: crash-ping-ingest
+  branches:
+    - name: main
+      level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public_restricted
+    taskgraph-actions: true
+    taskgraph-cron: true
+    trust-domain-scopes: true
+
 ###
 # WARNING: These grants apply to entire Github orgs.
 ###
