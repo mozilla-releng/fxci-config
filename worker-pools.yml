@@ -398,8 +398,9 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            enableD2G: true
-            containerEngine: docker
+            d2gConfig:
+              enableD2G: true
+              containerEngine: docker
             headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
@@ -430,8 +431,9 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            enableD2G: true
-            containerEngine: docker
+            d2gConfig:
+              enableD2G: true
+              containerEngine: docker
             headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
@@ -462,8 +464,9 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            enableD2G: true
-            containerEngine: docker
+            d2gConfig:
+              enableD2G: true
+              containerEngine: docker
             headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
@@ -498,8 +501,9 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            enableD2G: true
-            containerEngine: docker
+            d2gConfig:
+              enableD2G: true
+              containerEngine: docker
             headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
@@ -561,8 +565,9 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            enableD2G: true
-            containerEngine: docker
+            d2gConfig:
+              enableD2G: true
+              containerEngine: docker
             headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
@@ -596,8 +601,9 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            enableD2G: true
-            containerEngine: docker
+            d2gConfig:
+              enableD2G: true
+              containerEngine: docker
             headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
@@ -632,8 +638,9 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            enableD2G: true
-            containerEngine: docker
+            d2gConfig:
+              enableD2G: true
+              containerEngine: docker
             headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
@@ -667,8 +674,9 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            enableD2G: true
-            containerEngine: docker
+            d2gConfig:
+              enableD2G: true
+              containerEngine: docker
             headlessTasks: true
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
