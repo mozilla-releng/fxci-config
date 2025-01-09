@@ -711,7 +711,7 @@ firefox-ios:
       - firebase-performance-test
 
 staging-firefox-ios:
-  repo: https://github.com/mozilla-releng/staging-firefox-ios
+  repo: https://github.com/mozilla-mobile/staging-firefox-ios
   trust_domain: mobile
   trust_project: firefox-ios
   repo_type: git
