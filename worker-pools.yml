@@ -1556,6 +1556,7 @@ pools:
     email_on_error: true
     variants:
       - pool-group: gecko-t
+      - pool-group: mozilla-t
       - pool-group: gecko-3
         chain-of-trust: trusted
     provider_id:
