@@ -1567,7 +1567,7 @@ pools:
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
-      image: monopacker-gw-gcp-wayland-gui-relops1071
+      image: monopacker-gw-gcp-wayland-gui-relops1188
       security:
         by-chain-of-trust:
           trusted: trusted
