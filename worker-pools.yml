@@ -1704,7 +1704,9 @@ pools:
         genericWorker:
           config:
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
-            enableD2G: true
+            d2gConfig:
+              enableD2G: true
+              containerEngine: docker
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 100
@@ -1729,7 +1731,9 @@ pools:
         genericWorker:
           config:
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
-            enableD2G: true
+            d2gConfig:
+              enableD2G: true
+              containerEngine: docker
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 100
