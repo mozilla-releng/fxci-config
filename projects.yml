@@ -685,6 +685,37 @@ reference-browser:
       - bump-android-comp
       - nightly
 
+staging-reference-browser:
+  repo: https://github.com/mozilla-releng/staging-reference-browser
+  trust_domain: mobile
+  trust_project: reference-browser
+  repo_type: git
+  branches:
+    - name: master
+      level: 1
+  default_branch: master
+  features:
+    autophone: true
+    github-taskgraph: true
+    github-pull-request:
+      policy: public_restricted
+    mobile-roles: true
+    mobile-bump-github: true
+    mobile-firebase-testing: true
+    mobile-sign-phase: true
+    mobile-pushapk-phase: true
+    scriptworker: true
+    taskgraph-actions: true
+    taskgraph-cron: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+  cron:
+    targets:
+      # Cannot name the following entry "bump-android-components" because the full hookId is larger
+      # than 64 characters. For more details see: https://phabricator.services.mozilla.com/D67443
+      - bump-android-comp
+      - nightly
+
 firefox-ios:
   repo: https://github.com/mozilla-mobile/firefox-ios
   trust_domain: mobile
