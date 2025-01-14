@@ -773,6 +773,8 @@ staging-application-services:
     taskgraph-actions: true
     trust-domain-scopes: true
     beetmover: true
+  cron:
+    targets: [nightly]
 
 glean:
   repo: https://github.com/mozilla/glean
