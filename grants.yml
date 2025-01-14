@@ -2287,6 +2287,7 @@
 - grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-comm/in-tree-action-1-generic/*
+    - hooks:trigger-hook:project-mozilla/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-gecko/in-tree-action-1-backfill/*
     - hooks:trigger-hook:project-comm/in-tree-action-1-backfill/*
   to:
@@ -2298,6 +2299,7 @@
 - grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-2-generic/*
     - hooks:trigger-hook:project-comm/in-tree-action-2-generic/*
+    - hooks:trigger-hook:project-mozilla/in-tree-action-2-generic/*
     - hooks:trigger-hook:project-gecko/in-tree-action-2-backfill/*
     - hooks:trigger-hook:project-comm/in-tree-action-2-backfill/*
   to:
@@ -2308,6 +2310,7 @@
 - grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
     - hooks:trigger-hook:project-comm/in-tree-action-3-generic/*
+    - hooks:trigger-hook:project-mozilla/in-tree-action-3-generic/*
     - hooks:trigger-hook:project-gecko/in-tree-action-3-backfill/*
     - hooks:trigger-hook:project-comm/in-tree-action-3-backfill/*
   to:
