@@ -2126,6 +2126,8 @@
     - queue:quarantine-worker:proj-autophone/gecko-*
     - queue:quarantine-worker:releng-hardware/gecko-*
     - queue:quarantine-worker:releng-hardware/win11-64-2009-hw/mdc1/*
+    - queue:quarantine-worker:releng-hardware/win11-64-24h2-hw/mdc1/*
+    - queue:quarantine-worker:releng-hardware/win11-64-24h2-hw-ref/mdc1/*
     - queue:quarantine-worker:mobile-*
     # Allow sheriffs to terminate gecko/mobile related workers
     - worker-manager:remove-worker:gecko-*
