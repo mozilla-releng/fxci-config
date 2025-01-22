@@ -56,6 +56,7 @@ def run_test(monkeypatch, run_transform, responses):
             "test_platform": ["android-hw", "macosx"]
         },
         include_deps: list[str] = [],
+        mirror_public_fetches: list[str] = [],
         name: str = task_label,
     ) -> dict[str, Any] | None:
         _fetch_task_graph.cache_clear()
@@ -90,6 +91,7 @@ def run_test(monkeypatch, run_transform, responses):
             "include-attrs": include_attrs,
             "exclude-attrs": exclude_attrs,
             "include-deps": include_deps,
+            "mirror-public-fetches": mirror_public_fetches,
             "worker": {
                 "env": {
                     "MOZ_ARTIFACT_DIR": "/builds/worker/artifacts",
@@ -219,6 +221,26 @@ def test_private_fetch(run_test):
                 },
             },
         },
+        name="gecko",
+    )
+    assert_result({task_id: artifact}, "gecko", result)
+
+
+def test_included_public_fetch(run_test):
+    task_id = "def"
+    artifact = "public/build/foo.zip"
+    result = run_test(
+        {
+            "attributes": {"unittest_variant": "os-integration"},
+            "task": {
+                "payload": {
+                    "env": {
+                        "MOZ_FETCHES": f'[{{"task": "{task_id}", "artifact": "{artifact}"}}]'
+                    },
+                },
+            },
+        },
+        mirror_public_fetches=["^foo"],
         name="gecko",
     )
     assert_result({task_id: artifact}, "gecko", result)
