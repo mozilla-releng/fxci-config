@@ -2533,7 +2533,7 @@ pools:
       worker-purpose: gecko-t
       locations:
         by-suffix:
-          alpha: [uk-west]
+          alpha: [uk-south]
           source-alpha: [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
           gpu-alpha: [uk-south]
           gpu: [east-us, east-us-2, west-us, west-us-2]
