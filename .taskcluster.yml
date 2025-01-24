@@ -237,7 +237,7 @@ tasks:
                               taskclusterProxy: true
                               chainOfTrust: true
                           image:
-                              mozillareleases/taskgraph:decision-v12.1.0@sha256:756d6edd4c60e1c58132a667273e3cb6113bde3d7a4a3f7b326b375caf53eb81
+                              mozillareleases/taskgraph:decision-v13.0.0@sha256:57e4c2d2ad92cea663dcc02cacbfd88b3506edde80e19fbd8a57b3dfe37ae9bd
                           maxRunTime: 1800
                           command:
                               $flatten:
