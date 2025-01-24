@@ -171,9 +171,9 @@ ronin_b1_windows2022_64_2009_alpha:
     name: win2022_64_2009_alpha
 ronin_b1_windows2022_64_2009:
   azure2:
-    version: 1.0.0
+    version: 1.0.1
     resource_group: rg-packer-worker-images
-    deployment_id: "8346140"
+    deployment_id: "189d045"
     name: win2022_64_2009
 ronin-b3-windows2022-prod:
   azure_trusted:
