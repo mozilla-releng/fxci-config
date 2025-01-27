@@ -117,7 +117,7 @@ ronin_b3_windows2022_64_2009:
   azure_trusted:
     version: 1.0.1
     resource_group: rg-packer-worker-images
-    deployment_id: "189d045"
+    deployment_id: "1a0441f"
     name: trusted_win2022_64_2009
 # Windows 10
 ronin_t_windows10_64_2009_prod:
