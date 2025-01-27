@@ -2177,7 +2177,7 @@ pools:
     config:
       image:
         by-chain-of-trust:
-          trusted: ronin-b3-windows2022-prod
+          trusted: ronin_b3_windows2022_64_2009
           default: ronin_b1_windows2022_64_2009
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
