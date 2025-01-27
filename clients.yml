@@ -243,10 +243,6 @@ project/releng/fxci-config/generate:
   description: Used to run `tc-admin {generate|diff}` in mozilla-releng/fxci-config.
   scopes:
     - auth:list:clients
-project/releng/generic-worker/azure-gecko-1-b-win2012:
-  description: Windows 2012 experimental production worker.
-  scopes:
-    - assume:worker-type:azure/gecko-1-b-win2012
 project/releng/generic-worker/azure-gecko-t-win10-64:
   description: Windows 10 64bit experimental production worker.
   scopes:
