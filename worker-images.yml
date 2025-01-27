@@ -130,9 +130,9 @@ ronin-b3-windows2022-prod:
 # Windows 10
 ronin_t_windows10_64_2009_prod:
   azure2:
-    version: 1.0.0
+    version: 1.0.1
     resource_group: rg-packer-worker-images
-    deployment_id: "8346140"
+    deployment_id: "1a0441f"
     name: win10_64_2009
 ronin_t_windows10_64_2009_alpha:
   azure2:
