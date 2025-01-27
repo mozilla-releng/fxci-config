@@ -113,20 +113,12 @@ ronin_b1_windows2022_64_2009:
     resource_group: rg-packer-worker-images
     deployment_id: "189d045"
     name: win2022_64_2009
-ronin-b3-windows2022-prod:
+ronin_b3_windows2022_64_2009:
   azure_trusted:
-    deployment_id: "8346140"
-    version: NA
-    sbom: false
-    resource_group: rg-packer-through-cib
-    central-us: trusted-win2022-64-2009-centralus-2022-datacenter-azure-edition
-    east-us: trusted-win2022-64-2009-eastus-2022-datacenter-azure-edition
-    east-us-2: trusted-win2022-64-2009-eastus2-2022-datacenter-azure-edition
-    # Image failing to build 2023-07-13. Comment out for now.
-    north-central-us: trusted-win2022-64-2009-northcentralus-2022-datacenter-azure-edition
-    south-central-us: trusted-win2022-64-2009-southcentralus-2022-datacenter-azure-edition
-    west-us: trusted-win2022-64-2009-westus-2022-datacenter-azure-edition
-    west-us-2: trusted-win2022-64-2009-westus2-2022-datacenter-azure-edition
+    version: 1.0.1
+    resource_group: rg-packer-worker-images
+    deployment_id: "189d045"
+    name: trusted_win2022_64_2009
 # Windows 10
 ronin_t_windows10_64_2009_prod:
   azure2:
@@ -149,18 +141,16 @@ ronin_b1_windows11_a64_24h2_builder_alpha:
     name: win11_a64_24h2_builder_alpha
 ronin_b1_windows11_a64_24h2_builder:
   azure2:
-    version: 1.0.0
+    version: 1.0.1
     resource_group: rg-packer-worker-images
-    deployment_id: a03478d
+    deployment_id: "1a0441f"
     name: win11_a64_24h2_builder
-    sbom: false
 ronin_b3_windows11_a64_24h2_builder:
   azure_trusted:
-    version: 1.0.0
+    version: 1.0.1
     resource_group: rg-packer-worker-images
-    deployment_id: a03478d
+    deployment_id: "1a0441f"
     name: win11_a64_24h2_builder
-    sbom: false
 ronin_t_windows11_a64_24h2_tester_alpha:
   azure2:
     version: 1.0.0
