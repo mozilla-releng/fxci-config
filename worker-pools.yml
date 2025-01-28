@@ -2426,8 +2426,8 @@ pools:
       worker-config:
         genericWorker:
           config:
-            workerType: win11-a64-24h2-builder-alpha
-            provisionerId: gecko-1
+            workerType: win11-a64-24h2-builder-{suffix}
+            provisionerId: '{pool-group}'
             cachesDir: C:\caches
             downloadsDir: C:\downloads
             tasksDir: C:\
