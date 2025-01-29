@@ -2,17 +2,71 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import copy
 import json
 import os
+import re
 import shlex
+from textwrap import dedent
 from typing import Any
 
 from taskgraph.transforms.base import TransformSequence
+from taskgraph.util.schema import Schema
+from voluptuous import ALLOW_EXTRA, Optional, Required
 
 from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
 from fxci_config_taskgraph.util.integration import find_tasks, get_taskcluster_client
 
+SCHEMA = Schema(
+    {
+        Required(
+            "decision-index-paths",
+            description=dedent(
+                """
+            A list of index paths in the Firefox CI (production) Taskcluster
+            instance index whose created tasks should be rerun in the staging
+            instance (subject to the filtering provided to this transform).
+            """.lstrip(),
+            ),
+        ): [str],
+        Optional(
+            "include-attrs",
+            description=dedent(
+                """
+            A dict of attribute key/value pairs that tasks created by a
+            `decision-index-paths` task will be filtered on. Any tasks that
+            don't match all of the given attributes will be ignored.
+            """.lstrip(),
+            ),
+        ): {str: [str]},
+        Optional(
+            "exclude-attrs",
+            description=dedent(
+                """
+            A dict of attribute key/value pairs that tasks created by a
+            `decision-index-paths` task will be filtered on. Any tasks that
+            contain an attribute that matches any of the given prefixes
+            will be ignored.
+            """.lstrip(),
+            ),
+        ): {str: [str]},
+        Optional(
+            "include-deps",
+            description=dedent(
+                """
+            If provided, dependencies of selected tasks will have their
+            upstream dependencies recursively walked to find additional tasks
+            to rerun in the staging instance. Any tasks matching one of the
+            given regex patterns will be rerun in the staging instance.
+            """.lstrip(),
+            ),
+        ): [str],
+    },
+    extra=ALLOW_EXTRA,
+)
+
 transforms = TransformSequence()
+transforms.add_validate(SCHEMA)
 
 
 def patch_root_url(task_def):
@@ -119,6 +173,16 @@ def rewrite_docker_image(taskdesc: dict[str, Any]) -> None:
     }
 
 
+def load_fetches(moz_fetches: dict | str) -> list[dict[str, Any]]:
+    if isinstance(moz_fetches, str):
+        ret = json.loads(moz_fetches)
+        if not isinstance(ret, list):
+            raise Exception("non-list fetches are not supported at this time")
+        return ret
+    else:
+        return []
+
+
 def rewrite_private_fetches(taskdesc: dict[str, Any]) -> None:
     """Re-write fetches that use private artifacts to the equivalent `firefoxci-artifact`
     task.
@@ -127,7 +191,7 @@ def rewrite_private_fetches(taskdesc: dict[str, Any]) -> None:
     deps = taskdesc.setdefault("dependencies", {})
 
     if "MOZ_FETCHES" in payload.get("env", {}):
-        fetches = json.loads(payload.get("env", {}).get("MOZ_FETCHES", "{}"))
+        fetches = load_fetches(payload.get("env", {}).get("MOZ_FETCHES", "[]"))
         modified = False
         for fetch in fetches:
             if fetch["artifact"].startswith("public"):
@@ -144,7 +208,73 @@ def rewrite_private_fetches(taskdesc: dict[str, Any]) -> None:
             payload["env"]["MOZ_FETCHES"] = {"task-reference": json.dumps(fetches)}
 
 
-def make_integration_test_description(task_def: dict[str, Any], name_prefix: str):
+def rewrite_mirrored_dependencies(
+    taskdesc: dict[str, Any],
+    prefix: str,
+    dependencies: dict[str, str],
+    mirrored_tasks: dict[str, Any],
+    include_deps: list[str],
+    artifact_tasks: dict[str, Any],
+):
+    """Re-write dependencies and fetches of tasks that are being re-run in the
+    staging instance. Without this, the downstream tasks will attempt to refer
+    to firefoxci task ids that do not exist in the staging cluster, and task
+    submission will fail.
+    """
+    patterns = [re.compile(p) for p in include_deps]
+    mirrored_deps = set()
+    artifact_deps = set()
+    # First, update any dependencies that are also being run as part of this integration test
+    for upstream_task_id in dependencies:
+        # Some of these may be other tasks that we're mirroring into this cluster...
+        if upstream_task_id in mirrored_tasks:
+            name = mirrored_tasks[upstream_task_id]["metadata"]["name"]
+            if any([pat.match(name) for pat in patterns]):
+                mirrored_deps.add(upstream_task_id)
+                upstream_task_label = f"{prefix}-{name}"
+                taskdesc["dependencies"][upstream_task_label] = upstream_task_label
+
+        # Others may be `firefoxci-artifact` tasks that have mirrored artifacts
+        # from firefox ci tasks into this cluster.
+        artifact_task_label = f"firefoxci-artifact-{prefix}-{upstream_task_id}"
+        if (
+            artifact_task_label in artifact_tasks
+            and artifact_task_label not in taskdesc["dependencies"].values()
+        ):
+            artifact_deps.add(upstream_task_id)
+            taskdesc["dependencies"][artifact_task_label] = artifact_task_label
+
+    # Second, update any fetches that point to dependencies that are also being run as part
+    # of this integration test
+    updated_fetches = []
+    fetches = load_fetches(
+        taskdesc["task"]["payload"].get("env", {}).get("MOZ_FETCHES", "[]")
+    )
+
+    if fetches:
+        for fetch in fetches:
+            fetch_task_id = fetch["task"]
+            if fetch_task_id in mirrored_deps:
+                fetch_task_label = mirrored_tasks[fetch_task_id]["metadata"]["name"]
+                fetch["task"] = f"<{prefix}-{fetch_task_label}>"
+
+            if fetch_task_id in artifact_deps:
+                fetch["task"] = f"<firefoxci-artifact-{prefix}-{fetch_task_id}>"
+
+            updated_fetches.append(fetch)
+
+        taskdesc["task"]["payload"]["env"]["MOZ_FETCHES"] = {
+            "task-reference": json.dumps(updated_fetches)
+        }
+
+
+def make_integration_test_description(
+    task_def: dict[str, Any],
+    name_prefix: str,
+    mirrored_tasks: dict[str, Any],
+    include_deps: list[str],
+    artifact_tasks: dict[str, Any],
+):
     """Schedule a task on the staging Taskcluster instance.
 
     Typically task_def will come from the firefox-ci instance and will be
@@ -160,11 +290,11 @@ def make_integration_test_description(task_def: dict[str, Any], name_prefix: str
         }
     )
 
+    orig_dependencies = task_def["dependencies"]
     del task_def["dependencies"]
     if "treeherder" in task_def["extra"]:
         del task_def["extra"]["treeherder"]
 
-    patch_root_url(task_def)
     rewrite_mounts(task_def)
     rewrite_docker_cache(task_def)
 
@@ -192,6 +322,46 @@ def make_integration_test_description(task_def: dict[str, Any], name_prefix: str
     }
     rewrite_docker_image(taskdesc)
     rewrite_private_fetches(taskdesc)
+    rewrite_mirrored_dependencies(
+        taskdesc,
+        name_prefix,
+        orig_dependencies,
+        mirrored_tasks,
+        include_deps,
+        artifact_tasks,
+    )
+    # Tasks may only have 1 root url set, which is primarily used to decide
+    # where to find `MOZ_FETCHES`. When all of our fetches are known to be
+    # running in the staging cluster, we do not need to patch the root url.
+    # If they're all running in production, we must patch it. If we have a mix
+    # of both, we cannot proceed, as either the stage or production ones would
+    # result in 404s at runtime.
+    fetches = json.loads(
+        task_def.get("payload", {})
+        .get("env", {})
+        .get("MOZ_FETCHES", {})
+        .get("task-reference", "{}")
+    )
+    task_locations = set()
+    for f in fetches:
+        name = f["task"].strip("<>")
+        # It would be preferable if we checked for full task labels rather
+        # than relying on a prefix, but because tasks created by this transform
+        # depend on one another, and we don't try to create them in graph order,
+        # there's no guarantee that this check would reliably.
+        if name in artifact_tasks or name.startswith(f"{name_prefix}-"):
+            task_locations.add("stage")
+        else:
+            task_locations.add("prod")
+
+    if len(task_locations) == 2:
+        raise Exception(
+            "Cannot run a task with fetches from stage and production clusters."
+        )
+
+    if "prod" in task_locations:
+        patch_root_url(task_def)
+
     return taskdesc
 
 
@@ -203,11 +373,44 @@ def schedule_tasks_at_index(config, tasks):
     if os.environ["TASKCLUSTER_ROOT_URL"] != STAGING_ROOT_URL:
         return
 
+    artifact_tasks = {
+        k: v
+        for k, v in config.kind_dependencies_tasks.items()
+        if k.startswith("firefoxci-artifact")
+    }
     for task in tasks:
         include_attrs = task.pop("include-attrs", {})
         exclude_attrs = task.pop("exclude-attrs", {})
+        include_deps = task.pop("include-deps", [])
         for decision_index_path in task.pop("decision-index-paths"):
-            for task_def in find_tasks(
-                decision_index_path, include_attrs, exclude_attrs
-            ):
-                yield make_integration_test_description(task_def, task["name"])
+            # `find_tasks` can return tasks with duplicate labels when
+            # `include_deps` is used (eg: graphs with leaf nodes that have
+            # different instances of the same ancestor task due to caching).
+            # To deal with this, we keep track of task names we create and
+            # ensure we only create each once.
+            created_tasks = set()
+
+            found_tasks = find_tasks(
+                decision_index_path,
+                include_attrs,
+                exclude_attrs,
+                include_deps,
+            )
+
+            for task_def in found_tasks.values():
+                # `task_def` will be modified by the function called below;
+                # we need a copy of the original name to add it to
+                # `created_tasks` afterwards
+                orig_name = task_def["metadata"]["name"]
+                if orig_name not in created_tasks:
+                    # task_def is copied to avoid modifying the version in `tasks`, which
+                    # may be used to modify parts of the new task description
+                    yield make_integration_test_description(
+                        copy.deepcopy(task_def),
+                        task["name"],
+                        found_tasks,
+                        include_deps,
+                        artifact_tasks,
+                    )
+
+                created_tasks.add(orig_name)

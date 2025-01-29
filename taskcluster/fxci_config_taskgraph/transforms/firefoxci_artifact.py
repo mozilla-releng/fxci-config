@@ -4,6 +4,7 @@
 
 import json
 import os
+import re
 from collections import defaultdict
 from copy import deepcopy
 
@@ -25,21 +26,29 @@ def make_firefoxci_artifact_tasks(config, tasks):
         tasks_to_create = defaultdict(list)
         include_attrs = task.pop("include-attrs", {})
         exclude_attrs = task.pop("exclude-attrs", {})
+        include_deps = task.pop("include-deps", [])
+        # Mirror public artifacts is a bit weird; you would expect that you
+        # could just pull them from the firefox ci cluster instead, but it
+        # turns out to be necessary when you we're running integration tests
+        # on tasks that have fetches from a non-mirrored task in the firefox ci
+        # cluster as well as a mirrored task in the staging cluster.
+        mirror_public_fetches = [
+            re.compile(r) for r in task.pop("mirror-public-fetches", [])
+        ]
         for decision_index_path in task.pop("decision-index-paths"):
             for task_def in find_tasks(
-                decision_index_path, include_attrs, exclude_attrs
-            ):
+                decision_index_path,
+                include_attrs,
+                exclude_attrs,
+                include_deps,
+            ).values():
                 # Add docker images
                 if "image" in task_def["payload"]:
                     image = task_def["payload"]["image"]
-                    if not isinstance(image, dict) or "taskId" not in image:
-                        continue
-
-                    task_id = image["taskId"]
-                    if task_id in tasks_to_create:
-                        continue
-
-                    tasks_to_create[task_id] = [image["path"]]
+                    if isinstance(image, dict) and "taskId" in image:
+                        task_id = image["taskId"]
+                        if task_id not in tasks_to_create:
+                            tasks_to_create[task_id] = [image["path"]]
 
                 # Add private artifacts
                 if "MOZ_FETCHES" in task_def["payload"].get("env", {}):
@@ -48,7 +57,13 @@ def make_firefoxci_artifact_tasks(config, tasks):
                     )
                     for fetch in fetches:
                         if fetch["artifact"].startswith("public"):
-                            continue
+                            if not any(
+                                [
+                                    pat.match(task_def["metadata"]["name"])
+                                    for pat in mirror_public_fetches
+                                ]
+                            ):
+                                continue
 
                         task_id = fetch["task"]
                         tasks_to_create[task_id].append(fetch["artifact"])
