@@ -79,6 +79,5 @@ async def check_level_3_worker_security():
             or ("azure_trusted" in pool.provider_id)
         )
         assert not all([not trusted_security, is_level3_worker(pool)]), (
-            f"{pool.pool_id} is a level 3 worker but has "
-            f"unrestricted network access"
+            f"{pool.pool_id} is a level 3 worker but has unrestricted network access"
         )

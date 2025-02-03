@@ -273,7 +273,7 @@ def test_public_fetch_docker_worker(run_test):
     assert result["task"]["payload"]["command"] == [
         "bash",
         "-c",
-        "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com " "cmd",
+        "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com cmd",
     ]
 
 

@@ -82,8 +82,7 @@ def format_arguments(app):
 
 @app.command(
     "check-worker-secrets",
-    help="Verify that all workers in fxci-config "
-    "have the necessary secrets defined.",
+    help="Verify that all workers in fxci-config have the necessary secrets defined.",
     description="This does not require any scopes, "
     "but does not verify that the secrets are up-to-date.",
 )

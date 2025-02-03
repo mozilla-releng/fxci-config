@@ -41,8 +41,7 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
             )
         else:
             raise Exception(
-                "Don't know how to determine file URL for non-github "
-                f"repo: {repo_path}"
+                f"Don't know how to determine file URL for non-github repo: {repo_path}"
             )
     else:
         raise Exception(f"Unknown repo_type {repo_type}!")

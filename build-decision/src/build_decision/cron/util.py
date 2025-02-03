@@ -54,7 +54,7 @@ def calculate_time():
             print(time)
         else:
             logger.warning(
-                "using current time for time; try setting $CRON_TIME " "to a timestamp"
+                "using current time for time; try setting $CRON_TIME to a timestamp"
             )
             time = datetime.datetime.utcnow()
     else:
