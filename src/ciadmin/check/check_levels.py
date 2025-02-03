@@ -17,9 +17,9 @@ async def get_hg_repo_owner(project):
     hg.mozilla.org metadata
     """
 
-    assert (
-        project.repo_type == "hg"
-    ), "Only hg repos can be queried for group_owner metadata"
+    assert project.repo_type == "hg", (
+        "Only hg repos can be queried for group_owner metadata"
+    )
 
     session = aiohttp_session()
     headers = {"User-Agent": USER_AGENT}

@@ -57,8 +57,7 @@ class Repository:
                 headers["Accept"] = "application/vnd.github.raw+json"
             elif repo_url.startswith("git@github.com:"):
                 raise Exception(
-                    "Don't know how to get file from private github "
-                    f"repo: {repo_url}"
+                    f"Don't know how to get file from private github repo: {repo_url}"
                 )
             else:
                 raise Exception(
