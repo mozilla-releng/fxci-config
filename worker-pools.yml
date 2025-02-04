@@ -2565,6 +2565,8 @@ pools:
       - pool-group: gecko-t
         suffix: large
       - pool-group: gecko-t
+        suffix: large-alpha
+      - pool-group: gecko-t
         suffix: gpu
       - pool-group: gecko-t
         suffix: gpu-alpha
