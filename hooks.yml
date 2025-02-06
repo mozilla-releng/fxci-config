@@ -148,30 +148,10 @@ project-relman/code-review-testing:
     additionalProperties: true
     properties:
 
-      # Trigger hook with token payload to create a try push
-      object:
-        type: object
-        required:
-          - type
-          - phid
-        properties:
-          type:
-            type: string
-            description: Phabricator object's type triggering the hook
-          phid:
-            type: string
-            description: Phabricator object's PHID triggering the hook
-      transactions:
-        type: array
-        description: Phabricator transactions leading to this trigger
-        items:
-          type: object
-          required:
-            - phid
-          properties:
-            phid:
-              type: string
-              description: Phabricator transaction's PHID
+      # Trigger hook from Phabricator with token payload to create a try push
+      build_target_phid:
+        type: string
+        description: Phabricator Build target's PHID triggering the hook
 
       # Trigger hook from pulse for analyzing results
       runId:

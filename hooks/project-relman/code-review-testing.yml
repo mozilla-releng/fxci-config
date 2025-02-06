@@ -34,16 +34,8 @@ payload:
       - $if: firedBy == 'triggerHookWithToken'
         else: {}
         then:
-          $let:
-            transactions:
-              $map: {$eval: payload.transactions}
-              each(transaction): {$eval: transaction.phid}
-          in:
-            PHABRICATOR_OBJECT_TYPE:
-              $eval: payload.object.type
-            PHABRICATOR_OBJECT_PHID:
-              $eval: payload.object.phid
-            PHABRICATOR_TRANSACTIONS: {$json: {$eval: transactions}}
+          PHABRICATOR_BUILD_TARGET:
+            $eval: payload.build_target_phid
       - $if: firedBy == 'pulseMessage'
         else: {}
         then:
