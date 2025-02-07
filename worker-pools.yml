@@ -2098,8 +2098,8 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/worker-runner-windows
       worker-purpose: gecko-1
-      locations: [west-us-3, east-us, central-india]
-      maxCapacity: 5
+      locations: [west-us-3]
+      maxCapacity: 10
       worker-config:
         genericWorker:
           config:
@@ -2109,7 +2109,7 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: bug1838725
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
