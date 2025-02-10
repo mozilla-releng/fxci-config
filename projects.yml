@@ -527,6 +527,7 @@ nss:
     hg-push: true
     trust-domain-scopes: true
     treeherder-reporting: true
+    taskgraph-actions: true
 
 nss-try:
   repo: https://hg.mozilla.org/projects/nss-try
