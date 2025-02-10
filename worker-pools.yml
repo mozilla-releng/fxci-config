@@ -991,6 +991,8 @@ pools:
         chain-of-trust: trusted
       - pool-group: translations-1
       - pool-group: nss-1
+      - pool-group: nss-3
+        chain-of-trust: trusted
     config:
       regions: [us-central1, us-west1]
       image:
