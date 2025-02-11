@@ -600,6 +600,10 @@ project/releng/generic-worker/datacenter-gecko-t-win10-64-1803-hw:
     and unittest. 1803 references the os build.
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-win10-64-1803-hw
+project/releng/generic-worker/win10-64-2009-hw:
+  description: Datacenter Windows 10 speedometer worker. 2009 references the os build.
+  scopes:
+    - assume:worker-type:releng-hardware/win10-64-2009-hw
 project/releng/generic-worker/win11-64-2009-hw:
   description: Datacenter Windows 11 main production worker. 2009 references the os build.
   scopes:
