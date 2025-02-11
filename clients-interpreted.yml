@@ -174,3 +174,15 @@
       - project:
             level: 3
             feature: [beetmover-get-artifact-scope]
+
+# Clients for landoscript workers
+- client:
+      project/releng/scriptworker/v2/lando/dev/firefoxci-{trust_domain}-1:
+          description: "{trust_domain} level 1 nonprod lando scriptworker"
+          scopes:
+              - queue:claim-work:scriptworker-k8s/{trust_domain}-1-lando-dev
+              - queue:worker-id:{trust_domain}-1-lando-dev/{trust_domain}-1-lando-dev-*
+  for:
+      - project:
+            level: 1
+            feature: [lando]
