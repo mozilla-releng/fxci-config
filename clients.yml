@@ -873,16 +873,16 @@ project/releng/scriptworker/v2/iscript/tb-prod:
   scopes:
     - assume:worker-type:scriptworker-prov-v1/tb-signing-mac-v1
     - queue:worker-id:signing-mac-v1/tb-mac-v3-signing*
-project/releng/scriptworker/v2/mac-signing/prod/firefoxci-gecko-signing-mac14m2-dep:
+project/releng/scriptworker/v2/mac-signing/dev/firefoxci-gecko-t:
   description: Dep signing worker pool for Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
-    - assume:worker-type:scriptworker-prov-v1/gecko-signing-mac14m2-prod
-    - queue:worker-id:gecko-signing-mac14m2-prod/signing-mac14m2-prod*
-project/releng/scriptworker/v2/mac-signing/prod/firefoxci-gecko-signing-mac14m2:
+    - assume:worker-type:scriptworker-prov-v1/gecko-depsigning-mac14m2
+    - queue:worker-id:gecko-depsigning-mac14m2/depsigning-mac14m2*
+project/releng/scriptworker/v2/mac-signing/prod/firefoxci-gecko-3:
   description: Production signing worker pool for Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
-    - assume:worker-type:scriptworker-prov-v1/gecko-signing-mac14m2-prod
-    - queue:worker-id:gecko-signing-mac14m2-prod/signing-mac14m2-prod*
+    - assume:worker-type:scriptworker-prov-v1/gecko-signing-mac14m2
+    - queue:worker-id:gecko-signing-mac14m2/signing-mac14m2*
 project/releng/scriptworker/v2/signing/dev/firefoxci-mozillavpn-t:
   description: mozillavpn linux signing
   scopes:
