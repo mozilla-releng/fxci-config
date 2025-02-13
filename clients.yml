@@ -226,7 +226,7 @@ project/autophone/gecko-t-lambda-alpha-a55:
     - auth:statsum:tc-worker-script
     - auth:webhooktunnel
     - auth:websocktunnel-token:firefoxcitc/lambda.*
-    - queue:claim-work:proj-autophone/gecko-t-lambda-gw-a55
+    - queue:claim-work:proj-autophone/gecko-t-lambda-alpha-a55
     - queue:worker-id:lambda/*
 project/packet/docker-worker:
   description: ''
