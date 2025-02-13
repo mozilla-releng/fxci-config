@@ -405,6 +405,7 @@ try:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
 try-comm-central:
   repo: https://hg.mozilla.org/try-comm-central
   repo_type: hg
