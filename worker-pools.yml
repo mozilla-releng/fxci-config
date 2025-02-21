@@ -128,6 +128,25 @@ worker-defaults:
             taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
             taskclusterProxyPort: 80
             wstAudience: firefoxcitc
+      generic-worker/linux-d2g:
+        genericWorker:
+          config:
+            cleanUpTaskDirs: true
+            disableReboots: false
+            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
+            idleTimeoutSecs: 300  # 5 minutes
+            livelogExecutable: /usr/local/bin/livelog
+            numberOfTasksToRun: 0
+            sentryProject: generic-worker
+            shutdownMachineOnIdle: true
+            shutdownMachineOnInternalError: true
+            taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
+            taskclusterProxyPort: 80
+            wstAudience: firefoxcitc
+            d2gConfig:
+              enableD2G: true
+              allowPrivileged: false
+              allowHostSharedMemory: false
 
 meta:
   - &persistent-disk
@@ -398,13 +417,10 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            d2gConfig:
-              enableD2G: true
             headlessTasks: true
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-headless
       instance_types:
@@ -430,13 +446,10 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            d2gConfig:
-              enableD2G: true
             headlessTasks: true
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-headless
       instance_types:
@@ -462,13 +475,10 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            d2gConfig:
-              enableD2G: true
             headlessTasks: true
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-headless
       instance_types:
@@ -495,13 +505,10 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            d2gConfig:
-              enableD2G: true
             headlessTasks: true
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-headless
       instance_types:
@@ -555,13 +562,10 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            d2gConfig:
-              enableD2G: true
             headlessTasks: true
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-headless
       instance_types:
@@ -587,13 +591,10 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            d2gConfig:
-              enableD2G: true
             headlessTasks: true
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 16
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-headless
       instance_types:
@@ -620,13 +621,10 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            d2gConfig:
-              enableD2G: true
             headlessTasks: true
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-headless
       instance_types:
@@ -652,13 +650,10 @@ pools:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
             enableInteractive: true
-            d2gConfig:
-              enableD2G: true
             headlessTasks: true
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       maxCapacity: 8
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-headless
       instance_types:
@@ -1583,13 +1578,10 @@ pools:
       worker-config:
         genericWorker:
           config:
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
-            d2gConfig:
-              enableD2G: true
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 10
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: relsre-gw-fxci-gcp-2404-amd64-gui-alpha
       instance_types:
@@ -1609,13 +1601,10 @@ pools:
       worker-config:
         genericWorker:
           config:
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
-            d2gConfig:
-              enableD2G: true
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 10
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: relsre-gw-fxci-gcp-2404-amd64-alpha
       instance_types:
@@ -1635,14 +1624,11 @@ pools:
       worker-config:
         genericWorker:
           config:
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
-            d2gConfig:
-              enableD2G: true
             enableInteractive: true
             headlessTasks: true
       minCapacity: 0
       maxCapacity: 10
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-headless-alpha
       instance_types:
@@ -1667,13 +1653,10 @@ pools:
       worker-config:
         genericWorker:
           config:
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
-            d2gConfig:
-              enableD2G: true
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 100
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-wayland
       instance_types:
@@ -1693,13 +1676,10 @@ pools:
       worker-config:
         genericWorker:
           config:
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
-            d2gConfig:
-              enableD2G: true
             enableInteractive: true
       minCapacity: 0
       maxCapacity: 100
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-wayland
       instance_types:
@@ -2006,16 +1986,14 @@ pools:
             maxTaskRunTime: 2592900
             enableInteractive: true
             d2gConfig:
-              enableD2G: true
               allowGPUs: true
             headlessTasks: true
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless-alpha
       instance_types:
@@ -2045,16 +2023,14 @@ pools:
             maxTaskRunTime: 2592900
             enableInteractive: true
             d2gConfig:
-              enableD2G: true
               allowGPUs: true
             headlessTasks: true
-            ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless-alpha
       instance_types:
