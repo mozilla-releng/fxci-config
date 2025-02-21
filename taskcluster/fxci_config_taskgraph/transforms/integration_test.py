@@ -137,16 +137,20 @@ def rewrite_mounts(task_def: dict[str, Any]) -> None:
             del content["taskId"]
 
 
-def rewrite_docker_cache(task_def: dict[str, Any]) -> None:
-    """Adjust docker caches to ci-level-1."""
-    cache = task_def["payload"].get("cache")
-    if not cache:
-        return
+def rewrite_caches(task_def: dict[str, Any]) -> None:
+    """Adjust worker caches to ci-level-1."""
+    if cache := task_def["payload"].get("cache"):
+        for name, value in cache.copy().items():
+            del cache[name]
+            name = name.replace("gecko-level-3", "ci-level-1")
+            cache[name] = value
 
-    for name, value in cache.copy().items():
-        del cache[name]
-        name = name.replace("gecko-level-3", "ci-level-1")
-        cache[name] = value
+    if mounts := task_def["payload"].get("mounts"):
+        for mount in mounts:
+            if "cacheName" in mount:
+                mount["cacheName"] = mount["cacheName"].replace(
+                    "gecko-level-3", "ci-level-1"
+                )
 
     for i, scope in enumerate(task_def.get("scopes", [])):
         task_def["scopes"][i] = scope.replace("gecko-level-3", "ci-level-1")
@@ -296,7 +300,7 @@ def make_integration_test_description(
         del task_def["extra"]["treeherder"]
 
     rewrite_mounts(task_def)
-    rewrite_docker_cache(task_def)
+    rewrite_caches(task_def)
 
     # Drop down to level 1 to match the current context.
     for key in ("taskQueueId", "provisionerId", "worker-type"):
