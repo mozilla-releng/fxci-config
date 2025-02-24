@@ -480,16 +480,6 @@ project/releng/generic-worker/datacenter-gecko-t-osx-1300-m2:
     - queue:worker-id:mdc2/mac*
     - queue:worker-id:mdc2/t-yosemite*
     - queue:worker-id:mdc2/t-mojave*
-project/releng/generic-worker/datacenter-gecko-t-osx-1300-m2-vms:
-  description: Datacenter MacOS dedicated developer and automation worker.
-  scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
-    - queue:worker-id:mdc1/mac*
-    - queue:worker-id:mdc1/t-yosemite*
-    - queue:worker-id:mdc1/t-mojave*
-    - queue:worker-id:mdc2/mac*
-    - queue:worker-id:mdc2/t-yosemite*
-    - queue:worker-id:mdc2/t-mojave*
 project/releng/generic-worker/datacenter-gecko-t-osx-1300-r8:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
@@ -590,16 +580,16 @@ project/releng/generic-worker/datacenter-gecko-t-osx-1500-m4-staging:
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-osx*
     - queue:worker-id:mdc1/mac*
-project/releng/generic-worker/datacenter-gecko-t-osx-1400-m2-vms-staging:
+project/releng/generic-worker/datacenter-gecko-t-osx-1400-m-vms:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-osx*
     - queue:worker-id:mdc1/mac*
-    - queue:worker-id:mdc1/t-yosemite*
-    - queue:worker-id:mdc1/t-mojave*
-    - queue:worker-id:mdc2/mac*
-    - queue:worker-id:mdc2/t-yosemite*
-    - queue:worker-id:mdc2/t-mojave*
+project/releng/generic-worker/datacenter-gecko-t-osx-1500-m-vms:
+  description: Datacenter MacOS dedicated developer and automation worker.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-t-osx*
+    - queue:worker-id:mdc1/mac*
 project/releng/generic-worker/win11-64-24h2-hw-perf-sheriff:
   description: Tracking metric variability with performance sheriffing. Tracking in RELOPS-1288.
   scopes:
