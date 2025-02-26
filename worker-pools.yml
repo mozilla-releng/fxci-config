@@ -2580,7 +2580,7 @@ pools:
         3: azure_trusted
     config:
       image: 'ronin_b{level}_windows11_a64_24h2_builder_{suffix}'
-      implementation: 
+      implementation:
         by-suffix:
           .*alpha: generic-worker/windows
           default: generic-worker/worker-runner-windows
