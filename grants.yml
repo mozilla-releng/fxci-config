@@ -2294,6 +2294,12 @@
     - hooks:trigger-hook:project-mozilla/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-gecko/in-tree-action-1-backfill/*
     - hooks:trigger-hook:project-comm/in-tree-action-1-backfill/*
+    - hooks:trigger-hook:project-gecko/in-tree-action-1-merge-automation/*
+    - hooks:trigger-hook:project-comm/in-tree-action-1-merge-automation/*
+    # we considered also allowing release promotion for all L1 users, but
+    # decided against it because release promotion tasks make changes to
+    # ship it, balrog, ftp.stage.mozaws.net, etc. - and can cause conflicts
+    # with other ongoing releases
   to:
     - groups:
         - active_scm_level_1
