@@ -2582,7 +2582,7 @@ pools:
       image: 'ronin_b{level}_windows11_a64_24h2_builder_{suffix}'
       implementation:
         by-suffix:
-          .*alpha: generic-worker/windows
+          alpha: generic-worker/windows
           default: generic-worker/worker-runner-windows
       worker-purpose:
         by-pool-group:
