@@ -2632,18 +2632,22 @@ pools:
     provider_id: azure2
     attributes:
       suffix: ''
+      implementation: generic-worker/worker-runner-windows
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
         suffix: alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: gpu
       - pool-group: gecko-t
         suffix: gpu-alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: source
       - pool-group: gecko-t
         suffix: source-alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: ssd
       - pool-group: gecko-t
@@ -2657,7 +2661,7 @@ pools:
           .*alpha: ronin_t_windows11_64_2009_alpha
           default: ronin_t_windows11_64_2009
       image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
+      implementation: '{implementation}'
       worker-purpose: '{pool-group}'
       locations:
         by-pool-group:
