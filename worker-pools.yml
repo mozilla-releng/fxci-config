@@ -2567,12 +2567,14 @@ pools:
     attributes:
       suffix: ''
       level: 1
+      implementation: generic-worker/worker-runner-windows
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-3
         level: 3
       - pool-group: gecko-1
         suffix: alpha
+        implementation: generic-worker/windows
       - pool-group: mozillavpn-1
     provider_id:
       by-level:
@@ -2580,10 +2582,7 @@ pools:
         3: azure_trusted
     config:
       image: 'ronin_b{level}_windows11_a64_24h2_builder_{suffix}'
-      implementation:
-        by-suffix:
-          .*alpha: generic-worker/windows
-          default: generic-worker/worker-runner-windows
+      implementation: '{implementation}'
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
