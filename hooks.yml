@@ -194,3 +194,26 @@ project-relman/code-review-production:
   trigger_schema:
     type: object
     additionalProperties: true
+    properties:
+
+      # Trigger hook from Phabricator with token payload to create a try push
+      build_target_phid:
+        type: string
+        description: Phabricator Build target's PHID triggering the hook
+
+      # Trigger hook from pulse for analyzing results
+      runId:
+        type: integer
+        description: Taskcluster Task Run ID triggering the hook (should be a Try Task run)
+      status:
+        type: object
+        required:
+          - taskId
+          - taskGroupId
+        properties:
+          taskId:
+            type: string
+            description: Taskcluster Task ID triggering the hook (should be a Try Task)
+          taskGroupId:
+            type: string
+            description: Taskcluster Task Group ID triggering the hook (should be a Try Task Group)
