@@ -2399,7 +2399,7 @@ pools:
     config:
       image: ronin_b1_windows2022_64_2009_alpha
       image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
       worker-purpose: nss-1
       locations: [central-us, north-central-us]
       maxCapacity: 25
@@ -2443,7 +2443,7 @@ pools:
     config:
       image: ronin_b1_windows2022_64_2009_alpha
       image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
       worker-purpose: vpn-1
       locations: [central-us, north-central-us]
       maxCapacity: 25
@@ -2487,6 +2487,7 @@ pools:
     provider_id: azure2
     attributes:
       suffix: ''
+      implementation: generic-worker/worker-runner-windows
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
@@ -2495,17 +2496,20 @@ pools:
         suffix: source
       - pool-group: gecko-t
         suffix: alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: source-alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: gpu-alpha
+        implementation: generic-worker/windows
     config:
       image:
         by-suffix:
           .*alpha: ronin_t_windows10_64_2009_alpha
           default: ronin_t_windows10_64_2009_prod
       image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
+      implementation: '{implementation}'
       worker-purpose: gecko-t
       locations:
         by-suffix:
@@ -2632,18 +2636,22 @@ pools:
     provider_id: azure2
     attributes:
       suffix: ''
+      implementation: generic-worker/worker-runner-windows
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
         suffix: alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: gpu
       - pool-group: gecko-t
         suffix: gpu-alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: source
       - pool-group: gecko-t
         suffix: source-alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: ssd
       - pool-group: gecko-t
@@ -2657,7 +2665,7 @@ pools:
           .*alpha: ronin_t_windows11_64_2009_alpha
           default: ronin_t_windows11_64_2009
       image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
+      implementation: '{implementation}'
       worker-purpose: '{pool-group}'
       locations:
         by-pool-group:
@@ -2732,22 +2740,27 @@ pools:
     provider_id: azure2
     attributes:
       suffix: ''
+      implementation: generic-worker/worker-runner-windows
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
         suffix: alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: large
       - pool-group: gecko-t
         suffix: large-alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: gpu
       - pool-group: gecko-t
         suffix: gpu-alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: source
       - pool-group: gecko-t
         suffix: source-alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: ssd
       - pool-group: gecko-t
@@ -2761,7 +2774,7 @@ pools:
           .*alpha: ronin_t_windows11_64_24h2_alpha
           default: ronin_t_windows11_64_24h2
       image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
+      implementation: '{implementation}'
       worker-purpose: '{pool-group}'
       locations:
         by-pool-group:
@@ -2838,13 +2851,16 @@ pools:
     provider_id: azure2
     attributes:
       suffix: ''
+      implementation: generic-worker/worker-runner-windows
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
         suffix: alpha
+        implementation: generic-worker/windows
       - pool-group: comm-t
       - pool-group: comm-t
         suffix: alpha
+        implementation: generic-worker/windows
     config:
       image: ronin_t_windows11_a64_24h2_tester_{suffix}
       implementation: generic-worker/worker-runner-windows
