@@ -53,18 +53,15 @@ worker-defaults:
       generic-worker/windows:
         genericWorker:
           config:
-            idleTimeoutSecs: 90
             cachesDir: Z:\caches
             cleanUpTaskDirs: true
-            deploymentId: f37dd7ee1cae
             disableReboots: false
             downloadsDir: Z:\downloads
-            ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
             livelogExecutable: C:\generic-worker\livelog.exe
-            livelogPUTPort: 60022
+            ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+            idleTimeoutSecs: 150
             numberOfTasksToRun: 0
             runAfterUserCreation: C:\generic-worker\task-user-init.cmd
-            runTasksAsCurrentUser: false
             sentryProject: generic-worker
             shutdownMachineOnIdle: true
             shutdownMachineOnInternalError: true
@@ -2271,7 +2268,7 @@ pools:
     config:
       image: ronin_b1_windows2022_64_2009_alpha
       image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
       worker-purpose: gecko-1
       locations: [west-us-3]
       maxCapacity: 10
@@ -2570,12 +2567,14 @@ pools:
     attributes:
       suffix: ''
       level: 1
+      implementation: generic-worker/worker-runner-windows
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-3
         level: 3
       - pool-group: gecko-1
         suffix: alpha
+        implementation: generic-worker/windows
       - pool-group: mozillavpn-1
     provider_id:
       by-level:
@@ -2583,7 +2582,7 @@ pools:
         3: azure_trusted
     config:
       image: 'ronin_b{level}_windows11_a64_24h2_builder_{suffix}'
-      implementation: generic-worker/worker-runner-windows
+      implementation: '{implementation}'
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
