@@ -2340,7 +2340,7 @@ pools:
           trusted: ronin_b3_windows2022_64_2009
           default: ronin_b1_windows2022_64_2009
       image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
       locations:
         by-pool-group:
           .*-3: [central-us, east-us-2, west-us-2]
@@ -2487,7 +2487,7 @@ pools:
     provider_id: azure2
     attributes:
       suffix: ''
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
@@ -2571,7 +2571,7 @@ pools:
     attributes:
       suffix: ''
       level: 1
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-3
@@ -2636,7 +2636,7 @@ pools:
     provider_id: azure2
     attributes:
       suffix: ''
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
@@ -2740,7 +2740,7 @@ pools:
     provider_id: azure2
     attributes:
       suffix: ''
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
@@ -2851,7 +2851,7 @@ pools:
     provider_id: azure2
     attributes:
       suffix: ''
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
