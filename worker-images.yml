@@ -147,9 +147,9 @@ ronin_b1_windows11_a64_24h2_builder:
     name: win11_a64_24h2_builder
 ronin_b3_windows11_a64_24h2_builder:
   azure_trusted:
-    version: 1.0.2
+    version: 1.0.1
     resource_group: rg-packer-worker-images
-    deployment_id: "b1f4165"
+    deployment_id: "1a0441f"
     name: trusted_win11_a64_24h2_builder
 ronin_t_windows11_a64_24h2_tester_alpha:
   azure2:
