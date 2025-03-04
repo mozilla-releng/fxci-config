@@ -2571,7 +2571,7 @@ pools:
     attributes:
       suffix: ''
       level: 1
-      implementation: generic-worker/windows
+      implementation: generic-worker/worker-runner-windows
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-3
