@@ -2888,7 +2888,7 @@ pools:
         implementation: generic-worker/windows
     config:
       image: ronin_t_windows11_a64_24h2_tester_{suffix}
-      implementation: generic-worker/worker-runner-windows
+      implementation: '{implementation}'
       worker-purpose: '{pool-group}'
       locations: [east-us-2, north-central-us, central-us]
       maxCapacity: 500
