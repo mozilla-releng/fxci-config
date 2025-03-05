@@ -1610,6 +1610,31 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: c2-standard-4
+  - pool_id: '{pool-group}/t-linux-2404-headless-ssd-alpha'
+    description: Workers running Ubuntu 24.04. Used by RelSRE to qualify images.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            enableInteractive: true
+            headlessTasks: true
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/linux-d2g
+      regions: [us-central1, us-west1]
+      image: ubuntu-2404-headless-alpha
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 60
+            - *scratch-disk
+          machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-2404-headless-alpha'
     description: Workers running Ubuntu 24.04. Used by RelSRE to qualify images.
     owner: release+tc-workers@mozilla.com
