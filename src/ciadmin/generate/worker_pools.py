@@ -4,6 +4,7 @@
 
 import copy
 import hashlib
+import json
 import pprint
 
 import attr
@@ -70,6 +71,19 @@ def _populate_deployment_id(instance_worker_config, image_id):
     ).hexdigest()
 
 
+def _populate_launch_config_id(launch_config, pool_id):
+    launch_config_id = launch_config.get("workerManager", {}).get("launchConfigId")
+    if launch_config_id is not None:
+        return
+    cfg_without_wm = {k: v for k, v in launch_config.items() if k != "workerManager"}
+    hashedLaunchConfig = hashlib.sha256(
+        (pool_id + json.dumps(cfg_without_wm, sort_keys=True)).encode("utf8")
+    ).hexdigest()
+    launch_config.setdefault("workerManager", {})["launchConfigId"] = (
+        "lc-" + hashedLaunchConfig[:20]
+    )
+
+
 def get_aws_provider_config(
     environment, provider_id, pool_id, config, worker_images, defaults
 ):
@@ -92,6 +106,16 @@ def get_aws_provider_config(
         {"implementation": implementation},
     )
     worker_config = merge(worker_config, config.get("worker-config", {}))
+
+    worker_manager_config = evaluate_keyed_by(
+        defaults.get("worker-manager-config", {}),
+        pool_id,
+        {"implementation": implementation},
+    )
+    worker_manager_config = merge(
+        worker_manager_config,
+        config.get("worker-manager-config", {}),
+    )
 
     _validate_instance_capacity(pool_id, implementation, instance_types)
 
@@ -119,11 +143,24 @@ def get_aws_provider_config(
                     instance_type["instanceType"],
                 ):
                     continue
+                instance_worker_manager_config = merge(
+                    {
+                        "capacityPerInstance": instance_type.get(
+                            "capacityPerInstance", 1
+                        )
+                    },
+                    worker_manager_config,
+                    instance_type.get("worker-manager-config", {}),
+                )
                 if implementation == "docker-worker":
                     instance_worker_config = merge(
                         worker_config,
                         instance_type.get("worker-config", {}),
-                        {"capacity": instance_type.get("capacityPerInstance", 1)},
+                        {
+                            "capacity": instance_worker_manager_config.get(
+                                "capacityPerInstance", 1
+                            )
+                        },
                     )
                 else:
                     instance_worker_config = merge(
@@ -139,7 +176,6 @@ def get_aws_provider_config(
                 image_id = image.get(provider_id, region)
                 _populate_deployment_id(instance_worker_config, image_id)
                 launch_config = {
-                    "capacityPerInstance": instance_type.get("capacityPerInstance", 1),
                     "region": region,
                     "launchConfig": {
                         "ImageId": image_id,
@@ -149,6 +185,7 @@ def get_aws_provider_config(
                         "InstanceType": instance_type["instanceType"],
                     },
                     "workerConfig": instance_worker_config,
+                    "workerManager": instance_worker_manager_config,
                 }
                 launch_config["additionalUserData"] = {}
                 launch_config["additionalUserData"].update(user_data)
@@ -162,6 +199,8 @@ def get_aws_provider_config(
                     launch_config["launchConfig"]["InstanceMarketOptions"] = {
                         "MarketType": "spot"
                     }
+                launch_config["launchConfig"].pop("capacityPerInstance", None)
+                _populate_launch_config_id(launch_config, pool_id)
                 launch_configs.append(launch_config)
 
     return {
@@ -198,6 +237,16 @@ def get_azure_provider_config(
     gw_config = worker_config["genericWorker"]["config"]
     if azure_config.get("wst_server_url"):
         gw_config.setdefault("wstServerURL", azure_config["wst_server_url"])
+
+    worker_manager_config = evaluate_keyed_by(
+        defaults.get("worker-manager-config", {}),
+        pool_id,
+        {"implementation": implementation},
+    )
+    worker_manager_config = merge(
+        worker_manager_config,
+        config.get("worker-manager-config", {}),
+    )
 
     # Populate some generic-worker metadata.
     metadata = {}
@@ -252,6 +301,12 @@ def get_azure_provider_config(
                 )
             tags["deploymentId"] = DeploymentId
 
+            instance_worker_manager_config = merge(
+                {"capacityPerInstance": vmSize.get("capacityPerInstance", 1)},
+                worker_manager_config,
+                vmSize.get("worker-manager-config", {}),
+            )
+
             launch_config = {
                 "location": loc,
                 "subnetId": subnetId,
@@ -265,11 +320,12 @@ def get_azure_provider_config(
                 "priority": "spot",
                 "billingProfile": {"maxPrice": -1},
                 "evictionPolicy": "Delete",
-                "capacityPerInstance": 1,
                 "storageProfile": {"imageReference": {"id": imageReference_id}},
+                "workerManager": instance_worker_manager_config,
             }
 
             launch_config = merge(launch_config, vmSize.get("launchConfig", {}))
+            _populate_launch_config_id(launch_config, pool_id)
             launch_configs.append(launch_config)
 
     return {
@@ -301,6 +357,16 @@ def get_google_provider_config(
     )
     worker_config = merge(worker_config, config.get("worker-config", {}))
 
+    worker_manager_config = evaluate_keyed_by(
+        defaults.get("worker-manager-config", {}),
+        pool_id,
+        {"implementation": implementation},
+    )
+    worker_manager_config = merge(
+        worker_manager_config,
+        config.get("worker-manager-config", {}),
+    )
+
     image_name = image.get(provider_id)
 
     _validate_instance_capacity(pool_id, implementation, instance_types)
@@ -319,7 +385,16 @@ def get_google_provider_config(
                 ):
                     continue
                 launch_config = copy.deepcopy(instance_type)
-                launch_config.setdefault("capacityPerInstance", 1)
+                instance_worker_manager_config = merge(
+                    {
+                        "capacityPerInstance": launch_config.pop(
+                            "capacityPerInstance", 1
+                        )
+                    },
+                    worker_manager_config,
+                    launch_config.pop("worker-manager-config", {}),
+                )
+                launch_config["workerManager"] = instance_worker_manager_config
                 launch_config.setdefault(
                     "networkInterfaces",
                     [{"accessConfigs": [{"type": "ONE_TO_ONE_NAT"}]}],
@@ -349,7 +424,11 @@ def get_google_provider_config(
                 if implementation == "docker-worker":
                     launch_config["workerConfig"] = merge(
                         launch_config["workerConfig"],
-                        {"capacity": instance_type.get("capacityPerInstance", 1)},
+                        {
+                            "capacity": instance_worker_manager_config.get(
+                                "capacityPerInstance", 1
+                            )
+                        },
                     )
                 else:
                     if google_config.get("wst_server_url") and launch_config[
@@ -386,6 +465,7 @@ def get_google_provider_config(
                 scheduling_choice = launch_config.get("scheduling", "spot")
                 launch_config["scheduling"] = scheduling_options[scheduling_choice]
 
+                _populate_launch_config_id(launch_config, pool_id)
                 launch_configs.append(launch_config)
 
     return {
@@ -471,6 +551,17 @@ def generate_pool_variants(worker_pools, environment):
                 config["worker-config"]["shutdown"]["afterIdleSeconds"] = value
             else:
                 del config["worker-config"]["shutdown"]["afterIdleSeconds"]
+
+        if config.get("worker-manager-config", {}).get("launchConfigId", None):
+            value = evaluate_keyed_by(
+                config["worker-manager-config"]["launchConfigId"],
+                "worker-manager-config.launchConfigId",
+                attributes,
+            )
+            if value is not None:
+                config["worker-manager-config"]["launchConfigId"] = value
+            else:
+                del config["worker-manager-config"]["launchConfigId"]
 
         for key in (
             "image",
