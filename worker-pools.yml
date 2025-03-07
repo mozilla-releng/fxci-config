@@ -177,7 +177,8 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-2
-          capacityPerInstance: 8
+          worker-manager-config:
+            capacityPerInstance: 8
       worker-config:
         shutdown:
           afterIdleSeconds: 86400
@@ -930,7 +931,8 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: c2-standard-4
-          capacityPerInstance: 2
+          worker-manager-config:
+            capacityPerInstance: 2
       worker-config:
         shutdown:
           afterIdleSeconds:
@@ -1007,7 +1009,8 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: n2-standard-2
-          capacityPerInstance: 2
+          worker-manager-config:
+            capacityPerInstance: 2
       worker-config:
         shutdown:
           afterIdleSeconds:
@@ -1091,7 +1094,8 @@ pools:
                   diskSizeGb: 75
                 - *scratch-disk
               machine_type: n2-standard-2
-              capacityPerInstance: 1
+              worker-manager-config:
+                capacityPerInstance: 1
           default:
             - minCpuPlatform: Intel Cascadelake
               disks:
@@ -1099,7 +1103,8 @@ pools:
                   diskSizeGb: 75
                 - *scratch-disk
               machine_type: c2-standard-4
-              capacityPerInstance: 1
+              worker-manager-config:
+                capacityPerInstance: 1
   - pool_id: '{pool-group}/images-gcp-aarch64'
     description: Builds AArch64 docker images
     owner: release+tc-workers@mozilla.com
@@ -2283,7 +2288,8 @@ pools:
               diskSizeGb: 20
             - *scratch-disk
           machine_type: c2-standard-4
-          capacityPerInstance: 8
+          worker-manager-config:
+            capacityPerInstance: 8
   # Windows Server 2022
   - pool_id: gecko-1/b-win2022-alpha
     description: ''
@@ -2329,7 +2335,8 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
   - pool_id: '{pool-group}/b-win2022'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2415,7 +2422,8 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
   - pool_id: nss-1/b-win2022-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2459,7 +2467,8 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
   - pool_id: mozillavpn-1/b-win2022-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2503,7 +2512,8 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
   # Windows 10
   - pool_id: '{pool-group}/win10-64-2009-{suffix}'
     description: ''
@@ -2587,7 +2597,8 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
   # Windows 11
   - pool_id: '{pool-group}/win11-a64-24h2-builder-{suffix}'
     description: ''
@@ -2653,7 +2664,8 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
   - pool_id: '{pool-group}/win11-64-2009-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2757,7 +2769,8 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
   - pool_id: '{pool-group}/win11-64-24h2-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2868,7 +2881,8 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
   - pool_id: '{pool-group}/win11-a64-24h2-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2928,7 +2942,8 @@ pools:
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
   - pool_id: '{pool-group}/t-linux-large-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -3032,7 +3047,8 @@ pools:
               diskSizeGb: 20
             - *scratch-disk
           machine_type: c2-standard-4
-          capacityPerInstance: 2
+          worker-manager-config:
+            capacityPerInstance: 2
       worker-config:
         shutdown:
           afterIdleSeconds: 900
