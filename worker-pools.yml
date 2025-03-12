@@ -1651,7 +1651,7 @@ pools:
             enableInteractive: true
             headlessTasks: true
       minCapacity: 0
-      maxCapacity: 10
+      maxCapacity: 100
       implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
       image: ubuntu-2404-headless-alpha
