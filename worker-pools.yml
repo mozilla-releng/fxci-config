@@ -1623,6 +1623,8 @@ pools:
           config:
             enableInteractive: true
             headlessTasks: true
+            downloadsDir: /home/generic-worker/downloads
+            cachesDir: /home/generic-worker/caches
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/linux-d2g
