@@ -135,7 +135,6 @@ def assert_aws_basic(pool):
     config = pool.config
     assert config["launchConfigs"][0] == {
         "additionalUserData": {},
-        "capacityPerInstance": 1,
         "launchConfig": {
             "ImageId": "id",
             "InstanceMarketOptions": {"MarketType": "spot"},
@@ -146,6 +145,10 @@ def assert_aws_basic(pool):
         },
         "region": "us-east1",
         "workerConfig": {"capacity": 1},
+        "workerManager": {
+            "capacityPerInstance": 1,
+            "launchConfigId": "lc-9790845b6f288e58e00c",
+        },
     }
 
 
@@ -154,7 +157,6 @@ def assert_google_basic(pool):
 
     config = pool.config
     assert config["launchConfigs"][0] == {
-        "capacityPerInstance": 1,
         "disks": [],
         "machineType": "zones/us-east1a/machineTypes/n2-custom",
         "networkInterfaces": [{"accessConfigs": [{"type": "ONE_TO_ONE_NAT"}]}],
@@ -165,6 +167,10 @@ def assert_google_basic(pool):
             "onHostMaintenance": "terminate",
         },
         "workerConfig": {"capacity": 1},
+        "workerManager": {
+            "capacityPerInstance": 1,
+            "launchConfigId": "lc-67ea709518817f31825b",
+        },
         "zone": "us-east1a",
     }
 
@@ -175,7 +181,6 @@ def assert_azure_basic(pool):
     config = pool.config
     assert config["launchConfigs"][0] == {
         "billingProfile": {"maxPrice": -1},
-        "capacityPerInstance": 1,
         "evictionPolicy": "Delete",
         "hardwareProfile": {"vmSize": {"vmSize": "Standard_F8s_v2"}},
         "location": "useast1",
@@ -188,6 +193,10 @@ def assert_azure_basic(pool):
         "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
         "tags": {"deploymentId": "d_id"},
         "workerConfig": {"genericWorker": {"config": {}}},
+        "workerManager": {
+            "capacityPerInstance": 1,
+            "launchConfigId": "lc-c2939e65d0a8212f975e",
+        },
     }
 
 
@@ -197,7 +206,6 @@ def assert_azure_version(pool):
     config = pool.config
     assert config["launchConfigs"][0] == {
         "billingProfile": {"maxPrice": -1},
-        "capacityPerInstance": 1,
         "evictionPolicy": "Delete",
         "hardwareProfile": {"vmSize": {"vmSize": "Standard_F8s_v2"}},
         "location": "useast1",
@@ -210,6 +218,10 @@ def assert_azure_version(pool):
         "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
         "tags": {"deploymentId": "d_id"},
         "workerConfig": {"genericWorker": {"config": {}}},
+        "workerManager": {
+            "capacityPerInstance": 1,
+            "launchConfigId": "lc-6f6da7314b90174aeeea",
+        },
     }
 
 
