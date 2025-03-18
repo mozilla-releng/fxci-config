@@ -312,6 +312,7 @@
     - queue:create-task:low:lambda/gecko-t-*
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1-dev
+    - queue:create-task:low:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
     - queue:get-artifact:releng/partner/*
     # TODO(bug 1824855): move mobile secrets into the gecko namespace
     - secrets:get:project/mobile/firefox-android/android-components/firebase
@@ -368,6 +369,7 @@
     - queue:create-task:low:bitbar/gecko-t-*
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1-dev
+    - queue:create-task:low:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
     - queue:get-artifact:releng/partner/*
   to:
     - projects:
@@ -393,7 +395,7 @@
     - project:comm:thunderbird:releng:treescript:action:push
     - project:comm:thunderbird:releng:treescript:action:tagging
     - project:comm:thunderbird:releng:treescript:action:version_bump
-    - queue:create-task:low:scriptworker-prov-v1/tb-depsigning-mac-v1
+    - queue:create-task:low:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
     - queue:get-artifact:project/comm/*
     - secrets:get:project/comm/thunderbird/releng/build/level-1/*
   to:
@@ -438,6 +440,7 @@
     - queue:route:notify.email.release-automation-notifications@mozilla.com.*
     - secrets:get:project/mobile/firefox-android/fenix/nightly
     - secrets:get:project/mobile/firefox-android/fenix/nightly-simulation
+    - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac14m2
   to:
     - projects:
         feature: gecko-roles
@@ -451,6 +454,7 @@
     - queue:create-task:highest:scriptworker-prov-v1/tb-depsigning-mac-v1
     - queue:create-task:highest:scriptworker-prov-v1/tb-signing-mac-v1
     - queue:create-task:highest:scriptworker-prov-v1/tb-mac-notarization-poller
+    - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac14m2
     - secrets:get:project/comm/thunderbird/releng/build/level-3/*
   to:
     - projects:
@@ -1818,6 +1822,7 @@
         job: [release:*, action:release-promotion]
 
 - grant:
+    - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac14m2
     - project:mozillavpn:releng:signing:cert:release-signing
     - project:mozillavpn:releng:signing:cert:release-apple-notarization
     - secrets:get:project/mozillavpn/tokens
@@ -1858,6 +1863,7 @@
     - queue:create-task:low:releng-hardware/mozillavpn-b-1-*
     - queue:create-task:low:scriptworker-prov-v1/mozillavpn-t-signing-mac
     - queue:create-task:highest:scriptworker-prov-v1/vpn-depsigning-mac-v1
+    - queue:create-task:highest:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
     - project:mozillavpn:releng:beetmover:action:push-to-candidates
     - project:mozillavpn:releng:beetmover:action:push-to-releases
     - project:mozillavpn:releng:beetmover:action:direct-push-to-bucket
@@ -2013,6 +2019,7 @@
     - queue:create-task:highest:adhoc-t/*
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac-dev
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
+    - queue:create-task:highest:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2*
     - project:adhoc:releng:signing:cert:dep-signing
     - queue:route:index.{trust_domain}.v2.{alias}.*
     - queue:route:index.{trust_domain}.v2.staging-adhoc-manifest.*
@@ -2029,6 +2036,7 @@
     - project:adhoc:releng:signing:cert:release-apple-notarization
     - project:adhoc:releng:signing:cert:nightly-signing
     - queue:route:index.{trust_domain}.v2.adhoc-manifest.*
+    - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac14m2*
   to:
     - project:
         alias:
