@@ -2008,9 +2008,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      lifecycle:
-        # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -2120,9 +2117,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      lifecycle:
-        # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -2159,9 +2153,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      lifecycle:
-        # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -2198,9 +2189,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      lifecycle:
-        # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
@@ -2239,9 +2227,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      lifecycle:
-        # low inactivity timeout because these workers are very expensive
-        queueInactivityTimeout: 1800
       worker-config:
         genericWorker:
           config:
