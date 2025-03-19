@@ -880,48 +880,48 @@ project/releng/scriptworker/v2/iscript/tb-prod:
   scopes:
     - assume:worker-type:scriptworker-prov-v1/tb-signing-mac-v1
     - queue:worker-id:signing-mac-v1/tb-mac-v3-signing*
-# Gecko m2 mac signers
+# Gecko m2 mac signers dep
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-gecko-t:
   description: Dep signing worker pool for Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
-    - assume:worker-type:scriptworker-prov-v1/gecko-depsigning-mac14m2
-    - queue:worker-id:gecko-depsigning-mac14m2/gecko-depsigning-mac14m2*
+    - assume:worker-type:scriptworker-prov-v1/dep-gecko-signing-mac14m2
+    - queue:worker-id:dep-gecko-signing-mac14m2/dep-gecko-signing-mac14m2*
 # Gecko m2 mac signers
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-gecko-3:
   description: Production signing worker pool for Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
     - assume:worker-type:scriptworker-prov-v1/gecko-signing-mac14m2
     - queue:worker-id:gecko-signing-mac14m2/gecko-signing-mac14m2*
-# TB m2 mac signers
-project/releng/scriptworker/v3/mac-signing/prod/firefoxci-tb-t:
+# TB m2 mac signers dep
+project/releng/scriptworker/v3/mac-signing/prod/firefoxci-comm-t:
   description: Dep signing worker pool for Thunderbird on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
-    - assume:worker-type:scriptworker-prov-v1/tb-depsigning-mac14m2
-    - queue:worker-id:tb-depsigning-mac14m2/tb-depsigning-mac14m2*
+    - assume:worker-type:scriptworker-prov-v1/dep-comm-signing-mac14m2
+    - queue:worker-id:dep-comm-signing-mac14m2/dep-comm-signing-mac14m2*
 # TB m2 mac signers
-project/releng/scriptworker/v3/mac-signing/prod/firefoxci-tb-3:
+project/releng/scriptworker/v3/mac-signing/prod/firefoxci-comm-3:
   description: Production signing worker pool for Thunderbird on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
-    - assume:worker-type:scriptworker-prov-v1/tb-signing-mac14m2
-    - queue:worker-id:tb-signing-mac14m2/tb-signing-mac14m2*
-# VPN m2 mac signers
+    - assume:worker-type:scriptworker-prov-v1/comm-signing-mac14m2
+    - queue:worker-id:comm-signing-mac14m2/comm-signing-mac14m2*
+# VPN m2 mac signers dep
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-mozillavpn-t:
   description: Dep signing worker pool for MozillaVPN on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
-    - assume:worker-type:scriptworker-prov-v1/mozillavpn-depsigning-mac14m2
-    - queue:worker-id:mozillavpn-depsigning-mac14m2/mozillavpn-depsigning-mac14m2*
+    - assume:worker-type:scriptworker-prov-v1/dep-mozillavpn-signing-mac14m2
+    - queue:worker-id:dep-mozillavpn-signing-mac14m2/dep-mozillavpn-signing-mac14m2*
 # VPN m2 mac signers
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-mozillavpn-3:
   description: Production signing worker pool for MozillaVPN on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
     - assume:worker-type:scriptworker-prov-v1/mozillavpn-signing-mac14m2
     - queue:worker-id:mozillavpn-signing-mac14m2/mozillavpn-signing-mac14m2*
-# Adhoc m2 mac signers
+# Adhoc m2 mac signers dep
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-adhoc-t:
   description: Dep signing worker pool for Adhoc on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
-    - assume:worker-type:scriptworker-prov-v1/adhoc-depsigning-mac14m2
-    - queue:worker-id:adhoc-depsigning-mac14m2/adhoc-depsigning-mac14m2*
+    - assume:worker-type:scriptworker-prov-v1/dep-adhoc-signing-mac14m2
+    - queue:worker-id:dep-adhoc-signing-mac14m2/dep-adhoc-signing-mac14m2*
 # Adhoc m2 mac signers
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-adhoc-3:
   description: Production signing worker pool for Adhoc on macOS 14 (M2). Handles macOS-specific signing tasks.
