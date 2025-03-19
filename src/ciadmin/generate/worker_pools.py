@@ -120,7 +120,7 @@ def get_aws_provider_config(
     _validate_instance_capacity(pool_id, implementation, instance_types)
 
     launch_configs = []
-    for region in regions:
+    for region in sorted(regions):
         availability_zones = evaluate_keyed_by(
             aws_config["availability-zones"], pool_id, {"region": region}
         )
@@ -129,14 +129,14 @@ def get_aws_provider_config(
             pool_id,
             {"region": region, "security": security},
         )
-        for availability_zone in availability_zones:
+        for availability_zone in sorted(availability_zones):
             subnet_id = evaluate_keyed_by(
                 aws_config["subnet-id"],
                 pool_id,
                 {"availability-zone": availability_zone},
             )
 
-            for instance_type in instance_types:
+            for instance_type in sorted(instance_types):
                 if is_invalid_aws_instance_type(
                     aws_config["invalid-instances"],
                     availability_zone,
