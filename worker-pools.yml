@@ -2958,6 +2958,40 @@ pools:
               type: SCRATCH
               interface: NVME
           machine_type: c2-standard-4
+  - pool_id: '{pool-group}/t-linux-docker'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+      - pool-group: comm-t
+      - pool-group: mozilla-t
+      - pool-group: nss-t
+    email_on_error: true
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            enableInteractive: true
+            headlessTasks: true
+            disableNativePayloads: true
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 2500
+          comm-t: 100
+          mozilla-t: 100
+          nss-t: 100
+      implementation: generic-worker/linux-d2g
+      regions: [us-central1, us-west1]
+      image: ubuntu-2404-headless
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 75
+            - *scratch-disk
+          machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-large-noscratch-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
@@ -2985,6 +3019,37 @@ pools:
                 diskSizeGb: 75
                 sourceImage: <image>
               type: PERSISTENT
+          machine_type: c2-standard-4
+  - pool_id: '{pool-group}/t-linux-docker-noscratch'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+      - pool-group: comm-t
+      - pool-group: mozilla-t
+    email_on_error: true
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            enableInteractive: true
+            headlessTasks: true
+            disableNativePayloads: true
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 2500
+          comm-t: 100
+          mozilla-t: 100
+      implementation: generic-worker/linux-d2g
+      regions: [us-central1, us-west1]
+      image: ubuntu-2404-headless
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 75
           machine_type: c2-standard-4
   - pool_id: 'gecko-t/t-linux-large-hostub2204-gcp'
     description: Worker for gecko-based automation.
