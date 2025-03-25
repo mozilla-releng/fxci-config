@@ -2975,6 +2975,8 @@ pools:
             enableInteractive: true
             headlessTasks: true
             disableNativePayloads: true
+            downloadsDir: /home/generic-worker/downloads
+            cachesDir: /home/generic-worker/caches
       minCapacity: 0
       maxCapacity:
         by-pool-group:
@@ -3036,6 +3038,8 @@ pools:
             enableInteractive: true
             headlessTasks: true
             disableNativePayloads: true
+            downloadsDir: /home/generic-worker/downloads
+            cachesDir: /home/generic-worker/caches
       minCapacity: 0
       maxCapacity:
         by-pool-group:
