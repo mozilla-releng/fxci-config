@@ -604,9 +604,9 @@ project/releng/generic-worker/win10-64-2009-hw:
   scopes:
     - assume:worker-type:releng-hardware/win10-64-2009-hw
 project/releng/generic-worker/win10-64-2009-hw-alpha:
-  description: Datacenter Windows 11 alpha worker. 2009 references the os build.
+  description: Datacenter Windows 10 alpha worker. 2009 references the os build.
   scopes:
-    - assume:worker-type:releng-hardware/win11-64-2009-hw-alpha
+    - assume:worker-type:releng-hardware/win10-64-2009-hw-alpha
 project/releng/generic-worker/win11-64-2009-hw:
   description: Datacenter Windows 11 main production worker. 2009 references the os build.
   scopes:
