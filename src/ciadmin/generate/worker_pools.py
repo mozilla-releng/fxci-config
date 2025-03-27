@@ -144,12 +144,19 @@ def get_aws_provider_config(
                 ):
                     continue
 
-                attrs = {"availabilityZone": availability_zone, "instanceType": instance_type["instanceType"]}
+                attrs = {
+                    "availabilityZone": availability_zone,
+                    "instanceType": instance_type["instanceType"],
+                }
                 initial_weight = evaluate_keyed_by(
-                    worker_manager_config.get("initialWeight", None), "initialWeight", attrs
+                    worker_manager_config.get("initialWeight", None),
+                    "initialWeight",
+                    attrs,
                 )
                 max_capacity = evaluate_keyed_by(
-                    worker_manager_config.get("maxCapacity", None), "maxCapacity", attrs,
+                    worker_manager_config.get("maxCapacity", None),
+                    "maxCapacity",
+                    attrs,
                 )
                 instance_worker_manager_config = merge(
                     {
@@ -158,7 +165,9 @@ def get_aws_provider_config(
                         )
                     },
                     worker_manager_config,
-                    {"initialWeight": initial_weight} if initial_weight is not None else {},
+                    {"initialWeight": initial_weight}
+                    if initial_weight is not None
+                    else {},
                     {"maxCapacity": max_capacity} if max_capacity is not None else {},
                     instance_type.get("worker-manager-config", {}),
                 )
@@ -316,7 +325,9 @@ def get_azure_provider_config(
                 worker_manager_config.get("initialWeight", None), "initialWeight", attrs
             )
             max_capacity = evaluate_keyed_by(
-                worker_manager_config.get("maxCapacity", None), "maxCapacity", attrs,
+                worker_manager_config.get("maxCapacity", None),
+                "maxCapacity",
+                attrs,
             )
 
             instance_worker_manager_config = merge(
@@ -324,7 +335,7 @@ def get_azure_provider_config(
                 worker_manager_config,
                 {"initialWeight": initial_weight} if initial_weight is not None else {},
                 {"maxCapacity": max_capacity} if max_capacity is not None else {},
-                vmSize.get("worker-manager-config", {})
+                vmSize.get("worker-manager-config", {}),
             )
 
             launch_config = {
@@ -406,12 +417,20 @@ def get_google_provider_config(
                     continue
                 launch_config = copy.deepcopy(instance_type)
 
-                attrs = {"region": region, "zone": zone, "machineType": instance_type["machine_type"]}
+                attrs = {
+                    "region": region,
+                    "zone": zone,
+                    "machineType": instance_type["machine_type"],
+                }
                 initial_weight = evaluate_keyed_by(
-                    worker_manager_config.get("initialWeight", None), "initialWeight", attrs,
+                    worker_manager_config.get("initialWeight", None),
+                    "initialWeight",
+                    attrs,
                 )
                 max_capacity = evaluate_keyed_by(
-                    worker_manager_config.get("maxCapacity", None), "maxCapacity", attrs,
+                    worker_manager_config.get("maxCapacity", None),
+                    "maxCapacity",
+                    attrs,
                 )
                 instance_worker_manager_config = merge(
                     {
@@ -420,7 +439,9 @@ def get_google_provider_config(
                         )
                     },
                     worker_manager_config,
-                    {"initialWeight": initial_weight} if initial_weight is not None else {},
+                    {"initialWeight": initial_weight}
+                    if initial_weight is not None
+                    else {},
                     {"maxCapacity": max_capacity} if max_capacity is not None else {},
                     launch_config.pop("worker-manager-config", {}),
                 )
