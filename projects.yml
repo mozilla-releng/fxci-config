@@ -726,6 +726,8 @@ firefox-ios:
   branches:
     - name: main
       level: 3
+    - name: release/*
+      level: 3
   features:
     bitrise: true
     github-taskgraph: true
@@ -750,6 +752,8 @@ staging-firefox-ios:
   repo_type: git
   branches:
     - name: main
+      level: 1
+    - name: release/*
       level: 1
   features:
     bitrise: true
