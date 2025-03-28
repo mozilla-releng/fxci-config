@@ -1714,7 +1714,7 @@
           - firefox-ios
           - staging-firefox-ios
         job:
-          - branch:release/*
+          - action:release-promotion
 
 - grant:
     - secrets:get:project/mobile/ci/testrail
