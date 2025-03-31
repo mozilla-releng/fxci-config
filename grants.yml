@@ -1707,6 +1707,16 @@
           - pull-request:trusted
 
 - grant:
+    - project:{trust_domain}:{trust_project}:releng:bitrise:workflow:release_promotion_*
+  to:
+    - project:
+        alias:
+          - firefox-ios
+          - staging-firefox-ios
+        job:
+          - action:release-promotion
+
+- grant:
     - secrets:get:project/mobile/ci/testrail
   to:
     - project:
