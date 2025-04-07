@@ -103,6 +103,9 @@ ubuntu-2404-headless:
 ubuntu-2404-arm64-headless-alpha:
   ## alpha pool that relsre can use to rebuild and test 2404 arm64 headless ubuntu images
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-alpha
+ubuntu-2404-arm64-headless:
+  ## Headless Image for Ubuntu 24.04 arm64
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2025-04-07
 
 # Windows Server 2022
 ronin_b1_windows2022_64_2009_alpha:
