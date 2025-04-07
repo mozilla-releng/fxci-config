@@ -2872,7 +2872,7 @@ pools:
           nss-t: 100
       implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1]
-      image: ubuntu-2404-arm64-headless-alpha
+      image: ubuntu-2404-arm64-headless
       instance_types:
         - minCpuPlatform: Ampere Altra
           disks:
