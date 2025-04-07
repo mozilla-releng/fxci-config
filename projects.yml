@@ -738,6 +738,7 @@ firefox-ios:
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
+    treescript-phase: true
     trust-domain-scopes: true
   cron:
     targets:
@@ -764,6 +765,7 @@ staging-firefox-ios:
     mobile-testrail: true
     taskgraph-actions: true
     treeherder-reporting: true
+    treescript-phase: true
     trust-domain-scopes: true
 
 # mozilla's Github repositories
