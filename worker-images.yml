@@ -98,7 +98,7 @@ ubuntu-2404-headless-alpha:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha
 ubuntu-2404-headless:
   ## Headless Image for Ubuntu 24.04
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-04-01
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-04-08
 
 ubuntu-2404-arm64-headless-alpha:
   ## alpha pool that relsre can use to rebuild and test 2404 arm64 headless ubuntu images
