@@ -731,6 +731,7 @@ firefox-ios:
   features:
     bitrise: true
     github-taskgraph: true
+    github-publication: true
     github-pull-request:
       policy: public_restricted
     mobile-roles: true
@@ -758,6 +759,7 @@ staging-firefox-ios:
       level: 1
   features:
     bitrise: true
+    github-publication: true
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
