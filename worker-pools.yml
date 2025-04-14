@@ -1530,6 +1530,7 @@ pools:
       minCapacity: 0
       maxCapacity: 100
       implementation: generic-worker/linux-d2g
+      # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
       image: ubuntu-2404-arm64-headless-alpha
       instance_types:
@@ -2899,7 +2900,8 @@ pools:
           mozilla-t: 100
           nss-t: 100
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
+      regions: [us-central1]
       image: ubuntu-2404-arm64-headless
       instance_types:
         - minCpuPlatform: Ampere Altra
