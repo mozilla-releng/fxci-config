@@ -589,6 +589,11 @@ project/releng/generic-worker/datacenter-gecko-t-osx-1500-m4-staging:
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-osx*
     - queue:worker-id:mdc1/mac*
+project/releng/generic-worker/datacenter-gecko-t-osx-1500-m4:
+  description: Datacenter MacOS dedicated developer and automation worker.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-t-osx*
+    - queue:worker-id:mdc1/mac*
 project/releng/generic-worker/datacenter-gecko-t-osx-1400-m-vms:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
