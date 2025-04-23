@@ -728,6 +728,7 @@ firefox-ios:
       policy: public_restricted
     mobile-roles: true
     mobile-testrail: true
+    shipit: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -757,6 +758,7 @@ staging-firefox-ios:
       policy: public_restricted
     mobile-roles: true
     mobile-testrail: true
+    shipit: true
     taskgraph-actions: true
     treeherder-reporting: true
     treescript-phase: true
