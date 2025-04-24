@@ -90,27 +90,42 @@ async def check_providers():
     assert not invalid_pools
 
 
+GCP_MACHINE_TYPE_REGEX = re.compile(
+    r"""
+    ^(?P<machine_series>[^-]+)
+    -(?P<machine_configuration>[^-]+)
+    -(?P<number_of_cpus>\d+)
+    (-(?P<suffix>.+))?
+    $""",
+    re.VERBOSE,
+)
+
+
 def min_scratch_disks(machine_type):
     """Return the minimum number of scratch disks based on machine_type.
 
     As documented at:
     https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds
     """
-    family, *parts = machine_type.split("-")
-    if family not in ("n1", "n2", "c2", "t2a"):
+    matches = GCP_MACHINE_TYPE_REGEX.match(machine_type)
+    if matches is None:
+        raise ValueError(f"Cannot parse '{machine_type}'")
+
+    machine_series = matches.group("machine_series")
+    if machine_series not in ("n1", "n2", "c2", "t2a"):
         raise NotImplementedError(
             f"Min scratch disks not implemented for '{machine_type}'"
         )
 
     # t2a ARM64 machines don't support Local SSD disks.
-    if family == "t2a":
+    if machine_series == "t2a":
         return 0
 
-    if family == "n1":
+    if machine_series == "n1":
         return 1
 
-    num_cpu = int(parts[1])
-    assert family in ("c2", "n2")
+    num_cpu = int(matches.group("number_of_cpus"))
+    assert machine_series in ("c2", "n2")
     if num_cpu <= 10:
         return 1
 
