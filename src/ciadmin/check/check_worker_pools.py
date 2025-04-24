@@ -112,7 +112,7 @@ def min_scratch_disks(machine_type):
         raise ValueError(f"Cannot parse '{machine_type}'")
 
     machine_series = matches.group("machine_series")
-    if machine_series not in ("n1", "n2", "c2", "t2a"):
+    if machine_series not in ("n1", "n2", "n2d", "c2", "c2d", "c3d", "t2a"):
         raise NotImplementedError(
             f"Min scratch disks not implemented for '{machine_type}'"
         )
@@ -125,11 +125,24 @@ def min_scratch_disks(machine_type):
         return 1
 
     num_cpu = int(matches.group("number_of_cpus"))
-    if machine_series in ("c2", "n2"):
+    if machine_series in ("c2", "n2", "n2d"):
         powers_of_2 = tuple(2**i for i in range(0, 4))
         for i in powers_of_2:
             if num_cpu <= i * 10:
                 return i
+
+    elif machine_series in ("c2d", "c3d"):
+        # https://cloud.google.com/compute/docs/compute-optimized-machines#c2d_machine_types
+        # https://cloud.google.com/compute/docs/general-purpose-machines#c3d-standard-with-local-ssd
+        if num_cpu <= 16:
+            return 1
+        elif num_cpu <= 32:
+            return 2
+        elif num_cpu <= 60:
+            return 4
+        elif num_cpu <= 360:
+            return 8
+
     return 16
 
 
@@ -138,7 +151,12 @@ async def check_gcp_ssds():
     """This test aims to avoid requesting unnecessary SSDs."""
     environment = await Environment.current()
     worker_pools = await WorkerPoolConfig.fetch_all()
-    ignore = ()
+    ignore = (
+        # Bug 1962119: Let's keep the number of local SSDs the same between
+        # c2 and its AMD counterparts.
+        "gecko-1/b-linux-gcp-bug1962119-c2d",
+        "gecko-1/b-linux-gcp-bug1962119-c3d",
+    )
     errors = []
 
     for pool in generate_pool_variants(worker_pools, environment):
