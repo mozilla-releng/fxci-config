@@ -2873,6 +2873,35 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: c2-standard-4
+  - pool_id: 'gecko-t/t-linux-docker-kvm'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 400
+      regions: [us-central1, us-west1]
+      image: ubuntu-2404-headless
+      implementation: generic-worker/linux-d2g
+      worker-config:
+        genericWorker:
+          config:
+            enableInteractive: true
+            headlessTasks: true
+            disableNativePayloads: true
+            downloadsDir: /home/generic-worker/downloads
+            cachesDir: /home/generic-worker/caches
+            d2gConfig:
+              allowKVM: true
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 75
+          machine_type: n2-standard-8
+          advancedMachineFeatures:
+            enableNestedVirtualization: true
   - pool_id: '{pool-group}/t-linux-arm64-docker'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
