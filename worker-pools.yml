@@ -144,6 +144,7 @@ worker-defaults:
               enableD2G: true
               allowPrivileged: false
               allowHostSharedMemory: false
+              allowKVM: false
 
 meta:
   - &persistent-disk
