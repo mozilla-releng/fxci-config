@@ -125,19 +125,11 @@ def min_scratch_disks(machine_type):
         return 1
 
     num_cpu = int(matches.group("number_of_cpus"))
-    assert machine_series in ("c2", "n2")
-    if num_cpu <= 10:
-        return 1
-
-    if num_cpu <= 20:
-        return 2
-
-    if num_cpu <= 40:
-        return 4
-
-    if num_cpu <= 80:
-        return 8
-
+    if machine_series in ("c2", "n2"):
+        powers_of_2 = tuple(2**i for i in range(0, 4))
+        for i in powers_of_2:
+            if num_cpu <= i * 10:
+                return i
     return 16
 
 
