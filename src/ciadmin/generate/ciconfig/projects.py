@@ -61,6 +61,7 @@ class Project:
             takes_self=True,
         ),
     )
+    lando_repo = attr.ib(type=str, default=None)
     trust_domain = attr.ib(type=str, default=None)
     trust_project = attr.ib(type=str, default=None)
     parent_repo = attr.ib(type=str, default=None)

@@ -89,6 +89,7 @@ elm:
     trust-domain-scopes: true
 mozilla-release:
   repo: https://hg.mozilla.org/releases/mozilla-release
+  lando_repo: release
   repo_type: hg
   access: scm_level_3
   branches:
@@ -123,6 +124,7 @@ comm-release:
     trust-domain-scopes: true
 mozilla-esr115:
   repo: https://hg.mozilla.org/releases/mozilla-esr115
+  lando_repo: esr115
   repo_type: hg
   access: scm_level_3
   branches:
@@ -141,6 +143,7 @@ mozilla-esr115:
       - periodic-update
 mozilla-esr128:
   repo: https://hg.mozilla.org/releases/mozilla-esr128
+  lando_repo: esr128
   repo_type: hg
   access: scm_level_3
   branches:
@@ -246,6 +249,7 @@ toolchains:
     trust-domain-scopes: true
 mozilla-beta:
   repo: https://hg.mozilla.org/releases/mozilla-beta
+  lando_repo: beta
   repo_type: hg
   access: scm_level_3
   branches:
@@ -286,6 +290,7 @@ comm-beta:
       - l10n-bumper
 mozilla-central:
   repo: https://hg.mozilla.org/mozilla-central
+  lando_repo: main
   repo_type: hg
   access: scm_level_3
   branches:
@@ -391,6 +396,7 @@ cypress:
     trust-domain-scopes: true
 try:
   repo: https://hg.mozilla.org/try
+  lando_repo: ff-test-dev
   repo_type: hg
   access: scm_level_1
   branches:
@@ -472,6 +478,7 @@ jamun:
     trust-domain-scopes: true
 autoland:
   repo: https://hg.mozilla.org/integration/autoland
+  lando_repo: autoland
   repo_type: hg
   access: scm_level_3
   branches:
