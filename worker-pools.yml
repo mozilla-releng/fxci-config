@@ -277,7 +277,7 @@ pools:
         - minCpuPlatform: Intel Cascadelake
           disks:
             - <<: *persistent-disk
-              diskSizeGb: 20
+              diskSizeGb: 60
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
