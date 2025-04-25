@@ -153,9 +153,8 @@ async def check_gcp_ssds():
     worker_pools = await WorkerPoolConfig.fetch_all()
     ignore = (
         # Bug 1962119: Let's keep the number of local SSDs the same between
-        # c2 and its AMD counterparts.
+        # c2 and its AMD counterpart.
         "gecko-1/b-linux-gcp-bug1962119-c2d",
-        "gecko-1/b-linux-gcp-bug1962119-c3d",
     )
     errors = []
 
