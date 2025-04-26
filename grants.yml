@@ -3061,3 +3061,111 @@
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
+
+### landoscript scopes
+# on try, we're fairly liberal with these scopes for ease of testing, and
+# allow all actions to be run through any means.
+- grant:
+    - project:releng:lando:action:*
+    # this dev/test repo will probably change; but it's what we have for now
+    - project:releng:lando:repo:ff-test-dev
+  to:
+    - project:
+        alias: try
+
+# on level 3 repositories we only allow the specific actions that we expect to
+# run in a given repository, and scope the grants down to the cron or action
+# that needs them, mostly to prevent accidents.
+
+# non-merge day actions are all quite straightforward: projects only need
+# a repo scope for themselves, and a specific action scope, on one or more jobs.
+- grant:
+    - project:releng:lando:action:android_l10n_import
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: autoland
+        job: cron:android-l10n-import
+
+- grant:
+    - project:releng:lando:action:android_l10n_sync
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: mozilla-beta
+        job: cron:android-l10n-sync
+
+- grant:
+    - project:releng:lando:action:l10n_bump
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: [autoland, mozilla-beta]
+        job: cron:l10n-bumper
+
+- grant:
+    - project:releng:lando:action:tag
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr128]
+        job: action:release-promotion
+
+- grant:
+    - project:releng:lando:action:version_bump
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        # mozilla-central is not needed here because those version bumps are
+        # done through a `merge_day` task
+        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr128]
+        job: action:release-promotion
+
+# merge day scopes are a bit weird; some repositories update themselves and
+# others, while some only update themselves.
+# also: l10n_bump happens as part of merge-automation actions (but only for
+# central-to-beta)
+# TODO: replace the singular `merge_day` action with behaviour-specific scopes
+# for better granularity and protection
+
+# granting the scopes for self-updates is straightforward, just like the other
+# actions above. the only thing of note here is that `mozilla-release` doesn't
+# run any `merge-automation` tasks to update itself, unlike the other projects.
+- grant:
+    - project:releng:lando:action:merge_day
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr128]
+        job: action:merge-automation
+
+# granting scopes for cross-repo updates is also straightforward, but it looks
+# a bit weird to have things like `mozilla-central` being able to update `beta`.
+# in an ideal world perhaps we'd run the actions on the target repositories
+# rather than the source ones?
+- grant:
+    - project:releng:lando:action:merge_day
+    - project:releng:lando:action:l10n_bump
+    # in an ideal world we wouldn't grant the repo scope for dry runs
+    # landoscript and taskgraph will need updates to support this
+    - project:releng:lando:repo:beta
+  to:
+    - project:
+        alias: mozilla-central
+        job: [cron:merge-central-to-beta-dry-run, action:merge-automation]
+
+- grant:
+    - project:releng:lando:repo:release
+  to:
+    - project:
+        alias: mozilla-beta
+        job: action:merge-automation
+
+# release -> esr128 will not run again at any point, but having this block
+# here will remind us to update and uncomment it for the next esr cycle
+# - grant:
+#     - project:releng:lando:repo:esr128
+#   to:
+#     - project:
+#         alias: mozilla-release
+#         job: action:merge-automation
