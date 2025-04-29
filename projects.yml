@@ -103,6 +103,7 @@ mozilla-release:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - periodic-update
@@ -138,6 +139,7 @@ mozilla-esr115:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - periodic-update
@@ -157,6 +159,7 @@ mozilla-esr128:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - periodic-update
@@ -263,6 +266,7 @@ mozilla-beta:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - android-l10n-sync
@@ -305,6 +309,7 @@ mozilla-central:
     is-trunk: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - nightly-all
@@ -493,6 +498,7 @@ autoland:
     is-trunk: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - android-l10n-import
