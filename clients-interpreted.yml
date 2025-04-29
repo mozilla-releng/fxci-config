@@ -186,3 +186,17 @@
       - project:
             level: 1
             feature: [lando]
+
+- client:
+      project/releng/scriptworker/v2/lando/prod/firefoxci-{trust_domain}-1:
+          description: "{trust_domain} level 1 lando scriptworker"
+          scopes:
+              - queue:get-artifact:{trust_domain}/*
+      project/releng/scriptworker/v2/lando/prod/firefoxci-{trust_domain}-3:
+          description: "{trust_domain} level 3 lando scriptworker"
+          scopes:
+              - queue:get-artifact:{trust_domain}/*
+  for:
+      - project:
+            level: 3
+            feature: [lando]
