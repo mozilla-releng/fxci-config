@@ -89,7 +89,7 @@ elm:
     trust-domain-scopes: true
 mozilla-release:
   repo: https://hg.mozilla.org/releases/mozilla-release
-  lando_repo: release
+  lando_repo: firefox-release
   repo_type: hg
   access: scm_level_3
   branches:
@@ -103,6 +103,7 @@ mozilla-release:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - periodic-update
@@ -124,7 +125,7 @@ comm-release:
     trust-domain-scopes: true
 mozilla-esr115:
   repo: https://hg.mozilla.org/releases/mozilla-esr115
-  lando_repo: esr115
+  lando_repo: firefox-esr115
   repo_type: hg
   access: scm_level_3
   branches:
@@ -138,12 +139,13 @@ mozilla-esr115:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - periodic-update
 mozilla-esr128:
   repo: https://hg.mozilla.org/releases/mozilla-esr128
-  lando_repo: esr128
+  lando_repo: firefox-esr128
   repo_type: hg
   access: scm_level_3
   branches:
@@ -157,6 +159,7 @@ mozilla-esr128:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - periodic-update
@@ -249,7 +252,7 @@ toolchains:
     trust-domain-scopes: true
 mozilla-beta:
   repo: https://hg.mozilla.org/releases/mozilla-beta
-  lando_repo: beta
+  lando_repo: firefox-beta
   repo_type: hg
   access: scm_level_3
   branches:
@@ -263,6 +266,7 @@ mozilla-beta:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - android-l10n-sync
@@ -290,7 +294,7 @@ comm-beta:
       - l10n-bumper
 mozilla-central:
   repo: https://hg.mozilla.org/mozilla-central
-  lando_repo: main
+  lando_repo: firefox-main
   repo_type: hg
   access: scm_level_3
   branches:
@@ -305,6 +309,7 @@ mozilla-central:
     is-trunk: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - nightly-all
@@ -478,7 +483,7 @@ jamun:
     trust-domain-scopes: true
 autoland:
   repo: https://hg.mozilla.org/integration/autoland
-  lando_repo: autoland
+  lando_repo: firefox-autoland
   repo_type: hg
   access: scm_level_3
   branches:
@@ -493,6 +498,7 @@ autoland:
     is-trunk: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    lando: true
   cron:
     targets:
       - android-l10n-import
