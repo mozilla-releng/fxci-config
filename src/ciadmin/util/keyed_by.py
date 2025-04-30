@@ -48,6 +48,79 @@ def iter_dot_path(container, subfield):
         yield container, subfield
 
 
+def resolve_keyed_by(item, field, item_name, **extra_values):
+    """
+    For values which can either accept a literal value, or be keyed by some
+    other attribute of the item, perform that lookup and replacement in-place
+    (modifying `item` directly).  The field is specified using dotted notation
+    to traverse dictionaries.
+
+    For example, given item::
+
+        task:
+            test-platform: linux128
+            chunks:
+                by-test-platform:
+                    macosx-10.11/debug: 13
+                    win.*: 6
+                    default: 12
+
+    a call to `resolve_keyed_by(item, 'task.chunks', item['thing-name'])`
+    would mutate item in-place to::
+
+        task:
+            test-platform: linux128
+            chunks: 12
+
+    The `item_name` parameter is used to generate useful error messages.
+
+    If extra_values are supplied, they represent additional values available
+    for reference from by-<field>.
+
+    Items can be nested as deeply as the schema will allow::
+
+        chunks:
+            by-test-platform:
+                win.*:
+                    by-project:
+                        ash: ..
+                        cedar: ..
+                linux: 13
+                default: 12
+
+    Args:
+        item (dict): Object being evaluated.
+        field (str): Name of the key to perform evaluation on.
+        item_name (str): Used to generate useful error messages.
+        extra_values (kwargs):
+            If supplied, represent additional values available
+            for reference from by-<field>.
+
+    Returns:
+        dict: item which has also been modified in-place.
+    """
+    # find the field, returning the item unchanged if anything goes wrong
+    container, subfield = item, field
+    while "." in subfield:
+        f, subfield = subfield.split(".", 1)
+        if f not in container:
+            return item
+        container = container[f]
+        if not isinstance(container, dict):
+            return item
+
+    if subfield not in container:
+        return item
+
+    container[subfield] = evaluate_keyed_by(
+        value=container[subfield],
+        item_name=f"`{field}` in `{item_name}`",
+        attributes=dict(item, **extra_values),
+    )
+
+    return item
+
+
 def evaluate_keyed_by(value, item_name, attributes):
     """
     For values which can either accept a literal value, or be keyed by some
