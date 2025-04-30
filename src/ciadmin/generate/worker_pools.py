@@ -10,7 +10,7 @@ import pprint
 import attr
 from tcadmin.resources import WorkerPool
 
-from ..util.keyed_by import evaluate_keyed_by, iter_dot_path
+from ..util.keyed_by import evaluate_keyed_by, iter_dot_path, resolve_keyed_by
 from ..util.templates import merge
 from .ciconfig.environment import Environment
 from .ciconfig.get import get_ciconfig_file
@@ -84,6 +84,25 @@ def _populate_launch_config_id(launch_config, pool_id):
     )
 
 
+def _resolve_defaults(defaults, provider_id, implementation):
+    keys = (
+        "lifecycle",
+        "lifecycle.queueInactivityTimeout",
+        "lifecycle.registrationTimeout",
+        "lifecycle.reregistrationTimeout",
+        "worker-config",
+    )
+    for key in keys:
+        resolve_keyed_by(
+            defaults,
+            key,
+            "worker-defaults",
+            implementation=implementation,
+            provider=provider_id,
+        )
+    return defaults
+
+
 def get_aws_provider_config(
     environment, provider_id, pool_id, config, worker_images, defaults
 ):
@@ -95,25 +114,16 @@ def get_aws_provider_config(
     user_data = config.pop("additional-user-data", {})
     implementation = config.pop("implementation", "docker-worker")
 
-    defaults = evaluate_keyed_by(defaults, "defaults", {"provider": provider_id})
     aws_config = environment.aws_config
 
+    # Merge defaults with pool config.
+    defaults = _resolve_defaults(defaults, provider_id, implementation)
     lifecycle = merge(defaults.get("lifecycle", {}), config.pop("lifecycle", {}))
-
-    worker_config = evaluate_keyed_by(
-        defaults.get("worker-config", {}),
-        pool_id,
-        {"implementation": implementation},
-    )
-    worker_config = merge(worker_config, config.get("worker-config", {}))
-
-    worker_manager_config = evaluate_keyed_by(
-        defaults.get("worker-manager-config", {}),
-        pool_id,
-        {"implementation": implementation},
+    worker_config = merge(
+        defaults.get("worker-config", {}), config.get("worker-config", {})
     )
     worker_manager_config = merge(
-        worker_manager_config,
+        defaults.get("worker-manager-config", {}),
         config.get("worker-manager-config", {}),
     )
 
@@ -165,9 +175,11 @@ def get_aws_provider_config(
                         )
                     },
                     worker_manager_config,
-                    {"initialWeight": initial_weight}
-                    if initial_weight is not None
-                    else {},
+                    (
+                        {"initialWeight": initial_weight}
+                        if initial_weight is not None
+                        else {}
+                    ),
                     {"maxCapacity": max_capacity} if max_capacity is not None else {},
                     instance_type.get("worker-manager-config", {}),
                 )
@@ -241,31 +253,22 @@ def get_azure_provider_config(
     implementation = config.pop(
         "implementation", "generic-worker/worker-runner-windows"
     )
-
-    defaults = evaluate_keyed_by(defaults, "defaults", {"provider": provider_id})
     azure_config = environment.azure_config
 
+    # Merge defaults with pool config.
+    defaults = _resolve_defaults(defaults, provider_id, implementation)
     lifecycle = merge(defaults.get("lifecycle", {}), config.pop("lifecycle", {}))
-
-    worker_config = evaluate_keyed_by(
-        defaults.get("worker-config", {}),
-        pool_id,
-        {"implementation": implementation},
+    worker_config = merge(
+        defaults.get("worker-config", {}), config.get("worker-config", {})
     )
-    worker_config = merge(worker_config, config.get("worker-config", {}))
+    worker_manager_config = merge(
+        defaults.get("worker-manager-config", {}),
+        config.get("worker-manager-config", {}),
+    )
+
     gw_config = worker_config["genericWorker"]["config"]
     if azure_config.get("wst_server_url"):
         gw_config.setdefault("wstServerURL", azure_config["wst_server_url"])
-
-    worker_manager_config = evaluate_keyed_by(
-        defaults.get("worker-manager-config", {}),
-        pool_id,
-        {"implementation": implementation},
-    )
-    worker_manager_config = merge(
-        worker_manager_config,
-        config.get("worker-manager-config", {}),
-    )
 
     # Populate some generic-worker metadata.
     metadata = {}
@@ -375,26 +378,16 @@ def get_google_provider_config(
     image = worker_images[config["image"]]
     instance_types = config["instance_types"]
     implementation = config.pop("implementation", "docker-worker")
-
-    defaults = evaluate_keyed_by(defaults, "defaults", {"provider": provider_id})
     google_config = environment.google_config
 
+    # Merge defaults with pool config.
+    defaults = _resolve_defaults(defaults, provider_id, implementation)
     lifecycle = merge(defaults.get("lifecycle", {}), config.pop("lifecycle", {}))
-
-    worker_config = evaluate_keyed_by(
-        defaults.get("worker-config", {}),
-        pool_id,
-        {"implementation": implementation},
-    )
-    worker_config = merge(worker_config, config.get("worker-config", {}))
-
-    worker_manager_config = evaluate_keyed_by(
-        defaults.get("worker-manager-config", {}),
-        pool_id,
-        {"implementation": implementation},
+    worker_config = merge(
+        defaults.get("worker-config", {}), config.get("worker-config", {})
     )
     worker_manager_config = merge(
-        worker_manager_config,
+        defaults.get("worker-manager-config", {}),
         config.get("worker-manager-config", {}),
     )
 
@@ -439,9 +432,11 @@ def get_google_provider_config(
                         )
                     },
                     worker_manager_config,
-                    {"initialWeight": initial_weight}
-                    if initial_weight is not None
-                    else {},
+                    (
+                        {"initialWeight": initial_weight}
+                        if initial_weight is not None
+                        else {}
+                    ),
                     {"maxCapacity": max_capacity} if max_capacity is not None else {},
                     launch_config.pop("worker-manager-config", {}),
                 )
@@ -666,7 +661,7 @@ async def update_resources(resources):
 
     for wp in generate_pool_variants(worker_pools, environment):
         apwt = await make_worker_pool(
-            environment, resources, wp, worker_images, worker_defaults
+            environment, resources, wp, worker_images, copy.deepcopy(worker_defaults)
         )
         if apwt:
             resources.add(apwt)
