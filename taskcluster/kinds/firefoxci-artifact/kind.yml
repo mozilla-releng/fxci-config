@@ -55,10 +55,7 @@ tasks:
       # tasks they normally would be.
       # docker-image tasks are excluded because there's no value in rerunning
       # them as part of integration tests.
-      # fetch tasks are excluded because there's no value in rerunning them,
-      # and also because they live forever, and depend on docker images which
-      # expire, which causes us to try to mirror expired docker image tasks
-      # into the staging cluster
-      - ^(?!(Decision|Action|PR action|build-docker-image|docker-image|fetch)).*
+      - ^(?!(Decision|Action|PR action|build-docker-image|docker-image)).*
     mirror-public-fetches:
       - ^toolchain.*
+      - ^fetch.*
