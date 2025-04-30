@@ -191,11 +191,13 @@
       project/releng/scriptworker/v2/lando/prod/firefoxci-{trust_domain}-1:
           description: "{trust_domain} level 1 lando scriptworker"
           scopes:
-              - queue:get-artifact:{trust_domain}/*
+              - queue:claim-work:scriptworker-k8s/{trust_domain}-1-lando
+              - queue:worker-id:{trust_domain}-1-lando/{trust_domain}-1-lando-*
       project/releng/scriptworker/v2/lando/prod/firefoxci-{trust_domain}-3:
           description: "{trust_domain} level 3 lando scriptworker"
           scopes:
-              - queue:get-artifact:{trust_domain}/*
+              - queue:claim-work:scriptworker-k8s/{trust_domain}-3-lando
+              - queue:worker-id:{trust_domain}-3-lando/{trust_domain}-3-lando-*
   for:
       - project:
             level: 3
