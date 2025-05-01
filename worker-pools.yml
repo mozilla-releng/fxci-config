@@ -56,6 +56,7 @@ worker-defaults:
             cachesDir: Z:\caches
             cleanUpTaskDirs: true
             disableReboots: false
+            disableOOMProtection: true
             downloadsDir: Z:\downloads
             livelogExecutable: C:\generic-worker\livelog.exe
             ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
