@@ -112,7 +112,7 @@ def min_scratch_disks(machine_type):
         raise ValueError(f"Cannot parse '{machine_type}'")
 
     machine_series = matches.group("machine_series")
-    if machine_series not in ("n1", "n2", "n2d", "c2", "c2d", "c3d", "t2a"):
+    if machine_series not in ("n1", "n2", "n2d", "c2", "c2d", "c3d", "c4d", "t2a"):
         raise NotImplementedError(
             f"Min scratch disks not implemented for '{machine_type}'"
         )
@@ -131,7 +131,9 @@ def min_scratch_disks(machine_type):
             if num_cpu <= i * 10:
                 return i
 
-    elif machine_series in ("c2d", "c3d"):
+    # TODO: c4d doesn't have a documented limit for local SSDs.
+    # https://cloud.google.com/compute/docs/general-purpose-machines#c4d-standard-with-local-ssd
+    elif machine_series in ("c2d", "c3d", "c4d"):
         # https://cloud.google.com/compute/docs/compute-optimized-machines#c2d_machine_types
         # https://cloud.google.com/compute/docs/general-purpose-machines#c3d-standard-with-local-ssd
         if num_cpu <= 16:
@@ -155,6 +157,7 @@ async def check_gcp_ssds():
         # Bug 1962119: Let's keep the number of local SSDs the same between
         # c2 and its AMD counterpart.
         "gecko-1/b-linux-gcp-bug1962119-c2d",
+        "gecko-1/b-linux-gcp-bug1962119-c4d",
     )
     errors = []
 
