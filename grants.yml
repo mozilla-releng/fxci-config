@@ -1014,6 +1014,7 @@
 
 - grant:
     - queue:route:index.{trust_domain}.v2.trunk.revision.*
+    - index:insert-task:{trust_domain}.v2.trunk.revision.*
   to:
     - project:
         feature: is-trunk
