@@ -3150,7 +3150,7 @@
     - project:releng:lando:action:l10n_bump
     # in an ideal world we wouldn't grant the repo scope for dry runs
     # landoscript and taskgraph will need updates to support this
-    - project:releng:lando:repo:beta
+    - project:releng:lando:repo:firefox-beta
   to:
     - project:
         alias: mozilla-central
