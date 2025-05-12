@@ -3068,8 +3068,9 @@
 # allow all actions to be run through any means.
 - grant:
     - project:releng:lando:action:*
-    # this dev/test repo will probably change; but it's what we have for now
-    - project:releng:lando:repo:ff-test-dev
+    # there are staging versions of all production repos; allow try access
+    # to all of them
+    - project:releng:lando:repo:staging-*
   to:
     - project:
         alias: try
