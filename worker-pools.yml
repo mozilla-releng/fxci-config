@@ -277,8 +277,6 @@ pools:
         - disks:
             - <<: *persistent-disk
               diskSizeGb: 60
-            - *scratch-disk
-            - *scratch-disk
           machine_type: "c4d-standard-16"
 
   - pool_id: '{pool-group}/b-linux-docker-alpha'
