@@ -131,6 +131,9 @@ firefoxci:
     invalid-instances:
       - zones: [us-central1-c]
         families: [t2a]
+      # TODO: This is likely to change in the future, since c4d is in public preview
+      - zones: [us-central1-c, us-central1-f]
+        families: [c4d]
   cron:
     gecko:
       hooks_owner: release+tc-hooks@mozilla.com
