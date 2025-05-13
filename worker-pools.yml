@@ -269,6 +269,14 @@ pools:
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
+      implementation: generic-worker/linux-d2g
+      worker-config:
+        genericWorker:
+          config:
+            enableInteractive: true
+            headlessTasks: true
+            downloadsDir: /home/generic-worker/downloads
+            cachesDir: /home/generic-worker/caches
       minCapacity: 0
       maxCapacity: 100
       regions: [us-central1]
