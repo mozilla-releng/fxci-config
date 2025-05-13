@@ -276,7 +276,7 @@ pools:
       instance_types:
         - disks:
             - <<: *persistent-disk
-              diskSizeGb: 20
+              diskSizeGb: 60
             - *scratch-disk
             - *scratch-disk
           machine_type: "c4d-standard-16"
