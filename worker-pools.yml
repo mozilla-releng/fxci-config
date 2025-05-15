@@ -263,6 +263,21 @@ pools:
               diskSizeGb: 20
             - *scratch-disk
           machine_type: "c3d-standard-16-lssd"
+  - pool_id: 'gecko-1/b-linux-gcp-bug1962119-c4d-dw'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 100
+      regions: [us-central1]
+      image: monopacker-docker-worker-current
+      instance_types:
+        - disks:
+            - <<: *persistent-disk
+              diskSizeGb: 200
+          machine_type: "c4d-standard-16"
   - pool_id: 'gecko-1/b-linux-gcp-bug1962119-c4d'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
