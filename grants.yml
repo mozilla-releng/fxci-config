@@ -3157,7 +3157,7 @@
         job: [cron:merge-central-to-beta-dry-run, action:merge-automation]
 
 - grant:
-    - project:releng:lando:repo:release
+    - project:releng:lando:repo:firefox-release
   to:
     - project:
         alias: mozilla-beta
