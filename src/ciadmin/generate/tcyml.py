@@ -2,6 +2,7 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+import os
 from asyncio import Lock
 
 import aiohttp
@@ -32,13 +33,13 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
         if repo_path.startswith("https://github.com/"):
             if repo_path.endswith("/"):
                 repo_path = repo_path[:-1]
-            url = f"{repo_path}/raw/{revision}/.taskcluster.yml"
+            repo = repo_path.replace("https://github.com/", "")
+            url = f"https://api.github.com/repos/{repo}/contents/.taskcluster.yml"
         elif repo_path.startswith("git@github.com:"):
             if repo_path.endswith(".git"):
                 repo_path = repo_path[:-4]
-            url = "{}/raw/{}/.taskcluster.yml".format(
-                repo_path.replace("git@github.com:", "https://github.com/"), revision
-            )
+            repo = repo_path.replace("git@github.com:", "")
+            url = f"https://api.github.com/repos/{repo}/contents/.taskcluster.yml"
         else:
             raise Exception(
                 f"Don't know how to determine file URL for non-github repo: {repo_path}"
@@ -57,7 +58,14 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
             retry_options=ExponentialRetry(attempts=5, statuses={404}),
         )
         headers = {"User-Agent": USER_AGENT}
-        async with client.get(url, headers=headers) as response:
+        params = {}
+        # TODO: when we no longer need to support hg.mozilla.org here, we can
+        # switch this to simple-github rather than doing this by hand.
+        if "GITHUB_TOKEN" in os.environ and repo_type == "git":
+            headers["Authorization"] = f"Bearer {os.environ['GITHUB_TOKEN']}"
+            headers["Accept"] = "application/vnd.github.raw+json"
+            params["ref"] = revision
+        async with client.get(url, headers=headers, params=params) as response:
             try:
                 response.raise_for_status()
                 result = await response.read()
