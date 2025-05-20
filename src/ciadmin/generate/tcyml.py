@@ -46,9 +46,11 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
             )
     else:
         raise Exception(f"Unknown repo_type {repo_type}!")
-    async with _lock.setdefault(url, Lock()):
-        if url in _cache:
-            return _cache[url]
+
+    cache_key = (url, revision)
+    async with _lock.setdefault(cache_key, Lock()):
+        if cache_key in _cache:
+            return _cache[cache_key]
 
         client = RetryClient(
             client_session=aiohttp_session(),
@@ -73,5 +75,5 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
                 print(f"Got error when querying {url}: {e}")
                 raise e
 
-        _cache[url] = result
-        return _cache[url]
+        _cache[cache_key] = result
+        return _cache[cache_key]
