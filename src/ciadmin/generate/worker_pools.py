@@ -613,6 +613,7 @@ def generate_pool_variants(worker_pools, environment):
             "image",
             "implementation",
             "worker-purpose",
+            "instance_types.machine_type",
             "worker-config.genericWorker.config.workerType",
             "worker-config.genericWorker.config.provisionerId",
         ):

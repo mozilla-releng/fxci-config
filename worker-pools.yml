@@ -278,11 +278,15 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 200
           machine_type: "c4d-standard-16"
-  - pool_id: 'gecko-1/b-linux-gcp-bug1962119-c4d'
+  - pool_id: 'gecko-1/b-linux-gcp-bug1962119-{cpu_series}-gw'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
+    variants:
+      - cpu_series: c2d
+      - cpu_series: c3d
+      - cpu_series: c4d
     config:
       implementation: generic-worker/linux-d2g
       worker-config:
@@ -300,7 +304,7 @@ pools:
         - disks:
             - <<: *persistent-disk
               diskSizeGb: 200
-          machine_type: "c4d-standard-16"
+          machine_type: "{cpu_series}-standard-16"
 
   - pool_id: '{pool-group}/b-linux-docker-alpha'
     description: Worker for Firefox automation.
