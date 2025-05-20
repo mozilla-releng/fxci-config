@@ -35,6 +35,7 @@ def run_test(monkeypatch, run_transform, make_transform_config, responses):
     base_task = {
         "attributes": {},
         "task": {
+            "provisionerId": "prov",
             "dependencies": [],
             "extra": {},
             "metadata": {"name": task_label, "description": "test"},
@@ -56,7 +57,7 @@ def run_test(monkeypatch, run_transform, make_transform_config, responses):
     def inner(
         task: dict[str, Any],
         ancestors: dict[str, Any] = {},
-        include_attrs: dict[str, list[str]] = {"unittest_variant": ["os-integration"]},
+        include_attrs: dict[str, list[str]] = {"kind": ["build", "test"]},
         exclude_attrs: dict[str, list[str]] = {
             "test_platform": ["android-hw", "macosx"]
         },
@@ -111,12 +112,12 @@ def run_test(monkeypatch, run_transform, make_transform_config, responses):
     return inner
 
 
-def test_no_unittest_variant_skipped(run_test):
+def test_no_kind_skipped(run_test):
     assert run_test({"attributes": {"foo": "bar"}}) is None
 
 
-def test_wrong_unittest_variant_skipped(run_test):
-    assert run_test({"attributes": {"unittest_variant": "something-else"}}) is None
+def test_wrong_kind_skipped(run_test):
+    assert run_test({"attributes": {"kind": "something-else"}}) is None
 
 
 def test_macosx_skipped(run_test):
@@ -124,7 +125,7 @@ def test_macosx_skipped(run_test):
         run_test(
             {
                 "attributes": {
-                    "unittest_variant": "os-integration",
+                    "kind": "test",
                     "test_platform": "macosx1100",
                 }
             }
@@ -138,7 +139,7 @@ def test_android_hw_skipped(run_test):
         run_test(
             {
                 "attributes": {
-                    "unittest_variant": "os-integration",
+                    "kind": "test",
                     "test_platform": "android-hw-4.0",
                 }
             }
@@ -147,10 +148,44 @@ def test_android_hw_skipped(run_test):
     )
 
 
-def test_basic(run_test):
-    result = run_test(
-        {"attributes": {"unittest_variant": "os-integration"}}, name="gecko"
+def test_releng_hardware_skipped(run_test):
+    assert (
+        run_test(
+            {
+                "attributes": {
+                    "kind": "test",
+                },
+                "task": {
+                    "provisionerId": "releng-hardware",
+                },
+            }
+        )
+        is None
     )
+
+
+def test_run_as_administrator_skipped(run_test):
+    assert (
+        run_test(
+            {
+                "attributes": {
+                    "kind": "test",
+                },
+                "task": {
+                    "payload": {
+                        "features": {
+                            "runAsAdministrator": True,
+                        }
+                    }
+                },
+            }
+        )
+        is None
+    )
+
+
+def test_basic(run_test):
+    result = run_test({"attributes": {"kind": "test"}}, name="gecko")
     assert len(result) == 1
     result = result[0]
     assert result == {
@@ -173,6 +208,7 @@ def test_basic(run_test):
             "metadata": {"description": "test", "name": "gecko-foo"},
             "payload": {"command": ""},
             "priority": "low",
+            "provisionerId": "prov",
             "routes": ["checks"],
             "schedulerId": "ci-level-1",
             "tags": {},
@@ -184,7 +220,7 @@ def test_basic(run_test):
 def test_docker_image(run_test):
     result = run_test(
         {
-            "attributes": {"unittest_variant": "os-integration"},
+            "attributes": {"kind": "build"},
             "task": {"payload": {"image": {"taskId": "def"}}},
         },
         name="gecko",
@@ -205,7 +241,7 @@ def test_docker_image(run_test):
 def test_public_fetch_generic_worker(run_test):
     result = run_test(
         {
-            "attributes": {"unittest_variant": "os-integration"},
+            "attributes": {"kind": "test"},
             "task": {
                 "payload": {
                     "command": [["chmod", "+x", "run-task"], ["cmd"]],
@@ -233,7 +269,7 @@ def test_public_fetch_generic_worker(run_test):
 def test_public_fetch_generic_worker_windows(run_test):
     result = run_test(
         {
-            "attributes": {"unittest_variant": "os-integration"},
+            "attributes": {"kind": "test"},
             "task": {
                 "payload": {
                     "command": ["cmd"],
@@ -256,7 +292,7 @@ def test_public_fetch_generic_worker_windows(run_test):
 def test_public_fetch_docker_worker(run_test):
     result = run_test(
         {
-            "attributes": {"unittest_variant": "os-integration"},
+            "attributes": {"kind": "test"},
             "task": {
                 "payload": {
                     "command": ["cmd"],
@@ -280,7 +316,7 @@ def test_public_fetch_docker_worker(run_test):
 def test_private_artifact(run_test):
     result = run_test(
         {
-            "attributes": {"unittest_variant": "os-integration"},
+            "attributes": {"kind": "test"},
             "task": {
                 "payload": {
                     "command": ["cmd"],
@@ -304,7 +340,7 @@ def test_private_artifact(run_test):
 def test_mounts_task_id(run_test):
     result = run_test(
         {
-            "attributes": {"unittest_variant": "os-integration"},
+            "attributes": {"kind": "test"},
             "task": {
                 "payload": {
                     "mounts": [
@@ -328,7 +364,7 @@ def test_mounts_task_id(run_test):
 def test_mounts_namespace(run_test):
     result = run_test(
         {
-            "attributes": {"unittest_variant": "os-integration"},
+            "attributes": {"kind": "test"},
             "task": {
                 "payload": {
                     "mounts": [
@@ -357,7 +393,7 @@ def test_mounts_namespace(run_test):
 def test_docker_cache(run_test):
     result = run_test(
         {
-            "attributes": {"unittest_variant": "os-integration"},
+            "attributes": {"kind": "test"},
             "task": {
                 "payload": {"cache": {"gecko-level-3": "path"}},
                 "scopes": ["cache:gecko-level-3"],
@@ -547,7 +583,7 @@ def test_include_all_deps(run_test):
     result = run_include_deps_test(
         run_test,
         {
-            "attributes": {"unittest_variant": "os-integration"},
+            "attributes": {"kind": "test"},
             "task": {
                 "dependencies": [
                     "dep3",
@@ -606,7 +642,7 @@ def test_include_some_deps(run_test):
     result = run_include_deps_test(
         run_test,
         {
-            "attributes": {"unittest_variant": "os-integration"},
+            "attributes": {"kind": "test"},
             "task": {
                 "dependencies": [
                     "dep3",
@@ -648,7 +684,7 @@ def test_no_deps(run_test):
     result = run_include_deps_test(
         run_test,
         {
-            "attributes": {"unittest_variant": "os-integration"},
+            "attributes": {"kind": "test"},
             "task": {
                 "dependencies": [
                     "dep3",
@@ -676,7 +712,7 @@ def test_include_deps_stage_and_prod_fetches(run_test):
         run_include_deps_test(
             run_test,
             {
-                "attributes": {"unittest_variant": "os-integration"},
+                "attributes": {"kind": "test"},
                 "task": {
                     "dependencies": [
                         "dep3",
