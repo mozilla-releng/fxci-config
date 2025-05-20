@@ -133,6 +133,12 @@ def find_tasks(
     for task_id, task in _fetch_task_graph(decision_index_path).items():
         assert isinstance(task, dict)
         attributes = task.get("attributes", {})
+        if task["task"]["provisionerId"] == "releng-hardware":
+            continue
+
+        if task["task"]["payload"].get("features", {}).get("runAsAdministrator"):
+            continue
+
         if not attrmatch(attributes, **include_attrs):
             continue
 
