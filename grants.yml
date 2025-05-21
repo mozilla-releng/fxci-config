@@ -1718,6 +1718,16 @@
           - action:release-promotion
 
 - grant:
+    - project:{trust_domain}:releng:ship-it:server:staging
+    - project:{trust_domain}:releng:ship-it:action:create-new-release
+  to:
+    - project:
+        alias:
+          - staging-firefox-ios
+        job:
+          - cron:beta-releases
+
+- grant:
     - secrets:get:project/mobile/ci/testrail
   to:
     - project:
