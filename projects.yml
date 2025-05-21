@@ -773,9 +773,13 @@ staging-firefox-ios:
     mobile-testrail: true
     shipit: true
     taskgraph-actions: true
+    taskgraph-cron: true
     treeherder-reporting: true
     treescript-phase: true
     trust-domain-scopes: true
+  cron:
+    targets:
+      - beta-releases
 
 # mozilla's Github repositories
 application-services:
