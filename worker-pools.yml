@@ -3038,7 +3038,7 @@ pools:
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 400
+      maxCapacity: 800
       regions: [us-central1, us-west1]
       image: ubuntu-2404-headless
       implementation: generic-worker/linux-d2g
