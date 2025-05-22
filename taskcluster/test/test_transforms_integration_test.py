@@ -157,7 +157,7 @@ def test_releng_hardware_skipped(run_test):
                 },
                 "task": {
                     "provisionerId": "releng-hardware",
-                }
+                },
             }
         )
         is None
@@ -177,7 +177,7 @@ def test_run_as_administrator_skipped(run_test):
                             "runAsAdministrator": True,
                         }
                     }
-                }
+                },
             }
         )
         is None
@@ -185,9 +185,7 @@ def test_run_as_administrator_skipped(run_test):
 
 
 def test_basic(run_test):
-    result = run_test(
-        {"attributes": {"kind": "test"}}, name="gecko"
-    )
+    result = run_test({"attributes": {"kind": "test"}}, name="gecko")
     assert len(result) == 1
     result = result[0]
     assert result == {
