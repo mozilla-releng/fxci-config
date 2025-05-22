@@ -3212,7 +3212,7 @@ pools:
     config:
       regions: [us-central1, us-west1]
       image: monopacker-docker-worker-current
-      minCapacity: 1
+      minCapacity: 0
       maxCapacity: 10
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -3221,7 +3221,9 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
             - *scratch-disk
-          machine_type: c2-standard-16
+            - *scratch-disk
+            - *scratch-disk
+          machine_type: c2-standard-30
       worker-config:
         shutdown:
           afterIdleSeconds: 900
