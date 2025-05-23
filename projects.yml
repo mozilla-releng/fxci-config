@@ -1381,6 +1381,20 @@ crash-ping-ingest:
 ###
 # WARNING: These grants apply to entire Github orgs.
 ###
+mozilla:
+  repo: https://github.com/mozilla/*
+  repo_type: git
+  trust_domain: mozilla
+  branches:
+    - name: main
+      level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public_restricted
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 mozilla-releng:
   repo: https://github.com/mozilla-releng/*
   repo_type: git
