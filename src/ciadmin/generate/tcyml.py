@@ -95,7 +95,9 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
             params = {"ref": revision}
 
             async with client_cls() as client:
-                response = await client.request("GET", endpoint, headers=headers, params=params)
+                response = await client.request(
+                    "GET", endpoint, headers=headers, params=params
+                )
                 try:
                     response.raise_for_status()
                     result = await response.read()
