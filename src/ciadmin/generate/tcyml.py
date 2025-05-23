@@ -4,9 +4,11 @@
 
 import os
 from asyncio import Lock
+from functools import partial
 
 import aiohttp
 from aiohttp_retry import ExponentialRetry, RetryClient
+from simple_github import AppClient, PublicClient, TokenClient
 from tcadmin.util.sessions import aiohttp_session
 
 from ciadmin import USER_AGENT
@@ -27,6 +29,31 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
         if revision is None:
             revision = default_branch or "default"
         url = f"{repo_path}/raw-file/{revision}/.taskcluster.yml"
+        cache_key = (url, revision)
+
+        async with _lock.setdefault(cache_key, Lock()):
+            if cache_key in _cache:
+                return _cache[cache_key]
+
+            client = RetryClient(
+                client_session=aiohttp_session(),
+                # Despite only setting 404 here, 5xx statuses will still be retried
+                # for. See https://github.com/inyutin/aiohttp_retry?tab=readme-ov-file
+                # for details.
+                retry_options=ExponentialRetry(attempts=5, statuses={404}),
+            )
+            headers = {"User-Agent": USER_AGENT}
+            params = {}
+            async with client.get(url, headers=headers, params=params) as response:
+                try:
+                    response.raise_for_status()
+                    result = await response.read()
+                except aiohttp.ClientResponseError as e:
+                    print(f"Got error when querying {url}: {e}")
+                    raise e
+
+            _cache[cache_key] = result
+
     elif repo_type == "git":
         if revision is None:
             revision = default_branch or "master"
@@ -34,46 +61,53 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
             if repo_path.endswith("/"):
                 repo_path = repo_path[:-1]
             repo = repo_path.replace("https://github.com/", "")
-            url = f"https://api.github.com/repos/{repo}/contents/.taskcluster.yml"
+            endpoint = f"/repos/{repo}/contents/.taskcluster.yml"
         elif repo_path.startswith("git@github.com:"):
             if repo_path.endswith(".git"):
                 repo_path = repo_path[:-4]
             repo = repo_path.replace("git@github.com:", "")
-            url = f"https://api.github.com/repos/{repo}/contents/.taskcluster.yml"
+            endpoint = f"/repos/{repo}/contents/.taskcluster.yml"
         else:
             raise Exception(
                 f"Don't know how to determine file URL for non-github repo: {repo_path}"
             )
+
+        cache_key = (endpoint, revision)
+
+        async with _lock.setdefault(cache_key, Lock()):
+            if cache_key in _cache:
+                return _cache[cache_key]
+
+            if "GITHUB_TOKEN" in os.environ:
+                client_cls = partial(TokenClient, os.environ["GITHUB_TOKEN"])
+            elif "GITHUB_APP_ID" in os.environ and "GITHUB_APP_PRIVKEY" in os.environ:
+                client_cls = partial(
+                    AppClient,
+                    os.environ["GITHUB_APP_ID"],
+                    os.environ["GITHUB_APP_PRIVKEY"],
+                    owner="mozilla-releng",
+                    repositories=["fxci-config"],
+                )
+            else:
+                client_cls = PublicClient
+
+            headers = {"Accept": "application/vnd.github.raw+json"}
+            params = {"ref": revision}
+
+            async with client_cls() as client:
+                response = await client.request(
+                    "GET", endpoint, headers=headers, params=params
+                )
+                try:
+                    response.raise_for_status()
+                    result = await response.read()
+                except aiohttp.ClientResponseError as e:
+                    print(f"Got error when querying {endpoint}: {e}")
+                    raise e
+
+            _cache[cache_key] = result
+
     else:
         raise Exception(f"Unknown repo_type {repo_type}!")
 
-    cache_key = (url, revision)
-    async with _lock.setdefault(cache_key, Lock()):
-        if cache_key in _cache:
-            return _cache[cache_key]
-
-        client = RetryClient(
-            client_session=aiohttp_session(),
-            # Despite only setting 404 here, 5xx statuses will still be retried
-            # for. See https://github.com/inyutin/aiohttp_retry?tab=readme-ov-file
-            # for details.
-            retry_options=ExponentialRetry(attempts=5, statuses={404}),
-        )
-        headers = {"User-Agent": USER_AGENT}
-        params = {}
-        # TODO: when we no longer need to support hg.mozilla.org here, we can
-        # switch this to simple-github rather than doing this by hand.
-        if "GITHUB_TOKEN" in os.environ and repo_type == "git":
-            headers["Authorization"] = f"Bearer {os.environ['GITHUB_TOKEN']}"
-            headers["Accept"] = "application/vnd.github.raw+json"
-            params["ref"] = revision
-        async with client.get(url, headers=headers, params=params) as response:
-            try:
-                response.raise_for_status()
-                result = await response.read()
-            except aiohttp.ClientResponseError as e:
-                print(f"Got error when querying {url}: {e}")
-                raise e
-
-        _cache[cache_key] = result
-        return _cache[cache_key]
+    return _cache[cache_key]
