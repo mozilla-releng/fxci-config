@@ -1416,9 +1416,27 @@ crash-ping-ingest:
     taskgraph-cron: true
     trust-domain-scopes: true
 
-###
 # WARNING: These grants apply to entire Github orgs.
-###
+#
+# We should only grant the mozilla trust domain and level 1 context here, as
+# these are both already treated as insecure. This context is appropriate to
+# run builds, tests and lints, but wouldn't have the capability to use any
+# release infrastructure or have access to any sensitive scopes.
+
+mozilla:
+  repo: https://github.com/mozilla/*
+  repo_type: git
+  trust_domain: mozilla
+  branches:
+    - name: main
+      level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public_restricted
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 mozilla-releng:
   repo: https://github.com/mozilla-releng/*
   repo_type: git
