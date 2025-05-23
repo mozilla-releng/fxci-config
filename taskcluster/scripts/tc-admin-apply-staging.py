@@ -38,4 +38,15 @@ env.update(
         "GITHUB_APP_PRIVKEY": github_app_creds["ssh_privkey"],
     }
 )
-subprocess.run(["tc-admin", "apply", "--environment=staging"], env=env, check=True)
+subprocess.run(
+    [
+        "tc-admin",
+        "apply",
+        "--environment=staging",
+        # Generate all resources except for 'in_tree_actions' so we avoid
+        # downloading .taskcluster.yml files from each repo.
+        "--resources=clients,cron_tasks,grants,hg_pushes,hooks,scm_group_roles,worker_pools",
+    ],
+    env=env,
+    check=True,
+)
