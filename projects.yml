@@ -836,6 +836,7 @@ rust-components-swift:
     - name: main
       level: 3
   trust_domain: app-services
+  trust_project: rust-components-swift
   features:
     github-taskgraph: true
     github-pull-request:
