@@ -53,7 +53,7 @@ payload:
           else:
             # Triggered by end of build on autoland & MC
             GENERIC_TASK_GROUP_ID:
-              $eval: payload.status.taskGroupId
+              $eval: payload.taskGroupId
   features:
     taskclusterProxy: true
   image:
