@@ -589,12 +589,6 @@
         trust_domain: gecko
         level: [3]
         alias: [mozilla-central]
-    # TODO: remove central-to-beta entry once https://bugzilla.mozilla.org/show_bug.cgi?id=1967638 is fixed
-    - project:
-        job: [cron:merge-central-to-beta-dry-run]
-        trust_domain: gecko
-        level: [3]
-        alias: [mozilla-central]
 
 - grant:
     - queue:create-task:{priority}:scriptworker-k8s/gecko-3-tree
