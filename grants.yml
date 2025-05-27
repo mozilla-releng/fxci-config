@@ -441,6 +441,7 @@
     - secrets:get:project/mobile/firefox-android/fenix/nightly
     - secrets:get:project/mobile/firefox-android/fenix/nightly-simulation
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac14m2
+    - queue:create-task:highest:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
   to:
     - projects:
         feature: gecko-roles
@@ -455,6 +456,7 @@
     - queue:create-task:highest:scriptworker-prov-v1/tb-signing-mac-v1
     - queue:create-task:highest:scriptworker-prov-v1/tb-mac-notarization-poller
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac14m2
+    - queue:create-task:highest:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
     - secrets:get:project/comm/thunderbird/releng/build/level-3/*
   to:
     - projects:
