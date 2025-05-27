@@ -3,7 +3,8 @@
 set -e
 SUFFIX=${SUFFIX:-txt}
 
-pip install --upgrade pip
+# pinned due to https://github.com/jazzband/pip-tools/issues/2176
+pip install --upgrade "pip<25.0.1"
 pip install pip-compile-multi
 
 # XXX pip-tools 6.4.0 from pip-compile-multi 2.4.2 requires

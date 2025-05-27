@@ -2,13 +2,11 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
-import os
 from asyncio import Lock
-from functools import partial
 
 import aiohttp
 from aiohttp_retry import ExponentialRetry, RetryClient
-from simple_github import AppClient, PublicClient, TokenClient
+from simple_github import client_from_env
 from tcadmin.util.sessions import aiohttp_session
 
 from ciadmin import USER_AGENT
@@ -78,18 +76,7 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
             if cache_key in _cache:
                 return _cache[cache_key]
 
-            if "GITHUB_TOKEN" in os.environ:
-                client_cls = partial(TokenClient, os.environ["GITHUB_TOKEN"])
-            elif "GITHUB_APP_ID" in os.environ and "GITHUB_APP_PRIVKEY" in os.environ:
-                client_cls = partial(
-                    AppClient,
-                    os.environ["GITHUB_APP_ID"],
-                    os.environ["GITHUB_APP_PRIVKEY"],
-                    owner="mozilla-releng",
-                    repositories=["fxci-config"],
-                )
-            else:
-                client_cls = PublicClient
+            client_cls = client_from_env("mozilla-releng", ["fxci-config"])
 
             headers = {"Accept": "application/vnd.github.raw+json"}
             params = {"ref": revision}

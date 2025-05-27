@@ -2,12 +2,10 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
-import os
 from asyncio import Lock
-from functools import partial
 
 import aiohttp
-from simple_github import AppClient, PublicClient, TokenClient
+from simple_github import client_from_env
 
 _cache = {}
 _lock = {}
@@ -29,18 +27,7 @@ async def get(repo_path, repo_type="git"):
     # https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28#list-branches
     params = {"per_page": 100}
     headers = {}
-    if "GITHUB_TOKEN" in os.environ:
-        client_cls = partial(TokenClient, os.environ["GITHUB_TOKEN"])
-    elif "GITHUB_APP_ID" in os.environ and "GITHUB_APP_PRIVKEY" in os.environ:
-        client_cls = partial(
-            AppClient,
-            os.environ["GITHUB_APP_ID"],
-            os.environ["GITHUB_APP_PRIVKEY"],
-            owner="mozilla-releng",
-            repositories=["fxci-config"],
-        )
-    else:
-        client_cls = PublicClient
+    client_cls = client_from_env("mozilla-releng", ["fxci-config"])
 
     async with _lock.setdefault(repo_path, Lock()):
         if repo_path in _cache:
