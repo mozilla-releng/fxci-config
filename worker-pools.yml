@@ -2247,6 +2247,41 @@ pools:
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
+  - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-1tb-alpha'
+    description: Worker for machine learning and other high GPU tasks
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: translations-1
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
+            enableInteractive: true
+            d2gConfig:
+              allowGPUs: true
+            headlessTasks: true
+      minCapacity: 0
+      maxCapacity: 128
+      implementation: generic-worker/linux-d2g
+      regions: [us-central1, us-west1, us-east1]
+      image: ubuntu-2404-headless-alpha
+      instance_types:
+        - minCpuPlatform: Intel Skylake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 1024
+          # 40 CPUs, 256GB RAM
+          machine_type: n1-custom-40-262144
+          guestAccelerators:
+            - acceleratorCount: 1
+              acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-2tb'
     description: Worker for machine learning and other high GPU tasks
     owner: release+tc-workers@mozilla.com
