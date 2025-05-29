@@ -2247,7 +2247,7 @@ pools:
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
-  - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-1tb-alpha'
+  - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-1tb-alpha'
     description: Worker for machine learning and other high GPU tasks
     owner: release+tc-workers@mozilla.com
     variants:
@@ -2268,6 +2268,9 @@ pools:
               allowGPUs: true
             headlessTasks: true
       minCapacity: 0
+      # We use 4 GPUs per instance across 4 regions with a limit of 128
+      # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
+      # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
       implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
@@ -2280,7 +2283,7 @@ pools:
           # 40 CPUs, 256GB RAM
           machine_type: n1-custom-40-262144
           guestAccelerators:
-            - acceleratorCount: 1
+            - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-2tb'
     description: Worker for machine learning and other high GPU tasks
