@@ -1729,6 +1729,17 @@
         job:
           - cron:beta-releases
 
+
+- grant:
+    - project:{trust_domain}:releng:ship-it:server:production
+    - project:{trust_domain}:releng:ship-it:action:create-new-release
+  to:
+    - project:
+        alias:
+          - firefox-ios
+        job:
+          - cron:beta-releases
+
 - grant:
     - secrets:get:project/mobile/ci/testrail
   to:

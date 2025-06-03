@@ -750,6 +750,7 @@ firefox-ios:
   cron:
     targets:
       - l10-screenshots
+      - beta-releases
       - bitrise-performance-test
       - firebase-performance-test
 
