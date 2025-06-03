@@ -1014,6 +1014,20 @@ project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-3:
     - project:releng:services/shipit_api/update_release_status
     - queue:claim-work:scriptworker-k8s/gecko-3-shipit
     - queue:worker-id:gecko-3-shipit/gecko-3-shipit-*
+project/releng/scriptworker/v2/shipit/prod/firefoxci-mobile-1:
+  description: "mobile level 1 shipit scriptworker"
+  scopes:
+    - project:releng:services/shipit_api/add_release/firefox-ios
+    - project:releng:services/shipit_api/schedule_phase/firefox-ios/promote
+    - project:releng:services/shipit_api/schedule_phase/firefox-ios/push
+    - project:releng:services/shipit_api/schedule_phase/firefox-ios/ship
+project/releng/scriptworker/v2/shipit/prod/firefoxci-mobile-3:
+  description: "mobile level 3 shipit scriptworker"
+  scopes:
+    - project:releng:services/shipit_api/add_release/firefox-ios
+    - project:releng:services/shipit_api/schedule_phase/firefox-ios/promote
+    - project:releng:services/shipit_api/schedule_phase/firefox-ios/push
+    - project:releng:services/shipit_api/schedule_phase/firefox-ios/ship
 project/releng/scriptworker/v2/shipit/dev/firefoxci-mobile-1:
   description: "mobile level 1 nonprod shipit scriptworker"
   scopes:
