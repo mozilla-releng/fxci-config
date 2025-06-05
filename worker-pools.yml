@@ -2274,7 +2274,7 @@ pools:
       maxCapacity: 128
       implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
-      image: ubuntu-2404-headless-alpha
+      image: ubuntu-2404-headless-alpha-tc
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
