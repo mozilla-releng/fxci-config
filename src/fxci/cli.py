@@ -4,6 +4,8 @@
 
 import functools
 import json
+import os
+import pathlib
 import sys
 
 import yaml
@@ -144,6 +146,7 @@ async def generate_worker_pools(options):
 async def replay_hg_push(options):
     from .hg_pushes import replay_hg_push
 
+    os.chdir(str(pathlib.Path(__file__).parent.parent.parent))
     await replay_hg_push(alias=options["alias"], revision=options["revision"])
 
 
