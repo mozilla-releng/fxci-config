@@ -3020,6 +3020,8 @@
         job:
           - branch:*
           - pull-request:*
+          - action:train
+          - pr-action:train
 
 - grant:
     - project:translations:releng:beetmover:bucket:release
@@ -3029,8 +3031,10 @@
           - translations
         job:
           - branch:*
+          - action:train
 
 - grant:
+    - project:translations:releng:beetmover:action:upload-data
     - project:translations:releng:beetmover:action:upload-translations-artifacts
   to:
     - project:
