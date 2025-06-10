@@ -519,7 +519,7 @@
         job: [action:release-promotion]
         trust_domain: gecko
         level: [3]
-        alias: [mozilla-esr140, mozilla-esr128, mozilla-esr115, mozilla-release, mozilla-beta]
+        alias: [mozilla-esr128, mozilla-esr115, mozilla-release, mozilla-beta]
 
 - grant:
     - project:releng:googleplay:product:fenix
@@ -3133,7 +3133,7 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr128, mozilla-esr140]
+        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr128]
         job: action:release-promotion
 
 - grant:
@@ -3143,7 +3143,7 @@
     - project:
         # mozilla-central is not needed here because those version bumps are
         # done through a `merge_day` task
-        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr128, mozilla-esr140]
+        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr128]
         job: action:release-promotion
 
 # merge day scopes are a bit weird; some repositories update themselves and
@@ -3159,7 +3159,7 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr128, mozilla-esr140]
+        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr128]
         job: action:merge-automation
 
 # granting scopes for cross-repo updates is also straightforward, but it looks
@@ -3182,9 +3182,11 @@
         alias: mozilla-beta
         job: action:merge-automation
 
-- grant:
-    - project:releng:lando:repo:esr140
-  to:
-    - project:
-        alias: mozilla-release
-        job: action:merge-automation
+# release -> esr128 will not run again at any point, but having this block
+# here will remind us to update and uncomment it for the next esr cycle
+# - grant:
+#     - project:releng:lando:repo:esr128
+#   to:
+#     - project:
+#         alias: mozilla-release
+#         job: action:merge-automation
