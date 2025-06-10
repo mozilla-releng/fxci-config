@@ -163,6 +163,26 @@ mozilla-esr128:
   cron:
     targets:
       - periodic-update
+mozilla-esr140:
+  repo: https://hg.mozilla.org/releases/mozilla-esr140
+  lando_repo: firefox-esr140
+  repo_type: hg
+  access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
+  trust_domain: gecko
+  features:
+    gecko-actions: true
+    gecko-cron: true
+    gecko-roles: true
+    hg-push: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+    lando: true
+  cron:
+    targets:
+      - periodic-update
 comm-esr115:
   repo: https://hg.mozilla.org/releases/comm-esr115
   repo_type: hg
