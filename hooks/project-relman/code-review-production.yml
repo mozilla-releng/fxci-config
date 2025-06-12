@@ -52,6 +52,7 @@ payload:
 
           else:
             # Triggered by end of build on autoland & MC
+            # and other unsupported level-3 branches (skipped by bot)
             GENERIC_TASK_GROUP_ID:
               $eval: payload.taskGroupId
   features:
