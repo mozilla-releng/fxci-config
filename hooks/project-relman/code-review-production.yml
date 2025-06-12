@@ -39,12 +39,21 @@ payload:
       - $if: firedBy == 'pulseMessage'
         else: {}
         then:
-          TRY_RUN_ID:
-            $eval: payload.runId
-          TRY_TASK_GROUP_ID:
-            $eval: payload.status.taskGroupId
-          TRY_TASK_ID:
-            $eval: payload.status.taskId
+          $if: '"runId" in payload && "status" in payload'
+          then:
+            # Triggered by code-review task in try ending
+            # so we can analyze a try patch
+            TRY_RUN_ID:
+              $eval: payload.runId
+            TRY_TASK_GROUP_ID:
+              $eval: payload.status.taskGroupId
+            TRY_TASK_ID:
+              $eval: payload.status.taskId
+
+          else:
+            # Triggered by end of build on autoland & MC
+            GENERIC_TASK_GROUP_ID:
+              $eval: payload.taskGroupId
   features:
     taskclusterProxy: true
   image:
