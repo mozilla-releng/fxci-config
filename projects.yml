@@ -890,13 +890,13 @@ k8s-autoscale:
   repo: https://github.com/mozilla-releng/k8s-autoscale
   repo_type: git
   branches:
-    - name: master
+    - name: main
       level: 3
     - name: production
       level: 3
     - name: dev
       level: 3
-  default_branch: master
+  default_branch: main
   trust_domain: releng
   trust_project: k8s-autoscale
   features:
