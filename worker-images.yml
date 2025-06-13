@@ -51,6 +51,9 @@ monopacker-docker-worker-2024-06-14-relops993:
   # relops-993 updates livelog certs to expire 6/17/2025
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2024-06-14t19-52-20z
 # monopacker-docker-worker-trusted-2024-06-14-relops993 dropped becuase L3 doesn't use livelog (no need to update livelog certs)
+monopacker-docker-worker-2025-06-13-relops1411:
+  # relops-1411 updates livelog certs to expire 6/13/2026
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z
 
 # monopacker generic-worker vm images (chronologically ordered)
 monopacker-translations-worker:
