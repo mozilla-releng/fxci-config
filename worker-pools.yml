@@ -230,6 +230,26 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
+  - pool_id: '{pool-group}/b-linux-gcp-relops1411'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: gecko-1
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 100
+      regions: [us-central1, us-west1]
+      image: monopacker-docker-worker-2025-06-13-relops1411
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 20
+            - *scratch-disk
+            - *scratch-disk
+          machine_type: c2-standard-16
   - pool_id: 'gecko-1/b-linux-gcp-bug1962119-c2d'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
