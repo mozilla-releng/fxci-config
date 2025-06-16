@@ -1607,7 +1607,6 @@ pools:
             headlessTasks: true
             downloadsDir: /home/generic-worker/downloads
             cachesDir: /home/generic-worker/caches
-            disableOOMProtection: true
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/linux-d2g
