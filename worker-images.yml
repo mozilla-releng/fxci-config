@@ -82,6 +82,11 @@ handbuilt-docker-worker-tester-20240614:
   # built off of projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25
   # includes new livelog certificate, see https://mozilla-hub.atlassian.net/browse/RELOPS-993
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14
+handbuild-docker-worker-tester-20250616:
+  # for relops-1411
+  # built off of projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14
+  # includes new livelog certificate, see https://mozilla-hub.atlassian.net/browse/RELOPS-1411
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2025-06-16
 
 # worker-images generic-worker vm images
 relsre-gw-fxci-gcp-2404-amd64-gui-alpha:
