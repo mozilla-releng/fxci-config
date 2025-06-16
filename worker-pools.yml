@@ -1315,7 +1315,7 @@ pools:
           machine_type: n2-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true
-  - pool_id: 'gecko-t/t-linux-kvm-gcp-RELOPS1411'
+  - pool_id: 'gecko-t/t-linux-kvm-gcp-relops1411'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
