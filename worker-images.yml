@@ -26,11 +26,11 @@
 # `gcloud config set project <project>` before starting.
 
 # GCP builders level 1, 2 and misc. testers -t
-monopacker-docker-worker-current: monopacker-docker-worker-2024-06-14-relops993
+monopacker-docker-worker-current: monopacker-docker-worker-2025-06-13-relops1411
 # GCP builders level 3
 monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-gcp-2024-02-05
 # GCP testers (not really built with monopacker, but by hand)
-monopacker-docker-worker-gcp-current: handbuilt-docker-worker-tester-20240614
+monopacker-docker-worker-gcp-current: handbuild-docker-worker-tester-20250616
 
 # 'image qualification' pool aliases
 monopacker-docker-worker-relops528: monopacker-docker-worker-2023-04-13-relops528
