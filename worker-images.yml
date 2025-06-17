@@ -26,11 +26,11 @@
 # `gcloud config set project <project>` before starting.
 
 # GCP builders level 1, 2 and misc. testers -t
-monopacker-docker-worker-current: monopacker-docker-worker-2024-06-14-relops993
+monopacker-docker-worker-current: monopacker-docker-worker-2025-06-13-relops1411
 # GCP builders level 3
 monopacker-docker-worker-trusted-current-gcp: monopacker-docker-worker-trusted-gcp-2024-02-05
 # GCP testers (not really built with monopacker, but by hand)
-monopacker-docker-worker-gcp-current: handbuilt-docker-worker-tester-20240614
+monopacker-docker-worker-gcp-current: handbuilt-docker-worker-tester-20250616
 
 # 'image qualification' pool aliases
 monopacker-docker-worker-relops528: monopacker-docker-worker-2023-04-13-relops528
@@ -47,9 +47,6 @@ monopacker-docker-worker-trusted-gcp-2024-02-05:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z
 monopacker-docker-worker-2023-04-13-relops528:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-lt-googlecompute-2023-04-13t21-30-28z
-monopacker-docker-worker-2024-06-14-relops993:
-  # relops-993 updates livelog certs to expire 6/17/2025
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2024-06-14t19-52-20z
 # monopacker-docker-worker-trusted-2024-06-14-relops993 dropped becuase L3 doesn't use livelog (no need to update livelog certs)
 monopacker-docker-worker-2025-06-13-relops1411:
   # relops-1411 updates livelog certs to expire 6/13/2026
@@ -64,25 +61,12 @@ monopacker-ubuntu-2204-wayland:
 monopacker-ubuntu-2204-wayland-arm64:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-arm64-gui-googlecompute-2024-09-18t14-57-52z
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-arm64-gui-googlecompute-2024-09-18t19-02-58z
-# monopacker-ubuntu-2204:  # non-gui, not working yet. see https://github.com/taskcluster/taskcluster/issues/6786
-#   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-googlecompute-2024-01-19t17-35-11z
-#   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-googlecompute-2024-01-19t18-10-08z
 
 # vm images built by hand (chronologically ordered)
 handbuilt-ubuntu-2204-wayland-vm:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z
 # d-w tester images are still handbuilt
-# handbuilt-docker-worker-tester-20240325:
-  # built off of projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13
-  # includes fixes to handle instances with no scratch disks attached
-  # - see https://github.com/mozilla-platform-ops/relops-infra/tree/master/docker-worker-test-image
-  # fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25
-handbuilt-docker-worker-tester-20240614:
-  # for relops-993
-  # built off of projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25
-  # includes new livelog certificate, see https://mozilla-hub.atlassian.net/browse/RELOPS-993
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14
-handbuild-docker-worker-tester-20250616:
+handbuilt-docker-worker-tester-20250616:
   # for relops-1411
   # built off of projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14
   # includes new livelog certificate, see https://mozilla-hub.atlassian.net/browse/RELOPS-1411

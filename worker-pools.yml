@@ -1255,7 +1255,7 @@ pools:
           nss-t: 100
           comm-t: 10
       regions: [us-central1, us-west1]
-      image: handbuilt-docker-worker-tester-20240614
+      image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1283,7 +1283,7 @@ pools:
           nss-t: 100
           comm-t: 10
       regions: [us-central1, us-west1]
-      image: handbuilt-docker-worker-tester-20240614
+      image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1324,7 +1324,7 @@ pools:
       minCapacity: 0
       maxCapacity: 400
       regions: [us-central1, us-west1]
-      image: handbuild-docker-worker-tester-20250616
+      image: handbuilt-docker-worker-tester-20250616
       worker-config:
         deviceManagement:
           kvm:
@@ -1349,7 +1349,7 @@ pools:
       minCapacity: 0
       maxCapacity: 800
       regions: [us-central1, us-west1]
-      image: handbuilt-docker-worker-tester-20240614
+      image: monopacker-docker-worker-gcp-current
       worker-config:
         deviceManagement:
           kvm:
@@ -1398,7 +1398,7 @@ pools:
       minCapacity: 0
       maxCapacity: 400
       regions: [us-central1, us-west1]
-      image: handbuilt-docker-worker-tester-20240614
+      image: monopacker-docker-worker-gcp-current
       worker-config:
         deviceManagement:
           kvm:
@@ -3415,7 +3415,7 @@ pools:
           comm-t: 100
           mozilla-t: 100
       regions: [us-central1, us-west1]
-      image: handbuilt-docker-worker-tester-20240614
+      image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
