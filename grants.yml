@@ -1256,39 +1256,6 @@
         alias: k8s-autoscale
         job: [branch:dev, branch:main, branch:production]
 
-# - cloud-image-builder specific roles
-- grant:
-    - auth:create-role:worker-pool:gecko-1/win*
-    - auth:create-role:worker-pool:gecko-t/win*
-    - auth:sentry:generic-worker
-    - auth:update-role:worker-pool:gecko-1/win*
-    - auth:update-role:worker-pool:gecko-t/win*
-    - auth:websocktunnel-token:cloudopsstage/*
-    - auth:websocktunnel-token:firefoxcitc/*
-    - queue:route:index.project.relops.*
-    - generic-worker:os-group:*
-    - generic-worker:run-as-administrator:*
-    - queue:create-task:{priority}:gecko-1/win*
-    - queue:create-task:{priority}:gecko-1/b-win*
-    - queue:create-task:{priority}:gecko-t/win*
-    - queue:create-task:{priority}:gecko-t/t-win*
-    - queue:create-task:{priority}:relops*
-    - secrets:get:project/relops/image-builder*
-    - secrets:get:project/relops/image-deploy*
-    - queue:scheduler-id:taskcluster-github
-    - worker-manager:manage-worker-pool:gecko-1/win*
-    - worker-manager:manage-worker-pool:gecko-1/b-win*
-    - worker-manager:manage-worker-pool:gecko-t/win*
-    - worker-manager:manage-worker-pool:gecko-t/t-win*
-    - worker-manager:manage-worker-pool:relops*
-    - worker-manager:provider:aws
-    - worker-manager:provider:azure
-  to:
-    - project:
-        alias: cloud-image-builder
-        job: [branch:main]
-  environment: staging
-
 # - product-details specific roles
 - grant:
     - secrets:get:repo:github.com/mozilla-releng/product-details:branch:production
