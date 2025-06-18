@@ -302,9 +302,9 @@ def get_azure_provider_config(
             DeploymentId = image.get(provider_id, "deployment_id")
             subscription_id = f"/subscriptions/{subscription_id}"
             resource_suffix = f"{location}-{purpose}"
-            rgroup = f"rg-{resource_suffix}"
-            vnet = f"vn-{resource_suffix}"
-            snet = f"sn-{resource_suffix}"
+            rgroup = f"rg2-{resource_suffix}"
+            vnet = f"vn2-{resource_suffix}"
+            snet = f"sn2-{resource_suffix}"
             subnetId = (
                 f"{subscription_id}/resourceGroups/{rgroup}/providers/"
                 f"Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
