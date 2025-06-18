@@ -1076,6 +1076,22 @@ firefox-ci-playground-private:
     taskgraph-actions: true
     trust-domain-scopes: true
 
+worker-images:
+  repo: https://github.com/mozilla-platform-ops/worker-images
+  repo_type: git
+  branches:
+    - name: main
+      level: 3
+  trust_domain: relops
+  trust_project: worker-images
+  features:
+    github-pull-request:
+      policy: public_restricted
+    github-taskgraph: true
+    pr-actions: true
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 # Mozilla VPN
 mozilla-vpn-client:
   repo: https://github.com/mozilla-mobile/mozilla-vpn-client
