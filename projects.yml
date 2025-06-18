@@ -1076,17 +1076,6 @@ firefox-ci-playground-private:
     taskgraph-actions: true
     trust-domain-scopes: true
 
-cloud-image-builder:
-  repo: https://github.com/mozilla-platform-ops/cloud-image-builder
-  repo_type: git
-  branches:
-    - name: main
-      level: 3
-  trust_domain: relops
-  features:
-    github-pull-request:
-      policy: collaborators
-
 # Mozilla VPN
 mozilla-vpn-client:
   repo: https://github.com/mozilla-mobile/mozilla-vpn-client
