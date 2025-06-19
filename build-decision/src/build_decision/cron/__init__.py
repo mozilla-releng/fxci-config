@@ -9,6 +9,7 @@ from pathlib import Path
 
 from requests.exceptions import HTTPError
 
+from ..repository import NoPushesError
 from ..util.keyed_by import evaluate_keyed_by
 from ..util.schema import Schema
 from . import action, decision
@@ -76,7 +77,14 @@ def run_job(job_name, job, *, repository, push_info, dry_run=False):
 def run(*, repository, branch, force_run, dry_run):
     time = calculate_time()
 
-    push_info = repository.get_push_info(branch=branch)
+    try:
+        push_info = repository.get_push_info(branch=branch)
+    except NoPushesError:
+        # A common cause for this is a new repository being set-up that hasn't
+        # had pushes made to it yet. Avoiding an exception for this allows the
+        # repository to be added to projects.yml before pushes are made to it.
+        logger.info("No pushes found; doing nothing.")
+        return
 
     jobs = load_jobs(repository, revision=push_info["revision"])
 

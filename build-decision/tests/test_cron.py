@@ -3,6 +3,7 @@ import requests.exceptions
 import yaml
 
 import build_decision.cron as cron
+from build_decision.repository import NoPushesError
 
 from . import TEST_DATA_DIR
 
@@ -178,6 +179,21 @@ def test_run(mocker, force_run, jobs):
     mocker.patch.object(cron, "should_run", new=fake_should_run)
     mocker.patch.object(cron, "_format_and_raise_error_if_any")
     cron.run(repository=fake_repo, branch="branch", force_run=force_run, dry_run=True)
+
+
+def test_run_no_pushes(mocker):
+    """Ensure that running cron.hook does nothing when no pushes are found,
+    and doesn't raise an Exception."""
+    fake_repo = mocker.MagicMock()
+    def fake_get_push_info(*args, **kwargs):
+        raise NoPushesError()
+
+    fake_repo.get_push_info = fake_get_push_info
+
+    mocker.patch.object(cron, "load_jobs")
+    cron.run(repository=fake_repo, branch="branch", force_run=False, dry_run=False)
+    assert cron.load_jobs.call_count == 0
+    # no exceptions raised; nothing else to check!
 
 
 def test_format_and_raise_error_if_any_with_failures():
