@@ -14,10 +14,8 @@ from .util.http import SESSION
 logger = logging.getLogger(__name__)
 
 
-class RetryableError(Exception):
-    """
-    An error that can automatially be retried.
-    """
+class NoPushesError(Exception):
+    pass
 
 
 @attr.s(frozen=True)
@@ -78,7 +76,7 @@ class Repository:
         attempts=5,
         sleeptime=10,
         retry_exceptions=(
-            RetryableError,
+            NoPushesError,
             ChunkedEncodingError,
             ConnectionError,
             SSLError,
@@ -104,7 +102,7 @@ class Repository:
                 # If we query immediately after a push, hg.mozilla.org might
                 # report that there are no pushes associated to a changeset.
                 # We retry, since this tends to be a transient error.
-                raise RetryableError(
+                raise NoPushesError(
                     f"Changeset {revset} has no associated pushes. "
                     "Maybe the push log has not been updated?"
                 )

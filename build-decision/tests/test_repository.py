@@ -105,11 +105,11 @@ def test_get_file(mocker, repository_type, repo_url, revision, raises, expected_
     "branch, revision, pushes, raises, expected",
     (
         (
-            # RetryableError on empty pushes
+            # NoPushesError on empty pushes
             "branch",
             None,
             {"pushes": []},
-            repository.RetryableError,
+            repository.NoPushesError,
             None,
         ),
         (
