@@ -2716,6 +2716,13 @@
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|afranchuk
 
+# Bug 1973252: grant pwong access to run release promotion on Try
+- grant:
+    - hooks:trigger-hook:project-gecko/in-tree-action-1-release-promotion/*
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|pwong
+
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
 # access to the root credentials.
