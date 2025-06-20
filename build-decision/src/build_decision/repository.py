@@ -7,6 +7,7 @@ import logging
 import attr
 import redo
 import yaml
+from requests.exceptions import ChunkedEncodingError, ConnectionError, SSLError
 
 from .util.http import SESSION
 
@@ -73,7 +74,7 @@ class Repository:
 
         return yaml.safe_load(tcyml)
 
-    @redo.retriable(attempts=5, sleeptime=10, retry_exceptions=(RetryableError,))
+    @redo.retriable(attempts=5, sleeptime=10, retry_exceptions=(RetryableError,ChunkedEncodingError,ConnectionError,SSLError))
     def get_push_info(self, *, revision=None, branch=None):
         if branch and revision:
             raise ValueError("Can't pass both revision and branch to get_push_info")
