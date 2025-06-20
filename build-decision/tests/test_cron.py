@@ -185,6 +185,7 @@ def test_run_no_pushes(mocker):
     """Ensure that running cron.hook does nothing when no pushes are found,
     and doesn't raise an Exception."""
     fake_repo = mocker.MagicMock()
+
     def fake_get_push_info(*args, **kwargs):
         raise NoPushesError()
 
