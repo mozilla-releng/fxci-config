@@ -195,7 +195,7 @@ def assert_azure_basic(pool):
         "workerConfig": {"genericWorker": {"config": {}}},
         "workerManager": {
             "capacityPerInstance": 1,
-            "launchConfigId": "lc-c2939e65d0a8212f975e",
+            "launchConfigId": "lc-bb60903a6b585774add1",
         },
     }
 
@@ -220,7 +220,7 @@ def assert_azure_version(pool):
         "workerConfig": {"genericWorker": {"config": {}}},
         "workerManager": {
             "capacityPerInstance": 1,
-            "launchConfigId": "lc-6f6da7314b90174aeeea",
+            "launchConfigId": "lc-44830d08bfa9f202a60a",
         },
     }
 
