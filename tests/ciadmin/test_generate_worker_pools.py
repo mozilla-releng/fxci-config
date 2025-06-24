@@ -190,7 +190,7 @@ def assert_azure_basic(pool):
                 "id": "/subscriptions/subscription_id/resourceGroups/rgroup_id/providers/Microsoft.Compute/images/ue1_id-d_id"  # noqa: E501
             }
         },
-        "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
+        "subnetId": "/subscriptions/subscription_id/resourceGroups/rg2-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn2-us-east1-test/subnets/sn2-us-east1-test",  # noqa: E501
         "tags": {"deploymentId": "d_id"},
         "workerConfig": {"genericWorker": {"config": {}}},
         "workerManager": {
@@ -215,7 +215,7 @@ def assert_azure_version(pool):
                 "id": "/subscriptions/subscription_id/resourceGroups/rgroup_id/providers/Microsoft.Compute/galleries/name_id/images/name_id/versions/ver_id"  # noqa: E501
             }
         },
-        "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
+        "subnetId": "/subscriptions/subscription_id/resourceGroups/rg2-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn2-us-east1-test/subnets/sn2-us-east1-test",  # noqa: E501
         "tags": {"deploymentId": "d_id"},
         "workerConfig": {"genericWorker": {"config": {}}},
         "workerManager": {
