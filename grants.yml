@@ -3137,7 +3137,7 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr128, mozilla-esr140]
+        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr128, mozilla-esr140, comm-central, comm-beta, comm-esr115, comm-esr128, comm-esr140]
         job: action:merge-automation
 
 # granting scopes for cross-repo updates is also straightforward, but it looks
