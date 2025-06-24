@@ -3163,7 +3163,7 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr128, mozilla-esr140, comm-central, comm-beta, comm-esr115, comm-esr128, comm-esr140]
+        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr128, mozilla-esr140]
         job: action:merge-automation
 
 - grant:
@@ -3188,13 +3188,6 @@
         job: action:merge-automation
 
 - grant:
-    - project:releng:lando:repo:comm-beta
-  to:
-    - project:
-        alias: comm-central
-        job: action:merge-automation
-
-- grant:
     - project:releng:lando:repo:firefox-release
   to:
     - project:
@@ -3202,17 +3195,24 @@
         job: action:merge-automation
 
 - grant:
-    - project:releng:lando:repo:comm-release
-  to:
-    - project:
-        alias: comm-beta
-        job: action:merge-automation
-
-- grant:
     - project:releng:lando:repo:esr140
   to:
     - project:
         alias: mozilla-release
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:comm-beta
+  to:
+    - project:
+        alias: comm-central
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:comm-release
+  to:
+    - project:
+        alias: comm-beta
         job: action:merge-automation
 
 - grant:
