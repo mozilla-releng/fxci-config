@@ -34,6 +34,7 @@ def run_test(monkeypatch, run_transform, responses):
     base_task = {
         "attributes": {},
         "task": {
+            "provisionerId": "prov",
             "dependencies": [],
             "extra": {},
             "metadata": {"name": task_label, "description": "test"},

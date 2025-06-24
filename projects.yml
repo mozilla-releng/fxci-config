@@ -215,6 +215,22 @@ comm-esr128:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+comm-esr140:
+  repo: https://hg.mozilla.org/releases/comm-esr140
+  repo_type: hg
+  access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
+  trust_domain: comm
+  parent_repo: https://hg.mozilla.org/releases/mozilla-esr140
+  features:
+    gecko-actions: true
+    gecko-cron: false
+    gecko-roles: true
+    hg-push: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
 oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
@@ -1060,16 +1076,21 @@ firefox-ci-playground-private:
     taskgraph-actions: true
     trust-domain-scopes: true
 
-cloud-image-builder:
-  repo: https://github.com/mozilla-platform-ops/cloud-image-builder
+worker-images:
+  repo: https://github.com/mozilla-platform-ops/worker-images
   repo_type: git
   branches:
     - name: main
       level: 3
   trust_domain: relops
+  trust_project: worker-images
   features:
     github-pull-request:
-      policy: collaborators
+      policy: public_restricted
+    github-taskgraph: true
+    pr-actions: true
+    taskgraph-actions: true
+    trust-domain-scopes: true
 
 # Mozilla VPN
 mozilla-vpn-client:

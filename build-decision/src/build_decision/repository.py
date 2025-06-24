@@ -7,16 +7,15 @@ import logging
 import attr
 import redo
 import yaml
+from requests.exceptions import ChunkedEncodingError, ConnectionError, SSLError
 
 from .util.http import SESSION
 
 logger = logging.getLogger(__name__)
 
 
-class RetryableError(Exception):
-    """
-    An error that can automatially be retried.
-    """
+class NoPushesError(Exception):
+    pass
 
 
 @attr.s(frozen=True)
@@ -73,7 +72,16 @@ class Repository:
 
         return yaml.safe_load(tcyml)
 
-    @redo.retriable(attempts=5, sleeptime=10, retry_exceptions=(RetryableError,))
+    @redo.retriable(
+        attempts=5,
+        sleeptime=10,
+        retry_exceptions=(
+            NoPushesError,
+            ChunkedEncodingError,
+            ConnectionError,
+            SSLError,
+        ),
+    )
     def get_push_info(self, *, revision=None, branch=None):
         if branch and revision:
             raise ValueError("Can't pass both revision and branch to get_push_info")
@@ -94,7 +102,7 @@ class Repository:
                 # If we query immediately after a push, hg.mozilla.org might
                 # report that there are no pushes associated to a changeset.
                 # We retry, since this tends to be a transient error.
-                raise RetryableError(
+                raise NoPushesError(
                     f"Changeset {revset} has no associated pushes. "
                     "Maybe the push log has not been updated?"
                 )

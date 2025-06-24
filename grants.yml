@@ -638,7 +638,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr128, comm-esr115]
+        alias: [comm-esr140, comm-esr128, comm-esr115]
 
 - grant:
     - project:comm:thunderbird:releng:balrog:server:release
@@ -671,7 +671,7 @@
   to:
     - project:
         level: [3]
-        alias: [comm-esr128, comm-esr115, comm-release, comm-beta]
+        alias: [comm-esr140, comm-esr128, comm-esr115, comm-release, comm-beta]
 
 - grant:
     - project:comm:thunderbird:releng:beetmover:bucket:release
@@ -683,7 +683,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr128, comm-esr115, comm-release, comm-beta]
+        alias: [comm-esr140, comm-esr128, comm-esr115, comm-release, comm-beta]
 
 - grant:
     - project:comm:thunderbird:releng:microsoftstore:release
@@ -692,7 +692,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr128, comm-esr115, comm-release]
+        alias: [comm-esr140, comm-esr128, comm-esr115, comm-release]
 
 - grant:
     - project:comm:thunderbird:releng:microsoftstore:beta
@@ -710,7 +710,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr128, comm-esr115, comm-release]
+        alias: [comm-esr140, comm-esr128, comm-esr115, comm-release]
 
 - grant:
     - project:comm:thunderbird:releng:flathub:beta
@@ -1255,39 +1255,6 @@
     - project:
         alias: k8s-autoscale
         job: [branch:dev, branch:main, branch:production]
-
-# - cloud-image-builder specific roles
-- grant:
-    - auth:create-role:worker-pool:gecko-1/win*
-    - auth:create-role:worker-pool:gecko-t/win*
-    - auth:sentry:generic-worker
-    - auth:update-role:worker-pool:gecko-1/win*
-    - auth:update-role:worker-pool:gecko-t/win*
-    - auth:websocktunnel-token:cloudopsstage/*
-    - auth:websocktunnel-token:firefoxcitc/*
-    - queue:route:index.project.relops.*
-    - generic-worker:os-group:*
-    - generic-worker:run-as-administrator:*
-    - queue:create-task:{priority}:gecko-1/win*
-    - queue:create-task:{priority}:gecko-1/b-win*
-    - queue:create-task:{priority}:gecko-t/win*
-    - queue:create-task:{priority}:gecko-t/t-win*
-    - queue:create-task:{priority}:relops*
-    - secrets:get:project/relops/image-builder*
-    - secrets:get:project/relops/image-deploy*
-    - queue:scheduler-id:taskcluster-github
-    - worker-manager:manage-worker-pool:gecko-1/win*
-    - worker-manager:manage-worker-pool:gecko-1/b-win*
-    - worker-manager:manage-worker-pool:gecko-t/win*
-    - worker-manager:manage-worker-pool:gecko-t/t-win*
-    - worker-manager:manage-worker-pool:relops*
-    - worker-manager:provider:aws
-    - worker-manager:provider:azure
-  to:
-    - project:
-        alias: cloud-image-builder
-        job: [branch:main]
-  environment: staging
 
 # - product-details specific roles
 - grant:
@@ -2715,6 +2682,13 @@
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|afranchuk
+
+# Bug 1973252: grant pwong access to run release promotion on Try
+- grant:
+    - hooks:trigger-hook:project-gecko/in-tree-action-1-release-promotion/*
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|pwong
 
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires

@@ -1283,11 +1283,6 @@ project/relman/code-review/events-testing:
   description: See [bug 1593749](https://bugzilla.mozilla.org/show_bug.cgi?id=1593749#c12)
   scopes:
     - assume:project:relman:code-review/runtime/testing
-project/relops/opencloudconfig/tooltool:
-  description: Client for OpenCloudConfig workers to access tooltool for image maintenance
-  scopes:
-    - project:releng:services/tooltool/api/download/internal
-    - project:releng:services/tooltool/api/upload/internal
 project/taskcluster/legacy-login:
   description: ''
   scopes:
@@ -1326,44 +1321,6 @@ project/wpt/wptsync:
   description: Created in Bug 1596469 - Secret handed to :jgraham
   scopes:
     - assume:repo:hg.mozilla.org/try:*
-project/relops/image-builder/dev:
-  environments: [staging]
-  description: build cloud windows images in ci
-  scopes:
-    - auth:create-role:repo:github.com/mozilla-platform-ops/cloud-image-builder:branch:*
-    - auth:update-role:repo:github.com/mozilla-platform-ops/cloud-image-builder:branch:*
-    - generic-worker:os-group:relops/win2019/Administrators
-    - generic-worker:run-as-administrator:relops/*
-    - queue:create-task:high:relops/*
-    - queue:create-task:highest:relops/*
-    - queue:create-task:low:relops/*
-    - queue:create-task:medium:relops/*
-    - queue:create-task:very-high:relops/*
-    - queue:route:index.project.relops.cloud-image-builder.*
-    - queue:scheduler-id:-
-    - queue:scheduler-id:taskcluster-github
-    - secrets:get:project/relops/image-builder/dev
-    - worker-manager:manage-worker-pool:gecko-1/win*
-    - worker-manager:manage-worker-pool:gecko-3/win*
-    - worker-manager:manage-worker-pool:gecko-t/win*
-    - worker-manager:manage-worker-pool:mozillavpn-1/win*
-    - worker-manager:manage-worker-pool:mozillavpn-3/win*
-    - worker-manager:manage-worker-pool:relops/*
-    # Allow creating tasks on test workers
-    - worker-manager:provider:aws
-    - worker-manager:provider:azure
-    - worker-manager:manage-worker-pool:relops-test-workers/*
-    - queue:create-task:{priority}:relops-test-workers/*
-    - generic-worker:os-group:relops-test-workers/*
-    - generic-worker:run-as-administrator:relops-test-workers/*
-
-project/relops/image-builder/purge:
-  environments: [staging]
-  description: clean up unused azure resources
-  scopes:
-    - assume:hook-id:project-relops/cron-task-purge-azure-resources
-    - hooks:modify-hook:project-relops/cron-task-purge-azure-resources
-
 project/perf-sheriffs/treeherder/bot:
   description: Performance Sheriffing backfill bot
   scopes:
