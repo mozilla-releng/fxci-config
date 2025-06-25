@@ -1093,6 +1093,9 @@ pools:
       - pool-group: ci-1
       - pool-group: ci-3
         chain-of-trust: trusted
+      - pool-group: relops-1
+      - pool-group: relops-3
+        chain-of-trust: trusted
       - pool-group: scriptworker-1
       - pool-group: scriptworker-3
         chain-of-trust: trusted
