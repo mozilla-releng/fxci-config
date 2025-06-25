@@ -250,82 +250,50 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
-  - pool_id: 'gecko-1/b-linux-gcp-bug1962119-c2d'
+  - pool_id: '{pool-group}/b-linux-amd'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
-    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-2
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+      - pool-group: comm-1
+      - pool-group: comm-2
+      - pool-group: comm-3
+        chain-of-trust: trusted
+      - pool-group: app-services-1
+      - pool-group: app-services-3
+        chain-of-trust: trusted
+      - pool-group: mozillaonline-1
+      - pool-group: mozillaonline-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 100
-      regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-current
-      instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: "c2d-standard-16"
-  - pool_id: 'gecko-1/b-linux-gcp-bug1962119-c3d'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 100
+      maxCapacity:
+        by-pool-group:
+          gecko-.*: 1000
+          comm-.*: 300
+          app-services-1: 50
+          app-services-3: 100
+          mozillaonline-.*: 10
+          default: 100
       regions: [us-central1]
-      image: monopacker-docker-worker-current
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-current
       instance_types:
         - disks:
             - <<: *persistent-disk
               diskSizeGb: 20
             - *scratch-disk
           machine_type: "c3d-standard-16-lssd"
-  - pool_id: 'gecko-1/b-linux-gcp-bug1962119-c4d-dw'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 100
-      regions: [us-central1]
-      image: monopacker-docker-worker-current
-      instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 200
-          machine_type: "c4d-standard-16"
-  - pool_id: 'gecko-1/b-linux-gcp-bug1962119-{cpu_series}-gw'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    variants:
-      - cpu_series: c2d
-      - cpu_series: c3d
-      - cpu_series: c4d
-    config:
-      implementation: generic-worker/linux-d2g
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
-            headlessTasks: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
-      minCapacity: 0
-      maxCapacity: 100
-      regions: [us-central1]
-      image: ubuntu-2404-headless-alpha
-      instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 200
-          machine_type: "{cpu_series}-standard-16"
-
   - pool_id: '{pool-group}/b-linux-docker-alpha'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
