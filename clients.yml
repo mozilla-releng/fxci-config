@@ -771,12 +771,14 @@ project/releng/scriptworker/v2/iscript/tb-prod:
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-gecko-t:
   description: Dep signing worker pool for Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
+    - queue:get-artifact:releng/partner/*
     - assume:worker-type:scriptworker-prov-v1/dep-gecko-signing-mac14m2
     - queue:worker-id:dep-gecko-signing-mac14m2/dep-gecko-signing-mac14m2*
 # Gecko m2 mac signers
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-gecko-3:
   description: Production signing worker pool for Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
+    - queue:get-artifact:releng/partner/*
     - assume:worker-type:scriptworker-prov-v1/gecko-signing-mac14m2
     - queue:worker-id:gecko-signing-mac14m2/gecko-signing-mac14m2*
 # TB m2 mac signers dep
