@@ -250,25 +250,113 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
-  - pool_id: '{pool-group}/b-linux-amd'
+  - pool_id: '{pool-group}/b-linux{suffix}-amd'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
+    attributes:
+      # Used to populate scratch disks
+      scratch-disk-definition: *scratch-disk
     variants:
+      # Base 16-core (gecko, comm, app-services, mozillaonline)
       - pool-group: gecko-1
+        suffix: ''
+        cores: 16
+        scratch-disks: 1
       - pool-group: gecko-2
+        suffix: ''
+        cores: 16
+        scratch-disks: 1
       - pool-group: gecko-3
         chain-of-trust: trusted
+        suffix: ''
+        cores: 16
+        scratch-disks: 1
       - pool-group: comm-1
+        suffix: ''
+        cores: 16
+        scratch-disks: 1
       - pool-group: comm-2
+        suffix: ''
+        cores: 16
+        scratch-disks: 1
       - pool-group: comm-3
         chain-of-trust: trusted
+        suffix: ''
+        cores: 16
+        scratch-disks: 1
       - pool-group: app-services-1
+        suffix: ''
+        cores: 16
+        scratch-disks: 1
       - pool-group: app-services-3
         chain-of-trust: trusted
+        suffix: ''
+        cores: 16
+        scratch-disks: 1
       - pool-group: mozillaonline-1
+        suffix: ''
+        cores: 16
+        scratch-disks: 1
       - pool-group: mozillaonline-3
         chain-of-trust: trusted
+        suffix: ''
+        cores: 16
+        scratch-disks: 1
+      # Large 30-core (gecko, comm)
+      - pool-group: gecko-1
+        suffix: '-large'
+        cores: 30
+        scratch-disks: 2
+      - pool-group: gecko-2
+        suffix: '-large'
+        cores: 30
+        scratch-disks: 2
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+        suffix: '-large'
+        cores: 30
+        scratch-disks: 2
+      - pool-group: comm-1
+        suffix: '-large'
+        cores: 30
+        scratch-disks: 2
+      - pool-group: comm-2
+        suffix: '-large'
+        cores: 30
+        scratch-disks: 2
+      - pool-group: comm-3
+        chain-of-trust: trusted
+        suffix: '-large'
+        cores: 30
+        scratch-disks: 2
+      # XLarge 32-core (gecko, comm)
+      - pool-group: gecko-1
+        suffix: '-xlarge'
+        cores: 60
+        scratch-disks: 4
+      - pool-group: gecko-2
+        suffix: '-xlarge'
+        cores: 60
+        scratch-disks: 4
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+        suffix: '-xlarge'
+        cores: 60
+        scratch-disks: 4
+      - pool-group: comm-1
+        suffix: '-xlarge'
+        cores: 60
+        scratch-disks: 4
+      - pool-group: comm-2
+        suffix: '-xlarge'
+        cores: 60
+        scratch-disks: 4
+      - pool-group: comm-3
+        chain-of-trust: trusted
+        suffix: '-xlarge'
+        cores: 60
+        scratch-disks: 4
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -292,8 +380,8 @@ pools:
         - disks:
             - <<: *persistent-disk
               diskSizeGb: 20
-            - *scratch-disk
-          machine_type: "c3d-standard-16-lssd"
+            # scratch disks added by variant
+          machine_type: "c3d-standard-{cores}-lssd"
   - pool_id: '{pool-group}/b-linux-docker-alpha'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -492,29 +580,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: n2-standard-32
-  - pool_id: 'gecko-1/b-linux-large-gcp-bug1962119'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-.*: 1000
-          default: 10
-      regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-current
-      implementation: "docker-worker"
-      instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: n2d-standard-32
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g'
     description: Workers using generic-worker on Linux with D2G capability.
     owner: release+tc-workers@mozilla.com
@@ -824,34 +889,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: n2-standard-64
-  - pool_id: 'gecko-1/b-linux-xlarge-gcp-bug1962119'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: gecko-1
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-.*: 1000
-          default: 10
-      regions: [us-central1, us-west1]
-      image: monopacker-docker-worker-current
-      instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: n2d-standard-64
   - pool_id: '{pool-group}/b-linux-xlarge-gcp-bug1797804-c2'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
