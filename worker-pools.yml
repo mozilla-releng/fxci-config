@@ -160,6 +160,28 @@ meta:
       diskType: diskTypes/local-ssd
     type: SCRATCH
     interface: NVME
+  - &c3d-standard-16-lssd
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 20
+      - *scratch-disk
+    machine_type: c3d-standard-16-lssd
+  - &c3d-standard-30-lssd
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 20
+      - *scratch-disk
+      - *scratch-disk
+    machine_type: c3d-standard-30-lssd
+  - &c3d-standard-60-lssd
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 20
+      - *scratch-disk
+      - *scratch-disk
+      - *scratch-disk
+      - *scratch-disk
+    machine_type: c3d-standard-60-lssd
 
 pools:
   - pool_id: infra/build-decision
@@ -261,102 +283,80 @@ pools:
       # Base 16-core (gecko, comm, app-services, mozillaonline)
       - pool-group: gecko-1
         suffix: ''
-        cores: 16
-        scratch-disks: 1
+        instance_types: [*c3d-standard-16-lssd]
       - pool-group: gecko-2
         suffix: ''
-        cores: 16
-        scratch-disks: 1
+        instance_types: [*c3d-standard-16-lssd]
       - pool-group: gecko-3
         chain-of-trust: trusted
         suffix: ''
-        cores: 16
-        scratch-disks: 1
+        instance_types: [*c3d-standard-16-lssd]
       - pool-group: comm-1
         suffix: ''
-        cores: 16
-        scratch-disks: 1
+        instance_types: [*c3d-standard-16-lssd]
       - pool-group: comm-2
         suffix: ''
-        cores: 16
-        scratch-disks: 1
+        instance_types: [*c3d-standard-16-lssd]
       - pool-group: comm-3
         chain-of-trust: trusted
         suffix: ''
-        cores: 16
-        scratch-disks: 1
+        instance_types: [*c3d-standard-16-lssd]
       - pool-group: app-services-1
         suffix: ''
-        cores: 16
-        scratch-disks: 1
+        instance_types: [*c3d-standard-16-lssd]
       - pool-group: app-services-3
         chain-of-trust: trusted
         suffix: ''
-        cores: 16
-        scratch-disks: 1
+        instance_types: [*c3d-standard-16-lssd]
       - pool-group: mozillaonline-1
         suffix: ''
-        cores: 16
-        scratch-disks: 1
+        instance_types: [*c3d-standard-16-lssd]
       - pool-group: mozillaonline-3
         chain-of-trust: trusted
         suffix: ''
-        cores: 16
-        scratch-disks: 1
+        instance_types: [*c3d-standard-16-lssd]
       # Large 30-core (gecko, comm)
       - pool-group: gecko-1
         suffix: '-large'
-        cores: 30
-        scratch-disks: 2
+        instance_types: [*c3d-standard-30-lssd]
       - pool-group: gecko-2
         suffix: '-large'
-        cores: 30
-        scratch-disks: 2
+        instance_types: [*c3d-standard-30-lssd]
       - pool-group: gecko-3
         chain-of-trust: trusted
         suffix: '-large'
-        cores: 30
-        scratch-disks: 2
+        instance_types: [*c3d-standard-30-lssd]
       - pool-group: comm-1
         suffix: '-large'
-        cores: 30
-        scratch-disks: 2
+        instance_types: [*c3d-standard-30-lssd]
       - pool-group: comm-2
         suffix: '-large'
-        cores: 30
-        scratch-disks: 2
+        instance_types: [*c3d-standard-30-lssd]
       - pool-group: comm-3
         chain-of-trust: trusted
         suffix: '-large'
-        cores: 30
-        scratch-disks: 2
+        instance_types: [*c3d-standard-30-lssd]
       # XLarge 32-core (gecko, comm)
       - pool-group: gecko-1
         suffix: '-xlarge'
-        cores: 60
-        scratch-disks: 4
+        instance_types: [*c3d-standard-60-lssd]
       - pool-group: gecko-2
         suffix: '-xlarge'
-        cores: 60
-        scratch-disks: 4
+        instance_types: [*c3d-standard-60-lssd]
       - pool-group: gecko-3
         chain-of-trust: trusted
         suffix: '-xlarge'
-        cores: 60
-        scratch-disks: 4
+        instance_types: [*c3d-standard-60-lssd]
       - pool-group: comm-1
         suffix: '-xlarge'
-        cores: 60
-        scratch-disks: 4
+        instance_types: [*c3d-standard-60-lssd]
       - pool-group: comm-2
         suffix: '-xlarge'
-        cores: 60
-        scratch-disks: 4
+        instance_types: [*c3d-standard-60-lssd]
       - pool-group: comm-3
         chain-of-trust: trusted
         suffix: '-xlarge'
-        cores: 60
-        scratch-disks: 4
+        instance_types: [*c3d-standard-60-lssd]
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -376,12 +376,7 @@ pools:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
-      instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
-            # scratch disks added by variant
-          machine_type: "c3d-standard-{cores}-lssd"
+      instance_types: []
   - pool_id: '{pool-group}/b-linux-docker-alpha'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com

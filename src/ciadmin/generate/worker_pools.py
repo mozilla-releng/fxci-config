@@ -609,10 +609,8 @@ def generate_pool_variants(worker_pools, environment):
             else:
                 del config["worker-manager-config"]["launchConfigId"]
 
-        if attributes.get("scratch-disks", 0) > 0:
-            scratch_disks = [attributes["scratch-disk-definition"]] * attributes["scratch-disks"]
-            for instance in config.get("instance_types", []):
-                instance["disks"] = instance.get("disks", []) + scratch_disks
+        if attributes.get("instance_types", None) and not config.get("instance_types", None):
+            config["instance_types"] = attributes["instance_types"]
 
         for key in (
             "image",
