@@ -609,6 +609,11 @@ def generate_pool_variants(worker_pools, environment):
             else:
                 del config["worker-manager-config"]["launchConfigId"]
 
+        if attributes.get("instance_types", None) and not config.get(
+            "instance_types", None
+        ):
+            config["instance_types"] = attributes["instance_types"]
+
         for key in (
             "image",
             "implementation",
