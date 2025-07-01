@@ -228,6 +228,15 @@ project/autophone/gecko-t-lambda-perf-a55:
     - auth:websocktunnel-token:firefoxcitc/lambda.*
     - queue:claim-work:proj-autophone/gecko-t-lambda-perf-a55
     - queue:worker-id:lambda/*
+project/autophone/gecko-t-lambda-perf-p9:
+  description: Lambdatest pool for performance testing on pixel9
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/lambda.*
+    - queue:claim-work:proj-autophone/gecko-t-lambda-perf-p9
+    - queue:worker-id:lambda/*
 project/autophone/gecko-t-lambda-alpha-a55:
   description: Lambdatest pool for configuration testing on a55
   scopes:
