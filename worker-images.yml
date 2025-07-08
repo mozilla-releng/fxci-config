@@ -118,9 +118,9 @@ ronin_b1_windows2022_64_2009:
     name: win2022_64_2009
 ronin_b3_windows2022_64_2009:
   azure_trusted:
-    version: 1.0.4
+    version: 1.0.5
     resource_group: rg-packer-worker-images
-    deployment_id: "389b2fc"
+    deployment_id: "a704867"
     name: trusted_win2022_64_2009
 # Windows 10
 ronin_t_windows10_64_2009_prod:
@@ -150,9 +150,9 @@ ronin_b1_windows11_a64_24h2_builder:
     name: win11_a64_24h2_builder
 ronin_b3_windows11_a64_24h2_builder:
   azure_trusted:
-    version: 1.0.4
+    version: 1.0.5
     resource_group: rg-packer-worker-images
-    deployment_id: "389b2fc"
+    deployment_id: "a704867"
     name: trusted_win11_a64_24h2_builder
 ronin_t_windows11_a64_24h2_tester_alpha:
   azure2:
