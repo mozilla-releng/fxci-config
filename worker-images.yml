@@ -144,15 +144,15 @@ ronin_b1_windows11_a64_24h2_builder_alpha:
     name: win11_a64_24h2_builder_alpha
 ronin_b1_windows11_a64_24h2_builder:
   azure2:
-    version: 1.0.4
+    version: 1.0.5
     resource_group: rg-packer-worker-images
-    deployment_id: "389b2fc"
+    deployment_id: "9e421c2"
     name: win11_a64_24h2_builder
 ronin_b3_windows11_a64_24h2_builder:
   azure_trusted:
-    version: 1.0.4
+    version: 1.0.5
     resource_group: rg-packer-worker-images
-    deployment_id: "389b2fc"
+    deployment_id: "9e421c2"
     name: trusted_win11_a64_24h2_builder
 ronin_t_windows11_a64_24h2_tester_alpha:
   azure2:
@@ -162,9 +162,9 @@ ronin_t_windows11_a64_24h2_tester_alpha:
     name: win11_a64_24h2_tester_alpha
 ronin_t_windows11_a64_24h2_tester:
   azure2:
-    version: 1.0.4
+    version: 1.0.5
     resource_group: rg-packer-worker-images
-    deployment_id: "389b2fc"
+    deployment_id: "9e421c2"
     name: win11_a64_24h2_tester
 ronin_t_windows11_64_24h2:
   azure2:
