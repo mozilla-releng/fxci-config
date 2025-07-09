@@ -1216,7 +1216,14 @@
     - project:
         trust_domain: releng
 
-# - fxci-config specific roles
+# Cross trust-domain os-integration test scopes.
+# These scopes are necessary to run tests from other trust domains on repos where
+# we manage Taskcluster configuration, like fxci-config and worker-images. These
+# tests help us ensure we don't break downstream tasks before changing the pools
+# they run on.
+#
+# Running tasks on other trust domain's pools is not a good practice, so make
+# sure we're only granting level 1 pools and other non-sensitive scopes here.
 - grant:
     # There's a task in the staging instance that runs on fxci-config pull requests
     # which applies the config directly from a pull request. This task resets the
@@ -1228,6 +1235,13 @@
     # This is only used to authenticate as the taskcluster-staging app to avoid
     # Github rate limits.
     - secrets:get:project/releng/tc-github-private-key
+  to:
+    - project:
+        alias: fxci-config
+        job: [pull-request:trusted]
+  environments: staging
+
+- grant: &os-integration
     # We grant ability to create `gecko-t` tasks in the staging instance so we
     # can validate image changes before they land.
     - queue:create-task:low:gecko-t/*
@@ -1247,6 +1261,12 @@
         alias: fxci-config
         job: [pull-request:trusted]
   environments: staging
+
+- grant: *os-integration
+  to:
+    - project:
+        alias: worker-images
+        job: [pull-request:trusted]
 
 # - k8s-autoscale roles
 - grant:
