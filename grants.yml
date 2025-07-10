@@ -3006,7 +3006,7 @@
 
 # Beetmover scopes for Translations
 - grant:
-    - project:translations:releng:beetmover:bucket:dep
+    - project:translations:releng:beetmover:bucket:development
   to:
     - project:
         alias:
@@ -3018,7 +3018,7 @@
           - pr-action:train
 
 - grant:
-    - project:translations:releng:beetmover:bucket:release
+    - project:translations:releng:beetmover:bucket:production
   to:
     - project:
         alias:
