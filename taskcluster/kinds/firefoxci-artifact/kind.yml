@@ -37,6 +37,7 @@ tasks:
     include-attrs:
       kind:
         - source-test
+        - startup-test
         - test
     exclude-attrs:
       test_platform:
