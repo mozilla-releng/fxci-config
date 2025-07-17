@@ -2985,9 +2985,11 @@
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bacasandrei
 
 # Bug 1738050: secret scopes to perftest
+# Bug 1977820: perftest private artifacts
 - grant:
     - secrets:set:project/perftest/*
     - secrets:get:project/perftest/*
+    - queue:get-artifact:perftest/*
   to:
     - roles:
         - mozilla-group:perftest
