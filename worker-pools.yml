@@ -1637,6 +1637,7 @@ pools:
           disks:
             - <<: *persistent-disk
               diskSizeGb: 75
+            - <<: *scratch-disk
           machine_type: n2-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true
@@ -3255,6 +3256,7 @@ pools:
           disks:
             - <<: *persistent-disk
               diskSizeGb: 75
+            - <<: *scratch-disk
           machine_type: n2-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true

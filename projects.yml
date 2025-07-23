@@ -359,6 +359,7 @@ mozilla-central:
       - periodic-update
       - system-symbols
       - l10n-cross-channel
+      - os-integration
       - target: scriptworker-canary
         allow-input: true
 comm-central:

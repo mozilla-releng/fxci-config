@@ -37,6 +37,7 @@ tasks:
     include-attrs:
       kind:
         - source-test
+        - startup-test
         - test
     exclude-attrs:
       test_platform:
@@ -56,7 +57,15 @@ tasks:
       # tasks they normally would be.
       # docker-image tasks are excluded because there's no value in rerunning
       # them as part of integration tests.
-      - ^(?!(Decision|Action|PR action|build-docker-image|docker-image)).*
+      # fetch tasks are excluded because there's no value in rerunning them,
+      # and also because they live forever, and depend on docker images which
+      # expire, which causes us to try to mirror expired docker image tasks
+      # into the staging cluster
+      - ^(?!(Decision|Action|PR action|build-docker-image|docker-image|fetch)).*
+    # Tasks that depend on artifacts from mirrored and non-mirrored tasks
+    # must be listed here to ensure that all `MOZ_FETCHES` entries point
+    # at the same cluster. Generally, these are tasks that depend on an
+    # unmirrored, non-docker image task in addition to a mirrored task.
     mirror-public-fetches:
       - ^toolchain.*
-      - ^fetch.*
+      - ^corpus-clean-parallel-bicleaner-ai.*
