@@ -2718,6 +2718,7 @@
     - hooks:trigger-hook:project-gecko/in-tree-action-1-release-promotion/*
   to:
     - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|pwong
 
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
