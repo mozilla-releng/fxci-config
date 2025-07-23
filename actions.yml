@@ -107,3 +107,9 @@
   levels: [1]
   action_perms:
     - generic
+
+- trust_domain: relops
+  levels: [1, 3]
+  action_perms:
+    - generic
+    - run-integration-tests
