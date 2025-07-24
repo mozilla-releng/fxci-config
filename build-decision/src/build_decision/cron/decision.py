@@ -4,6 +4,7 @@
 
 
 import copy
+import json
 import os
 import shlex
 
@@ -39,12 +40,20 @@ def run_decision_task(job_name, job, *, repository, push_info, dry_run):
 
     arguments = make_arguments(job)
 
+    cron_input = {}
+    if job.get("include-cron-input") and "HOOK_PAYLOAD" in os.environ:
+        cron_hook_payload = json.loads(os.environ["HOOK_PAYLOAD"])
+        print("Cron Hook Payload:")
+        print(json.dumps(cron_hook_payload, indent=4, sort_keys=True))
+        cron_input.update(cron_hook_payload)
+
     cron_info = {
         "task_id": os.environ.get("TASK_ID", "<cron task id>"),
         "job_name": job_name,
         "job_symbol": job["treeherder-symbol"],
         # args are shell-quoted since they are given to `bash -c`
         "quoted_args": " ".join(shlex.quote(a) for a in arguments),
+        "input": cron_input,
     }
 
     task = render_tc_yml(
