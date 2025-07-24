@@ -1093,6 +1093,9 @@ worker-images:
     taskgraph-actions: true
     taskgraph-cron: true
     trust-domain-scopes: true
+  cron:
+    targets:
+      - run-integration-tests
 
 # Mozilla VPN
 mozilla-vpn-client:
