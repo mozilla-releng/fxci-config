@@ -1091,6 +1091,7 @@ worker-images:
     github-taskgraph: true
     pr-actions: true
     taskgraph-actions: true
+    taskgraph-cron: true
     trust-domain-scopes: true
 
 # Mozilla VPN
