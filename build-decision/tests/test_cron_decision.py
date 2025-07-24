@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 import build_decision.cron.decision as decision
@@ -42,7 +44,10 @@ def test_make_arguments(job, expected):
 def run_decision_task(mocker):
     job_name = "abc"
 
-    def inner(job=None, dry_run=False):
+    def inner(job=None, dry_run=False, env=None):
+        if env:
+            mocker.patch.dict(os.environ, env)
+
         job = job or {}
         job.setdefault("treeherder-symbol", "x")
 
@@ -79,3 +84,21 @@ def test_dry_run(run_decision_task, dry_run):
         mocks["hook"].submit.assert_called_once_with()
     else:
         mocks["hook"].submit.assert_not_called()
+
+
+def test_cron_input(run_decision_task):
+    mock = run_decision_task()["render"]
+    mock.assert_called_once()
+    kwargs = mock.call_args_list[0][1]
+    assert kwargs["cron"]["input"] == {}
+
+    env = {"HOOK_PAYLOAD": '{"foo": "bar"}'}
+    mock = run_decision_task(env=env)["render"]
+    mock.assert_called_once()
+    kwargs = mock.call_args_list[0][1]
+    assert kwargs["cron"]["input"] == {}
+
+    mock = run_decision_task({"include-cron-input": True}, env=env)["render"]
+    mock.assert_called_once()
+    kwargs = mock.call_args_list[0][1]
+    assert kwargs["cron"]["input"] == {"foo": "bar"}
