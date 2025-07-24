@@ -1095,7 +1095,8 @@ worker-images:
     trust-domain-scopes: true
   cron:
     targets:
-      - run-integration-tests
+      - target: run-integration-tests
+        allow-input: true
 
 # Mozilla VPN
 mozilla-vpn-client:
