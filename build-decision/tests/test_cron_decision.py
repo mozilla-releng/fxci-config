@@ -38,28 +38,44 @@ def test_make_arguments(job, expected):
     assert decision.make_arguments(job) == expected
 
 
+@pytest.fixture
+def run_decision_task(mocker):
+    job_name = "abc"
+
+    def inner(job=None, dry_run=False):
+        job = job or {}
+        job.setdefault("treeherder-symbol", "x")
+
+        mocks = {
+            "hook": mocker.MagicMock(),
+            "repo": mocker.MagicMock(),
+            "render": mocker.MagicMock(),
+        }
+        mocks["repo"].get_file.return_value = {"tc": True}
+        mocks["render"].return_value = mocks["hook"]
+
+        mocker.patch.object(decision, "render_tc_yml", new=mocks["render"])
+        mocker.patch.object(decision, "make_arguments", return_value=["--option=arg"])
+
+        decision.run_decision_task(
+            job_name,
+            job,
+            repository=mocks["repo"],
+            push_info={"revision": "rev"},
+            dry_run=dry_run,
+        )
+
+        return mocks
+
+    return inner
+
+
 @pytest.mark.parametrize("dry_run", (True, False))
-def test_run_decision_task(mocker, dry_run):
+def test_dry_run(run_decision_task, dry_run):
     """Add coverage for cron.decision.run_decision_task."""
-    fake_hook = mocker.MagicMock()
-    fake_repo = mocker.MagicMock()
-    fake_repo.get_file.return_value = {"tc": True}
-
-    def fake_render(*args, **kwargs):
-        return fake_hook
-
-    mocker.patch.object(decision, "render_tc_yml", new=fake_render)
-    mocker.patch.object(decision, "make_arguments", return_value=["--option=arg"])
-
-    decision.run_decision_task(
-        "job_name",
-        {"treeherder-symbol": "x"},
-        repository=fake_repo,
-        push_info={"revision": "rev"},
-        dry_run=dry_run,
-    )
+    mocks = run_decision_task(dry_run=dry_run)
 
     if not dry_run:
-        fake_hook.submit.assert_called_once_with()
+        mocks["hook"].submit.assert_called_once_with()
     else:
-        fake_hook.submit.assert_not_called()
+        mocks["hook"].submit.assert_not_called()
