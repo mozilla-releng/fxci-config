@@ -94,6 +94,11 @@ definitions:
                     type: array
                     items: {type: string}
                     description: Kinds that should not be re-used from the on-push graph.
+                include-cron-input:
+                    type: boolean
+                    description: >-
+                        Whether the input to the cron hook should be added to the context
+                        used to render .taskcluster.yml.
         trigger-action:
             required: ["type", "action-name"]
             additionalProperties: false
