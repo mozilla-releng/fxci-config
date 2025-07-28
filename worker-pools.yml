@@ -1326,7 +1326,7 @@ pools:
         default: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 10
+      maxCapacity: 30
       regions: [us-central1, us-west1]
       image:
         by-chain-of-trust:
