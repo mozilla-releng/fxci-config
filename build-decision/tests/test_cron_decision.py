@@ -42,6 +42,9 @@ def test_make_arguments(job, expected):
 
 @pytest.fixture
 def run_decision_task(mocker):
+    mocker.patch.object(
+        os, "environ", new={"TASKCLUSTER_ROOT_URL": "http://taskcluster.local"}
+    )
     job_name = "abc"
 
     def inner(job=None, dry_run=False, env=None):
@@ -86,7 +89,10 @@ def test_dry_run(run_decision_task, dry_run):
         mocks["hook"].submit.assert_not_called()
 
 
-def test_cron_input(run_decision_task):
+def test_cron_input(mocker, run_decision_task):
+    mocker.patch.object(
+        os, "environ", new={"TASKCLUSTER_ROOT_URL": "http://taskcluster.local"}
+    )
     mock = run_decision_task()["render"]
     mock.assert_called_once()
     kwargs = mock.call_args_list[0][1]

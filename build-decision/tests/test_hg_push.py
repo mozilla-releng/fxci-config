@@ -80,6 +80,7 @@ def test_get_revision_from_pulse_message(mocker, pulse_payload, expected):
 )
 def test_build_decision(mocker, push_age, use_tc_yml_repo, dry_run):
     """Add coverage for hg_push.build_decision."""
+    taskcluster_root_url = "http://taskcluster.local"
     now_timestamp = 1649974668
     push = {"pushdate": now_timestamp - push_age}
     fake_repo = mocker.MagicMock()
@@ -87,9 +88,12 @@ def test_build_decision(mocker, push_age, use_tc_yml_repo, dry_run):
     fake_tc_yml_repo = mocker.MagicMock()
     fake_task = mocker.MagicMock()
 
+    mocker.patch.object(
+        os, "environ", new={"TASKCLUSTER_ROOT_URL": taskcluster_root_url}
+    )
     mocker.patch.object(hg_push, "get_revision_from_pulse_message", return_value="rev")
     mocker.patch.object(time, "time", return_value=now_timestamp)
-    mocker.patch.object(hg_push, "render_tc_yml", return_value=fake_task)
+    mock_render = mocker.patch.object(hg_push, "render_tc_yml", return_value=fake_task)
 
     args = {
         "repository": fake_repo,
@@ -98,7 +102,19 @@ def test_build_decision(mocker, push_age, use_tc_yml_repo, dry_run):
     }
 
     hg_push.build_decision(**args)
+
     if not dry_run and push_age <= hg_push.MAX_TIME_DRIFT:
         fake_task.submit.assert_called_once_with()
+
+        mock_render.assert_called_once()
+        render_context = mock_render.call_args_list[0][1]
+        assert render_context.pop("repository", False)
+        assert render_context == {
+            "push": {
+                "pushdate": now_timestamp - push_age,
+            },
+            "taskcluster_root_url": taskcluster_root_url,
+            "tasks_for": "hg-push",
+        }
     else:
         fake_task.submit.assert_not_called()

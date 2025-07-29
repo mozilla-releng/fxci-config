@@ -58,6 +58,7 @@ def run_decision_task(job_name, job, *, repository, push_info, dry_run):
 
     task = render_tc_yml(
         taskcluster_yml,
+        taskcluster_root_url=os.environ["TASKCLUSTER_ROOT_URL"],
         tasks_for="cron",
         repository=repository.to_json(),
         push=push_info,
