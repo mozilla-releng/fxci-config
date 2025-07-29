@@ -43,7 +43,8 @@ project-relman/code-coverage-cron-production:
   description: Automatically build code coverage reports
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
-  schedule: []
+  schedule:
+    - 0 0 12 * * *
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - docker-worker:cache:code-coverage-bot-production
@@ -63,7 +64,8 @@ project-relman/code-coverage-cron-testing:
   description: Automatically build code coverage reports
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
-  schedule: []
+  schedule:
+    - 0 0 12 * * *
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
     - docker-worker:cache:code-coverage-bot-testing
@@ -83,7 +85,8 @@ project-relman/code-coverage-crontrigger-production:
   description: Automatically trigger code coverage ingestion hook
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
-  schedule: []
+  schedule:
+    - 0 */30 * * * *
   scopes:
     - hooks:trigger-hook:project-relman/code-coverage-repo-production
     - assume:project:taskcluster:mozilla-github-repository
@@ -103,7 +106,8 @@ project-relman/code-coverage-crontrigger-testing:
   description: Automatically trigger code coverage ingestion hook
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
-  schedule: []
+  schedule:
+    - 0 */30 * * * *
   scopes:
     - hooks:trigger-hook:project-relman/code-coverage-repo-testing
     - assume:project:taskcluster:mozilla-github-repository
