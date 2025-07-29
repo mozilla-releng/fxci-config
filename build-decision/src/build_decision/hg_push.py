@@ -58,6 +58,7 @@ def build_decision(*, repository, taskcluster_yml_repo, dry_run):
 
     task = render_tc_yml(
         taskcluster_yml,
+        taskcluster_root_url=os.environ["TASKCLUSTER_ROOT_URL"],
         tasks_for="hg-push",
         push=push,
         repository=repository.to_json(),
