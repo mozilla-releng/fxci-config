@@ -86,7 +86,7 @@ project-relman/code-coverage-crontrigger-production:
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   schedule:
-    - 0 */30 * * * *
+    - 0 0 */3 * * *
   scopes:
     - hooks:trigger-hook:project-relman/code-coverage-repo-production
     - assume:project:taskcluster:mozilla-github-repository
@@ -107,7 +107,7 @@ project-relman/code-coverage-crontrigger-testing:
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   schedule:
-    - 0 */30 * * * *
+    - 0 0 */3 * * *
   scopes:
     - hooks:trigger-hook:project-relman/code-coverage-repo-testing
     - assume:project:taskcluster:mozilla-github-repository
