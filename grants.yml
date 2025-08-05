@@ -1266,7 +1266,7 @@
   to:
     - project:
         alias: worker-images
-        job: [pull-request:trusted]
+        job: [cron:run-integration-tests]
 
 # - k8s-autoscale roles
 - grant:
