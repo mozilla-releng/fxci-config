@@ -362,6 +362,20 @@ project/releng/generic-worker/datacenter-gecko-t-linux-netperf:
     - queue:worker-id:mdc1/t-linux*
     - queue:worker-id:mdc1/ms*
     - queue:worker-id:mdc1/moon*
+project/releng/generic-worker/datacenter-gecko-t-linux-2404:
+  description: Datacenter Linux64 worker for network performance testing.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-t-linux*
+    - queue:worker-id:mdc1/t-linux*
+    - queue:worker-id:mdc1/ms*
+    - queue:worker-id:mdc1/moon*
+project/releng/generic-worker/datacenter-gecko-t-linux-2404-wayland:
+  description: Datacenter Linux64 worker for network performance testing.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-t-linux*
+    - queue:worker-id:mdc1/t-linux*
+    - queue:worker-id:mdc1/ms*
+    - queue:worker-id:mdc1/moon*
 project/releng/generic-worker/datacenter-gecko-t-linux-beta:
   description: testing non-perf tasks on linux hardware workers
   scopes:
