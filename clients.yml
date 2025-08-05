@@ -1308,6 +1308,10 @@ project/relman/code-review/events-testing:
   description: See [bug 1593749](https://bugzilla.mozilla.org/show_bug.cgi?id=1593749#c12)
   scopes:
     - assume:project:relman:code-review/runtime/testing
+project/relops/worker-images/run-integration-tests:
+  description: Client used to trigger the 'run-integration-tests' hook from Github Actions (Bug 1981245)
+  scopes:
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-platform-ops-worker-images/run-integration-tests
 project/taskcluster/legacy-login:
   description: ''
   scopes:
