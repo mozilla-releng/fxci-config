@@ -2522,7 +2522,6 @@ pools:
       worker-purpose: gecko-1
       locations: [west-us-3]
       maxCapacity: 10
-      publicip: true
       worker-config:
         genericWorker:
           config:
@@ -2604,7 +2603,6 @@ pools:
           mozilla-.*: 25
           relops-.*: 12
           nss-.*: 25
-      publicip: true
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
@@ -2655,7 +2653,6 @@ pools:
       worker-purpose: nss-1
       locations: [central-us, north-central-us]
       maxCapacity: 25
-      publicip: true
       worker-config:
         genericWorker:
           config:
@@ -2701,7 +2698,6 @@ pools:
       worker-purpose: vpn-1
       locations: [central-us, north-central-us]
       maxCapacity: 25
-      publicip: true
       worker-config:
         genericWorker:
           config:
@@ -2779,7 +2775,6 @@ pools:
           '': 600
           alpha: 500
           default: 100
-      publicip: true
       worker-config:
         genericWorker:
           config:
@@ -2854,7 +2849,6 @@ pools:
         by-pool-group:
           gecko.*: 250
           mozillavpn.*: 10
-      publicip: true
       worker-config:
         genericWorker:
           config:
@@ -2953,7 +2947,6 @@ pools:
               alpha: 500
               gpu: 600
               default: 100
-      publicip: true
       worker-config:
         genericWorker:
           config:
@@ -3064,7 +3057,6 @@ pools:
               alpha: 500
               gpu: 600
               default: 100
-      publicip: true
       worker-config:
         genericWorker:
           config:
@@ -3131,7 +3123,6 @@ pools:
       worker-purpose: '{pool-group}'
       locations: [east-us-2, north-central-us, central-us]
       maxCapacity: 500
-      publicip: true
       worker-config:
         genericWorker:
           config:
