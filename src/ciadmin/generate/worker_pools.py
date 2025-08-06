@@ -365,7 +365,6 @@ def get_azure_provider_config(
     return {
         "minCapacity": config.get("minCapacity", 0),
         "maxCapacity": config["maxCapacity"],
-        "publicIp": config.get("publicIp", True),
         "scalingRatio": config.get("scalingRatio", 1),
         "lifecycle": lifecycle,
         "launchConfigs": launch_configs,
