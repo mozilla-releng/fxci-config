@@ -337,16 +337,17 @@ def get_azure_provider_config(
                 attrs,
             )
 
-            public_ip_defined = (
-                "publicIp" in worker_manager_config or "publicIp" in config
-            )
+            # Get publicIp from worker_manager_config or config, if defined
+            public_ip_source = None
+            if "publicIp" in worker_manager_config:
+                public_ip_source = worker_manager_config["publicIp"]
+            elif "publicIp" in config:
+                public_ip_source = config["publicIp"]
+
             public_ip = None
-            if public_ip_defined:
-                public_ip_value = worker_manager_config.get(
-                    "publicIp", config.get("publicIp")
-                )
+            if public_ip_source is not None:
                 public_ip = evaluate_keyed_by(
-                    public_ip_value,
+                    public_ip_source,
                     "publicIp",
                     attrs,
                 )
@@ -356,7 +357,7 @@ def get_azure_provider_config(
                 worker_manager_config,
                 {"initialWeight": initial_weight} if initial_weight is not None else {},
                 {"maxCapacity": max_capacity} if max_capacity is not None else {},
-                {"publicIp": public_ip} if public_ip_defined else {},
+                {"publicIp": public_ip} if public_ip is not None else {},
                 vmSize.get("worker-manager-config", {}),
             )
 
