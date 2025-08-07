@@ -2523,7 +2523,7 @@ pools:
       locations: [west-us-3]
       maxCapacity: 10
       publicIp:
-        by-suffix:
+        by-pool-id:
           .*alpha: true
           default: false
       worker-config:
@@ -2608,7 +2608,7 @@ pools:
           relops-.*: 12
           nss-.*: 25
       publicIp:
-        by-suffix:
+        by-pool-id:
           .*alpha: true
           default: false
       worker-purpose:
@@ -2662,7 +2662,7 @@ pools:
       locations: [central-us, north-central-us]
       maxCapacity: 25
       publicIp:
-        by-suffix:
+        by-pool-id:
           .*alpha: true
           default: false
       worker-config:
@@ -2711,7 +2711,7 @@ pools:
       locations: [central-us, north-central-us]
       maxCapacity: 25
       publicIp:
-        by-suffix:
+        by-pool-id:
           .*alpha: true
           default: false
       worker-config:
@@ -2792,7 +2792,7 @@ pools:
           alpha: 500
           default: 100
       publicIp:
-        by-suffix:
+        by-pool-id:
           .*alpha: true
           default: false
       worker-config:
@@ -2870,7 +2870,7 @@ pools:
           gecko.*: 250
           mozillavpn.*: 10
       publicIp:
-        by-suffix:
+        by-pool-id:
           .*alpha: true
           default: false
       worker-config:
@@ -3082,7 +3082,7 @@ pools:
               gpu: 600
               default: 100
       publicIp:
-        by-suffix:
+        by-pool-id:
           .*alpha: true
           default: false
       worker-config:
@@ -3152,7 +3152,7 @@ pools:
       locations: [east-us-2, north-central-us, central-us]
       maxCapacity: 500
       publicIp:
-        by-suffix:
+        by-pool-id:
           .*alpha: true
           default: false
       worker-config:
