@@ -323,7 +323,11 @@ def get_azure_provider_config(
                 )
             tags["deploymentId"] = DeploymentId
 
-            attrs = {"location": location, "vmSize": vmSize.get("vmSize"), "pool-id": pool_id}
+            attrs = {
+                "location": location,
+                "vmSize": vmSize.get("vmSize"),
+                "pool-id": pool_id,
+            }
             initial_weight = evaluate_keyed_by(
                 worker_manager_config.get("initialWeight", None), "initialWeight", attrs
             )
@@ -332,17 +336,21 @@ def get_azure_provider_config(
                 "maxCapacity",
                 attrs,
             )
-            
-            public_ip_defined = "publicIp" in worker_manager_config or "publicIp" in config
+
+            public_ip_defined = (
+                "publicIp" in worker_manager_config or "publicIp" in config
+            )
             public_ip = None
             if public_ip_defined:
-                public_ip_value = worker_manager_config.get("publicIp", config.get("publicIp"))
+                public_ip_value = worker_manager_config.get(
+                    "publicIp", config.get("publicIp")
+                )
                 public_ip = evaluate_keyed_by(
                     public_ip_value,
                     "publicIp",
                     attrs,
                 )
-            
+
             instance_worker_manager_config = merge(
                 {"capacityPerInstance": vmSize.get("capacityPerInstance", 1)},
                 worker_manager_config,
