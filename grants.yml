@@ -3157,6 +3157,32 @@
         alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr128, mozilla-esr140]
         job: action:release-promotion
 
+- grant:
+    - project:releng:lando:action:l10n_bump
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: [comm-beta]
+        job: cron:l10n-bumper
+
+- grant:
+    - project:releng:lando:action:tag
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: [comm-beta, comm-release, comm-esr115, comm-esr128, comm-esr140]
+        job: action:release-promotion
+
+- grant:
+    - project:releng:lando:action:version_bump
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        # comm-central is not needed here because those version bumps are
+        # done through a `merge_day` task
+        alias: [comm-beta, comm-release, comm-esr115, comm-esr128, comm-esr140]
+        job: action:release-promotion
+
 # merge day scopes are a bit weird; some repositories update themselves and
 # others, while some only update themselves.
 # TODO: replace the singular `merge_day` action with behaviour-specific scopes
@@ -3171,6 +3197,14 @@
   to:
     - project:
         alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr128, mozilla-esr140]
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:action:merge_day
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: [comm-central, comm-beta, comm-esr115, comm-esr128, comm-esr140]
         job: action:merge-automation
 
 # granting scopes for cross-repo updates is also straightforward, but it looks
@@ -3198,4 +3232,25 @@
   to:
     - project:
         alias: mozilla-release
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:comm-beta
+  to:
+    - project:
+        alias: comm-central
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:comm-release
+  to:
+    - project:
+        alias: comm-beta
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:comm-esr140
+  to:
+    - project:
+        alias: comm-release
         job: action:merge-automation
