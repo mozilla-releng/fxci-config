@@ -81,7 +81,7 @@ def boot():
                 else:
                     click.echo(f"Ignoring invalid resource: {reso}.")
             if "clients" not in resources_list:
-                from tcadmin.current import clients
+                from tcadmin.current import clients  # noqa: PLC0415
 
                 async def fetch_clients(resources):
                     return

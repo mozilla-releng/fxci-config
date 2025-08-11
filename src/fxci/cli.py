@@ -91,7 +91,7 @@ def format_arguments(app):
 @ciconfig_arguments(app)
 @run_async
 async def check_worker_secrets(options):
-    from .worker_secrets import check_worker_secrets
+    from .worker_secrets import check_worker_secrets  # noqa: PLC0415
 
     await check_worker_secrets()
 
@@ -112,7 +112,7 @@ async def check_worker_secrets(options):
 )
 @run_async
 async def create_worker_secrets(options):
-    from .worker_secrets import create_worker_secrets
+    from .worker_secrets import create_worker_secrets  # noqa: PLC0415
 
     await create_worker_secrets(update=options["update"])
 
@@ -130,7 +130,7 @@ async def create_worker_secrets(options):
 @app.argument("--grep", help="Regular expression to limit the worker pools listed.")
 @run_async
 async def generate_worker_pools(options):
-    from .workers import generate_worker_pools
+    from .workers import generate_worker_pools  # noqa: PLC0415
 
     await generate_worker_pools(
         grep=options["grep"],
@@ -144,7 +144,7 @@ async def generate_worker_pools(options):
 @ciconfig_arguments(app, use_environment=False)
 @run_async
 async def replay_hg_push(options):
-    from .hg_pushes import replay_hg_push
+    from .hg_pushes import replay_hg_push  # noqa: PLC0415
 
     os.chdir(str(pathlib.Path(__file__).parent.parent.parent))
     await replay_hg_push(alias=options["alias"], revision=options["revision"])
@@ -162,7 +162,7 @@ async def replay_hg_push(options):
 )
 @format_arguments(app)
 def list_workers(options):
-    from .workers import list_workers
+    from .workers import list_workers  # noqa: PLC0415
 
     list_workers(
         options["worker-pool"],
