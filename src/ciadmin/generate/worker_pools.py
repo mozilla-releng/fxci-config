@@ -290,7 +290,7 @@ def get_azure_provider_config(
     tags = config.get("tags", {})
 
     launch_configs = []
-    for location in locations:
+    for location in sorted(locations):
         for vmSize in vmSizes:
             if provider_id == "azure_trusted":
                 subscription_id = azure_config["trusted_subscription"]
