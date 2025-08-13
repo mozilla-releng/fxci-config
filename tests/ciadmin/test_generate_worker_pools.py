@@ -147,7 +147,7 @@ def assert_aws_basic(pool):
         "workerConfig": {"capacity": 1},
         "workerManager": {
             "capacityPerInstance": 1,
-            "launchConfigId": "lc-9790845b6f288e58e00c",
+            "launchConfigId": "lc-abb9d2d6cbe96a47eecb",
         },
     }
 
@@ -169,7 +169,7 @@ def assert_google_basic(pool):
         "workerConfig": {"capacity": 1},
         "workerManager": {
             "capacityPerInstance": 1,
-            "launchConfigId": "lc-67ea709518817f31825b",
+            "launchConfigId": "lc-fbffa60a697114fb4175",
         },
         "zone": "us-east1a",
     }
@@ -195,7 +195,7 @@ def assert_azure_basic(pool):
         "workerConfig": {"genericWorker": {"config": {}}},
         "workerManager": {
             "capacityPerInstance": 1,
-            "launchConfigId": "lc-c2939e65d0a8212f975e",
+            "launchConfigId": "lc-1e93272fb618ed461059",
         },
     }
 
@@ -220,7 +220,7 @@ def assert_azure_version(pool):
         "workerConfig": {"genericWorker": {"config": {}}},
         "workerManager": {
             "capacityPerInstance": 1,
-            "launchConfigId": "lc-6f6da7314b90174aeeea",
+            "launchConfigId": "lc-93e8de7d6edec4bfbed4",
         },
     }
 
