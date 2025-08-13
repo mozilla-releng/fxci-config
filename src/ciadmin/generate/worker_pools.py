@@ -75,9 +75,8 @@ def _populate_launch_config_id(launch_config, pool_id):
     launch_config_id = launch_config.get("workerManager", {}).get("launchConfigId")
     if launch_config_id is not None:
         return
-    cfg_without_wm = {k: v for k, v in launch_config.items() if k != "workerManager"}
     hashedLaunchConfig = hashlib.sha256(
-        (pool_id + json.dumps(cfg_without_wm, sort_keys=True)).encode("utf8")
+        (pool_id + json.dumps(launch_config, sort_keys=True)).encode("utf8")
     ).hexdigest()
     launch_config.setdefault("workerManager", {})["launchConfigId"] = (
         "lc-" + hashedLaunchConfig[:20]
