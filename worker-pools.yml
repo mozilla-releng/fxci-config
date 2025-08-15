@@ -160,6 +160,17 @@ meta:
       diskType: diskTypes/local-ssd
     type: SCRATCH
     interface: NVME
+  - &c3d-standard-4
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 75
+    machine_type: c3d-standard-4
+  - &c3d-standard-4-lssd
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 75
+      - *scratch-disk
+    machine_type: c3d-standard-4-lssd
   - &c3d-standard-16-lssd
     disks:
       - <<: *persistent-disk
@@ -3262,6 +3273,54 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: c2-standard-4
+  - pool_id: '{pool-group}/t-linux-docker{suffix}-amd'
+    description: Worker for test tasks.
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+        suffix: ''
+        instance_types: [*c3d-standard-4-lssd]
+      - pool-group: comm-t
+        suffix: ''
+        instance_types: [*c3d-standard-4-lssd]
+      - pool-group: mozilla-t
+        suffix: ''
+        instance_types: [*c3d-standard-4-lssd]
+      - pool-group: nss-t
+        suffix: ''
+        instance_types: [*c3d-standard-4-lssd]
+      # noscratch variants (Note: nss doesn't use noscratch)
+      - pool-group: gecko-t
+        suffix: -noscratch
+        instance_types: [*c3d-standard-4]
+      - pool-group: comm-t
+        suffix: -noscratch
+        instance_types: [*c3d-standard-4]
+      - pool-group: mozilla-t
+        suffix: -noscratch
+        instance_types: [*c3d-standard-4]
+    email_on_error: true
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            enableInteractive: true
+            headlessTasks: true
+            disableNativePayloads: true
+            downloadsDir: /home/generic-worker/downloads
+            cachesDir: /home/generic-worker/caches
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 2500
+          comm-t: 100
+          mozilla-t: 100
+          nss-t: 100
+      implementation: generic-worker/linux-d2g
+      regions: [us-central1, us-east1]
+      image: ubuntu-2404-headless
+      instance_types: []
   - pool_id: 'gecko-t/t-linux-docker-kvm'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
