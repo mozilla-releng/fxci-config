@@ -415,9 +415,9 @@ def get_google_provider_config(
     _validate_instance_capacity(pool_id, implementation, instance_types)
 
     launch_configs = []
-    for region in regions:
+    for region in sorted(regions):
         zones = evaluate_keyed_by(google_config["zones"], pool_id, {"region": region})
-        for zone in zones:
+        for zone in sorted(zones):
             for instance_type in instance_types:
                 if google_config.get(
                     "invalid-instances"
