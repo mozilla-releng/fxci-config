@@ -2791,10 +2791,7 @@ pools:
           '': 600
           alpha: 500
           default: 100
-      publicIp:
-        by-pool-id:
-          .*alpha: true
-          default: false
+      publicIp: true
       worker-config:
         genericWorker:
           config:
