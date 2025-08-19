@@ -1050,9 +1050,9 @@ taskcluster-urls==13.0.1 \
     --hash=sha256:b25e122ecec249c4299ac7b20b08db76e3e2025bdaeb699a9d444556de5fd367 \
     --hash=sha256:f66dcbd6572a6216ab65949f0fa0b91f2df647918028436c384e6af5cd12ae2b
     # via taskcluster
-tc-admin==4.1.0 \
-    --hash=sha256:9aa95543edf5b32976588b3d26bd4c5b43215a4fd68950fe3ff5b83c77085621 \
-    --hash=sha256:d40db6cb5032673d3dc736d738f5bb63650e0622824c000832a1a56da3b358f5
+tc-admin==5.0.3 \
+    --hash=sha256:1c658d827b5ba06d1e2f0865e299e32579407091a9ba0215ed3f877abfe674a0 \
+    --hash=sha256:cc978d5a342983758c28da249c1d294fb391beb7f51b262aa0857586ad2c4413
     # via -r requirements/base.in
 typing-extensions==4.14.0 \
     --hash=sha256:8676b788e32f02ab42d9e7c61324048ae4c6d844a399eebace3d4979d75ceef4 \
