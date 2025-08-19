@@ -3053,16 +3053,16 @@ pools:
         by-pool-group:
           comm-t:
             by-suffix:
-              ssd: [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
-              default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
+              ssd: [east-us-2, west-us, west-us-2, north-central-us, central-us]
+              default: [canada-central, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
               (source-)?alpha: [uk-south]
-              gpu: [east-us, east-us-2, west-us, west-us-2]
+              gpu: [east-us-2, west-us, west-us-2]
               gpu-alpha: [west-us, west-us-2]
-              (ssd|source): [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
-              ssd-gpu: [north-europe, east-us, east-us-2]
-              default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
+              (ssd|source): [east-us-2, west-us, west-us-2, north-central-us, central-us]
+              ssd-gpu: [north-europe, east-us-2]
+              default: [canada-central, central-india, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
       maxCapacity:
         by-pool-group:
           comm-t:
