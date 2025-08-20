@@ -259,23 +259,13 @@
         level: [1, 2, 3]
 
 - grant:
-    - generic-worker:os-group:gecko-t/t-win7-32/Administrators
-    - generic-worker:os-group:gecko-t/t-win7-32-beta/Administrators
-    - generic-worker:os-group:gecko-t/t-win10-64/Administrators
-    - generic-worker:os-group:gecko-t/t-win10-64-alpha/Administrators
-    - generic-worker:os-group:gecko-t/t-win10-64-beta/Administrators
     - generic-worker:os-group:gecko-t/win11-64-2009/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2/Administrators
     - generic-worker:os-group:gecko-t/win11-64-2009-alpha/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2-alpha/Administrators
-    - generic-worker:os-group:gecko-t/t-linux-2204-wayland-experimental/audio
-    - generic-worker:os-group:gecko-t/t-linux-2204-wayland-experimental/video
     - generic-worker:os-group:gecko-t/t-linux-2204-wayland-snap/snap_sudo
     - generic-worker:os-group:gecko-t/t-linux-2404-wayland-snap/snap_sudo
     - generic-worker:os-group:gecko-t/t-linux-2404-wayland-relsre/snap_sudo
-    - generic-worker:run-as-administrator:gecko-t/t-win10-64
-    - generic-worker:run-as-administrator:gecko-t/t-win10-64-alpha
-    - generic-worker:run-as-administrator:gecko-t/t-win10-64-beta
     - generic-worker:run-as-administrator:gecko-t/win11-64-2009-alpha
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-alpha
     - generic-worker:run-as-administrator:gecko-t/win11-64-2009
@@ -328,19 +318,10 @@
 
 - grant:
     - generic-worker:allow-rdp:gecko-1/b-win*
-    - generic-worker:allow-rdp:gecko-t/t-win*
     - generic-worker:allow-rdp:gecko-1/win*
     - generic-worker:allow-rdp:gecko-t/win*
-    - generic-worker:os-group:gecko-t/t-win7-32/Administrators
-    - generic-worker:os-group:gecko-t/t-win7-32-beta/Administrators
-    - generic-worker:os-group:gecko-t/t-win10-64/Administrators
-    - generic-worker:os-group:gecko-t/t-win10-64-alpha/Administrators
-    - generic-worker:os-group:gecko-t/t-win10-64-beta/Administrators
     - generic-worker:os-group:gecko-t/win11-64-2009/Administrators
     - generic-worker:os-group:gecko-t/win11-64-2009-alpha/Administrators
-    - generic-worker:run-as-administrator:gecko-t/t-win10-64
-    - generic-worker:run-as-administrator:gecko-t/t-win10-64-alpha
-    - generic-worker:run-as-administrator:gecko-t/t-win10-64-beta
     - generic-worker:run-as-administrator:gecko-t/win11-64-2009-alpha
     - generic-worker:run-as-administrator:gecko-t/win11-64-2009
     - project:releng:addons.mozilla.org:server:staging
@@ -1341,7 +1322,6 @@
 # mobile:level:X:*
 - grant:
     - queue:create-task:highest:mobile-{level}/*
-    - queue:create-task:highest:mobile-t/*
     - queue:create-task:{priority}:built-in/*
     - queue:get-artifact:mobile/android-sdk/*
     - queue:route:notify.*
@@ -1950,7 +1930,6 @@
     - project:xpi:balrog:channel:*
     - project:xpi:balrog:server:staging
     - queue:create-task:highest:xpi-{level}/*
-    - queue:create-task:highest:xpi-t/*
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
     - queue:route:index.{trust_domain}.v2.xpi-manifest.*
@@ -2000,7 +1979,6 @@
     - queue:route:notify.email.*
     - queue:create-task:low:built-in/*
     - queue:create-task:low:xpi-1/*
-    - queue:create-task:low:xpi-t/*
     - queue:get-artifact:xpi/*
     - queue:scheduler-id:xpi-level-1
     - queue:cancel-task-group:xpi-level-1/*
@@ -2048,7 +2026,6 @@
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-t-*
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
     - queue:create-task:highest:adhoc-{level}/*
-    - queue:create-task:highest:adhoc-t/*
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac-dev
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
     - queue:create-task:highest:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2*
@@ -2080,7 +2057,6 @@
 - grant:
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
     - queue:create-task:highest:scriptworker-{level}/*
-    - queue:create-task:highest:scriptworker-t/*
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
     - queue:route:index.{trust_domain}.v2.{alias}.*
     - queue:route:index.scriptworker.cache.level-{level}.*
@@ -2580,7 +2556,6 @@
     - hooks:trigger-hook:project-relman/code-coverage-crontrigger-production
     - secrets:get:project/relman/code-coverage/*
     - secrets:set:project/relman/code-coverage/*
-    - queue:create-task:lowest:code-coverage/bot
     - queue:create-task:lowest:code-coverage/bot-gcp
   to:
     - roles:
@@ -2591,7 +2566,7 @@
 - grant:
     - secrets:get:project/relman/code-review/*
     - secrets:set:project/relman/code-review/*
-    - queue:create-task:lowest:code-review/bot
+    - queue:create-task:lowest:code-review/bot-gcp
   to:
     - group:
         - code-review-developers
