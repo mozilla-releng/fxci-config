@@ -45,6 +45,88 @@ async def check_grant_aliases():
 
 
 @pytest.mark.asyncio
+async def check_grant_pools(generate_resources):
+    """
+    Ensures that we don't grant things for non-existent worker pools.
+    """
+    generated = await generate_resources("worker_pools")
+
+    # Known scopes that reference worker-pools.
+    prefixes = (
+        "generic-worker:allow-rdp:",
+        "generic-worker:os-group:",
+        "generic-worker:run-as-administrator:",
+        "queue:create-task:",
+        "queue:quarantine-worker:",
+    )
+    # These providers are not managed by worker-manager, so valid pools can't
+    # be detected.
+    ignore_providers = {
+        "bitbar",
+        "built-in",
+        "lambda",
+        "performance-hardware",
+        "proj-autophone",
+        "releng-hardware",
+        "scriptworker-k8s",
+        "scriptworker-prov-v1",
+    }
+
+    # We validate the raw grants rather than the generated grants to allow for
+    # things like `{trust_domain}-t/*`. This will inevitably generate scopes
+    # that don't reference valid pools, but that's ok as the intent of this
+    # check is to keep grants.yml clean, not the generated grants.
+    grants = await Grant.fetch_all()
+    pools = [p.workerPoolId for p in generated.filter("WorkerPool=.*")]
+    invalid_scopes = set()
+
+    for grant in grants:
+        for scope in grant.scopes:
+            assert isinstance(scope, str)
+
+            if not scope.startswith(prefixes):
+                continue
+
+            target_pool = scope.rsplit(":", 1)[-1]
+
+            # These scopes can have slashes *after* the worker-pool.
+            if "os-group" in scope or "quarantine-worker" in scope:
+                parts = target_pool.split("/")[:2]
+                target_pool = "/".join(parts)
+
+            # Scope uses interpolation (see note above).
+            if "{trust_domain}" in target_pool or "{level}" in target_pool:
+                continue
+
+            # Scope uses a wildcard which encompasses providers outside of
+            # worker-manager's control.
+            if "/" not in target_pool:
+                continue
+
+            # Scope uses a provider not managed by worker-manager.
+            provider = target_pool.split("/")[0]
+            if provider in ignore_providers:
+                continue
+
+            if target_pool.endswith("*"):
+                target_pool = target_pool[:-1]
+
+                matches = {p for p in pools if p.startswith(target_pool)}
+                if not matches:
+                    invalid_scopes.add(scope)
+            else:
+                if target_pool not in pools:
+                    invalid_scopes.add(scope)
+
+    if invalid_scopes:
+        print(
+            "Grants are given for the following undefined worker-pools:\n"
+            + "\n".join(sorted(invalid_scopes))
+        )
+    assert not invalid_scopes
+
+
+@pytest.mark.asyncio
 async def check_insecure_grants(generate_resources):
     """
     Ensures we don't grant any level 3 scopes to level 1 contexts.
