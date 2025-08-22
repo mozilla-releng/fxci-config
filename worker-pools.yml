@@ -3136,6 +3136,10 @@ pools:
       - pool-group: comm-t
         suffix: alpha
         implementation: generic-worker/windows
+      - pool-group: nss-1
+      - pool-group: nss-1
+        suffix: alpha
+        implementation: generic-worker/windows
     config:
       image: ronin_t_windows11_a64_24h2_tester_{suffix}
       implementation: '{implementation}'
