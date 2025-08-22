@@ -2604,8 +2604,8 @@ pools:
       implementation: generic-worker/windows
       locations:
         by-pool-group:
-          .*-3: [central-us, east-us-2, west-us-2]
-          default: [central-us, north-central-us, east-us-2, west-us-2]
+          .*-3: [west-us-3, east-us-2, west-us-2]
+          default: [north-central-us, east-us-2, west-us-2]
       maxCapacity:
         by-pool-group:
           gecko-.*: 500
