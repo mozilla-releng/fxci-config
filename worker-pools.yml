@@ -3417,7 +3417,7 @@ pools:
           comm-t: 100
           mozilla-t: 100
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
