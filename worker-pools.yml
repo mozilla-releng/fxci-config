@@ -2850,9 +2850,6 @@ pools:
         implementation: generic-worker/windows
       - pool-group: mozillavpn-1
       - pool-group: nss-1
-      - pool-group: nss-1
-        suffix: alpha
-        implementation: generic-worker/windows
     provider_id:
       by-level:
         1: azure2
