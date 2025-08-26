@@ -2853,7 +2853,7 @@ pools:
         suffix: alpha
         implementation: generic-worker/windows
       - pool-group: nss-1
-      - pool-group: nss-1
+      - pool-group: nss-3
         level: 3
     provider_id:
       by-level:
