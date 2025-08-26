@@ -160,17 +160,17 @@ meta:
       diskType: diskTypes/local-ssd
     type: SCRATCH
     interface: NVME
-  - &c3d-standard-4
+  - &c3d-standard-8
     disks:
       - <<: *persistent-disk
         diskSizeGb: 75
-    machine_type: c3d-standard-4
-  - &c3d-standard-4-lssd
+    machine_type: c3d-standard-8
+  - &c3d-standard-8-lssd
     disks:
       - <<: *persistent-disk
         diskSizeGb: 75
       - *scratch-disk
-    machine_type: c3d-standard-4-lssd
+    machine_type: c3d-standard-8-lssd
   - &c3d-standard-16-lssd
     disks:
       - <<: *persistent-disk
@@ -3257,26 +3257,26 @@ pools:
     variants:
       - pool-group: gecko-t
         suffix: ''
-        instance_types: [*c3d-standard-4-lssd]
+        instance_types: [*c3d-standard-8-lssd]
       - pool-group: comm-t
         suffix: ''
-        instance_types: [*c3d-standard-4-lssd]
+        instance_types: [*c3d-standard-8-lssd]
       - pool-group: mozilla-t
         suffix: ''
-        instance_types: [*c3d-standard-4-lssd]
+        instance_types: [*c3d-standard-8-lssd]
       - pool-group: nss-t
         suffix: ''
-        instance_types: [*c3d-standard-4-lssd]
+        instance_types: [*c3d-standard-8-lssd]
       # noscratch variants (Note: nss doesn't use noscratch)
       - pool-group: gecko-t
         suffix: -noscratch
-        instance_types: [*c3d-standard-4]
+        instance_types: [*c3d-standard-8]
       - pool-group: comm-t
         suffix: -noscratch
-        instance_types: [*c3d-standard-4]
+        instance_types: [*c3d-standard-8]
       - pool-group: mozilla-t
         suffix: -noscratch
-        instance_types: [*c3d-standard-4]
+        instance_types: [*c3d-standard-8]
     email_on_error: true
     config:
       worker-config:
