@@ -9,3 +9,4 @@ pytest-mock
 pytest-taskgraph >= 0.1.0
 responses >= 0.25.3
 taskcluster-taskgraph >= 13.0.0
+google-cloud-compute
