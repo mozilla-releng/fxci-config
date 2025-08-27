@@ -3093,7 +3093,7 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
-              (source-)?alpha: Standard_E8ads_v6
+              (source-)?alpha: Standard_E8ads_v5
               .*large.*: Standard_E8ads_v5
               .*gpu.*: Standard_NV12s_v3
               default: Standard_F8s_v2
@@ -3112,7 +3112,7 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
-                  (source-)?alpha: Standard_E8ads_v6
+                  (source-)?alpha: Standard_E8ads_v5
                   .*large.*: Standard_E8ads_v5
                   .*gpu.*: Standard_NV12s_v3
                   default: Standard_F8s_v2
