@@ -24,10 +24,8 @@ task-defaults:
     using: run-task
     cwd: '{checkout}'
     command: >-
-      pip install --user -r requirements/base.txt &&
-      pip install --user --no-deps . &&
       export PYTHONPATH="taskcluster:$PYTHONPATH" &&
-      python taskcluster/scripts/fetch-firefoxci-artifacts.py
+      uv run python taskcluster/scripts/fetch-firefoxci-artifacts.py
 
 tasks:
   gecko:

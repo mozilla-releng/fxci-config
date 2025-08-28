@@ -28,6 +28,4 @@ tasks:
         run-on-tasks-for: []
         run:
             command: >-
-                pip install --user -r requirements/base.txt &&
-                pip install --user --no-deps . &&
-                python taskcluster/scripts/tc-admin-apply-staging.py
+                uv run python taskcluster/scripts/tc-admin-apply-staging.py
