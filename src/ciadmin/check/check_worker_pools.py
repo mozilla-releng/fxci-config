@@ -234,6 +234,7 @@ class GCPApiHandler:
         request = ListMachineTypesRequest(project=self.project_id, zone=zone)
         return set(m.name for m in self.machine_types_client.list(request=request))
 
+
 @pytest.mark.asyncio
 async def check_worker_pool_gcp_instances_by_region():
     gcp_token = os.getenv("GCP_CHECK_TOKEN", None)
@@ -267,8 +268,9 @@ async def check_worker_pool_gcp_instances_by_region():
                 invalid_zones.append((pool.pool_id, machine_type, machine["zone"]))
             zone_machine_types = gcp_api.list_machine_types(machine["zone"])
             if machine_type not in zone_machine_types:
-                invalid_machine_types.append((pool.pool_id, machine_type, machine["zone"]))
-
+                invalid_machine_types.append(
+                    (pool.pool_id, machine_type, machine["zone"])
+                )
 
     message = "\n".join(
         f" - {pool_id}: {machine_type} (zone: {zone})"
@@ -280,4 +282,6 @@ async def check_worker_pool_gcp_instances_by_region():
         f" - {pool_id}: {machine_type} (zone: {zone})"
         for pool_id, machine_type, zone in invalid_machine_types
     )
-    assert not invalid_machine_types, f"Invalid GCP worker machine types found: \n{message}"
+    assert not invalid_machine_types, (
+        f"Invalid GCP worker machine types found: \n{message}"
+    )
