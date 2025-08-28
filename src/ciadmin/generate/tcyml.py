@@ -6,10 +6,10 @@ from asyncio import Lock
 
 import aiohttp
 from aiohttp_retry import ExponentialRetry, RetryClient
-from simple_github import client_from_env
 from tcadmin.util.sessions import aiohttp_session
 
 from ciadmin import USER_AGENT
+from ciadmin.util import github
 
 _cache = {}
 _lock = {}
@@ -76,21 +76,19 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
             if cache_key in _cache:
                 return _cache[cache_key]
 
-            client_cls = client_from_env("mozilla-releng", ["fxci-config"])
-
             headers = {"Accept": "application/vnd.github.raw+json"}
             params = {"ref": revision}
 
-            async with client_cls() as client:
-                response = await client.request(
-                    "GET", endpoint, headers=headers, params=params
-                )
-                try:
-                    response.raise_for_status()
-                    result = await response.read()
-                except aiohttp.ClientResponseError as e:
-                    print(f"Got error when querying {endpoint}: {e}")
-                    raise e
+            client = await github.get_client()
+            response = await client.request(
+                "GET", endpoint, headers=headers, params=params
+            )
+            try:
+                response.raise_for_status()
+                result = await response.read()
+            except aiohttp.ClientResponseError as e:
+                print(f"Got error when querying {endpoint}: {e}")
+                raise e
 
             _cache[cache_key] = result
 
