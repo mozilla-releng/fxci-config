@@ -2531,7 +2531,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows
       worker-purpose: gecko-1
-      locations: [west-us-3]
+      locations: [central-india]
       maxCapacity: 10
       publicIp: true
       worker-config:
@@ -2548,7 +2548,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_F32s_v2
+        - vmSize: Standard_D32als_v6
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2561,8 +2561,9 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
+                  placement: NvmeDisk
             hardwareProfile:
-              vmSize: Standard_F32s_v2
+              vmSize: Standard_D32als_v6
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
