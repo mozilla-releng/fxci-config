@@ -29,17 +29,13 @@ tasks:
         description: "Run ciadmin `unit tests` to validate the latest changes"
         run:
             command: >-
-                pip install --user -r requirements/test.txt &&
-                pip install --user --no-deps . &&
-                pytest tests/ -vv
+                uv run pytest tests -vv
 
     unit-build-decision:
         description: "Run build-decision `unit tests` to validate the latest changes"
         run:
             command: >-
-                pip install --user -r build-decision/requirements/test.txt &&
-                pip install --user --no-deps build-decision/. &&
-                pytest build-decision/tests/ -vv
+                uv run --package build-decision pytest build-decision/tests -vv
         when:
             files-changed: ["build-decision/**"]
 
@@ -47,8 +43,6 @@ tasks:
         description: "Run fxci_config_taskgraph unit tests to validate the latest changes"
         run:
             command: >-
-                pip install --user -r requirements/test.txt &&
-                pip install --user --no-deps . &&
-                pytest taskcluster/test/ -vv
+                uv run pytest taskcluster/test -vv
         when:
             files-changed: ["taskcluster/**"]

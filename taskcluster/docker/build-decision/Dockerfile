@@ -1,15 +1,22 @@
 # %ARG PYTHON_VERSION
-FROM python:$PYTHON_VERSION-slim
-MAINTAINER Aki Sasaki <aki@mozilla.com>
+# %ARG UV_VERSION
+FROM ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-bookworm-slim AS builder
+LABEL maintainer="Mozilla Release Engineering <release+build-decision@mozilla.com>"
+WORKDIR /build
 
-# %include build-decision/requirements/base.in
-# %include build-decision/requirements/base.txt
-# %include build-decision/setup.py
+# %include build-decision/README.txt
+# %include build-decision/pyproject.toml
 # %include build-decision/src
-ADD topsrcdir/build-decision /setup/
-RUN ["pip", "install", "-r", "/setup/requirements/base.txt"]
-RUN ["pip", "install", "--no-deps", "/setup"]
-RUN ["/bin/rm", "-rf", "/setup"]
+# %include README.md
+# %include uv.lock
+# %include pyproject.toml
+COPY topsrcdir/ /build
 
+RUN ["uv", "sync", "--package=build-decision", "--no-dev", "--frozen"]
+
+FROM python:$PYTHON_VERSION-slim
 USER nobody
-ENTRYPOINT ["build-decision"]
+WORKDIR /build
+COPY --from=builder /build /build
+
+ENTRYPOINT ["/build/.venv/bin/build-decision"]
