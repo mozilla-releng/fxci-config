@@ -17,5 +17,4 @@ task-defaults:
 
 tasks:
     build-decision: {}
-    python3.11:
-        definition: python
+    python: {}

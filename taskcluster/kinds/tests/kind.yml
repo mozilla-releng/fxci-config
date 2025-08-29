@@ -14,7 +14,7 @@ task-defaults:
         code-review: true
     worker-type: t-linux
     worker:
-        docker-image: {in-tree: python3.11}
+        docker-image: {in-tree: python}
         max-run-time: 3600
         env:
             # fail instead of skipping tests due to missing information
