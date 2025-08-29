@@ -2561,7 +2561,7 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
-                  placement: NvmeDisk
+                  placement: NVMeDisk
             hardwareProfile:
               vmSize: Standard_D32alds_v6
             diagnosticsProfile:
