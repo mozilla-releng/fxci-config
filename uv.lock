@@ -776,7 +776,7 @@ requires-dist = [
     { name = "async-timeout" },
     { name = "attrs" },
     { name = "iso8601", specifier = "==0.1.12" },
-    { name = "json-e", specifier = "<3" },
+    { name = "json-e" },
     { name = "mozilla-repo-urls" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
@@ -1000,9 +1000,12 @@ wheels = [
 
 [[package]]
 name = "json-e"
-version = "2.7.1"
+version = "4.8.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/cc/7c/87630efb97538a37f121818c5deb033102ceffb421002650d96b3a5b4ff5/json-e-2.7.1.tar.gz", hash = "sha256:de971441107b5df68c6ca06c486206db3c25f9881c1e353eabd53f4fb563b3be", size = 17105, upload-time = "2018-09-22T12:26:58.253Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f5/1b/7d068aba86734c11a1720fe32654112d1946855851e558079acd90afb498/json-e-4.8.0.tar.gz", hash = "sha256:91a50ba4e1a9e6d40c36c0601d68acda9ae44ca2817525e09938b2c82ce23572", size = 11989, upload-time = "2024-10-03T21:42:20.448Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c8/76/5f2f214b19110406ec612413f3475664dbde83bf04e116ee54939edf80a1/json_e-4.8.0-py3-none-any.whl", hash = "sha256:51ead93962912d701c6f1a6a0b27cc34bb2cb8397a82affd8adb2401898e27ea", size = 13969, upload-time = "2024-10-03T21:42:18.968Z" },
+]
 
 [[package]]
 name = "jsonschema"
