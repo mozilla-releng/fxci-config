@@ -1,7 +1,5 @@
 include pyproject.toml
-include setup.py
 
-recursive-include requirements *
 recursive-include src *
 
 exclude .arcconfig
@@ -11,7 +9,6 @@ exclude README.md
 exclude Dockerfile.test
 exclude taskcluster
 exclude tests
-exclude tox.ini
 
 recursive-exclude taskcluster *
 recursive-exclude tests *
