@@ -10,7 +10,7 @@ from ciadmin.util.matching import GroupGrantee, ProjectGrantee
 
 @pytest.mark.asyncio
 async def test_fetch_empty(mock_ciconfig_file):
-    mock_ciconfig_file("grants.yml", [])
+    mock_ciconfig_file("dir:grants.d", [])
     assert await Grant.fetch_all() == []
 
 
@@ -18,7 +18,7 @@ async def test_fetch_empty(mock_ciconfig_file):
 async def test_fetch_entries(mock_ciconfig_file):
     """Test fetching non-empty grants, including singular and plural names"""
     mock_ciconfig_file(
-        "grants.yml",
+        "dir:grants.d",
         [
             {
                 "grant": ["somescope"],
@@ -91,9 +91,9 @@ async def test_fetch_entries(mock_ciconfig_file):
 
 @pytest.mark.asyncio
 async def test_fetch_grants_to_not_list(mock_ciconfig_file):
-    "Fetching grants.yml a malformed grants.to is an error"
+    "Fetching grants a malformed grants.to is an error"
     mock_ciconfig_file(
-        "grants.yml", [{"grant": [1, 2, 3], "to": "example-user:frankie"}]
+        "dir:grants.d", [{"grant": [1, 2, 3], "to": "example-user:frankie"}]
     )
 
     with pytest.raises(ValueError):
@@ -102,8 +102,8 @@ async def test_fetch_grants_to_not_list(mock_ciconfig_file):
 
 @pytest.mark.asyncio
 async def test_fetch_non_string_scopes(mock_ciconfig_file):
-    "Fetching grants.yml with non-strings scopes is an error"
-    mock_ciconfig_file("grants.yml", [{"grant": [1, 2, 3], "to": []}])
+    "Fetching grants with non-strings scopes is an error"
+    mock_ciconfig_file("dir:grants.d", [{"grant": [1, 2, 3], "to": []}])
 
     with pytest.raises(ValueError):
         await Grant.fetch_all()
@@ -111,8 +111,8 @@ async def test_fetch_non_string_scopes(mock_ciconfig_file):
 
 @pytest.mark.asyncio
 async def test_fetch_non_list_scopes(mock_ciconfig_file):
-    "Fetching grants.yml with something other than a list of scopes is an error"
-    mock_ciconfig_file("grants.yml", [{"grant": None, "to": []}])
+    "Fetching grants with something other than a list of scopes is an error"
+    mock_ciconfig_file("dir:grants.d", [{"grant": None, "to": []}])
 
     with pytest.raises(ValueError):
         await Grant.fetch_all()
@@ -122,7 +122,7 @@ async def test_fetch_non_list_scopes(mock_ciconfig_file):
 async def test_fetch_invalid_project_grantee_too_many_keys(mock_ciconfig_file):
     "A grantee with too many keys (not just project or group) is an error"
     mock_ciconfig_file(
-        "grants.yml",
+        "dir:grants.d",
         [
             {
                 "grant": [],
@@ -142,7 +142,7 @@ async def test_fetch_invalid_project_grantee_too_many_keys(mock_ciconfig_file):
 async def test_fetch_invalid_group_grantee(mock_ciconfig_file):
     "A malformed group grantee is an error"
     mock_ciconfig_file(
-        "grants.yml", [{"grant": [], "to": [{"groups": {"admins": True}}]}]
+        "dir:grants.d", [{"grant": [], "to": [{"groups": {"admins": True}}]}]
     )
 
     with pytest.raises(ValueError):
@@ -152,7 +152,22 @@ async def test_fetch_invalid_group_grantee(mock_ciconfig_file):
 @pytest.mark.asyncio
 async def test_fetch_invalid_grantee_too_many_keys(mock_ciconfig_file):
     "A grantee with an invalid key is an error"
-    mock_ciconfig_file("grants.yml", [{"grant": [], "to": [{"user": "me"}]}])
+    mock_ciconfig_file("dir:grants.d", [{"grant": [], "to": [{"user": "me"}]}])
 
     with pytest.raises(ValueError):
         await Grant.fetch_all()
+
+
+@pytest.mark.asyncio
+async def test_fetch_from_grants_dir(mock_ciconfig_file):
+    """Test loading grants from grants.d directory"""
+    # Mock grants.d directory with multiple files
+    mock_ciconfig_file("dir:grants.d", [
+        {"grant": ["scope1"], "to": [{"group": ["team1"]}]},
+        {"grant": ["scope2"], "to": [{"project": {"level": 2}}]},
+    ])
+    
+    grants = await Grant.fetch_all()
+    assert len(grants) == 2
+    assert grants[0].scopes == ["scope1"] 
+    assert grants[1].scopes == ["scope2"]

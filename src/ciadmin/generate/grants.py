@@ -41,7 +41,7 @@ def format_role_id(project, job, pr_policy):
 
 
 def format_scope(project, scope, level, priority):
-    # perform substitutions as grants.yml describes
+    # perform substitutions as grant file describes
     subs = {}
     subs["alias"] = project.alias
     if level:
@@ -212,7 +212,7 @@ def add_scopes_for_roles(grant, grantee, add_scope):
 
 async def update_resources(resources):
     """
-    Manage the scopes granted to projects.  This file interprets `grants.yml`
+    Manage the scopes granted to projects.  This file interprets `grants.d` yml files
     in fxci-config. Its behavior is largely documented in the comment in that file.
     """
 
@@ -255,7 +255,7 @@ async def update_resources(resources):
             roleId=roleId,
             scopes=normalizeScopes(scopes),
             description="Scopes in this role are defined in "
-            "[fxci-config/grants.yml]"
-            "(https://github.com/mozilla-releng/fxci-config/blob/main/grants.yml).",
+            "[fxci-config/grants.d]"
+            "(https://github.com/mozilla-releng/fxci-config/blob/main/grants.d).",
         )
         resources.add(role)
