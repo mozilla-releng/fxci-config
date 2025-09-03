@@ -160,17 +160,17 @@ meta:
       diskType: diskTypes/local-ssd
     type: SCRATCH
     interface: NVME
-  - &c3d-standard-4
+  - &c3d-standard-8
     disks:
       - <<: *persistent-disk
         diskSizeGb: 75
-    machine_type: c3d-standard-4
-  - &c3d-standard-4-lssd
+    machine_type: c3d-standard-8
+  - &c3d-standard-8-lssd
     disks:
       - <<: *persistent-disk
         diskSizeGb: 75
       - *scratch-disk
-    machine_type: c3d-standard-4-lssd
+    machine_type: c3d-standard-8-lssd
   - &c3d-standard-16-lssd
     disks:
       - <<: *persistent-disk
@@ -444,6 +444,10 @@ pools:
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
+      - pool-group: comm-1
+      - pool-group: comm-2
+      - pool-group: comm-3
+        chain-of-trust: trusted
     email_on_error: true
     provider_id:
       by-chain-of-trust:
@@ -453,7 +457,7 @@ pools:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          gecko-.*: 10
+          (gecko|comm)-.*: 10
       implementation: generic-worker/worker-runner-linux-multi
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
@@ -1155,6 +1159,10 @@ pools:
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
+      - pool-group: comm-1
+      - pool-group: comm-2
+      - pool-group: comm-3
+        chain-of-trust: trusted
     email_on_error: false
     provider_id:
       by-chain-of-trust:
@@ -1164,7 +1172,7 @@ pools:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          gecko-.*: 10
+          (gecko|comm)-.*: 10
       implementation: generic-worker/worker-runner-linux-multi
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
@@ -2531,7 +2539,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows
       worker-purpose: gecko-1
-      locations: [west-us-3]
+      locations: [central-india]
       maxCapacity: 10
       publicIp: true
       worker-config:
@@ -2548,7 +2556,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_F32s_v2
+        - vmSize: Standard_D32alds_v6
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2561,8 +2569,9 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
+                  placement: NVMeDisk
             hardwareProfile:
-              vmSize: Standard_F32s_v2
+              vmSize: Standard_D32alds_v6
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -3100,6 +3109,7 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
+              (source-)?alpha: Standard_E8ads_v5
               .*large.*: Standard_E8ads_v5
               .*gpu.*: Standard_NV12s_v3
               default: Standard_F8s_v2
@@ -3118,6 +3128,7 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
+                  (source-)?alpha: Standard_E8ads_v5
                   .*large.*: Standard_E8ads_v5
                   .*gpu.*: Standard_NV12s_v3
                   default: Standard_F8s_v2
@@ -3268,26 +3279,26 @@ pools:
     variants:
       - pool-group: gecko-t
         suffix: ''
-        instance_types: [*c3d-standard-4-lssd]
+        instance_types: [*c3d-standard-8-lssd]
       - pool-group: comm-t
         suffix: ''
-        instance_types: [*c3d-standard-4-lssd]
+        instance_types: [*c3d-standard-8-lssd]
       - pool-group: mozilla-t
         suffix: ''
-        instance_types: [*c3d-standard-4-lssd]
+        instance_types: [*c3d-standard-8-lssd]
       - pool-group: nss-t
         suffix: ''
-        instance_types: [*c3d-standard-4-lssd]
+        instance_types: [*c3d-standard-8-lssd]
       # noscratch variants (Note: nss doesn't use noscratch)
       - pool-group: gecko-t
         suffix: -noscratch
-        instance_types: [*c3d-standard-4]
+        instance_types: [*c3d-standard-8]
       - pool-group: comm-t
         suffix: -noscratch
-        instance_types: [*c3d-standard-4]
+        instance_types: [*c3d-standard-8]
       - pool-group: mozilla-t
         suffix: -noscratch
-        instance_types: [*c3d-standard-4]
+        instance_types: [*c3d-standard-8]
     email_on_error: true
     config:
       worker-config:

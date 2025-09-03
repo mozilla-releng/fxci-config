@@ -2,10 +2,14 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+import json
+import os
 import re
 from textwrap import dedent
 
 import pytest
+from google.cloud.compute import ListMachineTypesRequest, MachineTypesClient
+from google.oauth2 import service_account
 from tcadmin.resources import Resources
 
 from ciadmin.generate.ciconfig.environment import Environment
@@ -203,3 +207,60 @@ async def check_gcp_ssds():
             .lstrip()
         )
     assert not errors
+
+
+@pytest.mark.asyncio
+async def check_worker_pool_gcp_instances_by_region():
+    gcp_token = os.getenv("GCP_CHECK_TOKEN", None)
+    if not gcp_token:
+        return pytest.skip("GCP_CHECK_TOKEN not set")
+
+    # Fetch GCP pools
+    credentials = service_account.Credentials.from_service_account_info(
+        json.loads(gcp_token)
+    )
+    gcp_api_client = MachineTypesClient(credentials=credentials)
+
+    environment = await Environment.current()
+    resources = Resources()
+    worker_pools = await WorkerPoolConfig.fetch_all()
+    worker_images = await WorkerImage.fetch_all()
+
+    generated_pools = []
+    zones = set()
+    # Generate the pools
+    for pool in generate_pool_variants(worker_pools, environment):
+        if "gcp" not in pool.provider_id:
+            continue
+        generated = await make_worker_pool(
+            environment, resources, pool, worker_images, {}
+        )
+        generated_pools.append(generated)
+        # Collect zones to query GCP
+        for machine in generated.config["launchConfigs"]:
+            if "custom" in machine["machineType"].split("/")[-1]:
+                continue  # Skip custom machine types
+            zones.add(machine["zone"])
+
+    gcp_zone_machine_types = {}
+    for zone in zones:
+        for record in gcp_api_client.list(
+            ListMachineTypesRequest(project=credentials.project_id, zone=zone)
+        ):
+            # Machine type == record.name
+            gcp_zone_machine_types.setdefault(zone, set()).add(record.name)
+
+    invalid_pools = []
+    for pool in generated_pools:
+        for machine in pool.config["launchConfigs"]:
+            machine_type = machine["machineType"].split("/")[-1]
+            if "custom" in machine_type:
+                continue
+            if machine_type not in gcp_zone_machine_types[machine["zone"]]:
+                invalid_pools.append((pool.id, machine_type, machine["zone"]))
+
+    message = "\n".join(
+        f" - {pool_id}: {machine_type} (zone: {zone})"
+        for pool_id, machine_type, zone in invalid_pools
+    )
+    assert not invalid_pools, f"Invalid GCP worker pools found: \n{message}"
