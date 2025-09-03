@@ -5,7 +5,7 @@
 import attr
 
 from ...util.matching import grantees
-from .get import get_ciconfig_file, get_ciconfig_dir
+from .get import get_ciconfig_dir
 
 
 @attr.s(frozen=True)

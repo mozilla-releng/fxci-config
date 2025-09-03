@@ -162,12 +162,15 @@ async def test_fetch_invalid_grantee_too_many_keys(mock_ciconfig_file):
 async def test_fetch_from_grants_dir(mock_ciconfig_file):
     """Test loading grants from grants.d directory"""
     # Mock grants.d directory with multiple files
-    mock_ciconfig_file("dir:grants.d", [
-        {"grant": ["scope1"], "to": [{"group": ["team1"]}]},
-        {"grant": ["scope2"], "to": [{"project": {"level": 2}}]},
-    ])
-    
+    mock_ciconfig_file(
+        "dir:grants.d",
+        [
+            {"grant": ["scope1"], "to": [{"group": ["team1"]}]},
+            {"grant": ["scope2"], "to": [{"project": {"level": 2}}]},
+        ],
+    )
+
     grants = await Grant.fetch_all()
     assert len(grants) == 2
-    assert grants[0].scopes == ["scope1"] 
+    assert grants[0].scopes == ["scope1"]
     assert grants[1].scopes == ["scope2"]

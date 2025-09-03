@@ -4,6 +4,7 @@
 
 import os
 import tempfile
+
 import pytest
 from tcadmin.util.sessions import with_aiohttp_session
 
@@ -33,7 +34,7 @@ async def test_get_ciconfig_dir_dicts():
         file1_path = os.path.join(tmpdir, "file1.yml")
         with open(file1_path, "w") as f:
             f.write("key1: value1\nkey2: value2\n")
-        
+
         file2_path = os.path.join(tmpdir, "file2.yml")
         with open(file2_path, "w") as f:
             f.write("key3: value3\nkey4: value4\n")
@@ -41,9 +42,9 @@ async def test_get_ciconfig_dir_dicts():
         result = await get_ciconfig_dir(tmpdir)
         expected = {
             "key1": "value1",
-            "key2": "value2", 
+            "key2": "value2",
             "key3": "value3",
-            "key4": "value4"
+            "key4": "value4",
         }
         assert result == expected
         assert isinstance(result, dict)
@@ -58,7 +59,7 @@ async def test_get_ciconfig_dir_lists():
         file1_path = os.path.join(tmpdir, "file1.yml")
         with open(file1_path, "w") as f:
             f.write("- item1\n- item2\n")
-        
+
         file2_path = os.path.join(tmpdir, "file2.yml")
         with open(file2_path, "w") as f:
             f.write("- item3\n- item4\n")
@@ -78,7 +79,7 @@ async def test_get_ciconfig_dir_mixed_types_error():
         file1_path = os.path.join(tmpdir, "file1.yml")
         with open(file1_path, "w") as f:
             f.write("key1: value1\n")
-        
+
         file2_path = os.path.join(tmpdir, "file2.yml")
         with open(file2_path, "w") as f:
             f.write("- item1\n")
@@ -131,17 +132,20 @@ async def test_get_ciconfig_dir_duplicate_keys_error():
         file1_path = os.path.join(tmpdir, "file1.yml")
         with open(file1_path, "w") as f:
             f.write("key1: value1\nshared: from_file1\n")
-        
+
         file2_path = os.path.join(tmpdir, "file2.yml")
         with open(file2_path, "w") as f:
             f.write("key2: value2\nshared: from_file2\n")
 
-        with pytest.raises(ValueError, match="Duplicate key 'shared' found in files file1.yml and file2.yml"):
+        with pytest.raises(
+            ValueError,
+            match="Duplicate key 'shared' found in files file1.yml and file2.yml",
+        ):
             await get_ciconfig_dir(tmpdir)
 
 
 @pytest.mark.asyncio
-@with_aiohttp_session 
+@with_aiohttp_session
 async def test_get_ciconfig_dir_empty_files():
     """Test get_ciconfig_dir with empty yml files"""
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -149,7 +153,7 @@ async def test_get_ciconfig_dir_empty_files():
         file1_path = os.path.join(tmpdir, "empty1.yml")
         with open(file1_path, "w") as f:
             f.write("{}")
-        
+
         file2_path = os.path.join(tmpdir, "empty2.yml")
         with open(file2_path, "w") as f:
             f.write("{}")
