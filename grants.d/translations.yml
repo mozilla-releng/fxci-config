@@ -1,0 +1,55 @@
+# Scopes for running Translations training cycles and debugging
+- grant:
+    - hooks:trigger-hook:project-translations/in-tree-action-*
+    - hooks:trigger-hook:project-translations/in-tree-pr-action-*
+    - queue:create-task:low:translations-1/*
+    - docker-worker:cache:translations-level-1*
+    - generic-worker:cache:translations-level-1*
+    - queue:scheduler-id:taskcluster-ui
+    - queue:cancel-task:taskcluster-ui/*
+    # Note: these two scopes allow accessing these private artifacts on _any_ Task,
+    # not just `translations` tasks. However, users receiving these grants can't
+    # _create_ interactive tasks for any other projects (without also having other
+    # scopes), so the risk here is low.
+    - queue:get-artifact:private/interactive/*
+    - queue:get-artifact:private/docker-worker/*
+    - queue:get-artifact:private/generic-worker/*
+    - secrets:get:project/translations/level-1/*
+    - secrets:set:project/translations/level-1/*
+  to:
+    - roles:
+        - mozillians-group:translations-developers
+
+# Beetmover scopes for Translations
+- grant:
+    - project:translations:releng:beetmover:bucket:development
+  to:
+    - project:
+        alias:
+          - translations
+        job:
+          - branch:*
+          - pull-request:*
+          - action:train
+          - pr-action:train
+
+- grant:
+    - project:translations:releng:beetmover:bucket:production
+  to:
+    - project:
+        alias:
+          - translations
+        job:
+          - branch:*
+          - action:train
+
+- grant:
+    - project:translations:releng:beetmover:action:upload-data
+    - project:translations:releng:beetmover:action:upload-translations-artifacts
+  to:
+    - project:
+        alias:
+          - translations
+    - project:
+        alias:
+          - staging-firefox-translations-training
