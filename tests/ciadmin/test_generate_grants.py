@@ -596,7 +596,7 @@ async def test_update_resources(mock_ciconfig_file, set_environment):
         },
     )
     mock_ciconfig_file(
-        "grants.yml",
+        "dir:grants.d",
         [
             {
                 "grant": ["scope1:xyz", "scope1:abc", "scope2:*"],

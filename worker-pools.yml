@@ -444,6 +444,10 @@ pools:
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
+      - pool-group: comm-1
+      - pool-group: comm-2
+      - pool-group: comm-3
+        chain-of-trust: trusted
     email_on_error: true
     provider_id:
       by-chain-of-trust:
@@ -453,7 +457,7 @@ pools:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          gecko-.*: 10
+          (gecko|comm)-.*: 10
       implementation: generic-worker/worker-runner-linux-multi
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
@@ -827,6 +831,7 @@ pools:
     email_on_error: true
     variants:
       - pool-group: gecko-1
+      - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
     provider_id:
@@ -1155,6 +1160,10 @@ pools:
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
+      - pool-group: comm-1
+      - pool-group: comm-2
+      - pool-group: comm-3
+        chain-of-trust: trusted
     email_on_error: false
     provider_id:
       by-chain-of-trust:
@@ -1164,7 +1173,7 @@ pools:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          gecko-.*: 10
+          (gecko|comm)-.*: 10
       implementation: generic-worker/worker-runner-linux-multi
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
@@ -2533,7 +2542,10 @@ pools:
       worker-purpose: gecko-1
       locations: [central-india]
       maxCapacity: 10
-      publicIp: true
+      publicIp:
+        by-pool-id:
+          .*alpha: false
+          default: true
       worker-config:
         genericWorker:
           config:
@@ -2561,7 +2573,7 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
-                  placement: NvmeDisk
+                  placement: NVMeDisk
             hardwareProfile:
               vmSize: Standard_D32alds_v6
             diagnosticsProfile:
@@ -2616,7 +2628,10 @@ pools:
           mozilla-.*: 25
           relops-.*: 12
           nss-.*: 25
-      publicIp: true
+      publicIp:
+        by-pool-id:
+          .*alpha: false
+          default: true
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
@@ -2667,7 +2682,10 @@ pools:
       worker-purpose: nss-1
       locations: [central-us, north-central-us]
       maxCapacity: 25
-      publicIp: true
+      publicIp:
+        by-pool-id:
+          .*alpha: false
+          default: true
       worker-config:
         genericWorker:
           config:
@@ -2713,7 +2731,10 @@ pools:
       worker-purpose: vpn-1
       locations: [central-us, north-central-us]
       maxCapacity: 25
-      publicIp: true
+      publicIp:
+        by-pool-id:
+          .*alpha: false
+          default: true
       worker-config:
         genericWorker:
           config:
@@ -2791,7 +2812,10 @@ pools:
           '': 600
           alpha: 500
           default: 100
-      publicIp: true
+      publicIp:
+        by-pool-id:
+          .*alpha: false
+          default: true
       worker-config:
         genericWorker:
           config:
@@ -2866,7 +2890,10 @@ pools:
         by-pool-group:
           gecko.*: 250
           mozillavpn.*: 10
-      publicIp: true
+      publicIp:
+        by-pool-id:
+          .*alpha: false
+          default: true
       worker-config:
         genericWorker:
           config:
@@ -2965,7 +2992,10 @@ pools:
               alpha: 500
               gpu: 600
               default: 100
-      publicIp: true
+      publicIp:
+        by-pool-id:
+          .*alpha: false
+          default: true
       worker-config:
         genericWorker:
           config:
@@ -3076,7 +3106,10 @@ pools:
               alpha: 500
               gpu: 600
               default: 100
-      publicIp: true
+      publicIp:
+        by-pool-id:
+          .*alpha: false
+          default: true
       worker-config:
         genericWorker:
           config:
@@ -3145,7 +3178,10 @@ pools:
       worker-purpose: '{pool-group}'
       locations: [east-us-2, north-central-us, central-us]
       maxCapacity: 500
-      publicIp: true
+      publicIp:
+        by-pool-id:
+          .*alpha: false
+          default: true
       worker-config:
         genericWorker:
           config:

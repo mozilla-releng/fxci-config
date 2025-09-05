@@ -557,6 +557,21 @@ holly:
     treeherder-reporting: true
     trust-domain-scopes: true
 
+staging-firefox:
+  repo: https://github.com/mozilla-releng/staging-firefox
+  repo_type: git
+  trust_domain: gecko
+  branches:
+    - name: main
+      level: 1
+    - name: tc-github
+      level: 1
+  features:
+    github-taskgraph: true
+    pr-actions: true
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 # non-gecko repositories
 
 nss:
