@@ -1,3 +1,61 @@
+[project]
+name = "fxci-config"
+version = "1.0.0"
+description = "Administration of runtime configuration (Taskcluster settings) for Firefox CI"
+authors = [
+    {name = "Mozilla Release Engineering", email = "release+ciadmin@mozilla.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "tc-admin>=4.0.2",
+    "taskcluster",
+    "attrs",
+    "mozilla-repo-urls",
+    "aiohttp[speedups]<4",
+    "pyyaml>=5.3",
+    "iso8601==0.1.12",
+    "json-e",
+    "aiohttp-retry",
+    "simple-github>=2.2.0",
+    # These are used at run-time as part of `tc-admin check`
+    "pytest",
+    "pytest-asyncio",
+    "async-timeout",
+]
+
+[dependency-groups]
+dev = [
+    "coverage[toml]",
+    "flake8",
+    "google-cloud-compute",
+    "pip>=21.2",
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+    "pytest-taskgraph>=0.1.0",
+    "responses>=0.25.3",
+    "taskcluster-taskgraph>=13.0.0",
+]
+
+[project.scripts]
+ci-admin = "ciadmin.boot:boot"
+fxci = "fxci.cli:main"
+
+[tool.uv.workspace]
+members = ["build-decision"]
+
+[tool.uv.build-backend]
+module-name = ["ciadmin", "fxci"]
+
+[build-system]
+requires = ["uv_build>=0.8.14"]
+build-backend = "uv_build"
+
 [tool.ruff]
 line-length = 88
 target-version = "py311"

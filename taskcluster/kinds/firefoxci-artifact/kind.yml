@@ -14,7 +14,7 @@ task-defaults:
   attributes: {}  # cached_tasks transforms assume this exists
   worker-type: t-linux
   worker:
-    docker-image: {in-tree: python3.11}
+    docker-image: {in-tree: python}
     env:
       MOZ_ARTIFACT_DIR: /builds/worker/artifacts
     max-run-time: 3600
@@ -24,10 +24,8 @@ task-defaults:
     using: run-task
     cwd: '{checkout}'
     command: >-
-      pip install --user -r requirements/base.txt &&
-      pip install --user --no-deps . &&
       export PYTHONPATH="taskcluster:$PYTHONPATH" &&
-      python taskcluster/scripts/fetch-firefoxci-artifacts.py
+      uv run python taskcluster/scripts/fetch-firefoxci-artifacts.py
 
 tasks:
   gecko:
