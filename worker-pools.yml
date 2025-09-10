@@ -2618,6 +2618,12 @@ pools:
         suffix: alpha
         implementation: generic-worker/windows
       - pool-group: mozillavpn-1
+      - pool-group: nss-1
+        suffix: alpha
+        implementation: generic-worker/windows
+      - pool-group: nss-1
+      - pool-group: nss-3
+        level: 3
     provider_id:
       by-level:
         1: azure2
@@ -2632,6 +2638,7 @@ pools:
       locations: [east-us-2, west-us-3, north-central-us, central-us]
       maxCapacity:
         by-pool-group:
+          nss-.*: 25
           gecko.*: 250
           mozillavpn.*: 10
       worker-config:
@@ -2644,7 +2651,7 @@ pools:
             tasksDir: C:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: win11Aarch64
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2904,12 +2911,24 @@ pools:
       - pool-group: comm-t
         suffix: alpha
         implementation: generic-worker/windows
+      - pool-group: nss-1
+      - pool-group: nss-1
+        suffix: alpha
+        implementation: generic-worker/windows
+      - pool-group: nss-t
+      - pool-group: nss-t
+        suffix: alpha
+        implementation: generic-worker/windows
     config:
       image: ronin_t_windows11_a64_24h2_tester_{suffix}
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
       locations: [east-us-2, north-central-us, central-us]
-      maxCapacity: 500
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 500
+          comm-t: 500
+          default: 50
       worker-config:
         genericWorker:
           config:
@@ -2920,13 +2939,7 @@ pools:
             tasksDir: C:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch:
-          by-pool-group:
-            comm-t: windows
-            default:
-              by-suffix:
-                alpha: windows
-                default: cloud_windows
+        sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
