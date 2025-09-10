@@ -831,6 +831,7 @@ pools:
     email_on_error: true
     variants:
       - pool-group: gecko-1
+      - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
     provider_id:
@@ -1755,242 +1756,6 @@ pools:
             - <<: *persistent-disk
               diskSizeGb: 60
           machine_type: c2-standard-8
-  - pool_id: '{pool-group}/b-linux-v100-gpu'
-    description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
-    variants:
-      - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            enableInteractive: true
-      minCapacity: 0
-      maxCapacity: 200
-      implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1]
-      image: monopacker-translations-worker
-      instance_types:
-        - minCpuPlatform: Intel Skylake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
-          machine_type: n1-highmem-8
-          guestAccelerators:
-            - acceleratorCount: 1
-              acceleratorType: nvidia-tesla-v100
-  - pool_id: '{pool-group}/b-linux-v100-gpu-4'
-    description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
-    variants:
-      - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            enableInteractive: true
-      minCapacity: 0
-      # We use 4 GPUs per instance across 4 regions with a limit of 128
-      # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
-      # 512 GPUs / 4 per instance = 128 instances possibly running at once.
-      maxCapacity: 128
-      implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1]
-      image: monopacker-translations-worker
-      instance_types:
-        - minCpuPlatform: Intel Skylake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
-          machine_type: n1-highmem-8
-          guestAccelerators:
-            - acceleratorCount: 4
-              acceleratorType: nvidia-tesla-v100
-  - pool_id: '{pool-group}/b-linux-v100-gpu-4-300gb'
-    description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
-    variants:
-      - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            enableInteractive: true
-      minCapacity: 0
-      # We use 4 GPUs per instance across 4 regions with a limit of 128
-      # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
-      # 512 GPUs / 4 per instance = 128 instances possibly running at once.
-      maxCapacity: 128
-      implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1]
-      image: monopacker-translations-worker
-      instance_types:
-        - minCpuPlatform: Intel Skylake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 300
-          # 40 CPUs, 256GB RAM
-          machine_type: n1-custom-40-262144
-          guestAccelerators:
-            - acceleratorCount: 4
-              acceleratorType: nvidia-tesla-v100
-  - pool_id: '{pool-group}/b-linux-v100-gpu-4-300gb-standard'
-    description: Worker for machine learning tasks that require standard VMs
-    owner: release+tc-workers@mozilla.com
-    variants:
-      - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            enableInteractive: true
-      minCapacity: 0
-      maxCapacity: 50
-      implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
-      image: monopacker-translations-worker
-      instance_types:
-        - minCpuPlatform: Intel Skylake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 300
-          # 40 CPUs, 256GB RAM
-          machine_type: n1-custom-40-262144
-          scheduling: standard
-          guestAccelerators:
-            - acceleratorCount: 4
-              acceleratorType: nvidia-tesla-v100
-  - pool_id: '{pool-group}/b-linux-v100-gpu-4-1tb-standard'
-    description: Worker for machine learning tasks that require standard VMs
-    owner: release+tc-workers@mozilla.com
-    variants:
-      - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            enableInteractive: true
-      minCapacity: 0
-      maxCapacity: 50
-      implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
-      image: monopacker-translations-worker
-      instance_types:
-        - minCpuPlatform: Intel Skylake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 1024
-          # 40 CPUs, 256GB RAM
-          machine_type: n1-custom-40-262144
-          scheduling: standard
-          guestAccelerators:
-            - acceleratorCount: 4
-              acceleratorType: nvidia-tesla-v100
-  - pool_id: '{pool-group}/b-linux-v100-gpu-4-1tb'
-    description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
-    variants:
-      - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            enableInteractive: true
-      minCapacity: 0
-      # We use 4 GPUs per instance across 4 regions with a limit of 128
-      # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
-      # 512 GPUs / 4 per instance = 128 instances possibly running at once.
-      maxCapacity: 128
-      implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1]
-      image: monopacker-translations-worker
-      instance_types:
-        - minCpuPlatform: Intel Skylake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 1024
-          # 40 CPUs, 256GB RAM
-          machine_type: n1-custom-40-262144
-          guestAccelerators:
-            - acceleratorCount: 4
-              acceleratorType: nvidia-tesla-v100
-  - pool_id: '{pool-group}/b-linux-v100-gpu-4-2tb'
-    description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
-    variants:
-      - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            enableInteractive: true
-      minCapacity: 0
-      # We use 4 GPUs per instance across 4 regions with a limit of 128
-      # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
-      # 512 GPUs / 4 per instance = 128 instances possibly running at once.
-      maxCapacity: 128
-      implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1, us-east1]
-      image: monopacker-translations-worker
-      instance_types:
-        - minCpuPlatform: Intel Skylake
-          disks:
-            - <<: *persistent-disk
-              diskSizeGb: 2048
-          # 40 CPUs, 256GB RAM
-          machine_type: n1-custom-40-262144
-          guestAccelerators:
-            - acceleratorCount: 4
-              acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g'
     description: Worker for machine learning and other high GPU tasks
     owner: release+tc-workers@mozilla.com
@@ -2541,7 +2306,6 @@ pools:
       worker-purpose: gecko-1
       locations: [central-india]
       maxCapacity: 10
-      publicIp: true
       worker-config:
         genericWorker:
           config:
@@ -2624,7 +2388,6 @@ pools:
           mozilla-.*: 25
           relops-.*: 12
           nss-.*: 25
-      publicIp: true
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
@@ -2675,7 +2438,6 @@ pools:
       worker-purpose: nss-1
       locations: [central-us, north-central-us]
       maxCapacity: 25
-      publicIp: true
       worker-config:
         genericWorker:
           config:
@@ -2721,7 +2483,6 @@ pools:
       worker-purpose: vpn-1
       locations: [central-us, north-central-us]
       maxCapacity: 25
-      publicIp: true
       worker-config:
         genericWorker:
           config:
@@ -2799,7 +2560,6 @@ pools:
           '': 600
           alpha: 500
           default: 100
-      publicIp: true
       worker-config:
         genericWorker:
           config:
@@ -2881,7 +2641,6 @@ pools:
           nss-.*: 25
           gecko.*: 250
           mozillavpn.*: 10
-      publicIp: true
       worker-config:
         genericWorker:
           config:
@@ -2980,7 +2739,6 @@ pools:
               alpha: 500
               gpu: 600
               default: 100
-      publicIp: true
       worker-config:
         genericWorker:
           config:
@@ -3091,7 +2849,6 @@ pools:
               alpha: 500
               gpu: 600
               default: 100
-      publicIp: true
       worker-config:
         genericWorker:
           config:
@@ -3164,7 +2921,6 @@ pools:
       worker-purpose: '{pool-group}'
       locations: [east-us-2, north-central-us, central-us]
       maxCapacity: 500
-      publicIp: true
       worker-config:
         genericWorker:
           config:

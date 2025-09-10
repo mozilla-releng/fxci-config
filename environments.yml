@@ -129,14 +129,16 @@ firefoxci:
         northamerica-northeast1: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
         europe-west4: [europe-west4-a, europe-west4-b, europe-west4-c]
     invalid-instances:
+      # No AMD families in northamerica-northeast1
+      - zones: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
+        families: [c4d, c3d]
       - zones: [us-central1-c]
         families: [t2a]
-      # TODO: This is likely to change in the future, since c4d is in public preview
-      - zones: [us-central1-c, us-central1-f]
+      - zones: [us-central1-f, us-west1-c]
         families: [c4d]
       - zones: [us-east1-b, us-east1-d, us-west1-c]
         families: [n1]
-      - zones: [us-west1-a]
+      - zones: [us-west1-a, us-west1-c]
         families: [c3d]
   cron:
     gecko:

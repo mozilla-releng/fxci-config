@@ -75,7 +75,7 @@ async def check_grant_pools(generate_resources):
     # We validate the raw grants rather than the generated grants to allow for
     # things like `{trust_domain}-t/*`. This will inevitably generate scopes
     # that don't reference valid pools, but that's ok as the intent of this
-    # check is to keep grants.yml clean, not the generated grants.
+    # check is to keep grants.d yml files clean, not the generated grants.
     grants = await Grant.fetch_all()
     pools = [p.workerPoolId for p in generated.filter("WorkerPool=.*")]
     invalid_scopes = set()

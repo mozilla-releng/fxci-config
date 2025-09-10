@@ -5,7 +5,7 @@
 import attr
 
 from ...util.matching import grantees
-from .get import get_ciconfig_file
+from .get import get_ciconfig_dir
 
 
 @attr.s(frozen=True)
@@ -23,8 +23,8 @@ class Grant:
 
     @staticmethod
     async def fetch_all():
-        """Load project metadata from grants.yml in fxci-config"""
-        grants = await get_ciconfig_file("grants.yml")
+        """Load grants from grants.d/ directory in fxci-config"""
+        grants = await get_ciconfig_dir("grants.d")
 
         return [
             Grant(

@@ -67,9 +67,8 @@ provided here.
 
 ## Initial Setup
 
-1. Create and activate a new python virtualenv
-1. pip install -e .
-1. pip install -r requirements/local.txt
+1. Ensure [uv is installed](https://docs.astral.sh/uv/getting-started/installation/)
+1. Run `uv sync`
 1. If you will be applying changes, ensure you have a way of generating
    taskcluster credentials, such as
    [taskcluster-cli](https://github.com/taskcluster/taskcluster/releases)
@@ -160,6 +159,5 @@ To apply changes locally (not recommended):
 
 # Development
 
-To update dependencies, make changes to `requirements/*.in`, then install
-`pip-compile-multi` from PyPI and run `pip-compile-multi -s -g
-requirements/base.in`.
+Dependencies are defined in `pyproject.toml`. To update all dependencies run
+`uv lock -U`. To update specific dependency, run `uv lock -P <package>`.

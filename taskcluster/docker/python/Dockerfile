@@ -3,7 +3,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # %ARG PYTHON_VERSION
-FROM python:$PYTHON_VERSION
+# %ARG UV_VERSION
+FROM ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-bookworm-slim
 LABEL maintainer="Mozilla Release Engineering <release+fxci-config@mozilla.com>"
 
 # Add worker user
@@ -15,7 +16,7 @@ RUN mkdir -p /builds && \
 # %include-run-task
 
 RUN apt-get update && apt-get install -y --force-yes --no-install-recommends \
-    mercurial
+    git
 
 ENV SHELL=/bin/bash \
     HOME=/builds/worker \
