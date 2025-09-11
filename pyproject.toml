@@ -34,6 +34,7 @@ dev = [
     "flake8",
     "google-cloud-compute",
     "pip>=21.2",
+    "pre-commit",
     "pytest",
     "pytest-cov",
     "pytest-mock",
