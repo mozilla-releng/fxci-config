@@ -2320,7 +2320,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_D32alds_v6
+        - vmSize: Standard_D32ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2333,9 +2333,8 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
-                  placement: NVMeDisk
             hardwareProfile:
-              vmSize: Standard_D32alds_v6
+              vmSize: Standard_D32ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
