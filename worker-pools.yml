@@ -2405,7 +2405,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_F32s_v2
+        - vmSize: Standard_D32ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2419,7 +2419,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize: Standard_F32s_v2
+              vmSize: Standard_D32ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2450,7 +2450,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_F32s_v2
+        - vmSize: Standard_D32ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2464,7 +2464,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize: Standard_F32s_v2
+              vmSize: Standard_D32ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2495,7 +2495,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_F32s_v2
+        - vmSize: Standard_D32ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2509,7 +2509,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize: Standard_F32s_v2
+              vmSize: Standard_D32ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
