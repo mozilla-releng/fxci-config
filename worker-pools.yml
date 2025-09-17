@@ -2374,10 +2374,7 @@ pools:
           default: ronin_b1_windows2022_64_2009
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows
-      locations:
-        by-pool-group:
-          .*-3: [west-us-3, east-us-2, west-us-2]
-          default: [north-central-us, east-us-2, west-us-2]
+      locations: [central-india, north-central-us, east-us-2]
       maxCapacity:
         by-pool-group:
           gecko-.*: 500
@@ -2405,7 +2402,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_F32s_v2
+        - vmSize: Standard_D32ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2419,7 +2416,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize: Standard_F32s_v2
+              vmSize: Standard_D32ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2450,7 +2447,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_F32s_v2
+        - vmSize: Standard_D32ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2464,7 +2461,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize: Standard_F32s_v2
+              vmSize: Standard_D32ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2495,7 +2492,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_F32s_v2
+        - vmSize: Standard_D32ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2509,7 +2506,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize: Standard_F32s_v2
+              vmSize: Standard_D32ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
