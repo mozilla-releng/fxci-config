@@ -16,11 +16,13 @@ async def check_privileged_is_untrusted(generate_resources):
     Ensures that any docker-worker pool with `allowPrivileged` is not
     run on a trusted image.
     """
+    environment = await Environment.current()
     worker_pools = await WorkerPoolConfig.fetch_all()
     trusted_pools = set()
-    for pool in worker_pools:
+    for pool in generate_pool_variants(worker_pools, environment):
         if "trusted" in pool.config.get("image", ""):
             trusted_pools.add(pool.pool_id)
+    assert trusted_pools
 
     resources = await generate_resources("worker_pools")
     for pool in resources.filter("WorkerPool=.*"):
