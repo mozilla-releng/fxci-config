@@ -1084,6 +1084,7 @@ firefox-ci-playground-private:
       level: 1
   trust_domain: mozilla
   trust_project: firefox-ci-playground
+  artifact_prefix: private/releng
   features:
     github-private-repo: true
     github-pull-request:

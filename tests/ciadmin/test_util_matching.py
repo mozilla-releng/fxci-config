@@ -60,6 +60,25 @@ from ciadmin.util.matching import glob_match
             False,
             id="glob_no_match",
         ),
+        # Tests for None value handling
+        pytest.param(
+            ["*"],
+            None,
+            False,
+            id="wildcard_does_not_match_none",
+        ),
+        pytest.param(
+            ["foo"],
+            None,
+            False,
+            id="specific_value_does_not_match_none",
+        ),
+        pytest.param(
+            ["foo*"],
+            None,
+            False,
+            id="prefix_wildcard_does_not_match_none",
+        ),
     ),
 )
 def test_glob_match(grantee_values, proj_value, expected_result):

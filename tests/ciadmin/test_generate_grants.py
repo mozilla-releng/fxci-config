@@ -293,6 +293,226 @@ class TestAddScopesForProjects:
                 projects,
             )
 
+    def test_match_artifact_prefix(self, add_scope):
+        "If artifact_prefix matches it adds scopes with proper substitution"
+        test_projects = [
+            Project(
+                alias="playground-private",
+                repo="https://github.com/mozilla-releng/firefox-ci-playground-private",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="mozilla",
+                artifact_prefix="private/releng",
+            ),
+            Project(
+                alias="playground-public",
+                repo="https://github.com/mozilla-releng/firefox-ci-playground",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="mozilla",
+                # no artifact_prefix (defaults to None)
+            ),
+        ]
+
+        grantee = ProjectGrantee(artifact_prefix="private/releng")
+        grants.add_scopes_for_projects(
+            Grant(
+                scopes=["queue:get-artifact:{artifact_prefix}/*"], grantees=[grantee]
+            ),
+            grantee,
+            add_scope,
+            test_projects,
+        )
+        assert add_scope.added == set(
+            [
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-private:*",
+                    "queue:get-artifact:private/releng/*",
+                ),
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-private:branch:main",
+                    "queue:get-artifact:private/releng/*",
+                ),
+            ]
+        )
+
+    def test_match_artifact_prefix_wildcard(self, add_scope):
+        "If artifact_prefix uses wildcard '*' it matches all projects with any artifact_prefix"
+        test_projects = [
+            Project(
+                alias="playground-private",
+                repo="https://github.com/mozilla-releng/firefox-ci-playground-private",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="mozilla",
+                artifact_prefix="private/releng",
+            ),
+            Project(
+                alias="playground-staging",
+                repo="https://github.com/mozilla-releng/firefox-ci-playground-staging",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="mozilla",
+                artifact_prefix="private/staging",
+            ),
+            Project(
+                alias="playground-public",
+                repo="https://github.com/mozilla-releng/firefox-ci-playground",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="mozilla",
+                # no artifact_prefix (defaults to None)
+            ),
+        ]
+
+        grantee = ProjectGrantee(artifact_prefix="*")
+        grants.add_scopes_for_projects(
+            Grant(
+                scopes=["queue:get-artifact:{artifact_prefix}/*"], grantees=[grantee]
+            ),
+            grantee,
+            add_scope,
+            test_projects,
+        )
+        assert add_scope.added == set(
+            [
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-private:*",
+                    "queue:get-artifact:private/releng/*",
+                ),
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-private:branch:main",
+                    "queue:get-artifact:private/releng/*",
+                ),
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-staging:*",
+                    "queue:get-artifact:private/staging/*",
+                ),
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-staging:branch:main",
+                    "queue:get-artifact:private/staging/*",
+                ),
+            ]
+        )
+
+    def test_match_artifact_prefix_prefix_wildcard(self, add_scope):
+        "If artifact_prefix uses prefix wildcard 'private/*' it matches projects with matching prefix"
+        test_projects = [
+            Project(
+                alias="playground-private",
+                repo="https://github.com/mozilla-releng/firefox-ci-playground-private",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="mozilla",
+                artifact_prefix="private/releng",
+            ),
+            Project(
+                alias="playground-staging",
+                repo="https://github.com/mozilla-releng/firefox-ci-playground-staging",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="mozilla",
+                artifact_prefix="private/staging",
+            ),
+            Project(
+                alias="playground-public",
+                repo="https://github.com/mozilla-releng/firefox-ci-playground-public",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="mozilla",
+                artifact_prefix="public/build",
+            ),
+        ]
+
+        grantee = ProjectGrantee(artifact_prefix="private/*")
+        grants.add_scopes_for_projects(
+            Grant(
+                scopes=["queue:get-artifact:{artifact_prefix}/*"], grantees=[grantee]
+            ),
+            grantee,
+            add_scope,
+            test_projects,
+        )
+        assert add_scope.added == set(
+            [
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-private:*",
+                    "queue:get-artifact:private/releng/*",
+                ),
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-private:branch:main",
+                    "queue:get-artifact:private/releng/*",
+                ),
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-staging:*",
+                    "queue:get-artifact:private/staging/*",
+                ),
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-staging:branch:main",
+                    "queue:get-artifact:private/staging/*",
+                ),
+            ]
+        )
+
+    def test_match_artifact_prefix_multiple_values(self, add_scope):
+        "If artifact_prefix uses array ['private/releng', 'public'] it matches projects with either value"
+        test_projects = [
+            Project(
+                alias="playground-private",
+                repo="https://github.com/mozilla-releng/firefox-ci-playground-private",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="mozilla",
+                artifact_prefix="private/releng",
+            ),
+            Project(
+                alias="playground-public",
+                repo="https://github.com/mozilla-releng/firefox-ci-playground-public",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="mozilla",
+                artifact_prefix="public",
+            ),
+            Project(
+                alias="playground-staging",
+                repo="https://github.com/mozilla-releng/firefox-ci-playground-staging",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="mozilla",
+                artifact_prefix="private/staging",
+            ),
+        ]
+
+        grantee = ProjectGrantee(artifact_prefix=["private/releng", "public"])
+        grants.add_scopes_for_projects(
+            Grant(
+                scopes=["queue:get-artifact:{artifact_prefix}/*"], grantees=[grantee]
+            ),
+            grantee,
+            add_scope,
+            test_projects,
+        )
+        assert add_scope.added == set(
+            [
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-private:*",
+                    "queue:get-artifact:private/releng/*",
+                ),
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-private:branch:main",
+                    "queue:get-artifact:private/releng/*",
+                ),
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-public:*",
+                    "queue:get-artifact:public/*",
+                ),
+                (
+                    "repo:github.com/mozilla-releng/firefox-ci-playground-public:branch:main",
+                    "queue:get-artifact:public/*",
+                ),
+            ]
+        )
+
 
 class TestAddScopesForGroups:
     "Tests for add_scopes_to_groups"

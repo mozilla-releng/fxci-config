@@ -54,6 +54,8 @@ def format_scope(project, scope, level, priority):
         subs["trust_project"] = project.trust_project
     if project.lando_repo:
         subs["lando_repo"] = project.lando_repo
+    if project.artifact_prefix:
+        subs["artifact_prefix"] = project.artifact_prefix
 
     try:
         subs["repo_path"] = project.repo_path
