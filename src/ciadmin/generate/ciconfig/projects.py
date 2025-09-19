@@ -173,3 +173,13 @@ class Project:
     @property
     def default_branch_level(self):
         return self.get_level(self.default_branch)
+
+    @property
+    def private_artifact_prefix(self):
+        if not self.feature("private-artifacts"):
+            return None
+
+        if self.trust_project:
+            return f"private/{self.trust_domain}-{self.trust_project}"
+        else:
+            return f"private/{self.trust_domain}"
