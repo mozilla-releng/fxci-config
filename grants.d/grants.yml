@@ -1006,6 +1006,12 @@
     - project:
         feature: is-trunk
 
+- grant:
+    - queue:get-artifact:{artifact_prefix}/*
+  to:
+    - project:
+        artifact_prefix: "*"
+
 ##
 # mozilla roles
 #

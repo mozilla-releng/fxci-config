@@ -69,6 +69,7 @@ class Project:
     features = attr.ib(type=dict, factory=lambda: {})
     cron = attr.ib(type=dict, factory=lambda: {})
     taskcluster_yml_project = attr.ib(type=str, default=None)
+    artifact_prefix = attr.ib(type=str, default=None)
 
     _parsed_url = attr.ib(
         eq=False,

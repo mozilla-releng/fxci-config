@@ -22,6 +22,7 @@ class ProjectGrantee:
     job = attr.ib(type=list, converter=listify, default="*")
     include_pull_requests = attr.ib(type=bool, default=True)
     has_trust_project = attr.ib(type=bool, default=None)
+    artifact_prefix = attr.ib(type=list, converter=listify, default=None)
 
 
 @attr.s(frozen=True)
@@ -98,6 +99,9 @@ def glob_match(grantee_values, proj_value):
     if grantee_values is None:
         return True
 
+    if not proj_value:
+        return False
+
     for grantee_value in grantee_values:
         if grantee_value == "*":
             return True
@@ -130,6 +134,8 @@ def project_match(grantee, project):
         if grantee.has_trust_project != bool(project.trust_project):
             return False
     if not match(grantee.trust_domain, project.trust_domain):
+        return False
+    if not glob_match(grantee.artifact_prefix, project.artifact_prefix):
         return False
 
     return True
