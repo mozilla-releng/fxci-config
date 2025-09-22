@@ -711,7 +711,7 @@
     - project:releng:balrog:server:nightly
   to:
     - project:
-        alias: [oak, cedar, pine, larch]
+        alias: [oak, cedar, pine, larch, cypress]
 
 # grant relman access to trigger mozilla-central & mozilla-releases hooks
 # bug 1899553: grant relman access to trigger google play pushes
@@ -2983,6 +2983,14 @@
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mpohle
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|nrishel
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|nshukla
+
+# cypress nightly releases
+- grant:
+    - hooks:trigger-hook:project-releng/cron-task-projects-cypress/*
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bgrinstead
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|elee
 
 # allow mardak to trigger nightly releases on larch
 - grant:
