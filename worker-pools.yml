@@ -954,10 +954,6 @@ pools:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
-      security:
-        by-chain-of-trust:
-          trusted: trusted
-          default:
       minCapacity:
         by-pool-group:
           gecko-[13]: 1
@@ -1037,10 +1033,6 @@ pools:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
-      security:
-        by-chain-of-trust:
-          trusted: trusted
-          default:
       minCapacity:
         by-pool-group:
           '(app-services|glean|mozillavpn|mobile|mozilla|translations)-1': 1
@@ -1121,10 +1113,6 @@ pools:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
-      security:
-        by-chain-of-trust:
-          trusted: trusted
-          default:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
@@ -1178,10 +1166,6 @@ pools:
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
       image: monopacker-ubuntu-2204-wayland-arm64
-      security:
-        by-chain-of-trust:
-          trusted: trusted
-          default:
       instance_types:
         - minCpuPlatform: Ampere Altra
           disks:
@@ -1470,10 +1454,6 @@ pools:
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-gw-gcp-wayland-gui-relops1188
-      security:
-        by-chain-of-trust:
-          trusted: trusted
-          default:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1499,10 +1479,6 @@ pools:
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
       image: monopacker-gw-gcp-wayland-gui-arm64-relops1071
-      security:
-        by-chain-of-trust:
-          trusted: trusted
-          default:
       instance_types:
         - minCpuPlatform: Ampere Altra
           disks:
@@ -3343,10 +3319,6 @@ pools:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
-      security:
-        by-chain-of-trust:
-          trusted: trusted
-          default:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -3372,10 +3344,6 @@ pools:
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-ubuntu-2204-wayland
-      security:
-        by-chain-of-trust:
-          trusted: trusted
-          default:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
