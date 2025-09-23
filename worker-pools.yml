@@ -1459,22 +1459,13 @@ pools:
     variants:
       - pool-group: gecko-t
       - pool-group: mozilla-t
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        default: fxci-level1-gcp
-        trusted: fxci-level3-gcp
+    provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1, us-west1]
       image: monopacker-gw-gcp-wayland-gui-relops1188
-      security:
-        by-chain-of-trust:
-          trusted: trusted
-          default:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1486,13 +1477,8 @@ pools:
     owner: aerickson@mozilla.com
     variants:
       - pool-group: gecko-t
-      - pool-group: gecko-3
-        chain-of-trust: trusted
     email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        default: fxci-level1-gcp
-        trusted: fxci-level3-gcp
+    provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
       maxCapacity: 10
@@ -1500,10 +1486,6 @@ pools:
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
       image: monopacker-gw-gcp-wayland-gui-arm64-relops1071
-      security:
-        by-chain-of-trust:
-          trusted: trusted
-          default:
       instance_types:
         - minCpuPlatform: Ampere Altra
           disks:
