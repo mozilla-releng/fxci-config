@@ -32,6 +32,7 @@
           - pull-request:*
           - action:train
           - pr-action:train
+          - cron:run-pipeline
 
 - grant:
     - project:translations:releng:beetmover:bucket:production
