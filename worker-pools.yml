@@ -1443,12 +1443,7 @@ pools:
     variants:
       - pool-group: gecko-t
       - pool-group: mozilla-t
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        default: fxci-level1-gcp
-        trusted: fxci-level3-gcp
+    provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
       maxCapacity: 10
@@ -1466,13 +1461,8 @@ pools:
     owner: aerickson@mozilla.com
     variants:
       - pool-group: gecko-t
-      - pool-group: gecko-3
-        chain-of-trust: trusted
     email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        default: fxci-level1-gcp
-        trusted: fxci-level3-gcp
+    provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
       maxCapacity: 10
