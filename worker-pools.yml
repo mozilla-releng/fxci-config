@@ -2573,7 +2573,9 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
-              gpu(-alpha)?: Standard_NV12s_v3
+              gpu-alpha: Standard_NV12ads_A10_v5
+              ssd-gpu: Standard_NV12s_v3
+              gpu: Standard_NV12s_v3
               default: Standard_F8s_v2
           launchConfig:
             osProfile:
@@ -2590,7 +2592,9 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
-                  gpu(-alpha)?: Standard_NV12s_v3
+                  gpu-alpha: Standard_NV12ads_A10_v5
+                  ssd-gpu: Standard_NV12s_v3
+                  gpu: Standard_NV12s_v3
                   default: Standard_F8s_v2
             diagnosticsProfile:
               bootDiagnostics:
@@ -2619,6 +2623,13 @@ pools:
                 west-us-2: 1
                 east-us: 1
                 east-us-2: 1
+                default: 0.5
+            Standard_NV12ads_A10_v5:
+              by-location:
+                east-us: 1
+                west-us-2: 1
+                west-us-3: 1
+                east-us-2: 0.8
                 default: 0.5
             default: 1
   # Windows 11
@@ -2776,7 +2787,9 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
-              .*gpu.*: Standard_NV12s_v3
+              gpu-alpha: Standard_NV12ads_A10_v5
+              ssd-gpu: Standard_NV12s_v3
+              gpu: Standard_NV12s_v3
               default: Standard_F8s_v2
           launchConfig:
             osProfile:
@@ -2793,7 +2806,9 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
-                  .*gpu.*: Standard_NV12s_v3
+                  gpu-alpha: Standard_NV12ads_A10_v5
+                  ssd-gpu: Standard_NV12s_v3
+                  gpu: Standard_NV12s_v3
                   default: Standard_F8s_v2
             diagnosticsProfile:
               bootDiagnostics:
@@ -2888,7 +2903,9 @@ pools:
             by-suffix:
               (source-)?alpha: Standard_E8ads_v5
               .*large.*: Standard_E8ads_v5
-              .*gpu.*: Standard_NV12s_v3
+              gpu-alpha: Standard_NV12ads_A10_v5
+              ssd-gpu: Standard_NV12s_v3
+              gpu: Standard_NV12s_v3
               default: Standard_F8s_v2
           launchConfig:
             osProfile:
@@ -2907,7 +2924,9 @@ pools:
                 by-suffix:
                   (source-)?alpha: Standard_E8ads_v5
                   .*large.*: Standard_E8ads_v5
-                  .*gpu.*: Standard_NV12s_v3
+                  gpu-alpha: Standard_NV12ads_A10_v5
+                  ssd-gpu: Standard_NV12s_v3
+                  gpu: Standard_NV12s_v3
                   default: Standard_F8s_v2
             diagnosticsProfile:
               bootDiagnostics:
