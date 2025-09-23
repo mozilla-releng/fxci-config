@@ -579,6 +579,7 @@ staging-firefox:
     github-taskgraph: true
     pr-actions: true
     taskgraph-actions: true
+    treeherder-reporting: true
     trust-domain-scopes: true
 
 # non-gecko repositories
