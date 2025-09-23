@@ -844,6 +844,7 @@ pools:
       maxCapacity:
         by-pool-group:
           gecko-1: 200
+          gecko-2: 50
           gecko-3: 100
           default: 10
       regions: [us-central1, us-west1]
