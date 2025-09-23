@@ -575,6 +575,7 @@ staging-firefox:
     - name: tc-github
       level: 1
   features:
+    gecko-roles: true
     github-taskgraph: true
     pr-actions: true
     taskgraph-actions: true
