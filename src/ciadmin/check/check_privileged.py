@@ -74,9 +74,8 @@ async def check_level_3_worker_security():
     worker_pools = await WorkerPoolConfig.fetch_all()
     for pool in generate_pool_variants(worker_pools, environment):
         trusted_security = (
-            ("trusted" == pool.config.get("security", "untrusted"))
-            # GCP workers have networker security at the project/provider level
-            or ("level3" in pool.provider_id)
+            # GCP workers have network security at the project/provider level
+            ("level3" in pool.provider_id)
             # Azure trusted workers are restricted to the azure_trusted provider
             or ("azure_trusted" in pool.provider_id)
         )
