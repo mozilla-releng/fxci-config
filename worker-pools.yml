@@ -347,7 +347,7 @@ pools:
         chain-of-trust: trusted
         suffix: '-large'
         instance_types: [*c3d-standard-30-lssd]
-      # XLarge 32-core (gecko, comm)
+      # XLarge 60-core (gecko, comm)
       - pool-group: gecko-1
         suffix: '-xlarge'
         instance_types: [*c3d-standard-60-lssd]
