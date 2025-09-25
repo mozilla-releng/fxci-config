@@ -2865,6 +2865,7 @@
     - queue:list-task-group:*
     - queue:list-worker-types:*
     - queue:list-workers:*
+    - queue:claimed-count:*
     - queue:pending-count:*
     - queue:status:*
     - secrets:list-secrets
