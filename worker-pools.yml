@@ -2504,6 +2504,10 @@ pools:
       - pool-group: gecko-t
         suffix: gpu-alpha
         implementation: generic-worker/windows
+      - pool-group: gecko-t
+        suffix: webgpu
+      - pool-group: gecko-t
+        suffix: webgpu-alpha
     config:
       image:
         by-suffix:
@@ -2541,8 +2545,10 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
-              gpu-alpha: Standard_NV12ads_A10_v5
               ssd-gpu: Standard_NV12s_v3
+              webgpu-alpha: Standard_NV12ads_A10_v5
+              webgpu: Standard_NV12ads_A10_v5
+              gpu-alpha: Standard_NV12s_v3
               gpu: Standard_NV12s_v3
               default: Standard_F8s_v2
           launchConfig:
@@ -2560,8 +2566,10 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
-                  gpu-alpha: Standard_NV12ads_A10_v5
                   ssd-gpu: Standard_NV12s_v3
+                  webgpu-alpha: Standard_NV12ads_A10_v5
+                  webgpu: Standard_NV12ads_A10_v5
+                  gpu-alpha: Standard_NV12s_v3
                   gpu: Standard_NV12s_v3
                   default: Standard_F8s_v2
             diagnosticsProfile:
@@ -2691,6 +2699,10 @@ pools:
         suffix: gpu
       - pool-group: gecko-t
         suffix: gpu-alpha
+      - pool-group: gecko-t
+        suffix: webgpu
+      - pool-group: gecko-t
+        suffix: webgpu-alpha
         implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: source
@@ -2755,7 +2767,9 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
-              gpu-alpha: Standard_NV12ads_A10_v5
+              webgpu-alpha: Standard_NV12ads_A10_v5
+              webgpu: Standard_NV12ads_A10_v5
+              gpu-alpha: Standard_NV12s_v3
               ssd-gpu: Standard_NV12s_v3
               gpu: Standard_NV12s_v3
               default: Standard_F8s_v2
@@ -2774,7 +2788,9 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
-                  gpu-alpha: Standard_NV12ads_A10_v5
+                  webgpu-alpha: Standard_NV12ads_A10_v5
+                  webgpu: Standard_NV12ads_A10_v5
+                  gpu-alpha: Standard_NV12s_v3
                   ssd-gpu: Standard_NV12s_v3
                   gpu: Standard_NV12s_v3
                   default: Standard_F8s_v2
