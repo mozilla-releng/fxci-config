@@ -161,6 +161,11 @@ meta:
       diskType: diskTypes/local-ssd
     type: SCRATCH
     interface: NVME
+  - &c3d-standard-4
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 75
+    machine_type: c3d-standard-4
   - &c3d-standard-8
     disks:
       - <<: *persistent-disk
@@ -194,6 +199,16 @@ meta:
       - *scratch-disk
       - *scratch-disk
     machine_type: c3d-standard-60-lssd
+  - &c4d-standard-4
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 20
+    machine_type: c4d-standard-4
+  - &c4d-standard-8
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 20
+    machine_type: c4d-standard-8
 
 pools:
   - pool_id: infra/build-decision
@@ -980,6 +995,39 @@ pools:
             by-pool-group:
               gecko-[13]: 600
               default: 120
+  - pool_id: '{pool-group}/decision-gcp-{suffix}-amd-bug1990935'
+    description: Decision task worker
+    owner: release+tc-workers@mozilla.com
+    email_on_error: false
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-1
+        suffix: 'c3d4'
+        instance_types: [*c3d-standard-4]
+      - pool-group: gecko-1
+        suffix: 'c3d8'
+        instance_types: [*c3d-standard-8]
+      - pool-group: gecko-1
+        suffix: 'c4d4'
+        instance_types: [*c4d-standard-4]
+      - pool-group: gecko-1
+        suffix: 'c4d8'
+        instance_types: [*c4d-standard-8]
+    config:
+      regions: [us-central1]
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-current
+      minCapacity: 0
+      maxCapacity: 20
+      instance_types: []
+      worker-config:
+        shutdown:
+          afterIdleSeconds: 120
   - pool_id: '{pool-group}/decision-gcp'
     description: Worker for Firefox automation
     owner: release+tc-workers@mozilla.com
