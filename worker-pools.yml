@@ -2366,7 +2366,6 @@ pools:
       - pool-group: gecko-3
         chain-of-trust: trusted
       - pool-group: comm-1
-      - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
       - pool-group: mozilla-1
@@ -2375,7 +2374,6 @@ pools:
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
-      - pool-group: relops-1
       - pool-group: nss-1
       - pool-group: nss-3
         chain-of-trust: trusted
