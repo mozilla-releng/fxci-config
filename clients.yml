@@ -1312,6 +1312,11 @@ project/relops/worker-images/run-integration-tests:
   description: Client used to trigger the 'run-integration-tests' hook from Github Actions (Bug 1981245)
   scopes:
     - hooks:trigger-hook:project-releng/cron-task-mozilla-platform-ops-worker-images/run-integration-tests
+project/relsre/devicepool:
+  description: Used by the Android bitbar-taskcluster-devicepool software (for Bitbar and LambdaTest). Contact point is aerickson/RelSRE/SEIO.
+  scopes:
+    - queue:claimed-count:*
+    - queue:pending-count:*
 project/taskcluster/legacy-login:
   description: ''
   scopes:
