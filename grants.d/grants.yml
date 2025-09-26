@@ -1015,6 +1015,18 @@
     - project:
         feature: is-trunk
 
+- grant:
+    - queue:get-artifact:{private_artifact_prefix}/*
+  to:
+    - project:
+        feature: private-artifacts
+        github_pull_request_policy: ["public_restricted", "collaborators", "collaborators_quiet"]
+        include_pull_requests: true
+    - project:
+        feature: private-artifacts
+        github_pull_request_policy: ["public"]
+        include_pull_requests: false
+
 ##
 # mozilla roles
 #

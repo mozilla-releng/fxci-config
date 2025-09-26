@@ -293,6 +293,267 @@ class TestAddScopesForProjects:
                 projects,
             )
 
+    def test_match_private_artifacts_feature(self, add_scope):
+        test_projects = [
+            Project(
+                alias="some-project",
+                repo="https://github.com/some-github-org/some-project",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="some-trust-domain",
+                trust_project="some-trust-project",
+                features={"private-artifacts": {"enabled": True}},
+            ),
+        ]
+
+        grantee = ProjectGrantee(
+            feature="private-artifacts", include_pull_requests=False
+        )
+        grants.add_scopes_for_projects(
+            Grant(
+                scopes=["queue:get-artifact:{private_artifact_prefix}/*"],
+                grantees=[grantee],
+            ),
+            grantee,
+            add_scope,
+            test_projects,
+        )
+        assert add_scope.added == set(
+            [
+                (
+                    "repo:github.com/some-github-org/some-project:*",
+                    "queue:get-artifact:private/some-trust-domain-some-trust-project/*",
+                ),
+                (
+                    "repo:github.com/some-github-org/some-project:branch:main",
+                    "queue:get-artifact:private/some-trust-domain-some-trust-project/*",
+                ),
+            ]
+        )
+
+    def test_match_private_artifacts_without_trust_project(self, add_scope):
+        test_projects = [
+            Project(
+                alias="some-project",
+                repo="https://github.com/some-github-org/some-project",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="some-trust-domain",
+                features={"private-artifacts": {"enabled": True}},
+            ),
+        ]
+
+        grantee = ProjectGrantee(
+            feature="private-artifacts", include_pull_requests=False
+        )
+        grants.add_scopes_for_projects(
+            Grant(
+                scopes=["queue:get-artifact:{private_artifact_prefix}/*"],
+                grantees=[grantee],
+            ),
+            grantee,
+            add_scope,
+            test_projects,
+        )
+        assert add_scope.added == set(
+            [
+                (
+                    "repo:github.com/some-github-org/some-project:*",
+                    "queue:get-artifact:private/some-trust-domain/*",
+                ),
+                (
+                    "repo:github.com/some-github-org/some-project:branch:main",
+                    "queue:get-artifact:private/some-trust-domain/*",
+                ),
+            ]
+        )
+
+    def test_match_private_artifacts_with_github_policy(self, add_scope):
+        test_projects = [
+            Project(
+                alias="some-project",
+                repo="https://github.com/some-github-org/some-project",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="some-trust-domain",
+                trust_project="some-trust-project",
+                features={
+                    "private-artifacts": {"enabled": True},
+                    "github-pull-request": {
+                        "enabled": True,
+                        "policy": "public_restricted",
+                    },
+                },
+            ),
+        ]
+
+        grantee = ProjectGrantee(
+            feature="private-artifacts",
+            github_pull_request_policy=[
+                "public_restricted",
+                "collaborators",
+                "collaborators_quiet",
+            ],
+            include_pull_requests=True,
+        )
+        grants.add_scopes_for_projects(
+            Grant(
+                scopes=["queue:get-artifact:{private_artifact_prefix}/*"],
+                grantees=[grantee],
+            ),
+            grantee,
+            add_scope,
+            test_projects,
+        )
+        assert add_scope.added == set(
+            [
+                (
+                    "repo:github.com/some-github-org/some-project:*",
+                    "queue:get-artifact:private/some-trust-domain-some-trust-project/*",
+                ),
+                (
+                    "repo:github.com/some-github-org/some-project:branch:main",
+                    "queue:get-artifact:private/some-trust-domain-some-trust-project/*",
+                ),
+            ]
+        )
+
+    def test_match_private_artifacts_exclude_pull_requests(self, add_scope):
+        test_projects = [
+            Project(
+                alias="some-project",
+                repo="https://github.com/some-github-org/some-project",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="some-trust-domain",
+                trust_project="some-trust-project",
+                features={
+                    "private-artifacts": {"enabled": True},
+                    "github-pull-request": {"enabled": True, "policy": "public"},
+                },
+            ),
+        ]
+
+        grantee = ProjectGrantee(
+            feature="private-artifacts", include_pull_requests=False
+        )
+        grants.add_scopes_for_projects(
+            Grant(
+                scopes=["queue:get-artifact:{private_artifact_prefix}/*"],
+                grantees=[grantee],
+            ),
+            grantee,
+            add_scope,
+            test_projects,
+        )
+        assert add_scope.added == set(
+            [
+                (
+                    "repo:github.com/some-github-org/some-project:*",
+                    "queue:get-artifact:private/some-trust-domain-some-trust-project/*",
+                ),
+                (
+                    "repo:github.com/some-github-org/some-project:branch:main",
+                    "queue:get-artifact:private/some-trust-domain-some-trust-project/*",
+                ),
+            ]
+        )
+
+    def test_no_match_private_artifacts_missing_feature(self, add_scope):
+        test_projects = [
+            Project(
+                alias="some-project",
+                repo="https://github.com/some-github-org/some-project",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="some-trust-domain",
+                trust_project="some-trust-project",
+            ),
+        ]
+
+        grantee = ProjectGrantee(
+            feature="private-artifacts", include_pull_requests=False
+        )
+        grants.add_scopes_for_projects(
+            Grant(
+                scopes=["queue:get-artifact:{private_artifact_prefix}/*"],
+                grantees=[grantee],
+            ),
+            grantee,
+            add_scope,
+            test_projects,
+        )
+        assert add_scope.added == set()
+
+    def test_no_match_private_artifacts_wrong_github_policy(self, add_scope):
+        test_projects = [
+            Project(
+                alias="some-project",
+                repo="https://github.com/some-github-org/some-project",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="some-trust-domain",
+                trust_project="some-trust-project",
+                features={
+                    "private-artifacts": {"enabled": True},
+                    "github-pull-request": {"enabled": True, "policy": "public"},
+                },
+            ),
+        ]
+
+        grantee = ProjectGrantee(
+            feature="private-artifacts",
+            github_pull_request_policy=[
+                "public_restricted",
+                "collaborators",
+                "collaborators_quiet",
+            ],
+            include_pull_requests=True,
+        )
+        grants.add_scopes_for_projects(
+            Grant(
+                scopes=["queue:get-artifact:{private_artifact_prefix}/*"],
+                grantees=[grantee],
+            ),
+            grantee,
+            add_scope,
+            test_projects,
+        )
+        assert add_scope.added == set()
+
+    def test_no_match_private_artifacts_no_github_feature(self, add_scope):
+        test_projects = [
+            Project(
+                alias="some-project",
+                repo="https://github.com/some-github-org/some-project",
+                repo_type="git",
+                branches=[{"name": "main", "level": 1}],
+                trust_domain="some-trust-domain",
+                trust_project="some-trust-project",
+                features={"private-artifacts": {"enabled": True}},
+            ),
+        ]
+
+        grantee = ProjectGrantee(
+            feature="private-artifacts",
+            github_pull_request_policy=[
+                "public_restricted",
+                "collaborators",
+                "collaborators_quiet",
+            ],
+            include_pull_requests=True,
+        )
+        grants.add_scopes_for_projects(
+            Grant(
+                scopes=["queue:get-artifact:{private_artifact_prefix}/*"],
+                grantees=[grantee],
+            ),
+            grantee,
+            add_scope,
+            test_projects,
+        )
+        assert add_scope.added == set()
+
 
 class TestAddScopesForGroups:
     "Tests for add_scopes_to_groups"

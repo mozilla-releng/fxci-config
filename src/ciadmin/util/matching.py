@@ -22,6 +22,7 @@ class ProjectGrantee:
     job = attr.ib(type=list, converter=listify, default="*")
     include_pull_requests = attr.ib(type=bool, default=True)
     has_trust_project = attr.ib(type=bool, default=None)
+    github_pull_request_policy = attr.ib(type=list, converter=listify, default=None)
 
 
 @attr.s(frozen=True)
@@ -131,6 +132,14 @@ def project_match(grantee, project):
             return False
     if not match(grantee.trust_domain, project.trust_domain):
         return False
+    if grantee.github_pull_request_policy is not None:
+        project_policy = (
+            project.feature("github-pull-request", "policy")
+            if project.feature("github-pull-request")
+            else None
+        )
+        if not match(grantee.github_pull_request_policy, project_policy):
+            return False
 
     return True
 
