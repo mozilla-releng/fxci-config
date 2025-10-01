@@ -1027,7 +1027,7 @@ pools:
       instance_types: []
       worker-config:
         shutdown:
-          afterIdleSeconds: 120
+          afterIdleSeconds: 300
   - pool_id: '{pool-group}/decision-gcp'
     description: Worker for Firefox automation
     owner: release+tc-workers@mozilla.com
