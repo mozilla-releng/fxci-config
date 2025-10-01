@@ -202,12 +202,12 @@ meta:
   - &c4d-standard-4
     disks:
       - <<: *persistent-disk
-        diskSizeGb: 20
+        diskSizeGb: 75
     machine_type: c4d-standard-4
   - &c4d-standard-8
     disks:
       - <<: *persistent-disk
-        diskSizeGb: 20
+        diskSizeGb: 75
     machine_type: c4d-standard-8
 
 pools:
