@@ -862,7 +862,7 @@ pools:
           gecko-2: 50
           gecko-3: 100
           default: 10
-      regions: [us-central1, us-west1]
+      regions: [us-central1, us-west1, northamerica-northeast1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
