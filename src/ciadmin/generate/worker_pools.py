@@ -396,6 +396,8 @@ def get_google_provider_config(
     regions = config.pop("regions")
     image = worker_images[config["image"]]
     instance_types = config["instance_types"]
+    if isinstance(instance_types, dict):
+        instance_types = evaluate_keyed_by(instance_types, pool_id, {"pool-id": pool_id})
     implementation = config.pop("implementation", "docker-worker")
     google_config = environment.google_config
 
