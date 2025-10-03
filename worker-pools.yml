@@ -981,8 +981,8 @@ pools:
           gecko-3: 20
           default: 4
       instance_types:
-        by-pool-id:
-          gecko-1.*: [*c4d-standard-4]
+        by-pool-group:
+          gecko-1: [*c4d-standard-4]
           default:
             - minCpuPlatform: Intel Cascadelake
               disks:
