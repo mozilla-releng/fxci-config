@@ -977,7 +977,7 @@ pools:
           default: 0
       maxCapacity:
         by-pool-group:
-          gecko-1: 40
+          gecko-1: 100
           gecko-3: 20
           default: 4
       instance_types:
