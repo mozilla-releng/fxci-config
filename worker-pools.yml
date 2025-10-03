@@ -398,7 +398,7 @@ pools:
           app-services-3: 100
           mozillaonline-.*: 10
           default: 100
-      regions: [us-central1]
+      regions: [us-central1, us-east1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
