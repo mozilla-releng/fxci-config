@@ -860,7 +860,7 @@ pools:
         by-pool-group:
           gecko-1: 200
           gecko-2: 50
-          gecko-3: 100
+          gecko-3: 200
           default: 10
       regions: [us-central1, us-west1, northamerica-northeast1]
       image:
