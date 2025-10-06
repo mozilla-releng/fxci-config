@@ -2690,7 +2690,7 @@ pools:
         by-pool-group:
           mozillavpn-1: vpn-1
           default: null  # defaults to pool-group
-      locations: [east-us-2, west-us-3, north-central-us, central-us]
+      locations: [central-india, east-us-2, north-central-us, central-us]
       maxCapacity:
         by-pool-group:
           nss-.*: 25
@@ -2730,6 +2730,16 @@ pools:
                 enabled: false
       worker-manager-config:
         capacityPerInstance: 1
+        initialWeight:
+          by-vmSize:
+            Standard_D16ps_v5:
+              by-location:
+                central-india: 1
+                east-us-2: 0.9
+                north-central-us: 0.9
+                central-us: 0.8
+                default: 0.5
+            default: 1
   - pool_id: '{pool-group}/win11-64-2009-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -3050,7 +3060,7 @@ pools:
       image: ronin_t_windows11_a64_24h2_tester_{suffix}
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
-      locations: [east-us-2, north-central-us, central-us]
+      locations: [central-india, east-us-2, north-central-us, central-us]
       maxCapacity:
         by-pool-group:
           gecko-t: 500
@@ -3088,6 +3098,16 @@ pools:
                 enabled: false
       worker-manager-config:
         capacityPerInstance: 1
+        initialWeight:
+          by-vmSize:
+            Standard_D16ps_v5:
+              by-location:
+                central-india: 1
+                east-us-2: 0.9
+                north-central-us: 0.9
+                central-us: 0.8
+                default: 0.5
+            default: 1
   - pool_id: '{pool-group}/t-linux-large-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
