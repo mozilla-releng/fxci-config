@@ -2391,7 +2391,7 @@ pools:
           default: ronin_b1_windows2022_64_2009
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows
-      locations: [central-india, east-us-2, north-central-us]
+      locations: [central-india, north-central-us, east-us-2]
       maxCapacity:
         by-pool-group:
           gecko-.*: 500
