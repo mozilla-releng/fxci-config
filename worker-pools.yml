@@ -3060,7 +3060,7 @@ pools:
       image: ronin_t_windows11_a64_24h2_tester_{suffix}
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
-      locations: [central-india, east-us-2, north-central-us, central-us]
+      locations: [central-india, east-us-2, north-central-us, central-us, uk-south]
       maxCapacity:
         by-pool-group:
           gecko-t: 500
@@ -3103,9 +3103,10 @@ pools:
             Standard_D16ps_v5:
               by-location:
                 central-india: 1
-                east-us-2: 0.9
-                north-central-us: 0.9
-                central-us: 0.8
+                uk-south: 0.9
+                east-us-2: 0.8
+                north-central-us: 0.7
+                central-us: 0.6
                 default: 0.5
             default: 1
   - pool_id: '{pool-group}/t-linux-large-gcp'
