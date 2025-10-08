@@ -104,6 +104,7 @@ mozilla-release:
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
+    shipit: true
   cron:
     targets:
       - periodic-update
@@ -123,6 +124,7 @@ comm-release:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    shipit: true
 mozilla-esr115:
   repo: https://hg.mozilla.org/releases/mozilla-esr115
   lando_repo: firefox-esr115
@@ -140,6 +142,7 @@ mozilla-esr115:
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
+    shipit: true
   cron:
     targets:
       - periodic-update
@@ -160,6 +163,7 @@ mozilla-esr128:
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
+    shipit: true
   cron:
     targets:
       - periodic-update
@@ -180,6 +184,7 @@ mozilla-esr140:
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
+    shipit: true
   cron:
     targets:
       - periodic-update
@@ -199,6 +204,7 @@ comm-esr115:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    shipit: true
 comm-esr128:
   repo: https://hg.mozilla.org/releases/comm-esr128
   repo_type: hg
@@ -215,6 +221,7 @@ comm-esr128:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    shipit: true
 comm-esr140:
   repo: https://hg.mozilla.org/releases/comm-esr140
   repo_type: hg
@@ -231,6 +238,7 @@ comm-esr140:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    shipit: true
 oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
@@ -303,6 +311,7 @@ mozilla-beta:
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
+    shipit: true
   cron:
     targets:
       - android-l10n-sync
@@ -325,6 +334,7 @@ comm-beta:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    shipit: true
   cron:
     targets:
       - l10n-bumper
@@ -462,6 +472,7 @@ try:
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
+    shipit: true
 try-comm-central:
   repo: https://hg.mozilla.org/try-comm-central
   repo_type: hg
@@ -478,6 +489,7 @@ try-comm-central:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    shipit: true
 larch:
   repo: https://hg.mozilla.org/projects/larch
   repo_type: hg
