@@ -980,7 +980,7 @@ pools:
           gecko-1: 100
           gecko-3: 20
           default: 4
-      instance_types: [*c4d-standard-4]
+      instance_types: [*c4d-standard-8]
       worker-config:
         shutdown:
           afterIdleSeconds:
