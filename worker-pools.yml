@@ -3167,6 +3167,34 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: c2-standard-4
+  - pool_id: '{pool-group}/t-linux-docker{suffix}-amd-alpha'
+    description: Worker for test tasks. Used by RelSRE to qualify images.
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+        suffix: ''
+        instance_types: [*c3d-standard-8-lssd]
+      # noscratch variant
+      - pool-group: gecko-t
+        suffix: -noscratch
+        instance_types: [*c3d-standard-8]
+    email_on_error: true
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            enableInteractive: true
+            headlessTasks: true
+            disableNativePayloads: true
+            downloadsDir: /home/generic-worker/downloads
+            cachesDir: /home/generic-worker/caches
+      minCapacity: 0
+      maxCapacity: 100
+      implementation: generic-worker/linux-d2g
+      regions: [us-central1, us-east1]
+      image: ubuntu-2404-headless-alpha
+      instance_types: []
   - pool_id: '{pool-group}/t-linux-docker{suffix}-amd'
     description: Worker for test tasks.
     owner: release+tc-workers@mozilla.com
