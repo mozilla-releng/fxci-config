@@ -32,6 +32,8 @@
           scopes:
               - hooks:trigger-hook:project-{trust_domain}/in-tree-action-1-generic/*
               - hooks:trigger-hook:project-{trust_domain}/in-tree-action-1-release-promotion/*
+              - queue:cancel-task:project-{trust_domain}-level-1/*
+              - queue:seal-task-group:project-{trust_domain}-level-1/*
   for:
       - project:
             level: 1
@@ -59,6 +61,8 @@
           scopes:
               - hooks:trigger-hook:project-{trust_domain}/in-tree-action-3-generic/*
               - hooks:trigger-hook:project-{trust_domain}/in-tree-action-3-release-promotion/*
+              - queue:cancel-task:project-{trust_domain}-level-3/*
+              - queue:seal-task-group:project-{trust_domain}-level-3/*
   for:
       - project:
             level: 3
