@@ -3174,7 +3174,12 @@ pools:
     variants:
       - pool-group: gecko-t
         suffix: ''
-        instance_types: [*c3d-standard-8-lssd]
+        instance_types:
+          - <<: *c3d-standard-8-lssd
+            # Some gecko tasks some extra storage
+            disks:
+              - <<: *persistent-disk
+                diskSizeGb: 120
       - pool-group: comm-t
         suffix: ''
         instance_types: [*c3d-standard-8-lssd]
