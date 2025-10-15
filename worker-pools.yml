@@ -215,6 +215,16 @@ meta:
         diskSizeGb: 75
       - *scratch-disk
     machine_type: c4d-standard-8-lssd
+  - &c4d-highcpu-4
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 75
+    machine_type: c4d-highcpu-4
+  - &c4d-highcpu-8
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 75
+    machine_type: c4d-highcpu-8
 
 pools:
   - pool_id: infra/build-decision
@@ -1017,6 +1027,12 @@ pools:
       - pool-group: gecko-1
         suffix: 'c4d8-lssd'
         instance_types: [*c4d-standard-8-lssd]
+      - pool-group: gecko-1
+        suffix: 'c4d4-hcpu'
+        instance_types: [*c4d-highcpu-4]
+      - pool-group: gecko-1
+        suffix: 'c4d8-hcpu'
+        instance_types: [*c4d-highcpu-8]
     config:
       regions: [us-central1]
       image:
