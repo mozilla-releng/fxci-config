@@ -577,6 +577,21 @@ holly:
     treeherder-reporting: true
     trust-domain-scopes: true
 
+firefox-prototypes:
+  repo: https://github.com/Firefox-AI/firefox-prototypes
+  repo_type: git
+  trust_domain: gecko
+  branches:
+    - name: main
+      level: 3
+  features:
+    gecko-roles: true
+    github-taskgraph: true
+    pr-actions: true
+    taskgraph-actions: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+
 staging-firefox:
   repo: https://github.com/mozilla-releng/staging-firefox
   repo_type: git
