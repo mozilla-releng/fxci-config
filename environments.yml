@@ -128,7 +128,7 @@ firefoxci:
         us-east1: [us-east1-b, us-east1-c, us-east1-d]
         northamerica-northeast1: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
         europe-west4: [europe-west4-a, europe-west4-b, europe-west4-c]
-    invalid-instances:
+    invalid-instances: &gcp_invalid_instances
       # No AMD families in northamerica-northeast1
       - zones: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
         families: [c4d, c3d]
@@ -275,6 +275,7 @@ staging:
         us-east1: [us-east1-c]
         northamerica-northeast1: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
         europe-west4: [europe-west4-a, europe-west4-b, europe-west4-c]
+    invalid-instances: *gcp_invalid_instances
   cron:
     gecko:
       hooks_owner: release+tc-hooks-staging@mozilla.com
