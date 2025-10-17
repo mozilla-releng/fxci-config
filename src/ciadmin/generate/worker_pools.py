@@ -27,11 +27,27 @@ def is_invalid_aws_instance_type(invalid_instances, zone, instance_type):
 
 
 def is_invalid_gcp_instance_type(invalid_instances, zone, machine_type):
-    family, _ = machine_type.split("-", 1)
-    return any(
-        (zone in entry["zones"]) and (family in entry["families"])
-        for entry in invalid_instances
-    )
+    # Parse machine type: family-configuration-cpus[-suffix]
+    # e.g., "c4d-standard-8-lssd" -> family="c4d", suffix="lssd"
+    parts = machine_type.split("-")
+    family = parts[0]
+    # If the last part is not numeric, it's a suffix
+    suffix = parts[-1] if not parts[-1].isdigit() else None
+
+    for entry in invalid_instances:
+        if zone not in entry["zones"]:
+            continue
+        if family not in entry["families"]:
+            continue
+
+        # suffixes config is optional
+        invalid_suffixes = entry.get("suffixes", [])
+        if invalid_suffixes and suffix not in invalid_suffixes:
+            continue
+
+        return True
+
+    return False
 
 
 def _validate_instance_capacity(pool_id, implementation, instance_types):
