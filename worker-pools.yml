@@ -3501,6 +3501,42 @@ pools:
               diskSizeGb: 75
             - *scratch-disk
           machine_type: c2-standard-4
+  - pool_id: '{pool-group}/linux-docker'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: ci-t
+      - pool-group: releng-t
+      - pool-group: taskgraph-t
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          nss-.*: 100
+          default: 10
+      worker-config:
+        genericWorker:
+          config:
+            enableInteractive: true
+            headlessTasks: true
+            disableNativePayloads: true
+            downloadsDir: /home/generic-worker/downloads
+            cachesDir: /home/generic-worker/caches
+      regions: [us-central1, us-west1]
+      image: ubuntu-2404-headless
+      implementation: generic-worker/linux-d2g
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - <<: *persistent-disk
+              diskSizeGb: 75
+            - *scratch-disk
+          machine_type: c2-standard-4
   - pool_id: '{pool-group}/linux-gw-gcp'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
