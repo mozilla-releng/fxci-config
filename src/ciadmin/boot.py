@@ -55,8 +55,9 @@ def boot():
     if not os.environ.get("GITHUB_TOKEN") and not (
         os.environ.get("GITHUB_APP_ID") and os.environ.get("GITHUB_APP_PRIVKEY")
     ):
-        print(
-            "WARNING: GITHUB_TOKEN is not present in the environment; you may run into rate limits querying for GitHub branches"
+        click.echo(
+            "WARNING: GITHUB_TOKEN is not present in the environment; you may run into rate limits querying for GitHub branches",
+            err=True,
         )
 
     @click.command(
@@ -76,10 +77,10 @@ def boot():
         else:
             for reso in resources_list:
                 if resource_module := RESOURCES.get(reso, None):
-                    click.echo(f"Registering resource: {reso}")
+                    click.echo(f"Registering resource: {reso}", err=True)
                     appconfig.generators.register(resource_module)
                 else:
-                    click.echo(f"Ignoring invalid resource: {reso}.")
+                    click.echo(f"Ignoring invalid resource: {reso}.", err=True)
             if "clients" not in resources_list:
                 from tcadmin.current import clients  # noqa: PLC0415
 
