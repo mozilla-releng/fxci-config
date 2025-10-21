@@ -149,12 +149,22 @@ worker-defaults:
               allowKVM: false
 
 meta:
+  - &default-gcp-regions [us-central1, us-west1]
   - &persistent-disk
     autoDelete: true
     boot: true
     initializeParams:
       sourceImage: <image>
     type: PERSISTENT
+  - &persistent-disk-75gb
+    <<: *persistent-disk
+    diskSizeGb: 75
+  - &persistent-disk-60gb
+    <<: *persistent-disk
+    diskSizeGb: 60
+  - &persistent-disk-20gb
+    <<: *persistent-disk
+    diskSizeGb: 20
   - &scratch-disk
     autoDelete: true
     initializeParams:
@@ -163,37 +173,31 @@ meta:
     interface: NVME
   - &c3d-standard-4
     disks:
-      - <<: *persistent-disk
-        diskSizeGb: 75
+      - *persistent-disk-75gb
     machine_type: c3d-standard-4
   - &c3d-standard-8
     disks:
-      - <<: *persistent-disk
-        diskSizeGb: 75
+      - *persistent-disk-75gb
     machine_type: c3d-standard-8
   - &c3d-standard-8-lssd
     disks:
-      - <<: *persistent-disk
-        diskSizeGb: 75
+      - *persistent-disk-75gb
       - *scratch-disk
     machine_type: c3d-standard-8-lssd
   - &c3d-standard-16-lssd
     disks:
-      - <<: *persistent-disk
-        diskSizeGb: 20
+      - *persistent-disk-20gb
       - *scratch-disk
     machine_type: c3d-standard-16-lssd
   - &c3d-standard-30-lssd
     disks:
-      - <<: *persistent-disk
-        diskSizeGb: 20
+      - *persistent-disk-20gb
       - *scratch-disk
       - *scratch-disk
     machine_type: c3d-standard-30-lssd
   - &c3d-standard-60-lssd
     disks:
-      - <<: *persistent-disk
-        diskSizeGb: 20
+      - *persistent-disk-20gb
       - *scratch-disk
       - *scratch-disk
       - *scratch-disk
@@ -201,29 +205,24 @@ meta:
     machine_type: c3d-standard-60-lssd
   - &c4d-standard-4
     disks:
-      - <<: *persistent-disk
-        diskSizeGb: 75
+      - *persistent-disk-75gb
     machine_type: c4d-standard-4
   - &c4d-standard-8
     disks:
-      - <<: *persistent-disk
-        diskSizeGb: 75
+      - *persistent-disk-75gb
     machine_type: c4d-standard-8
   - &c4d-standard-8-lssd
     disks:
-      - <<: *persistent-disk
-        diskSizeGb: 75
+      - *persistent-disk-75gb
       - *scratch-disk
     machine_type: c4d-standard-8-lssd
   - &c4d-highcpu-4
     disks:
-      - <<: *persistent-disk
-        diskSizeGb: 75
+      - *persistent-disk-75gb
     machine_type: c4d-highcpu-4
   - &c4d-highcpu-8
     disks:
-      - <<: *persistent-disk
-        diskSizeGb: 75
+      - *persistent-disk-75gb
     machine_type: c4d-highcpu-8
 
 pools:
@@ -235,13 +234,12 @@ pools:
     config:
       minCapacity: 1
       maxCapacity: 4
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - *scratch-disk
           machine_type: n2-standard-2
           worker-manager-config:
@@ -282,7 +280,7 @@ pools:
           app-services-3: 100
           mozillaonline-.*: 10
           default: 100
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -290,8 +288,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
+            - *persistent-disk-20gb
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
@@ -305,13 +302,12 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 100
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-2025-06-13-relops1411
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
+            - *persistent-disk-20gb
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
@@ -430,7 +426,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 50
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless-alpha
       implementation: generic-worker/linux-d2g
       worker-config:
@@ -443,8 +439,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
@@ -463,8 +458,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
+            - *persistent-disk-20gb
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
@@ -497,8 +491,7 @@ pools:
       instance_types:
         - minCpuPlatform: Ampere Altra
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: t2a-standard-16
   - pool_id: '{pool-group}/b-linux{suffix}'
     description: Worker for Firefox automation.
@@ -551,7 +544,7 @@ pools:
           mozilla-.*: 10
           mozillavpn-.*: 10
           default: 100
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image:
         by-implementation:
           docker-worker:
@@ -566,14 +559,12 @@ pools:
           generic-worker/.*:
             - minCpuPlatform: Intel Cascadelake
               disks:
-                - <<: *persistent-disk
-                  diskSizeGb: 60
+                - *persistent-disk-60gb
               machine_type: c2-standard-4
           default:
             - minCpuPlatform: Intel Cascadelake
               disks:
-                - <<: *persistent-disk
-                  diskSizeGb: 20
+                - *persistent-disk-20gb
                 - *scratch-disk
               machine_type: c2-standard-4
   - pool_id: '{pool-group}/b-linux-large{suffix}'
@@ -606,7 +597,7 @@ pools:
           gecko-.*: 1000
           comm-.*: 20
           default: 10
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -615,8 +606,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
+            - *persistent-disk-20gb
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -643,13 +633,12 @@ pools:
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: n2-highmem-32
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g-1tb'
     description: Big workers with big disks - intended for Firefox Translations only
@@ -672,7 +661,7 @@ pools:
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -701,7 +690,7 @@ pools:
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -731,7 +720,7 @@ pools:
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -760,7 +749,7 @@ pools:
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -789,7 +778,7 @@ pools:
       minCapacity: 0
       maxCapacity: 16
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -819,7 +808,7 @@ pools:
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -848,7 +837,7 @@ pools:
       minCapacity: 0
       maxCapacity: 8
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -886,8 +875,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
+            - *persistent-disk-20gb
             - *scratch-disk
           machine_type: c2-standard-8
   - pool_id: '{pool-group}/b-linux-xlarge-gcp'
@@ -914,7 +902,7 @@ pools:
           gecko-.*: 1000
           comm-.*: 20
           default: 10
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -922,8 +910,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
+            - *persistent-disk-20gb
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -946,15 +933,14 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 10
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
           default: monopacker-docker-worker-current
       instance_types:
         - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
+            - *persistent-disk-20gb
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -982,7 +968,7 @@ pools:
       - pool-group: comm-3
         chain-of-trust: trusted
     config:
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -1095,7 +1081,7 @@ pools:
       - pool-group: nss-3
         chain-of-trust: trusted
     config:
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -1108,8 +1094,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - *scratch-disk
           machine_type: n2-standard-2
           worker-manager-config:
@@ -1186,14 +1171,13 @@ pools:
           (comm|gecko)-.*: 30
           default: 10
       worker-config: {dindImage: taskcluster/dind-service:v4.1}
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       instance_types:
         by-pool-group:
           (taskgraph|ci)-.*:
             - minCpuPlatform: Intel Cascadelake
               disks:
-                - <<: *persistent-disk
-                  diskSizeGb: 75
+                - *persistent-disk-75gb
                 - *scratch-disk
               machine_type: n2-standard-2
               worker-manager-config:
@@ -1201,8 +1185,7 @@ pools:
           default:
             - minCpuPlatform: Intel Cascadelake
               disks:
-                - <<: *persistent-disk
-                  diskSizeGb: 75
+                - *persistent-disk-75gb
                 - *scratch-disk
               machine_type: c2-standard-4
               worker-manager-config:
@@ -1236,8 +1219,7 @@ pools:
       instance_types:
         - minCpuPlatform: Ampere Altra
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: t2a-standard-4
   - pool_id: '{pool-group}/t-linux-xlarge{suffix}-gcp'
     description: Worker for gecko-based automation.
@@ -1265,13 +1247,12 @@ pools:
               -source: 200
           nss-t: 100
           comm-t: 10
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - *scratch-disk
           machine_type: n2-standard-4
   - pool_id: '{pool-group}/t-linux-xlarge{suffix}-noscratch-gcp'
@@ -1300,13 +1281,12 @@ pools:
               -source: 200
           nss-t: 100
           comm-t: 10
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: n2-standard-4
   - pool_id: 'gecko-t/t-linux-kvm-gcp'
     description: Worker for gecko-based automation.
@@ -1316,7 +1296,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 400
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-gcp-current
       worker-config:
         deviceManagement:
@@ -1327,8 +1307,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - *scratch-disk
           machine_type: n2-standard-8
           advancedMachineFeatures:
@@ -1341,7 +1320,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 400
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: handbuilt-docker-worker-tester-20250616
       worker-config:
         deviceManagement:
@@ -1352,8 +1331,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - *scratch-disk
           machine_type: n2-standard-8
           advancedMachineFeatures:
@@ -1366,7 +1344,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 800
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-gcp-current
       worker-config:
         deviceManagement:
@@ -1377,8 +1355,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: n2-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true
@@ -1398,7 +1375,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 30
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -1412,8 +1389,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
@@ -1433,15 +1409,14 @@ pools:
         default: fxci-level1-gcp
     config:
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-ubuntu-2204-wayland  # use temporarily until monopacker-ubuntu-2204 is working.
       minCapacity: 0
       maxCapacity: 10
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: c2-standard-4
           advancedMachineFeatures:
             enableNestedVirtualization: true
@@ -1464,13 +1439,12 @@ pools:
       minCapacity: 0
       maxCapacity: 500
       implementation: generic-worker/worker-runner-linux
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: handbuilt-ubuntu-2204-wayland-vm
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: n2-standard-2
           advancedMachineFeatures:
             enableNestedVirtualization: true
@@ -1494,13 +1468,12 @@ pools:
       minCapacity: 0
       maxCapacity: 100
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-ubuntu-2204-wayland
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-2204-wayland-relsre'
     description: Workers for Wayland on Ubuntu 22.04. Used by RelSRE to qualify images.
@@ -1514,13 +1487,12 @@ pools:
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-gw-gcp-wayland-gui-relops1188
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-2204-wayland-arm64-relsre'
     description: Workers for Wayland on Ubuntu 22.04 ARM64. Used by RelSRE to qualify images.
@@ -1539,8 +1511,7 @@ pools:
       instance_types:
         - minCpuPlatform: Ampere Altra
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: t2a-standard-4
   - pool_id: '{pool-group}/t-linux-2404-wayland-relsre'
     description: Workers for Wayland on Ubuntu 24.04. Used by RelSRE to qualify images.
@@ -1557,13 +1528,12 @@ pools:
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: relsre-gw-fxci-gcp-2404-amd64-gui-alpha
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-2404-relsre'
     description: Workers running Ubuntu 24.04. Used by RelSRE to qualify images.
@@ -1580,13 +1550,12 @@ pools:
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: relsre-gw-fxci-gcp-2404-amd64-alpha
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-2404-headless-ssd-alpha'
     description: Workers running Ubuntu 24.04. Used by RelSRE to qualify images.
@@ -1606,13 +1575,12 @@ pools:
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless-alpha
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
             - *scratch-disk
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-2404-headless-alpha'
@@ -1631,13 +1599,12 @@ pools:
       minCapacity: 0
       maxCapacity: 100
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless-alpha
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-2404-headless-arm64-alpha'
     description: Workers running Ubuntu 24.04 arm64. Used by RelSRE to qualify images.
@@ -1661,8 +1628,7 @@ pools:
       instance_types:
         - minCpuPlatform: Ampere Altra
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: t2a-standard-4
   - pool_id: 'gecko-t/t-linux-docker-kvm-alpha'
     description: Worker for gecko-based automation.
@@ -1672,7 +1638,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 100
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless-alpha
       implementation: generic-worker/linux-d2g
       worker-config:
@@ -1688,8 +1654,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - <<: *scratch-disk
           machine_type: n2-standard-8
           advancedMachineFeatures:
@@ -1714,13 +1679,12 @@ pools:
       minCapacity: 0
       maxCapacity: 100
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-wayland
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-xlarge-2404-wayland'  # Bug 1902716
     variants:
@@ -1737,13 +1701,12 @@ pools:
       minCapacity: 0
       maxCapacity: 100
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-wayland
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: c2-standard-8
   - pool_id: 'gecko-t/t-linux-2204-wayland-root-exp'  # Bug 1874877
     description: Worker for testing Wayland on Ubuntu 22.04
@@ -1758,13 +1721,12 @@ pools:
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-ubuntu-2204-wayland
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: n2-standard-2
   - pool_id: '{pool-group}/t-linux-xlarge-2204-wayland'  # Bug 1903073
     variants:
@@ -1781,13 +1743,12 @@ pools:
       minCapacity: 0
       maxCapacity: 100
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-ubuntu-2204-wayland
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: c2-standard-8
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g'
     description: Worker for machine learning and other high GPU tasks
@@ -1817,8 +1778,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: n1-highmem-8
           guestAccelerators:
             - acceleratorCount: 1
@@ -1851,8 +1811,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: n1-highmem-8
           guestAccelerators:
             - acceleratorCount: 1
@@ -1888,8 +1847,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: n1-highmem-8
           guestAccelerators:
             - acceleratorCount: 4
@@ -1925,8 +1883,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: n1-highmem-8
           guestAccelerators:
             - acceleratorCount: 4
@@ -2030,7 +1987,7 @@ pools:
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -2066,7 +2023,7 @@ pools:
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless-alpha-tc
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -2102,7 +2059,7 @@ pools:
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -2138,7 +2095,7 @@ pools:
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless-alpha-tc
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -2315,13 +2272,12 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 32
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
+            - *persistent-disk-20gb
             - *scratch-disk
           machine_type: c2-standard-4
           worker-manager-config:
@@ -3139,7 +3095,7 @@ pools:
           gecko-t: 2500
           comm-t: 100
           mozilla-t: 100
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -3183,13 +3139,12 @@ pools:
           mozilla-t: 100
           nss-t: 100
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - *scratch-disk
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-docker{suffix}-amd-alpha'
@@ -3276,7 +3231,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 1600
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       implementation: generic-worker/linux-d2g
       worker-config:
@@ -3292,8 +3247,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - <<: *scratch-disk
           machine_type: n2-standard-8
           advancedMachineFeatures:
@@ -3331,8 +3285,7 @@ pools:
       instance_types:
         - minCpuPlatform: Ampere Altra
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: t2a-standard-4
   - pool_id: '{pool-group}/t-linux-large-noscratch-gcp'
     description: Worker for gecko-based automation.
@@ -3350,7 +3303,7 @@ pools:
           gecko-t: 2500
           comm-t: 100
           mozilla-t: 100
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -3392,8 +3345,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: c2-standard-4
   - pool_id: 'gecko-t/t-linux-large-hostub2204-gcp'
     description: Worker for gecko-based automation.
@@ -3403,7 +3355,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 200
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-relops528
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -3426,15 +3378,14 @@ pools:
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-current
       minCapacity: 1
       maxCapacity: 100
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 20
+            - *persistent-disk-20gb
             - *scratch-disk
           machine_type: c2-standard-4
           worker-manager-config:
@@ -3448,15 +3399,14 @@ pools:
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-docker-worker-current
       minCapacity: 0
       maxCapacity: 10
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - *scratch-disk
           machine_type: c2-standard-4
       worker-config:
@@ -3489,7 +3439,7 @@ pools:
         by-pool-group:
           nss-.*: 100
           default: 10
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -3497,8 +3447,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - *scratch-disk
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/linux-docker'
@@ -3527,14 +3476,13 @@ pools:
             disableNativePayloads: true
             downloadsDir: /home/generic-worker/downloads
             cachesDir: /home/generic-worker/caches
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       implementation: generic-worker/linux-d2g
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
             - *scratch-disk
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/linux-gw-gcp'
@@ -3553,11 +3501,10 @@ pools:
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: monopacker-ubuntu-2204-wayland
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - <<: *persistent-disk
-              diskSizeGb: 75
+            - *persistent-disk-75gb
           machine_type: c2-standard-4
