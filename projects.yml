@@ -1057,6 +1057,7 @@ winsign:
     github-pull-request:
       policy: public
     taskgraph-actions: true
+    github-taskgraph: true
 
 mozilla-version:
   repo: https://github.com/mozilla-releng/mozilla-version
