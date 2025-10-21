@@ -132,14 +132,20 @@ firefoxci:
       # No AMD families in northamerica-northeast1
       - zones: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
         families: [c4d, c3d]
-      - zones: [us-central1-c]
-        families: [t2a]
-      - zones: [us-central1-f, us-west1-c]
-        families: [c4d]
-      - zones: [us-east1-b, us-east1-d, us-west1-c]
-        families: [n1]
+      # C3D in west1 is only available in zone b
       - zones: [us-west1-a, us-west1-c]
         families: [c3d]
+      # No c3d/c4d with lssd in west1
+      - zones: [us-west1-a, us-west1-b, us-west1-c]
+        families: [c4d, c3d]
+        suffixes: [lssd]
+      # No c4d on us-central1-f or us-west1-c
+      - zones: [us-central1-f, us-west1-c]
+        families: [c4d]
+      - zones: [us-central1-c]
+        families: [t2a]
+      - zones: [us-east1-b, us-east1-d, us-west1-c]
+        families: [n1]
   cron:
     gecko:
       hooks_owner: release+tc-hooks@mozilla.com

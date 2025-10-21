@@ -27,11 +27,36 @@ def is_invalid_aws_instance_type(invalid_instances, zone, instance_type):
 
 
 def is_invalid_gcp_instance_type(invalid_instances, zone, machine_type):
-    family, _ = machine_type.split("-", 1)
-    return any(
-        (zone in entry["zones"]) and (family in entry["families"])
-        for entry in invalid_instances
-    )
+    # Parse machine type: family-configuration-cpus[-suffix]
+    # e.g., "c4d-standard-8-lssd" -> family="c4d", suffix="lssd"
+    parts = machine_type.split("-")
+    family = parts[0]
+    # Suffix will be anything after cpus number
+    if len(parts) < 3:
+        # Wrong machine type
+        raise Exception(
+            f"Machine type should be on the format <family>-<configuration>-<cpus>[-<suffix>]. Got: {machine_type}"
+        )
+    elif len(parts) == 3:
+        # No suffix
+        suffix = None
+    else:
+        # Has suffix
+        # Note: we might eventually want to support multi suffixes (ie: highlssd-metal)
+        #  where a config with -metal is also filtered out
+        suffix = "-".join(parts[3:])
+
+    for entry in invalid_instances:
+        # Zones and Families are required and always needs to be a match. Suffixes are optional.
+
+        # True if suffixes undefined, or [], or actually matches config
+        matches_suffix = not entry.get("suffixes") or suffix in entry["suffixes"]
+
+        if zone in entry["zones"] and family in entry["families"] and matches_suffix:
+            # Invalid!
+            return True
+    # No matches found, machine_type is valid in this zone
+    return False
 
 
 def _validate_instance_capacity(pool_id, implementation, instance_types):

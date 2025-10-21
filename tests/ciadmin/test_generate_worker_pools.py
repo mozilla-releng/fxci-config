@@ -11,7 +11,10 @@ from tcadmin.resources.worker_pool import WorkerPool as TCWorkerPool
 from ciadmin.generate.ciconfig.environment import Environment
 from ciadmin.generate.ciconfig.worker_images import WorkerImage, WorkerImages
 from ciadmin.generate.ciconfig.worker_pools import WorkerPool
-from ciadmin.generate.worker_pools import make_worker_pool
+from ciadmin.generate.worker_pools import (
+    is_invalid_gcp_instance_type,
+    make_worker_pool,
+)
 from ciadmin.util.templates import merge
 
 
@@ -293,3 +296,111 @@ async def test_make_worker_pool(
     # Assertion callbacks correspond to `id` of parametrized test.
     param_id = request.node.callspec.id
     globals()[f"assert_{param_id}"](result)
+
+
+@pytest.mark.parametrize(
+    "invalid_instances,zone,machine_type,expected",
+    [
+        # Basic family matching - should match when zone and family match
+        (
+            [{"zones": ["us-west1-a"], "families": ["n2"]}],
+            "us-west1-a",
+            "n2-standard-2",
+            True,
+        ),
+        # Basic family matching - should not match when family differs
+        (
+            [{"zones": ["us-west1-a"], "families": ["n2"]}],
+            "us-west1-a",
+            "c4d-standard-2",
+            False,
+        ),
+        # Multiple families - should match first family
+        (
+            [{"zones": ["us-west1-a"], "families": ["n2", "c4d"]}],
+            "us-west1-a",
+            "n2-standard-2",
+            True,
+        ),
+        # Multiple families - should match second family
+        (
+            [{"zones": ["us-west1-a"], "families": ["n2", "c4d"]}],
+            "us-west1-a",
+            "c4d-standard-2",
+            True,
+        ),
+        # Multiple families - should not match unlisted family
+        (
+            [{"zones": ["us-west1-a"], "families": ["c4d", "c2"]}],
+            "us-west1-a",
+            "n2-standard-2",
+            False,
+        ),
+        # Suffix filtering - should match when suffix matches
+        (
+            [
+                {
+                    "zones": ["us-west1-a"],
+                    "families": ["n2"],
+                    "suffixes": ["lssd", "ext"],
+                }
+            ],
+            "us-west1-a",
+            "n2-standard-8-lssd",
+            True,
+        ),
+        # Suffix filtering - should not match when suffix differs
+        (
+            [{"zones": ["us-west1-a"], "families": ["n2"], "suffixes": ["lssd"]}],
+            "us-west1-a",
+            "n2-standard-8",
+            False,
+        ),
+        # No suffix filter - matches all variants (without suffix)
+        (
+            [{"zones": ["us-west1-a"], "families": ["n2"]}],
+            "us-west1-a",
+            "n2-standard-16",
+            True,
+        ),
+        # No suffix filter - matches all variants (with any suffix)
+        (
+            [{"zones": ["us-west1-a"], "families": ["n2"]}],
+            "us-west1-a",
+            "n2-standard-16-ext",
+            True,
+        ),
+        # No suffix filter (empty list) - matches all variants (with any suffix)
+        (
+            [{"zones": ["us-west1-a"], "families": ["n2"], "suffixes": []}],
+            "us-west1-a",
+            "n2-standard-16-ext",
+            True,
+        ),
+        # No suffix filter - strictly no suffix (we don't really have a use case for this "feature" yet)
+        (
+            [{"zones": ["us-west1-a"], "families": ["n2"], "suffixes": [None]}],
+            "us-west1-a",
+            "n2-standard-16-ext",
+            False,
+        ),
+        # Zone mismatch - should not match when zone differs
+        (
+            [{"zones": ["us-west1-a"], "families": ["n2"], "suffixes": ["lssd"]}],
+            "us-central1-f",
+            "n2-standard-8-lssd",
+            False,
+        ),
+        # Family mismatch - should not match when family differs
+        (
+            [{"zones": ["us-west1-a"], "families": ["n2"], "suffixes": ["lssd"]}],
+            "us-west1-a",
+            "c4d-standard-8-lssd",
+            False,
+        ),
+    ],
+)
+def test_is_invalid_gcp_instance_type(invalid_instances, zone, machine_type, expected):
+    assert (
+        is_invalid_gcp_instance_type(invalid_instances, zone, machine_type) == expected
+    )
