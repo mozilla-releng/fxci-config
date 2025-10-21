@@ -1058,6 +1058,7 @@ winsign:
       policy: public
     taskgraph-actions: true
     github-taskgraph: true
+    trust-domain-scopes: true
 
 mozilla-version:
   repo: https://github.com/mozilla-releng/mozilla-version
