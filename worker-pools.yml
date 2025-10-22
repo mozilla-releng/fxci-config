@@ -3220,7 +3220,7 @@ pools:
           mozilla-t: 100
           nss-t: 100
       implementation: generic-worker/linux-d2g
-      regions: [us-central1, us-east1]
+      regions: *default-gcp-regions
       image: ubuntu-2404-headless
       instance_types: []
   - pool_id: 'gecko-t/t-linux-docker-kvm'
