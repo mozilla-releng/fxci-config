@@ -146,6 +146,14 @@ firefoxci:
         families: [t2a]
       - zones: [us-east1-b, us-east1-d, us-west1-c]
         families: [n1]
+      # There are no highcpu c3d in us-west1
+      - zones: [us-west1-a, us-west1-b, us-west1-c]
+        families: [c3d]
+        profiles: ["highcpu"]
+      # There are no highcpu c4d in us-west1-c
+      - zones: [us-west1-c]
+        families: [c4d]
+        profiles: ["highcpu"]
   cron:
     gecko:
       hooks_owner: release+tc-hooks@mozilla.com
