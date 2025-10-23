@@ -55,6 +55,7 @@ worker-defaults:
           config:
             cachesDir: Z:\caches
             cleanUpTaskDirs: true
+            createObjectArtifacts: true
             disableReboots: false
             disableOOMProtection: true
             downloadsDir: Z:\downloads
@@ -76,6 +77,7 @@ worker-defaults:
           config:
             cachesDir: Z:\caches
             cleanUpTaskDirs: true
+            createObjectArtifacts: true
             disableReboots: false
             downloadsDir: Z:\downloads
             livelogExecutable: C:\generic-worker\livelog.exe
@@ -96,6 +98,7 @@ worker-defaults:
           config:
             cachesDir: /home/ubuntu/caches
             cleanUpTaskDirs: true
+            createObjectArtifacts: true
             disableReboots: false
             downloadsDir: /home/ubuntu/downloads
             livelogExecutable: /home/ubuntu/generic_worker/livelog
@@ -116,6 +119,7 @@ worker-defaults:
         genericWorker:
           config:
             cleanUpTaskDirs: true
+            createObjectArtifacts: true
             disableReboots: false
             ed25519SigningKeyLocation: /etc/taskcluster/secrets/gw_cot_private_key
             idleTimeoutSecs: 300  # 5 minutes
@@ -131,6 +135,7 @@ worker-defaults:
         genericWorker:
           config:
             cleanUpTaskDirs: true
+            createObjectArtifacts: true
             disableReboots: false
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
             idleTimeoutSecs: 300  # 5 minutes
