@@ -228,10 +228,6 @@ meta:
     disks:
       - *persistent-disk-75gb
     machine_type: c4d-highcpu-8
-  - &c4d-highcpu-16
-    disks:
-      - *persistent-disk-75gb
-    machine_type: c4d-highcpu-16
 
 pools:
   - pool_id: infra/build-decision
@@ -3205,10 +3201,7 @@ pools:
         suffix: -noscratch
         instance_types: [*c3d-standard-8]
       - pool-group: gecko-t
-        suffix: -16c30gbc4d
-        instance_types: [*c4d-highcpu-16]
-      - pool-group: gecko-t
-        suffix: -16c32gbc3d
+        suffix: -16c32gb
         instance_types: [*c3d-highcpu-16]
       - pool-group: comm-t
         suffix: -noscratch
