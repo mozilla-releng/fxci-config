@@ -129,10 +129,11 @@ worker-defaults:
             wstAudience: firefoxcitc
       generic-worker/linux-d2g:
         genericWorker:
-          config:
+          config: &gw-config-d2g
             cleanUpTaskDirs: true
             disableReboots: false
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
+            enableRunTaskAsCurrentUser: false
             idleTimeoutSecs: 300  # 5 minutes
             livelogExecutable: /usr/local/bin/livelog
             numberOfTasksToRun: 0
@@ -144,9 +145,27 @@ worker-defaults:
             wstAudience: firefoxcitc
             d2gConfig:
               enableD2G: true
-              allowPrivileged: false
+              allowGPUs: false
               allowHostSharedMemory: false
+              allowInteractive: true
               allowKVM: false
+              allowLoopbackAudio: true
+              allowLoopbackVideo: false
+              allowPrivileged: false
+      generic-worker/linux-d2g-trusted:
+        genericWorker:
+          config:
+            <<: *gw-config-d2g
+            d2gConfig:
+              enableD2G: true
+              allowGPUs: false
+              allowHostSharedMemory: false
+              allowInteractive: false
+              allowKVM: false
+              allowLoopbackAudio: false
+              allowLoopbackVideo: false
+              allowPrivileged: false
+            enableInteractive: false
 
 meta:
   - &default-gcp-regions [us-central1, us-west1]
