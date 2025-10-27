@@ -1017,6 +1017,42 @@ pools:
             by-pool-group:
               gecko-[13]: 600
               default: 120
+  - pool_id: '{pool-group}/decision'
+    description: Worker for Firefox automation
+    owner: release+tc-workers@mozilla.com
+    email_on_error: false
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-1
+        chain-of-trust: ''
+      - pool-group: gecko-2
+        chain-of-trust: ''
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            headlessTasks: true
+            disableNativePayloads: true
+            downloadsDir: /home/generic-worker/downloads
+            cachesDir: /home/generic-worker/caches
+      implementation: generic-worker/linux-d2g-{chain-of-trust}
+      image: ubuntu-2404-headless
+      minCapacity:
+        by-pool-group:
+          gecko-[13]: 1
+          default: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-1: 40
+          gecko-3: 20
+          default: 4
+      regions: *default-gcp-regions
+      instance_types: [*c4d-standard-8]
   - pool_id: '{pool-group}/decision-gcp-{suffix}-amd-bug1990935'
     description: Decision task worker
     owner: release+tc-workers@mozilla.com
