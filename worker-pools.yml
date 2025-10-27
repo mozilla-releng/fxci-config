@@ -445,17 +445,22 @@ pools:
     email_on_error: true
     variants:
       - pool-group: gecko-1
-    provider_id: fxci-level1-gcp
+        chain-of-trust: ''
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
     config:
       minCapacity: 0
       maxCapacity: 50
       regions: *default-gcp-regions
       image: ubuntu-2404-headless-alpha
-      implementation: generic-worker/linux-d2g
+      implementation: generic-worker/linux-d2g-{chain-of-trust}
       worker-config:
         genericWorker:
           config:
-            enableInteractive: true
             headlessTasks: true
             downloadsDir: /home/generic-worker/downloads
             cachesDir: /home/generic-worker/caches
