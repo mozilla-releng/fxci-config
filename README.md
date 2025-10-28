@@ -72,6 +72,9 @@ provided here.
 1. If you will be applying changes, ensure you have a way of generating
    taskcluster credentials, such as
    [taskcluster-cli](https://github.com/taskcluster/taskcluster/releases)
+1. Create a Github Classic token and set with `export GITHUB_TOKEN` before running
+   commands to ensure you don't hit GitHub rate-limits. Make sure you've authorized
+   all orgs under the 'Configure SSO' dropdown. No scopes are required for the token.
 
 ## Starting Concepts
 
