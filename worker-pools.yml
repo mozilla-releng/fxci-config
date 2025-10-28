@@ -2955,6 +2955,7 @@ pools:
       - pool-group: comm-t
       - pool-group: comm-t
         suffix: ssd
+      - pool-group: taskgraph-t
     config:
       image:
         by-suffix:
@@ -2989,6 +2990,7 @@ pools:
               alpha: 500
               gpu: 600
               default: 100
+          default: 5
       worker-config:
         genericWorker:
           config:
