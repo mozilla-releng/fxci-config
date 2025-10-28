@@ -149,8 +149,8 @@ worker-defaults:
               allowHostSharedMemory: false
               allowInteractive: true
               allowKVM: false
-              allowLoopbackAudio: true
-              allowLoopbackVideo: false
+              allowLoopbackAudio: false
+              allowLoopbackVideo: true
               allowPrivileged: false
       generic-worker/linux-d2g-trusted:
         genericWorker:
