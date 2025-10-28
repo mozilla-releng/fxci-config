@@ -166,6 +166,7 @@ worker-defaults:
               allowLoopbackVideo: false
               allowPrivileged: false
             enableInteractive: false
+            livelogExecutable: /bin/false
 
 meta:
   - &default-gcp-regions [us-central1, us-west1]
