@@ -491,6 +491,47 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
+  - pool_id: '{pool-group}/b-linux-aarch64'
+    description: Linux ARM64 VM for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: gecko-1
+        chain-of-trust: ''
+      - pool-group: gecko-2
+        chain-of-trust: ''
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+      - pool-group: comm-1
+        chain-of-trust: ''
+      - pool-group: comm-2
+        chain-of-trust: ''
+      - pool-group: comm-3
+        chain-of-trust: trusted
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          (gecko|comm)-.*: 10
+      implementation: generic-worker/linux-d2g-{chain-of-trust}
+      worker-config:
+        genericWorker:
+          config:
+            headlessTasks: true
+            downloadsDir: /home/generic-worker/downloads
+            cachesDir: /home/generic-worker/caches
+      # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
+      regions: [us-central1]
+      image: ubuntu-2404-arm64-headless
+      instance_types:
+        - minCpuPlatform: Ampere Altra
+          disks:
+            - *persistent-disk-75gb
+          machine_type: t2a-standard-16
   - pool_id: '{pool-group}/b-linux-gcp-aarch64'
     description: Linux ARM64 VM for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -1255,6 +1296,47 @@ pools:
               machine_type: c2-standard-4
               worker-manager-config:
                 capacityPerInstance: 1
+  - pool_id: '{pool-group}/images-aarch64'
+    description: Builds AArch64 docker images
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: gecko-1
+        chain-of-trust: ''
+      - pool-group: gecko-2
+        chain-of-trust: ''
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+      - pool-group: comm-1
+        chain-of-trust: ''
+      - pool-group: comm-2
+        chain-of-trust: ''
+      - pool-group: comm-3
+        chain-of-trust: trusted
+    email_on_error: false
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          (gecko|comm)-.*: 10
+      implementation: generic-worker/linux-d2g-{chain-of-trust}
+      # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
+      regions: [us-central1]
+      image: ubuntu-2404-arm64-headless
+      instance_types:
+        - minCpuPlatform: Ampere Altra
+          disks:
+            - *persistent-disk-75gb
+          machine_type: t2a-standard-4
+      worker-config:
+        genericWorker:
+          config:
+            headlessTasks: true
+            downloadsDir: /home/generic-worker/downloads
+            cachesDir: /home/generic-worker/caches
   - pool_id: '{pool-group}/images-gcp-aarch64'
     description: Builds AArch64 docker images
     owner: release+tc-workers@mozilla.com
