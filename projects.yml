@@ -584,6 +584,8 @@ firefox-prototypes:
   branches:
     - name: main
       level: 3
+    - name: smart-window
+      level: 1
   features:
     gecko-roles: true
     github-taskgraph: true
