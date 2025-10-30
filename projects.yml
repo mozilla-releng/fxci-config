@@ -583,7 +583,7 @@ firefox-prototypes:
   trust_domain: gecko
   branches:
     - name: main
-      level: 3
+      level: 1
     - name: smart-window
       level: 1
   features:
