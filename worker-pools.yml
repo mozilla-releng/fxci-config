@@ -91,7 +91,7 @@ worker-defaults:
             taskclusterProxyPort: 80
             tasksDir: Z:\
             wstAudience: firefoxcitc
-      generic-worker/worker-runner-linux:
+      generic-worker/worker-runner-linux:  # solely for the t-linux-vm-2204-wayland pool with g-w simple
         genericWorker:
           config:
             cachesDir: /home/ubuntu/caches
@@ -127,13 +127,18 @@ worker-defaults:
             taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
             taskclusterProxyPort: 80
             wstAudience: firefoxcitc
-      generic-worker/linux-d2g:
+      generic-worker/linux-d2g:  # for headless images built from worker-images
         genericWorker:
           config: &gw-config-d2g
+            cachesDir: /home/generic-worker/caches
             cleanUpTaskDirs: true
+            disableNativePayloads: true
             disableReboots: false
+            downloadsDir: /home/generic-worker/downloads
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
+            enableInteractive: true
             enableRunTaskAsCurrentUser: false
+            headlessTasks: true
             idleTimeoutSecs: 300  # 5 minutes
             livelogExecutable: /usr/local/bin/livelog
             numberOfTasksToRun: 0
@@ -152,7 +157,7 @@ worker-defaults:
               allowLoopbackAudio: false
               allowLoopbackVideo: true
               allowPrivileged: false
-      generic-worker/linux-d2g-trusted:
+      generic-worker/linux-d2g-trusted:  # for trusted/l3 images built from worker-images
         genericWorker:
           config:
             <<: *gw-config-d2g
@@ -167,6 +172,14 @@ worker-defaults:
               allowPrivileged: false
             enableInteractive: false
             livelogExecutable: /bin/false
+      generic-worker/linux-wayland:  # for wayland images built from worker-images
+        genericWorker:
+          config:
+            <<: *gw-config-d2g
+            d2gConfig:
+              enableD2G: false
+            disableNativePayloads: false
+            headlessTasks: false
 
 meta:
   - &default-gcp-regions [us-central1, us-west1]
@@ -459,12 +472,6 @@ pools:
       regions: *default-gcp-regions
       image: ubuntu-2404-headless-alpha
       implementation: generic-worker/linux-d2g-{chain-of-trust}
-      worker-config:
-        genericWorker:
-          config:
-            headlessTasks: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -518,12 +525,6 @@ pools:
         by-pool-group:
           (gecko|comm)-.*: 10
       implementation: generic-worker/linux-d2g-{chain-of-trust}
-      worker-config:
-        genericWorker:
-          config:
-            headlessTasks: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
       image: ubuntu-2404-arm64-headless
@@ -698,8 +699,6 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
@@ -726,8 +725,6 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
@@ -755,8 +752,6 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
@@ -785,8 +780,6 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
@@ -814,8 +807,6 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
@@ -843,8 +834,6 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 16
       implementation: generic-worker/linux-d2g
@@ -873,8 +862,6 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 1000
       implementation: generic-worker/linux-d2g
@@ -902,8 +889,6 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 8
       implementation: generic-worker/linux-d2g
@@ -1075,13 +1060,6 @@ pools:
       - pool-group: gecko-3
         chain-of-trust: trusted
     config:
-      worker-config:
-        genericWorker:
-          config:
-            headlessTasks: true
-            disableNativePayloads: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
       implementation: generic-worker/linux-d2g-{chain-of-trust}
       image: ubuntu-2404-headless
       minCapacity:
@@ -1331,12 +1309,6 @@ pools:
           disks:
             - *persistent-disk-75gb
           machine_type: t2a-standard-4
-      worker-config:
-        genericWorker:
-          config:
-            headlessTasks: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
   - pool_id: '{pool-group}/images-gcp-aarch64'
     description: Builds AArch64 docker images
     owner: release+tc-workers@mozilla.com
@@ -1668,13 +1640,9 @@ pools:
     variants:
       - pool-group: gecko-t
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
       minCapacity: 0
       maxCapacity: 10
-      implementation: generic-worker/linux-d2g
+      implementation: generic-worker/linux-wayland
       regions: *default-gcp-regions
       image: relsre-gw-fxci-gcp-2404-amd64-gui-alpha
       instance_types:
@@ -1690,10 +1658,6 @@ pools:
     variants:
       - pool-group: gecko-t
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/linux-d2g
@@ -1712,13 +1676,6 @@ pools:
     variants:
       - pool-group: gecko-t
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
-            headlessTasks: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/linux-d2g
@@ -1738,11 +1695,6 @@ pools:
     variants:
       - pool-group: gecko-t
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 100
       implementation: generic-worker/linux-d2g
@@ -1761,11 +1713,6 @@ pools:
     variants:
       - pool-group: gecko-t
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 100
       implementation: generic-worker/linux-d2g
@@ -1791,11 +1738,6 @@ pools:
       worker-config:
         genericWorker:
           config:
-            enableInteractive: true
-            headlessTasks: true
-            disableNativePayloads: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
             d2gConfig:
               allowKVM: true
       instance_types:
@@ -1819,13 +1761,9 @@ pools:
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
       minCapacity: 0
       maxCapacity: 100
-      implementation: generic-worker/linux-d2g
+      implementation: generic-worker/linux-wayland
       regions: *default-gcp-regions
       image: ubuntu-2404-wayland
       instance_types:
@@ -1841,13 +1779,9 @@ pools:
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
       minCapacity: 0
       maxCapacity: 100
-      implementation: generic-worker/linux-d2g
+      implementation: generic-worker/linux-wayland
       regions: *default-gcp-regions
       image: ubuntu-2404-wayland
       instance_types:
@@ -1913,10 +1847,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 200
       implementation: generic-worker/linux-d2g
@@ -1946,10 +1878,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 200
       implementation: generic-worker/linux-d2g
@@ -1979,10 +1909,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
@@ -2015,10 +1943,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
@@ -2051,10 +1977,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
@@ -2089,10 +2013,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
@@ -2127,10 +2049,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/linux-d2g
@@ -2163,10 +2083,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/linux-d2g
@@ -2199,10 +2117,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/linux-d2g
@@ -2235,10 +2151,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       maxCapacity: 50
       implementation: generic-worker/linux-d2g
@@ -2271,10 +2185,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
@@ -2309,10 +2221,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
@@ -2347,10 +2257,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
@@ -2385,10 +2293,8 @@ pools:
           config:
             # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
             maxTaskRunTime: 2592900
-            enableInteractive: true
             d2gConfig:
               allowGPUs: true
-            headlessTasks: true
       minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
@@ -3272,14 +3178,6 @@ pools:
       - pool-group: nss-t
     email_on_error: true
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
-            headlessTasks: true
-            disableNativePayloads: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
       minCapacity: 0
       maxCapacity:
         by-pool-group:
@@ -3310,14 +3208,6 @@ pools:
         instance_types: [*c3d-standard-8]
     email_on_error: true
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
-            headlessTasks: true
-            disableNativePayloads: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
       minCapacity: 0
       maxCapacity: 100
       implementation: generic-worker/linux-d2g
@@ -3356,14 +3246,6 @@ pools:
         instance_types: [*c3d-standard-8]
     email_on_error: true
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
-            headlessTasks: true
-            disableNativePayloads: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
       minCapacity: 0
       maxCapacity:
         by-pool-group:
@@ -3389,11 +3271,6 @@ pools:
       worker-config:
         genericWorker:
           config:
-            enableInteractive: true
-            headlessTasks: true
-            disableNativePayloads: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
             d2gConfig:
               allowKVM: true
       instance_types:
@@ -3415,14 +3292,6 @@ pools:
       - pool-group: nss-t
     email_on_error: true
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
-            headlessTasks: true
-            disableNativePayloads: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
       minCapacity: 0
       maxCapacity:
         by-pool-group:
@@ -3477,14 +3346,6 @@ pools:
       - pool-group: mozilla-t
     email_on_error: true
     config:
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
-            headlessTasks: true
-            disableNativePayloads: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
       minCapacity: 0
       maxCapacity:
         by-pool-group:
@@ -3620,14 +3481,6 @@ pools:
         by-pool-group:
           nss-.*: 100
           default: 10
-      worker-config:
-        genericWorker:
-          config:
-            enableInteractive: true
-            headlessTasks: true
-            disableNativePayloads: true
-            downloadsDir: /home/generic-worker/downloads
-            cachesDir: /home/generic-worker/caches
       regions: *default-gcp-regions
       image: ubuntu-2404-headless
       implementation: generic-worker/linux-d2g
