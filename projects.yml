@@ -580,11 +580,31 @@ holly:
 firefox-prototypes:
   repo: https://github.com/Firefox-AI/firefox-prototypes
   repo_type: git
+  # TODO: Determine whether we want a separate trust domain before making the
+  # repo L3.
   trust_domain: gecko
   branches:
     - name: main
       level: 1
     - name: smart-window
+      level: 1
+  features:
+    gecko-roles: true
+    github-taskgraph: true
+    pr-actions: true
+    taskgraph-actions: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+
+enterprise-firefox:
+  repo: https://github.com/mozilla/enterprise-firefox
+  repo_type: git
+  default_branch: enterprise-main
+  # TODO: Determine whether we want a separate trust domain before making the
+  # repo L3.
+  trust_domain: gecko
+  branches:
+    - name: enterprise-main
       level: 1
   features:
     gecko-roles: true
