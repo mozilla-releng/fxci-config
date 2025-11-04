@@ -457,9 +457,10 @@ pools:
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
+    attributes:
+      chain-of-trust: ''
     variants:
       - pool-group: gecko-1
-        chain-of-trust: ''
       - pool-group: gecko-3
         chain-of-trust: trusted
     provider_id:
@@ -501,17 +502,15 @@ pools:
   - pool_id: '{pool-group}/b-linux-aarch64'
     description: Linux ARM64 VM for Firefox automation.
     owner: release+tc-workers@mozilla.com
+    attributes:
+      chain-of-trust: ''
     variants:
       - pool-group: gecko-1
-        chain-of-trust: ''
       - pool-group: gecko-2
-        chain-of-trust: ''
       - pool-group: gecko-3
         chain-of-trust: trusted
       - pool-group: comm-1
-        chain-of-trust: ''
       - pool-group: comm-2
-        chain-of-trust: ''
       - pool-group: comm-3
         chain-of-trust: trusted
     email_on_error: true
@@ -1052,11 +1051,11 @@ pools:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
+    attributes:
+      chain-of-trust: ''
     variants:
       - pool-group: gecko-1
-        chain-of-trust: ''
       - pool-group: gecko-2
-        chain-of-trust: ''
       - pool-group: gecko-3
         chain-of-trust: trusted
     config:
@@ -1277,17 +1276,15 @@ pools:
   - pool_id: '{pool-group}/images-aarch64'
     description: Builds AArch64 docker images
     owner: release+tc-workers@mozilla.com
+    attributes:
+      chain-of-trust: ''
     variants:
       - pool-group: gecko-1
-        chain-of-trust: ''
       - pool-group: gecko-2
-        chain-of-trust: ''
       - pool-group: gecko-3
         chain-of-trust: trusted
       - pool-group: comm-1
-        chain-of-trust: ''
       - pool-group: comm-2
-        chain-of-trust: ''
       - pool-group: comm-3
         chain-of-trust: trusted
     email_on_error: false
