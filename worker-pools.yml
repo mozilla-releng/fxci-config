@@ -219,18 +219,18 @@ meta:
     machine_type: c3d-standard-8-lssd
   - &c3d-standard-16-lssd
     disks:
-      - *persistent-disk-20gb
+      - *persistent-disk-60gb
       - *scratch-disk
     machine_type: c3d-standard-16-lssd
   - &c3d-standard-30-lssd
     disks:
-      - *persistent-disk-20gb
+      - *persistent-disk-60gb
       - *scratch-disk
       - *scratch-disk
     machine_type: c3d-standard-30-lssd
   - &c3d-standard-60-lssd
     disks:
-      - *persistent-disk-20gb
+      - *persistent-disk-60gb
       - *scratch-disk
       - *scratch-disk
       - *scratch-disk
