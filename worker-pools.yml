@@ -3858,18 +3858,15 @@ pools:
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     variants:
-      - pool-group: ci-t
       - pool-group: code-analysis-1
       - pool-group: code-analysis-3
         chain-of-trust: trusted
       - pool-group: nss-1
       - pool-group: nss-3
         chain-of-trust: trusted
-      - pool-group: releng-t
       - pool-group: releng-1
       - pool-group: releng-3
         chain-of-trust: trusted
-      - pool-group: taskgraph-t
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
