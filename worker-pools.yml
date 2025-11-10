@@ -3346,6 +3346,9 @@ pools:
         suffix: alpha
         implementation: generic-worker/windows
       - pool-group: gecko-t
+        suffix: amd
+        implementation: generic-worker/windows
+      - pool-group: gecko-t
         suffix: large
       - pool-group: gecko-t
         suffix: large-alpha
@@ -3375,6 +3378,7 @@ pools:
     config:
       image:
         by-suffix:
+          amd: win116424h2alpha
           .*alpha: ronin_t_windows11_64_24h2_alpha
           default: ronin_t_windows11_64_24h2
       image_resource_group: rg-packer-through-cib
@@ -3388,6 +3392,7 @@ pools:
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
+              amd: [uk-south, central-india]
               (source-)?alpha: [uk-south]
               (webgpu|gpu): [east-us, east-us-2, west-us, west-us-2]
               .*gpu-alpha: [west-us, west-us-2]
@@ -3424,6 +3429,7 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
+              amd: Standard_E8ads_v6
               (source-)?alpha: Standard_E8ads_v5
               .*large.*: Standard_E8ads_v5
               webgpu-alpha: Standard_NV12ads_A10_v5
@@ -3447,6 +3453,7 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
+                  amd: Standard_E8ads_v6
                   (source-)?alpha: Standard_E8ads_v5
                   .*large.*: Standard_E8ads_v5
                   webgpu-alpha: Standard_NV12ads_A10_v5
@@ -3482,6 +3489,10 @@ pools:
                 west-us-2: 1
                 west-us-3: 1
                 east-us-2: 0.8
+                default: 0.5
+            Standard_E8ads_v6:
+              by-location:
+                central-india: 1
                 default: 0.5
             default: 1
   - pool_id: '{pool-group}/win11-a64-24h2-{suffix}'
