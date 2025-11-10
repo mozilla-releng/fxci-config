@@ -193,3 +193,9 @@ ronin_t_windows11_64_2009:
     resource_group: rg-packer-worker-images
     deployment_id: "79dd0f2"
     name: win11_64_2009
+win116424h2alpha:
+  azure2:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: alpha
+    name: win116424h2alpha
