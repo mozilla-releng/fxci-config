@@ -3449,7 +3449,10 @@ pools:
                 caching: ReadOnly
                 createOption: FromImage
                 diffDiskSettings:
-                  option: Local
+                  option:
+                    by-suffix:
+                      amd: NVMe
+                      default: Local
             hardwareProfile:
               vmSize:
                 by-suffix:
