@@ -285,6 +285,7 @@
     - project:releng:beetmover:bucket:dep-partner
     - project:releng:beetmover:bucket:maven-staging
     - project:releng:beetmover:bucket:maven-nightly-staging
+    - project:releng:beetmover:yum-repo:dep
     - project:releng:bouncer:action:*
     - project:releng:bouncer:server:staging
     - project:releng:bouncer:server:staging-nazgul
@@ -336,6 +337,7 @@
     - project:releng:beetmover:apt-repo:dep
     - project:releng:beetmover:bucket:dep-partner
     - project:releng:beetmover:bucket:maven-staging
+    - project:releng:beetmover:yum-repo:dep
     - project:releng:bouncer:action:*
     - project:releng:bouncer:server:staging
     - project:releng:bouncer:server:staging-nazgul
@@ -484,6 +486,7 @@
     - project:releng:beetmover:bucket:partner
     - project:releng:beetmover:bucket:release
     - project:releng:beetmover:apt-repo:release
+    - project:releng:beetmover:yum-repo:release
     - project:releng:bouncer:server:production
     - project:releng:bouncer:server:production-nazgul
     - project:releng:googleplay:product:fenix
@@ -2102,6 +2105,7 @@
     - project:releng:beetmover:apt-repo:nightly
     - project:releng:beetmover:bucket:maven-production
     - project:releng:beetmover:bucket:maven-nightly-production
+    - project:releng:beetmover:yum-repo:nightly
     - project:releng:bouncer:server:production
     - project:releng:bouncer:server:production-nazgul
     - project:releng:googleplay:product:fenix
