@@ -170,7 +170,7 @@ def _build_arm_template_launch_config(
         {
             "vmSize": vm_size,
             "imageId": image_reference_id,
-            "location": location,
+            "location": loc,
             "subnetId": subnet_id,
             "priority": pool_cfg.get("priority", "Spot"),
         }

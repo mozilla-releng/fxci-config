@@ -254,7 +254,7 @@ def assert_azure_arm(pool):
         "imageId": {
             "value": "/subscriptions/subscription_id/resourceGroups/rgroup_id/providers/Microsoft.Compute/galleries/name_id/images/name_id/versions/ver_id"  # noqa: E501
         },
-        "location": {"value": "us-east1"},
+        "location": {"value": "useast1"},
         "priority": {"value": "Regular"},
         "subnetId": {
             "value": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test"  # noqa: E501
