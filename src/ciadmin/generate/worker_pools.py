@@ -617,7 +617,13 @@ def generate_pool_variants(worker_pools, environment):
         config = copy.deepcopy(config)
 
         # First pass: evaluate vmSize so it can be used in subsequent evaluations
-        resolve_keyed_by(config, "vmSizes.vmSize", name, **attributes)
+        for key in ("vmSizes.vmSize",):
+            for container, subkey in iter_dot_path(config, key):
+                value = evaluate_keyed_by(container[subkey], name, attributes)
+                if value is not None:
+                    container[subkey] = value
+                else:
+                    del container[subkey]
 
         # Add vmSize to attributes after it's been evaluated
         # This makes it available for other keyed-by expressions
@@ -639,21 +645,38 @@ def generate_pool_variants(worker_pools, environment):
             "vmSizes.launchConfig.storageProfile.osDisk.diffDiskSettings.option",
             "worker-purpose",
         ):
-            resolve_keyed_by(config, key, name, **attributes)
+            for container, subkey in iter_dot_path(config, key):
+                value = evaluate_keyed_by(container[subkey], name, attributes)
+                if value is not None:
+                    container[subkey] = value
+                else:
+                    del container[subkey]
 
-        resolve_keyed_by(
-            config,
-            "worker-config.shutdown.afterIdleSeconds",
-            name,
-            **attributes,
-        )
+        if (
+            config.get("worker-config", {})
+            .get("shutdown", {})
+            .get("afterIdleSeconds", None)
+        ):
+            value = evaluate_keyed_by(
+                config["worker-config"]["shutdown"]["afterIdleSeconds"],
+                "worker-config.shutdown.afterIdleSeconds",
+                attributes,
+            )
+            if value is not None:
+                config["worker-config"]["shutdown"]["afterIdleSeconds"] = value
+            else:
+                del config["worker-config"]["shutdown"]["afterIdleSeconds"]
 
-        resolve_keyed_by(
-            config,
-            "worker-manager-config.launchConfigId",
-            name,
-            **attributes,
-        )
+        if config.get("worker-manager-config", {}).get("launchConfigId", None):
+            value = evaluate_keyed_by(
+                config["worker-manager-config"]["launchConfigId"],
+                "worker-manager-config.launchConfigId",
+                attributes,
+            )
+            if value is not None:
+                config["worker-manager-config"]["launchConfigId"] = value
+            else:
+                del config["worker-manager-config"]["launchConfigId"]
 
         # Evaluate keyed-by for all fields under worker-config.genericWorker.config
         if config.get("worker-config", {}).get("genericWorker", {}).get("config", None):
