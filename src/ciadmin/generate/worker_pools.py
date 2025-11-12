@@ -115,6 +115,86 @@ def _populate_launch_config_id(launch_config, pool_id):
     )
 
 
+def _normalize_arm_parameters(parameters):
+    parameters = parameters or {}
+    return {
+        key: value if isinstance(value, dict) and "value" in value else {"value": value}
+        for key, value in parameters.items()
+    }
+
+
+def _build_arm_template_launch_config(
+    *,
+    pool_id,
+    location,
+    loc,
+    vm_size,
+    subnet_id,
+    image_reference_id,
+    worker_config,
+    worker_manager_config,
+    tags,
+    pool_cfg,
+    arm_layers,
+):
+    # we allow armDeployment be defined and overriden in any layer
+    # lower layers could opt-out of using armDeployment by setting it to False:
+    # {"armDeployment": False}
+    dict_layers = []
+    for layer in arm_layers:
+        if layer is None:
+            continue
+        if layer is False:
+            return None  # Opt-out
+        if not isinstance(layer, dict):
+            raise ValueError(
+                f"armDeployment must be a mapping, got {type(layer)} for Azure pool {pool_id}"
+            )
+        dict_layers.append(layer)
+
+    if not dict_layers:
+        return None
+
+    template_spec_id = None
+    parameters = {}
+    for layer in dict_layers:
+        template_spec_id = layer.get("templateSpecId", template_spec_id)
+        parameters.update(_normalize_arm_parameters(layer.get("parameters")))
+
+    if not template_spec_id:
+        raise ValueError(
+            f"armDeployment.templateSpecId must be provided for Azure pool {pool_id}"
+        )
+
+    auto_defaults = _normalize_arm_parameters(
+        {
+            "vmSize": vm_size,
+            "imageId": image_reference_id,
+            "location": location,
+            "subnetId": subnet_id,
+            "priority": pool_cfg.get("priority", "Spot"),
+        }
+    )
+
+    parameters = {**auto_defaults, **parameters}
+
+    arm_deployment = {
+        "mode": "Incremental",
+        "templateLink": {"id": template_spec_id},
+        "parameters": parameters,
+    }
+
+    launch_config = {
+        "location": loc,
+        "tags": merge(tags),
+        "workerConfig": merge(worker_config),
+        "armDeployment": arm_deployment,
+        "workerManager": merge(worker_manager_config),
+    }
+
+    return launch_config
+
+
 def _resolve_defaults(defaults, provider_id, implementation):
     keys = (
         "lifecycle",
@@ -391,6 +471,43 @@ def get_azure_provider_config(
                 {"publicIp": public_ip} if public_ip is not None else {},
                 vmSize.get("worker-manager-config", {}),
             )
+
+            def _evaluate_optional(value, item_name):
+                if value is None:
+                    return None
+                return evaluate_keyed_by(value, item_name, attrs)
+
+            arm_layers = [
+                _evaluate_optional(
+                    azure_config.get("armDeployment"), "armDeployment.environment"
+                ),
+                _evaluate_optional(
+                    image.get(provider_id, "armDeployment"),
+                    "armDeployment.image",
+                ),
+                _evaluate_optional(
+                    config.get("armDeployment"), "armDeployment.pool-config"
+                ),
+                _evaluate_optional(vmSize.get("armDeployment"), "armDeployment.vmSize"),
+            ]
+
+            arm_launch_config = _build_arm_template_launch_config(
+                pool_id=pool_id,
+                location=location,
+                loc=loc,
+                vm_size=vmSize.get("vmSize"),
+                subnet_id=subnetId,
+                image_reference_id=imageReference_id,
+                worker_config=worker_config,
+                worker_manager_config=instance_worker_manager_config,
+                tags=tags,
+                pool_cfg=config,
+                arm_layers=arm_layers,
+            )
+            if arm_launch_config:
+                _populate_launch_config_id(arm_launch_config, pool_id)
+                launch_configs.append(arm_launch_config)
+                continue
 
             launch_config = {
                 "location": loc,

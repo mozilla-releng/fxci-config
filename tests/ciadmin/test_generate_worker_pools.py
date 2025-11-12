@@ -228,6 +228,86 @@ def assert_azure_version(pool):
     }
 
 
+def assert_azure_arm(pool):
+    assert_common(pool)
+
+    config = pool.config
+    launch_config = config["launchConfigs"][0]
+
+    assert launch_config["location"] == "useast1"
+    assert launch_config["tags"] == {"deploymentId": "d_id"}
+    assert launch_config["workerConfig"] == {"genericWorker": {"config": {}}}
+
+    worker_manager = launch_config["workerManager"]
+    assert worker_manager["capacityPerInstance"] == 1
+    assert "launchConfigId" in worker_manager
+
+    arm_deployment = launch_config["armDeployment"]
+    assert arm_deployment["mode"] == "Incremental"
+    assert (
+        arm_deployment["templateLink"]["id"]
+        == "/subscriptions/subscription_id/resourceGroups/templates/providers/Microsoft.Resources/templateSpecs/fxci-test/versions/42"
+    )  # noqa: E501
+    parameters = arm_deployment["parameters"]
+    assert parameters == {
+        "customParam": {"value": "customValue"},
+        "imageId": {
+            "value": "/subscriptions/subscription_id/resourceGroups/rgroup_id/providers/Microsoft.Compute/galleries/name_id/images/name_id/versions/ver_id"  # noqa: E501
+        },
+        "location": {"value": "us-east1"},
+        "priority": {"value": "Regular"},
+        "subnetId": {
+            "value": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test"  # noqa: E501
+        },
+        "vmSize": {"value": "Standard_F8s_v2"},
+    }
+
+    assert "hardwareProfile" not in launch_config
+    assert "storageProfile" not in launch_config
+
+
+def assert_azure_arm_disabled(pool):
+    assert_common(pool)
+
+    config = pool.config
+    launch_config = config["launchConfigs"][0]
+    assert "armDeployment" not in launch_config
+
+    normalized_vm = dict(launch_config["hardwareProfile"]["vmSize"])
+    assert normalized_vm.pop("armDeployment", None) is False
+
+    normalized_launch_config = {k: v for k, v in launch_config.items()}
+    normalized_launch_config["hardwareProfile"] = {"vmSize": normalized_vm}
+    normalized_launch_config["workerManager"] = dict(launch_config["workerManager"])
+
+    expected = {
+        "billingProfile": {"maxPrice": -1},
+        "evictionPolicy": "Delete",
+        "hardwareProfile": {"vmSize": {"vmSize": "Standard_F8s_v2"}},
+        "location": "useast1",
+        "priority": "spot",
+        "storageProfile": {
+            "imageReference": {
+                "id": "/subscriptions/subscription_id/resourceGroups/rgroup_id/providers/Microsoft.Compute/galleries/name_id/images/name_id/versions/ver_id"  # noqa: E501
+            }
+        },
+        "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
+        "tags": {"deploymentId": "d_id"},
+        "workerConfig": {"genericWorker": {"config": {}}},
+        "workerManager": {
+            "capacityPerInstance": 1,
+            "launchConfigId": normalized_launch_config["workerManager"][
+                "launchConfigId"
+            ],
+        },
+    }
+
+    normalized_launch_config["workerManager"]["launchConfigId"] = expected[
+        "workerManager"
+    ]["launchConfigId"]
+    assert normalized_launch_config == expected
+
+
 def assert_scaling_ratio(pool):
     assert pool.config["scalingRatio"] == 0.5
 
@@ -265,6 +345,30 @@ def assert_guest_accelerators(pool):
         ),
         pytest.param("azure", None, {"version": "NA"}, id="azure_basic"),
         pytest.param("azure", None, None, id="azure_version"),
+        pytest.param(
+            "azure",
+            {
+                "armDeployment": {
+                    "templateSpecId": "/subscriptions/subscription_id/resourceGroups/templates/providers/Microsoft.Resources/templateSpecs/fxci-test/versions/42",  # noqa: E501
+                    "parameters": {
+                        "customParam": "customValue",
+                        "priority": {"value": "Regular"},
+                    },
+                },
+            },
+            None,
+            id="azure_arm",
+        ),
+        pytest.param(
+            "azure",
+            {
+                "armDeployment": {
+                    "templateSpecId": "/subscriptions/subscription_id/resourceGroups/templates/providers/Microsoft.Resources/templateSpecs/fxci-test/versions/42",  # noqa: E501
+                }
+            },
+            None,
+            id="azure_arm_disabled",
+        ),
         pytest.param("aws", {"scalingRatio": 0.5}, None, id="scaling_ratio"),
     ),
 )
@@ -283,6 +387,12 @@ async def test_make_worker_pool(
     m.return_value = Namespace(description_prefix="PREFIX - ")
 
     pool = make_pool(provider, extra_pool_config)
+    if (
+        extra_pool_config
+        and "vmSizes" not in extra_pool_config
+        and request.node.callspec.id == "azure_arm_disabled"
+    ):
+        pool.config["vmSizes"][0]["armDeployment"] = False
     if extra_cloud_config:
         extra_cloud_config = {provider: extra_cloud_config}
     images = make_images(extra_cloud_config)
