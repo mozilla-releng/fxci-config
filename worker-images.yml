@@ -199,3 +199,9 @@ win116424h2alpha:
     resource_group: rg-packer-worker-images
     deployment_id: alpha
     name: win116424h2alpha
+win2022642009alpha:
+  azure2:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: alpha
+    name: win2022642009alpha
