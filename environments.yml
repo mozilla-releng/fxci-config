@@ -120,7 +120,7 @@ firefoxci:
       - westeurope
     sbom_url_tmpl: https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/{name}-{version}.md
     # armDeployment:
-    #   templateSpecId: /subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.Resources/templateSpecs/<name>/versions/<version>
+    #   templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
     #   # custom parameters to pass to ARM template
     #   parameters:
     #     customParam: customValue
@@ -289,7 +289,7 @@ staging:
       - westus2
     sbom_url_tmpl: https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/{name}-{version}.md
     # armDeployment:
-    #   templateSpecId: /subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.Resources/templateSpecs/<name>/versions/<version>
+    #   templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
     #   parameters:
     #     customParam: customValue
   google_config:
