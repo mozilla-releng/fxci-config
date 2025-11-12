@@ -661,6 +661,28 @@ def generate_pool_variants(worker_pools, environment):
             else:
                 del config["worker-manager-config"]["launchConfigId"]
 
+        # Add vmSize to attributes after it's been evaluated for use in worker-config
+        # This handles Azure pools where vmSizes is a list with a single entry
+        if config.get("vmSizes") and len(config["vmSizes"]) > 0:
+            # Check if vmSize has been resolved (not a keyed-by expression)
+            first_vm_size = config["vmSizes"][0].get("vmSize")
+            if first_vm_size and not isinstance(first_vm_size, dict):
+                attributes = dict(attributes, vmSize=first_vm_size)
+
+        # Evaluate keyed-by for all fields under worker-config.genericWorker.config
+        if config.get("worker-config", {}).get("genericWorker", {}).get("config", None):
+            gw_config = config["worker-config"]["genericWorker"]["config"]
+            for field_name, field_value in list(gw_config.items()):
+                evaluated_value = evaluate_keyed_by(
+                    field_value,
+                    f"worker-config.genericWorker.config.{field_name}",
+                    attributes,
+                )
+                if evaluated_value is not None:
+                    gw_config[field_name] = evaluated_value
+                else:
+                    del gw_config[field_name]
+
         if attributes.get("instance_types", None) and not config.get(
             "instance_types", None
         ):

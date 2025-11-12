@@ -3417,9 +3417,18 @@ pools:
           config:
             workerType: 'win11-64-24h2-{suffix}'
             provisionerId: gecko-t
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
+            cachesDir:
+              by-vmSize:
+                .*v6.*: C:\caches
+                default: D:\caches
+            downloadsDir:
+              by-vmSize:
+                .*v6.*: C:\downloads
+                default: D:\downloads
+            tasksDir:
+              by-vmSize:
+                .*v6.*: C:\
+                default: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: windows
