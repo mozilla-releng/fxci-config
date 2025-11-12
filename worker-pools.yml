@@ -2804,7 +2804,7 @@ pools:
                 caching: ReadOnly
                 createOption: FromImage
                 diffDiskSettings:
-                  option: Local
+                  option: NVMe
             hardwareProfile:
               vmSize: Standard_D32ads_v5
             diagnosticsProfile:
