@@ -3459,8 +3459,8 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option:
-                    by-suffix:
-                      amd: NVMe
+                    by-vmSize:
+                      .*v6.*: NVMe
                       default: Local
             hardwareProfile:
               vmSize:

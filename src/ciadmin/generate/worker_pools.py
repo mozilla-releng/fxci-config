@@ -615,6 +615,24 @@ def generate_pool_variants(worker_pools, environment):
 
     def update_config(config, name, attributes):
         config = copy.deepcopy(config)
+
+        # First pass: evaluate vmSize so it can be used in subsequent evaluations
+        for key in ("vmSizes.vmSize",):
+            for container, subkey in iter_dot_path(config, key):
+                value = evaluate_keyed_by(container[subkey], name, attributes)
+                if value is not None:
+                    container[subkey] = value
+                else:
+                    del container[subkey]
+
+        # Add vmSize to attributes after it's been evaluated
+        # This makes it available for other keyed-by expressions
+        if config.get("vmSizes") and len(config["vmSizes"]) > 0:
+            first_vm_size = config["vmSizes"][0].get("vmSize")
+            if first_vm_size and not isinstance(first_vm_size, dict):
+                attributes = dict(attributes, vmSize=first_vm_size)
+
+        # Second pass: evaluate everything else with vmSize now available
         for key in (
             "image",
             "instance_types",
@@ -623,7 +641,6 @@ def generate_pool_variants(worker_pools, environment):
             "minCapacity",
             "security",
             "tags.sourceBranch",
-            "vmSizes.vmSize",
             "vmSizes.launchConfig.hardwareProfile.vmSize",
             "vmSizes.launchConfig.storageProfile.osDisk.diffDiskSettings.option",
             "worker-purpose",
@@ -660,14 +677,6 @@ def generate_pool_variants(worker_pools, environment):
                 config["worker-manager-config"]["launchConfigId"] = value
             else:
                 del config["worker-manager-config"]["launchConfigId"]
-
-        # Add vmSize to attributes after it's been evaluated for use in worker-config
-        # This handles Azure pools where vmSizes is a list with a single entry
-        if config.get("vmSizes") and len(config["vmSizes"]) > 0:
-            # Check if vmSize has been resolved (not a keyed-by expression)
-            first_vm_size = config["vmSizes"][0].get("vmSize")
-            if first_vm_size and not isinstance(first_vm_size, dict):
-                attributes = dict(attributes, vmSize=first_vm_size)
 
         # Evaluate keyed-by for all fields under worker-config.genericWorker.config
         if config.get("worker-config", {}).get("genericWorker", {}).get("config", None):
