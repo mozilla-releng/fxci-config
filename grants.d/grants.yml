@@ -2251,10 +2251,9 @@
     # adds merge-automation, release-promotion, purge-caches, retrigger-decision
     # Merge Day Automation
     - hooks:trigger-hook:project-comm/in-tree-action-*
-    # Allow cancel
     - queue:cancel-task:comm-level-*
-    # Allow rerun
     - queue:rerun-task:comm-level-*
+    - queue:schedule-task:comm-level-*
   to:
     - groups:
         - thunderbird-releng
