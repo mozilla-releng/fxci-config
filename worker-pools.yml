@@ -3497,7 +3497,6 @@ pools:
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
     provider_id: azure2
-    attributes:
     config:
       image: win116424h2alpha
       image_resource_group: rg-packer-through-cib
