@@ -760,6 +760,8 @@ def generate_pool_variants(worker_pools, environment):
             "tags.sourceBranch",
             "vmSizes.launchConfig.hardwareProfile.vmSize",
             "vmSizes.launchConfig.storageProfile.osDisk.diffDiskSettings.option",
+            "vmSizes.launchConfig.storageProfile.osDisk.diffDiskSettings.placement",
+            "vmSizes.launchConfig.diskControllerType",
             "worker-purpose",
         ):
             for container, subkey in iter_dot_path(config, key):
