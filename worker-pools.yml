@@ -2804,9 +2804,10 @@ pools:
                 caching: ReadOnly
                 createOption: FromImage
                 diffDiskSettings:
-                  option: NVMe
+                  option: Local
+                  placement: NvmeDisk
             hardwareProfile:
-              vmSize: Standard_D32ads_v5
+              vmSize: Standard_D32ads_v6
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -3348,9 +3349,6 @@ pools:
         suffix: alpha
         implementation: generic-worker/windows
       - pool-group: gecko-t
-        suffix: amd
-        implementation: generic-worker/windows
-      - pool-group: gecko-t
         suffix: large
       - pool-group: gecko-t
         suffix: large-alpha
@@ -3380,7 +3378,6 @@ pools:
     config:
       image:
         by-suffix:
-          amd: win116424h2alpha
           .*alpha: ronin_t_windows11_64_24h2_alpha
           default: ronin_t_windows11_64_24h2
       image_resource_group: rg-packer-through-cib
@@ -3394,7 +3391,6 @@ pools:
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
-              amd: [uk-south, central-india]
               (source-)?alpha: [uk-south]
               (webgpu|gpu): [east-us, east-us-2, west-us, west-us-2]
               .*gpu-alpha: [west-us, west-us-2]
@@ -3419,18 +3415,9 @@ pools:
           config:
             workerType: 'win11-64-24h2-{suffix}'
             provisionerId: gecko-t
-            cachesDir:
-              by-vmSize:
-                .*v6.*: C:\caches
-                default: D:\caches
-            downloadsDir:
-              by-vmSize:
-                .*v6.*: C:\downloads
-                default: D:\downloads
-            tasksDir:
-              by-vmSize:
-                .*v6.*: C:\
-                default: D:\
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: windows
@@ -3440,7 +3427,6 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
-              amd: Standard_E8ads_v6
               (source-)?alpha: Standard_E8ads_v5
               .*large.*: Standard_E8ads_v5
               webgpu-alpha: Standard_NV12ads_A10_v5
@@ -3455,19 +3441,16 @@ pools:
                 timeZone: UTC
                 enableAutomaticUpdates: false
             storageProfile:
+              diskControllerType: SCSI
               osDisk:
                 osType: Windows
                 caching: ReadOnly
                 createOption: FromImage
                 diffDiskSettings:
-                  option:
-                    by-vmSize:
-                      .*v6.*: NVMe
-                      default: Local
+                  option: Local
             hardwareProfile:
               vmSize:
                 by-suffix:
-                  amd: Standard_E8ads_v6
                   (source-)?alpha: Standard_E8ads_v5
                   .*large.*: Standard_E8ads_v5
                   webgpu-alpha: Standard_NV12ads_A10_v5
@@ -3509,6 +3492,53 @@ pools:
                 central-india: 1
                 default: 0.5
             default: 1
+  - pool_id: 'gecko-t/win11-64-24h2-amd'
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: win116424h2alpha
+      image_resource_group: rg-packer-through-cib
+      locations: [uk-south, central-india]
+      maxCapacity: 10
+      worker-config:
+        genericWorker:
+          config:
+            workerType: 'win11-64-24h2-amd'
+            provisionerId: gecko-t
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_E8ads_v6
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                caching: ReadOnly
+                createOption: FromImage
+                diffDiskSettings:
+                  option: Local
+                  placement: NvmeDisk
+            hardwareProfile:
+              vmSize: Standard_E8ads_v6
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      worker-manager-config:
+        capacityPerInstance: 1
+        initialWeight: 1
   - pool_id: '{pool-group}/win11-a64-24h2-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
