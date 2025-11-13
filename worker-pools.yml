@@ -3441,23 +3441,13 @@ pools:
                 timeZone: UTC
                 enableAutomaticUpdates: false
             storageProfile:
+              diskControllerType: SCSI
               osDisk:
                 osType: Windows
                 caching: ReadOnly
                 createOption: FromImage
                 diffDiskSettings:
-                  option:
-                    by-vmSize:
-                      .*v6.*: NVMe
-                      default: Local
-                  placement:
-                    by-vmSize:
-                      .*v6.*: NvmeDisk
-                      default: CacheDisk
-            diskControllerType:
-              by-vmSize:
-                .*v6.*: NVMe
-                default: SCSI
+                  option: Local
             hardwareProfile:
               vmSize:
                 by-suffix:
