@@ -104,8 +104,8 @@ GCP_MACHINE_TYPE_REGEX = re.compile(
     r"""
     ^(?P<machine_series>[^-]+)
     -(?P<machine_configuration>[^-]+)
-    -(?P<number_of_cpus>\d+)
-    (-(?P<suffix>.+))?
+    (-(?P<number_of_cpus>\d+)
+    (-(?P<suffix>.+))?)?
     $""",
     re.VERBOSE,
 )
@@ -122,7 +122,17 @@ def min_scratch_disks(machine_type):
         raise ValueError(f"Cannot parse '{machine_type}'")
 
     machine_series = matches.group("machine_series")
-    if machine_series not in ("n1", "n2", "n2d", "c2", "c2d", "c3d", "c4d", "t2a"):
+    if machine_series not in (
+        "g1",
+        "n1",
+        "n2",
+        "n2d",
+        "c2",
+        "c2d",
+        "c3d",
+        "c4d",
+        "t2a",
+    ):
         raise NotImplementedError(
             f"Min scratch disks not implemented for '{machine_type}'"
         )
@@ -133,6 +143,12 @@ def min_scratch_disks(machine_type):
 
     if machine_series == "n1":
         return 1
+
+    if machine_series == "g1":
+        return 0
+
+    if not matches.group("number_of_cpus"):
+        raise ValueError(f"Expected CPU count as part of {machine_type}")
 
     num_cpu = int(matches.group("number_of_cpus"))
     if machine_series in ("c2", "n2", "n2d"):

@@ -27,18 +27,18 @@ def is_invalid_aws_instance_type(invalid_instances, zone, instance_type):
 
 
 def is_invalid_gcp_instance_type(invalid_instances, zone, machine_type):
-    # Parse machine type: family-profile-cpus[-suffix]
+    # Parse machine type: family-profile[-cpus[-suffix]]
     # e.g., "c4d-standard-8-lssd" -> family="c4d", suffix="lssd"
     parts = machine_type.split("-")
+    if len(parts) < 2:
+        # Wrong machine type
+        raise Exception(
+            f"Machine type should be on the format <family>-<profile>[-<cpus>[-<suffix>]]. Got: {machine_type}"
+        )
     family = parts[0]
     profile = parts[1]
     # Suffix will be anything after cpus number
-    if len(parts) < 3:
-        # Wrong machine type
-        raise Exception(
-            f"Machine type should be on the format <family>-<profile>-<cpus>[-<suffix>]. Got: {machine_type}"
-        )
-    elif len(parts) == 3:
+    if len(parts) <= 3:
         # No suffix
         suffix = None
     else:
