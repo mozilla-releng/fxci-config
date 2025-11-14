@@ -2741,6 +2741,25 @@ pools:
           guestAccelerators:
             - acceleratorCount: 4
               acceleratorType: nvidia-tesla-v100
+  - pool_id: '{pool-group}/misc'
+    description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
+      SCM levels.  Used for things like indexing tasks.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: gecko-t
+      - pool-group: comm-t
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 32
+      regions: *default-gcp-regions
+      image: ubuntu-2404-headless
+      implementation: generic-worker/linux-d2g
+      instance_types:
+        - disks:
+            - *persistent-disk-60gb
+          machine_type: g1-small
   - pool_id: '{pool-group}/misc-gcp'
     description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
       SCM levels.  Used for things like indexing tasks.
