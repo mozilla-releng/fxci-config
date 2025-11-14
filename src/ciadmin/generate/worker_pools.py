@@ -27,11 +27,43 @@ def is_invalid_aws_instance_type(invalid_instances, zone, instance_type):
 
 
 def is_invalid_gcp_instance_type(invalid_instances, zone, machine_type):
-    family, _ = machine_type.split("-", 1)
-    return any(
-        (zone in entry["zones"]) and (family in entry["families"])
-        for entry in invalid_instances
-    )
+    # Parse machine type: family-profile-cpus[-suffix]
+    # e.g., "c4d-standard-8-lssd" -> family="c4d", suffix="lssd"
+    parts = machine_type.split("-")
+    family = parts[0]
+    profile = parts[1]
+    # Suffix will be anything after cpus number
+    if len(parts) < 3:
+        # Wrong machine type
+        raise Exception(
+            f"Machine type should be on the format <family>-<profile>-<cpus>[-<suffix>]. Got: {machine_type}"
+        )
+    elif len(parts) == 3:
+        # No suffix
+        suffix = None
+    else:
+        # Has suffix
+        # Note: we might eventually want to support multi suffixes (ie: highlssd-metal)
+        #  where a config with -metal is also filtered out
+        suffix = "-".join(parts[3:])
+
+    for entry in invalid_instances:
+        # Zones and Families are required and always needs to be a match. Suffixes are optional.
+
+        # True if suffixes undefined, or [], or actually matches config
+        matches_suffix = not entry.get("suffixes") or suffix in entry["suffixes"]
+        matches_profile = not entry.get("profiles") or profile in entry["profiles"]
+
+        if (
+            zone in entry["zones"]
+            and family in entry["families"]
+            and matches_suffix
+            and matches_profile
+        ):
+            # Invalid!
+            return True
+    # No matches found, machine_type is valid in this zone
+    return False
 
 
 def _validate_instance_capacity(pool_id, implementation, instance_types):
@@ -81,6 +113,86 @@ def _populate_launch_config_id(launch_config, pool_id):
     launch_config.setdefault("workerManager", {})["launchConfigId"] = (
         "lc-" + hashedLaunchConfig[:20]
     )
+
+
+def _normalize_arm_parameters(parameters):
+    parameters = parameters or {}
+    return {
+        key: value if isinstance(value, dict) and "value" in value else {"value": value}
+        for key, value in parameters.items()
+    }
+
+
+def _build_arm_template_launch_config(
+    *,
+    pool_id,
+    location,
+    loc,
+    vm_size,
+    subnet_id,
+    image_reference_id,
+    worker_config,
+    worker_manager_config,
+    tags,
+    pool_cfg,
+    arm_layers,
+):
+    # we allow armDeployment be defined and overriden in any layer
+    # lower layers could opt-out of using armDeployment by setting it to False:
+    # {"armDeployment": False}
+    dict_layers = []
+    for layer in arm_layers:
+        if layer is None:
+            continue
+        if layer is False:
+            return None  # Opt-out
+        if not isinstance(layer, dict):
+            raise ValueError(
+                f"armDeployment must be a mapping, got {type(layer)} for Azure pool {pool_id}"
+            )
+        dict_layers.append(layer)
+
+    if not dict_layers:
+        return None
+
+    template_spec_id = None
+    parameters = {}
+    for layer in dict_layers:
+        template_spec_id = layer.get("templateSpecId", template_spec_id)
+        parameters.update(_normalize_arm_parameters(layer.get("parameters")))
+
+    if not template_spec_id:
+        raise ValueError(
+            f"armDeployment.templateSpecId must be provided for Azure pool {pool_id}"
+        )
+
+    auto_defaults = _normalize_arm_parameters(
+        {
+            "vmSize": vm_size,
+            "imageId": image_reference_id,
+            "location": loc,
+            "subnetId": subnet_id,
+            "priority": pool_cfg.get("priority", "Spot"),
+        }
+    )
+
+    parameters = {**auto_defaults, **parameters}
+
+    arm_deployment = {
+        "mode": "Incremental",
+        "templateLink": {"id": template_spec_id},
+        "parameters": parameters,
+    }
+
+    launch_config = {
+        "location": loc,
+        "tags": merge(tags),
+        "workerConfig": merge(worker_config),
+        "armDeployment": arm_deployment,
+        "workerManager": merge(worker_manager_config),
+    }
+
+    return launch_config
 
 
 def _resolve_defaults(defaults, provider_id, implementation):
@@ -360,6 +472,43 @@ def get_azure_provider_config(
                 vmSize.get("worker-manager-config", {}),
             )
 
+            def _evaluate_optional(value, item_name):
+                if value is None:
+                    return None
+                return evaluate_keyed_by(value, item_name, attrs)
+
+            arm_layers = [
+                _evaluate_optional(
+                    azure_config.get("armDeployment"), "armDeployment.environment"
+                ),
+                _evaluate_optional(
+                    image.get(provider_id, "armDeployment"),
+                    "armDeployment.image",
+                ),
+                _evaluate_optional(
+                    config.get("armDeployment"), "armDeployment.pool-config"
+                ),
+                _evaluate_optional(vmSize.get("armDeployment"), "armDeployment.vmSize"),
+            ]
+
+            arm_launch_config = _build_arm_template_launch_config(
+                pool_id=pool_id,
+                location=location,
+                loc=loc,
+                vm_size=vmSize.get("vmSize"),
+                subnet_id=subnetId,
+                image_reference_id=imageReference_id,
+                worker_config=worker_config,
+                worker_manager_config=instance_worker_manager_config,
+                tags=tags,
+                pool_cfg=config,
+                arm_layers=arm_layers,
+            )
+            if arm_launch_config:
+                _populate_launch_config_id(arm_launch_config, pool_id)
+                launch_configs.append(arm_launch_config)
+                continue
+
             launch_config = {
                 "location": loc,
                 "subnetId": subnetId,
@@ -583,6 +732,24 @@ def generate_pool_variants(worker_pools, environment):
 
     def update_config(config, name, attributes):
         config = copy.deepcopy(config)
+
+        # First pass: evaluate vmSize so it can be used in subsequent evaluations
+        for key in ("vmSizes.vmSize",):
+            for container, subkey in iter_dot_path(config, key):
+                value = evaluate_keyed_by(container[subkey], name, attributes)
+                if value is not None:
+                    container[subkey] = value
+                else:
+                    del container[subkey]
+
+        # Add vmSize to attributes after it's been evaluated
+        # This makes it available for other keyed-by expressions
+        if config.get("vmSizes") and len(config["vmSizes"]) > 0:
+            first_vm_size = config["vmSizes"][0].get("vmSize")
+            if first_vm_size and not isinstance(first_vm_size, dict):
+                attributes = dict(attributes, vmSize=first_vm_size)
+
+        # Second pass: evaluate everything else with vmSize now available
         for key in (
             "image",
             "instance_types",
@@ -591,7 +758,6 @@ def generate_pool_variants(worker_pools, environment):
             "minCapacity",
             "security",
             "tags.sourceBranch",
-            "vmSizes.vmSize",
             "vmSizes.launchConfig.hardwareProfile.vmSize",
             "worker-purpose",
         ):
@@ -627,6 +793,20 @@ def generate_pool_variants(worker_pools, environment):
                 config["worker-manager-config"]["launchConfigId"] = value
             else:
                 del config["worker-manager-config"]["launchConfigId"]
+
+        # Evaluate keyed-by for all fields under worker-config.genericWorker.config
+        if config.get("worker-config", {}).get("genericWorker", {}).get("config", None):
+            gw_config = config["worker-config"]["genericWorker"]["config"]
+            for field_name, field_value in list(gw_config.items()):
+                evaluated_value = evaluate_keyed_by(
+                    field_value,
+                    f"worker-config.genericWorker.config.{field_name}",
+                    attributes,
+                )
+                if evaluated_value is not None:
+                    gw_config[field_name] = evaluated_value
+                else:
+                    del gw_config[field_name]
 
         if attributes.get("instance_types", None) and not config.get(
             "instance_types", None

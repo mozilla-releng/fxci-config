@@ -77,7 +77,7 @@ relsre-gw-fxci-gcp-2404-amd64-gui-alpha:
 ubuntu-2404-wayland:
   ## Bug 1902716
   ## 2404 ubuntu image with wayland
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2025-09-25
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2025-10-13
 
 relsre-gw-fxci-gcp-2404-amd64-alpha:
   ## alpha pool that relsre can use to rebuild and test 2404 ubuntu images
@@ -86,9 +86,12 @@ relsre-gw-fxci-gcp-2404-amd64-alpha:
 ubuntu-2404-headless-alpha:
   ## alpha pool that relsre can use to rebuild and test 2404 headless ubuntu images
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-amd64-headless-googlecompute-alpha
+
 ubuntu-2404-headless:
   ## Headless Image for Ubuntu 24.04
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-09-25
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-10-13
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-amd64-headless-googlecompute-2025-10-27
 
 ubuntu-2404-headless-alpha-tc:
   ## alpha pool that tc can use to rebuild and test 2404 headless ubuntu images
@@ -97,9 +100,11 @@ ubuntu-2404-headless-alpha-tc:
 ubuntu-2404-arm64-headless-alpha:
   ## alpha pool that relsre can use to rebuild and test 2404 arm64 headless ubuntu images
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-alpha
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-arm64-headless-googlecompute-alpha
 ubuntu-2404-arm64-headless:
   ## Headless Image for Ubuntu 24.04 arm64
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2025-09-25
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2025-10-13
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-arm64-headless-googlecompute-2025-10-28
 
 # Windows Server 2022
 ronin_b1_windows2022_64_2009_alpha:
@@ -188,3 +193,15 @@ ronin_t_windows11_64_2009:
     resource_group: rg-packer-worker-images
     deployment_id: "79dd0f2"
     name: win11_64_2009
+win116424h2alpha:
+  azure2:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: alpha
+    name: win116424h2alpha
+win2022642009alpha:
+  azure2:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: alpha
+    name: win2022642009alpha

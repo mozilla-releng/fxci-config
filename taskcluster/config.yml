@@ -26,4 +26,4 @@ workers:
             provisioner: 'ci-t'
             implementation: docker-worker
             os: linux
-            worker-type: linux-gcp
+            worker-type: linux-docker

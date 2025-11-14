@@ -19,12 +19,13 @@ jobs:
     env:
       TASKCLUSTER_ROOT_URL: ${{vars.TASKCLUSTER_ROOT_URL}}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GCP_CHECK_TOKEN: ${{ secrets.GCP_CHECK_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.13'
       - name: Install uv
         uses: astral-sh/setup-uv@v4
       - name: Set root url
@@ -55,7 +56,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.13'
       - name: Install uv
         uses: astral-sh/setup-uv@v4
       - name: Deploy environment

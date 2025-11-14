@@ -119,6 +119,14 @@ firefoxci:
       - westus2
       - westeurope
     sbom_url_tmpl: https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/{name}-{version}.md
+    # armDeployment:
+    #   templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+    #   # custom parameters to pass to ARM template
+    #   parameters:
+    #     customParam: customValue
+    #
+    # Note: to override higher-level settings and opt out of using ARM templates
+    #       for specific worker pool or VM size, set `armDeployment: False`
   google_config:
     wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
     zones:
@@ -128,18 +136,32 @@ firefoxci:
         us-east1: [us-east1-b, us-east1-c, us-east1-d]
         northamerica-northeast1: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
         europe-west4: [europe-west4-a, europe-west4-b, europe-west4-c]
-    invalid-instances:
+    invalid-instances: &gcp_invalid_instances
       # No AMD families in northamerica-northeast1
       - zones: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
         families: [c4d, c3d]
-      - zones: [us-central1-c]
-        families: [t2a]
-      - zones: [us-central1-f, us-west1-c]
-        families: [c4d]
-      - zones: [us-east1-b, us-east1-d, us-west1-c]
-        families: [n1]
+      # C3D in west1 is only available in zone b
       - zones: [us-west1-a, us-west1-c]
         families: [c3d]
+      # No c3d/c4d with lssd in west1
+      - zones: [us-west1-a, us-west1-b, us-west1-c]
+        families: [c4d, c3d]
+        suffixes: [lssd]
+      # No c4d on us-central1-f or us-west1-c
+      - zones: [us-central1-f, us-west1-c]
+        families: [c4d]
+      - zones: [us-central1-c]
+        families: [t2a]
+      - zones: [us-east1-b, us-east1-d, us-west1-c]
+        families: [n1]
+      # There are no highcpu c3d in us-west1
+      - zones: [us-west1-a, us-west1-b, us-west1-c]
+        families: [c3d]
+        profiles: ["highcpu"]
+      # There are no highcpu c4d in us-west1-c
+      - zones: [us-west1-c]
+        families: [c4d]
+        profiles: ["highcpu"]
   cron:
     gecko:
       hooks_owner: release+tc-hooks@mozilla.com
@@ -266,6 +288,10 @@ staging:
       - westus
       - westus2
     sbom_url_tmpl: https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/{name}-{version}.md
+    # armDeployment:
+    #   templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+    #   parameters:
+    #     customParam: customValue
   google_config:
     wst_server_url: https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/
     zones:
@@ -275,6 +301,7 @@ staging:
         us-east1: [us-east1-c]
         northamerica-northeast1: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
         europe-west4: [europe-west4-a, europe-west4-b, europe-west4-c]
+    invalid-instances: *gcp_invalid_instances
   cron:
     gecko:
       hooks_owner: release+tc-hooks-staging@mozilla.com

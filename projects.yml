@@ -104,6 +104,7 @@ mozilla-release:
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
+    shipit: true
   cron:
     targets:
       - periodic-update
@@ -123,6 +124,7 @@ comm-release:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    shipit: true
 mozilla-esr115:
   repo: https://hg.mozilla.org/releases/mozilla-esr115
   lando_repo: firefox-esr115
@@ -140,26 +142,7 @@ mozilla-esr115:
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
-  cron:
-    targets:
-      - periodic-update
-mozilla-esr128:
-  repo: https://hg.mozilla.org/releases/mozilla-esr128
-  lando_repo: firefox-esr128
-  repo_type: hg
-  access: scm_level_3
-  branches:
-    - name: "*"
-    - name: default
-  trust_domain: gecko
-  features:
-    gecko-actions: true
-    gecko-cron: true
-    gecko-roles: true
-    hg-push: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-    lando: true
+    shipit: true
   cron:
     targets:
       - periodic-update
@@ -180,6 +163,7 @@ mozilla-esr140:
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
+    shipit: true
   cron:
     targets:
       - periodic-update
@@ -199,22 +183,7 @@ comm-esr115:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
-comm-esr128:
-  repo: https://hg.mozilla.org/releases/comm-esr128
-  repo_type: hg
-  access: scm_level_3
-  branches:
-    - name: "*"
-    - name: default
-  trust_domain: comm
-  parent_repo: https://hg.mozilla.org/releases/mozilla-esr128
-  features:
-    gecko-actions: true
-    gecko-cron: true
-    gecko-roles: true
-    hg-push: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
+    shipit: true
 comm-esr140:
   repo: https://hg.mozilla.org/releases/comm-esr140
   repo_type: hg
@@ -231,6 +200,7 @@ comm-esr140:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    shipit: true
 oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
@@ -303,6 +273,7 @@ mozilla-beta:
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
+    shipit: true
   cron:
     targets:
       - android-l10n-sync
@@ -325,6 +296,7 @@ comm-beta:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    shipit: true
   cron:
     targets:
       - l10n-bumper
@@ -462,6 +434,7 @@ try:
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
+    shipit: true
 try-comm-central:
   repo: https://hg.mozilla.org/try-comm-central
   repo_type: hg
@@ -478,6 +451,7 @@ try-comm-central:
     hg-push: true
     treeherder-reporting: true
     trust-domain-scopes: true
+    shipit: true
 larch:
   repo: https://hg.mozilla.org/projects/larch
   repo_type: hg
@@ -562,6 +536,43 @@ holly:
     gecko-cron: false
     gecko-roles: true
     hg-push: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+
+firefox-prototypes:
+  repo: https://github.com/Firefox-AI/firefox-prototypes
+  repo_type: git
+  # TODO: Determine whether we want a separate trust domain before making the
+  # repo L3.
+  trust_domain: gecko
+  branches:
+    - name: main
+      level: 1
+    - name: smart-window
+      level: 1
+  features:
+    gecko-roles: true
+    github-taskgraph: true
+    pr-actions: true
+    taskgraph-actions: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+
+enterprise-firefox:
+  repo: https://github.com/mozilla/enterprise-firefox
+  repo_type: git
+  default_branch: enterprise-main
+  # TODO: Determine whether we want a separate trust domain before making the
+  # repo L3.
+  trust_domain: gecko
+  branches:
+    - name: enterprise-main
+      level: 1
+  features:
+    gecko-roles: true
+    github-taskgraph: true
+    pr-actions: true
+    taskgraph-actions: true
     treeherder-reporting: true
     trust-domain-scopes: true
 
@@ -1045,6 +1056,8 @@ winsign:
     github-pull-request:
       policy: public
     taskgraph-actions: true
+    github-taskgraph: true
+    trust-domain-scopes: true
 
 mozilla-version:
   repo: https://github.com/mozilla-releng/mozilla-version
