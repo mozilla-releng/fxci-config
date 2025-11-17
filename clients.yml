@@ -483,6 +483,11 @@ project/releng/generic-worker/datacenter-gecko-t-osx-1500-m4:
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-osx*
     - queue:worker-id:mdc1/mac*
+project/releng/generic-worker/datacenter-gecko-t-osx-1500-m4-ipv6:
+  description: Datacenter MacOS M4 workers for IPv6 testing on dual stack network.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-t-osx-1500-m4-ipv6
+    - queue:worker-id:mdc1/mac*
 project/releng/generic-worker/datacenter-gecko-t-osx-1500-m-vms:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
