@@ -493,7 +493,7 @@ pools:
           app-services-3: 100
           mozillaonline-.*: 10
           default: 100
-      regions: [us-central1]
+      regions: [us-central1, us-east1]
       implementation: generic-worker/linux-d2g-{chain-of-trust}
       image: ubuntu-2404-headless
       instance_types: []
@@ -596,7 +596,7 @@ pools:
           app-services-3: 100
           mozillaonline-.*: 10
           default: 100
-      regions: [us-central1]
+      regions: [us-central1, us-east1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
