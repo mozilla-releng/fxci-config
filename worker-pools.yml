@@ -493,7 +493,7 @@ pools:
           app-services-3: 100
           mozillaonline-.*: 10
           default: 100
-      regions: [us-central1]
+      regions: [us-central1, us-east1]
       implementation: generic-worker/linux-d2g-{chain-of-trust}
       image: ubuntu-2404-headless
       instance_types: []
@@ -596,7 +596,7 @@ pools:
           app-services-3: 100
           mozillaonline-.*: 10
           default: 100
-      regions: [us-central1]
+      regions: [us-central1, us-east1]
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -3075,11 +3075,11 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
-                  ssd-gpu: Standard_NV12s_v3
+                  ssd-gpu: Standard_NV12ads_A10_v5
                   webgpu-alpha: Standard_NV12ads_A10_v5
                   webgpu: Standard_NV12ads_A10_v5
                   gpu-alpha: Standard_NV12ads_A10_v5
-                  gpu: Standard_NV12s_v3
+                  gpu: Standard_NV12ads_A10_v5
                   default: Standard_F8s_v2
             diagnosticsProfile:
               bootDiagnostics:
@@ -3282,8 +3282,8 @@ pools:
               webgpu-alpha: Standard_NV12ads_A10_v5
               webgpu: Standard_NV12ads_A10_v5
               gpu-alpha: Standard_NV12ads_A10_v5
-              ssd-gpu: Standard_NV12s_v3
-              gpu: Standard_NV12s_v3
+              ssd-gpu: Standard_NV12ads_A10_v5
+              gpu: Standard_NV12ads_A10_v5
               default: Standard_F8s_v2
           launchConfig:
             osProfile:
@@ -3303,8 +3303,8 @@ pools:
                   webgpu-alpha: Standard_NV12ads_A10_v5
                   webgpu: Standard_NV12ads_A10_v5
                   gpu-alpha: Standard_NV12ads_A10_v5
-                  ssd-gpu: Standard_NV12s_v3
-                  gpu: Standard_NV12s_v3
+                  ssd-gpu: Standard_NV12ads_A10_v5
+                  gpu: Standard_NV12ads_A10_v5
                   default: Standard_F8s_v2
             diagnosticsProfile:
               bootDiagnostics:
@@ -3432,8 +3432,8 @@ pools:
               webgpu-alpha: Standard_NV12ads_A10_v5
               webgpu: Standard_NV12ads_A10_v5
               gpu-alpha: Standard_NV12ads_A10_v5
-              ssd-gpu: Standard_NV12s_v3
-              gpu: Standard_NV12s_v3
+              ssd-gpu: Standard_NV12ads_A10_v5
+              gpu: Standard_NV12ads_A10_v5
               default: Standard_F8s_v2
           launchConfig:
             osProfile:
@@ -3456,8 +3456,8 @@ pools:
                   webgpu-alpha: Standard_NV12ads_A10_v5
                   webgpu: Standard_NV12ads_A10_v5
                   gpu-alpha: Standard_NV12ads_A10_v5
-                  ssd-gpu: Standard_NV12s_v3
-                  gpu: Standard_NV12s_v3
+                  ssd-gpu: Standard_NV12ads_A10_v5
+                  gpu: Standard_NV12ads_A10_v5
                   default: Standard_F8s_v2
             diagnosticsProfile:
               bootDiagnostics:
