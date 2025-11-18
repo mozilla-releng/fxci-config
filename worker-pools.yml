@@ -2845,7 +2845,7 @@ pools:
           default: ronin_b1_windows2022_64_2009
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows
-      locations: [central-india, north-central-us, east-us-2]
+      locations: [north-central-us, east-us-2]
       maxCapacity:
         by-pool-group:
           gecko-.*: 500
@@ -2897,9 +2897,8 @@ pools:
           by-vmSize:
             Standard_D32ads_v5:
               by-location:
-                central-india: 1
-                north-central-us: 0.8
-                east-us-2: 0.7
+                north-central-us: 1
+                east-us-2: 0.8
             default: 1
   - pool_id: nss-1/b-win2022-alpha
     description: ''
