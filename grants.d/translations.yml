@@ -33,6 +33,7 @@
           - action:train
           - pr-action:train
           - cron:run-pipeline
+          - cron:update-db
 
 - grant:
     - project:translations:releng:beetmover:bucket:production
@@ -43,6 +44,7 @@
         job:
           - branch:*
           - action:train
+          - cron:update-db
 
 - grant:
     - project:translations:releng:beetmover:action:upload-data
