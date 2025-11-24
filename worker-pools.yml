@@ -2792,7 +2792,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_D48ads_v5
+        - vmSize: Standard_D96ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2806,7 +2806,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize: Standard_D48ads_v5
+              vmSize: Standard_D96ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
