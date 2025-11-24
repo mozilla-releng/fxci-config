@@ -2770,7 +2770,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
-      image: win2022642009alpha
+      image: ronin_b1_windows2022_64_2009_alpha
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows
       worker-purpose: gecko-1
@@ -2792,7 +2792,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_D32ads_v6
+        - vmSize: Standard_D48ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2805,9 +2805,8 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
-                  placement: NvmeDisk
             hardwareProfile:
-              vmSize: Standard_D32ads_v6
+              vmSize: Standard_D48ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
