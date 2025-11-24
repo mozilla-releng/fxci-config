@@ -2776,8 +2776,6 @@ pools:
       worker-purpose: gecko-1
       locations: [central-india]
       maxCapacity: 10
-      armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config:
@@ -2792,7 +2790,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_D48ads_v5
+        - vmSize: Standard_D96ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2806,7 +2804,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize: Standard_D48ads_v5
+              vmSize: Standard_D96ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
