@@ -589,7 +589,9 @@
         alias: [autoland]
 
 - grant:
+    # TODO: Remove the release bucket scope once beetmover has switched to using integration credentials
     - project:releng:beetmover:bucket:release
+    - project:releng:beetmover:bucket:integration
     - project:releng:beetmover:action:direct-push-to-bucket
   to:
     - project:
