@@ -742,6 +742,13 @@ pools:
       - pool-group: adhoc-1
       - pool-group: adhoc-3
         chain-of-trust: trusted
+      - pool-group: adhoc-1
+        suffix: ''
+        implementation: generic-worker/linux-d2g
+      - pool-group: adhoc-3
+        suffix: ''
+        implementation: generic-worker/linux-d2g-trusted
+        chain-of-trust: trusted
       - pool-group: scriptworker-1
       - pool-group: scriptworker-3
         chain-of-trust: trusted
@@ -770,15 +777,22 @@ pools:
             by-chain-of-trust:
               trusted: monopacker-docker-worker-trusted-current-gcp
               default: monopacker-docker-worker-current
-          generic-worker/.*: monopacker-ubuntu-2204-wayland
+          generic-worker/worker-runner-linux-multi: monopacker-ubuntu-2204-wayland
+          generic-worker/linux-d2g.*: ubuntu-2404-headless
       implementation: "{implementation}"
       instance_types:
         by-implementation:
           # Scratch disks aren't configured on generic-worker images yet.
-          generic-worker/.*:
+          generic-worker/worker-runner-linux-multi:
             - minCpuPlatform: Intel Cascadelake
               disks:
                 - *persistent-disk-60gb
+              machine_type: c2-standard-4
+          generic-worker/linux-d2g.*:
+            - minCpuPlatform: Intel Cascadelake
+              disks:
+                - *persistent-disk-60gb
+                - *scratch-disk
               machine_type: c2-standard-4
           default:
             - minCpuPlatform: Intel Cascadelake
