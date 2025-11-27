@@ -305,6 +305,7 @@ pools:
       - pool-group: mozillaonline-1
       - pool-group: mozillaonline-3
         chain-of-trust: trusted
+      - pool-group: enterprise-1
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -437,6 +438,9 @@ pools:
         chain-of-trust: trusted
         suffix: ''
         instance_types: [*c3d-standard-16-lssd]
+      - pool-group: enterprise-1
+        suffix: ''
+        instance_types: [*c3d-standard-16-lssd]
       # Large 30-core (gecko, comm)
       - pool-group: gecko-1
         suffix: '-large'
@@ -458,6 +462,9 @@ pools:
         chain-of-trust: trusted
         suffix: '-large'
         instance_types: [*c3d-standard-30-lssd]
+      - pool-group: enterprise-1
+        suffix: '-large'
+        instance_types: [*c3d-standard-30-lssd]
       # XLarge 60-core (gecko, comm)
       - pool-group: gecko-1
         suffix: '-xlarge'
@@ -477,6 +484,9 @@ pools:
         instance_types: [*c3d-standard-60-lssd]
       - pool-group: comm-3
         chain-of-trust: trusted
+        suffix: '-xlarge'
+        instance_types: [*c3d-standard-60-lssd]
+      - pool-group: enterprise-1
         suffix: '-xlarge'
         instance_types: [*c3d-standard-60-lssd]
     provider_id:
@@ -662,6 +672,7 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
+      - pool-group: enterprise-1
     email_on_error: true
     provider_id:
       by-chain-of-trust:
@@ -672,6 +683,7 @@ pools:
       maxCapacity:
         by-pool-group:
           (gecko|comm)-.*: 10
+          default: 5
       implementation: generic-worker/linux-d2g-{chain-of-trust}
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
@@ -1366,13 +1378,14 @@ pools:
       - pool-group: nss-1
       - pool-group: nss-3
         chain-of-trust: trusted
+      - pool-group: enterprise-1
     config:
       implementation: generic-worker/linux-d2g-{chain-of-trust}
       image: ubuntu-2404-headless
       minCapacity:
         by-pool-group:
           gecko-[13]: 1
-          '(app-services|glean|mozillavpn|mobile|mozilla|translations)-1': 1
+          '(app-services|enterprise|glean|mozillavpn|mobile|mozilla|translations)-1': 1
           default: 0
       maxCapacity:
         by-pool-group:
@@ -1561,6 +1574,7 @@ pools:
       - pool-group: scriptworker-3
         chain-of-trust: trusted
       - pool-group: translations-1
+      - pool-group: enterprise-1
     config:
       image: ubuntu-2404-headless
       implementation: generic-worker/linux-d2g-{chain-of-trust}
@@ -1683,6 +1697,7 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
+      - pool-group: enterprise-1
     email_on_error: false
     provider_id:
       by-chain-of-trust:
@@ -1693,6 +1708,7 @@ pools:
       maxCapacity:
         by-pool-group:
           (gecko|comm)-.*: 10
+          default: 5
       implementation: generic-worker/linux-d2g-{chain-of-trust}
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
@@ -2850,6 +2866,7 @@ pools:
       - pool-group: nss-1
       - pool-group: nss-3
         chain-of-trust: trusted
+      - pool-group: enterprise-1
     provider_id:
       by-chain-of-trust:
         trusted: azure_trusted
@@ -2866,11 +2883,8 @@ pools:
         by-pool-group:
           gecko-.*: 500
           comm-3: 50
-          comm-(1|2): 25
-          mozillavpn-.*: 25
-          mozilla-.*: 25
           relops-.*: 12
-          nss-.*: 25
+          default: 25
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
@@ -3382,6 +3396,8 @@ pools:
       - pool-group: gecko-t
         suffix: source-alpha
         implementation: generic-worker/windows
+      - pool-group: enterprise-t
+        suffix: source
       - pool-group: gecko-t
         suffix: ssd
       - pool-group: gecko-t
@@ -3732,6 +3748,9 @@ pools:
       - pool-group: nss-t
         suffix: ''
         instance_types: [*c3d-standard-8-lssd]
+      - pool-group: enterprise-t
+        suffix: ''
+        instance_types: [*c3d-standard-8-lssd]
       # noscratch variants (Note: nss doesn't use noscratch)
       - pool-group: gecko-t
         suffix: -noscratch
@@ -3751,9 +3770,7 @@ pools:
       maxCapacity:
         by-pool-group:
           gecko-t: 2500
-          comm-t: 100
-          mozilla-t: 100
-          nss-t: 100
+          default: 100
       implementation: generic-worker/linux-d2g
       regions: *default-gcp-regions
       image: ubuntu-2404-headless

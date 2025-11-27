@@ -805,6 +805,18 @@ project/releng/scriptworker/v3/mac-signing/prod/firefoxci-gecko-3:
     - queue:get-artifact:releng/partner/*
     - assume:worker-type:scriptworker-prov-v1/gecko-signing-mac14m2
     - queue:worker-id:gecko-signing-mac14m2/gecko-signing-mac14m2*
+# Enterprise m2 mac signers dep
+project/releng/scriptworker/v3/mac-signing/prod/firefoxci-enterprise-t:
+  description: Dep signing worker pool for Enterprise Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
+  scopes:
+    - assume:worker-type:scriptworker-prov-v1/dep-enterprise-signing-mac14m2
+    - queue:worker-id:dep-enterprise-signing-mac14m2/dep-enterprise-signing-mac14m2*
+# Enterprise m2 mac signers
+project/releng/scriptworker/v3/mac-signing/prod/firefoxci-enterprise-3:
+  description: Production signing worker pool for Enterprise Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
+  scopes:
+    - assume:worker-type:scriptworker-prov-v1/enterprise-signing-mac14m2
+    - queue:worker-id:enterprise-signing-mac14m2/enterprise-signing-mac14m2*
 # TB m2 mac signers dep
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-comm-t:
   description: Dep signing worker pool for Thunderbird on macOS 14 (M2). Handles macOS-specific signing tasks.
@@ -1082,6 +1094,11 @@ project/releng/scriptworker/v2/signing/dev/firefoxci-gecko-t:
     - queue:worker-id:gecko-t-signing-dev/gecko-t-signing-dev-*
     - queue:get-artifact:releng/partner/*
     - queue:get-artifact:private/openh264/*
+project/releng/scriptworker/v2/signing/dev/firefoxci-enterprise-t:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/enterprise-t-signing-dev
+    - queue:worker-id:enterprise-t-signing-dev/enterprise-t-signing-dev-*
 project/releng/scriptworker/v2/signing/dev/firefoxci-mobile-t:
   description: dev mobile signing
   scopes:
@@ -1153,6 +1170,16 @@ project/releng/scriptworker/v2/signing/prod/firefoxci-gecko-t:
     - queue:get-artifact:releng/partner/*
     - queue:worker-id:gecko-t-signing/gecko-t-signing-*
     - queue:get-artifact:private/openh264/*
+project/releng/scriptworker/v2/signing/prod/firefoxci-enterprise-3:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/enterprise-3-signing
+    - queue:worker-id:enterprise-3-signing/enterprise-3-signing-*
+project/releng/scriptworker/v2/signing/prod/firefoxci-enterprise-t:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/enterprise-t-signing
+    - queue:worker-id:enterprise-t-signing/enterprise-t-signing-*
 project/releng/scriptworker/v2/signing/prod/firefoxci-glean-3:
   description: ''
   scopes:
