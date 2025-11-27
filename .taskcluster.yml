@@ -310,3 +310,23 @@ tasks:
                                 then:
                                     cron: {$json: {$eval: 'cron'}}
                               - tasks_for: '${tasks_for}'
+                  else:
+                      # If we didn't trigger a decision task, silence the taskcluster github service
+                      $if: 'tasks_for == "github-issue-comment"'
+                      then:
+                          taskId: '${ownTaskId}'
+                          taskGroupId: '${ownTaskId}'
+                          schedulerId: '${trustDomain}-level-${level}'
+                          created: {$fromNow: ''}
+                          deadline: {$fromNow: '1 day'}
+                          expires: {$fromNow: '2 days'}
+                          provisionerId: built-in
+                          workerType: succeed
+                          payload: {}
+                          routes:
+                              - checks
+                          metadata:
+                              owner: "${ownerEmail}"
+                              source: "${repoUrl}/raw/${head_sha}/.taskcluster.yml"
+                              name: "Skipped Decision Task"
+                              description: "The github-comment didn't trigger any decision task for this instance"
