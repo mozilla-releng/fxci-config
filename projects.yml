@@ -562,9 +562,7 @@ enterprise-firefox:
   repo: https://github.com/mozilla/enterprise-firefox
   repo_type: git
   default_branch: enterprise-main
-  # TODO: Determine whether we want a separate trust domain before making the
-  # repo L3.
-  trust_domain: gecko
+  trust_domain: enterprise
   branches:
     - name: enterprise-main
       level: 1
