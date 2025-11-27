@@ -302,9 +302,6 @@ pools:
       - pool-group: app-services-1
       - pool-group: app-services-3
         chain-of-trust: trusted
-      - pool-group: mozillaonline-1
-      - pool-group: mozillaonline-3
-        chain-of-trust: trusted
       - pool-group: enterprise-1
     provider_id:
       by-chain-of-trust:
@@ -318,7 +315,6 @@ pools:
           comm-.*: 300
           app-services-1: 50
           app-services-3: 100
-          mozillaonline-.*: 10
           default: 100
       implementation: generic-worker/linux-d2g-{chain-of-trust}
       regions: *default-gcp-regions
@@ -346,9 +342,6 @@ pools:
       - pool-group: app-services-1
       - pool-group: app-services-3
         chain-of-trust: trusted
-      - pool-group: mozillaonline-1
-      - pool-group: mozillaonline-3
-        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -361,7 +354,6 @@ pools:
           comm-.*: 300
           app-services-1: 50
           app-services-3: 100
-          mozillaonline-.*: 10
           default: 100
       regions: *default-gcp-regions
       image:
@@ -403,7 +395,7 @@ pools:
       # Used to populate scratch disks
       scratch-disk-definition: *scratch-disk
     variants:
-      # Base 16-core (gecko, comm, app-services, mozillaonline)
+      # Base 16-core (gecko, comm, app-services)
       - pool-group: gecko-1
         suffix: ''
         instance_types: [*c3d-standard-16-lssd]
@@ -428,13 +420,6 @@ pools:
         suffix: ''
         instance_types: [*c3d-standard-16-lssd]
       - pool-group: app-services-3
-        chain-of-trust: trusted
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      - pool-group: mozillaonline-1
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      - pool-group: mozillaonline-3
         chain-of-trust: trusted
         suffix: ''
         instance_types: [*c3d-standard-16-lssd]
@@ -501,7 +486,6 @@ pools:
           comm-.*: 300
           app-services-1: 50
           app-services-3: 100
-          mozillaonline-.*: 10
           default: 100
       regions: [us-central1, us-east1]
       implementation: generic-worker/linux-d2g-{chain-of-trust}
@@ -515,7 +499,7 @@ pools:
       # Used to populate scratch disks
       scratch-disk-definition: *scratch-disk
     variants:
-      # Base 16-core (gecko, comm, app-services, mozillaonline)
+      # Base 16-core (gecko, comm, app-services)
       - pool-group: gecko-1
         suffix: ''
         instance_types: [*c3d-standard-16-lssd]
@@ -540,13 +524,6 @@ pools:
         suffix: ''
         instance_types: [*c3d-standard-16-lssd]
       - pool-group: app-services-3
-        chain-of-trust: trusted
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      - pool-group: mozillaonline-1
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      - pool-group: mozillaonline-3
         chain-of-trust: trusted
         suffix: ''
         instance_types: [*c3d-standard-16-lssd]
@@ -604,7 +581,6 @@ pools:
           comm-.*: 300
           app-services-1: 50
           app-services-3: 100
-          mozillaonline-.*: 10
           default: 100
       regions: [us-central1, us-east1]
       image:
