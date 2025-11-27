@@ -21,7 +21,7 @@ workers:
             provisioner: 'ci-{level}'
             implementation: docker-worker
             os: linux
-            worker-type: images-gcp
+            worker-type: images
         t-linux:
             provisioner: 'ci-t'
             implementation: docker-worker
