@@ -2765,6 +2765,7 @@ pools:
     variants:
       - pool-group: gecko-t
       - pool-group: comm-t
+      - pool-group: enterprise-t
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
