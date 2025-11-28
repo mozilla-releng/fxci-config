@@ -1332,9 +1332,6 @@ pools:
       - pool-group: xpi-1
       - pool-group: xpi-3
         chain-of-trust: trusted
-      - pool-group: ci-1
-      - pool-group: ci-3
-        chain-of-trust: trusted
       - pool-group: taskgraph-1
       - pool-group: taskgraph-3
         chain-of-trust: trusted
@@ -1447,9 +1444,6 @@ pools:
       - pool-group: xpi-1
       - pool-group: xpi-3
         chain-of-trust: trusted
-      - pool-group: ci-1
-      - pool-group: ci-3
-        chain-of-trust: trusted
       - pool-group: taskgraph-1
       - pool-group: taskgraph-3
         chain-of-trust: trusted
@@ -1540,9 +1534,6 @@ pools:
       - pool-group: taskgraph-1
       - pool-group: taskgraph-3
         chain-of-trust: trusted
-      - pool-group: ci-1
-      - pool-group: ci-3
-        chain-of-trust: trusted
       - pool-group: relops-1
       - pool-group: relops-3
         chain-of-trust: trusted
@@ -1618,9 +1609,6 @@ pools:
         chain-of-trust: trusted
       - pool-group: taskgraph-1
       - pool-group: taskgraph-3
-        chain-of-trust: trusted
-      - pool-group: ci-1
-      - pool-group: ci-3
         chain-of-trust: trusted
       - pool-group: relops-1
       - pool-group: relops-3
@@ -3962,7 +3950,6 @@ pools:
     attributes:
       chain-of-trust: ''
     variants:
-      - pool-group: ci-t
       - pool-group: code-analysis-1
       - pool-group: code-analysis-3
         chain-of-trust: trusted
