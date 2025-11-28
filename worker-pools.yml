@@ -1558,7 +1558,7 @@ pools:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          (comm|gecko)-.*: 30
+          (comm|gecko|enterprise)-.*: 30
           default: 10
       regions: *default-gcp-regions
       instance_types:
