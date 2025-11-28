@@ -197,7 +197,12 @@ async def check_inaccessible_pools(generated):
     }
     roles = [role for role in roles if all(i not in role.roleId for i in ignore_roles)]
 
-    pools = [p.workerPoolId for p in generated.filter("WorkerPool=.*")]
+    # FIXME ignore ci-* pools until fxci-config is actually switched to using releng-*
+    pools = [
+        p.workerPoolId
+        for p in generated.filter("WorkerPool=.*")
+        if not p.workerPoolId.startswith("ci-")
+    ]
     remaining_pools = set(pools)
 
     priorities = {
