@@ -624,7 +624,7 @@ nss-try:
 fxci-config:
   repo: https://github.com/mozilla-releng/fxci-config
   repo_type: git
-  trust_domain: ci
+  trust_domain: releng
   branches:
     - name: main
       level: 3
