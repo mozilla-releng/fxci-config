@@ -1226,13 +1226,9 @@
 # Grant these for all releng repos on github
 - grant:
     - notify:email:*
-    - notify:irc-channel:*
-    - notify:irc-user:*
     - queue:route:garbage.*
     - queue:route:index.garbage.*
     - queue:route:notify.email.*
-    - queue:route:notify.irc-channel.*
-    - queue:route:notify.irc-user.*
     - queue:scheduler-id:taskcluster-github
     - queue:create-task:{priority}:{trust_domain}-{level}/*
     - queue:create-task:{priority}:{trust_domain}-t/*
