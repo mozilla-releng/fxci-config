@@ -1,5 +1,5 @@
 ---
-trust-domain: ci
+trust-domain: releng
 treeherder:
     group-names: {}
 
@@ -18,12 +18,12 @@ taskgraph:
 workers:
     aliases:
         images:
-            provisioner: 'ci-{level}'
+            provisioner: 'releng-{level}'
             implementation: docker-worker
             os: linux
-            worker-type: images-gcp
+            worker-type: linux-docker
         t-linux:
-            provisioner: 'ci-t'
+            provisioner: 'releng-t'
             implementation: docker-worker
             os: linux
             worker-type: linux-docker
