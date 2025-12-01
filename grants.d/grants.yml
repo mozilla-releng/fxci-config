@@ -283,6 +283,7 @@
     - generic-worker:os-group:gecko-t/win10-64-2009-source/Administrators
     - generic-worker:os-group:gecko-t/win11-64-2009/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2/Administrators
+    - generic-worker:os-group:gecko-t/win11-64-24h2-amd/Administrators
     - generic-worker:os-group:gecko-t/win11-64-2009-alpha/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2-alpha/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2-source/Administrators
@@ -294,6 +295,7 @@
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-alpha
     - generic-worker:run-as-administrator:gecko-t/win11-64-2009
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2
+    - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-amd
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-source
     - generic-worker:run-as-administrator:releng-hardware/win11-64*
     - project:releng:addons.mozilla.org:server:staging
