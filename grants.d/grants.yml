@@ -137,6 +137,7 @@
 - grant:
     # Grant some Gecko build secrets to Enterprise Firefox as the values for both
     # will be the same regardless.
+    - secrets:get:project/releng/gecko/build/level-{level}/gecko-symbol-upload
     - secrets:get:project/releng/gecko/build/level-{level}/gls-gapi.data
     - secrets:get:project/releng/gecko/build/level-{level}/sb-gapi.data
     - secrets:get:project/releng/gecko/build/level-{level}/mozilla-desktop-geoloc-api.key
