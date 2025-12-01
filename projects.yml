@@ -570,6 +570,7 @@ enterprise-firefox:
     gecko-roles: true
     github-taskgraph: true
     pr-actions: true
+    scriptworker: true
     taskgraph-actions: true
     treeherder-reporting: true
     trust-domain-scopes: true
