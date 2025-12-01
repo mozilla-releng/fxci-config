@@ -2832,7 +2832,7 @@ pools:
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-1
-        suffix: -xxlarge
+        suffix: xxlarge
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
