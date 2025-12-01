@@ -2823,12 +2823,16 @@ pools:
                 enabled: false
       worker-manager-config:
         capacityPerInstance: 1
-  - pool_id: '{pool-group}/b-win2022'
+  - pool_id: '{pool-group}/b-win2022-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
+    attributes:
+      suffix: ''
     variants:
       - pool-group: gecko-1
+      - pool-group: gecko-1
+        suffix: -xxlarge
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
@@ -2856,7 +2860,7 @@ pools:
           default: ronin_b1_windows2022_64_2009
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows
-      locations: [north-central-us, east-us-2]
+      locations: [central-india, north-central-us, east-us-2]
       maxCapacity:
         by-pool-group:
           gecko-.*: 500
@@ -2881,7 +2885,10 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_D32ads_v5
+        - vmSize:
+          by-suffix:
+            .*xxlarge.*: Standard_D96ads_v5
+            default: Standard_D32ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2895,7 +2902,10 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize: Standard_D32ads_v5
+              vmSize:
+                by-suffix:
+                  .*xxlarge.*: Standard_D96ads_v5
+                  default: Standard_D32ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2905,7 +2915,13 @@ pools:
           by-vmSize:
             Standard_D32ads_v5:
               by-location:
-                north-central-us: 1
+                central-india: 1
+                north-central-us: 0.9
+                east-us-2: 0.8
+            Standard_D96ads_v5:
+              by-location:
+                central-india: 1
+                north-central-us: 0.9
                 east-us-2: 0.8
             default: 1
   - pool_id: nss-1/b-win2022-alpha
