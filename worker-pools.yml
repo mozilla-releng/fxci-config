@@ -2776,20 +2776,59 @@ pools:
           machine_type: c2-standard-4
           worker-manager-config:
             capacityPerInstance: 8
-  - pool_id: '{pool-group}/b-win2022-{suffix}'
+  # Windows Server 2022
+  - pool_id: gecko-1/b-win2022-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
     email_on_error: true
-    attributes:
-      suffix: ''
-      level: 1
+    provider_id: azure2
+    config:
+      image: ronin_b1_windows2022_64_2009_alpha
+      image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows
+      worker-purpose: gecko-1
+      locations: [central-india]
+      maxCapacity: 10
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win2022-azure
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_D96ads_v5
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                caching: ReadOnly
+                createOption: FromImage
+                diffDiskSettings:
+                  option: Local
+            hardwareProfile:
+              vmSize: Standard_D96ads_v5
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      worker-manager-config:
+        capacityPerInstance: 1
+  - pool_id: '{pool-group}/b-win2022'
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
     variants:
       - pool-group: gecko-1
-      - pool-group: gecko-1
-        suffix: alpha
-      - pool-group: gecko-1
-        suffix: xxlarge
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
@@ -2800,25 +2839,24 @@ pools:
       - pool-group: mozilla-3
         chain-of-trust: trusted
       - pool-group: mozillavpn-1
-      - pool-group: mozillavpn-1
-        suffix: alpha
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
       - pool-group: nss-1
-      - pool-group: nss-1
-        suffix: alpha
       - pool-group: nss-3
         chain-of-trust: trusted
       - pool-group: enterprise-1
     provider_id:
-      by-level:
-        1: azure2
-        3: azure_trusted
+      by-chain-of-trust:
+        trusted: azure_trusted
+        default: azure2
     config:
-      image: ronin_b{level}_windows2022_64_2009
+      image:
+        by-chain-of-trust:
+          trusted: ronin_b3_windows2022_64_2009
+          default: ronin_b1_windows2022_64_2009
       image_resource_group: rg-packer-through-cib
-      implementation: '{implementation}'
-      locations: [central-india, north-central-us, east-us-2]
+      implementation: generic-worker/windows
+      locations: [north-central-us, east-us-2]
       maxCapacity:
         by-pool-group:
           gecko-.*: 500
@@ -2843,10 +2881,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize:
-          by-suffix:
-            .*xxlarge.*: Standard_D96ads_v5
-            default: Standard_D32ads_v5
+        - vmSize: Standard_D32ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2860,10 +2895,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize:
-                by-suffix:
-                  .*xxlarge.*: Standard_D96ads_v5
-                  default: Standard_D32ads_v5
+              vmSize: Standard_D32ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2873,15 +2905,99 @@ pools:
           by-vmSize:
             Standard_D32ads_v5:
               by-location:
-                central-india: 1
-                north-central-us: 0.9
-                east-us-2: 0.8
-            Standard_D96ads_v5:
-              by-location:
-                central-india: 1
-                north-central-us: 0.9
+                north-central-us: 1
                 east-us-2: 0.8
             default: 1
+  - pool_id: nss-1/b-win2022-alpha
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin_b1_windows2022_64_2009_alpha
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/windows
+      worker-purpose: nss-1
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
+      tags:
+        sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
+        sourceBranch: windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_D32ads_v5
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                caching: ReadOnly
+                createOption: FromImage
+                diffDiskSettings:
+                  option: Local
+            hardwareProfile:
+              vmSize: Standard_D32ads_v5
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      worker-manager-config:
+        capacityPerInstance: 1
+  - pool_id: mozillavpn-1/b-win2022-alpha
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: ronin_b1_windows2022_64_2009_alpha
+      image_resource_group: rg-packer-through-cib
+      implementation: generic-worker/windows
+      worker-purpose: vpn-1
+      locations: [central-us, north-central-us]
+      maxCapacity: 25
+      worker-config:
+        genericWorker:
+          config:
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
+      tags:
+        sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
+        sourceBranch: windows
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_D32ads_v5
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                caching: ReadOnly
+                createOption: FromImage
+                diffDiskSettings:
+                  option: Local
+            hardwareProfile:
+              vmSize: Standard_D32ads_v5
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      worker-manager-config:
+        capacityPerInstance: 1
   # Windows 10
   - pool_id: '{pool-group}/win10-64-2009-{suffix}'
     description: ''
