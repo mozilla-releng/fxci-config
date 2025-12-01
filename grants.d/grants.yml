@@ -874,7 +874,7 @@
 ## Enterprise Firefox specific roles
 
 - grant:
-    - project:{trust_domain}:enterprise:releng:signing:cert:dep-signing
+    - project:{trust_domain}:releng:signing:cert:dep-signing
   to:
     - project:
         alias: enterprise-firefox
