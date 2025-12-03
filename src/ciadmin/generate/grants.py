@@ -68,16 +68,16 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         if not project_match(grantee, project):
             continue
 
-        branch_jobs = []
-        non_branch_jobs = []
+        branch_jobs = set()
+        non_branch_jobs = set()
         for job in grantee.job:
             if job == "*":
-                branch_jobs.append("branch:*")
-                non_branch_jobs.append(job)
+                branch_jobs.add("branch:*")
+                non_branch_jobs.add(job)
             elif job.startswith("branch"):
-                branch_jobs.append(job)
+                branch_jobs.add(job)
             else:
-                non_branch_jobs.append(job)
+                non_branch_jobs.add(job)
 
         # Force being explicit with pull-request policies. Otherwise, the `pull-request`
         # job would be equivalent to `pull-request:trusted`, which may not be intended.
@@ -96,32 +96,34 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             # Github mixes pull-requests and other tasks under the same prefix
             # Since pull-requests should be level-1, we need to explicitly
             # split based on the job
-            non_branch_jobs = [job for job in non_branch_jobs if job != "*"]
-            non_branch_jobs += [
-                "pull-request:*",
-                "cron:*",
-                "action:*",
-                "pr-action:*",
-                "release:*",
-            ]
+            non_branch_jobs.remove("*")
+            non_branch_jobs.update(
+                {
+                    "pull-request:*",
+                    "cron:*",
+                    "action:*",
+                    "pr-action:*",
+                    "release:*",
+                }
+            )
 
         # Only grant scopes to `cron:` or `action:` jobs if the corresponding features
         # are enabled. This allows having generic grants that don't generate unused
         # roles
         if not project.feature("taskgraph-cron") and not project.feature("gecko-cron"):
-            non_branch_jobs = [
+            non_branch_jobs = {
                 job for job in non_branch_jobs if not job.startswith("cron:")
-            ]
+            }
         if not project.feature("taskgraph-actions") and not project.feature(
             "gecko-actions"
         ):
-            non_branch_jobs = [
+            non_branch_jobs = {
                 job for job in non_branch_jobs if not job.startswith("action:")
-            ]
+            }
         if not project.feature("pr-actions"):
-            non_branch_jobs = [
+            non_branch_jobs = {
                 job for job in non_branch_jobs if not job.startswith("pr-action:")
-            ]
+            }
 
         # Only grant pull-request scopes where it makes sense.
         if (
@@ -129,29 +131,25 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             or not pr_policy
             or not grantee.include_pull_requests
         ):
-            non_branch_jobs = [
+            non_branch_jobs = {
                 job
                 for job in non_branch_jobs
                 if not job.startswith("pull-request")
                 and not job.startswith("pr-action")
-            ]
+            }
 
         if "pull-request:*" in non_branch_jobs:
             non_branch_jobs.remove("pull-request:*")
-            non_branch_jobs.extend(["pull-request:trusted", "pull-request:untrusted"])
+            non_branch_jobs.update({"pull-request:trusted", "pull-request:untrusted"})
 
         # Remove any 'pull-request:trusted' jobs for projects using the 'public' policy.
         # Similarly, remove any 'pull-request:untrusted' jobs for projects using the
         # 'collaborators' policy. Only the 'public_restricted' policy supports both at
         # the same time.
         if pr_policy == "public":
-            non_branch_jobs = [
-                job for job in non_branch_jobs if job != "pull-request:trusted"
-            ]
+            non_branch_jobs.discard("pull-request:trusted")
         elif pr_policy.startswith("collaborators"):
-            non_branch_jobs = [
-                job for job in non_branch_jobs if job != "pull-request:untrusted"
-            ]
+            non_branch_jobs.discard("pull-request:untrusted")
 
         for job in non_branch_jobs:
             roleId = format_role_id(project, job, pr_policy)
