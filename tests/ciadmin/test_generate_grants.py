@@ -293,6 +293,88 @@ class TestAddScopesForProjects:
                 projects,
             )
 
+    def test_match_level_with_no_access_l3(self, add_scope):
+        """Projects without access field can still match when grantee has level"""
+        grantee = ProjectGrantee(alias="proj_no_access", level=3)
+        projects = [
+            Project(
+                alias="proj_no_access",
+                repo="https://github.com/mozilla/no-access",
+                repo_type="git",
+                branches=[
+                    {
+                        "name": "main",
+                        "level": 3,
+                    },
+                    {
+                        "name": "other",
+                        "level": 1,
+                    },
+                ],
+                trust_domain="foo",
+                features={
+                    "github-pull-request": {
+                        "enabled": True,
+                        "policy": "public",
+                    }
+                },
+            )
+        ]
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]),
+            grantee,
+            add_scope,
+            projects,
+        )
+        # Without access field, project matches and grants to both branch and non-branch jobs
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/no-access:branch:main", "sc"),
+                ("repo:github.com/mozilla/no-access:release:*", "sc"),
+            ]
+        )
+
+    def test_match_level_with_no_access_l1(self, add_scope):
+        """Projects without access field can still match when grantee has level"""
+        grantee = ProjectGrantee(alias="proj_no_access", level=1)
+        projects = [
+            Project(
+                alias="proj_no_access",
+                repo="https://github.com/mozilla/no-access",
+                repo_type="git",
+                branches=[
+                    {
+                        "name": "main",
+                        "level": 3,
+                    },
+                    {
+                        "name": "other",
+                        "level": 1,
+                    },
+                ],
+                trust_domain="foo",
+                features={
+                    "github-pull-request": {
+                        "enabled": True,
+                        "policy": "public",
+                    }
+                },
+            )
+        ]
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]),
+            grantee,
+            add_scope,
+            projects,
+        )
+        # Without access field, project matches and grants to both branch and non-branch jobs
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/no-access:branch:other", "sc"),
+                ("repo:github.com/mozilla/no-access:pull-request", "sc"),
+            ]
+        )
+
 
 class TestAddScopesForGroups:
     "Tests for add_scopes_to_groups"
@@ -573,6 +655,57 @@ class TestAddScopesForGithubPush:
         assert add_scope.added == set(
             [
                 ("repo:github.com/mozilla/example2:branch:*", "sc-3"),
+            ]
+        )
+
+    def test_grant_to_level_1_excludes_non_branch_jobs(
+        self, add_scope, sample_projects
+    ):
+        """Level 1 grantees should not get non-branch jobs like release:*"""
+        grantee = ProjectGrantee(alias="limited_branches", level=[1])
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]),
+            grantee,
+            add_scope,
+            sample_projects,
+        )
+        pprint(add_scope.added)
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/example:branch:default", "sc"),
+            ]
+        )
+
+    def test_grant_to_non_level_1_excludes_all_non_branch_jobs(
+        self, add_scope, sample_projects
+    ):
+        """Grantees without level 1 should not get any non-branch jobs"""
+        grantee = ProjectGrantee(alias="limited_branches", level=[2])
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]),
+            grantee,
+            add_scope,
+            sample_projects,
+        )
+        assert add_scope.added == set()
+
+    def test_grant_to_level_3_includes_matching_non_branch_jobs(
+        self, add_scope, sample_projects
+    ):
+        """Level 3 grantees should get level 3 branches and release:* jobs"""
+        grantee = ProjectGrantee(alias="limited_branches", level=[3])
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]),
+            grantee,
+            add_scope,
+            sample_projects,
+        )
+        pprint(add_scope.added)
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/example:branch:main", "sc"),
+                ("repo:github.com/mozilla/example:branch:release*", "sc"),
+                ("repo:github.com/mozilla/example:release:*", "sc"),
             ]
         )
 
