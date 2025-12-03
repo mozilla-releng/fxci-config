@@ -117,7 +117,9 @@ def project_match(grantee, project):
         return False
     if not match(grantee.repo_type, project.repo_type):
         return False
-    if not match(grantee.level, project.get_level(project.default_branch)):
+    if project.access and not match(
+        grantee.level, project.get_level(project.default_branch)
+    ):
         return False
     if not match(grantee.alias, project.alias):
         return False

@@ -130,6 +130,7 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             project.repo_type != "git"
             or not pr_policy
             or not grantee.include_pull_requests
+            or (grantee.level and 1 not in grantee.level)
         ):
             non_branch_jobs = {
                 job
@@ -154,6 +155,17 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         for job in non_branch_jobs:
             roleId = format_role_id(project, job, pr_policy)
             level = project.default_branch_level
+
+            # If the grantee has a level, use the default_branch_level to filter out
+            # actions and cron. Pull requests are hardcoded to L1 and were already
+            # filtered out above.
+            if (
+                project.repo_type == "git"
+                and not job.startswith("pull-request")
+                and (grantee.level and level not in grantee.level)
+            ):
+                continue
+
             # This is explicitly fetched before we override level for pull
             # requests due to us granting them `highest` priority in the past.
             # Ideally we'd stop doing this, but it requires all GitHub repositories
@@ -180,13 +192,18 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
                 # branch loop
                 if not glob_match([job.split(":")[1]], branch.name):
                     continue
+
+                # skip branches that don't match the grantee's level, if specified.
+                level = project.get_level(branch.name)
+                if grantee.level and level not in grantee.level:
+                    continue
+
                 # We always use the branch name from the `project` even if the job is
                 # `branch:*`. This is to ensure that we don't grant things to all
                 # branches in a block that is also conditional on level. All branches
                 # can _still_ be granted things, but only if there is a branch named `*`
                 # in the project configuration.
                 roleId = format_role_id(project, f"branch:{branch.name}", "")
-                level = project.get_level(branch.name)
                 priority = LEVEL_PRIORITIES[level]
 
                 for scope in grant.scopes:
