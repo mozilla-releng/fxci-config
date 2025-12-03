@@ -9,7 +9,7 @@ policy:
     pullRequests: public_restricted
 tasks:
     - $let:
-          trustDomain: ci
+          trustDomain: releng
           taskclusterInstance:
               $switch:
                   'taskcluster_root_url == "https://firefox-ci-tc.services.mozilla.com"': "firefoxci"
