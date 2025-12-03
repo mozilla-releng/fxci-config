@@ -303,6 +303,8 @@ pools:
       - pool-group: app-services-3
         chain-of-trust: trusted
       - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -426,6 +428,10 @@ pools:
       - pool-group: enterprise-1
         suffix: ''
         instance_types: [*c3d-standard-16-lssd]
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
+        suffix: ''
+        instance_types: [*c3d-standard-16-lssd]
       # Large 30-core (gecko, comm)
       - pool-group: gecko-1
         suffix: '-large'
@@ -450,6 +456,10 @@ pools:
       - pool-group: enterprise-1
         suffix: '-large'
         instance_types: [*c3d-standard-30-lssd]
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
+        suffix: '-large'
+        instance_types: [*c3d-standard-30-lssd]
       # XLarge 60-core (gecko, comm)
       - pool-group: gecko-1
         suffix: '-xlarge'
@@ -472,6 +482,10 @@ pools:
         suffix: '-xlarge'
         instance_types: [*c3d-standard-60-lssd]
       - pool-group: enterprise-1
+        suffix: '-xlarge'
+        instance_types: [*c3d-standard-60-lssd]
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
         suffix: '-xlarge'
         instance_types: [*c3d-standard-60-lssd]
     provider_id:
@@ -649,6 +663,8 @@ pools:
       - pool-group: comm-3
         chain-of-trust: trusted
       - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
     email_on_error: true
     provider_id:
       by-chain-of-trust:
@@ -1352,6 +1368,8 @@ pools:
       - pool-group: nss-3
         chain-of-trust: trusted
       - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
     config:
       implementation: generic-worker/linux-d2g-{chain-of-trust}
       image: ubuntu-2404-headless
@@ -1543,6 +1561,8 @@ pools:
         chain-of-trust: trusted
       - pool-group: translations-1
       - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
     config:
       image: ubuntu-2404-headless
       implementation: generic-worker/linux-d2g-{chain-of-trust}
@@ -1663,6 +1683,8 @@ pools:
       - pool-group: comm-3
         chain-of-trust: trusted
       - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
     email_on_error: false
     provider_id:
       by-chain-of-trust:
@@ -2840,6 +2862,8 @@ pools:
       - pool-group: nss-3
         chain-of-trust: trusted
       - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: azure_trusted
