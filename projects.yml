@@ -565,6 +565,8 @@ enterprise-firefox:
   trust_domain: enterprise
   branches:
     - name: enterprise-main
+      level: 3
+    - name: "*"
       level: 1
   features:
     gecko-roles: true
