@@ -228,15 +228,13 @@
         level: 2
 
 - grant:
-    # Bug 2002823 - Temporarily grant access to L1 Gecko mac workers to unblock
-    # progress until we can get macs for enterprise. This is needed to prevent
-    # build bustage in the meantime.
-    - queue:create-task:{priority}:releng-hardware/gecko-1-*
+    # Bug 2002823 - Temporarily grant access to Gecko mac workers to unblock
+    # progress until we can get macs for enterprise.
+    - queue:create-task:{priority}:releng-hardware/gecko-{level}-b-osx*
   to:
     - project:
         feature: gecko-roles
         trust_domain: [enterprise]
-        level: 1
 
 - grant:
     - queue:get-artifact:private/openh264/*
