@@ -571,6 +571,8 @@ enterprise-firefox:
   features:
     gecko-roles: true
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
     pr-actions: true
     scriptworker: true
     taskgraph-actions: true
