@@ -881,6 +881,15 @@
     - project:
         alias: enterprise-firefox
 
+- grant:
+    - project:{trust_domain}:releng:signing:cert:nightly-signing
+    - queue:create-task:{priority}:scriptworker-prov-v1/{trust_domain}-signing-mac14m2
+  to:
+    - project:
+        alias: enterprise-firefox
+        job: [branch:enterprise-main]
+        level: 3
+
 ##
 # Non-gecko tree projects
 
