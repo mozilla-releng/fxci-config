@@ -1290,7 +1290,7 @@ pools:
       - pool-group: comm-3
         chain-of-trust: trusted
     config:
-      regions: [us-central1, us-east1]
+      regions: *default-gcp-regions
       image:
         by-chain-of-trust:
           trusted: monopacker-docker-worker-trusted-current-gcp
@@ -1304,10 +1304,7 @@ pools:
           gecko-1: 100
           gecko-3: 20
           default: 4
-      instance_types:
-        by-pool-group:
-          gecko-1: [*c4d-standard-8-lssd]
-          default: [*c4d-standard-8]
+      instance_types: [*c4d-standard-8]
       worker-config:
         shutdown:
           afterIdleSeconds:
@@ -1387,9 +1384,10 @@ pools:
           gecko-3: 20
           enterprise-1: 10
           default: 4
-      regions: *default-gcp-regions
+      regions: [us-central1, us-east1]
       instance_types:
         by-pool-group:
+          gecko-1: [*c4d-standard-8-lssd]
           (gecko|comm)-.*: [*c4d-standard-8]
           default:
             - minCpuPlatform: Intel Cascadelake
