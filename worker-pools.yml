@@ -3218,7 +3218,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize:
+        - vmSize: Standard_D16ps_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -3651,7 +3651,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize:
+        - vmSize: Standard_D8ps_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
