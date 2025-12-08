@@ -2799,6 +2799,8 @@ pools:
       worker-purpose: gecko-1
       locations: [central-india]
       maxCapacity: 10
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config:
@@ -2882,7 +2884,12 @@ pools:
           comm-3: 50
           relops-.*: 12
           default: 25
-      worker-purpose:
+      armDeployment:
+        by-chain-of-trust:
+          trusted:
+            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+          default:
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
         by-pool-group:
           mozillavpn-1: vpn-1
           mozillavpn-3: vpn-3
@@ -2951,6 +2958,8 @@ pools:
       worker-purpose: nss-1
       locations: [central-us, north-central-us]
       maxCapacity: 25
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config:
@@ -2996,6 +3005,8 @@ pools:
       worker-purpose: vpn-1
       locations: [central-us, north-central-us]
       maxCapacity: 25
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config:
