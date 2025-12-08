@@ -3202,6 +3202,12 @@ pools:
           nss-.*: 25
           gecko.*: 250
           mozillavpn.*: 10
+      armDeployment:
+        by-level:
+          1:
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+          3:
+            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config:
@@ -3631,6 +3637,8 @@ pools:
           gecko-t: 500
           comm-t: 500
           default: 50
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config:
