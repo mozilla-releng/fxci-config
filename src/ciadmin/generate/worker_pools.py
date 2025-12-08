@@ -129,6 +129,7 @@ def _build_arm_template_launch_config(
     location,
     loc,
     vm_size,
+    vm_size_launch_config,
     subnet_id,
     image_reference_id,
     worker_config,
@@ -166,6 +167,12 @@ def _build_arm_template_launch_config(
             f"armDeployment.templateSpecId must be provided for Azure pool {pool_id}"
         )
 
+    # Check if diffDiskSettings is configured in the launchConfig
+    # If present, ephemeral disks should be used; if absent, they shouldn't
+    has_diff_disk = "diffDiskSettings" in vm_size_launch_config.get(
+        "storageProfile", {}
+    ).get("osDisk", {})
+
     auto_defaults = _normalize_arm_parameters(
         {
             "vmSize": vm_size,
@@ -173,6 +180,7 @@ def _build_arm_template_launch_config(
             "location": loc,
             "subnetId": subnet_id,
             "priority": pool_cfg.get("priority", "Spot"),
+            "useEphemeralDisk": has_diff_disk,
         }
     )
 
@@ -496,6 +504,7 @@ def get_azure_provider_config(
                 location=location,
                 loc=loc,
                 vm_size=vmSize.get("vmSize"),
+                vm_size_launch_config=vmSize.get("launchConfig", {}),
                 subnet_id=subnetId,
                 image_reference_id=imageReference_id,
                 worker_config=worker_config,
