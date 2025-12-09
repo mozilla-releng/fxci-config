@@ -210,7 +210,7 @@ def test_basic(run_test):
             "priority": "low",
             "provisionerId": "prov",
             "routes": ["checks"],
-            "schedulerId": "ci-level-1",
+            "schedulerId": "releng-level-1",
             "tags": {},
             "taskGroupId": "abc",
         },
@@ -402,8 +402,8 @@ def test_docker_cache(run_test):
     )
     assert len(result) == 1
     result = result[0]
-    assert result["task"]["payload"]["cache"] == {"ci-level-1": "path"}
-    assert result["task"]["scopes"] == ["cache:ci-level-1"]
+    assert result["task"]["payload"]["cache"] == {"releng-level-1": "path"}
+    assert result["task"]["scopes"] == ["cache:releng-level-1"]
 
 
 def run_include_deps_test(run_test, *args, **kwargs):

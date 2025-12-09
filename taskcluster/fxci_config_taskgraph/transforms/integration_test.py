@@ -138,22 +138,22 @@ def rewrite_mounts(task_def: dict[str, Any]) -> None:
 
 
 def rewrite_caches(task_def: dict[str, Any]) -> None:
-    """Adjust worker caches to ci-level-1."""
+    """Adjust worker caches to releng-level-1."""
     if cache := task_def["payload"].get("cache"):
         for name, value in cache.copy().items():
             del cache[name]
-            name = name.replace("gecko-level-3", "ci-level-1")
+            name = name.replace("gecko-level-3", "releng-level-1")
             cache[name] = value
 
     if mounts := task_def["payload"].get("mounts"):
         for mount in mounts:
             if "cacheName" in mount:
                 mount["cacheName"] = mount["cacheName"].replace(
-                    "gecko-level-3", "ci-level-1"
+                    "gecko-level-3", "releng-level-1"
                 )
 
     for i, scope in enumerate(task_def.get("scopes", [])):
-        task_def["scopes"][i] = scope.replace("gecko-level-3", "ci-level-1")
+        task_def["scopes"][i] = scope.replace("gecko-level-3", "releng-level-1")
 
 
 def rewrite_docker_image(taskdesc: dict[str, Any]) -> None:
@@ -287,7 +287,7 @@ def make_integration_test_description(
     assert "TASK_ID" in os.environ
     task_def.update(
         {
-            "schedulerId": "ci-level-1",
+            "schedulerId": "releng-level-1",
             "taskGroupId": os.environ["TASK_ID"],
             "priority": "low",
             "routes": ["checks"],
