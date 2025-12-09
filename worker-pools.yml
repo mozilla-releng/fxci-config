@@ -3180,6 +3180,8 @@ pools:
         suffix: alpha
         implementation: generic-worker/windows
       - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-3
+        level: 3
       - pool-group: nss-1
         suffix: alpha
         implementation: generic-worker/windows
