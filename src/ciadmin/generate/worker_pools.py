@@ -751,6 +751,7 @@ def generate_pool_variants(worker_pools, environment):
 
         # Second pass: evaluate everything else with vmSize now available
         for key in (
+            "armDeployment",
             "image",
             "instance_types",
             "locations",
