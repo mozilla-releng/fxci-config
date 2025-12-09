@@ -223,7 +223,6 @@ tasks:
                                     FXCI_HEAD_REF: '${head_ref}'
                                     FXCI_HEAD_REV: '${head_sha}'
                                     FXCI_REPOSITORY_TYPE: git
-                                    FXCI_PIP_REQUIREMENTS: taskcluster/requirements.txt
                                     REPOSITORIES: {$json: {fxci: "Firefox-CI Config"}}
                                   - $if: 'tasks_for == "action"'
                                     then:
@@ -237,7 +236,7 @@ tasks:
                               taskclusterProxy: true
                               chainOfTrust: true
                           image:
-                              mozillareleases/taskgraph:decision-v13.0.0@sha256:57e4c2d2ad92cea663dcc02cacbfd88b3506edde80e19fbd8a57b3dfe37ae9bd
+                              mozillareleases/taskgraph:decision-v18.0.3@sha256:c98a061f7f5058b14d0f7cce4fee0cdd2103a48413e85deb948a5fbf0b092458
                           maxRunTime: 1800
                           command:
                               $flatten:
