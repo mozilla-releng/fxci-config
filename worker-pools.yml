@@ -2910,9 +2910,9 @@ pools:
       spot: true
       vmSizes:
         - vmSize:
-          by-suffix:
-            .*xxlarge.*: Standard_D96ads_v5
-            default: Standard_D32ads_v5
+            by-suffix:
+              .*xxlarge.*: Standard_D96ads_v5
+              default: Standard_D32ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
