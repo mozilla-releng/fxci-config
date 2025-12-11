@@ -154,7 +154,6 @@ def find_tasks(
                 if any([pat.match(label) for pat in patterns]):
                     ancestors.get(task_id, []).append(upstream_task_id)
 
-
     upstream_task_ids = sum(ancestors.values(), [])
     if upstream_task_ids:
         upstream_task_defs = get_task_definitions(upstream_task_ids)
