@@ -8,12 +8,12 @@ from typing import Any
 
 import pytest
 from taskgraph.util.copy import deepcopy
-from taskgraph.util.taskcluster import _get_deps, get_task_definition
+from taskgraph.util.taskcluster import _task_definitions_cache
 from taskgraph.util.templates import merge
 
 from fxci_config_taskgraph.transforms.integration_test import transforms
 from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
-from fxci_config_taskgraph.util.integration import _fetch_task_graph, _queue_task
+from fxci_config_taskgraph.util.integration import _fetch_task_graph
 
 
 @pytest.fixture
@@ -66,9 +66,7 @@ def run_test(monkeypatch, run_transform, make_transform_config, responses):
         kind_dependencies_tasks: dict[str, Any] = {},
     ) -> dict[str, Any] | None:
         _fetch_task_graph.cache_clear()
-        _queue_task.cache_clear()
-        _get_deps.cache_clear()
-        get_task_definition.cache_clear()
+        _task_definitions_cache.cache.clear()
 
         task = merge(deepcopy(base_task), task)
         task_graph = {decision_task_id: task}
@@ -79,17 +77,13 @@ def run_test(monkeypatch, run_transform, make_transform_config, responses):
             json=task_graph,
         )
         if include_deps:
-            responses.upsert(
-                responses.GET,
-                f"{FIREFOXCI_ROOT_URL}/api/queue/v1/task/{decision_task_id}",
-                json=task["task"],
-            )
-            for upstream_task_id, upstream_task in ancestors.items():
-                responses.upsert(
-                    responses.GET,
-                    f"{FIREFOXCI_ROOT_URL}/api/queue/v1/task/{upstream_task_id}",
-                    json=upstream_task,
-                )
+            task_definitions = {decision_task_id: task["task"]}
+            task_definitions.update(ancestors)
+            def callback(request):
+                payload = json.loads(request.body)
+                resp_body = {"tasks": [{"taskId": task_id, "task": task_def} for task_id, task_def in task_definitions.items() if task_id in payload["taskIds"]]}
+                return 200, [], json.dumps(resp_body)
+            responses.add_callback(responses.POST, f"{FIREFOXCI_ROOT_URL}/api/queue/v1/tasks", callback=callback)
 
         result = run_transform(
             transforms,
