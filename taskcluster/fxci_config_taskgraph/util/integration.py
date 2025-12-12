@@ -20,15 +20,20 @@ def get_ancestors(task_ids: list[str] | str) -> dict[str, str]:
     # This is not ideal, but at the moment we don't have a better way
     # to ensure that the upstream get_ancestors talks to the correct taskcluster
     # instance.
-    orig = os.environ["TASKCLUSTER_ROOT_URL"]
+    orig_root = os.environ["TASKCLUSTER_ROOT_URL"]
+    orig_proxy = os.environ.get("TASKCLUSTER_PROXY_URL")
     try:
         # Cache needs to be cleared here to allow `get_root_url` to ensure that
         # `get_root_url` is called again after a change.
         get_root_url.cache_clear()
         os.environ["TASKCLUSTER_ROOT_URL"] = FIREFOXCI_ROOT_URL
+        if orig_proxy is not None:
+            del os.environ["TASKCLUSTER_PROXY_URL"]
         ret = taskgraph_get_ancestors(task_ids)
     finally:
-        os.environ["TASKCLUSTER_ROOT_URL"] = orig
+        os.environ["TASKCLUSTER_ROOT_URL"] = orig_root
+        if orig_proxy is not None:
+            os.environ["TASKCLUSTER_PROXY_URL"] = orig_proxy
         get_root_url.cache_clear()
 
     return ret
