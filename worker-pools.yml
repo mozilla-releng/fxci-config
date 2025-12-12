@@ -743,9 +743,6 @@ pools:
         suffix: "-gcp-gw"
         implementation: generic-worker/worker-runner-linux-multi
         chain-of-trust: trusted
-      - pool-group: adhoc-1
-      - pool-group: adhoc-3
-        chain-of-trust: trusted
       - pool-group: scriptworker-1
       - pool-group: scriptworker-3
         chain-of-trust: trusted
@@ -1446,9 +1443,6 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     variants:
-      - pool-group: adhoc-1
-      - pool-group: adhoc-3
-        chain-of-trust: trusted
       - pool-group: app-services-1
       - pool-group: app-services-3
         chain-of-trust: trusted
@@ -1604,9 +1598,6 @@ pools:
       - pool-group: comm-1
       - pool-group: comm-2
       - pool-group: comm-3
-        chain-of-trust: trusted
-      - pool-group: adhoc-1
-      - pool-group: adhoc-3
         chain-of-trust: trusted
       - pool-group: app-services-1
       - pool-group: app-services-3
