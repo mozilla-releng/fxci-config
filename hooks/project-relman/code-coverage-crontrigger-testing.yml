@@ -3,7 +3,7 @@ created: {$fromNow: 0 seconds}
 deadline: {$fromNow: 4 hours}
 expires: {$fromNow: 1 month}
 provisionerId: code-coverage
-workerType: bot-gcp
+workerType: bot
 metadata:
   description: ''
   name: Code Coverage - cron trigger task (testing)
