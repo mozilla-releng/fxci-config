@@ -10,7 +10,7 @@ project-relman/code-coverage-repo-production:
     - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.production.repo.*
     - notify:email:*
-    - queue:create-task:highest:code-coverage/bot
+    - queue:create-task:highest:code-coverage/bot-gcp
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-production
@@ -29,7 +29,7 @@ project-relman/code-coverage-repo-testing:
     - docker-worker:cache:code-coverage-bot-testing
     - index:insert-task:project.relman.code-coverage.testing.repo.*
     - notify:email:*
-    - queue:create-task:lowest:code-coverage/bot
+    - queue:create-task:lowest:code-coverage/bot-gcp
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
@@ -50,7 +50,7 @@ project-relman/code-coverage-cron-production:
     - docker-worker:cache:code-coverage-bot-production
     - index:insert-task:project.relman.code-coverage.production.cron.*
     - notify:email:*
-    - queue:create-task:highest:code-coverage/bot
+    - queue:create-task:highest:code-coverage/bot-gcp
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-production
@@ -71,7 +71,7 @@ project-relman/code-coverage-cron-testing:
     - docker-worker:cache:code-coverage-bot-testing
     - index:insert-task:project.relman.code-coverage.testing.cron.*
     - notify:email:*
-    - queue:create-task:lowest:code-coverage/bot
+    - queue:create-task:lowest:code-coverage/bot-gcp
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
@@ -92,7 +92,7 @@ project-relman/code-coverage-crontrigger-production:
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.code-coverage.production.crontrigger.*
     - notify:email:*
-    - queue:create-task:highest:code-coverage/bot
+    - queue:create-task:highest:code-coverage/bot-gcp
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-production
@@ -113,7 +113,7 @@ project-relman/code-coverage-crontrigger-testing:
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.code-coverage.testing.crontrigger.*
     - notify:email:*
-    - queue:create-task:lowest:code-coverage/bot
+    - queue:create-task:lowest:code-coverage/bot-gcp
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
@@ -132,7 +132,7 @@ project-relman/code-review-testing:
     - hooks:trigger-hook:project-releng/services-testing-*
     - index:insert-task:project.relman.testing.code-review.*
     - notify:email:*
-    - queue:create-task:lowest:code-review/bot
+    - queue:create-task:lowest:code-review/bot-gcp
     - queue:route:index.project.releng.services.project.testing.static_analysis_bot.*
     - queue:route:index.project.relman.testing.code-review.*
     - queue:route:notify.email.*
@@ -182,7 +182,7 @@ project-relman/code-review-production:
     - hooks:trigger-hook:project-releng/services-production-*
     - index:insert-task:project.relman.production.code-review.*
     - notify:email:*
-    - queue:create-task:highest:code-review/bot
+    - queue:create-task:highest:code-review/bot-gcp
     - queue:route:index.project.releng.services.project.production.static_analysis_bot.*
     - queue:route:index.project.relman.production.code-review.*
     - queue:route:notify.email.*
