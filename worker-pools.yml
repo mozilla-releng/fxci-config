@@ -3925,6 +3925,32 @@ pools:
               type: SCRATCH
               interface: NVME
           machine_type: n2-standard-2
+  - pool_id: '{pool-group}/bot'
+    description: Worker for the {pool-group} bot.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - pool-group: code-review
+      - pool-group: code-coverage
+    provider_id: fxci-level1-gcp
+    config:
+      regions: *default-gcp-regions
+      implementation: generic-worker/linux-d2g
+      image: ubuntu-2404-headless
+      minCapacity:
+        by-pool-group:
+          code-review: 1
+          code-coverage: 0
+      maxCapacity:
+        by-pool-group:
+          code-review: 100
+          code-coverage: 10
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-75gb
+            - *scratch-disk
+          machine_type: c2-standard-4
   - pool_id: code-review/bot-gcp
     description: Worker for the code-review bot.
     owner: release+tc-workers@mozilla.com
