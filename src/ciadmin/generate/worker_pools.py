@@ -841,9 +841,12 @@ def generate_pool_variants(worker_pools, environment):
             # the suffix was empty.
             name = name.rstrip("-")
 
+            description = wp.description.format(**attributes)
+
             yield attr.evolve(
                 wp,
                 pool_id=name,
+                description=description,
                 provider_id=evaluate_keyed_by(wp.provider_id, name, attributes),
                 config=update_config(wp.config, name, attributes),
                 attributes={},
