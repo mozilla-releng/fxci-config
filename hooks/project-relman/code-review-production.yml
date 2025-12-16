@@ -74,4 +74,4 @@ scopes:
   - 'notify:email:*'
   - 'docker-worker:cache:code-review-production-checkout'
 tags: {}
-workerType: bot-gcp
+workerType: bot
