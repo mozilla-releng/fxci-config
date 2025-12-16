@@ -47,4 +47,7 @@ tasks:
       # and also because they live forever, and depend on docker images which
       # expire, which causes us to try to mirror expired docker image tasks
       # into the staging cluster
-      - ^(?!(Decision|Action|PR action|build-docker-image|docker-image|fetch)).*
+      # upload tasks are excluded because there's no value in rerunning them,
+      # and we don't have scriptworkers running against the staging cluster
+      # anyway
+      - ^(?!(Decision|Action|PR action|build-docker-image|docker-image|fetch|upload)).*
