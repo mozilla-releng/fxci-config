@@ -1427,8 +1427,7 @@ pools:
       regions: [us-central1, us-east1]
       instance_types:
         by-pool-group:
-          gecko-1: [*c4d-standard-8-lssd]
-          (gecko|comm)-.*: [*c4d-standard-8]
+          (gecko|comm)-.*: [*c4d-standard-8-lssd]
           default:
             - minCpuPlatform: Intel Cascadelake
               disks:
