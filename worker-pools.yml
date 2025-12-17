@@ -716,6 +716,49 @@ pools:
           disks:
             - *persistent-disk-75gb
           machine_type: t2a-standard-16
+  - pool_id: '{pool-group}/b-linux'
+    description: Worker for Firefox automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    attributes:
+      chain-of-trust: ''
+    variants:
+      - pool-group: glean-1
+      - pool-group: glean-3
+        chain-of-trust: trusted
+      - pool-group: mobile-1
+      - pool-group: mobile-3
+        chain-of-trust: trusted
+      - pool-group: mozilla-1
+      - pool-group: mozilla-3
+        chain-of-trust: trusted
+      - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-3
+        chain-of-trust: trusted
+      - pool-group: xpi-1
+      - pool-group: xpi-3
+        chain-of-trust: trusted
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          mobile-.*: 50
+          mozilla-.*: 10
+          mozillavpn-.*: 10
+          default: 100
+      regions: *default-gcp-regions
+      image: ubuntu-2404-headless
+      implementation: generic-worker/linux-d2g-{chain-of-trust}
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-60gb
+            - *scratch-disk
+          machine_type: c2-standard-4
   - pool_id: '{pool-group}/b-linux{suffix}'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
