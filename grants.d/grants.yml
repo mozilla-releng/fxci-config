@@ -2584,7 +2584,6 @@
     - hooks:trigger-hook:project-relman/code-coverage-crontrigger-production
     - secrets:get:project/relman/code-coverage/*
     - secrets:set:project/relman/code-coverage/*
-    - queue:create-task:lowest:code-coverage/bot-gcp
     - queue:create-task:lowest:code-coverage/bot
   to:
     - roles:
@@ -2595,7 +2594,6 @@
 - grant:
     - secrets:get:project/relman/code-review/*
     - secrets:set:project/relman/code-review/*
-    - queue:create-task:lowest:code-review/bot-gcp
     - queue:create-task:lowest:code-review/bot
   to:
     - group:
