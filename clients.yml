@@ -334,6 +334,14 @@ project/releng/generic-worker/datacenter-applicationservices-b-3-osx:
   description: Datacenter level 3 MacOS dedicated workers for the application-services trust domain.
   scopes:
     - assume:worker-type:releng-hardware/applicationservices-b-3-osx*
+project/releng/generic-worker/datacenter-enterprise-1-b-osx-arm64:
+  description: Datacenter level 1 MacOS dedicated developer and automation worker.
+  scopes:
+    - assume:worker-type:releng-hardware/enterprise-1-b-osx-arm64*
+project/releng/generic-worker/datacenter-enterprise-3-b-osx-arm64:
+  description: Datacenter level 3 MacOS dedicated developer and automation worker.
+  scopes:
+    - assume:worker-type:releng-hardware/enterprise-3-b-osx-arm64*
 project/releng/generic-worker/datacenter-nss-1-b-osx:
   description: Datacenter level 1 MacOS dedicated workers for the nss trust domain.
   scopes:
@@ -343,11 +351,11 @@ project/releng/generic-worker/datacenter-nss-3-b-osx:
   scopes:
     - assume:worker-type:releng-hardware/nss-3-b-osx*
 project/releng/generic-worker/datacenter-gecko-1-b-osx-arm64:
-  description: MacStadium level 1 MacOS dedicated developer and automation worker.
+  description: Datacenter level 1 MacOS dedicated developer and automation worker.
   scopes:
     - assume:worker-type:releng-hardware/gecko-1-b-osx-arm64*
 project/releng/generic-worker/datacenter-gecko-3-b-osx-arm64:
-  description: AWS level 3 MacOS dedicated developer and automation worker.
+  description: Datacenter level 3 MacOS dedicated developer and automation worker.
   scopes:
     - assume:worker-type:releng-hardware/gecko-3-b-osx-arm64*
 project/releng/generic-worker/datacenter-mozilla-1-b-osx:
