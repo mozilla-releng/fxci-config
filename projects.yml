@@ -697,9 +697,9 @@ redo:
   trust_domain: mozilla
   trust_project: redo
   branches:
-    - name: master
+    - name: main
       level: 1
-  default_branch: master
+  default_branch: main
   features:
     github-taskgraph: true
     github-pull-request:
