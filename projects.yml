@@ -906,23 +906,6 @@ staging-application-services:
   cron:
     targets: [nightly]
 
-# Bug 1967842 - Request from application-services team
-rust-components-swift:
-  repo: https://github.com/mozilla/rust-components-swift
-  repo_type: git
-  branches:
-    - name: main
-      level: 3
-  trust_domain: app-services
-  trust_project: rust-components-swift
-  features:
-    github-taskgraph: true
-    github-pull-request:
-      policy: public
-    pr-actions: true
-    taskgraph-actions: true
-    trust-domain-scopes: true
-
 glean:
   repo: https://github.com/mozilla/glean
   repo_type: git
