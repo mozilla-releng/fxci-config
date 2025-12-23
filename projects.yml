@@ -1404,22 +1404,6 @@ staging-firefox-translations-training:
     targets:
       - run-pipeline
 
-# Bug 1822403: Enable the profiler repository on taskcluster
-firefox-profiler:
-  repo: https://github.com/firefox-devtools/profiler
-  repo_type: git
-  trust_domain: mozilla
-  trust_project: firefox-profiler
-  branches:
-    - name: main
-      level: 1
-  features:
-    github-taskgraph: true
-    github-pull-request:
-      policy: public
-    taskgraph-actions: true
-    trust-domain-scopes: true
-
 # Bug 1891530: Add taskcluster to fx-desktop-qa-automation
 fx-desktop-qa-automation:
   repo: https://github.com/mozilla/fx-desktop-qa-automation
