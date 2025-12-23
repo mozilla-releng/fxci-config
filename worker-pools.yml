@@ -2042,7 +2042,7 @@ pools:
         suffix: ''
     description: Worker for Wayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
-    email_on_error: true
+    email_on_error: false
     provider_id: fxci-level1-gcp
     config:
       worker-config:
@@ -2257,7 +2257,7 @@ pools:
   - pool_id: 'gecko-t/t-linux-2204-wayland-root-exp'  # Bug 1874877
     description: Worker for testing Wayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
-    email_on_error: true
+    email_on_error: false
     provider_id: fxci-level1-gcp
     config:
       worker-config:
@@ -2279,7 +2279,7 @@ pools:
       - pool-group: gecko-t
     description: Worker for Wayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
-    email_on_error: true
+    email_on_error: false
     provider_id: fxci-level1-gcp
     config:
       worker-config:
