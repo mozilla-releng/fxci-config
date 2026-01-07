@@ -2045,7 +2045,6 @@
     - queue:cancel-task-group:xpi-level-1/*
     - queue:seal-task-group:xpi-level-1/*
     - docker-worker:cache:xpi-level-1-*
-    - secrets:get:project/xpi/xpi-github-clone-ssh
     - project:xpi:releng:signing:cert:dep-signing
     - queue:create-task:low:scriptworker-k8s/xpi-t-*
   to:
@@ -2058,6 +2057,18 @@
         # give them level 1 scopes for master, PRs, and other branches.
         - repo:github.com/mozilla-extensions/*
         - repo:github.com/mozilla-releng/staging-xpi-*
+
+- grant:
+    # Only grant clone secret to the private repos that need it, and trusted
+    # contexts in xpi-manifest.
+    - secrets:get:project/xpi/xpi-github-clone-ssh
+  to:
+    - project:
+        feature: xpi-roles
+        job: [pull-request:trusted, branch:*, cron:*, action:*, tag:*]
+    - roles:
+        - repo:github.com/mozilla-extensions/cehomepage:*
+        - repo:github.com/mozilla-extensions/cpmanager:*
 
 - grant:
     - queue:get-artifact:xpi/*
