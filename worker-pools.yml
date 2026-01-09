@@ -3459,6 +3459,7 @@ pools:
         suffix: source-alpha
         implementation: generic-worker/windows
       - pool-group: enterprise-t
+      - pool-group: enterprise-t
         suffix: source
       - pool-group: gecko-t
         suffix: ssd
@@ -3502,6 +3503,7 @@ pools:
               alpha: 500
               gpu: 600
               default: 100
+          enterprise-t: 50
           default: 5
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
