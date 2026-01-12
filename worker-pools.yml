@@ -3821,18 +3821,19 @@ pools:
       - pool-group: gecko-t
         suffix: -noscratch
         instance_types: [*c3d-standard-8]
-      - pool-group: gecko-t
-        suffix: -16c32gb
-        instance_types: [*c3d-highcpu-16]
-      - pool-group: enterprise-t
-        suffix: -16c32gb
-        instance_types: [*c3d-highcpu-16]
       - pool-group: comm-t
         suffix: -noscratch
         instance_types: [*c3d-standard-8]
       - pool-group: mozilla-t
         suffix: -noscratch
         instance_types: [*c3d-standard-8]
+      # highcpu variants
+      - pool-group: gecko-t
+        suffix: -16c32gb
+        instance_types: [*c3d-highcpu-16]
+      - pool-group: enterprise-t
+        suffix: -16c32gb
+        instance_types: [*c3d-highcpu-16]
     email_on_error: true
     config:
       minCapacity: 0
