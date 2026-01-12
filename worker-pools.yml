@@ -3827,6 +3827,9 @@ pools:
       - pool-group: mozilla-t
         suffix: -noscratch
         instance_types: [*c3d-standard-8]
+      - pool-group: enterprise-t
+        suffix: -noscratch
+        instance_types: [*c3d-standard-8]
       # highcpu variants
       - pool-group: gecko-t
         suffix: -16c32gb
