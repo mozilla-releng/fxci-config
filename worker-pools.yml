@@ -3821,6 +3821,11 @@ pools:
         suffix: 'xlarge-2404-wayland'
         implementation: generic-worker/linux
         instance_types: [*c2-standard-8-60gb]
+      # GW / AMD / wayland / noscratch
+      - pool-group: translations-t
+        suffix: 'gw-noscratch-amd'
+        implementation: generic-worker/linux-headless
+        instance_types: [*c3d-standard-4]
     email_on_error: true
     config:
       minCapacity: 0
