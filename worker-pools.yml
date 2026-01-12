@@ -154,6 +154,11 @@ worker-defaults:
             taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
             taskclusterProxyPort: 80
             wstAudience: firefoxcitc
+      generic-worker/linux-headless:
+        genericWorker:
+          config:
+            <<: *gw-config
+            headlessTasks: true
       generic-worker/linux-d2g:
         genericWorker:
           config:
@@ -3833,7 +3838,7 @@ pools:
           default: *default-gcp-regions
       image:
         by-implementation:
-          generic-worker/linux-d2g: ubuntu-2404-headless
+          generic-worker/linux-(d2g|headless): ubuntu-2404-headless
           generic-worker/linux: ubuntu-2404-wayland
   - pool_id: '{pool-group}/t-linux-docker{suffix}-amd-alpha'
     description: Worker for test tasks. Used by RelSRE to qualify images.
