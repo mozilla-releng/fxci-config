@@ -757,6 +757,7 @@ def generate_pool_variants(worker_pools, environment):
             "locations",
             "maxCapacity",
             "minCapacity",
+            "regions",
             "security",
             "tags.sourceBranch",
             "vmSizes.launchConfig.hardwareProfile.vmSize",
