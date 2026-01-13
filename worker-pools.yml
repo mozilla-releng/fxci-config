@@ -130,8 +130,8 @@ worker-defaults:
             taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
             taskclusterProxyPort: 80
             wstAudience: firefoxcitc
-      # generic-worker configs for images build from worker-images
-      generic-worker/linux-wayland:
+      # generic-worker configs for images built from worker-images
+      generic-worker/linux:
         genericWorker:
           config: &gw-config
             cachesDir: /home/generic-worker/caches
@@ -2129,7 +2129,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 10
-      implementation: generic-worker/linux-wayland
+      implementation: generic-worker/linux
       regions: *default-gcp-regions
       image: relsre-gw-fxci-gcp-2404-amd64-gui-alpha
       instance_types:
@@ -3799,21 +3799,21 @@ pools:
       # GW / Intel / wayland
       - pool-group: gecko-t
         suffix: '2404-wayland'
-        implementation: generic-worker/linux-wayland
+        implementation: generic-worker/linux
         instance_types: [*c2-standard-4-60gb]
       - pool-group: gecko-t
         # TODO: consolidate this with above
         suffix: '2404-wayland-snap'
-        implementation: generic-worker/linux-wayland
+        implementation: generic-worker/linux
         instance_types: [*c2-standard-4-60gb]
       - pool-group: mozilla-t
         suffix: '2404-wayland'
-        implementation: generic-worker/linux-wayland
+        implementation: generic-worker/linux
         instance_types: [*c2-standard-4-60gb]
       # GW / Intel / wayland / xlarge
       - pool-group: gecko-t
         suffix: 'xlarge-2404-wayland'
-        implementation: generic-worker/linux-wayland
+        implementation: generic-worker/linux
         instance_types: [*c2-standard-8-60gb]
     email_on_error: true
     config:
@@ -3833,7 +3833,7 @@ pools:
       image:
         by-implementation:
           generic-worker/linux-d2g: ubuntu-2404-headless
-          generic-worker/linux-wayland: ubuntu-2404-wayland
+          generic-worker/linux: ubuntu-2404-wayland
   - pool_id: '{pool-group}/t-linux-docker{suffix}-amd-alpha'
     description: Worker for test tasks. Used by RelSRE to qualify images.
     owner: release+tc-workers@mozilla.com
