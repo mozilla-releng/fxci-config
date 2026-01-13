@@ -130,18 +130,21 @@ worker-defaults:
             taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
             taskclusterProxyPort: 80
             wstAudience: firefoxcitc
-      generic-worker/linux-d2g:  # for headless images built from worker-images
+      # generic-worker configs for images build from worker-images
+      generic-worker/linux-wayland:
         genericWorker:
-          config: &gw-config-d2g
+          config: &gw-config
             cachesDir: /home/generic-worker/caches
             cleanUpTaskDirs: true
-            disableNativePayloads: true
+            d2gConfig:
+              enableD2G: false
+            disableNativePayloads: false
             disableReboots: false
             downloadsDir: /home/generic-worker/downloads
             ed25519SigningKeyLocation: '/etc/generic-worker/ed25519_key'
             enableInteractive: true
             enableRunTaskAsCurrentUser: false
-            headlessTasks: true
+            headlessTasks: false
             idleTimeoutSecs: 300  # 5 minutes
             livelogExecutable: /usr/local/bin/livelog
             numberOfTasksToRun: 0
@@ -151,7 +154,11 @@ worker-defaults:
             taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
             taskclusterProxyPort: 80
             wstAudience: firefoxcitc
-            d2gConfig:
+      generic-worker/linux-d2g:
+        genericWorker:
+          config:
+            <<: *gw-config
+            d2gConfig: &d2g-config
               enableD2G: true
               allowGPUs: false
               allowHostSharedMemory: false
@@ -160,29 +167,20 @@ worker-defaults:
               allowLoopbackAudio: false
               allowLoopbackVideo: true
               allowPrivileged: false
-      generic-worker/linux-d2g-trusted:  # for trusted/l3 images built from worker-images
+            disableNativePayloads: true
+            headlessTasks: true
+      generic-worker/linux-d2g-trusted:
         genericWorker:
           config:
-            <<: *gw-config-d2g
+            <<: *gw-config
             d2gConfig:
-              enableD2G: true
-              allowGPUs: false
-              allowHostSharedMemory: false
+              <<: *d2g-config
               allowInteractive: false
-              allowKVM: false
-              allowLoopbackAudio: false
               allowLoopbackVideo: false
-              allowPrivileged: false
+            disableNativePayloads: true
             enableInteractive: false
+            headlessTasks: true
             livelogExecutable: /bin/false
-      generic-worker/linux-wayland:  # for wayland images built from worker-images
-        genericWorker:
-          config:
-            <<: *gw-config-d2g
-            d2gConfig:
-              enableD2G: false
-            disableNativePayloads: false
-            headlessTasks: false
 
 meta:
   - &default-gcp-regions [us-central1, us-west1]
