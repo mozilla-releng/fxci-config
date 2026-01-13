@@ -3802,7 +3802,8 @@ pools:
         implementation: generic-worker/linux
         instance_types: [*c2-standard-4-60gb]
       - pool-group: gecko-t
-        # TODO: consolidate this with above
+        # This is a separate pool from above as it's granted privileged
+        # os-groups.
         suffix: '2404-wayland-snap'
         implementation: generic-worker/linux
         instance_types: [*c2-standard-4-60gb]
