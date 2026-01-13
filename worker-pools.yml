@@ -3444,6 +3444,8 @@ pools:
       - pool-group: enterprise-t
       - pool-group: enterprise-t
         suffix: source
+      - pool-group: enterprise-t
+        suffix: alpha
       - pool-group: gecko-t
         suffix: ssd
       - pool-group: gecko-t
