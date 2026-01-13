@@ -3446,6 +3446,9 @@ pools:
         suffix: source
       - pool-group: enterprise-t
         suffix: alpha
+      - pool-group: enterprise-t
+        suffix: source-alpha
+        implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: ssd
       - pool-group: gecko-t
