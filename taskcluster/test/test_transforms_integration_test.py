@@ -79,11 +79,23 @@ def run_test(monkeypatch, run_transform, make_transform_config, responses):
         if include_deps:
             task_definitions = {decision_task_id: task["task"]}
             task_definitions.update(ancestors)
+
             def callback(request):
                 payload = json.loads(request.body)
-                resp_body = {"tasks": [{"taskId": task_id, "task": task_def} for task_id, task_def in task_definitions.items() if task_id in payload["taskIds"]]}
+                resp_body = {
+                    "tasks": [
+                        {"taskId": task_id, "task": task_def}
+                        for task_id, task_def in task_definitions.items()
+                        if task_id in payload["taskIds"]
+                    ]
+                }
                 return 200, [], json.dumps(resp_body)
-            responses.add_callback(responses.POST, f"{FIREFOXCI_ROOT_URL}/api/queue/v1/tasks", callback=callback)
+
+            responses.add_callback(
+                responses.POST,
+                f"{FIREFOXCI_ROOT_URL}/api/queue/v1/tasks",
+                callback=callback,
+            )
 
         result = run_transform(
             transforms,

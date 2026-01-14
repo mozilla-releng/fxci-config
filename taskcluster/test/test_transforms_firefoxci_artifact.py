@@ -8,8 +8,9 @@ from typing import Any
 
 import pytest
 from taskgraph.util.copy import deepcopy
-from taskgraph.util.taskcluster import _get_deps, get_task_definition
-from taskgraph.util.taskcluster import _task_definitions_cache
+from taskgraph.util.taskcluster import (
+    _task_definitions_cache,
+)
 from taskgraph.util.templates import merge
 
 from fxci_config_taskgraph.transforms.firefoxci_artifact import transforms
@@ -76,11 +77,23 @@ def run_test(monkeypatch, run_transform, responses):
         if include_deps:
             task_definitions = {decision_task_id: task["task"]}
             task_definitions.update(ancestors)
+
             def callback(request):
                 payload = json.loads(request.body)
-                resp_body = {"tasks": [{"taskId": task_id, "task": task_def} for task_id, task_def in task_definitions.items() if task_id in payload["taskIds"]]}
+                resp_body = {
+                    "tasks": [
+                        {"taskId": task_id, "task": task_def}
+                        for task_id, task_def in task_definitions.items()
+                        if task_id in payload["taskIds"]
+                    ]
+                }
                 return 200, [], json.dumps(resp_body)
-            responses.add_callback(responses.POST, f"{FIREFOXCI_ROOT_URL}/api/queue/v1/tasks", callback=callback)
+
+            responses.add_callback(
+                responses.POST,
+                f"{FIREFOXCI_ROOT_URL}/api/queue/v1/tasks",
+                callback=callback,
+            )
 
         transform_task = {
             "name": name,
