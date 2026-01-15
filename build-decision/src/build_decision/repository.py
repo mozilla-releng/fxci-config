@@ -179,4 +179,5 @@ class Repository:
             "url": self.repo_url,
             "project": self.project,
             "level": self.level,
+            "type": self.repository_type,
         }
