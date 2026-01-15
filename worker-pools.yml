@@ -1361,7 +1361,7 @@ pools:
           default: monopacker-docker-worker-current
       minCapacity:
         by-pool-group:
-          gecko-[13]: 1
+          gecko-3: 1
           default: 0
       maxCapacity:
         by-pool-group:
