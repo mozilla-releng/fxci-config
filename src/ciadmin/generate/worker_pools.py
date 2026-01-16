@@ -5,7 +5,6 @@
 import copy
 import hashlib
 import json
-import pprint
 
 import attr
 from tcadmin.resources import WorkerPool
@@ -89,18 +88,6 @@ def _validate_instance_capacity(pool_id, implementation, instance_types):
                 f"{implementation} does not support capacity-per-instance != 1 "
                 f"in worker {pool_id}.",
             )
-
-
-def _populate_deployment_id(instance_worker_config, image_id):
-    if "genericWorker" not in instance_worker_config or instance_worker_config[
-        "genericWorker"
-    ]["config"].get("deploymentId"):
-        return
-    _hash_config = copy.deepcopy(instance_worker_config)
-    _hash_config["imageId"] = image_id
-    instance_worker_config["genericWorker"]["config"]["deploymentId"] = hashlib.sha256(
-        pprint.pformat(_hash_config).encode("utf-8")
-    ).hexdigest()
 
 
 def _populate_launch_config_id(launch_config, pool_id):
@@ -316,7 +303,6 @@ def get_aws_provider_config(
                             "wstServerURL", aws_config["wst_server_url"]
                         )
                 image_id = image.get(provider_id, region)
-                _populate_deployment_id(instance_worker_config, image_id)
                 launch_config = {
                     "region": region,
                     "launchConfig": {
