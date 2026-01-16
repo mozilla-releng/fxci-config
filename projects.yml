@@ -569,6 +569,7 @@ enterprise-firefox:
     - name: "*"
       level: 1
   features:
+    gecko-cron: true
     gecko-roles: true
     github-taskgraph: true
     github-pull-request:
