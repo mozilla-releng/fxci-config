@@ -32,7 +32,7 @@ scopes:
   - assume:hook-id:${hookGroupId}/${hookId}
 payload:
   # built by pushes to the fxci-config repository
-  image: mozillareleases/build-decision:b85b7e401f2581bedef95c2a37a3201713f9c0fb@sha256:6c9263f4ff761dc7ce91fe5fbbd7359a15b8b19ee6fd61fbf2fcf78d38c5ff30
+  image: mozillareleases/build-decision:ed88efef5c4b4dca87066d03ae0a90e18fbe23cd@sha256:b720e21f4e5b3aeec5f8d8a8924a83507e271267ab1eef4f2c86321c7885ae11
   env:
     $merge:
       - $if: allow_input
