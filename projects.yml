@@ -588,6 +588,8 @@ staging-firefox:
   branches:
     - name: main
       level: 1
+    - name: enterprise-main
+      level: 1
     - name: tc-github
       level: 1
   features:
