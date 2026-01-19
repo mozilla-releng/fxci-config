@@ -35,7 +35,7 @@ HOOK_RETENTION_TIME = datetime.timedelta(days=60)
 
 def should_hash(project):
     if project.feature("gecko-actions"):
-        if not project.feature("hg-push") and not project.feature("gecko-cron"):
+        if not project.feature("hg-push") and not project.feature("taskgraph-cron"):
             return False
         if project.is_try:
             return False

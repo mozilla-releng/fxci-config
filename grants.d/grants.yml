@@ -2176,7 +2176,7 @@
     - project:releng:signing:cert:production-signing
   to:
     - project:
-        feature: gecko-cron
+        feature: taskgraph-cron
         alias: mozilla-central
         trust_domain: gecko
         job: cron:nightly-*
@@ -2192,7 +2192,7 @@
   to:
     - project:
         alias: comm-central
-        feature: gecko-cron
+        feature: taskgraph-cron
         trust_domain: comm
         job: cron:nightly-*
 
