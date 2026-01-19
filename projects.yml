@@ -595,6 +595,7 @@ staging-firefox:
     github-taskgraph: true
     pr-actions: true
     taskgraph-actions: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
 
