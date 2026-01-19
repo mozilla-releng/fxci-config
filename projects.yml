@@ -569,7 +569,6 @@ enterprise-firefox:
     - name: "*"
       level: 1
   features:
-    gecko-cron: true
     gecko-roles: true
     github-taskgraph: true
     github-pull-request:
@@ -577,6 +576,7 @@ enterprise-firefox:
     pr-actions: true
     scriptworker: true
     taskgraph-actions: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
 
