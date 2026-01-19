@@ -1442,7 +1442,8 @@ pools:
       image: ubuntu-2404-headless
       minCapacity:
         by-pool-group:
-          gecko-[13]: 1
+          gecko-1: 5
+          gecko-3: 1
           '(app-services|enterprise|glean|mozillavpn|mobile|mozilla|translations)-1': 1
           default: 0
       maxCapacity:
