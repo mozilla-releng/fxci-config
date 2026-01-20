@@ -26,7 +26,6 @@
 #                 values, defaulting to false
 #   - 'is-trunk' -- Branches containing 'landed' code destined for nightly builds. These branches have a shared index
 #       that can be referenced by the tip revision on any push.
-#   - `gecko-cron` -- tasks defined in `.cron.yml` can run for this project (gecko/comm repos only)
 #   - `hg-push` -- decision tasks run for pushes to this hg project's repository
 #   - `gecko-roles` -- this repository should have gecko-related roles assigned (for users, actions, cron, etc.)
 #   - `mobile-roles` -- this repository should have https://github.com/mozilla-mobile roles assigned (for users, actions, cron, etc.)
@@ -67,9 +66,9 @@ ash:
   parent_repo: https://hg.mozilla.org/mozilla-central
   features:
     gecko-actions: true
-    gecko-cron: false
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
 elm:
@@ -82,9 +81,9 @@ elm:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
 mozilla-release:
@@ -98,9 +97,9 @@ mozilla-release:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
@@ -119,9 +118,9 @@ comm-release:
   parent_repo: https://hg.mozilla.org/releases/mozilla-release
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
     shipit: true
@@ -136,9 +135,9 @@ mozilla-esr115:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
@@ -157,9 +156,9 @@ mozilla-esr140:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
@@ -178,9 +177,9 @@ comm-esr115:
   parent_repo: https://hg.mozilla.org/releases/mozilla-esr115
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
     shipit: true
@@ -195,9 +194,9 @@ comm-esr140:
   parent_repo: https://hg.mozilla.org/releases/mozilla-esr140
   features:
     gecko-actions: true
-    gecko-cron: false
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
     shipit: true
@@ -211,9 +210,9 @@ oak:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
@@ -228,9 +227,9 @@ pine:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
@@ -251,9 +250,9 @@ toolchains:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: false
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
 mozilla-beta:
@@ -267,9 +266,9 @@ mozilla-beta:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
@@ -291,9 +290,9 @@ comm-beta:
   parent_repo: https://hg.mozilla.org/releases/mozilla-beta
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
     shipit: true
@@ -311,10 +310,10 @@ mozilla-central:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
     is-trunk: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
@@ -345,10 +344,10 @@ comm-central:
   parent_repo: https://hg.mozilla.org/mozilla-central
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
     is-trunk: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
@@ -366,9 +365,9 @@ cedar:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
@@ -386,9 +385,9 @@ birch:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
@@ -403,9 +402,9 @@ cypress:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
@@ -428,9 +427,9 @@ try:
   is_try: true
   features:
     gecko-actions: true
-    gecko-cron: false
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
@@ -446,9 +445,9 @@ try-comm-central:
   is_try: true
   features:
     gecko-actions: true
-    gecko-cron: false
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
     shipit: true
@@ -462,9 +461,9 @@ larch:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: false
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
 maple:
@@ -477,9 +476,9 @@ maple:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
   cron:
@@ -495,9 +494,9 @@ jamun:
   trust_domain: comm
   features:
     gecko-actions: true
-    gecko-cron: false
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
 autoland:
@@ -511,10 +510,10 @@ autoland:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: true
     gecko-roles: true
     hg-push: true
     is-trunk: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
     lando: true
@@ -533,9 +532,9 @@ holly:
   trust_domain: gecko
   features:
     gecko-actions: true
-    gecko-cron: false
     gecko-roles: true
     hg-push: true
+    taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
 
@@ -569,7 +568,6 @@ enterprise-firefox:
     - name: "*"
       level: 1
   features:
-    gecko-cron: true
     gecko-roles: true
     github-taskgraph: true
     github-pull-request:
@@ -577,6 +575,7 @@ enterprise-firefox:
     pr-actions: true
     scriptworker: true
     taskgraph-actions: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
 
@@ -588,6 +587,8 @@ staging-firefox:
   branches:
     - name: main
       level: 1
+    - name: enterprise-main
+      level: 1
     - name: tc-github
       level: 1
   features:
@@ -595,6 +596,7 @@ staging-firefox:
     github-taskgraph: true
     pr-actions: true
     taskgraph-actions: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
 

@@ -174,7 +174,7 @@ firefoxci:
           on_event: on-failed
         - to_address: sheriffs+exceptioncron@mozilla.org
           on_event: on-exception
-    taskgraph:
+    default:
       hooks_owner: release+tc-hooks@mozilla.com
       notify_emails:
         - to_address: release+failedcron@mozilla.com
@@ -306,6 +306,6 @@ staging:
     gecko:
       hooks_owner: release+tc-hooks-staging@mozilla.com
       notify_emails: []
-    taskgraph:
+    default:
       hooks_owner: release+tc-hooks-staging@mozilla.com
       notify_emails: []
