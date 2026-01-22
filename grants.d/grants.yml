@@ -756,7 +756,7 @@
     - project:releng:balrog:server:nightly
   to:
     - project:
-        alias: [oak, cedar, pine, larch, cypress]
+        alias: [oak, cedar, pine, larch, cypress, maple]
 
 # grant relman access to trigger mozilla-central & mozilla-releases hooks
 # bug 1899553: grant relman access to trigger google play pushes
