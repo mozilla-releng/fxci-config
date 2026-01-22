@@ -68,6 +68,29 @@
             level: 3
             feature: [shipit]
 
+# Grant merge automation action scopes to shipit for gecko only
+- client:
+      project/releng/shipit/staging:
+          description: Shipit staging client
+          scopes:
+              - hooks:trigger-hook:project-{trust_domain}/in-tree-action-1-merge-automation/*
+  for:
+      - project:
+            trust_domain: [gecko]
+            level: 1
+            feature: [shipit]
+
+- client:
+      project/releng/shipit/production:
+          description: ''
+          scopes:
+              - hooks:trigger-hook:project-{trust_domain}/in-tree-action-3-merge-automation/*
+  for:
+      - project:
+            trust_domain: [gecko]
+            level: 3
+            feature: [shipit]
+
 # Amendments to the shipitscript clients for those that need to be able to
 # rebuild product details.
 - client:
