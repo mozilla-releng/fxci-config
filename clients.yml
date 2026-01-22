@@ -1012,6 +1012,7 @@ project/releng/scriptworker/v2/shipit/dev/firefoxci-gecko-1:
     - project:releng:services/shipit_api/schedule_phase/firefox-android/ship_android
     - project:releng:services/shipit_api/schedule_phase/firefox-android/promote_android
     - project:releng:services/shipit_api/update_release_status
+    - project:releng:services/shipit_api/mark_merge_automation_completed/firefox
     - queue:claim-work:scriptworker-k8s/gecko-1-shipit-dev
     - queue:worker-id:gecko-1-shipit-dev/gecko-1-shipit-dev-*
 project/releng/scriptworker/v2/shipit/prod/firefoxci-comm-1:
@@ -1043,6 +1044,7 @@ project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-1:
     - project:releng:services/shipit_api/schedule_phase/firefox-android/ship_android
     - project:releng:services/shipit_api/schedule_phase/firefox-android/promote_android
     - project:releng:services/shipit_api/update_release_status
+    - project:releng:services/shipit_api/mark_merge_automation_completed/firefox
     - queue:claim-work:scriptworker-k8s/gecko-1-shipit
     - queue:worker-id:gecko-1-shipit/gecko-1-shipit-*
 project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-3:
@@ -1058,6 +1060,7 @@ project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-3:
     - project:releng:services/shipit_api/schedule_phase/firefox-android/ship_android
     - project:releng:services/shipit_api/schedule_phase/firefox-android/promote_android
     - project:releng:services/shipit_api/update_release_status
+    - project:releng:services/shipit_api/mark_merge_automation_completed/firefox
     - queue:claim-work:scriptworker-k8s/gecko-3-shipit
     - queue:worker-id:gecko-3-shipit/gecko-3-shipit-*
 project/releng/scriptworker/v2/shipit/prod/firefoxci-mobile-1:
