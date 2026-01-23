@@ -280,6 +280,10 @@ meta:
       - *persistent-disk-75gb
       - *scratch-disk
     machine_type: c4d-standard-8-lssd
+    metadata:
+      items:
+        - key: serial-port-logging-enable
+          value: true
   - &c4d-highcpu-4
     disks:
       - *persistent-disk-75gb
