@@ -316,6 +316,7 @@
     - project:releng:googleplay:product:focus-android:dep
     - project:releng:microsoftstore:mock
     - project:releng:ship-it:action:create-new-release
+    - project:releng:ship-it:action:mark-as-merged
     - project:releng:ship-it:action:mark-as-shipped
     - project:releng:ship-it:action:mark-as-started
     - project:releng:ship-it:action:update-product-channel-version
@@ -366,6 +367,7 @@
     - project:releng:flathub:firefox:mock
     - project:releng:microsoftstore:mock
     - project:releng:ship-it:action:create-new-release
+    - project:releng:ship-it:action:mark-as-merged
     - project:releng:ship-it:action:mark-as-shipped
     - project:releng:ship-it:action:mark-as-started
     - project:releng:ship-it:action:update-product-channel-version
