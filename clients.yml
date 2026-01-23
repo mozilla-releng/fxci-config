@@ -1401,3 +1401,8 @@ project/mozci/sheriff-automation:
     - hooks:trigger-hook:project-gecko/in-tree-action-2-generic/*
     - hooks:trigger-hook:project-gecko/in-tree-action-3-backfill/*
     - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
+
+user/jcristau:
+  description: work around too many groups (https://github.com/taskcluster/taskcluster/issues/4333)
+  scopes:
+    - assume:mozilla-group:releng
