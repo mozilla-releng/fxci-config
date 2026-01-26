@@ -820,9 +820,6 @@ pools:
       - pool-group: scriptworker-1
       - pool-group: scriptworker-3
         chain-of-trust: trusted
-      - pool-group: xpi-1
-      - pool-group: xpi-3
-        chain-of-trust: trusted
       - pool-group: releng-1
       - pool-group: releng-3
         chain-of-trust: trusted
@@ -1529,9 +1526,6 @@ pools:
       - pool-group: scriptworker-1
       - pool-group: scriptworker-3
         chain-of-trust: trusted
-      - pool-group: xpi-1
-      - pool-group: xpi-3
-        chain-of-trust: trusted
       - pool-group: taskgraph-1
       - pool-group: taskgraph-3
         chain-of-trust: trusted
@@ -1690,9 +1684,6 @@ pools:
         chain-of-trust: trusted
       - pool-group: glean-1
       - pool-group: glean-3
-        chain-of-trust: trusted
-      - pool-group: xpi-1
-      - pool-group: xpi-3
         chain-of-trust: trusted
       - pool-group: taskgraph-1
       - pool-group: taskgraph-3
