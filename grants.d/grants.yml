@@ -894,6 +894,18 @@
         job: [branch:enterprise-main]
         level: 3
 
+# Bug 2013033: project maintenance scopes for enterprise-developers
+- grant:
+    - hooks:trigger-hook:project-enterprise/in-tree-action-1-generic/*
+    - hooks:trigger-hook:project-enterprise/in-tree-action-3-generic/*
+    - secrets:set:project/enterprise/*
+    - secrets:get:project/enterprise/*
+    - queue:rerun-task:enterprise-level-*
+    - queue:cancel-task:enterprise-level-*
+  to:
+    - roles:
+        - mozillians-group:enterprise-developers
+
 ##
 # Non-gecko tree projects
 
