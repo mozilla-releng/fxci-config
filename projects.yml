@@ -565,6 +565,8 @@ enterprise-firefox:
   branches:
     - name: enterprise-main
       level: 3
+    - name: enterprise-release
+      level: 3
     - name: "*"
       level: 1
   features:
