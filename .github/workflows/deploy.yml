@@ -21,7 +21,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GCP_CHECK_TOKEN: ${{ secrets.GCP_CHECK_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -52,7 +52,7 @@ jobs:
       TASKCLUSTER_ACCESS_TOKEN: ${{secrets.TASKCLUSTER_ACCESS_TOKEN}}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
