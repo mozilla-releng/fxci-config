@@ -1058,6 +1058,7 @@ build-mar:
       level: 1
   default_branch: master
   trust_domain: releng
+  trust_project: build-mar
   features:
     github-taskgraph: true
     github-pull-request:
