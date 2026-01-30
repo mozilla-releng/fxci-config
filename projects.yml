@@ -1244,7 +1244,7 @@ staging-adhoc-signing:
     taskgraph-actions: true
     github-taskgraph: true
     github-pull-request:
-      policy: collaborators
+      policy: public
 
 adhoc-signing:
   repo: https://github.com/mozilla-releng/adhoc-signing
@@ -1259,7 +1259,7 @@ adhoc-signing:
     taskgraph-actions: true
     github-taskgraph: true
     github-pull-request:
-      policy: collaborators
+      policy: public
 
 # Bug 1614312: Add code-analysis project for code-review & code-coverage
 code-review:
