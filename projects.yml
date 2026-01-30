@@ -1059,9 +1059,11 @@ build-mar:
   default_branch: master
   trust_domain: releng
   features:
+    github-taskgraph: true
     github-pull-request:
       policy: public
     taskgraph-actions: true
+    trust-domain-scopes: true
 
 firefox-ci-playground:
   repo: https://github.com/mozilla-releng/firefox-ci-playground
