@@ -2125,7 +2125,7 @@
   to:
     - project:
         feature: adhoc-roles
-        job: [branch:*, action:*, pull-request:trusted, action:*, cron:*]
+        job: [branch:*, action:*, pull-request:*, action:*, cron:*]
 
 - grant:
     - project:adhoc:releng:signing:cert:release-signing
