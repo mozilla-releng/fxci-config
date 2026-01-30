@@ -11,7 +11,7 @@ import requests
 import taskcluster
 from taskgraph.util.attributes import attrmatch
 from taskgraph.util.taskcluster import get_ancestors as taskgraph_get_ancestors
-from taskgraph.util.taskcluster import get_root_url
+from taskgraph.util.taskcluster import get_root_url, get_task_definitions
 
 from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL
 
@@ -71,12 +71,6 @@ def _fetch_task_graph(decision_index_path: str) -> dict[str, dict[str, Any]]:
     return task_graph
 
 
-@cache
-def _queue_task(task_id):
-    queue = get_taskcluster_client("queue")
-    return queue.task(task_id)
-
-
 def _rewrite_task_datestamps(task_def):
     """Rewrite absolute datestamps from a concrete task definition into
     relative ones that can then be used to schedule a new task."""
@@ -134,6 +128,7 @@ def find_tasks(
     access to task definitions for these tasks.)
     """
     tasks = {}
+    ancestors = {}
 
     for task_id, task in _fetch_task_graph(decision_index_path).items():
         assert isinstance(task, dict)
@@ -161,28 +156,38 @@ def find_tasks(
         if include_deps:
             patterns = [re.compile(p) for p in include_deps]
             for upstream_task_id, label in get_ancestors(task_id).items():
-                if any([pat.match(label) for pat in patterns]):
-                    task_def = _queue_task(upstream_task_id)
-                    # The task definitions from `get_ancestors` are fully
-                    # concrete, unlike the ones that `_fetch_task_graph`
-                    # returns, which have certain things missing or in a
-                    # different form. We need to massage the former to look
-                    # like the latter to allow callers to treat them the same.
+                if any(pat.match(label) for pat in patterns):
+                    ancestors.setdefault(task_id, []).append(upstream_task_id)
 
-                    # `taskQueueId` should never be present, because it will
-                    # never match what it ought to be when we reschedule tasks
-                    # in staging.
-                    if "taskQueueId" in task_def:
-                        del task_def["taskQueueId"]
+    upstream_task_ids = sum(ancestors.values(), [])
+    if upstream_task_ids:
+        upstream_task_defs = get_task_definitions(upstream_task_ids)
 
-                    # All datestamps come in as absolute ones, many of which
-                    # will be in the past. We need to rewrite these to relative
-                    # ones to make the task reschedulable.
-                    # We also need to remove absolute revisions from payloads
-                    # to avoid issues with revisions not matching the refs
-                    # that are given.
-                    tasks[upstream_task_id] = _remove_task_revisions(
-                        _rewrite_task_datestamps(task_def)
-                    )
+    for task_id in ancestors:
+        for upstream_task_id in ancestors[task_id]:
+            task_def = upstream_task_defs.get(upstream_task_id)
+            if not task_def:
+                continue
+            # The task definitions from `get_ancestors` are fully
+            # concrete, unlike the ones that `_fetch_task_graph`
+            # returns, which have certain things missing or in a
+            # different form. We need to massage the former to look
+            # like the latter to allow callers to treat them the same.
+
+            # `taskQueueId` should never be present, because it will
+            # never match what it ought to be when we reschedule tasks
+            # in staging.
+            if "taskQueueId" in task_def:
+                del task_def["taskQueueId"]
+
+            # All datestamps come in as absolute ones, many of which
+            # will be in the past. We need to rewrite these to relative
+            # ones to make the task reschedulable.
+            # We also need to remove absolute revisions from payloads
+            # to avoid issues with revisions not matching the refs
+            # that are given.
+            tasks[upstream_task_id] = _remove_task_revisions(
+                _rewrite_task_datestamps(task_def)
+            )
 
     return tasks
