@@ -995,7 +995,7 @@ requires-dist = [
     { name = "aiohttp-retry" },
     { name = "async-timeout" },
     { name = "attrs" },
-    { name = "iso8601", specifier = "==0.1.16" },
+    { name = "iso8601", specifier = "==2.1.0" },
     { name = "json-e" },
     { name = "mozilla-repo-urls" },
     { name = "pytest" },
@@ -1220,11 +1220,11 @@ wheels = [
 
 [[package]]
 name = "iso8601"
-version = "0.1.16"
+version = "2.1.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/45/66/a943f702763c879e2754b46089a136ee1e58f0f720c58fa640c00281d3fd/iso8601-0.1.16.tar.gz", hash = "sha256:36532f77cc800594e8f16641edae7f1baf7932f05d8e508545b95fc53c6dc85b", size = 19599, upload-time = "2021-07-16T12:55:55.615Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b9/f3/ef59cee614d5e0accf6fd0cbba025b93b272e626ca89fb70a3e9187c5d15/iso8601-2.1.0.tar.gz", hash = "sha256:6b1d3829ee8921c4301998c909f7829fa9ed3cbdac0d3b16af2d743aed1ba8df", size = 6522, upload-time = "2023-10-03T00:25:39.317Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d7/f8/8f315ea8272359d9ae57086581fb4c469be80e6b36bb36583c11bb19e6c4/iso8601-0.1.16-py2.py3-none-any.whl", hash = "sha256:906714829fedbc89955d52806c903f2332e3948ed94e31e85037f9e0226b8376", size = 10345, upload-time = "2021-07-16T12:55:53.946Z" },
+    { url = "https://files.pythonhosted.org/packages/6c/0c/f37b6a241f0759b7653ffa7213889d89ad49a2b76eb2ddf3b57b2738c347/iso8601-2.1.0-py3-none-any.whl", hash = "sha256:aac4145c4dcb66ad8b648a02830f5e2ff6c24af20f4f482689be402db2429242", size = 7545, upload-time = "2023-10-03T00:25:32.304Z" },
 ]
 
 [[package]]
