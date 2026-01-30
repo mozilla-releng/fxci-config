@@ -891,7 +891,7 @@
   to:
     - project:
         alias: enterprise-firefox
-        job: [branch:enterprise-main]
+        job: [branch:*]
         level: 3
 
 # Bug 2013033: project maintenance scopes for enterprise-developers
