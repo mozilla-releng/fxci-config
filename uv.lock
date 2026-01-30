@@ -995,7 +995,7 @@ requires-dist = [
     { name = "aiohttp-retry" },
     { name = "async-timeout" },
     { name = "attrs" },
-    { name = "iso8601", specifier = "==0.1.12" },
+    { name = "iso8601", specifier = "==0.1.16" },
     { name = "json-e" },
     { name = "mozilla-repo-urls" },
     { name = "pytest" },
@@ -1076,6 +1076,7 @@ dependencies = [
     { name = "proto-plus" },
     { name = "protobuf" },
 ]
+sdist = { url = "https://files.pythonhosted.org/packages/49/f7/4947a4a0423e43167b4397bf4a9ef84d3aa64a2af38343314c5c70d8d0bd/google_cloud_compute-1.41.0.tar.gz", hash = "sha256:8cd07f053c3bf910e8abe2fbeffa6f665f105eb9be8716ee85484e6e0a08314b", size = 4675744, upload-time = "2026-01-15T13:15:46.085Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5f/85/30f1379edd6948458f575e25a6fb2e08bb25e96913990c6cc5e399e32999/google_cloud_compute-1.41.0-py3-none-any.whl", hash = "sha256:ca5266b8dc707736aca0da48b39a94fe10b202d81c6290e8b464d0a63af0fd2e", size = 3530551, upload-time = "2026-01-09T14:53:51.356Z" },
 ]
@@ -1219,12 +1220,11 @@ wheels = [
 
 [[package]]
 name = "iso8601"
-version = "0.1.12"
+version = "0.1.16"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/45/13/3db24895497345fb44c4248c08b16da34a9eb02643cea2754b21b5ed08b0/iso8601-0.1.12.tar.gz", hash = "sha256:49c4b20e1f38aa5cf109ddcd39647ac419f928512c869dc01d5c7098eddede82", size = 8868, upload-time = "2017-07-27T22:07:27.72Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/45/66/a943f702763c879e2754b46089a136ee1e58f0f720c58fa640c00281d3fd/iso8601-0.1.16.tar.gz", hash = "sha256:36532f77cc800594e8f16641edae7f1baf7932f05d8e508545b95fc53c6dc85b", size = 19599, upload-time = "2021-07-16T12:55:55.615Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ef/57/7162609dab394d38bbc7077b7ba0a6f10fb09d8b7701ea56fa1edc0c4345/iso8601-0.1.12-py2.py3-none-any.whl", hash = "sha256:210e0134677cc0d02f6028087fee1df1e1d76d372ee1db0bf30bf66c5c1c89a3", size = 12049, upload-time = "2017-07-27T22:07:22.777Z" },
-    { url = "https://files.pythonhosted.org/packages/5c/dc/44e9065ac128f89c6abe0ed6dc1726b6a8a6f3a59cbbdc986bd42000964d/iso8601-0.1.12-py3-none-any.whl", hash = "sha256:bbbae5fb4a7abfe71d4688fd64bff70b91bbd74ef6a99d964bab18f7fdf286dd", size = 12046, upload-time = "2017-07-27T22:07:25.222Z" },
+    { url = "https://files.pythonhosted.org/packages/d7/f8/8f315ea8272359d9ae57086581fb4c469be80e6b36bb36583c11bb19e6c4/iso8601-0.1.16-py2.py3-none-any.whl", hash = "sha256:906714829fedbc89955d52806c903f2332e3948ed94e31e85037f9e0226b8376", size = 10345, upload-time = "2021-07-16T12:55:53.946Z" },
 ]
 
 [[package]]
