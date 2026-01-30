@@ -1594,6 +1594,9 @@ pools:
       - pool-group: mozilla-1
       - pool-group: mozilla-3
         chain-of-trust: trusted
+      - pool-group: releng-1
+      - pool-group: releng-3
+        chain-of-trust: trusted
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
