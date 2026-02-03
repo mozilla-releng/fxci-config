@@ -18,7 +18,6 @@ dependencies = [
     "mozilla-repo-urls",
     "aiohttp[speedups]<4",
     "pyyaml>=5.3",
-    "iso8601==0.1.16",
     "json-e",
     "aiohttp-retry",
     "simple-github>=2.2.0",
