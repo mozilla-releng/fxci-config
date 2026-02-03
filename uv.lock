@@ -963,7 +963,6 @@ dependencies = [
     { name = "aiohttp-retry" },
     { name = "async-timeout" },
     { name = "attrs" },
-    { name = "iso8601" },
     { name = "json-e" },
     { name = "mozilla-repo-urls" },
     { name = "pytest" },
@@ -995,7 +994,6 @@ requires-dist = [
     { name = "aiohttp-retry" },
     { name = "async-timeout" },
     { name = "attrs" },
-    { name = "iso8601", specifier = "==0.1.16" },
     { name = "json-e" },
     { name = "mozilla-repo-urls" },
     { name = "pytest" },
@@ -1216,15 +1214,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/72/34/14ca021ce8e5dfedc35312d08ba8bf51fdd999c576889fc2c24cb97f4f10/iniconfig-2.3.0.tar.gz", hash = "sha256:c76315c77db068650d49c5b56314774a7804df16fee4402c1f19d6d15d8c4730", size = 20503, upload-time = "2025-10-18T21:55:43.219Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/cb/b1/3846dd7f199d53cb17f49cba7e651e9ce294d8497c8c150530ed11865bb8/iniconfig-2.3.0-py3-none-any.whl", hash = "sha256:f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12", size = 7484, upload-time = "2025-10-18T21:55:41.639Z" },
-]
-
-[[package]]
-name = "iso8601"
-version = "0.1.16"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/45/66/a943f702763c879e2754b46089a136ee1e58f0f720c58fa640c00281d3fd/iso8601-0.1.16.tar.gz", hash = "sha256:36532f77cc800594e8f16641edae7f1baf7932f05d8e508545b95fc53c6dc85b", size = 19599, upload-time = "2021-07-16T12:55:55.615Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d7/f8/8f315ea8272359d9ae57086581fb4c469be80e6b36bb36583c11bb19e6c4/iso8601-0.1.16-py2.py3-none-any.whl", hash = "sha256:906714829fedbc89955d52806c903f2332e3948ed94e31e85037f9e0226b8376", size = 10345, upload-time = "2021-07-16T12:55:53.946Z" },
 ]
 
 [[package]]
