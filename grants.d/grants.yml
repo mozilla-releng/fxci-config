@@ -1504,7 +1504,9 @@
   to:
     - project:
         feature: treescript-phase
-        job: [action:release-promotion]
+        job:
+          - action:release-promotion
+          - action:merge-automation
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:github:action:release
