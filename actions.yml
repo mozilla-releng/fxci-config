@@ -61,6 +61,7 @@
   action_perms:
     - generic
     - release-promotion
+    - merge-automation
 
 - trust_domain: taskgraph
   levels: [1, 3]
