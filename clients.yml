@@ -538,6 +538,10 @@ project/releng/generic-worker/win11-64-24h2-hw-relops1213:
   description: Temp Datacenter Windows 11 experimental worker for RELOPS-1213.
   scopes:
     - assume:worker-type:releng-hardware/win11-64-24h2-hw-relops1213
+project/releng/generic-worker/win11-64-24h2-hw-perf-debug:
+  description: Temp Datacenter Windows 11 experimental worker for RELOPS-2176.
+  scopes:
+    - assume:worker-type:releng-hardware/win11-64-24h2-hw-perf-debug
 project/releng/generic-worker/win11-64-2009-hw-ref:
   description: Datacenter Windows 11 main production worker. 2009 references the os build.
   scopes:
