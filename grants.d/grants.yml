@@ -754,6 +754,15 @@
         alias: [comm-beta]
 
 - grant:
+    - project:comm:thunderbird:releng:flathub:esr
+  to:
+    - projects:
+        job: [action:release-promotion]
+        trust_domain: comm
+        level: [3]
+        alias: [comm-esr140]
+
+- grant:
     - project:comm:thunderbird:releng:flathub:stable
   to:
     - projects:
