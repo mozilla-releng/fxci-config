@@ -171,9 +171,9 @@ ronin_t_windows11_a64_24h2_tester:
     name: win11_a64_24h2_tester
 ronin_t_windows11_64_24h2:
   azure2:
-    version: 1.0.8
+    version: 1.0.9
     resource_group: rg-packer-worker-images
-    deployment_id: "79dd0f2"
+    deployment_id: "ab4658e"
     name: win11_64_24h2
 ronin_t_windows11_64_24h2_alpha:
   azure2:
