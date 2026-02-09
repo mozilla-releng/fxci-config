@@ -79,7 +79,7 @@ worker-defaults:
           config:
             cachesDir: Z:\caches
             cleanUpTaskDirs: true
-            disableReboots: false
+            disableReboots: true
             disableOOMProtection: true
             downloadsDir: Z:\downloads
             livelogExecutable: C:\generic-worker\livelog.exe
