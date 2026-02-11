@@ -1044,6 +1044,15 @@
         feature: trust-domain-scopes
 
 - grant:
+    # routes to support indexing by product
+    - queue:route:index.{trust_domain}.v2.{alias}-pr.*
+    - index:insert-task:{trust_domain}.v2.{alias}-pr.*
+  to:
+    - project:
+        job: [pr-action:*]
+        feature: pr-actions
+
+- grant:
     # routes to support reporting to treeherder
     - queue:route:tc-treeherder-stage.{alias}.*
     - queue:route:tc-treeherder.{alias}.*
