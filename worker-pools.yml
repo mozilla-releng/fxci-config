@@ -3221,6 +3221,9 @@ pools:
       - pool-group: gecko-1
         suffix: alpha
         implementation: generic-worker/windows
+      - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        level: 3
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         level: 3
@@ -3247,7 +3250,7 @@ pools:
         by-pool-group:
           nss-.*: 25
           gecko.*: 250
-          mozillavpn.*: 10
+          default: 10
       worker-config:
         genericWorker:
           config:
