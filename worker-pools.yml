@@ -170,6 +170,7 @@ worker-defaults:
             idleTimeoutSecs: 300  # 5 minutes
             livelogExecutable: /usr/local/bin/livelog
             numberOfTasksToRun: 0
+            requiredDiskSpaceMegabytes: 40960  # 40 GiB
             sentryProject: generic-worker
             shutdownMachineOnIdle: true
             shutdownMachineOnInternalError: true
