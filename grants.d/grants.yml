@@ -1121,6 +1121,21 @@
     - project:
         feature: is-trunk
 
+- grant:
+    - queue:get-artifact:private/project/{trust_domain}/*
+  to:
+    - project:
+        feature: private-artifacts
+        job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
+
+- grant:
+    - queue:get-artifact:private/project/{trust_domain}-{trust_project}/*
+  to:
+    - project:
+        feature: private-artifacts
+        has_trust_project: true
+        job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
+
 ##
 # mozilla roles
 #
