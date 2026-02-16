@@ -53,6 +53,7 @@
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to its trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
 #   - `treescript-phase` -- this repository should have treescript related scopes associated
+#   - `merge-automation` -- this repository should have merge-automation related scopes associated
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
 
 ash:
@@ -99,11 +100,12 @@ mozilla-release:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
+    merge-automation: true
+    shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    lando: true
-    shipit: true
   cron:
     targets:
       - periodic-update
@@ -137,11 +139,12 @@ mozilla-esr115:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
+    merge-automation: true
+    shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    lando: true
-    shipit: true
   cron:
     targets:
       - periodic-update
@@ -158,11 +161,12 @@ mozilla-esr140:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
+    merge-automation: true
+    shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    lando: true
-    shipit: true
   cron:
     targets:
       - periodic-update
@@ -268,11 +272,12 @@ mozilla-beta:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
+    merge-automation: true
+    shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    lando: true
-    shipit: true
   cron:
     targets:
       - android-l10n-sync
@@ -313,10 +318,11 @@ mozilla-central:
     gecko-roles: true
     hg-push: true
     is-trunk: true
+    lando: true
+    merge-automation: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    lando: true
   cron:
     targets:
       - nightly-all
@@ -429,11 +435,12 @@ try:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
+    merge-automation: true
+    shipit: true
     taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
-    lando: true
-    shipit: true
 try-comm-central:
   repo: https://hg.mozilla.org/try-comm-central
   repo_type: hg
@@ -806,6 +813,7 @@ firefox-ios:
     github-publication: true
     github-pull-request:
       policy: public_restricted
+    merge-automation: true
     mobile-roles: true
     mobile-testrail: true
     shipit: true
@@ -837,6 +845,7 @@ staging-firefox-ios:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
+    merge-automation: true
     mobile-roles: true
     mobile-testrail: true
     shipit: true
