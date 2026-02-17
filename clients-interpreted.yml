@@ -75,9 +75,8 @@
               - hooks:trigger-hook:project-{trust_domain}/in-tree-action-1-merge-automation/*
   for:
       - project:
-            trust_domain: [gecko, mobile]
             level: 1
-            feature: [shipit]
+            feature: [shipit, merge-automation]
 
 - client:
       project/releng/shipit/production:
@@ -86,9 +85,8 @@
               - hooks:trigger-hook:project-{trust_domain}/in-tree-action-3-merge-automation/*
   for:
       - project:
-            trust_domain: [gecko, mobile]
             level: 3
-            feature: [shipit]
+            feature: [shipit, merge-automation]
 
 # Amendments to the shipitscript clients for those that need to be able to
 # rebuild product details.
