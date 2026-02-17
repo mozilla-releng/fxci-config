@@ -334,7 +334,6 @@
     - project:releng:googleplay:product:focus-android:dep
     - project:releng:microsoftstore:mock
     - project:releng:ship-it:action:create-new-release
-    - project:releng:ship-it:action:mark-as-merged
     - project:releng:ship-it:action:mark-as-shipped
     - project:releng:ship-it:action:mark-as-started
     - project:releng:ship-it:action:update-product-channel-version
@@ -385,7 +384,6 @@
     - project:releng:flathub:firefox:mock
     - project:releng:microsoftstore:mock
     - project:releng:ship-it:action:create-new-release
-    - project:releng:ship-it:action:mark-as-merged
     - project:releng:ship-it:action:mark-as-shipped
     - project:releng:ship-it:action:mark-as-started
     - project:releng:ship-it:action:update-product-channel-version
@@ -752,6 +750,15 @@
         trust_domain: comm
         level: [3]
         alias: [comm-beta]
+
+- grant:
+    - project:comm:thunderbird:releng:flathub:esr
+  to:
+    - projects:
+        job: [action:release-promotion]
+        trust_domain: comm
+        level: [3]
+        alias: [comm-esr140]
 
 - grant:
     - project:comm:thunderbird:releng:flathub:stable
@@ -1665,12 +1672,32 @@
         job: [action:release-promotion]
 
 - grant:
+    - project:{trust_domain}:releng:ship-it:action:mark-as-merged
+  to:
+    - project:
+        feature: [shipit, merge-automation]
+        job: [action:merge-automation]
+        trust_domain: [mobile]
+
+- grant:
+    - project:releng:ship-it:action:mark-as-merged
+  to:
+    - project:
+        feature: [shipit, merge-automation]
+        job: [action:merge-automation]
+        trust_domain: [gecko]
+
+- grant:
     - project:{trust_domain}:releng:ship-it:server:production
   to:
     - project:
         level: 3
         feature: [shipit, taskgraph-actions]
         job: [action:release-promotion]
+    - project:
+        level: 3
+        feature: [shipit, taskgraph-actions, merge-automation]
+        job: [action:merge-automation]
 
 - grant:
     - project:{trust_domain}:releng:ship-it:server:staging
@@ -1686,6 +1713,10 @@
         level: 1
         feature: [shipit, taskgraph-actions]
         job: [action:release-promotion]
+    - project:
+        level: 1
+        feature: [shipit, taskgraph-actions, merge-automation]
+        job: [action:merge-automation]
     - project:
         level: 3
         feature: [shipit, taskgraph-actions]
