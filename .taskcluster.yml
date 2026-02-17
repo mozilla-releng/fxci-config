@@ -14,7 +14,7 @@ tasks:
               $switch:
                   'taskcluster_root_url == "https://firefox-ci-tc.services.mozilla.com"': "firefoxci"
                   'taskcluster_root_url == "https://stage.taskcluster.nonprod.cloudops.mozgcp.net"': "staging"
-                  $default: "staging"
+                  $default: "other"
           isPullRequest:
               $eval: 'tasks_for[:19] == "github-pull-request" || tasks_for == "github-issue-comment"'
           pullRequestAction:
@@ -114,6 +114,7 @@ tasks:
                          || (isPullRequest && pullRequestAction in ["opened", "reopened", "synchronize"])))
                     || (taskclusterInstance == "staging"
                         && (isPullRequest && issueCommentAction in ["created", "edited"]))
+                    || (taskclusterInstance == "other")
                   then:
                       taskId: {$if: 'tasks_for != "action"', then: '${ownTaskId}'}
                       taskGroupId:
@@ -241,6 +242,7 @@ tasks:
                           maxRunTime: 1800
                           command:
                               $flatten:
+                                  - true
                                   - run-task
                                   - '--fxci-checkout=/builds/worker/checkouts/src'
                                   - '--task-cwd=/builds/worker/checkouts/src'
