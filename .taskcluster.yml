@@ -14,7 +14,6 @@ tasks:
               $switch:
                   'taskcluster_root_url == "https://firefox-ci-tc.services.mozilla.com"': "firefoxci"
                   'taskcluster_root_url == "https://stage.taskcluster.nonprod.cloudops.mozgcp.net"': "staging"
-                  $default: "staging"
           isPullRequest:
               $eval: 'tasks_for[:19] == "github-pull-request" || tasks_for == "github-issue-comment"'
           pullRequestAction:
@@ -310,7 +309,6 @@ tasks:
                                 then:
                                     cron: {$json: {$eval: 'cron'}}
                               - tasks_for: '${tasks_for}'
-                              - root_url: "${taskcluster_root_url}"
                   else:
                       # If we didn't trigger a decision task, silence the taskcluster github service
                       $if: 'tasks_for == "github-issue-comment"'
@@ -331,5 +329,3 @@ tasks:
                               source: "${repoUrl}/raw/${head_sha}/.taskcluster.yml"
                               name: "Skipped Decision Task"
                               description: "The github-comment didn't trigger any decision task for this instance"
-                          extra:
-                              root_url: "${taskcluster_root_url}"
