@@ -313,6 +313,7 @@ tasks:
                                     cron: {$json: {$eval: 'cron'}}
                               - tasks_for: '${tasks_for}'
                               - root_url: "${taskcluster_root_url}"
+                              - tcinst: "${taskclusterInstance}"
                   else:
                       # If we didn't trigger a decision task, silence the taskcluster github service
                       $if: 'tasks_for == "github-issue-comment"'
