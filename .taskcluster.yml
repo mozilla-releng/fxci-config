@@ -14,6 +14,7 @@ tasks:
               $switch:
                   'taskcluster_root_url == "https://firefox-ci-tc.services.mozilla.com"': "firefoxci"
                   'taskcluster_root_url == "https://stage.taskcluster.nonprod.cloudops.mozgcp.net"': "staging"
+                  $default: 'unknown'
           isPullRequest:
               $eval: 'tasks_for[:19] == "github-pull-request" || tasks_for == "github-issue-comment"'
           pullRequestAction:
@@ -133,7 +134,7 @@ tasks:
                               - $switch:
                                     'tasks_for in ["github-push", "github-release"] || isPullRequest':
                                         name: "Decision Task (${tasks_for[7:]})"  # strip out "github-" from tasks_for
-                                        description: 'The task that creates all of the other tasks in the task graph'
+                                        description: "The task that creates all of the other tasks in the task graph in ${taskcluster_root_url}"
                                     'tasks_for == "action"':
                                         name: "Action: ${action.title}"
                                         description: |
