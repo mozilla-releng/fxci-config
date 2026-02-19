@@ -922,6 +922,7 @@
 # Bug 2013033: project maintenance scopes for enterprise-developers
 - grant:
     - hooks:trigger-hook:project-enterprise/in-tree-action-1-generic/*
+    - hooks:trigger-hook:project-enterprise/in-tree-pr-action-1-generic/*
     - hooks:trigger-hook:project-enterprise/in-tree-action-3-generic/*
     - secrets:set:project/enterprise/*
     - secrets:get:project/enterprise/*
