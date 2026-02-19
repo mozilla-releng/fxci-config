@@ -3296,6 +3296,98 @@ pools:
                 central-us: 0.8
                 default: 0.5
             default: 1
+  - pool_id: '{pool-group}/win11-a64-25h2-builder-{suffix}'
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    attributes:
+      suffix: ''
+      level: 1
+      implementation: generic-worker/windows
+    variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-3
+        level: 3
+      - pool-group: gecko-1
+        suffix: alpha
+        implementation: generic-worker/windows
+      - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        level: 3
+      - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-3
+        level: 3
+      - pool-group: nss-1
+      - pool-group: nss-1
+        suffix: alpha
+        implementation: generic-worker/windows
+      - pool-group: nss-3
+        level: 3
+    provider_id:
+      by-level:
+        1: azure2
+        3: azure_trusted
+    config:
+      image:
+        by-level:
+          3: trusted_win11_a64_25h2_builder
+          default: win11a6425h2builder{suffix}
+      image_resource_group: rg-packer-worker-images
+      implementation: '{implementation}'
+      worker-purpose:
+        by-pool-group:
+          mozillavpn-1: vpn-1
+          default: null
+      locations: [central-india, east-us-2, north-central-us, central-us]
+      maxCapacity:
+        by-pool-group:
+          nss-.*: 25
+          gecko.*: 250
+          default: 10
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-a64-25h2-builder-{suffix}
+            provisionerId: '{pool-group}'
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: master
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_D16ps_v5
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                managedDisk:
+                  storageAccountType: Premium_LRS
+                createOption: FromImage
+            hardwareProfile:
+              vmSize: Standard_D16ps_v5
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      worker-manager-config:
+        capacityPerInstance: 1
+        initialWeight:
+          by-vmSize:
+            Standard_D16ps_v5:
+              by-location:
+                central-india: 1
+                east-us-2: 0.9
+                north-central-us: 0.9
+                central-us: 0.8
+                default: 0.5
+            default: 1
   - pool_id: '{pool-group}/win11-64-2009-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
