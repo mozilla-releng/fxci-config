@@ -3296,6 +3296,99 @@ pools:
                 central-us: 0.8
                 default: 0.5
             default: 1
+  - pool_id: '{pool-group}/win11-a64-25h2-builder-{suffix}'
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    attributes:
+      suffix: ''
+      level: 1
+      implementation: generic-worker/windows
+    variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-3
+        level: 3
+      - pool-group: gecko-1
+        suffix: alpha
+        implementation: generic-worker/windows
+      - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        level: 3
+      - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-3
+        level: 3
+      - pool-group: nss-1
+      - pool-group: nss-1
+        suffix: alpha
+        implementation: generic-worker/windows
+      - pool-group: nss-3
+        level: 3
+    provider_id:
+      by-level:
+        1: azure2
+        3: azure_trusted
+    config:
+      image:
+        by-pool-group:
+          '.*-3': trusted_win11_a64_25h2_builder
+          default: win11a6425h2builder{suffix}
+      image_resource_group: rg-packer-worker-images
+      implementation: '{implementation}'
+      worker-purpose:
+        by-pool-group:
+          mozillavpn-1: vpn-1
+          mozillavpn-3: vpn-3
+          default: null
+      locations: [central-india, east-us-2, north-central-us, central-us]
+      maxCapacity:
+        by-pool-group:
+          nss-.*: 25
+          gecko.*: 250
+          default: 10
+      worker-config:
+        genericWorker:
+          config:
+            workerType: win11-a64-25h2-builder-{suffix}
+            provisionerId: '{pool-group}'
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: master
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_D16ps_v5
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                managedDisk:
+                  storageAccountType: Premium_LRS
+                createOption: FromImage
+            hardwareProfile:
+              vmSize: Standard_D16ps_v5
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      worker-manager-config:
+        capacityPerInstance: 1
+        initialWeight:
+          by-vmSize:
+            Standard_D16ps_v5:
+              by-location:
+                central-india: 1
+                east-us-2: 0.9
+                north-central-us: 0.9
+                central-us: 0.8
+                default: 0.5
+            default: 1
   - pool_id: '{pool-group}/win11-64-2009-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -3659,6 +3752,254 @@ pools:
       worker-manager-config:
         capacityPerInstance: 1
         initialWeight: 1
+  - pool_id: '{pool-group}/win11-64-25h2-{suffix}'
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    attributes:
+      suffix: ''
+      implementation: generic-worker/windows
+    variants:
+      - pool-group: gecko-t
+      - pool-group: gecko-t
+        suffix: alpha
+        implementation: generic-worker/windows
+      - pool-group: gecko-t
+        suffix: large
+      - pool-group: gecko-t
+        suffix: large-alpha
+        implementation: generic-worker/windows
+      - pool-group: gecko-t
+        suffix: gpu
+      - pool-group: gecko-t
+        suffix: gpu-alpha
+      - pool-group: gecko-t
+        suffix: webgpu
+      - pool-group: gecko-t
+        suffix: webgpu-alpha
+        implementation: generic-worker/windows
+      - pool-group: gecko-t
+        suffix: source
+      - pool-group: gecko-t
+        suffix: source-alpha
+        implementation: generic-worker/windows
+      - pool-group: enterprise-t
+      - pool-group: enterprise-t
+        suffix: source
+      - pool-group: enterprise-t
+        suffix: alpha
+      - pool-group: enterprise-t
+        suffix: source-alpha
+        implementation: generic-worker/windows
+      - pool-group: gecko-t
+        suffix: ssd
+      - pool-group: gecko-t
+        suffix: ssd-gpu
+      - pool-group: comm-t
+      - pool-group: comm-t
+        suffix: ssd
+      - pool-group: taskgraph-t
+    config:
+      image:
+        by-suffix:
+          .*alpha: win116425h2alpha
+          default: win116425h2
+      image_resource_group: rg-packer-worker-images
+      implementation: '{implementation}'
+      worker-purpose: '{pool-group}'
+      locations:
+        by-pool-group:
+          comm-t:
+            by-suffix:
+              ssd: [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+              default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
+          default:
+            by-suffix:
+              (source-)?alpha: [uk-south]
+              (webgpu|gpu): [east-us, east-us-2, west-us, west-us-2]
+              .*gpu-alpha: [west-us, west-us-2]
+              (ssd|source): [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+              ssd-gpu: [north-europe, east-us, east-us-2]
+              default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
+      maxCapacity:
+        by-pool-group:
+          comm-t:
+            by-suffix:
+              '': 600
+              default: 50
+          gecko-t:
+            by-suffix:
+              '': 1200
+              alpha: 500
+              gpu: 600
+              default: 100
+          enterprise-t: 50
+          default: 5
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+      worker-config:
+        genericWorker:
+          config:
+            workerType: 'win11-64-25h2-{suffix}'
+            provisionerId: gecko-t
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: master
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize:
+            by-suffix:
+              source-alpha: Standard_E8ads_v5
+              .*large.*: Standard_E8ads_v5
+              alpha: Standard_F8s_v2
+              webgpu-alpha: Standard_NV12ads_A10_v5
+              webgpu: Standard_NV12ads_A10_v5
+              gpu-alpha: Standard_NV12s_v3
+              ssd-gpu: Standard_NV12s_v3
+              gpu: Standard_NV12s_v3
+              default: Standard_F8s_v2
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              diskControllerType: SCSI
+              osDisk:
+                osType: Windows
+                caching: ReadOnly
+                createOption: FromImage
+                diffDiskSettings:
+                  option: Local
+            hardwareProfile:
+              vmSize:
+                by-suffix:
+                  source-alpha: Standard_E8ads_v5
+                  .*large.*: Standard_E8ads_v5
+                  alpha: Standard_F8s_v2
+                  webgpu-alpha: Standard_NV12ads_A10_v5
+                  webgpu: Standard_NV12ads_A10_v5
+                  gpu-alpha: Standard_NV12s_v3
+                  ssd-gpu: Standard_NV12s_v3
+                  gpu: Standard_NV12s_v3
+                  default: Standard_F8s_v2
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      worker-manager-config:
+        capacityPerInstance: 1
+        initialWeight:
+          by-vmSize:
+            Standard_F8s_v2:
+              by-location:
+                central-india: 1
+                west-us-3: 1
+                north-central-us: 1
+                south-india: 0.9
+                central-us: 0.8
+                north-europe: 0.7
+                canada-central: 0.6
+                west-us-2: 0.6
+                east-us: 0.5
+                west-us: 0.4
+                east-us-2: 0.4
+                default: 0.2
+            Standard_NV12ads_A10_v5:
+              by-location:
+                east-us: 1
+                west-us-2: 1
+                west-us-3: 1
+                east-us-2: 0.8
+                default: 0.5
+            Standard_E8ads_v6:
+              by-location:
+                central-india: 1
+                default: 0.5
+            default: 1
+  - pool_id: '{pool-group}/win11-a64-25h2-{suffix}'
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    attributes:
+      suffix: ''
+      implementation: generic-worker/windows
+    variants:
+      - pool-group: gecko-t
+      - pool-group: gecko-t
+        suffix: alpha
+        implementation: generic-worker/windows
+      - pool-group: comm-t
+      - pool-group: comm-t
+        suffix: alpha
+        implementation: generic-worker/windows
+      - pool-group: nss-1
+      - pool-group: nss-1
+        suffix: alpha
+        implementation: generic-worker/windows
+      - pool-group: nss-t
+      - pool-group: nss-t
+        suffix: alpha
+        implementation: generic-worker/windows
+    config:
+      image: win11a6425h2tester{suffix}
+      implementation: '{implementation}'
+      worker-purpose: '{pool-group}'
+      locations: [central-india, east-us-2, north-central-us, central-us, uk-south]
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 500
+          comm-t: 500
+          default: 50
+      worker-config:
+        genericWorker:
+          config:
+            workerType: 'win11-a64-25h2-{suffix}'
+            provisionerId: '{pool-group}'
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: master
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_D8ps_v5
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                createOption: FromImage
+            hardwareProfile:
+              vmSize: Standard_D8ps_v5
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      worker-manager-config:
+        capacityPerInstance: 1
+        initialWeight:
+          by-vmSize:
+            Standard_D16ps_v5:
+              by-location:
+                central-india: 1
+                uk-south: 0.9
+                east-us-2: 0.8
+                north-central-us: 0.7
+                central-us: 0.6
+                default: 0.5
+            default: 1
   - pool_id: '{pool-group}/win11-a64-24h2-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
