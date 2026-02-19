@@ -3329,14 +3329,15 @@ pools:
         3: azure_trusted
     config:
       image:
-        by-level:
-          3: trusted_win11_a64_25h2_builder
+        by-pool-group:
+          '.*-3': trusted_win11_a64_25h2_builder
           default: win11a6425h2builder{suffix}
       image_resource_group: rg-packer-worker-images
       implementation: '{implementation}'
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
+          mozillavpn-3: vpn-3
           default: null
       locations: [central-india, east-us-2, north-central-us, central-us]
       maxCapacity:
