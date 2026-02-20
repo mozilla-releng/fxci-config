@@ -893,6 +893,16 @@
         alias: try-comm-central
 
 - grant:
+    # Bug 2016051: Add scopes for code coverage bot in CI
+    - queue:route:project.codecoverage.v1.tasks_done
+  to:
+    - project:
+        alias:
+          - try
+          - try-comm-central
+          - mozilla-central
+
+- grant:
     # Bug 1876393: Allow mozilla-central to trigger tb-rust-update-check on comm-central
     - hooks:trigger-hook:project-releng/cron-task-comm-central/tb-rust-vendor-check
   to:
