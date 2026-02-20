@@ -1462,7 +1462,10 @@ pools:
         chain-of-trust: trusted
     config:
       implementation: generic-worker/linux-d2g-{chain-of-trust}
-      image: ubuntu-2404-headless
+      image:
+        by-pool-group:
+          gecko-1: ubuntu-2404-headless-alpha
+          default: ubuntu-2404-headless
       minCapacity:
         by-pool-group:
           gecko-1: 5
