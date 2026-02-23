@@ -1709,6 +1709,16 @@
         level: 3
         feature: [shipit, taskgraph-actions, merge-automation]
         job: [action:merge-automation]
+        trust_domain: [mobile]
+
+- grant:
+    - project:releng:ship-it:server:production
+  to:
+    - project:
+        level: 3
+        feature: [shipit, merge-automation]
+        job: [action:merge-automation]
+        trust_domain: [gecko]
 
 - grant:
     - project:{trust_domain}:releng:ship-it:server:staging
@@ -1728,6 +1738,20 @@
         level: 1
         feature: [shipit, taskgraph-actions, merge-automation]
         job: [action:merge-automation]
+        trust_domain: [mobile]
+
+- grant:
+    - project:releng:ship-it:server:staging
+  to:
+    - project:
+        level: 1
+        feature: [shipit, merge-automation]
+        job: [action:merge-automation]
+        trust_domain: [gecko]
+
+- grant:
+    - project:{trust_domain}:releng:ship-it:server:staging
+  to:
     - project:
         level: 3
         feature: [shipit, taskgraph-actions]
