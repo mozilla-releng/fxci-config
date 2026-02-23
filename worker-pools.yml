@@ -3922,6 +3922,56 @@ pools:
                 central-india: 1
                 default: 0.5
             default: 1
+  - pool_id: 'gecko-t/win11-64-25h2-amd'
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: win116425h2alpha
+      image_resource_group: rg-packer-worker-images
+      implementation: generic-worker/windows
+      locations: [uk-south, central-india]
+      maxCapacity: 100
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-v6-nvme/versions/1.0
+      worker-config:
+        genericWorker:
+          config:
+            workerType: 'win11-64-25h2-amd'
+            provisionerId: gecko-t
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: master
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      spot: true
+      vmSizes:
+        - vmSize: Standard_E8ads_v6
+          launchConfig:
+            osProfile:
+              windowsConfiguration:
+                timeZone: UTC
+                enableAutomaticUpdates: false
+            storageProfile:
+              osDisk:
+                osType: Windows
+                caching: ReadOnly
+                createOption: FromImage
+                diffDiskSettings:
+                  option: Local
+                  placement: NvmeDisk
+            hardwareProfile:
+              vmSize: Standard_E8ads_v6
+            diagnosticsProfile:
+              bootDiagnostics:
+                enabled: false
+      worker-manager-config:
+        capacityPerInstance: 1
+        initialWeight: 1
   - pool_id: '{pool-group}/win11-a64-25h2-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
