@@ -320,6 +320,7 @@ mozilla-central:
     is-trunk: true
     lando: true
     merge-automation: true
+    shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
