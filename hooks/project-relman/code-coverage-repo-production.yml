@@ -29,8 +29,19 @@ $merge:
         - "/cache"
         - "--working-dir"
         - "/build"
-      env:
-        $eval: payload
+    env:
+      $merge:
+        # Triggered by code coverage crontrigger.
+        - $if: firedBy == 'triggerHook'
+          else: {}
+          then:
+            $eval: payload
+        # Triggered by project.codecoverage.v1.tasks_done pulse message.
+        - $if: firedBy == 'pulseMessage'
+          else: {}
+          then:
+            TASK_GROUP_ID:
+              $eval: payload.status.taskGroupId
       features:
         taskclusterProxy: true
       image:
