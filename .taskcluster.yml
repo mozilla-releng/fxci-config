@@ -14,6 +14,7 @@ tasks:
               $switch:
                   'taskcluster_root_url == "https://firefox-ci-tc.services.mozilla.com"': "firefoxci"
                   'taskcluster_root_url == "https://stage.taskcluster.nonprod.cloudops.mozgcp.net"': "staging"
+                  $default: "UNDEFINED"
           isPullRequest:
               $eval: 'tasks_for[:19] == "github-pull-request" || tasks_for == "github-issue-comment"'
           pullRequestAction:
@@ -111,7 +112,7 @@ tasks:
                          || (tasks_for == "github-release" && releaseAction == "published")
                          || (tasks_for == "github-push" && short_head_ref == "main")
                          || (isPullRequest && pullRequestAction in ["opened", "reopened", "synchronize"])))
-                    || (taskclusterInstance == "staging"
+                    || (taskclusterInstance == "stagin"
                         && (isPullRequest && issueCommentAction in ["created", "edited"]))
                   then:
                       taskId: {$if: 'tasks_for != "action"', then: '${ownTaskId}'}
@@ -311,7 +312,7 @@ tasks:
                               - tasks_for: '${tasks_for}'
                   else:
                       # If we didn't trigger a decision task, silence the taskcluster github service
-                      $if: 'tasks_for == "github-issue-comment"'
+                      $if: taskclusterInstance != "firefoxci"
                       then:
                           taskId: '${ownTaskId}'
                           taskGroupId: '${ownTaskId}'
@@ -327,5 +328,5 @@ tasks:
                           metadata:
                               owner: "${ownerEmail}"
                               source: "${repoUrl}/raw/${head_sha}/.taskcluster.yml"
-                              name: "Skipped Decision Task"
+                              name: "Why are you like this ${taskcluster_root_url}"
                               description: "The github-comment didn't trigger any decision task for this instance"
