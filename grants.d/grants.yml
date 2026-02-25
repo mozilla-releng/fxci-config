@@ -917,6 +917,8 @@
     - project:{trust_domain}:releng:signing:cert:dep-signing
     - queue:create-task:{priority}:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
     - queue:create-task:{priority}:releng-hardware/{trust_domain}-{level}-*
+    - queue:route:tc-treeherder.v2.enterprise-main.*
+    - queue:route:tc-treeherder.v2.enterprise-release.*
   to:
     - project:
         alias: enterprise-firefox
