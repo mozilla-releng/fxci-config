@@ -13,6 +13,7 @@ tasks:
           taskclusterInstance:
               $switch:
                   'taskcluster_root_url == "https://firefox-ci-tc.services.mozilla.com"': "firefoxci"
+                  'taskcluster_root_url == "https://stage.taskcluster.nonprod.webservices.mozgcp.net"': "staging"
                   'taskcluster_root_url == "https://stage.taskcluster.nonprod.cloudops.mozgcp.net"': "staging"
           isPullRequest:
               $eval: 'tasks_for[:19] == "github-pull-request" || tasks_for == "github-issue-comment"'
