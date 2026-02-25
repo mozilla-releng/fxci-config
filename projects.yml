@@ -621,6 +621,25 @@ enterprise-firefox:
     treeherder-reporting: true
     trust-domain-scopes: true
 
+enterprise-firefox-try:
+  repo: https://github.com/mozilla/enterprise-firefox-try
+  repo_type: git
+  default_branch: enterprise-main
+  trust_domain: enterprise
+  branches:
+    - name: "*"
+      level: 1
+  features:
+    gecko-roles: true
+    github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
+    pr-actions: true
+    scriptworker: true
+    taskgraph-actions: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+
 staging-firefox:
   repo: https://github.com/mozilla-releng/staging-firefox
   repo_type: git

@@ -925,11 +925,24 @@
     - project:{trust_domain}:releng:signing:cert:dep-signing
     - queue:create-task:{priority}:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
     - queue:create-task:{priority}:releng-hardware/{trust_domain}-{level}-*
+  to:
+    - project:
+        trust_domain: enterprise
+
+- grant:
+    - queue:route:tc-treeherder-stage.v2.{alias}-pr.*
+    - queue:route:tc-treeherder.v2.{alias}-pr.*
+  to:
+    - project:
+        alias: enterprise-firefox-try
+
+- grant:
     - queue:route:tc-treeherder.v2.enterprise-main.*
     - queue:route:tc-treeherder.v2.enterprise-release.*
   to:
     - project:
         alias: enterprise-firefox
+        job: [action:*]
 
 - grant:
     - project:{trust_domain}:releng:signing:cert:release-apple-notarization
@@ -949,6 +962,7 @@
 
 - grant:
     - project:{trust_domain}:releng:signing:cert:nightly-signing
+    - queue:route:tc-treeherder.v2.enterprise-main.*
   to:
     - project:
         alias: enterprise-firefox
@@ -956,6 +970,7 @@
 
 - grant:
     - project:{trust_domain}:releng:signing:cert:release-signing
+    - queue:route:tc-treeherder.v2.enterprise-release.*
   to:
     - project:
         alias: enterprise-firefox
