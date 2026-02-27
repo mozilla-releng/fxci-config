@@ -300,10 +300,14 @@
     - generic-worker:os-group:gecko-t/win10-64-2009-source/Administrators
     - generic-worker:os-group:gecko-t/win11-64-2009/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2/Administrators
+    - generic-worker:os-group:gecko-t/win11-64-24h2-privileged/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2-amd/Administrators
     - generic-worker:os-group:gecko-t/win11-64-2009-alpha/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2-alpha/Administrators
+    - generic-worker:os-group:gecko-t/win11-64-24h2-privileged-alpha/Administrators
     - generic-worker:os-group:gecko-t/win11-64-25h2-alpha/Administrators
+    - generic-worker:os-group:gecko-t/win11-64-25h2-privileged/Administrators
+    - generic-worker:os-group:gecko-t/win11-64-25h2-privileged-alpha/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2-source/Administrators
     - generic-worker:os-group:gecko-t/t-linux-2204-wayland-snap/snap_sudo
     - generic-worker:os-group:gecko-t/t-linux-2404-wayland-snap/snap_sudo
