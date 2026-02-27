@@ -15,6 +15,9 @@ project-relman/code-coverage-repo-production:
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-production
   template_file: hooks/project-relman/code-coverage-repo-production.yml
+  bindings:
+    - exchange: exchange/taskcluster-queue/v1/task-completed
+      routing_key_pattern: route.project.relman.codecoverage.v1.tasks_done
   trigger_schema:
     type: object
     additionalProperties: true
@@ -34,6 +37,9 @@ project-relman/code-coverage-repo-testing:
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
   template_file: hooks/project-relman/code-coverage-repo-testing.yml
+  bindings:
+    - exchange: exchange/taskcluster-queue/v1/task-completed
+      routing_key_pattern: route.project.relman.codecoverage.v1.tasks_done
   trigger_schema:
     type: object
     additionalProperties: true
