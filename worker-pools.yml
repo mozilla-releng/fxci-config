@@ -3543,6 +3543,16 @@ pools:
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
+        suffix: privileged
+      - pool-group: gecko-t
+        suffix: unprivileged
+      - pool-group: gecko-t
+        suffix: privileged-alpha
+        implementation: generic-worker/windows
+      - pool-group: gecko-t
+        suffix: unprivileged-alpha
+        implementation: generic-worker/windows
+      - pool-group: gecko-t
         suffix: alpha
         implementation: generic-worker/windows
       - pool-group: gecko-t
@@ -3623,6 +3633,11 @@ pools:
           config:
             workerType: 'win11-64-24h2-{suffix}'
             provisionerId: gecko-t
+            numberOfTasksToRun:
+              by-suffix:
+                privileged: 1
+                privileged-alpha: 1
+                default: 0
             cachesDir: D:\caches
             downloadsDir: D:\downloads
             tasksDir: D:\
@@ -3763,6 +3778,16 @@ pools:
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
+        suffix: privileged
+      - pool-group: gecko-t
+        suffix: unprivileged
+      - pool-group: gecko-t
+        suffix: privileged-alpha
+        implementation: generic-worker/windows
+      - pool-group: gecko-t
+        suffix: unprivileged-alpha
+        implementation: generic-worker/windows
+      - pool-group: gecko-t
         suffix: alpha
         implementation: generic-worker/windows
       - pool-group: gecko-t
@@ -3843,6 +3868,11 @@ pools:
           config:
             workerType: 'win11-64-25h2-{suffix}'
             provisionerId: gecko-t
+            numberOfTasksToRun:
+              by-suffix:
+                privileged: 1
+                privileged-alpha: 1
+                default: 0
             cachesDir: D:\caches
             downloadsDir: D:\downloads
             tasksDir: D:\
