@@ -2892,12 +2892,17 @@ pools:
       - pool-group: gecko-1
       - pool-group: gecko-1
         suffix: xxlarge
+      - pool-group: gecko-1
+        suffix: headless
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
       - pool-group: gecko-3
         chain-of-trust: trusted
         suffix: xxlarge
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+        suffix: headless
       - pool-group: comm-1
       - pool-group: comm-3
         chain-of-trust: trusted
@@ -2923,7 +2928,10 @@ pools:
           trusted: ronin_b3_windows2022_64_2009
           default: ronin_b1_windows2022_64_2009
       image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/windows
+      implementation:
+        by-suffix:
+          .*headless.*: generic-worker/windows-builder
+          default: generic-worker/windows
       locations: [central-india, north-central-us, east-us-2]
       maxCapacity:
         by-pool-group:
