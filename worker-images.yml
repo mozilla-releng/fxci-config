@@ -93,6 +93,10 @@ ubuntu-2404-headless:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2026-01-14
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-amd64-headless-googlecompute-2026-01-14
 
+# temporary entry for testing in https://github.com/mozilla-releng/fxci-config/pull/827
+ubuntu-2404-headless-2026-02-27:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2026-02-27
+
 ubuntu-2404-headless-alpha-tc:
   ## alpha pool that tc can use to rebuild and test 2404 headless ubuntu images
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha-tc
