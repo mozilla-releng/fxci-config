@@ -739,6 +739,7 @@ def generate_pool_variants(worker_pools, environment):
         for key in (
             "armDeployment",
             "image",
+            "implementation",
             "instance_types",
             "locations",
             "maxCapacity",
