@@ -1269,35 +1269,11 @@ project/releng/treeherder/production:
   description: Treeherder production client
   scopes:
     - notify:email:*
-project/relman/code-coverage/backend-production:
-  description: See [bug 1593751](https://bugzilla.mozilla.org/show_bug.cgi?id=1593751#c20)
-  scopes:
-    - assume:project:relman:code-coverage/runtime/production
-project/relman/code-coverage/backend-testing:
-  description: See [bug 1593751](https://bugzilla.mozilla.org/show_bug.cgi?id=1593751#c20).
-  scopes:
-    - assume:project:relman:code-coverage/runtime/testing
-project/relman/code-coverage/events-production:
-  description: See [bug 1593751](https://bugzilla.mozilla.org/show_bug.cgi?id=1593751#c20)
-  scopes:
-    - assume:project:relman:code-coverage/runtime/production
-project/relman/code-coverage/events-testing:
-  description: See [bug ](https://bugzilla.mozilla.org/show_bug.cgi?id=1593751#c20)
-  scopes:
-    - assume:project:relman:code-coverage/runtime/testing
 project/relman/code-review/backend-production:
   description: See [bug 1593749](https://bugzilla.mozilla.org/show_bug.cgi?id=1593749#c12)
   scopes:
     - assume:project:relman:code-review/runtime/production
 project/relman/code-review/backend-testing:
-  description: See [bug 1593749](https://bugzilla.mozilla.org/show_bug.cgi?id=1593749#c12)
-  scopes:
-    - assume:project:relman:code-review/runtime/testing
-project/relman/code-review/events-production:
-  description: See [bug 1593749](https://bugzilla.mozilla.org/show_bug.cgi?id=1593749#c12)
-  scopes:
-    - assume:project:relman:code-review/runtime/production
-project/relman/code-review/events-testing:
   description: See [bug 1593749](https://bugzilla.mozilla.org/show_bug.cgi?id=1593749#c12)
   scopes:
     - assume:project:relman:code-review/runtime/testing
