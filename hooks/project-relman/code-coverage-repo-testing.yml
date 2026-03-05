@@ -1,8 +1,8 @@
 ---
 $merge:
-  - $if: "'taskGroupId' in payload"
+  - $if: "'coverageIngestionTaskGroupId' in payload"
     then:
-      taskGroupId: {$eval: payload.taskGroupId}
+      taskGroupId: {$eval: payload.coverageIngestionTaskGroupId}
     else: {}
   - created: {$fromNow: 0 seconds}
     deadline: {$fromNow: 4 hours}
@@ -40,7 +40,7 @@ $merge:
           - $if: firedBy == 'pulseMessage'
             else: {}
             then:
-              TASK_GROUP_ID:
+              TESTS_TASK_GROUP_ID:
                 $eval: payload.status.taskGroupId
       features:
         taskclusterProxy: true
