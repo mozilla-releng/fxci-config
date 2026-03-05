@@ -4,11 +4,16 @@
 
 import asyncio
 
+import aiohttp
 from simple_github import AsyncClient, client_from_env
 
 # Global shared client session
 _client: AsyncClient | None = None
 _client_lock = asyncio.Lock()
+
+RETRY_ATTEMPTS = 3
+RETRY_BACKOFF_SECONDS = 1
+RETRY_STATUSES = frozenset({502})
 
 
 async def get_client():
@@ -26,6 +31,38 @@ async def get_client():
             _client = client_cls()  # type: ignore
 
     return _client
+
+
+async def request_with_retry(
+    method,
+    query,
+    *,
+    attempts=RETRY_ATTEMPTS,
+    retry_statuses=RETRY_STATUSES,
+    backoff_seconds=RETRY_BACKOFF_SECONDS,
+    **kwargs,
+):
+    """Make a GitHub API request and retry transient HTTP responses."""
+    if attempts < 1:
+        raise ValueError("attempts must be at least 1")
+
+    client = await get_client()
+
+    for attempt in range(1, attempts + 1):
+        response = await client.request(method, query, **kwargs)
+        try:
+            response.raise_for_status()
+            return response
+        except aiohttp.ClientResponseError as e:
+            if e.status not in retry_statuses or attempt == attempts:
+                raise
+
+            response.release()
+            print(
+                f"Got error when querying {query}: {e}. "
+                f"Retrying ({attempt + 1}/{attempts})..."
+            )
+            await asyncio.sleep(backoff_seconds * 2 ** (attempt - 1))
 
 
 async def close_client():

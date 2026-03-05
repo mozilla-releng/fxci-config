@@ -79,12 +79,10 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
             headers = {"Accept": "application/vnd.github.raw+json"}
             params = {"ref": revision}
 
-            client = await github.get_client()
-            response = await client.request(
+            response = await github.request_with_retry(
                 "GET", endpoint, headers=headers, params=params
             )
             try:
-                response.raise_for_status()
                 result = await response.read()
             except aiohttp.ClientResponseError as e:
                 print(f"Got error when querying {endpoint}: {e}")

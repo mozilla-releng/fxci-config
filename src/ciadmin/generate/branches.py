@@ -33,14 +33,12 @@ async def get(repo_path, repo_type="git"):
         if repo_path in _cache:
             return _cache[repo_path]
 
-        client = await github.get_client()
         branches = []
         while branches_endpoint:
-            response = await client.request(
+            response = await github.request_with_retry(
                 "GET", branches_endpoint, headers=headers, params=params
             )
             try:
-                response.raise_for_status()
                 result = await response.json()
                 branches.extend([b["name"] for b in result])
                 # If `link` is present in the response it will contain
