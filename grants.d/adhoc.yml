@@ -1,0 +1,41 @@
+# Adhoc signing
+
+- grant:
+    - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+    - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
+    - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-t-*
+    - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
+    - queue:create-task:highest:adhoc-{level}/*
+    - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac-dev
+    - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
+    - queue:create-task:highest:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2*
+    - project:adhoc:releng:signing:cert:dep-signing
+    - queue:route:index.{trust_domain}.v2.{alias}.*
+    - queue:route:index.{trust_domain}.v2.staging-adhoc-manifest.*
+    - queue:route:index.adhoc-signing.cache.level-{level}.*
+    - queue:route:notify.email.*
+  to:
+    - project:
+        feature: adhoc-roles
+        job: [branch:*, pull-request:*, action:*, cron:*]
+
+# Only grant private artifact scopes to trusted contexts (including pull requests from trusted users)
+- grant:
+    - queue:get-artifact:releng/adhoc/*
+  to:
+    - project:
+        feature: adhoc-roles
+        job: [branch:*, pull-request:trusted, action:*, cron:*]
+
+- grant:
+    - project:adhoc:releng:signing:cert:release-signing
+    - project:adhoc:releng:signing:cert:release-apple-notarization
+    - project:adhoc:releng:signing:cert:nightly-signing
+    - queue:route:index.{trust_domain}.v2.adhoc-manifest.*
+    - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-signing-mac14m2*
+  to:
+    - project:
+        alias:
+          - adhoc-signing
+        # Only enable this for master and actions.
+        job: [branch:master, action:*]
