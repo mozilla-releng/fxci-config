@@ -1,6 +1,6 @@
 # FIXME: Bug 1632147 - app-services and glean should be merged under the same
 # `trust_domain` so that scopes are bulked together like in the mobile world
- 
+
 # - application-services specific roles
 - grant:
     - docker-worker:taskcluster-proxy:tooltool.download.internal
@@ -70,4 +70,3 @@
         - mozillians-group:application-services
     - groups:
         - shipit_firefox
-

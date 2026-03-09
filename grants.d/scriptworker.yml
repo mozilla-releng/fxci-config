@@ -32,4 +32,3 @@
     - project:
         alias: scriptworker
         job: [pull-request:trusted, branch:main, action:*]
-

@@ -153,4 +153,3 @@
     - project:
         alias: worker-images
         job: [cron:run-integration-tests]
-

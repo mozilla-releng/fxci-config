@@ -43,4 +43,3 @@
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|afranchuk
-
