@@ -31,7 +31,7 @@ jobs:
       - name: Set root url
         run: |
           if [ "${{ matrix.environment }}" == "staging" ]; then
-            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.cloudops.mozgcp.net" >> $GITHUB_ENV;
+            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> $GITHUB_ENV;
           elif [ "${{ matrix.environment }}" == "firefoxci" ]; then
             echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> $GITHUB_ENV;
           fi
