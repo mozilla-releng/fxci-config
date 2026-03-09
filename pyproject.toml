@@ -39,7 +39,8 @@ dev = [
     "pytest-mock",
     "pytest-taskgraph>=0.1.0",
     "responses>=0.25.3",
-    "taskcluster-taskgraph>=13.0.0",
+    # Keep this synced with the version in `.taskcluster.yml`.
+    "taskcluster-taskgraph==18.0.3",
 ]
 
 [project.scripts]
