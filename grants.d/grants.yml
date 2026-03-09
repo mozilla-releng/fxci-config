@@ -1037,20 +1037,6 @@
           - treeherder-reporting
           - pr-actions
 
-- grant:
-    - secrets:get:project/releng/taskgraph/ci
-  to:
-    - project:
-        alias: taskgraph
-        job: [action:*, branch:*, pull-request:trusted, release:*]
-
-- grant:
-    - secrets:get:project/releng/taskgraph/mozilla-taskgraph/ci
-  to:
-    - project:
-        alias: mozilla-taskgraph
-        job: [action:*, branch:*, pull-request:trusted, release:*]
-
 ##
 # feature-specific roles
 
