@@ -1881,8 +1881,6 @@
     - group:
         - non-moco-sheriffs-basic
 
-
-
 # Bug 1604686: Token for gfx github sync, ability to set and get
 - grant:
     - secrets:get:project/webrender-ci/wrupdater-github-token
@@ -1900,36 +1898,6 @@
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mh
-
-# Bug 1917007: Secrets for afranchuk/process-top-crashes
-- grant:
-    - secrets:get:project/mozilla/process-top-crashes/ci
-  to:
-    - project:
-        alias: process-top-crashes
-        job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
-
-- grant:
-    - secrets:get:project/mozilla/process-top-crashes/*
-    - secrets:set:project/mozilla/process-top-crashes/*
-  to:
-    - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|afranchuk
-
-# Bug 1940195: Secrets for mozilla/crash-ping-ingest
-- grant:
-    - secrets:get:project/mozilla/crash-ping-ingest/ci
-  to:
-    - project:
-        alias: crash-ping-ingest
-        job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
-
-- grant:
-    - secrets:get:project/mozilla/crash-ping-ingest/*
-    - secrets:set:project/mozilla/crash-ping-ingest/*
-  to:
-    - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|afranchuk
 
 # Bug 1973252: grant pwong access to run release promotion on Try
 - grant:
@@ -2249,22 +2217,6 @@
   to:
     - roles:
         - mozillians-group:windows-laf-token-managers
-
-# mozilla/fx-desktop-qa-automation
-- grant:
-    - notify:slack-channel:*
-    - queue:route:notify.slack-channel.*
-  to:
-    - project:
-        alias:
-          - fx-desktop-qa-automation
-
-- grant:
-    - secrets:get:project/mozilla/fx-desktop-qa-automation/level-*
-    - secrets:set:project/mozilla/fx-desktop-qa-automation/level-*
-  to:
-    - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
 
 ### landoscript scopes
 # on try, we're fairly liberal with these scopes for ease of testing, and
