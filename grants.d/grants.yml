@@ -1084,55 +1084,6 @@
     - groups:
         - team_moco
 
-# FIXME: Bug 1632147 - app-services and glean should be merged under the same
-# `trust_domain` so that scopes are bulked together like in the mobile world
-#
-# - glean specific roles
-- grant:
-    - queue:create-task:highest:glean-{level}/*
-    - queue:route:index.project.glean.cache.level-{level}.*
-    # RELENG-798 - until we have a shared trust domain to push toolchain artifacts to
-    - queue:get-artifact:project/gecko/mac-sdk/*
-    - project:releng:services/tooltool/api/download/internal
-    - project:mozilla:{trust_project}:releng:signing:cert:dep-signing
-    - project:mozilla:{trust_project}:releng:signing:format:*
-    - project:mozilla:{trust_project}:releng:beetmover:action:push-to-maven
-    - project:mozilla:{trust_project}:releng:beetmover:bucket:maven-staging
-  to:
-    - project:
-        alias: glean
-
-- grant:
-    - project:mozilla:{trust_project}:releng:signing:cert:release-signing
-    - project:mozilla:{trust_project}:releng:beetmover:bucket:maven-production
-    - queue:route:notify.email.*
-  to:
-    - project:
-        alias: glean
-        level: 3
-        job: [release:*]
-
-- grant:
-    # TODO Bug 1631839: Remove this scope once project has migrated to
-    # `index.glean.v2.*`.
-    - queue:route:index.project.glean.v2.branch.*
-    - queue:route:index.glean.v2.glean.revision.*
-  to:
-    - project:
-        alias: glean
-        job: [branch:*, release:*]
-
-- grant:
-    # TODO Make glean use the standard cached task routes
-    - index:insert-task:project.glean.cache.head.*
-    - queue:route:index.project.glean.cache.head.*
-    - index:insert-task:project.glean.cache.pr.*
-    - queue:route:index.project.glean.cache.pr.*
-  to:
-    - project:
-        alias: glean
-        job: [pull-request:*]
-
 # - application-services specific roles
 - grant:
     - docker-worker:taskcluster-proxy:tooltool.download.internal
@@ -2704,14 +2655,6 @@
         - non-moco-sheriffs-basic
 
 
-# Glean team should be able to rerun tasks for the Glean releases powered by TC
-- grant:
-    - hooks:trigger-hook:project-glean/in-tree-action-1-generic/*
-    - hooks:trigger-hook:project-glean/in-tree-action-3-generic/*
-  to:
-    - group:
-        - glean_team
-
 
 # Bug 1604686: Token for gfx github sync, ability to set and get
 - grant:
@@ -2802,11 +2745,6 @@
   to:
     - roles:
         - mozilla-group:mobile_test_ops
-- grant:
-    - assume:project:releng:ci-group:glean_team
-  to:
-    - roles:
-        - mozillians-group:glean_team
 - grant:
     - assume:project:releng:ci-group:team_moco
   to:
