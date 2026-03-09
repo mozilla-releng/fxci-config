@@ -183,7 +183,7 @@ firefoxci:
           on_event: on-exception
 
 staging:
-  root_url: https://stage.taskcluster.nonprod.cloudops.mozgcp.net
+  root_url: https://stage.taskcluster.nonprod.webservices.mozgcp.net
   modify_resources:
     # we do not want hooks to trigger on a schedule in staging, as that adds
     # lots of load (e.g., building nightlies).  They can be triggered
@@ -212,7 +212,7 @@ staging:
       fxci-test-gcp:
         implementation: google
   aws_config:
-    wst_server_url: https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/
+    wst_server_url: https://wstunnel.stage.taskcluster.nonprod.webservices.mozgcp.net/
     availability-zones:
       by-region:
         us-east-1:
@@ -275,7 +275,7 @@ staging:
             eu-central-1: [sg-026d562d7bb83f005]
     invalid-instances: []
   azure_config:
-    wst_server_url: https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/
+    wst_server_url: https://wstunnel.stage.taskcluster.nonprod.webservices.mozgcp.net/
     untrusted_subscription: 108d46d5-fe9b-4850-9a7d-8c914aa6c1f0
     # Staging should not touch the trusted subscription
     trusted_subscription: 0000000-000-0000-0000-000000000000
@@ -293,7 +293,7 @@ staging:
     #   parameters:
     #     customParam: customValue
   google_config:
-    wst_server_url: https://websocktunnel-stage.taskcluster.nonprod.cloudops.mozgcp.net/
+    wst_server_url: https://wstunnel.stage.taskcluster.nonprod.webservices.mozgcp.net/
     zones:
       by-region:
         us-central1: [us-central1-a, us-central1-b, us-central1-c, us-central1-f]
