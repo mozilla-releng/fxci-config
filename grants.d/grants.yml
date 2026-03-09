@@ -132,18 +132,6 @@
         feature: gecko-roles
 
 - grant:
-    # Grant some Gecko build secrets to Enterprise Firefox as the values for both
-    # will be the same regardless.
-    - secrets:get:project/releng/gecko/build/level-{level}/gecko-symbol-upload
-    - secrets:get:project/releng/gecko/build/level-{level}/gls-gapi.data
-    - secrets:get:project/releng/gecko/build/level-{level}/sb-gapi.data
-    - secrets:get:project/releng/gecko/build/level-{level}/mozilla-desktop-geoloc-api.key
-  to:
-    - project:
-        feature: gecko-roles
-        trust_domain: [enterprise]
-
-- grant:
     # access to workers; all levels have access to the same workers, but at
     # different priorities and levels
     - queue:create-task:{priority}:scriptworker-k8s/{trust_domain}-{level}-*
@@ -196,24 +184,6 @@
         - project:taskcluster:gecko:level-3-sccache-buckets
 
 - grant:
-    - auth:gcp:access-token:sccache-3/ent-sccache-l1*
-  to:
-    - role:
-        - project:taskcluster:enterprise:level-1-sccache-buckets
-
-- grant:
-    - auth:gcp:access-token:sccache-3/ent-sccache-l2*
-  to:
-    - role:
-        - project:taskcluster:enterprise:level-2-sccache-buckets
-
-- grant:
-    - auth:gcp:access-token:sccache-3/ent-sccache-l3*
-  to:
-    - role:
-        - project:taskcluster:enterprise:level-3-sccache-buckets
-
-- grant:
     # access to workers; all levels have access to the same workers, but at
     # different priorities and levels
     - queue:create-task:{priority}:bitbar/gecko-t-*
@@ -243,15 +213,6 @@
         level: 2
 
 - grant:
-    # Bug 2002823 - Temporarily grant access to Gecko mac workers to unblock
-    # progress until we can get macs for enterprise.
-    - queue:create-task:{priority}:releng-hardware/gecko-{level}-b-osx*
-  to:
-    - project:
-        feature: gecko-roles
-        trust_domain: [enterprise]
-
-- grant:
     - queue:get-artifact:private/openh264/*
   to:
     - groups:
@@ -263,7 +224,7 @@
   to:
     - project:
         feature: gecko-roles
-        trust_domain: [comm, enterprise]
+        trust_domain: comm
 
 # moz-tree roles include the basic scopes available to version-control trees at
 # each of the three Mozilla source-code management levels.  They are useful as
@@ -930,85 +891,6 @@
   to:
     - project:
         alias: mozilla-central
-
-## Enterprise Firefox specific roles
-
-- grant:
-    - project:{trust_domain}:releng:signing:cert:dep-signing
-    - queue:create-task:{priority}:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
-    - queue:create-task:{priority}:releng-hardware/{trust_domain}-{level}-*
-  to:
-    - project:
-        trust_domain: enterprise
-
-- grant:
-    - index:insert-task:{trust_domain}.v2.enterprise-firefox-pr.*
-    - queue:route:index.{trust_domain}.v2.enterprise-firefox-pr.*
-    - queue:route:tc-treeherder-stage.v2.enterprise-firefox-pr.*
-    - queue:route:tc-treeherder.v2.enterprise-firefox-pr.*
-  to:
-    - project:
-        alias: enterprise-firefox-try
-
-- grant:
-    - queue:route:tc-treeherder.v2.enterprise-main.*
-    - queue:route:tc-treeherder.v2.enterprise-release.*
-  to:
-    - project:
-        alias: enterprise-firefox
-        job: [action:*, cron:*]
-
-- grant:
-    - project:{trust_domain}:releng:signing:cert:release-apple-notarization
-    - queue:create-task:{priority}:scriptworker-prov-v1/{trust_domain}-signing-mac14m2
-    - queue:get-artifact:project/enterprise/*
-  to:
-    - project:
-        alias: enterprise-firefox
-        level: 3
-
-- grant:
-    - queue:get-artifact:project/enterprise/*
-  to:
-    - project:
-        alias: enterprise-firefox
-        job: [pull-request:trusted]
-
-- grant:
-    - project:{trust_domain}:releng:signing:cert:nightly-signing
-    - queue:route:tc-treeherder.v2.enterprise-main.*
-  to:
-    - project:
-        alias: enterprise-firefox
-        job: [branch:enterprise-main]
-
-- grant:
-    - project:{trust_domain}:releng:signing:cert:release-signing
-    - queue:route:tc-treeherder.v2.enterprise-release.*
-  to:
-    - project:
-        alias: enterprise-firefox
-        job: [branch:enterprise-release]
-
-# Bug 2013033: project maintenance scopes for enterprise-developers
-- grant:
-    - hooks:trigger-hook:project-enterprise/in-tree-action-1-generic/*
-    - hooks:trigger-hook:project-enterprise/in-tree-pr-action-1-generic/*
-    - hooks:trigger-hook:project-enterprise/in-tree-action-3-generic/*
-    - secrets:set:project/enterprise/*
-    - secrets:get:project/enterprise/*
-    - queue:rerun-task:enterprise-level-*
-    - queue:cancel-task:enterprise-level-*
-    - queue:get-artifact:project/enterprise/*
-  to:
-    - roles:
-        - mozillians-group:enterprise-developers
-
-- grant:
-    - queue:get-artifact:project/enterprise/*
-  to:
-    - groups:
-        - team_moco
 
 ##
 # Non-gecko tree projects
