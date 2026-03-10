@@ -2,7 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import os
+import logging
 import re
 from functools import cache
 from typing import Any
@@ -10,33 +10,51 @@ from typing import Any
 import requests
 import taskcluster
 from taskgraph.util.attributes import attrmatch
-from taskgraph.util.taskcluster import get_ancestors as taskgraph_get_ancestors
-from taskgraph.util.taskcluster import get_root_url
 
 from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL
 
+logger = logging.getLogger(__name__)
+
 
 def get_ancestors(task_ids: list[str] | str) -> dict[str, str]:
-    # This is not ideal, but at the moment we don't have a better way
-    # to ensure that the upstream get_ancestors talks to the correct taskcluster
-    # instance.
-    orig_root = os.environ["TASKCLUSTER_ROOT_URL"]
-    orig_proxy = os.environ.get("TASKCLUSTER_PROXY_URL")
-    try:
-        # Cache needs to be cleared here to allow `get_root_url` to ensure that
-        # `get_root_url` is called again after a change.
-        get_root_url.cache_clear()
-        os.environ["TASKCLUSTER_ROOT_URL"] = FIREFOXCI_ROOT_URL
-        if orig_proxy is not None:
-            del os.environ["TASKCLUSTER_PROXY_URL"]
-        ret = taskgraph_get_ancestors(task_ids)
-    finally:
-        os.environ["TASKCLUSTER_ROOT_URL"] = orig_root
-        if orig_proxy is not None:
-            os.environ["TASKCLUSTER_PROXY_URL"] = orig_proxy
-        get_root_url.cache_clear()
+    """Get ancestor tasks, skipping any that have expired (404).
 
-    return ret
+    The upstream ``taskgraph_get_ancestors`` crashes when any task in the
+    dependency tree has expired.  This reimplementation walks the tree
+    using the Firefox-CI Queue client directly and gracefully skips
+    expired tasks instead of raising.
+    """
+    if isinstance(task_ids, str):
+        task_ids = [task_ids]
+
+    queue = get_taskcluster_client("queue")
+    upstream: dict[str, str] = {}
+    seen: set[str] = set()
+
+    def _walk(ids: list[str]):
+        for task_id in ids:
+            if task_id in seen:
+                continue
+            seen.add(task_id)
+
+            try:
+                task_def = queue.task(task_id)
+            except taskcluster.exceptions.TaskclusterRestFailure as exc:
+                if exc.status_code == 404:
+                    logger.debug("Skipping expired ancestor task %s", task_id)
+                    continue
+                raise
+
+            name = task_def.get("metadata", {}).get("name")
+            if name:
+                upstream[task_id] = name
+
+            deps = task_def.get("dependencies", [])
+            if deps:
+                _walk(deps)
+
+    _walk(list(task_ids))
+    return upstream
 
 
 @cache
