@@ -237,7 +237,7 @@ tasks:
                               chainOfTrust: true
                           image:
                               # Keep this synced with the version in `pyproject.toml`.
-                              mozillareleases/taskgraph:decision-v18.0.3@sha256:c98a061f7f5058b14d0f7cce4fee0cdd2103a48413e85deb948a5fbf0b092458
+                              mozillareleases/taskgraph:decision-v19.2.1@sha256:6cf28e0019ac35234e3ad4dc42586161fb77e6791fd593b8440a53f2f8aff8db
                           maxRunTime: 1800
                           command:
                               $flatten:

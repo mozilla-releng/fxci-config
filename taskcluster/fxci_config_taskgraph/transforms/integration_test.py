@@ -11,13 +11,13 @@ from textwrap import dedent
 from typing import Any
 
 from taskgraph.transforms.base import TransformSequence
-from taskgraph.util.schema import Schema
+from taskgraph.util.schema import LegacySchema
 from voluptuous import ALLOW_EXTRA, Optional, Required
 
 from fxci_config_taskgraph.util.constants import FIREFOXCI_ROOT_URL, STAGING_ROOT_URL
 from fxci_config_taskgraph.util.integration import find_tasks, get_taskcluster_client
 
-SCHEMA = Schema(
+SCHEMA = LegacySchema(
     {
         Required(
             "decision-index-paths",
