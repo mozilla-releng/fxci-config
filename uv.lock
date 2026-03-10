@@ -2247,17 +2247,18 @@ wheels = [
 
 [[package]]
 name = "simple-github"
-version = "3.0.0"
+version = "3.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp", extra = ["speedups"] },
+    { name = "aiohttp-retry" },
     { name = "gql", extra = ["aiohttp", "requests"] },
     { name = "pyjwt", extra = ["crypto"] },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e8/35/72c9eb9641d100476d26d13e0f9c75b7b467b3ad0eb4565bab2e7a1b2a05/simple_github-3.0.0.tar.gz", hash = "sha256:3cb87771e20e17597b2183169662a47a490a0494039bbe78c6dd2c7ed9cb4d85", size = 140012, upload-time = "2026-02-10T15:31:44.096Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/68/6d/cab06643d1e7ab7f33e07e7c49c446cbb84af8d02b1df96693673c27ec64/simple_github-3.1.0.tar.gz", hash = "sha256:b78dc5ee4faa5e30a2d53620c5222da9b44bddc4942abeeed862388ac1fc7f25", size = 172789, upload-time = "2026-03-10T15:52:56.32Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/57/08/5f9921bfad2346acc97363f96971007679430284648f8b061d3eec3ecbc8/simple_github-3.0.0-py3-none-any.whl", hash = "sha256:906f6af08c9b373524bb55ab71da08cb4521da46d00439e42e25a5c6f516f7ec", size = 13885, upload-time = "2026-02-10T15:31:42.258Z" },
+    { url = "https://files.pythonhosted.org/packages/fd/ef/175b5b391797b1859a053678b963fbc27e8d7b39275b61cf0d813c220499/simple_github-3.1.0-py3-none-any.whl", hash = "sha256:8c6f6d88c95c94f1bb196693c90336c1d7f75f85ad8437e95e89ede0cb03872b", size = 14141, upload-time = "2026-03-10T15:52:54.906Z" },
 ]
 
 [[package]]
