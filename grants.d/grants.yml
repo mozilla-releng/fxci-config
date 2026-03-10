@@ -941,6 +941,13 @@
         level: 3
 
 - grant:
+    - queue:get-artifact:project/enterprise/*
+  to:
+    - project:
+        alias: enterprise-firefox
+        job: [pull-request:trusted]
+
+- grant:
     - project:{trust_domain}:releng:signing:cert:nightly-signing
   to:
     - project:
