@@ -780,12 +780,14 @@ project/releng/scriptworker/v3/mac-signing/prod/firefoxci-gecko-3:
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-enterprise-t:
   description: Dep signing worker pool for Enterprise Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
+    - queue:get-artifact:project/enterprise/repacks/*
     - assume:worker-type:scriptworker-prov-v1/dep-enterprise-signing-mac14m2
     - queue:worker-id:dep-enterprise-signing-mac14m2/dep-enterprise-signing-mac14m2*
 # Enterprise m2 mac signers
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-enterprise-3:
   description: Production signing worker pool for Enterprise Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
+    - queue:get-artifact:project/enterprise/repacks/*
     - assume:worker-type:scriptworker-prov-v1/enterprise-signing-mac14m2
     - queue:worker-id:enterprise-signing-mac14m2/enterprise-signing-mac14m2*
 # TB m2 mac signers dep
