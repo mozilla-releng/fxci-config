@@ -144,13 +144,13 @@ win11a6425h2builder:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    name: win11a6425h2builder
+    name: win11_a64_25h2_builder
 win11a6425h2builderalpha:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    name: win11a6425h2builderalpha
+    name: win11_a64_25h2_builder_alpha
 trusted_win11_a64_25h2_builder:
   azure_trusted:
     version: 1.0.0
@@ -192,13 +192,13 @@ win11a6425h2tester:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    name: win11a6425h2tester
+    name: win11_a64_25h2_tester
 win11a6425h2testeralpha:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    name: win11a6425h2testeralpha
+    name: win11_a64_25h2_tester_alpha
 ronin_t_windows11_64_24h2:
   azure2:
     version: 1.3.0
@@ -216,13 +216,13 @@ win116425h2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    name: win116425h2
+    name: win11_64_25h2
 win116425h2alpha:
   azure2:
     version: 1.0.0
     resource_group: rg-packer-worker-images
     deployment_id: alpha
-    name: win116425h2alpha
+    name: win11_64_25h2_alpha
 ronin_t_windows11_64_2009_alpha:
   azure2:
     version: 1.0.0
