@@ -227,3 +227,65 @@ project-relman/code-review-production:
           taskGroupId:
             type: string
             description: Taskcluster Task Group ID triggering the hook (should be a Try Task Group)
+
+project-relman/reviewer-assignment-infra-testing:
+  name: Reviewer assignment hook (testing)
+  description: Automatically assign reviewers to PRs
+  owner: omehani@mozilla.com
+  email_on_error: true
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository  # XXX: assuming this gives a suitable GITHUB_TOKEN
+    - notify:email:*
+    - queue:route:notify.email.*
+    - queue:scheduler-id:relman  # XXX: Do we want a different project for this?
+  template_file: hooks/project-relman/reviewer-assignment-infra-testing.yml
+  bindings:
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '#.infra-testing.#'  # e.g., primary.mozilla-firefox.infra-testing.opened or primary.mozilla-firefox.infra-testing.synchronize
+  trigger_schema:
+    type: object
+    # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
+    additionalProperties: true
+    properties:
+
+      body:
+        type: object
+        # https://docs.github.com/en/webhooks/webhook-events-and-payloads#pull_request
+        description: |
+          The raw body of github event (for version 1)
+        required:
+          - action
+          - organization
+          - pull_request
+          - repository
+        additionalProperties: true
+        properties:
+
+          action:
+            type: string
+            description: Action on the PR
+            pattern: "^(opened|synchronize)$"
+
+          organisation:
+            type: string
+            pattern: "^mozilla-firefox$"
+
+          pull_request:
+            type: object
+            description: Pull request metadata
+            required:
+              - url
+              - diff_url
+            additionalProperties: true
+            properties:
+
+              url:
+                type: string
+
+              diff_url:
+                # Note: while binary data is not present in that diff, the paths of the binary files are.
+                type: string
+
+          repository:
+            type: string
+            pattern: "^infra-testing$"
