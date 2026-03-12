@@ -7,7 +7,7 @@ expires:
   $fromNow: 1 month
 extra: {}
 metadata:
-  description: 
+  description:
   name: Reviewer assignment
   owner: omehani@mozilla.com
   # XXX: TBC
