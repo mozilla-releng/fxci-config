@@ -273,10 +273,23 @@ project-relman/reviewer-assignment-infra-testing:
             type: object
             description: Pull request metadata
             required:
+              - base
               - diff_url
               - html_url
             additionalProperties: true
             properties:
+
+              base:
+                type: object
+                description: Pull request metadata
+                required:
+                  - ref
+                additionalProperties: true
+                properties:
+
+                  ref:
+                    type: string
+                    description: Target branch to merge this PR in
 
               diff_url:
                 # Note: while binary data is not present in that diff, the paths of the binary files are.
