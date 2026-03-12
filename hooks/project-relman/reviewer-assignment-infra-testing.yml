@@ -7,71 +7,51 @@ expires:
   $fromNow: 1 month
 extra: {}
 metadata:
-  description: Publish issues detected in remote tasks
-  name: Code review publication (production)
-  owner: release-mgmt-analysis@mozilla.com
-  source: 'https://github.com/mozilla/code-review'
+  description: 
+  name: Reviewer assignment
+  owner: omehani@mozilla.com
+  # XXX: TBC
+  source: 'https://github.com/mozilla-conduit/reviewer-selector'
 payload:
-  artifacts:
-    public/results:
-      path: /tmp/results
-      type: directory
-  cache:
-    code-review-production-checkout: '/checkouts'
+  # artifacts:
+  #   public/results:
+  #     path: /tmp/results
+  #     type: directory
+  # cache:
+  #   code-review-production-checkout: '/checkouts'
   capabilities: {}
-  command:
-    - code-review-bot
-    - '--taskcluster-secret'
-    - project/relman/code-review/runtime-production
-    - '--mercurial-repository'
-    - '/checkouts'
+  # command:
+  #   - code-review-bot
+  #   - '--taskcluster-secret'
+  #   - project/relman/code-review/runtime-production
+  #   - '--mercurial-repository'
+  #   - '/checkouts'
   env:
-    $merge:
-      - $if: firedBy == 'triggerHook'
-        else: {}
-        then:
-          $eval: payload
-      - $if: firedBy == 'triggerHookWithToken'
-        else: {}
-        then:
-          PHABRICATOR_BUILD_TARGET:
-            $eval: payload.build_target_phid
-      - $if: firedBy == 'pulseMessage'
-        else: {}
-        then:
-          $if: '"runId" in payload && "status" in payload'
-          then:
-            # Triggered by code-review task in try ending
-            # so we can analyze a try patch
-            TRY_RUN_ID:
-              $eval: str(payload.runId)
-            TRY_TASK_GROUP_ID:
-              $eval: payload.status.taskGroupId
-            TRY_TASK_ID:
-              $eval: payload.status.taskId
+    GITHUB_TOKEN:
+      $eval: XXX_WHERE_DO_I_GET_THIS?
+    PR:
+      $eval: payload.body.pull_request.html_url
+    DIFF_URL:
+      $eval: payload.body.pull_request.diff_url
+    REPOSITORY:
+      $eval payload.body.repository.html_url
 
-          else:
-            # Triggered by end of build on autoland & MC
-            # and other unsupported level-3 branches (skipped by bot)
-            GENERIC_TASK_GROUP_ID:
-              $eval: payload.taskGroupId
-  features:
-    taskclusterProxy: true
-  image:
-    type: indexed-image
-    namespace: code-analysis.v2.code-review.branch.production
-    path: public/code-review-bot.tar.zst
+features:
+  taskclusterProxy: true
+  # XXX: push to the right place
+  image: docker.io/omehani/moz-reviewer-selector
   maxRunTime: 7200
 priority: lowest
 provisionerId: code-review
 retries: 3
 routes:
-  - index.project.relman.production.code-review.latest
+  # XXX: need to check this
+  - index.project.relman.production.reviewer-assignment.latest
 schedulerId: relman
 scopes:
-  - 'secrets:get:project/relman/code-review/runtime-production'
-  - 'index:insert-task:project.relman.production.code-review.*'
   - 'notify:email:*'
-  - 'docker-worker:cache:code-review-production-checkout'
+  # XXX: need to check those
+  - 'secrets:get:project/relman/reviewer-assignment/runtime-infra-testing'
+  - 'index:insert-task:project.relman.production.reviewer-assignment.*'
 tags: {}
 workerType: bot
