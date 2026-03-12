@@ -18,6 +18,7 @@ payload:
   #     type: directory
   # cache:
   #   code-review-production-checkout: '/checkouts'
+  # XXX: is it possible to mount a volume into the container?
   capabilities: {}
   # command:
   #   - code-review-bot
