@@ -1,0 +1,61 @@
+---
+created:
+  $fromNow: 0 seconds
+deadline:
+  $fromNow: 2 hours
+expires:
+  $fromNow: 1 month
+extra: {}
+metadata:
+  description:
+  name: Reviewer assignment
+  owner: omehani@mozilla.com
+  source: 'https://github.com/mozilla-conduit/reviewer-selector'
+payload:
+  # artifacts:
+  #   public/results:
+  #     path: /tmp/results
+  #     type: directory
+  # cache:
+  #   code-review-production-checkout: '/checkouts'
+  # XXX: is it possible to mount a volume into the container?
+  capabilities: {}
+  # command:
+  #   - code-review-bot
+  #   - '--taskcluster-secret'
+  #   - project/relman/code-review/runtime-production
+  #   - '--mercurial-repository'
+  #   - '/checkouts'
+  env:
+    # XXX: is this passed into the docker containers?
+    GITHUB_TOKEN:
+      $eval: XXX_WHERE_DO_I_GET_THIS?
+    DIFF_URL:
+      $eval: payload.body.pull_request.diff_url
+    PR_URL:
+      $eval: payload.body.pull_request.html_url
+    REPO_NAME:
+      # e.g., firefox-autoland
+      $eval payload.repository + '-' + payload.body.pull_request.base.ref
+    REPO_URL:
+      $eval payload.body.repository.html_url
+
+features:
+  taskclusterProxy: true
+  # XXX: push to the right place
+  image: docker.io/omehani/moz-reviewer-selector
+  maxRunTime: 7200
+priority: lowest
+provisionerId: code-review
+retries: 3
+routes:
+  # XXX: need to check this
+  - index.project.relman.production.reviewer-assignment.latest
+schedulerId: relman
+scopes:
+  - 'notify:email:*'
+  # XXX: need to check those
+  - 'secrets:get:project/relman/reviewer-assignment/runtime-infra-testing'
+  - 'index:insert-task:project.relman.production.reviewer-assignment.*'
+tags: {}
+workerType: bot
