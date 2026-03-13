@@ -1078,6 +1078,7 @@ project/releng/scriptworker/v2/signing/dev/firefoxci-enterprise-t:
   scopes:
     - queue:claim-work:scriptworker-k8s/enterprise-t-signing-dev
     - queue:worker-id:enterprise-t-signing-dev/enterprise-t-signing-dev-*
+    - queue:get-artifact:project/enterprise/*
 project/releng/scriptworker/v2/signing/dev/firefoxci-mobile-t:
   description: dev mobile signing
   scopes:
@@ -1154,11 +1155,13 @@ project/releng/scriptworker/v2/signing/prod/firefoxci-enterprise-3:
   scopes:
     - queue:claim-work:scriptworker-k8s/enterprise-3-signing
     - queue:worker-id:enterprise-3-signing/enterprise-3-signing-*
+    - queue:get-artifact:project/enterprise/*
 project/releng/scriptworker/v2/signing/prod/firefoxci-enterprise-t:
   description: ''
   scopes:
     - queue:claim-work:scriptworker-k8s/enterprise-t-signing
     - queue:worker-id:enterprise-t-signing/enterprise-t-signing-*
+    - queue:get-artifact:project/enterprise/*
 project/releng/scriptworker/v2/signing/prod/firefoxci-glean-3:
   description: ''
   scopes:
