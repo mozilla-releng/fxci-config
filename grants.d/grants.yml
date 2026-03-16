@@ -931,6 +931,7 @@
 
 - grant:
     - index:insert-task:{trust_domain}.v2.{alias}-pr.*
+    - queue:route:index.{trust_domain}.v2.{alias}-pr.*
     - queue:route:tc-treeherder-stage.v2.{alias}-pr.*
     - queue:route:tc-treeherder.v2.{alias}-pr.*
   to:
