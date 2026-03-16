@@ -930,6 +930,7 @@
         trust_domain: enterprise
 
 - grant:
+    - index:insert-task:{trust_domain}.v2.{alias}-pr.*
     - queue:route:tc-treeherder-stage.v2.{alias}-pr.*
     - queue:route:tc-treeherder.v2.{alias}-pr.*
   to:
