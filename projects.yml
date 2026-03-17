@@ -1341,6 +1341,7 @@ code-review:
   trust_domain: code-analysis
   features:
     trust-domain-scopes: true
+    github-taskgraph: true
     github-pull-request:
       policy: public
 
