@@ -228,7 +228,7 @@ project-relman/code-review-production:
             type: string
             description: Taskcluster Task Group ID triggering the hook (should be a Try Task Group)
 
-project-relman/reviewer-assignment-infra-testing:
+project-engwf/reviewer-assignment-infra-testing:
   name: Reviewer assignment hook (testing)
   description: Automatically assign reviewers to PRs
   owner: omehani@mozilla.com
@@ -237,8 +237,8 @@ project-relman/reviewer-assignment-infra-testing:
     - assume:project:taskcluster:mozilla-github-repository  # XXX: assuming this gives a suitable GITHUB_TOKEN
     - notify:email:*
     - queue:route:notify.email.*
-    - queue:scheduler-id:relman  # XXX: Do we want a different project for this?
-  template_file: hooks/project-relman/reviewer-assignment-infra-testing.yml
+    - queue:scheduler-id:engwf# XXX: Do we want a different project for this?
+  template_file: hooks/project-engwf/reviewer-assignment-infra-testing.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '#.infra-testing.#'  # e.g., primary.mozilla-firefox.infra-testing.opened or primary.mozilla-firefox.infra-testing.synchronize

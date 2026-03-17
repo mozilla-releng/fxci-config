@@ -23,7 +23,7 @@ payload:
   # command:
   #   - code-review-bot
   #   - '--taskcluster-secret'
-  #   - project/relman/code-review/runtime-production
+  #   - project/engwf/code-review/runtime-production
   #   - '--mercurial-repository'
   #   - '/checkouts'
   env:
@@ -50,12 +50,12 @@ provisionerId: code-review
 retries: 3
 routes:
   # XXX: need to check this
-  - index.project.relman.production.reviewer-assignment.latest
-schedulerId: relman
+  - index.project.engwf.production.reviewer-assignment.latest
+schedulerId: engwf
 scopes:
   - 'notify:email:*'
   # XXX: need to check those
-  - 'secrets:get:project/relman/reviewer-assignment/runtime-infra-testing'
-  - 'index:insert-task:project.relman.production.reviewer-assignment.*'
+  - 'secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing'
+  - 'index:insert-task:project.engwf.production.reviewer-assignment.*'
 tags: {}
 workerType: bot
