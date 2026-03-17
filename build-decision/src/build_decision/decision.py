@@ -42,7 +42,10 @@ class Task:
     task_payload = attr.ib()
 
     def display(self):
-        logger.info("Decision Task:\n%s", json.dumps(self.task_payload, indent=4, sort_keys=True))
+        logger.info(
+            "Decision Task:\n%s",
+            json.dumps(self.task_payload, indent=4, sort_keys=True),
+        )
 
     def submit(self):
         logger.info("Task Id: %s", self.task_id)

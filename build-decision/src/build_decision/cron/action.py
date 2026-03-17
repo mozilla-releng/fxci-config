@@ -34,7 +34,10 @@ def run_trigger_action(job_name, job, *, repository, push_info, dry_run):
 
     if job.get("include-cron-input") and "HOOK_PAYLOAD" in os.environ:
         cron_hook_payload = json.loads(os.environ["HOOK_PAYLOAD"])
-        logger.info("Cron Hook Payload:\n%s", json.dumps(cron_hook_payload, indent=4, sort_keys=True))
+        logger.info(
+            "Cron Hook Payload:\n%s",
+            json.dumps(cron_hook_payload, indent=4, sort_keys=True),
+        )
         action_input.update(cron_hook_payload)
 
     if job.get("extra-input"):
