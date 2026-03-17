@@ -18,22 +18,21 @@ MAX_TIME_DRIFT = 3 * 24 * 60 * 60
 
 def get_revision_from_pulse_message():
     pulse_message = json.loads(os.environ["PULSE_MESSAGE"])
-    print("Pulse Message:")
-    print(json.dumps(pulse_message, indent=4, sort_keys=True))
+    logger.info("Pulse Message:\n%s", json.dumps(pulse_message, indent=4, sort_keys=True))
 
     pulse_payload = pulse_message["payload"]
     if pulse_payload["type"] != "changegroup.1":
-        print("Not a changegroup.1 message")
+        logger.info("Not a changegroup.1 message")
         return
 
     push_count = len(pulse_payload["data"]["pushlog_pushes"])
     if push_count != 1:
-        print(f"Message has {push_count} pushes; only one supported")
+        logger.info("Message has %d pushes; only one supported", push_count)
         return
 
     head_count = len(pulse_payload["data"]["heads"])
     if head_count != 1:
-        print(f"Message has {head_count} heads; only one supported")
+        logger.info("Message has %d heads; only one supported", head_count)
         return
 
     return pulse_payload["data"]["heads"][0]

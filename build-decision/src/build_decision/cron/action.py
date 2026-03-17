@@ -4,6 +4,7 @@
 
 
 import json
+import logging
 import os
 
 import taskcluster
@@ -11,15 +12,17 @@ import taskcluster
 from ..util.http import SESSION
 from ..util.trigger_action import render_action
 
+logger = logging.getLogger(__name__)
+
 
 def find_decision_task(repository, revision):
     """Given the parameters for this action, find the taskId of the decision
     task"""
     index = taskcluster.Index(taskcluster.optionsFromEnvironment(), session=SESSION)
     decision_index = f"{repository.trust_domain}.v2.{repository.project}.revision.{revision}.taskgraph.decision"  # noqa
-    print(f"Looking for index: {decision_index}")
+    logger.info("Looking for index: %s", decision_index)
     task_id = index.findTask(decision_index)["taskId"]
-    print(f"Found decision task: {task_id}")
+    logger.info("Found decision task: %s", task_id)
     return task_id
 
 
@@ -31,8 +34,7 @@ def run_trigger_action(job_name, job, *, repository, push_info, dry_run):
 
     if job.get("include-cron-input") and "HOOK_PAYLOAD" in os.environ:
         cron_hook_payload = json.loads(os.environ["HOOK_PAYLOAD"])
-        print("Cron Hook Payload:")
-        print(json.dumps(cron_hook_payload, indent=4, sort_keys=True))
+        logger.info("Cron Hook Payload:\n%s", json.dumps(cron_hook_payload, indent=4, sort_keys=True))
         action_input.update(cron_hook_payload)
 
     if job.get("extra-input"):
