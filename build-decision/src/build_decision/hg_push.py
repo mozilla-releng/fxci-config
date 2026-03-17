@@ -6,10 +6,18 @@ import json
 import logging
 import os
 import time
+from contextlib import contextmanager
 
 from .decision import render_tc_yml
 
 logger = logging.getLogger(__name__)
+
+
+@contextmanager
+def timed(description):
+    start = time.perf_counter()
+    yield
+    logging.info(f"{description} took: {time.perf_counter() - start:.1f}")
 
 
 # Allow triggering on-push task for pushes up to 3 days old.
@@ -39,29 +47,33 @@ def get_revision_from_pulse_message():
 
 
 def build_decision(*, repository, taskcluster_yml_repo, dry_run):
+    logging.info("Running build-decision task")
     # The hg-push hook can be triggered manually, so we throw out everything
     # from the input, other than the revision, and get the pushinfo from
     # hg.mozilla.org.
     revision = get_revision_from_pulse_message()
 
-    push = repository.get_push_info(revision=revision)
+    with timed("Fetching push info"):
+        push = repository.get_push_info(revision=revision)
 
     if time.time() - push["pushdate"] > MAX_TIME_DRIFT:
         logger.warning("Push is too old, not triggering tasks")
         return
 
-    if taskcluster_yml_repo is None:
-        taskcluster_yml = repository.get_file(".taskcluster.yml", revision=revision)
-    else:
-        taskcluster_yml = taskcluster_yml_repo.get_file(".taskcluster.yml")
+    with timed("Fetching .taskcluster.yml"):
+        if taskcluster_yml_repo is None:
+            taskcluster_yml = repository.get_file(".taskcluster.yml", revision=revision)
+        else:
+            taskcluster_yml = taskcluster_yml_repo.get_file(".taskcluster.yml")
 
-    task = render_tc_yml(
-        taskcluster_yml,
-        taskcluster_root_url=os.environ["TASKCLUSTER_ROOT_URL"],
-        tasks_for="hg-push",
-        push=push,
-        repository=repository.to_json(),
-    )
+    with timed("Rendering task"):
+        task = render_tc_yml(
+            taskcluster_yml,
+            taskcluster_root_url=os.environ["TASKCLUSTER_ROOT_URL"],
+            tasks_for="hg-push",
+            push=push,
+            repository=repository.to_json(),
+        )
 
     task.display()
     if not dry_run:
