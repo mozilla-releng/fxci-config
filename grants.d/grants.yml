@@ -987,9 +987,16 @@
     - secrets:get:project/enterprise/*
     - queue:rerun-task:enterprise-level-*
     - queue:cancel-task:enterprise-level-*
+    - queue:get-artifact:project/enterprise/*
   to:
     - roles:
         - mozillians-group:enterprise-developers
+
+- grant:
+    - queue:get-artifact:project/enterprise/*
+  to:
+    - groups:
+        - team_moco
 
 ##
 # Non-gecko tree projects
