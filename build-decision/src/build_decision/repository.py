@@ -6,6 +6,7 @@ import logging
 
 import attr
 import redo
+import requests
 import yaml
 from requests.exceptions import ChunkedEncodingError, ConnectionError, SSLError
 
@@ -15,6 +16,10 @@ logger = logging.getLogger(__name__)
 
 
 class NoPushesError(Exception):
+    pass
+
+
+class RetryableError(Exception):
     pass
 
 
@@ -66,11 +71,21 @@ class Repository:
         else:
             raise Exception(f"Unknown repository_type {self.repository_type}!")
 
-        res = SESSION.get(url, headers=headers, timeout=60)
-        res.raise_for_status()
-        tcyml = res.text
+        return yaml.safe_load(self._fetch_file(url, headers))
 
-        return yaml.safe_load(tcyml)
+    @redo.retriable(attempts=5, sleeptime=10, retry_exceptions=(RetryableError,))
+    def _fetch_file(self, url, headers):
+        res = SESSION.get(url, headers=headers, timeout=60)
+        try:
+            res.raise_for_status()
+        except requests.HTTPError:
+            if res.status_code == 404 and self.repository_type == "hg":
+                raise RetryableError(
+                    f"Got 404 fetching {url}. The revision may not have "
+                    "replicated to the edge server yet."
+                )
+            raise
+        return res.text
 
     @redo.retriable(
         attempts=5,

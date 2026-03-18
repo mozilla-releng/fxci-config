@@ -1,5 +1,6 @@
 import pytest
 import redo
+import requests
 import yaml
 
 import build_decision.repository as repository
@@ -99,6 +100,42 @@ def test_get_file(mocker, repository_type, repo_url, revision, raises, expected_
         fake_session.get.assert_called_with(
             expected_url, headers=expected_headers, timeout=60
         )
+
+
+def test_get_file_hg_retries_on_404(mocker):
+    fake_session = mocker.MagicMock()
+    fake_response = mocker.MagicMock()
+    fake_response.status_code = 404
+    fake_response.raise_for_status.side_effect = requests.HTTPError("404")
+    fake_session.get.return_value = fake_response
+
+    mocker.patch.object(repository, "SESSION", new=fake_session)
+    mocker.patch.object(redo, "retry", new=fake_redo_retry)
+
+    repo = repository.Repository(
+        repo_url="https://hg.mozilla.org/fake_repo",
+        repository_type="hg",
+    )
+    with pytest.raises(repository.RetryableError):
+        repo.get_file("fake_path")
+
+
+def test_get_file_git_no_retry_on_404(mocker):
+    fake_session = mocker.MagicMock()
+    fake_response = mocker.MagicMock()
+    fake_response.status_code = 404
+    fake_response.raise_for_status.side_effect = requests.HTTPError("404")
+    fake_session.get.return_value = fake_response
+
+    mocker.patch.object(repository, "SESSION", new=fake_session)
+    mocker.patch.object(redo, "retry", new=fake_redo_retry)
+
+    repo = repository.Repository(
+        repo_url="https://github.com/org/repo",
+        repository_type="git",
+    )
+    with pytest.raises(requests.HTTPError):
+        repo.get_file("fake_path")
 
 
 @pytest.mark.parametrize(
