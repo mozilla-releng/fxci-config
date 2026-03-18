@@ -149,9 +149,12 @@ class Hook:
     hook_payload = attr.ib()
 
     def display(self):
-        print(f"Hook: {self.hook_group_id}/{self.hook_id}")
-        print("Hook payload:")
-        print(json.dumps(self.hook_payload, indent=4, sort_keys=True))
+        logger.info(
+            "Hook: %s/%s\nHook payload:\n%s",
+            self.hook_group_id,
+            self.hook_id,
+            json.dumps(self.hook_payload, indent=4, sort_keys=True),
+        )
 
     def submit(self):
         if "TASKCLUSTER_PROXY_URL" in os.environ:
@@ -164,6 +167,6 @@ class Hook:
                 taskcluster.optionsFromEnvironment(), session=SESSION
             )
 
-        print(self.hook_group_id, self.hook_id, self.hook_payload)
+        logger.info("Triggering hook %s/%s", self.hook_group_id, self.hook_id)
         result = hooks.triggerHook(self.hook_group_id, self.hook_id, self.hook_payload)
-        print(f"Task Id: {result['status']['taskId']}")
+        logger.info("Task Id: %s", result["status"]["taskId"])

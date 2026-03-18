@@ -6,10 +6,18 @@ import json
 import logging
 import os
 import time
+from contextlib import contextmanager
 
 from .decision import render_tc_yml
 
 logger = logging.getLogger(__name__)
+
+
+@contextmanager
+def timed(description):
+    start = time.perf_counter()
+    yield
+    logging.info(f"{description} took: {time.perf_counter() - start:.1f}")
 
 
 # Allow triggering on-push task for pushes up to 3 days old.
@@ -18,51 +26,56 @@ MAX_TIME_DRIFT = 3 * 24 * 60 * 60
 
 def get_revision_from_pulse_message():
     pulse_message = json.loads(os.environ["PULSE_MESSAGE"])
-    print("Pulse Message:")
-    print(json.dumps(pulse_message, indent=4, sort_keys=True))
+    logger.info(
+        "Pulse Message:\n%s", json.dumps(pulse_message, indent=4, sort_keys=True)
+    )
 
     pulse_payload = pulse_message["payload"]
     if pulse_payload["type"] != "changegroup.1":
-        print("Not a changegroup.1 message")
+        logger.info("Not a changegroup.1 message")
         return
 
     push_count = len(pulse_payload["data"]["pushlog_pushes"])
     if push_count != 1:
-        print(f"Message has {push_count} pushes; only one supported")
+        logger.info("Message has %d pushes; only one supported", push_count)
         return
 
     head_count = len(pulse_payload["data"]["heads"])
     if head_count != 1:
-        print(f"Message has {head_count} heads; only one supported")
+        logger.info("Message has %d heads; only one supported", head_count)
         return
 
     return pulse_payload["data"]["heads"][0]
 
 
 def build_decision(*, repository, taskcluster_yml_repo, dry_run):
+    logging.info("Running build-decision task")
     # The hg-push hook can be triggered manually, so we throw out everything
     # from the input, other than the revision, and get the pushinfo from
     # hg.mozilla.org.
     revision = get_revision_from_pulse_message()
 
-    push = repository.get_push_info(revision=revision)
+    with timed("Fetching push info"):
+        push = repository.get_push_info(revision=revision)
 
     if time.time() - push["pushdate"] > MAX_TIME_DRIFT:
         logger.warning("Push is too old, not triggering tasks")
         return
 
-    if taskcluster_yml_repo is None:
-        taskcluster_yml = repository.get_file(".taskcluster.yml", revision=revision)
-    else:
-        taskcluster_yml = taskcluster_yml_repo.get_file(".taskcluster.yml")
+    with timed("Fetching .taskcluster.yml"):
+        if taskcluster_yml_repo is None:
+            taskcluster_yml = repository.get_file(".taskcluster.yml", revision=revision)
+        else:
+            taskcluster_yml = taskcluster_yml_repo.get_file(".taskcluster.yml")
 
-    task = render_tc_yml(
-        taskcluster_yml,
-        taskcluster_root_url=os.environ["TASKCLUSTER_ROOT_URL"],
-        tasks_for="hg-push",
-        push=push,
-        repository=repository.to_json(),
-    )
+    with timed("Rendering task"):
+        task = render_tc_yml(
+            taskcluster_yml,
+            taskcluster_root_url=os.environ["TASKCLUSTER_ROOT_URL"],
+            tasks_for="hg-push",
+            push=push,
+            repository=repository.to_json(),
+        )
 
     task.display()
     if not dry_run:
