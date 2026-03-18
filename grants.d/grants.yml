@@ -3,6 +3,20 @@
 #
 # Format:
 # - grant:
+
+# Temporary: staging testing for code-review taskgraph migration.
+# Grants code-review-pr index routes to the JohanLorenzo/code-review fork
+# so that its build tasks can use the same routes as mozilla/code-review.
+- grant:
+    - queue:route:index.code-analysis.v2.code-review.*
+    - queue:route:index.code-analysis.v2.code-review-pr.*
+    - index:insert-task:code-analysis.v2.code-review.*
+    - index:insert-task:code-analysis.v2.code-review-pr.*
+    - queue:create-task:project:none
+  to:
+    - project:
+        alias: johanlorenzo-code-review
+  environments: staging
 #   - <scope>
 #   - ..
 #   to:
