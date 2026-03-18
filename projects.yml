@@ -1387,6 +1387,21 @@ code-coverage:
     github-pull-request:
       policy: public
 
+# Temporary: staging testing for code-review taskgraph migration
+johanlorenzo-code-coverage:
+  repo: https://github.com/JohanLorenzo/code-coverage
+  repo_type: git
+  branches:
+    - name: master
+      level: 1
+  default_branch: master
+  trust_domain: code-analysis
+  features:
+    trust-domain-scopes: true
+    github-taskgraph: true
+    github-pull-request:
+      policy: public
+
 # Bug 1822403: Add taskgraph support to firefox-translations-training
 translations:
   repo: https://github.com/mozilla/translations
