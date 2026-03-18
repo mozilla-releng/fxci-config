@@ -1388,8 +1388,8 @@ code-coverage:
       policy: public
 
 # Temporary: staging testing for code-review taskgraph migration
-johanlorenzo-code-coverage:
-  repo: https://github.com/JohanLorenzo/code-coverage
+johanlorenzo-code-review:
+  repo: https://github.com/JohanLorenzo/code-review
   repo_type: git
   branches:
     - name: master
