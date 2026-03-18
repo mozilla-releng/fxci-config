@@ -120,7 +120,7 @@ def test_get_file_hg_retries_on_404(mocker):
         repo.get_file("fake_path")
 
 
-def test_get_file_git_no_retry_on_404(mocker):
+def test_get_file_git_retries_on_404(mocker):
     fake_session = mocker.MagicMock()
     fake_response = mocker.MagicMock()
     fake_response.status_code = 404
@@ -134,7 +134,7 @@ def test_get_file_git_no_retry_on_404(mocker):
         repo_url="https://github.com/org/repo",
         repository_type="git",
     )
-    with pytest.raises(requests.HTTPError):
+    with pytest.raises(repository.RetryableError):
         repo.get_file("fake_path")
 
 

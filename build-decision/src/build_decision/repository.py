@@ -79,10 +79,10 @@ class Repository:
         try:
             res.raise_for_status()
         except requests.HTTPError:
-            if res.status_code == 404 and self.repository_type == "hg":
+            if res.status_code == 404:
                 raise RetryableError(
                     f"Got 404 fetching {url}. The revision may not have "
-                    "replicated to the edge server yet."
+                    "been replicated yet."
                 )
             raise
         return res.text
