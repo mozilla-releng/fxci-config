@@ -40,7 +40,7 @@ dev = [
     "pytest-taskgraph>=0.1.0",
     "responses>=0.25.3",
     # Keep this synced with the version in `.taskcluster.yml`.
-    "taskcluster-taskgraph==19.2.1",
+    "taskcluster-taskgraph==20.0.0",
 ]
 
 [project.scripts]
