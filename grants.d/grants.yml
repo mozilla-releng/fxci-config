@@ -903,6 +903,9 @@
   to:
     - project:
         alias: try
+    - project:
+        alias: firefox
+        job: [pull-request:trusted]
 
 - grant:
     # Bug 1800472: Allow try-comm-central to trigger code review bot
@@ -3240,6 +3243,9 @@
   to:
     - project:
         alias: try
+    - project:
+        alias: firefox
+        job: [pull-request:trusted]
 
 # on level 3 repositories we only allow the specific actions that we expect to
 # run in a given repository, and scope the grants down to the cron or action
