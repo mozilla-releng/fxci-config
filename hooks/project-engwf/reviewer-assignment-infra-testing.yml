@@ -21,9 +21,15 @@ payload:
       $eval: payload.body.pull_request.diff_url
     PR_URL:
       $eval: payload.body.pull_request.html_url
+    ORG_NAME:
+      # e.g., mozilla-firefox
+      $eval payload.organisation
     REPO_NAME:
-      # e.g., firefox-autoland
-      $eval payload.repository + '-' + payload.body.pull_request.base.ref
+      # e.g., firefox
+      $eval payload.repository
+    TARGET_BRANCH_NAME:
+      # e.g., autoland
+      $eval payload.body.pull_request.base.ref
     REPO_URL:
       $eval payload.body.repository.html_url
 
