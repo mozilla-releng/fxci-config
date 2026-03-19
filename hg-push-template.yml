@@ -32,7 +32,7 @@ routes:
   - index.hg-push.v1.${alias}.pushlog-id.$${payload.payload.data.pushlog_pushes[0].pushid}
 payload:
   # built by pushes to the fxci-config repository
-  image: mozillareleases/build-decision:ed88efef5c4b4dca87066d03ae0a90e18fbe23cd@sha256:b720e21f4e5b3aeec5f8d8a8924a83507e271267ab1eef4f2c86321c7885ae11
+  image: mozillareleases/build-decision:bd900d7a313c796d48da21fdb54ae35db812e3dc@sha256:2a7e477efee5e8b356ea3b642e30b3b5cb48ffe81b0e72bb223b4522b59345d5
   env:
     # pass along the hook payload, which is the Pulse message from hg (v2)
     # https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications
