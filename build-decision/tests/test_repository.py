@@ -102,11 +102,10 @@ def test_get_file(mocker, repository_type, repo_url, revision, raises, expected_
         )
 
 
-def test_get_file_hg_retries_on_404(mocker):
-    fake_session = mocker.MagicMock()
+def test_fetch_file_success(mocker):
     fake_response = mocker.MagicMock()
-    fake_response.status_code = 404
-    fake_response.raise_for_status.side_effect = requests.HTTPError("404")
+    fake_response.text = "file content"
+    fake_session = mocker.MagicMock()
     fake_session.get.return_value = fake_response
 
     mocker.patch.object(repository, "SESSION", new=fake_session)
@@ -116,26 +115,132 @@ def test_get_file_hg_retries_on_404(mocker):
         repo_url="https://hg.mozilla.org/fake_repo",
         repository_type="hg",
     )
-    with pytest.raises(repository.RetryableError):
-        repo.get_file("fake_path")
+    result = repo._fetch_file("https://example.com/file", {})
+    assert result == "file content"
 
 
-def test_get_file_git_retries_on_404(mocker):
-    fake_session = mocker.MagicMock()
+def test_fetch_file_non_404_error(mocker):
     fake_response = mocker.MagicMock()
-    fake_response.status_code = 404
-    fake_response.raise_for_status.side_effect = requests.HTTPError("404")
+    fake_response.status_code = 500
+    fake_response.raise_for_status.side_effect = requests.HTTPError("500")
+    fake_session = mocker.MagicMock()
     fake_session.get.return_value = fake_response
 
     mocker.patch.object(repository, "SESSION", new=fake_session)
     mocker.patch.object(redo, "retry", new=fake_redo_retry)
 
     repo = repository.Repository(
+        repo_url="https://hg.mozilla.org/fake_repo",
+        repository_type="hg",
+    )
+    with pytest.raises(requests.HTTPError):
+        repo._fetch_file("https://example.com/file", {})
+
+
+def test_fetch_file_404_delegates(mocker):
+    fake_response = mocker.MagicMock()
+    fake_response.status_code = 404
+    fake_response.raise_for_status.side_effect = requests.HTTPError("404")
+    fake_session = mocker.MagicMock()
+    fake_session.get.return_value = fake_response
+
+    mocker.patch.object(repository, "SESSION", new=fake_session)
+    mocker.patch.object(redo, "retry", new=fake_redo_retry)
+
+    repo = repository.Repository(
+        repo_url="https://hg.mozilla.org/fake_repo",
+        repository_type="hg",
+    )
+    mock_handle = mocker.patch.object(
+        repository.Repository,
+        "_handle_file_not_found",
+        side_effect=repository.RetryableError("lag"),
+    )
+    with pytest.raises(repository.RetryableError):
+        repo._fetch_file("https://example.com/file", {}, revision="rev")
+    mock_handle.assert_called_once()
+
+
+def test_handle_file_not_found_hg_revision_exists(mocker):
+    json_rev_response = mocker.MagicMock()
+    json_rev_response.status_code = 200
+    fake_session = mocker.MagicMock()
+    fake_session.get.return_value = json_rev_response
+
+    mocker.patch.object(repository, "SESSION", new=fake_session)
+
+    repo = repository.Repository(
+        repo_url="https://hg.mozilla.org/fake_repo",
+        repository_type="hg",
+    )
+    original_error = requests.HTTPError("404")
+    with pytest.raises(requests.HTTPError) as exc_info:
+        repo._handle_file_not_found(original_error, "https://example.com/file", "rev")
+    assert exc_info.value is original_error
+
+
+def test_handle_file_not_found_hg_revision_not_replicated(mocker):
+    json_rev_response = mocker.MagicMock()
+    json_rev_response.status_code = 404
+    fake_session = mocker.MagicMock()
+    fake_session.get.return_value = json_rev_response
+
+    mocker.patch.object(repository, "SESSION", new=fake_session)
+
+    repo = repository.Repository(
+        repo_url="https://hg.mozilla.org/fake_repo",
+        repository_type="hg",
+    )
+    with pytest.raises(repository.RetryableError):
+        repo._handle_file_not_found(
+            requests.HTTPError("404"), "https://example.com/file", "rev"
+        )
+
+
+def test_handle_file_not_found_hg_probe_fails(mocker):
+    fake_session = mocker.MagicMock()
+    fake_session.get.side_effect = requests.ConnectionError("probe failed")
+
+    mocker.patch.object(repository, "SESSION", new=fake_session)
+
+    repo = repository.Repository(
+        repo_url="https://hg.mozilla.org/fake_repo",
+        repository_type="hg",
+    )
+    with pytest.raises(repository.RetryableError):
+        repo._handle_file_not_found(
+            requests.HTTPError("404"), "https://example.com/file", "rev"
+        )
+
+
+def test_handle_file_not_found_hg_no_revision(mocker):
+    fake_session = mocker.MagicMock()
+    mocker.patch.object(repository, "SESSION", new=fake_session)
+
+    repo = repository.Repository(
+        repo_url="https://hg.mozilla.org/fake_repo",
+        repository_type="hg",
+    )
+    with pytest.raises(repository.RetryableError):
+        repo._handle_file_not_found(
+            requests.HTTPError("404"), "https://example.com/file", None
+        )
+    fake_session.get.assert_not_called()
+
+
+def test_handle_file_not_found_git(mocker):
+    fake_session = mocker.MagicMock()
+    mocker.patch.object(repository, "SESSION", new=fake_session)
+
+    repo = repository.Repository(
         repo_url="https://github.com/org/repo",
         repository_type="git",
     )
     with pytest.raises(repository.RetryableError):
-        repo.get_file("fake_path")
+        repo._handle_file_not_found(
+            requests.HTTPError("404"), "https://example.com/file", "rev"
+        )
+    fake_session.get.assert_not_called()
 
 
 @pytest.mark.parametrize(

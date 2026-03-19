@@ -71,21 +71,34 @@ class Repository:
         else:
             raise Exception(f"Unknown repository_type {self.repository_type}!")
 
-        return yaml.safe_load(self._fetch_file(url, headers))
+        return yaml.safe_load(self._fetch_file(url, headers, revision=revision))
 
     @redo.retriable(attempts=5, sleeptime=10, retry_exceptions=(RetryableError,))
-    def _fetch_file(self, url, headers):
+    def _fetch_file(self, url, headers, revision=None):
         res = SESSION.get(url, headers=headers, timeout=60)
         try:
             res.raise_for_status()
-        except requests.HTTPError:
+        except requests.HTTPError as e:
             if res.status_code == 404:
-                raise RetryableError(
-                    f"Got 404 fetching {url}. The revision may not have "
-                    "been replicated yet."
-                )
+                self._handle_file_not_found(e, url, revision)
             raise
         return res.text
+
+    def _handle_file_not_found(self, http_error, url, revision):
+        if self.repository_type == "hg" and revision:
+            try:
+                rev_res = SESSION.get(
+                    f"{self.repo_url}/json-rev/{revision}", timeout=15
+                )
+            except requests.RequestException as probe_error:
+                logger.warning("json-rev probe failed: %s", probe_error)
+            else:
+                if rev_res.status_code == 200:
+                    raise http_error
+        raise RetryableError(
+            f"Got 404 fetching {url}. The revision may not have "
+            "been replicated yet."
+        )
 
     @redo.retriable(
         attempts=5,
