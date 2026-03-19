@@ -939,10 +939,10 @@
         trust_domain: enterprise
 
 - grant:
-    - index:insert-task:{trust_domain}.v2.{alias}-pr.*
-    - queue:route:index.{trust_domain}.v2.{alias}-pr.*
-    - queue:route:tc-treeherder-stage.v2.{alias}-pr.*
-    - queue:route:tc-treeherder.v2.{alias}-pr.*
+    - index:insert-task:{trust_domain}.v2.enterprise-firefox-pr.*
+    - queue:route:index.{trust_domain}.v2.enterprise-firefox-pr.*
+    - queue:route:tc-treeherder-stage.v2.enterprise-firefox-pr.*
+    - queue:route:tc-treeherder.v2.enterprise-firefox-pr.*
   to:
     - project:
         alias: enterprise-firefox-try
