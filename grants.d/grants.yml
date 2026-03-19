@@ -420,6 +420,7 @@
     - project:comm:thunderbird:releng:balrog:server:dep
     - project:comm:thunderbird:releng:beetmover:action:*
     - project:comm:thunderbird:releng:beetmover:bucket:dep
+    - project:comm:thunderbird:releng:beetmover:apt-repo:dep
     - project:comm:thunderbird:releng:bouncer:action:*
     - project:comm:thunderbird:releng:bouncer:server:staging
     - project:comm:thunderbird:releng:bouncer:server:staging-nazgul
@@ -726,6 +727,7 @@
 
 - grant:
     - project:comm:thunderbird:releng:beetmover:bucket:release
+    - project:comm:thunderbird:releng:beetmover:apt-repo:release
     - project:comm:thunderbird:releng:bouncer:server:production
     - project:comm:thunderbird:releng:bouncer:server:production-nazgul
     - project:comm:thunderbird:releng:ship-it:server:production
@@ -2364,6 +2366,7 @@
     - assume:project:comm:thunderbird:comm:releng:nightly:level-{level}:{alias}
     - project:comm:thunderbird:releng:balrog:server:nightly
     - project:comm:thunderbird:releng:beetmover:bucket:nightly
+    - project:comm:thunderbird:releng:beetmover:apt-repo:nightly
     - project:comm:thunderbird:releng:bouncer:server:production
     - project:comm:thunderbird:releng:ship-it:server:production
     - project:comm:thunderbird:releng:signing:cert:nightly-signing
