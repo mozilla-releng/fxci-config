@@ -853,6 +853,9 @@
     - project:
         alias:
           - try
+    - project:
+        alias: firefox
+        job: [pull-request:trusted]
 
 - grant:
     # Bug 1618285 (Updatebot)
