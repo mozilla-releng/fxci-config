@@ -1,0 +1,34 @@
+# - scriptworker-scripts specific roles
+- grant:
+    - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+    - queue:create-task:highest:scriptworker-{level}/*
+    - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+    - queue:route:index.{trust_domain}.v2.{alias}.*
+    - queue:route:index.scriptworker.cache.level-{level}.*
+    # explicitly grant level 1 scopes for PRs
+    - queue:scheduler-id:scriptworker-level-1
+    - queue:create-task:highest:scriptworker-1/*
+    - queue:route:index.scriptworker.cache.level-1.*
+  to:
+    - project:
+        alias:
+          - scriptworker-scripts
+        job: [branch:*, action:*, pull-request:*, action:*, cron:*]
+
+# XXX delete these once we port scriptworker-scripts cloudops deploys to CoT
+#     downloads
+- grant:
+    - secrets:get:project/releng/scriptworker-scripts/deploy
+  to:
+    - projects:
+        alias: scriptworker-scripts
+        job: [branch:production*, branch:dev*]
+
+# - scriptworker specific roles
+- grant:
+    - secrets:get:repo:github.com/mozilla-releng/scriptworker:coveralls
+    - secrets:get:repo:github.com/mozilla-releng/scriptworker:github
+  to:
+    - project:
+        alias: scriptworker
+        job: [pull-request:trusted, branch:main, action:*]
