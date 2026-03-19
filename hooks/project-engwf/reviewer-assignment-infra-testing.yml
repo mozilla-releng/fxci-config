@@ -12,20 +12,7 @@ metadata:
   owner: omehani@mozilla.com
   source: 'https://github.com/mozilla-conduit/reviewer-selector'
 payload:
-  # artifacts:
-  #   public/results:
-  #     path: /tmp/results
-  #     type: directory
-  # cache:
-  #   code-review-production-checkout: '/checkouts'
-  # XXX: is it possible to mount a volume into the container?
   capabilities: {}
-  # command:
-  #   - code-review-bot
-  #   - '--taskcluster-secret'
-  #   - project/engwf/code-review/runtime-production
-  #   - '--mercurial-repository'
-  #   - '/checkouts'
   env:
     # XXX: is this passed into the docker containers?
     GITHUB_TOKEN:
