@@ -1394,6 +1394,8 @@ johanlorenzo-code-review:
   branches:
     - name: master
       level: 1
+    - name: testing
+      level: 1
   default_branch: master
   trust_domain: code-analysis
   features:
