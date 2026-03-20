@@ -956,7 +956,7 @@
   to:
     - project:
         alias: enterprise-firefox
-        job: [action:*]
+        job: [action:*, cron:*]
 
 - grant:
     - project:{trust_domain}:releng:signing:cert:release-apple-notarization
