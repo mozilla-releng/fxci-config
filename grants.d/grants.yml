@@ -121,9 +121,6 @@
 # scopes for all gecko-related projects
 
 - grant:
-    # coalescing routes support dropping unnecessary tasks under load
-    - queue:route:coalesce.v1.{alias}.*
-
     # allow fetching secrets appropriate to this level
     # TODO: switch to trust-domain-scopes format
     - secrets:get:project/releng/{trust_domain}/build/level-{level}/*
