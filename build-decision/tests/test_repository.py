@@ -281,6 +281,7 @@ def test_handle_file_not_found_git(mocker):
                 "pushdate": "now",
                 "revision": "rev",
                 "base_revision": "baserev",
+                "files": ["file1.py"],
             },
         ),
         (
@@ -289,7 +290,10 @@ def test_handle_file_not_found_git(mocker):
             {
                 "pushes": {
                     "1": {
-                        "changesets": [{"parents": ["baserev"]}, {"node": "rev"}],
+                        "changesets": [
+                            {"parents": ["baserev"], "files": ["a.py"]},
+                            {"node": "rev", "files": ["b.py"]},
+                        ],
                         "user": "me",
                         "date": "now",
                     }
@@ -302,6 +306,7 @@ def test_handle_file_not_found_git(mocker):
                 "pushdate": "now",
                 "revision": "rev",
                 "base_revision": "baserev",
+                "files": ["a.py", "b.py"],
             },
         ),
     ),
@@ -315,7 +320,7 @@ def test_hg_push_info(mocker, branch, revision, pushes, raises, expected):
                 1: {
                     "user": "me",
                     "date": "now",
-                    "changesets": [{"node": "rev", "parents": ["baserev"]}],
+                    "changesets": [{"node": "rev", "parents": ["baserev"], "files": ["file1.py"]}],
                 }
             }
         }

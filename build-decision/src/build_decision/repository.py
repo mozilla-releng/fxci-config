@@ -149,12 +149,14 @@ class Repository:
                     f"Changeset {revision} is not the tip {tip_revision} of the associated push."
                 )
 
+            files = sorted({f for cs in changesets for f in cs.get("files", [])})
             return {
                 "owner": push_info["user"],
                 "pushlog_id": push_id,
                 "pushdate": push_info["date"],
                 "revision": tip_revision,
                 "base_revision": base_revision,
+                "files": files,
             }
         elif self.repository_type == "git":
             if revision:
