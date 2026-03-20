@@ -14,6 +14,8 @@
     - index:insert-task:code-analysis.v2.code-review-pr.*
     - queue:create-task:project:none
     - secrets:get:project/relman/code-review/deploy-testing
+    - assume:hook-id:project-relman/code-review-integration-testing
+    - hooks:modify-hook:project-relman/code-review-integration-testing
   to:
     - project:
         alias: johanlorenzo-code-review
