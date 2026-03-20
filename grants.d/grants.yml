@@ -13,6 +13,7 @@
     - index:insert-task:code-analysis.v2.code-review.*
     - index:insert-task:code-analysis.v2.code-review-pr.*
     - queue:create-task:project:none
+    - secrets:get:project/relman/code-review/deploy-testing
   to:
     - project:
         alias: johanlorenzo-code-review
