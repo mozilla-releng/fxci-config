@@ -312,6 +312,39 @@ meta:
       - *persistent-disk-75gb
     machine_type: c4d-highcpu-8
 
+pool-templates:
+  # Base template for translations pools using generic-worker/linux-d2g
+  # with 30-day max task run time. Used for Firefox Translations workloads.
+  translations-d2g:
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
+      minCapacity: 0
+      implementation: generic-worker/linux-d2g
+      regions: *default-gcp-regions
+      image: ubuntu-2404-headless
+
+  # Extends translations-d2g with GPU support
+  translations-gpu:
+    extends: translations-d2g
+    config:
+      worker-config:
+        genericWorker:
+          config:
+            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
+            maxTaskRunTime: 2592900
+            d2gConfig:
+              allowGPUs: true
+
 pools:
   - pool_id: infra/build-decision
     description: Worker for firefox-ci automation.
