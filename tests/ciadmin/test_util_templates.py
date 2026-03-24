@@ -4,7 +4,7 @@
 
 import pytest
 
-from ciadmin.util.templates import deep_get, merge, merge_to
+from ciadmin.util.templates import deep_get, merge, merge_to, template_merge
 
 print(__file__)
 
@@ -71,3 +71,50 @@ def test_merge():
 )
 def test_deep_get(args, expected):
     assert deep_get(*args) == expected
+
+
+class TestTemplateMerge:
+    def test_dict_merge(self):
+        parent = {"a": 1, "b": {"x": 10, "y": 20}}
+        child = {"b": {"y": 30, "z": 40}, "c": 3}
+        result = template_merge(parent, child)
+        assert result == {"a": 1, "b": {"x": 10, "y": 30, "z": 40}, "c": 3}
+
+    def test_list_replacement(self):
+        parent = {"items": [1, 2, 3]}
+        child = {"items": [4, 5]}
+        result = template_merge(parent, child)
+        assert result == {"items": [4, 5]}
+
+    def test_child_overrides_scalar(self):
+        parent = {"x": "old", "y": "keep"}
+        child = {"x": "new"}
+        result = template_merge(parent, child)
+        assert result == {"x": "new", "y": "keep"}
+
+    def test_parent_only_fields_preserved(self):
+        parent = {"a": 1, "b": 2}
+        child = {"b": 3}
+        result = template_merge(parent, child)
+        assert result == {"a": 1, "b": 3}
+
+    def test_no_mutation(self):
+        parent = {"a": [1], "b": {"x": 1}}
+        child = {"a": [2], "b": {"y": 2}}
+        parent_copy = {"a": [1], "b": {"x": 1}}
+        child_copy = {"a": [2], "b": {"y": 2}}
+        template_merge(parent, child)
+        assert parent == parent_copy
+        assert child == child_copy
+
+    def test_empty_child(self):
+        parent = {"a": 1, "b": [1, 2]}
+        result = template_merge(parent, {})
+        assert result == parent
+        assert result is not parent
+
+    def test_nested_list_in_dict(self):
+        parent = {"config": {"instance_types": [{"type": "a"}], "maxCapacity": 10}}
+        child = {"config": {"instance_types": [{"type": "b"}]}}
+        result = template_merge(parent, child)
+        assert result == {"config": {"instance_types": [{"type": "b"}], "maxCapacity": 10}}
