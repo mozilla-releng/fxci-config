@@ -538,7 +538,10 @@ class TestTemplateResolution:
 
     def test_extends(self):
         templates = {
-            "parent": {"owner": "parent@test.com", "config": {"image": "base-image", "maxCapacity": 10}},
+            "parent": {
+                "owner": "parent@test.com",
+                "config": {"image": "base-image", "maxCapacity": 10},
+            },
             "child": {"extends": "parent", "config": {"maxCapacity": 20}},
         }
         result = resolve_template(templates, "child")
@@ -587,7 +590,11 @@ class TestTemplateResolution:
 
     def test_explicit_false_not_overridden(self):
         templates = {
-            "tmpl": {"email_on_error": True, "owner": "tmpl@test.com", "provider_id": "p"},
+            "tmpl": {
+                "email_on_error": True,
+                "owner": "tmpl@test.com",
+                "provider_id": "p",
+            },
         }
         wp = WorkerPool(
             pool_id="test/pool",

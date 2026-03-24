@@ -117,4 +117,6 @@ class TestTemplateMerge:
         parent = {"config": {"instance_types": [{"type": "a"}], "maxCapacity": 10}}
         child = {"config": {"instance_types": [{"type": "b"}]}}
         result = template_merge(parent, child)
-        assert result == {"config": {"instance_types": [{"type": "b"}], "maxCapacity": 10}}
+        assert result == {
+            "config": {"instance_types": [{"type": "b"}], "maxCapacity": 10}
+        }

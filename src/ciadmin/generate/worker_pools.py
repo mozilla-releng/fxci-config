@@ -12,6 +12,7 @@ from tcadmin.resources import WorkerPool
 from ..util.keyed_by import evaluate_keyed_by, iter_dot_path, resolve_keyed_by
 from ..util.templates import merge, template_merge
 from .ciconfig.environment import Environment
+from .ciconfig.get import _cache as _ciconfig_cache
 from .ciconfig.get import get_ciconfig_file
 from .ciconfig.worker_images import WorkerImage
 from .ciconfig.worker_pools import WorkerPool as ConfigWorkerPool
@@ -738,10 +739,24 @@ def apply_template(wp, templates):
         wp,
         config=merged_config,
         owner=wp.owner if wp.owner is not None else template.get("owner", ""),
-        email_on_error=wp.email_on_error if wp.email_on_error is not None else template.get("email_on_error", False),
-        provider_id=wp.provider_id if wp.provider_id is not None else template.get("provider_id", ""),
+        email_on_error=wp.email_on_error
+        if wp.email_on_error is not None
+        else template.get("email_on_error", False),
+        provider_id=wp.provider_id
+        if wp.provider_id is not None
+        else template.get("provider_id", ""),
         template=None,
     )
+
+
+def _get_templates(templates):
+    """Get pool templates, falling back to the ciconfig cache if not provided."""
+    if templates is not None:
+        return templates
+    # Fall back to cached worker-pools.yml data (populated by any prior
+    # call to get_ciconfig_file or WorkerPool.fetch_all)
+    config = _ciconfig_cache.get("worker-pools.yml", {})
+    return config.get("pool-templates", {})
 
 
 def generate_pool_variants(worker_pools, environment, templates=None):
@@ -749,6 +764,7 @@ def generate_pool_variants(worker_pools, environment, templates=None):
     Generate the list of worker pools by evaluting them at all the specified
     variants.
     """
+    templates = _get_templates(templates)
 
     def update_config(config, name, attributes):
         config = copy.deepcopy(config)
