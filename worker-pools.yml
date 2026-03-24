@@ -313,6 +313,48 @@ meta:
     machine_type: c4d-highcpu-8
 
 pool-templates:
+  # Base template for GCP docker-worker pools with chain-of-trust
+  # provider selection and trusted/untrusted image variants.
+  gcp-docker-cot:
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      regions: *default-gcp-regions
+      image:
+        by-chain-of-trust:
+          trusted: monopacker-docker-worker-trusted-current-gcp
+          default: monopacker-docker-worker-current
+
+  # Base template for GCP d2g pools with chain-of-trust provider
+  # selection, ubuntu-2404-headless image, and d2g implementation.
+  gcp-d2g-cot:
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id:
+      by-chain-of-trust:
+        trusted: fxci-level3-gcp
+        default: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      regions: *default-gcp-regions
+      image: ubuntu-2404-headless
+      implementation: generic-worker/linux-d2g-{chain-of-trust}
+
+  # Base template for level-1 GCP tester pools using docker-worker-gcp-current.
+  gcp-tester:
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      regions: *default-gcp-regions
+      image: monopacker-docker-worker-gcp-current
+
   # Base template for translations pools using generic-worker/linux-d2g
   # with 30-day max task run time. Used for Firefox Translations workloads.
   translations-d2g:
@@ -368,9 +410,8 @@ pools:
         shutdown:
           afterIdleSeconds: 86400
   - pool_id: '{pool-group}/b-linux'
+    template: gcp-d2g-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     attributes:
       chain-of-trust: ''
     variants:
@@ -388,12 +429,7 @@ pools:
       - pool-group: enterprise-1
       - pool-group: enterprise-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-.*: 1000
@@ -401,9 +437,6 @@ pools:
           app-services-1: 50
           app-services-3: 100
           default: 100
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -412,9 +445,8 @@ pools:
             - *scratch-disk
           machine_type: c2-standard-16
   - pool_id: '{pool-group}/b-linux-gcp'
+    template: gcp-docker-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-2
@@ -427,12 +459,7 @@ pools:
       - pool-group: app-services-1
       - pool-group: app-services-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-.*: 1000
@@ -440,11 +467,6 @@ pools:
           app-services-1: 50
           app-services-3: 100
           default: 100
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -472,9 +494,8 @@ pools:
             - *scratch-disk
           machine_type: c2-standard-16
   - pool_id: '{pool-group}/b-linux-docker{suffix}-amd'
+    template: gcp-d2g-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     attributes:
       chain-of-trust: ''
       # Used to populate scratch disks
@@ -571,12 +592,7 @@ pools:
         chain-of-trust: trusted
         suffix: '-xlarge'
         instance_types: [*c3d-standard-60-lssd]
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-.*: 1000
@@ -585,13 +601,10 @@ pools:
           app-services-3: 100
           default: 100
       regions: [us-central1, us-east1]
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
-      image: ubuntu-2404-headless
       instance_types: []
   - pool_id: '{pool-group}/b-linux{suffix}-amd'
+    template: gcp-docker-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     attributes:
       # Used to populate scratch disks
       scratch-disk-definition: *scratch-disk
@@ -666,12 +679,7 @@ pools:
         chain-of-trust: trusted
         suffix: '-xlarge'
         instance_types: [*c3d-standard-60-lssd]
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-.*: 1000
@@ -680,31 +688,19 @@ pools:
           app-services-3: 100
           default: 100
       regions: [us-central1, us-east1]
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
       instance_types: []
   - pool_id: '{pool-group}/b-linux-docker-alpha'
+    template: gcp-d2g-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     attributes:
       chain-of-trust: ''
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity: 50
-      regions: *default-gcp-regions
       image: ubuntu-2404-headless-alpha
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -732,8 +728,8 @@ pools:
             - *scratch-disk
           machine_type: c2-standard-16
   - pool_id: '{pool-group}/b-linux-aarch64'
+    template: gcp-d2g-cot
     description: Linux ARM64 VM for Firefox automation.
-    owner: release+tc-workers@mozilla.com
     attributes:
       chain-of-trust: ''
     variants:
@@ -748,18 +744,11 @@ pools:
       - pool-group: enterprise-1
       - pool-group: enterprise-3
         chain-of-trust: trusted
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           (gecko|comm)-.*: 10
           default: 5
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
       image: ubuntu-2404-arm64-headless
@@ -800,9 +789,8 @@ pools:
             - *persistent-disk-75gb
           machine_type: t2a-standard-16
   - pool_id: '{pool-group}/b-linux'
+    template: gcp-d2g-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     attributes:
       chain-of-trust: ''
     variants:
@@ -821,21 +809,13 @@ pools:
       - pool-group: xpi-1
       - pool-group: xpi-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           mobile-.*: 50
           mozilla-.*: 10
           mozillavpn-.*: 10
           default: 100
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -914,9 +894,8 @@ pools:
                 - *scratch-disk
               machine_type: c2-standard-4
   - pool_id: '{pool-group}/b-linux-large'
+    template: gcp-d2g-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     attributes:
       chain-of-trust: ''
     variants:
@@ -931,20 +910,12 @@ pools:
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-.*: 1000
           comm-.*: 20
           default: 10
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -955,9 +926,8 @@ pools:
             - *scratch-disk
           machine_type: n2-standard-32
   - pool_id: '{pool-group}/b-linux-large{suffix}'
+    template: gcp-docker-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     attributes:
       suffix: "-gcp"
       implementation: "docker-worker"
@@ -973,22 +943,12 @@ pools:
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-.*: 1000
           comm-.*: 20
           default: 10
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
       implementation: "{implementation}"
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -1106,9 +1066,8 @@ pools:
           machine_type: n2-highmem-64
           scheduling: standard
   - pool_id: '{pool-group}/b-linux-medium'
+    template: gcp-d2g-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     attributes:
       chain-of-trust: ''
     variants:
@@ -1116,12 +1075,7 @@ pools:
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-1: 200
@@ -1129,8 +1083,6 @@ pools:
           gecko-3: 200
           default: 10
       regions: [us-central1, us-west1, northamerica-northeast1]
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1138,20 +1090,14 @@ pools:
             - *scratch-disk
           machine_type: c2-standard-8
   - pool_id: '{pool-group}/b-linux-medium-gcp'
+    template: gcp-docker-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-1: 200
@@ -1159,10 +1105,6 @@ pools:
           gecko-3: 200
           default: 10
       regions: [us-central1, us-west1, northamerica-northeast1]
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1170,9 +1112,8 @@ pools:
             - *scratch-disk
           machine_type: c2-standard-8
   - pool_id: '{pool-group}/b-linux-xlarge'
+    template: gcp-d2g-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     attributes:
       chain-of-trust: ''
     variants:
@@ -1184,20 +1125,12 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-.*: 1000
           comm-.*: 20
           default: 10
-      regions: *default-gcp-regions
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1212,9 +1145,8 @@ pools:
             - *scratch-disk
           machine_type: n2-standard-64
   - pool_id: '{pool-group}/b-linux-xlarge-gcp'
+    template: gcp-docker-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-2
@@ -1224,22 +1156,12 @@ pools:
       - pool-group: comm-2
       - pool-group: comm-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-.*: 1000
           comm-.*: 20
           default: 10
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1254,23 +1176,12 @@ pools:
             - *scratch-disk
           machine_type: n2-standard-64
   - pool_id: '{pool-group}/b-linux-xlarge-gcp-bug1797804-c2'
+    template: gcp-docker-cot
     description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     variants:
       - pool-group: gecko-1
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity: 10
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
       instance_types:
         - disks:
             - *persistent-disk-20gb
@@ -1284,13 +1195,9 @@ pools:
             - *scratch-disk
           machine_type: c2-standard-60
   - pool_id: '{pool-group}/decision-gcp'
+    template: gcp-docker-cot
     description: Worker for Firefox automation
-    owner: release+tc-workers@mozilla.com
     email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-2
@@ -1301,11 +1208,6 @@ pools:
       - pool-group: comm-3
         chain-of-trust: trusted
     config:
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
       minCapacity:
         by-pool-group:
           gecko-3: 1
@@ -1323,13 +1225,9 @@ pools:
               gecko-[13]: 600
               default: 120
   - pool_id: '{pool-group}/decision'
+    template: gcp-d2g-cot
     description: Worker for Firefox automation
-    owner: release+tc-workers@mozilla.com
     email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     attributes:
       chain-of-trust: ''
     variants:
@@ -1382,8 +1280,6 @@ pools:
       - pool-group: enterprise-3
         chain-of-trust: trusted
     config:
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
-      image: ubuntu-2404-headless
       minCapacity:
         by-pool-group:
           gecko-1: 5
@@ -1407,13 +1303,9 @@ pools:
                 - *scratch-disk
               machine_type: n2-standard-2
   - pool_id: '{pool-group}/decision-gcp-{suffix}-amd-bug1990935'
+    template: gcp-docker-cot
     description: Decision task worker
-    owner: release+tc-workers@mozilla.com
     email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     variants:
       - pool-group: gecko-1
         suffix: 'c3d4'
@@ -1438,24 +1330,15 @@ pools:
         instance_types: [*c4d-highcpu-8]
     config:
       regions: [us-central1]
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      minCapacity: 0
       maxCapacity: 20
       instance_types: []
       worker-config:
         shutdown:
           afterIdleSeconds: 300
   - pool_id: '{pool-group}/decision-gcp'
+    template: gcp-docker-cot
     description: Worker for Firefox automation
-    owner: release+tc-workers@mozilla.com
     email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     variants:
       - pool-group: app-services-1
       - pool-group: app-services-3
@@ -1492,11 +1375,6 @@ pools:
       - pool-group: nss-3
         chain-of-trust: trusted
     config:
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
       minCapacity:
         by-pool-group:
           '(app-services|glean|mozillavpn|mobile|mozilla|translations)-1': 1
@@ -1517,13 +1395,9 @@ pools:
               '(app-services|glean|mozillavpn|mobile|mozilla)-1': 600
               default: 120
   - pool_id: '{pool-group}/images'
+    template: gcp-d2g-cot
     description: 'Builds docker images'
-    owner: release+tc-workers@mozilla.com
     email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     attributes:
       chain-of-trust: ''
     variants:
@@ -1573,14 +1447,10 @@ pools:
       - pool-group: enterprise-3
         chain-of-trust: trusted
     config:
-      image: ubuntu-2404-headless
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           (comm|gecko|enterprise)-.*: 30
           default: 10
-      regions: *default-gcp-regions
       instance_types:
         by-pool-group:
           (taskgraph|ci)-.*:
@@ -1596,14 +1466,10 @@ pools:
                 - *scratch-disk
               machine_type: c2-standard-4
   - pool_id: '{pool-group}/images-gcp'
+    template: gcp-docker-cot
     description: 'Builds docker images; NOTE: capacity set to 1 instead of 3
       to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
-    owner: release+tc-workers@mozilla.com
     email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-2
@@ -1645,17 +1511,11 @@ pools:
         chain-of-trust: trusted
       - pool-group: translations-1
     config:
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           (comm|gecko)-.*: 30
           default: 10
       worker-config: {dindImage: taskcluster/dind-service:v4.1}
-      regions: *default-gcp-regions
       instance_types:
         by-pool-group:
           (taskgraph|ci)-.*:
@@ -1675,8 +1535,9 @@ pools:
               worker-manager-config:
                 capacityPerInstance: 1
   - pool_id: '{pool-group}/images-aarch64'
+    template: gcp-d2g-cot
     description: Builds AArch64 docker images
-    owner: release+tc-workers@mozilla.com
+    email_on_error: false
     attributes:
       chain-of-trust: ''
     variants:
@@ -1691,18 +1552,11 @@ pools:
       - pool-group: enterprise-1
       - pool-group: enterprise-3
         chain-of-trust: trusted
-    email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           (gecko|comm)-.*: 10
           default: 5
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
       image: ubuntu-2404-arm64-headless
@@ -1743,8 +1597,8 @@ pools:
             - *persistent-disk-75gb
           machine_type: t2a-standard-4
   - pool_id: '{pool-group}/t-linux-xlarge{suffix}-gcp'
+    template: gcp-tester
     description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
     variants:
       - pool-group: gecko-t
         suffix: ''
@@ -1756,10 +1610,7 @@ pools:
         suffix: -source
       - pool-group: nss-t
         suffix: ''
-    email_on_error: true
-    provider_id: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-.*:
@@ -1768,8 +1619,6 @@ pools:
               -source: 200
           nss-t: 100
           comm-t: 10
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1777,8 +1626,8 @@ pools:
             - *scratch-disk
           machine_type: n2-standard-4
   - pool_id: '{pool-group}/t-linux-xlarge{suffix}-noscratch-gcp'
+    template: gcp-tester
     description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
     variants:
       - pool-group: gecko-t
         suffix: ''
@@ -1790,10 +1639,7 @@ pools:
         suffix: -source
       - pool-group: nss-t
         suffix: ''
-    email_on_error: true
-    provider_id: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-.*:
@@ -1802,23 +1648,16 @@ pools:
               -source: 200
           nss-t: 100
           comm-t: 10
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
             - *persistent-disk-75gb
           machine_type: n2-standard-4
   - pool_id: 'gecko-t/t-linux-kvm-gcp'
+    template: gcp-tester
     description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity: 400
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
       worker-config:
         deviceManagement:
           kvm:
@@ -1834,14 +1673,10 @@ pools:
           advancedMachineFeatures:
             enableNestedVirtualization: true
   - pool_id: 'gecko-t/t-linux-kvm-gcp-relops1411'
+    template: gcp-tester
     description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity: 400
-      regions: *default-gcp-regions
       image: handbuilt-docker-worker-tester-20250616
       worker-config:
         deviceManagement:
@@ -1858,15 +1693,10 @@ pools:
           advancedMachineFeatures:
             enableNestedVirtualization: true
   - pool_id: 'gecko-t/t-linux-kvm-noscratch-gcp'
+    template: gcp-tester
     description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity: 800
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
       worker-config:
         deviceManagement:
           kvm:
@@ -1881,9 +1711,8 @@ pools:
           advancedMachineFeatures:
             enableNestedVirtualization: true
   - pool_id: '{pool-group}/b-linux-kvm'
+    template: gcp-d2g-cot
     description: 'KVM-enabled builders for PGO using d2g.'
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     attributes:
       chain-of-trust: ''
     variants:
@@ -1891,16 +1720,8 @@ pools:
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity: 30
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
       worker-config:
         genericWorker:
           config:
@@ -1916,26 +1737,15 @@ pools:
           advancedMachineFeatures:
             enableNestedVirtualization: true
   - pool_id: '{pool-group}/b-linux-kvm-gcp'
+    template: gcp-docker-cot
     description: 'KVM-enabled builders for PGO using docker-worker.'
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity: 30
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current  # or monopacker-docker-worker-gcp-current? not sure the diff.
       worker-config:
         deviceManagement:
           kvm:
@@ -3873,23 +3683,18 @@ pools:
                 default: 0.5
             default: 1
   - pool_id: '{pool-group}/t-linux-large-gcp'
+    template: gcp-tester
     description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    provider_id: fxci-level1-gcp
     variants:
       - pool-group: gecko-t
       - pool-group: comm-t
       - pool-group: mozilla-t
-    email_on_error: true
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-t: 2500
           comm-t: 100
           mozilla-t: 100
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -4072,37 +3877,28 @@ pools:
             - *persistent-disk-75gb
           machine_type: t2a-standard-4
   - pool_id: '{pool-group}/t-linux-large-noscratch-gcp'
+    template: gcp-tester
     description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    provider_id: fxci-level1-gcp
     variants:
       - pool-group: gecko-t
       - pool-group: comm-t
       - pool-group: mozilla-t
-    email_on_error: true
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           gecko-t: 2500
           comm-t: 100
           mozilla-t: 100
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
             - *persistent-disk-75gb
           machine_type: c2-standard-4
   - pool_id: 'gecko-t/t-linux-large-hostub2204-gcp'
+    template: gcp-tester
     description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    provider_id: fxci-level1-gcp
-    email_on_error: true
     config:
-      minCapacity: 0
       maxCapacity: 200
-      regions: *default-gcp-regions
       image: monopacker-docker-worker-relops528
       instance_types:
         - minCpuPlatform: Intel Cascadelake
@@ -4137,9 +3933,8 @@ pools:
             - *scratch-disk
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/linux-gcp'
+    template: gcp-docker-cot
     description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     variants:
       - pool-group: code-analysis-1
       - pool-group: code-analysis-3
@@ -4150,21 +3945,11 @@ pools:
       - pool-group: releng-1
       - pool-group: releng-3
         chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           nss-.*: 100
           default: 10
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -4172,9 +3957,8 @@ pools:
             - *scratch-disk
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/linux-docker'
+    template: gcp-d2g-cot
     description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
     attributes:
       chain-of-trust: ''
     variants:
@@ -4189,19 +3973,11 @@ pools:
       - pool-group: releng-3
         chain-of-trust: trusted
       - pool-group: taskgraph-t
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      minCapacity: 0
       maxCapacity:
         by-pool-group:
           nss-.*: 100
           default: 10
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
-      implementation: generic-worker/linux-d2g-{chain-of-trust}
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
