@@ -1001,25 +1001,11 @@ pools:
           machine_type: n2-standard-32
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g'
     description: Workers using generic-worker on Linux with D2G capability.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
+    template: translations-d2g
     variants:
       - pool-group: translations-1
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-      minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1027,25 +1013,11 @@ pools:
           machine_type: n2-highmem-32
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g-1tb'
     description: Big workers with big disks - intended for Firefox Translations only
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
+    template: translations-d2g
     variants:
       - pool-group: translations-1
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-      minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1054,25 +1026,11 @@ pools:
           machine_type: n2-highmem-32
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g-1tb-standard'
     description: Big workers with big disks - intended for Firefox Translations only
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
+    template: translations-d2g
     variants:
       - pool-group: translations-1
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-      minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1082,25 +1040,11 @@ pools:
           scheduling: standard
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g-300gb'
     description: Big workers with big disks - intended for Firefox Translations only
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
+    template: translations-d2g
     variants:
       - pool-group: translations-1
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-      minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1109,25 +1053,11 @@ pools:
           machine_type: n2-highmem-32
   - pool_id: '{pool-group}/b-linux-large-gcp-1tb-32-256-d2g'
     description: Preemptible VM workers with 1 TB of disk space, 32 vCPUs, and 256 GiB of RAM. Intended for Firefox Translations only.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
+    template: translations-d2g
     variants:
       - pool-group: translations-1
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-      minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1136,25 +1066,11 @@ pools:
           machine_type: n2-highmem-32
   - pool_id: '{pool-group}/b-linux-large-gcp-1tb-32-256-std-d2g'
     description: Standard VM workers with 1 TB of disk space, 32 vCPUs, and 256 GiB of RAM. Intended for Firefox Translations only.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
+    template: translations-d2g
     variants:
       - pool-group: translations-1
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-      minCapacity: 0
       maxCapacity: 16
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1164,25 +1080,11 @@ pools:
           scheduling: standard
   - pool_id: '{pool-group}/b-linux-large-gcp-1tb-64-512-d2g'
     description: Preemptible VM workers with 1 TB of disk space, 64 vCPUs, and 512 GiB of RAM. Intended for Firefox Translations only.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
+    template: translations-d2g
     variants:
       - pool-group: translations-1
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-      minCapacity: 0
       maxCapacity: 1000
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -1191,25 +1093,11 @@ pools:
           machine_type: n2-highmem-64
   - pool_id: '{pool-group}/b-linux-large-gcp-1tb-64-512-std-d2g'
     description: Standard VM workers with 1 TB of disk space, 64 vCPUs, and 512 GiB of RAM. Intended for Firefox Translations only.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
+    template: translations-d2g
     variants:
       - pool-group: translations-1
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-      minCapacity: 0
       maxCapacity: 8
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -2341,27 +2229,12 @@ pools:
           machine_type: c2-standard-8
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g'
     description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       maxCapacity: 200
-      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
@@ -2372,25 +2245,11 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-alpha'
     description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       maxCapacity: 200
-      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless-alpha-tc
       instance_types:
@@ -2403,30 +2262,15 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4'
     description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
-      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
@@ -2437,28 +2281,14 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-alpha'
     description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
-      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless-alpha-tc
       instance_types:
@@ -2471,30 +2301,15 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-300gb'
     description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
-      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
@@ -2507,28 +2322,14 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-300gb-alpha'
     description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
-      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless-alpha-tc
       instance_types:
@@ -2543,27 +2344,11 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-300gb-standard'
     description: Worker for machine learning tasks that require standard VMs
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       maxCapacity: 50
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
@@ -2577,26 +2362,11 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-300gb-std-alpha'
     description: Worker for machine learning tasks that require standard VMs
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       maxCapacity: 50
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
       image: ubuntu-2404-headless-alpha-tc
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -2611,27 +2381,11 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-1tb-standard'
     description: Worker for machine learning tasks that require standard VMs
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       maxCapacity: 50
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
@@ -2645,26 +2399,11 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-1tb-std-alpha'
     description: Worker for machine learning tasks that require standard VMs
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       maxCapacity: 50
-      implementation: generic-worker/linux-d2g
-      regions: *default-gcp-regions
       image: ubuntu-2404-headless-alpha-tc
       instance_types:
         - minCpuPlatform: Intel Skylake
@@ -2679,30 +2418,15 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-1tb'
     description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
-      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
@@ -2715,28 +2439,14 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-1tb-alpha'
     description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
-      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless-alpha-tc
       instance_types:
@@ -2751,30 +2461,15 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-2tb'
     description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
-      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
-      image: ubuntu-2404-headless
       instance_types:
         - minCpuPlatform: Intel Skylake
           disks:
@@ -2787,28 +2482,14 @@ pools:
               acceleratorType: nvidia-tesla-v100
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g-4-2tb-alpha'
     description: Worker for machine learning and other high GPU tasks
-    owner: release+tc-workers@mozilla.com
+    template: translations-gpu
     variants:
       - pool-group: translations-1
-    email_on_error: true
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
     config:
-      worker-config:
-        genericWorker:
-          config:
-            # 2592900s is 30 days plus 900 seconds to account for https://github.com/taskcluster/taskcluster/issues/7423
-            maxTaskRunTime: 2592900
-            d2gConfig:
-              allowGPUs: true
-      minCapacity: 0
       # We use 4 GPUs per instance across 4 regions with a limit of 128
       # per region at any given time. 4 regions * 4 GPUs = 512 total GPUs
       # 512 GPUs / 4 per instance = 128 instances possibly running at once.
       maxCapacity: 128
-      implementation: generic-worker/linux-d2g
       regions: [us-central1, us-west1, us-east1]
       image: ubuntu-2404-headless-alpha-tc
       instance_types:
