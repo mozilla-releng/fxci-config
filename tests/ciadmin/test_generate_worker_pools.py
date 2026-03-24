@@ -12,8 +12,10 @@ from ciadmin.generate.ciconfig.environment import Environment
 from ciadmin.generate.ciconfig.worker_images import WorkerImage, WorkerImages
 from ciadmin.generate.ciconfig.worker_pools import WorkerPool
 from ciadmin.generate.worker_pools import (
+    apply_template,
     is_invalid_gcp_instance_type,
     make_worker_pool,
+    resolve_template,
 )
 from ciadmin.util.templates import merge
 
@@ -514,3 +516,112 @@ def test_is_invalid_gcp_instance_type(invalid_instances, zone, machine_type, exp
     assert (
         is_invalid_gcp_instance_type(invalid_instances, zone, machine_type) == expected
     )
+
+
+class TestTemplateResolution:
+    def test_simple_template(self):
+        templates = {
+            "basic": {
+                "owner": "test@example.com",
+                "email_on_error": True,
+                "provider_id": "fxci-level1-gcp",
+                "config": {
+                    "regions": ["us-central1"],
+                    "image": "test-image",
+                    "instance_types": [{"machine_type": "n2-standard-4"}],
+                },
+            }
+        }
+        result = resolve_template(templates, "basic")
+        assert result["owner"] == "test@example.com"
+        assert result["config"]["regions"] == ["us-central1"]
+
+    def test_extends(self):
+        templates = {
+            "parent": {"owner": "parent@test.com", "config": {"image": "base-image", "maxCapacity": 10}},
+            "child": {"extends": "parent", "config": {"maxCapacity": 20}},
+        }
+        result = resolve_template(templates, "child")
+        assert result["owner"] == "parent@test.com"
+        assert result["config"]["image"] == "base-image"
+        assert result["config"]["maxCapacity"] == 20
+
+    def test_cycle_detection(self):
+        templates = {
+            "a": {"extends": "b"},
+            "b": {"extends": "a"},
+        }
+        with pytest.raises(ValueError, match="too deep or cyclic"):
+            resolve_template(templates, "a")
+
+    def test_unknown_template(self):
+        with pytest.raises(ValueError, match="Unknown pool template"):
+            resolve_template({}, "nonexistent")
+
+    def test_apply_template_merges_config(self):
+        templates = {
+            "tmpl": {
+                "owner": "tmpl@test.com",
+                "email_on_error": True,
+                "provider_id": "fxci-level1-gcp",
+                "config": {
+                    "regions": ["us-central1"],
+                    "instance_types": [{"machine_type": "c2-standard-4"}],
+                    "maxCapacity": 100,
+                },
+            }
+        }
+        wp = WorkerPool(
+            pool_id="test/pool",
+            description="test",
+            template="tmpl",
+            config={"maxCapacity": 50},
+        )
+        result = apply_template(wp, templates)
+        assert result.owner == "tmpl@test.com"
+        assert result.email_on_error is True
+        assert result.provider_id == "fxci-level1-gcp"
+        assert result.config["maxCapacity"] == 50
+        assert result.config["regions"] == ["us-central1"]
+        assert result.template is None
+
+    def test_explicit_false_not_overridden(self):
+        templates = {
+            "tmpl": {"email_on_error": True, "owner": "tmpl@test.com", "provider_id": "p"},
+        }
+        wp = WorkerPool(
+            pool_id="test/pool",
+            description="test",
+            template="tmpl",
+            email_on_error=False,
+        )
+        result = apply_template(wp, templates)
+        assert result.email_on_error is False
+
+    def test_pool_overrides_template_lists(self):
+        templates = {
+            "tmpl": {"config": {"instance_types": [{"machine_type": "old"}]}},
+        }
+        wp = WorkerPool(
+            pool_id="test/pool",
+            description="test",
+            owner="o",
+            provider_id="p",
+            template="tmpl",
+            config={"instance_types": [{"machine_type": "new"}]},
+        )
+        result = apply_template(wp, templates)
+        assert result.config["instance_types"] == [{"machine_type": "new"}]
+
+    def test_no_template_passthrough(self):
+        wp = WorkerPool(
+            pool_id="test/pool",
+            description="test",
+            owner="o",
+            email_on_error=True,
+            provider_id="p",
+            config={"maxCapacity": 10},
+        )
+        result = apply_template(wp, {})
+        assert result.pool_id == "test/pool"
+        assert result.config == {"maxCapacity": 10}

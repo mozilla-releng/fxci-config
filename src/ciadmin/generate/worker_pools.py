@@ -10,7 +10,7 @@ import attr
 from tcadmin.resources import WorkerPool
 
 from ..util.keyed_by import evaluate_keyed_by, iter_dot_path, resolve_keyed_by
-from ..util.templates import merge
+from ..util.templates import merge, template_merge
 from .ciconfig.environment import Environment
 from .ciconfig.get import get_ciconfig_file
 from .ciconfig.worker_images import WorkerImage
@@ -710,7 +710,41 @@ async def make_worker_pool(environment, resources, wp, worker_images, worker_def
     )
 
 
-def generate_pool_variants(worker_pools, environment):
+def resolve_template(templates, name, _depth=0):
+    """Resolve a template by name, handling `extends` inheritance."""
+    if _depth > 5:
+        raise ValueError(f"Template inheritance too deep or cyclic at '{name}'")
+    if name not in templates:
+        raise ValueError(f"Unknown pool template: '{name}'")
+    template = copy.deepcopy(templates[name])
+    if "extends" in template:
+        parent_name = template.pop("extends")
+        parent = resolve_template(templates, parent_name, _depth + 1)
+        template = template_merge(parent, template)
+    return template
+
+
+def apply_template(wp, templates):
+    """Apply a template to a WorkerPool, merging template config under pool config.
+
+    Uses None-sentinel logic: if a pool field is None, inherit from template.
+    If explicitly set (even to False or ""), keep the pool's value.
+    """
+    if not wp.template:
+        return wp
+    template = resolve_template(templates, wp.template)
+    merged_config = template_merge(template.get("config", {}), wp.config)
+    return attr.evolve(
+        wp,
+        config=merged_config,
+        owner=wp.owner if wp.owner is not None else template.get("owner", ""),
+        email_on_error=wp.email_on_error if wp.email_on_error is not None else template.get("email_on_error", False),
+        provider_id=wp.provider_id if wp.provider_id is not None else template.get("provider_id", ""),
+        template=None,
+    )
+
+
+def generate_pool_variants(worker_pools, environment, templates=None):
     """
     Generate the list of worker pools by evaluting them at all the specified
     variants.
@@ -818,7 +852,12 @@ def generate_pool_variants(worker_pools, environment):
 
         return config
 
+    templates = templates or {}
+
     for wp in worker_pools:
+        # Resolve template before variant expansion
+        wp = apply_template(wp, templates)
+
         for variant in wp.variants:
             attributes = wp.attributes.copy()
             attributes["environment"] = environment
@@ -851,12 +890,12 @@ async def update_resources(resources):
 
     resources.manage("WorkerPool=.*")
 
-    worker_defaults = (await get_ciconfig_file("worker-pools.yml")).get(
-        "worker-defaults"
-    )
+    raw_config = await get_ciconfig_file("worker-pools.yml")
+    worker_defaults = raw_config.get("worker-defaults")
+    templates = raw_config.get("pool-templates", {})
     environment = await Environment.current()
 
-    for wp in generate_pool_variants(worker_pools, environment):
+    for wp in generate_pool_variants(worker_pools, environment, templates):
         apwt = await make_worker_pool(
             environment, resources, wp, worker_images, copy.deepcopy(worker_defaults)
         )
