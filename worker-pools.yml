@@ -4179,17 +4179,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-75gb
+            - *scratch-disk
           machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-{suffix}'
     description: Worker for test tasks.
@@ -4387,12 +4378,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
+            - *persistent-disk-75gb
           machine_type: c2-standard-4
   - pool_id: 'gecko-t/t-linux-large-hostub2204-gcp'
     description: Worker for gecko-based automation.
@@ -4407,17 +4393,8 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
+            - *persistent-disk-75gb
+            - *scratch-disk
           machine_type: n2-standard-2
   - pool_id: '{pool-group}/bot'
     description: Worker for the {pool-group} bot.
