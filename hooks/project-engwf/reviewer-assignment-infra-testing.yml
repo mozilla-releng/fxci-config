@@ -1,0 +1,54 @@
+---
+created:
+  $fromNow: 0 seconds
+deadline:
+  $fromNow: 2 hours
+expires:
+  $fromNow: 1 month
+extra: {}
+metadata:
+  description:
+  name: Reviewer assignment
+  owner: omehani@mozilla.com
+  source: 'https://github.com/mozilla-conduit/reviewer-selector'
+payload:
+  capabilities: {}
+  env:
+    # XXX: is this passed into the docker containers?
+    GITHUB_TOKEN:
+      $eval: XXX_WHERE_DO_I_GET_THIS?
+    DIFF_URL:
+      $eval: payload.body.pull_request.diff_url
+    PR_URL:
+      $eval: payload.body.pull_request.html_url
+    ORG_NAME:
+      # e.g., mozilla-firefox
+      $eval payload.organisation
+    REPO_NAME:
+      # e.g., firefox
+      $eval payload.repository
+    TARGET_BRANCH_NAME:
+      # e.g., autoland
+      $eval payload.body.pull_request.base.ref
+    REPO_URL:
+      $eval payload.body.repository.html_url
+
+features:
+  taskclusterProxy: true
+  # XXX: push to the right place
+  image: docker.io/omehani/moz-reviewer-selector
+  maxRunTime: 7200
+priority: lowest
+provisionerId: code-review
+retries: 3
+routes:
+  # XXX: need to check this
+  - index.project.engwf.production.reviewer-assignment.latest
+schedulerId: engwf
+scopes:
+  - 'notify:email:*'
+  # XXX: need to check those
+  - 'secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing'
+  - 'index:insert-task:project.engwf.production.reviewer-assignment.*'
+tags: {}
+workerType: bot

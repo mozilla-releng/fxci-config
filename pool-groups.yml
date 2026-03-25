@@ -1,0 +1,53 @@
+# pool-groups.yml
+#
+# Declares the trust-domain x level matrix. Each trust domain expands
+# to pool-groups named {domain}-{level}. Level 3 gets chain-of-trust: trusted.
+# Testing pools (domain-t) are generated when testing: true.
+
+pool-groups:
+  gecko:
+    levels: [1, 2, 3]
+    testing: true
+  comm:
+    levels: [1, 2, 3]
+    testing: true
+  enterprise:
+    levels: [1, 3]
+    testing: true
+  nss:
+    levels: [1, 3]
+    testing: true
+  translations:
+    levels: [1]
+    testing: true
+  app-services:
+    levels: [1, 3]
+  mozilla:
+    levels: [1, 3]
+    testing: true
+  mozillavpn:
+    levels: [1, 3]
+  glean:
+    levels: [1, 3]
+  mobile:
+    levels: [1, 3]
+  xpi:
+    levels: [1, 3]
+  scriptworker:
+    levels: [1, 3]
+  releng:
+    levels: [1, 3]
+    testing: true
+  relops:
+    levels: [1, 3]
+  taskgraph:
+    levels: [1, 3]
+    testing: true
+  adhoc:
+    levels: [1, 3]
+  code-analysis:
+    levels: [1, 3]
+  code-coverage:
+    levels: [standalone]
+  code-review:
+    levels: [standalone]

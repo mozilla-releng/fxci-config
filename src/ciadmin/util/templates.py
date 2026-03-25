@@ -4,6 +4,7 @@
 
 
 import copy
+from typing import Any
 
 
 def merge_to(source, dest):
@@ -48,3 +49,52 @@ def merge(*objects):
     if len(objects) == 1:
         return copy.deepcopy(objects[0])
     return merge_to(objects[-1], merge(*objects[:-1]))
+
+
+def deep_get(dict_: dict[str, Any], field: str, default: Any | None = None) -> Any:
+    """
+    Return a key from nested dictionaries using dot path notation
+    (e.g "key.subkey").
+
+    Args:
+        dict_: The dictionary to retrieve a value from.
+        field: The key to retrieve, can use dot path notation.
+        default: A default value to return if key does not exist
+            (default: None).
+    """
+    container, subfield = dict_, field
+    while "." in subfield:
+        f, subfield = subfield.split(".", 1)
+        if f not in container:
+            return default
+
+        container = container[f]
+
+    return container.get(subfield, default)
+
+
+def template_merge(parent, child):
+    """
+    Merge child config on top of parent config for pool template resolution.
+
+    Unlike merge(), this REPLACES lists rather than concatenating them.
+    This is the correct behavior for template inheritance — if a pool
+    specifies instance_types, it fully replaces the template's instance_types.
+
+    Dicts are recursively merged (child keys override parent keys).
+    Scalars and lists in child fully replace the parent value.
+    Fields only in parent are preserved.
+    Neither argument is mutated.
+    """
+    result = copy.deepcopy(parent)
+    _template_merge_into(result, child)
+    return result
+
+
+def _template_merge_into(dest, source):
+    """Merge source into dest in-place. Lists are replaced, dicts are recursive."""
+    for key, value in source.items():
+        if key in dest and isinstance(value, dict) and isinstance(dest[key], dict):
+            _template_merge_into(dest[key], value)
+        else:
+            dest[key] = copy.deepcopy(value)

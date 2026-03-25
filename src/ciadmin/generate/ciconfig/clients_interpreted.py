@@ -4,8 +4,7 @@
 
 import attr
 
-from ...util.matching import ProjectGrantee, grantees
-from .get import get_ciconfig_file
+from ...util.matching import ProjectGrantee
 
 
 @attr.s(frozen=True)
@@ -13,25 +12,14 @@ class Client:
     client_id = attr.ib(type=str)
     scopes = attr.ib(type=list)
     description = attr.ib(type=str)
-    grantee = attr.ib(type=ProjectGrantee)
+    grantee = attr.ib(type=ProjectGrantee, default=None)
     environments = attr.ib(type=list, default=None)
 
     @staticmethod
     async def fetch_all():
-        """Load hook metadata from hooks.yml in fxci-config"""
-        clients = []
+        """Interpreted clients are now pre-expanded in clients.yml.
 
-        for client_entry in await get_ciconfig_file("clients-interpreted.yml"):
-            for client_id, info in client_entry["client"].items():
-                for grantee in grantees(client_entry["for"]):
-                    clients.append(
-                        Client(
-                            client_id=client_id,
-                            scopes=info["scopes"],
-                            description=info["description"],
-                            grantee=grantee,
-                            environments=client_entry.get("environments"),
-                        )
-                    )
-
-        return clients
+        This returns an empty list; the entry point is preserved so that
+        existing callers (clients.py update_resources) continue to work.
+        """
+        return []

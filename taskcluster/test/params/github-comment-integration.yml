@@ -1,0 +1,28 @@
+---
+base_ref: main
+base_repository: https://github.com/mozilla-releng/fxci-config
+base_rev: 2d5ca6a4c1c4e3c99215514c8c3dcc3f429c941c
+build_date: 1732632497
+build_number: 1
+do_not_optimize: []
+enable_always_target: true
+existing_tasks: {}
+filters:
+  - target_tasks_method
+head_ref: push-yqlpqlyvvomq
+head_repository: https://github.com/mozilla-releng/fxci-config
+head_rev: bc31b74fb26b00e93ab6a92dc082260bc246acd2
+head_tag: ''
+level: '1'
+moz_build_date: '20241126144817'
+next_version: null
+optimize_strategies: null
+optimize_target_tasks: true
+owner: user@example.com
+project: fxci-config
+pushdate: 0
+pushlog_id: '0'
+repository_type: git
+target_tasks_method: integration
+tasks_for: github-issue-comment
+version: null

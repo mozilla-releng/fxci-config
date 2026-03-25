@@ -4,10 +4,14 @@
 
 
 import copy
+import json
+import logging
 import os
 import shlex
 
 from ..decision import render_tc_yml
+
+logger = logging.getLogger(__name__)
 
 
 def make_arguments(job):
@@ -39,16 +43,27 @@ def run_decision_task(job_name, job, *, repository, push_info, dry_run):
 
     arguments = make_arguments(job)
 
+    cron_input = {}
+    if job.get("include-cron-input") and "HOOK_PAYLOAD" in os.environ:
+        cron_hook_payload = json.loads(os.environ["HOOK_PAYLOAD"])
+        logger.info(
+            "Cron Hook Payload:\n%s",
+            json.dumps(cron_hook_payload, indent=4, sort_keys=True),
+        )
+        cron_input.update(cron_hook_payload)
+
     cron_info = {
         "task_id": os.environ.get("TASK_ID", "<cron task id>"),
         "job_name": job_name,
         "job_symbol": job["treeherder-symbol"],
         # args are shell-quoted since they are given to `bash -c`
         "quoted_args": " ".join(shlex.quote(a) for a in arguments),
+        "input": cron_input,
     }
 
     task = render_tc_yml(
         taskcluster_yml,
+        taskcluster_root_url=os.environ["TASKCLUSTER_ROOT_URL"],
         tasks_for="cron",
         repository=repository.to_json(),
         push=push_info,

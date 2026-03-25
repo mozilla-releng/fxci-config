@@ -21,10 +21,15 @@ async def make_hooks(project, environment):
     hookGroupId = "project-releng"
     hookId = "cron-task-{}".format(project.repo_path.replace("/", "-"))
 
-    if project.feature("gecko-cron"):
-        cron_config = environment.cron.get("gecko", {})
-    elif project.feature("taskgraph-cron"):
-        cron_config = environment.cron.get("taskgraph", {})
+    if project.feature("taskgraph-cron"):
+        key = "default"
+        if project.trust_domain in ("gecko", "comm") and project.access in (
+            "scm_level_2",
+            "scm_level_3",
+        ):
+            key = "gecko"
+
+        cron_config = environment.cron.get(key, {})
     else:
         raise Exception("Unknown cron task type.")
 
@@ -167,9 +172,9 @@ async def update_resources(resources):
     resources.manage("Role=hook-id:project-releng/cron-task-.*")
 
     for project in projects:
-        # if this project does not thave the `gecko-cron` feature, it does not get
+        # if this project does not thave the `taskgraph-cron` feature, it does not get
         # a hook.
-        if not project.feature("gecko-cron") and not project.feature("taskgraph-cron"):
+        if not project.feature("taskgraph-cron"):
             continue
 
         resources.update(await make_hooks(project, environment))

@@ -105,11 +105,11 @@ def test_get_file(mocker, repository_type, repo_url, revision, raises, expected_
     "branch, revision, pushes, raises, expected",
     (
         (
-            # RetryableError on empty pushes
+            # NoPushesError on empty pushes
             "branch",
             None,
             {"pushes": []},
-            repository.RetryableError,
+            repository.NoPushesError,
             None,
         ),
         (
@@ -344,7 +344,7 @@ def test_repo_path(repository_type, repo_url, raises, expected):
     (
         (
             {"repo_url": "https://repo.url", "repository_type": "git"},
-            {"url": "https://repo.url", "project": None, "level": None},
+            {"url": "https://repo.url", "project": None, "level": None, "type": "git"},
         ),
     ),
 )

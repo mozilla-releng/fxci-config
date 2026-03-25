@@ -6,6 +6,11 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath("./src"))
+sys.path.insert(0, os.path.abspath("."))
+
+from expand import expand_all  # noqa: E402
+
+expand_all()
 
 from ciadmin.boot import boot  # noqa: E402
 

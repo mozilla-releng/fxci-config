@@ -31,15 +31,29 @@ payload:
         else: {}
         then:
           $eval: payload
+      - $if: firedBy == 'triggerHookWithToken'
+        else: {}
+        then:
+          PHABRICATOR_BUILD_TARGET:
+            $eval: payload.build_target_phid
       - $if: firedBy == 'pulseMessage'
         else: {}
         then:
-          TRY_RUN_ID:
-            $eval: payload.runId
-          TRY_TASK_GROUP_ID:
-            $eval: payload.status.taskGroupId
-          TRY_TASK_ID:
-            $eval: payload.status.taskId
+          $if: '"runId" in payload && "status" in payload'
+          then:
+            # Triggered by code-review task in try ending
+            # so we can analyze a try patch
+            TRY_RUN_ID:
+              $eval: str(payload.runId)
+            TRY_TASK_GROUP_ID:
+              $eval: payload.status.taskGroupId
+            TRY_TASK_ID:
+              $eval: payload.status.taskId
+
+          else:
+            # Triggered by end of build on autoland & MC
+            GENERIC_TASK_GROUP_ID:
+              $eval: payload.taskGroupId
   features:
     taskclusterProxy: true
   image:
@@ -59,4 +73,4 @@ scopes:
   - 'notify:email:*'
   - 'docker-worker:cache:code-review-testing-checkout'
 tags: {}
-workerType: bot-gcp
+workerType: bot

@@ -1,0 +1,74 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+loader: taskgraph.loader.transform:loader
+
+transforms:
+  - fxci_config_taskgraph.transforms.firefoxci_artifact
+  - taskgraph.transforms.cached_tasks
+  - taskgraph.transforms.run
+  - taskgraph.transforms.task
+
+task-defaults:
+  attributes: {}  # cached_tasks transforms assume this exists
+  worker-type: t-linux
+  worker:
+    docker-image: {in-tree: python}
+    env:
+      MOZ_ARTIFACT_DIR: /builds/worker/artifacts
+    max-run-time: 3600
+  scopes:
+    - secrets:get:project/releng/fxci-config/firefoxci-artifact-client
+  run:
+    using: run-task
+    cwd: '{checkout}'
+    command: >-
+      export PYTHONPATH="taskcluster:$PYTHONPATH" &&
+      uv run python taskcluster/scripts/fetch-firefoxci-artifacts.py
+
+tasks:
+  gecko:
+    description: "Fetch artifacts from Firefox-CI for the integration tests"
+    decision-index-paths:
+      - gecko.v2.mozilla-central.latest.taskgraph.decision-os-integration
+    include-attrs:
+      kind:
+        - browsertime
+        - mochitest
+        - reftest
+        - source-test
+        - startup-test
+        - test
+        - web-platform-tests
+    exclude-attrs:
+      test_platform:
+        - android-hw
+        - macosx
+
+  translations:
+    description: "Fetch artifacts from Firefox-CI for translations pipeline tests"
+    decision-index-paths:
+      - translations.v2.translations.latest.taskgraph.decision-run-pipeline
+    include-attrs:
+      # Corresponds to https://github.com/mozilla/translations/blob/main/taskcluster/kinds/all-pipeline/kind.yml
+      stage:
+        - all-pipeline
+    include-deps:
+      # Decision and Action tasks are excluded because we'll be creating the
+      # tasks they normally would be.
+      # docker-image tasks are excluded because there's no value in rerunning
+      # them as part of integration tests.
+      # fetch tasks are excluded because there's no value in rerunning them,
+      # and also because they live forever, and depend on docker images which
+      # expire, which causes us to try to mirror expired docker image tasks
+      # into the staging cluster
+      - ^(?!(Decision|Action|PR action|build-docker-image|docker-image|fetch)).*
+    # Tasks that depend on artifacts from mirrored and non-mirrored tasks
+    # must be listed here to ensure that all `MOZ_FETCHES` entries point
+    # at the same cluster. Generally, these are tasks that depend on an
+    # unmirrored, non-docker image task in addition to a mirrored task.
+    mirror-public-fetches:
+      - ^toolchain.*
+      - ^corpus-clean-parallel-bicleaner-ai.*
+      - ^corpus-clean-.*

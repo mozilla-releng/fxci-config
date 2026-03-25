@@ -10,13 +10,14 @@ from .get import get_ciconfig_file
 @attr.s(frozen=True)
 class WorkerPool:
     pool_id = attr.ib(type=str)
-    description = attr.ib(type=str)
-    owner = attr.ib(type=str)
-    email_on_error = attr.ib(type=bool)
-    provider_id = attr.ib(type=str)
-    config = attr.ib()
+    description = attr.ib(type=str, default="")
+    owner = attr.ib(type=str, default=None)
+    email_on_error = attr.ib(default=None)  # None = inherit from template
+    provider_id = attr.ib(type=str, default=None)
+    config = attr.ib(factory=dict)
     attributes = attr.ib(factory=dict)
     variants = attr.ib(factory=lambda: [{}])
+    template = attr.ib(type=str, default=None)
 
     @pool_id.validator
     def _check_pool_id(self, attribute, value):

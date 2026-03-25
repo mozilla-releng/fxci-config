@@ -25,7 +25,12 @@ async def project_scopes(resolver, level):
     for project in projects:
         for branch in project.branches:
             if project.get_level(branch.name) == level:
-                scopes.append(f"assume:{project.role_prefix}:*")
+                if project.role_prefix.endswith(
+                    "*"
+                ):  # Needed for Github org wide grants
+                    scopes.append(f"assume:{project.role_prefix}")
+                else:
+                    scopes.append(f"assume:{project.role_prefix}:branch:{branch.name}")
     return resolver.expandScopes(scopes)
 
 

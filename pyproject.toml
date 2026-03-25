@@ -1,3 +1,62 @@
+[project]
+name = "fxci-config"
+version = "1.0.0"
+description = "Administration of runtime configuration (Taskcluster settings) for Firefox CI"
+authors = [
+    {name = "Mozilla Release Engineering", email = "release+ciadmin@mozilla.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "tc-admin>=5.1.0",
+    "taskcluster",
+    "attrs",
+    "mozilla-repo-urls",
+    "aiohttp[speedups]<4",
+    "pyyaml>=5.3",
+    "json-e",
+    "aiohttp-retry",
+    "simple-github>=2.2.0",
+    # These are used at run-time as part of `tc-admin check`
+    "pytest",
+    "pytest-asyncio",
+    "async-timeout",
+]
+
+[dependency-groups]
+dev = [
+    "coverage[toml]",
+    "flake8",
+    "google-cloud-compute",
+    "pip>=21.2",
+    "pre-commit",
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+    "pytest-taskgraph>=0.1.0",
+    "responses>=0.25.3",
+    # Keep this synced with the version in `.taskcluster.yml`.
+    "taskcluster-taskgraph==20.0.0",
+]
+
+[project.scripts]
+ci-admin = "ciadmin.boot:boot"
+fxci = "fxci.cli:main"
+
+[tool.uv.workspace]
+members = ["build-decision"]
+
+[tool.uv.build-backend]
+module-name = ["ciadmin", "fxci"]
+
+[build-system]
+requires = ["uv_build>=0.8.14"]
+build-backend = "uv_build"
+
 [tool.ruff]
 line-length = 88
 target-version = "py311"
@@ -17,10 +76,8 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["ciadmin", "build_decision"]
-known-third-party = ["taskcluster", "tcadmin"]
+known-first-party = ["ciadmin", "build_decision", "fxci_config_taskgraph"]
+known-third-party = ["taskcluster", "tcadmin", "taskgraph"]
 
-
-[tool.isort]
-known_third_party = ["taskcluster", "tcadmin"]
-known_first_party = ["ciadmin", "build_decision"]
+[tool.pytest.ini_options]
+testpaths = ["tests", "taskcluster/test"]

@@ -8,6 +8,7 @@ from tcadmin.util.sessions import with_aiohttp_session
 
 from ciadmin.generate import tcyml
 from ciadmin.generate.ciconfig.projects import Project
+from ciadmin.util import github
 
 
 async def _get_pull_request_policy(project):
@@ -19,6 +20,7 @@ async def _get_pull_request_policy(project):
             default_branch=project.default_branch,
         )
     )
+    await github.close_client()
     return config.get("policy", {}).get("pullRequests")
 
 
@@ -30,7 +32,6 @@ async def check_pull_request_policies_for_git_repos():
     """
     skip = (
         "occ",  # tc.yml v0
-        "firefox-profiler",  # not landed yet
         "fx-desktop-qa-automation",  # not landed yet
         "neqo",  # not landed yet
     )

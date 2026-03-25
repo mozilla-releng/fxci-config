@@ -3,6 +3,7 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
+import re
 import sys
 
 import click
@@ -51,9 +52,12 @@ appconfig.description_prefix = (
 
 
 def boot():
-    if not os.environ.get("GITHUB_TOKEN"):
-        print(
-            "WARNING: GITHUB_TOKEN is not present in the environment; you may run into rate limits querying for GitHub branches"
+    if not os.environ.get("GITHUB_TOKEN") and not (
+        os.environ.get("GITHUB_APP_ID") and os.environ.get("GITHUB_APP_PRIVKEY")
+    ):
+        click.echo(
+            "WARNING: GITHUB_TOKEN is not present in the environment; you may run into rate limits querying for GitHub branches",
+            err=True,
         )
 
     @click.command(
@@ -73,13 +77,24 @@ def boot():
         else:
             for reso in resources_list:
                 if resource_module := RESOURCES.get(reso, None):
-                    click.echo(f"Registering resource: {reso}")
+                    click.echo(f"Registering resource: {reso}", err=True)
                     appconfig.generators.register(resource_module)
                 else:
-                    click.echo(f"Ignoring invalid resource: {reso}.")
+                    click.echo(f"Ignoring invalid resource: {reso}.", err=True)
+            if "clients" not in resources_list:
+                from tcadmin.current import clients  # noqa: PLC0415
+
+                async def fetch_clients(resources):
+                    return
+
+                clients.fetch_clients = fetch_clients
 
         # Remove the --resources arguments from sys.argv so inner "click.command"s don't complain
-        if "--resources" in sys.argv:
+        # Handle parameter with =
+        arg_regex = re.compile(r"^--resources\=.*")
+        sys.argv = [arg for arg in sys.argv if not arg_regex.match(arg)]
+        # Handle parameter with space
+        while "--resources" in sys.argv:
             reso_arg_index = sys.argv.index("--resources")
             sys.argv = sys.argv[:reso_arg_index] + sys.argv[reso_arg_index + 2 :]
 

@@ -4,12 +4,11 @@
 
 import copy
 import hashlib
-import pprint
+import json
 
-import attr
 from tcadmin.resources import WorkerPool
 
-from ..util.keyed_by import evaluate_keyed_by, iter_dot_path
+from ..util.keyed_by import evaluate_keyed_by, resolve_keyed_by
 from ..util.templates import merge
 from .ciconfig.environment import Environment
 from .ciconfig.get import get_ciconfig_file
@@ -26,11 +25,43 @@ def is_invalid_aws_instance_type(invalid_instances, zone, instance_type):
 
 
 def is_invalid_gcp_instance_type(invalid_instances, zone, machine_type):
-    family, _ = machine_type.split("-", 1)
-    return any(
-        (zone in entry["zones"]) and (family in entry["families"])
-        for entry in invalid_instances
-    )
+    # Parse machine type: family-profile[-cpus[-suffix]]
+    # e.g., "c4d-standard-8-lssd" -> family="c4d", suffix="lssd"
+    parts = machine_type.split("-")
+    if len(parts) < 2:
+        # Wrong machine type
+        raise Exception(
+            f"Machine type should be on the format <family>-<profile>[-<cpus>[-<suffix>]]. Got: {machine_type}"
+        )
+    family = parts[0]
+    profile = parts[1]
+    # Suffix will be anything after cpus number
+    if len(parts) <= 3:
+        # No suffix
+        suffix = None
+    else:
+        # Has suffix
+        # Note: we might eventually want to support multi suffixes (ie: highlssd-metal)
+        #  where a config with -metal is also filtered out
+        suffix = "-".join(parts[3:])
+
+    for entry in invalid_instances:
+        # Zones and Families are required and always needs to be a match. Suffixes are optional.
+
+        # True if suffixes undefined, or [], or actually matches config
+        matches_suffix = not entry.get("suffixes") or suffix in entry["suffixes"]
+        matches_profile = not entry.get("profiles") or profile in entry["profiles"]
+
+        if (
+            zone in entry["zones"]
+            and family in entry["families"]
+            and matches_suffix
+            and matches_profile
+        ):
+            # Invalid!
+            return True
+    # No matches found, machine_type is valid in this zone
+    return False
 
 
 def _validate_instance_capacity(pool_id, implementation, instance_types):
@@ -58,16 +89,115 @@ def _validate_instance_capacity(pool_id, implementation, instance_types):
             )
 
 
-def _populate_deployment_id(instance_worker_config, image_id):
-    if "genericWorker" not in instance_worker_config or instance_worker_config[
-        "genericWorker"
-    ]["config"].get("deploymentId"):
+def _populate_launch_config_id(launch_config, pool_id):
+    launch_config_id = launch_config.get("workerManager", {}).get("launchConfigId")
+    if launch_config_id is not None:
         return
-    _hash_config = copy.deepcopy(instance_worker_config)
-    _hash_config["imageId"] = image_id
-    instance_worker_config["genericWorker"]["config"]["deploymentId"] = hashlib.sha256(
-        pprint.pformat(_hash_config).encode("utf-8")
+    hashedLaunchConfig = hashlib.sha256(
+        (pool_id + json.dumps(launch_config, sort_keys=True)).encode("utf8")
     ).hexdigest()
+    launch_config.setdefault("workerManager", {})["launchConfigId"] = (
+        "lc-" + hashedLaunchConfig[:20]
+    )
+
+
+def _normalize_arm_parameters(parameters):
+    parameters = parameters or {}
+    return {
+        key: value if isinstance(value, dict) and "value" in value else {"value": value}
+        for key, value in parameters.items()
+    }
+
+
+def _build_arm_template_launch_config(
+    *,
+    pool_id,
+    location,
+    loc,
+    vm_size,
+    subnet_id,
+    image_reference_id,
+    worker_config,
+    worker_manager_config,
+    tags,
+    pool_cfg,
+    arm_layers,
+):
+    # we allow armDeployment be defined and overriden in any layer
+    # lower layers could opt-out of using armDeployment by setting it to False:
+    # {"armDeployment": False}
+    dict_layers = []
+    for layer in arm_layers:
+        if layer is None:
+            continue
+        if layer is False:
+            return None  # Opt-out
+        if not isinstance(layer, dict):
+            raise ValueError(
+                f"armDeployment must be a mapping, got {type(layer)} for Azure pool {pool_id}"
+            )
+        dict_layers.append(layer)
+
+    if not dict_layers:
+        return None
+
+    template_spec_id = None
+    parameters = {}
+    for layer in dict_layers:
+        template_spec_id = layer.get("templateSpecId", template_spec_id)
+        parameters.update(_normalize_arm_parameters(layer.get("parameters")))
+
+    if not template_spec_id:
+        raise ValueError(
+            f"armDeployment.templateSpecId must be provided for Azure pool {pool_id}"
+        )
+
+    auto_defaults = _normalize_arm_parameters(
+        {
+            "vmSize": vm_size,
+            "imageId": image_reference_id,
+            "location": loc,
+            "subnetId": subnet_id,
+            "priority": pool_cfg.get("priority", "Spot"),
+        }
+    )
+
+    parameters = {**auto_defaults, **parameters}
+
+    arm_deployment = {
+        "mode": "Incremental",
+        "templateLink": {"id": template_spec_id},
+        "parameters": parameters,
+    }
+
+    launch_config = {
+        "location": loc,
+        "tags": merge(tags),
+        "workerConfig": merge(worker_config),
+        "armDeployment": arm_deployment,
+        "workerManager": merge(worker_manager_config),
+    }
+
+    return launch_config
+
+
+def _resolve_defaults(defaults, provider_id, implementation):
+    keys = (
+        "lifecycle",
+        "lifecycle.queueInactivityTimeout",
+        "lifecycle.registrationTimeout",
+        "lifecycle.reregistrationTimeout",
+        "worker-config",
+    )
+    for key in keys:
+        resolve_keyed_by(
+            defaults,
+            key,
+            "worker-defaults",
+            implementation=implementation,
+            provider=provider_id,
+        )
+    return defaults
 
 
 def get_aws_provider_config(
@@ -81,22 +211,23 @@ def get_aws_provider_config(
     user_data = config.pop("additional-user-data", {})
     implementation = config.pop("implementation", "docker-worker")
 
-    defaults = evaluate_keyed_by(defaults, "defaults", {"provider": provider_id})
     aws_config = environment.aws_config
 
+    # Merge defaults with pool config.
+    defaults = _resolve_defaults(defaults, provider_id, implementation)
     lifecycle = merge(defaults.get("lifecycle", {}), config.pop("lifecycle", {}))
-
-    worker_config = evaluate_keyed_by(
-        defaults.get("worker-config", {}),
-        pool_id,
-        {"implementation": implementation},
+    worker_config = merge(
+        defaults.get("worker-config", {}), config.get("worker-config", {})
     )
-    worker_config = merge(worker_config, config.get("worker-config", {}))
+    worker_manager_config = merge(
+        defaults.get("worker-manager-config", {}),
+        config.get("worker-manager-config", {}),
+    )
 
     _validate_instance_capacity(pool_id, implementation, instance_types)
 
     launch_configs = []
-    for region in regions:
+    for region in sorted(regions):
         availability_zones = evaluate_keyed_by(
             aws_config["availability-zones"], pool_id, {"region": region}
         )
@@ -105,25 +236,59 @@ def get_aws_provider_config(
             pool_id,
             {"region": region, "security": security},
         )
-        for availability_zone in availability_zones:
+        for availability_zone in sorted(availability_zones):
             subnet_id = evaluate_keyed_by(
                 aws_config["subnet-id"],
                 pool_id,
                 {"availability-zone": availability_zone},
             )
 
-            for instance_type in instance_types:
+            for instance_type in sorted(instance_types):
                 if is_invalid_aws_instance_type(
                     aws_config["invalid-instances"],
                     availability_zone,
                     instance_type["instanceType"],
                 ):
                     continue
+
+                attrs = {
+                    "availabilityZone": availability_zone,
+                    "instanceType": instance_type["instanceType"],
+                }
+                initial_weight = evaluate_keyed_by(
+                    worker_manager_config.get("initialWeight", None),
+                    "initialWeight",
+                    attrs,
+                )
+                max_capacity = evaluate_keyed_by(
+                    worker_manager_config.get("maxCapacity", None),
+                    "maxCapacity",
+                    attrs,
+                )
+                instance_worker_manager_config = merge(
+                    {
+                        "capacityPerInstance": instance_type.get(
+                            "capacityPerInstance", 1
+                        )
+                    },
+                    worker_manager_config,
+                    (
+                        {"initialWeight": initial_weight}
+                        if initial_weight is not None
+                        else {}
+                    ),
+                    {"maxCapacity": max_capacity} if max_capacity is not None else {},
+                    instance_type.get("worker-manager-config", {}),
+                )
                 if implementation == "docker-worker":
                     instance_worker_config = merge(
                         worker_config,
                         instance_type.get("worker-config", {}),
-                        {"capacity": instance_type.get("capacityPerInstance", 1)},
+                        {
+                            "capacity": instance_worker_manager_config.get(
+                                "capacityPerInstance", 1
+                            )
+                        },
                     )
                 else:
                     instance_worker_config = merge(
@@ -136,10 +301,8 @@ def get_aws_provider_config(
                         instance_worker_config["genericWorker"]["config"].setdefault(
                             "wstServerURL", aws_config["wst_server_url"]
                         )
-                image_id = image.image_id(provider_id, region)
-                _populate_deployment_id(instance_worker_config, image_id)
+                image_id = image.get(provider_id, region)
                 launch_config = {
-                    "capacityPerInstance": instance_type.get("capacityPerInstance", 1),
                     "region": region,
                     "launchConfig": {
                         "ImageId": image_id,
@@ -149,6 +312,7 @@ def get_aws_provider_config(
                         "InstanceType": instance_type["instanceType"],
                     },
                     "workerConfig": instance_worker_config,
+                    "workerManager": instance_worker_manager_config,
                 }
                 launch_config["additionalUserData"] = {}
                 launch_config["additionalUserData"].update(user_data)
@@ -162,6 +326,8 @@ def get_aws_provider_config(
                     launch_config["launchConfig"]["InstanceMarketOptions"] = {
                         "MarketType": "spot"
                     }
+                launch_config["launchConfig"].pop("capacityPerInstance", None)
+                _populate_launch_config_id(launch_config, pool_id)
                 launch_configs.append(launch_config)
 
     return {
@@ -183,35 +349,53 @@ def get_azure_provider_config(
     implementation = config.pop(
         "implementation", "generic-worker/worker-runner-windows"
     )
-
-    defaults = evaluate_keyed_by(defaults, "defaults", {"provider": provider_id})
     azure_config = environment.azure_config
 
+    # Merge defaults with pool config.
+    defaults = _resolve_defaults(defaults, provider_id, implementation)
     lifecycle = merge(defaults.get("lifecycle", {}), config.pop("lifecycle", {}))
-
-    worker_config = evaluate_keyed_by(
-        defaults.get("worker-config", {}),
-        pool_id,
-        {"implementation": implementation},
+    worker_config = merge(
+        defaults.get("worker-config", {}), config.get("worker-config", {})
     )
-    worker_config = merge(worker_config, config.get("worker-config", {}))
+    worker_manager_config = merge(
+        defaults.get("worker-manager-config", {}),
+        config.get("worker-manager-config", {}),
+    )
+
+    gw_config = worker_config["genericWorker"]["config"]
     if azure_config.get("wst_server_url"):
-        worker_config["genericWorker"]["config"].setdefault(
-            "wstServerURL", azure_config["wst_server_url"]
-        )
+        gw_config.setdefault("wstServerURL", azure_config["wst_server_url"])
+
+    # Populate some generic-worker metadata.
+    metadata = {}
+    has_sbom = image.get(provider_id, "sbom") in (None, True)  # defaults None to True
+    if has_sbom and "sbom_url_tmpl" in azure_config:
+        context = image.clouds[provider_id].copy()
+
+        # The SBOM urls use dashes in the name, whereas the names defined in
+        # worker-images.yml can use underscores. This can be removed if these
+        # two places ever use the same format.
+        if "name" in context:
+            context["name"] = context["name"].replace("_", "-")
+
+        metadata["sbom"] = azure_config["sbom_url_tmpl"].format(**context)
+
+    if metadata:
+        gw_config.setdefault("workerTypeMetaData", {}).update(metadata)
+
     tags = config.get("tags", {})
 
     launch_configs = []
-    for location in locations:
+    for location in sorted(locations):
         for vmSize in vmSizes:
             if provider_id == "azure_trusted":
                 subscription_id = azure_config["trusted_subscription"]
             else:
                 subscription_id = azure_config["untrusted_subscription"]
             loc = location.replace("-", "")
-            version = image.image_id(provider_id, "version")
-            image_rgroup = image.image_id(provider_id, "resource_group")
-            DeploymentId = image.image_id(provider_id, "deployment_id")
+            version = image.get(provider_id, "version")
+            image_rgroup = image.get(provider_id, "resource_group")
+            DeploymentId = image.get(provider_id, "deployment_id")
             subscription_id = f"/subscriptions/{subscription_id}"
             resource_suffix = f"{location}-{purpose}"
             rgroup = f"rg-{resource_suffix}"
@@ -222,18 +406,93 @@ def get_azure_provider_config(
                 f"Microsoft.Network/virtualNetworks/{vnet}/subnets/{snet}"
             )
             if version != "NA":
-                ImageId = image.image_id(provider_id, "name")
+                ImageId = image.get(provider_id, "name")
                 imageReference_id = (
                     f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
                     f"Microsoft.Compute/galleries/{ImageId}/images/{ImageId}/versions/{version}"
                 )
             else:
-                ImageId = image.image_id(provider_id, location)
+                ImageId = image.get(provider_id, location)
                 imageReference_id = (
                     f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
                     f"Microsoft.Compute/images/{ImageId}-{DeploymentId}"
                 )
             tags["deploymentId"] = DeploymentId
+
+            attrs = {
+                "location": location,
+                "vmSize": vmSize.get("vmSize"),
+                "pool-id": pool_id,
+            }
+            initial_weight = evaluate_keyed_by(
+                worker_manager_config.get("initialWeight", None), "initialWeight", attrs
+            )
+            max_capacity = evaluate_keyed_by(
+                worker_manager_config.get("maxCapacity", None),
+                "maxCapacity",
+                attrs,
+            )
+
+            # Get publicIp from worker_manager_config or config, if defined
+            public_ip_source = None
+            if "publicIp" in worker_manager_config:
+                public_ip_source = worker_manager_config["publicIp"]
+            elif "publicIp" in config:
+                public_ip_source = config["publicIp"]
+
+            public_ip = None
+            if public_ip_source is not None:
+                public_ip = evaluate_keyed_by(
+                    public_ip_source,
+                    "publicIp",
+                    attrs,
+                )
+
+            instance_worker_manager_config = merge(
+                {"capacityPerInstance": vmSize.get("capacityPerInstance", 1)},
+                worker_manager_config,
+                {"initialWeight": initial_weight} if initial_weight is not None else {},
+                {"maxCapacity": max_capacity} if max_capacity is not None else {},
+                {"publicIp": public_ip} if public_ip is not None else {},
+                vmSize.get("worker-manager-config", {}),
+            )
+
+            def _evaluate_optional(value, item_name):
+                if value is None:
+                    return None
+                return evaluate_keyed_by(value, item_name, attrs)
+
+            arm_layers = [
+                _evaluate_optional(
+                    azure_config.get("armDeployment"), "armDeployment.environment"
+                ),
+                _evaluate_optional(
+                    image.get(provider_id, "armDeployment"),
+                    "armDeployment.image",
+                ),
+                _evaluate_optional(
+                    config.get("armDeployment"), "armDeployment.pool-config"
+                ),
+                _evaluate_optional(vmSize.get("armDeployment"), "armDeployment.vmSize"),
+            ]
+
+            arm_launch_config = _build_arm_template_launch_config(
+                pool_id=pool_id,
+                location=location,
+                loc=loc,
+                vm_size=vmSize.get("vmSize"),
+                subnet_id=subnetId,
+                image_reference_id=imageReference_id,
+                worker_config=worker_config,
+                worker_manager_config=instance_worker_manager_config,
+                tags=tags,
+                pool_cfg=config,
+                arm_layers=arm_layers,
+            )
+            if arm_launch_config:
+                _populate_launch_config_id(arm_launch_config, pool_id)
+                launch_configs.append(arm_launch_config)
+                continue
 
             launch_config = {
                 "location": loc,
@@ -248,11 +507,12 @@ def get_azure_provider_config(
                 "priority": "spot",
                 "billingProfile": {"maxPrice": -1},
                 "evictionPolicy": "Delete",
-                "capacityPerInstance": 1,
                 "storageProfile": {"imageReference": {"id": imageReference_id}},
+                "workerManager": instance_worker_manager_config,
             }
 
             launch_config = merge(launch_config, vmSize.get("launchConfig", {}))
+            _populate_launch_config_id(launch_config, pool_id)
             launch_configs.append(launch_config)
 
     return {
@@ -271,27 +531,27 @@ def get_google_provider_config(
     image = worker_images[config["image"]]
     instance_types = config["instance_types"]
     implementation = config.pop("implementation", "docker-worker")
-
-    defaults = evaluate_keyed_by(defaults, "defaults", {"provider": provider_id})
     google_config = environment.google_config
 
+    # Merge defaults with pool config.
+    defaults = _resolve_defaults(defaults, provider_id, implementation)
     lifecycle = merge(defaults.get("lifecycle", {}), config.pop("lifecycle", {}))
-
-    worker_config = evaluate_keyed_by(
-        defaults.get("worker-config", {}),
-        pool_id,
-        {"implementation": implementation},
+    worker_config = merge(
+        defaults.get("worker-config", {}), config.get("worker-config", {})
     )
-    worker_config = merge(worker_config, config.get("worker-config", {}))
+    worker_manager_config = merge(
+        defaults.get("worker-manager-config", {}),
+        config.get("worker-manager-config", {}),
+    )
 
-    image_name = image.image_id(provider_id)
+    image_name = image.get(provider_id)
 
     _validate_instance_capacity(pool_id, implementation, instance_types)
 
     launch_configs = []
-    for region in regions:
+    for region in sorted(regions):
         zones = evaluate_keyed_by(google_config["zones"], pool_id, {"region": region})
-        for zone in zones:
+        for zone in sorted(zones):
             for instance_type in instance_types:
                 if google_config.get(
                     "invalid-instances"
@@ -302,7 +562,38 @@ def get_google_provider_config(
                 ):
                     continue
                 launch_config = copy.deepcopy(instance_type)
-                launch_config.setdefault("capacityPerInstance", 1)
+
+                attrs = {
+                    "region": region,
+                    "zone": zone,
+                    "machineType": instance_type["machine_type"],
+                }
+                initial_weight = evaluate_keyed_by(
+                    worker_manager_config.get("initialWeight", None),
+                    "initialWeight",
+                    attrs,
+                )
+                max_capacity = evaluate_keyed_by(
+                    worker_manager_config.get("maxCapacity", None),
+                    "maxCapacity",
+                    attrs,
+                )
+                instance_worker_manager_config = merge(
+                    {
+                        "capacityPerInstance": launch_config.pop(
+                            "capacityPerInstance", 1
+                        )
+                    },
+                    worker_manager_config,
+                    (
+                        {"initialWeight": initial_weight}
+                        if initial_weight is not None
+                        else {}
+                    ),
+                    {"maxCapacity": max_capacity} if max_capacity is not None else {},
+                    launch_config.pop("worker-manager-config", {}),
+                )
+                launch_config["workerManager"] = instance_worker_manager_config
                 launch_config.setdefault(
                     "networkInterfaces",
                     [{"accessConfigs": [{"type": "ONE_TO_ONE_NAT"}]}],
@@ -332,7 +623,11 @@ def get_google_provider_config(
                 if implementation == "docker-worker":
                     launch_config["workerConfig"] = merge(
                         launch_config["workerConfig"],
-                        {"capacity": instance_type.get("capacityPerInstance", 1)},
+                        {
+                            "capacity": instance_worker_manager_config.get(
+                                "capacityPerInstance", 1
+                            )
+                        },
                     )
                 else:
                     if google_config.get("wst_server_url") and launch_config[
@@ -369,6 +664,7 @@ def get_google_provider_config(
                 scheduling_choice = launch_config.get("scheduling", "spot")
                 launch_config["scheduling"] = scheduling_options[scheduling_choice]
 
+                _populate_launch_config_id(launch_config, pool_id)
                 launch_configs.append(launch_config)
 
     return {
@@ -413,82 +709,16 @@ async def make_worker_pool(environment, resources, wp, worker_images, worker_def
     )
 
 
-def generate_pool_variants(worker_pools, environment):
+def generate_pool_variants(worker_pools, environment, templates=None):
     """
-    Generate the list of worker pools by evaluting them at all the specified
-    variants.
+    Generate the list of worker pools.
+
+    In the new expansion model, pools arrive already expanded (templates resolved,
+    variants multiplied, keyed-by values evaluated) so this function simply yields
+    each pool as-is.
     """
-
-    def update_config(config, name, attributes):
-        config = copy.deepcopy(config)
-        for key in (
-            "image",
-            "instance_types",
-            "locations",
-            "maxCapacity",
-            "minCapacity",
-            "security",
-            "tags.sourceBranch",
-            "vmSizes.vmSize",
-            "vmSizes.launchConfig.hardwareProfile.vmSize",
-            "worker-purpose",
-        ):
-            for container, subkey in iter_dot_path(config, key):
-                value = evaluate_keyed_by(container[subkey], name, attributes)
-                if value is not None:
-                    container[subkey] = value
-                else:
-                    del container[subkey]
-
-        if (
-            config.get("worker-config", {})
-            .get("shutdown", {})
-            .get("afterIdleSeconds", None)
-        ):
-            value = evaluate_keyed_by(
-                config["worker-config"]["shutdown"]["afterIdleSeconds"],
-                "worker-config.shutdown.afterIdleSeconds",
-                attributes,
-            )
-            if value is not None:
-                config["worker-config"]["shutdown"]["afterIdleSeconds"] = value
-            else:
-                del config["worker-config"]["shutdown"]["afterIdleSeconds"]
-
-        for key in (
-            "image",
-            "implementation",
-            "worker-purpose",
-            "worker-config.genericWorker.config.workerType",
-            "worker-config.genericWorker.config.provisionerId",
-        ):
-            for container, subkey in iter_dot_path(config, key):
-                container[subkey] = container[subkey].format(**attributes)
-                # Some pools append a suffix to the value. Strip "-" for cases
-                # where the suffix was empty.
-                container[subkey] = container[subkey].rstrip("-_")
-
-        return config
-
     for wp in worker_pools:
-        for variant in wp.variants:
-            attributes = wp.attributes.copy()
-            attributes["environment"] = environment
-            attributes.update(variant)
-
-            name = wp.pool_id.format(**attributes)
-            # Some pools append a suffix to the name. Strip "-" for cases where
-            # the suffix was empty.
-            name = name.rstrip("-")
-
-            yield attr.evolve(
-                wp,
-                pool_id=name,
-                provider_id=evaluate_keyed_by(wp.provider_id, name, attributes),
-                config=update_config(wp.config, name, attributes),
-                attributes={},
-                variants=[{}],
-            )
+        yield wp
 
 
 async def update_resources(resources):
@@ -500,14 +730,13 @@ async def update_resources(resources):
 
     resources.manage("WorkerPool=.*")
 
-    worker_defaults = (await get_ciconfig_file("worker-pools.yml")).get(
-        "worker-defaults"
-    )
+    raw_config = await get_ciconfig_file("worker-pools.yml")
+    worker_defaults = raw_config.get("worker-defaults")
     environment = await Environment.current()
 
     for wp in generate_pool_variants(worker_pools, environment):
         apwt = await make_worker_pool(
-            environment, resources, wp, worker_images, worker_defaults
+            environment, resources, wp, worker_images, copy.deepcopy(worker_defaults)
         )
         if apwt:
             resources.add(apwt)

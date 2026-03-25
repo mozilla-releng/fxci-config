@@ -9,11 +9,11 @@ policy:
     pullRequests: public_restricted
 tasks:
     - $let:
-          trustDomain: ci
+          trustDomain: releng
           taskclusterInstance:
               $switch:
                   'taskcluster_root_url == "https://firefox-ci-tc.services.mozilla.com"': "firefoxci"
-                  'taskcluster_root_url == "https://stage.taskcluster.nonprod.cloudops.mozgcp.net"': "staging"
+                  'taskcluster_root_url == "https://stage.taskcluster.nonprod.webservices.mozgcp.net"': "staging"
           isPullRequest:
               $eval: 'tasks_for[:19] == "github-pull-request" || tasks_for == "github-issue-comment"'
           pullRequestAction:
@@ -150,7 +150,7 @@ tasks:
                                         name: "Decision Task for cron job ${cron.job_name}"
                                         description: 'Created by a [cron task](https://firefox-ci-tc.services.mozilla.com/tasks/${cron.task_id})'
                       provisionerId: "${trustDomain}-${level}"
-                      workerType: "decision-gcp"
+                      workerType: "decision"
                       tags:
                           $switch:
                               'tasks_for == "github-push" || isPullRequest':
@@ -223,7 +223,6 @@ tasks:
                                     FXCI_HEAD_REF: '${head_ref}'
                                     FXCI_HEAD_REV: '${head_sha}'
                                     FXCI_REPOSITORY_TYPE: git
-                                    FXCI_PIP_REQUIREMENTS: taskcluster/requirements.txt
                                     REPOSITORIES: {$json: {fxci: "Firefox-CI Config"}}
                                   - $if: 'tasks_for == "action"'
                                     then:
@@ -236,8 +235,8 @@ tasks:
                           features:
                               taskclusterProxy: true
                               chainOfTrust: true
-                          image:
-                              mozillareleases/taskgraph:decision-v7.3.1@sha256:1d1364c01c13002a13863f0ef27dd7331ad1c7fe92bbb8b0b4019dc5a821461c
+                          # Keep this synced with the version in `pyproject.toml`.
+                          image: mozillareleases/taskgraph:decision-v20.0.0@sha256:afae5e5d3caaeb10a93fae56bc3176d1e73faf9b616c01facf811e488db4eafe
                           maxRunTime: 1800
                           command:
                               $flatten:
@@ -265,6 +264,7 @@ tasks:
                                         else: >
                                             ln -s /builds/worker/artifacts artifacts &&
                                             taskgraph decision
+                                            --verbose
                                             --pushlog-id='0'
                                             --pushdate='0'
                                             --project='${project}'
@@ -309,3 +309,23 @@ tasks:
                                 then:
                                     cron: {$json: {$eval: 'cron'}}
                               - tasks_for: '${tasks_for}'
+                  else:
+                      # If we didn't trigger a decision task, silence the taskcluster github service
+                      $if: 'tasks_for == "github-issue-comment"'
+                      then:
+                          taskId: '${ownTaskId}'
+                          taskGroupId: '${ownTaskId}'
+                          schedulerId: '${trustDomain}-level-${level}'
+                          created: {$fromNow: ''}
+                          deadline: {$fromNow: '1 day'}
+                          expires: {$fromNow: '2 days'}
+                          provisionerId: built-in
+                          workerType: succeed
+                          payload: {}
+                          routes:
+                              - checks
+                          metadata:
+                              owner: "${ownerEmail}"
+                              source: "${repoUrl}/raw/${head_sha}/.taskcluster.yml"
+                              name: "Skipped Decision Task"
+                              description: "The github-comment didn't trigger any decision task for this instance"

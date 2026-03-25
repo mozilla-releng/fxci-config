@@ -37,6 +37,13 @@
     - release-promotion
     - retrigger-decision
 
+- trust_domain: enterprise
+  levels: [1, 3]
+  action_perms:
+    - generic
+    - purge-caches
+    - retrigger-decision
+
 - trust_domain: xpi
   levels: [1, 3]
   action_perms:
@@ -54,13 +61,9 @@
   action_perms:
     - generic
     - release-promotion
+    - merge-automation
 
 - trust_domain: taskgraph
-  levels: [1, 3]
-  action_perms:
-    - generic
-
-- trust_domain: ci
   levels: [1, 3]
   action_perms:
     - generic
@@ -97,3 +100,19 @@
   levels: [1, 3]
   action_perms:
     - generic
+
+- trust_domain: nss
+  levels: [1, 3]
+  action_perms:
+    - generic
+
+- trust_domain: mozilla
+  levels: [1]
+  action_perms:
+    - generic
+
+- trust_domain: relops
+  levels: [1, 3]
+  action_perms:
+    - generic
+    - run-integration-tests

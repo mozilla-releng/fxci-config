@@ -61,6 +61,7 @@ class Project:
             takes_self=True,
         ),
     )
+    lando_repo = attr.ib(type=str, default=None)
     trust_domain = attr.ib(type=str, default=None)
     trust_project = attr.ib(type=str, default=None)
     parent_repo = attr.ib(type=str, default=None)
@@ -105,7 +106,7 @@ class Project:
                 )
             if any([b.level is not None for b in self.branches]):
                 raise ValueError(
-                    f"Mercurial repo {self.alias} cannot define a `level` " "property"
+                    f"Mercurial repo {self.alias} cannot define a `level` property"
                 )
         else:
             if any([b.level is None for b in self.branches]):
@@ -115,7 +116,7 @@ class Project:
                 )
             if self.access:
                 raise ValueError(
-                    f"Non-hg repo {self.alias} cannot define an `access` " "property"
+                    f"Non-hg repo {self.alias} cannot define an `access` property"
                 )
 
         # Convert boolean features into a dict of the form {"enabled": <val>}

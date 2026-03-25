@@ -48,7 +48,7 @@ def repo_arguments(app):
 @app.argument("--taskcluster-yml-repo")
 @app.argument("--dry-run", action="store_true")
 def hg_push(options):
-    from .hg_push import build_decision
+    from .hg_push import build_decision  # noqa: PLC0415
 
     if options["taskcluster_yml_repo"]:
         taskcluster_yml_repo = Repository(
@@ -70,7 +70,7 @@ def hg_push(options):
 @app.argument("--force-run")
 @app.argument("--dry-run", action="store_true")
 def cron(options):
-    from .cron import run
+    from .cron import run  # noqa: PLC0415
 
     run(
         repository=options["repository"],

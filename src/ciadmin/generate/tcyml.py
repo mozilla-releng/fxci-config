@@ -8,6 +8,9 @@ import aiohttp
 from aiohttp_retry import ExponentialRetry, RetryClient
 from tcadmin.util.sessions import aiohttp_session
 
+from ciadmin import USER_AGENT
+from ciadmin.util import github
+
 _cache = {}
 _lock = {}
 
@@ -24,44 +27,72 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
         if revision is None:
             revision = default_branch or "default"
         url = f"{repo_path}/raw-file/{revision}/.taskcluster.yml"
+        cache_key = (url, revision)
+
+        async with _lock.setdefault(cache_key, Lock()):
+            if cache_key in _cache:
+                return _cache[cache_key]
+
+            client = RetryClient(
+                client_session=aiohttp_session(),
+                # Despite only setting 404 here, 5xx statuses will still be retried
+                # for. See https://github.com/inyutin/aiohttp_retry?tab=readme-ov-file
+                # for details.
+                retry_options=ExponentialRetry(attempts=5, statuses={404}),
+            )
+            headers = {"User-Agent": USER_AGENT}
+            params = {}
+            async with client.get(url, headers=headers, params=params) as response:
+                try:
+                    response.raise_for_status()
+                    result = await response.read()
+                except aiohttp.ClientResponseError as e:
+                    print(f"Got error when querying {url}: {e}")
+                    raise e
+
+            _cache[cache_key] = result
+
     elif repo_type == "git":
         if revision is None:
             revision = default_branch or "master"
         if repo_path.startswith("https://github.com/"):
             if repo_path.endswith("/"):
                 repo_path = repo_path[:-1]
-            url = f"{repo_path}/raw/{revision}/.taskcluster.yml"
+            repo = repo_path.replace("https://github.com/", "")
+            endpoint = f"/repos/{repo}/contents/.taskcluster.yml"
         elif repo_path.startswith("git@github.com:"):
             if repo_path.endswith(".git"):
                 repo_path = repo_path[:-4]
-            url = "{}/raw/{}/.taskcluster.yml".format(
-                repo_path.replace("git@github.com:", "https://github.com/"), revision
-            )
+            repo = repo_path.replace("git@github.com:", "")
+            endpoint = f"/repos/{repo}/contents/.taskcluster.yml"
         else:
             raise Exception(
-                "Don't know how to determine file URL for non-github "
-                f"repo: {repo_path}"
+                f"Don't know how to determine file URL for non-github repo: {repo_path}"
             )
-    else:
-        raise Exception(f"Unknown repo_type {repo_type}!")
-    async with _lock.setdefault(url, Lock()):
-        if url in _cache:
-            return _cache[url]
 
-        client = RetryClient(
-            client_session=aiohttp_session(),
-            # Despite only setting 404 here, 5xx statuses will still be retried
-            # for. See https://github.com/inyutin/aiohttp_retry?tab=readme-ov-file
-            # for details.
-            retry_options=ExponentialRetry(attempts=5, statuses={404}),
-        )
-        async with client.get(url) as response:
+        cache_key = (endpoint, revision)
+
+        async with _lock.setdefault(cache_key, Lock()):
+            if cache_key in _cache:
+                return _cache[cache_key]
+
+            headers = {"Accept": "application/vnd.github.raw+json"}
+            params = {"ref": revision}
+
+            client = await github.get_client()
+            response = await client.request(
+                "GET", endpoint, headers=headers, params=params
+            )
             try:
                 response.raise_for_status()
                 result = await response.read()
             except aiohttp.ClientResponseError as e:
-                print(f"Got error when querying {url}: {e}")
+                print(f"Got error when querying {endpoint}: {e}")
                 raise e
 
-        _cache[url] = result
-        return _cache[url]
+            _cache[cache_key] = result
+
+    else:
+        raise Exception(f"Unknown repo_type {repo_type}!")
+
+    return _cache[cache_key]

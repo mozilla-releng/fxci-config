@@ -10,11 +10,14 @@ project-relman/code-coverage-repo-production:
     - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
     - index:insert-task:project.relman.code-coverage.production.repo.*
     - notify:email:*
-    - queue:create-task:highest:code-coverage/bot-gcp
+    - queue:create-task:highest:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-production
   template_file: hooks/project-relman/code-coverage-repo-production.yml
+  bindings:
+    - exchange: exchange/taskcluster-queue/v1/task-completed
+      routing_key_pattern: route.project.codecoverage.v1.tasks_done
   trigger_schema:
     type: object
     additionalProperties: true
@@ -29,11 +32,14 @@ project-relman/code-coverage-repo-testing:
     - docker-worker:cache:code-coverage-bot-testing
     - index:insert-task:project.relman.code-coverage.testing.repo.*
     - notify:email:*
-    - queue:create-task:lowest:code-coverage/bot-gcp
+    - queue:create-task:lowest:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
   template_file: hooks/project-relman/code-coverage-repo-testing.yml
+  bindings:
+    - exchange: exchange/taskcluster-queue/v1/task-completed
+      routing_key_pattern: route.project.codecoverage.v1.tasks_done
   trigger_schema:
     type: object
     additionalProperties: true
@@ -50,7 +56,7 @@ project-relman/code-coverage-cron-production:
     - docker-worker:cache:code-coverage-bot-production
     - index:insert-task:project.relman.code-coverage.production.cron.*
     - notify:email:*
-    - queue:create-task:highest:code-coverage/bot-gcp
+    - queue:create-task:highest:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-production
@@ -71,7 +77,7 @@ project-relman/code-coverage-cron-testing:
     - docker-worker:cache:code-coverage-bot-testing
     - index:insert-task:project.relman.code-coverage.testing.cron.*
     - notify:email:*
-    - queue:create-task:lowest:code-coverage/bot-gcp
+    - queue:create-task:lowest:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
@@ -86,13 +92,13 @@ project-relman/code-coverage-crontrigger-production:
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   schedule:
-    - 0 */30 * * * *
+    - 0 0 */3 * * *
   scopes:
     - hooks:trigger-hook:project-relman/code-coverage-repo-production
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.code-coverage.production.crontrigger.*
     - notify:email:*
-    - queue:create-task:highest:code-coverage/bot-gcp
+    - queue:create-task:highest:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-production
@@ -107,13 +113,13 @@ project-relman/code-coverage-crontrigger-testing:
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   schedule:
-    - 0 */30 * * * *
+    - 0 0 */3 * * *
   scopes:
     - hooks:trigger-hook:project-relman/code-coverage-repo-testing
     - assume:project:taskcluster:mozilla-github-repository
     - index:insert-task:project.relman.code-coverage.testing.crontrigger.*
     - notify:email:*
-    - queue:create-task:lowest:code-coverage/bot-gcp
+    - queue:create-task:lowest:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
@@ -132,7 +138,7 @@ project-relman/code-review-testing:
     - hooks:trigger-hook:project-releng/services-testing-*
     - index:insert-task:project.relman.testing.code-review.*
     - notify:email:*
-    - queue:create-task:lowest:code-review/bot-gcp
+    - queue:create-task:lowest:code-review/bot
     - queue:route:index.project.releng.services.project.testing.static_analysis_bot.*
     - queue:route:index.project.relman.testing.code-review.*
     - queue:route:notify.email.*
@@ -143,9 +149,34 @@ project-relman/code-review-testing:
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
       routing_key_pattern: route.project.relman.codereview.v1.try_ending
+    - exchange: exchange/taskcluster-queue/v1/task-group-resolved
+      routing_key_pattern: '#.gecko-level-3.#'
   trigger_schema:
     type: object
     additionalProperties: true
+    properties:
+
+      # Trigger hook from Phabricator with token payload to create a try push
+      build_target_phid:
+        type: string
+        description: Phabricator Build target's PHID triggering the hook
+
+      # Trigger hook from pulse for analyzing results
+      runId:
+        type: integer
+        description: Taskcluster Task Run ID triggering the hook (should be a Try Task run)
+      status:
+        type: object
+        required:
+          - taskId
+          - taskGroupId
+        properties:
+          taskId:
+            type: string
+            description: Taskcluster Task ID triggering the hook (should be a Try Task)
+          taskGroupId:
+            type: string
+            description: Taskcluster Task Group ID triggering the hook (should be a Try Task Group)
 
 project-relman/code-review-production:
   name: Code review hook (production)
@@ -157,16 +188,132 @@ project-relman/code-review-production:
     - hooks:trigger-hook:project-releng/services-production-*
     - index:insert-task:project.relman.production.code-review.*
     - notify:email:*
-    - queue:create-task:highest:code-review/bot-gcp
+    - queue:create-task:highest:code-review/bot
     - queue:route:index.project.releng.services.project.production.static_analysis_bot.*
     - queue:route:index.project.relman.production.code-review.*
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-review/runtime-production
+    - docker-worker:cache:code-review-production-checkout
   template_file: hooks/project-relman/code-review-production.yml
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
       routing_key_pattern: route.project.relman.codereview.v1.try_ending
+    - exchange: exchange/taskcluster-queue/v1/task-group-resolved
+      routing_key_pattern: '#.gecko-level-3.#'
   trigger_schema:
     type: object
     additionalProperties: true
+    properties:
+
+      # Trigger hook from Phabricator with token payload to create a try push
+      build_target_phid:
+        type: string
+        description: Phabricator Build target's PHID triggering the hook
+
+      # Trigger hook from pulse for analyzing results
+      runId:
+        type: integer
+        description: Taskcluster Task Run ID triggering the hook (should be a Try Task run)
+      status:
+        type: object
+        required:
+          - taskId
+          - taskGroupId
+        properties:
+          taskId:
+            type: string
+            description: Taskcluster Task ID triggering the hook (should be a Try Task)
+          taskGroupId:
+            type: string
+            description: Taskcluster Task Group ID triggering the hook (should be a Try Task Group)
+
+project-engwf/reviewer-assignment-infra-testing:
+  name: Reviewer assignment hook (testing)
+  description: Automatically assign reviewers to PRs
+  owner: omehani@mozilla.com
+  email_on_error: true
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository  # XXX: assuming this gives a suitable GITHUB_TOKEN
+    - notify:email:*
+    - queue:route:notify.email.*
+    - queue:scheduler-id:engwf
+  template_file: hooks/project-engwf/reviewer-assignment-infra-testing.yml
+  bindings:
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '#.infra-testing.#'  # e.g., primary.mozilla-firefox.infra-testing.opened or primary.mozilla-firefox.infra-testing.synchronize
+  trigger_schema:
+    type: object
+    # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
+    required:
+      - body
+      - organization
+      - repository
+    additionalProperties: true
+    properties:
+
+      body:
+        type: object
+        # https://docs.github.com/en/webhooks/webhook-events-and-payloads#pull_request
+        description: |
+          The raw body of github event (for version 1)
+        required:
+          - action
+          - pull_request
+          - repository
+        additionalProperties: true
+        properties:
+
+          action:
+            type: string
+            description: Action on the PR
+            pattern: "^(opened|synchronize)$"
+
+          pull_request:
+            type: object
+            description: Pull request metadata
+            required:
+              - base
+              - diff_url
+              - html_url
+            additionalProperties: true
+            properties:
+
+              base:
+                type: object
+                description: Pull request metadata
+                required:
+                  - ref
+                additionalProperties: true
+                properties:
+
+                  ref:
+                    type: string
+                    description: Target branch to merge this PR in
+
+              diff_url:
+                # Note: while binary data is not present in that diff, the paths of the binary files are.
+                type: string
+
+              html_url:
+                type: string
+
+
+          repository:
+            type: object
+            required:
+              - html_url
+            additionalProperties: true
+            properties:
+
+              html_url:
+                type: string
+
+
+      organisation:
+        type: string
+        pattern: "^mozilla-firefox$"
+
+      repository:
+        type: string
+        pattern: "^infra-testing$"

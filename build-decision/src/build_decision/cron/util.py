@@ -51,10 +51,10 @@ def calculate_time():
         if "CRON_TIME" in os.environ:
             logger.warning("setting time based on $CRON_TIME")
             time = datetime.datetime.utcfromtimestamp(int(os.environ["CRON_TIME"]))
-            print(time)
+            logger.info("cron time: %s", time)
         else:
             logger.warning(
-                "using current time for time; try setting $CRON_TIME " "to a timestamp"
+                "using current time for time; try setting $CRON_TIME to a timestamp"
             )
             time = datetime.datetime.utcnow()
     else:

@@ -3,19 +3,20 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # %ARG PYTHON_VERSION
-FROM python:$PYTHON_VERSION
+# %ARG UV_VERSION
+FROM ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-bookworm-slim
 LABEL maintainer="Mozilla Release Engineering <release+fxci-config@mozilla.com>"
 
 # Add worker user
-RUN mkdir /builds && \
+RUN mkdir -p /builds && \
     useradd -d /builds/worker -s /bin/bash -m worker && \
     mkdir /builds/worker/artifacts && \
-    chown worker:worker /builds/worker/artifacts
+    chown worker:worker /builds/worker /builds/worker/artifacts
 
 # %include-run-task
 
 RUN apt-get update && apt-get install -y --force-yes --no-install-recommends \
-    mercurial
+    git
 
 ENV SHELL=/bin/bash \
     HOME=/builds/worker \
