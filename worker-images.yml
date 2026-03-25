@@ -141,9 +141,9 @@ ronin_t_windows10_64_2009_alpha:
 # Windows 11
 win11a6425h2builder:
   azure2:
-    version: 1.0.0
+    version: 1.0.1
     resource_group: rg-packer-worker-images
-    deployment_id: alpha
+    deployment_id: "82086a7"
     name: win11_a64_25h2_builder
 win11a6425h2builderalpha:
   azure2:
@@ -189,9 +189,9 @@ ronin_t_windows11_a64_24h2_tester:
     name: win11_a64_24h2_tester
 win11a6425h2tester:
   azure2:
-    version: 1.0.0
+    version: 1.0.1
     resource_group: rg-packer-worker-images
-    deployment_id: alpha
+    deployment_id: "82086a7"
     name: win11_a64_25h2_tester
 win11a6425h2testeralpha:
   azure2:
@@ -213,9 +213,9 @@ ronin_t_windows11_64_24h2_alpha:
     name: win11_64_24h2_alpha
 win116425h2:
   azure2:
-    version: 1.0.0
+    version: 1.0.1
     resource_group: rg-packer-worker-images
-    deployment_id: alpha
+    deployment_id: "82086a7"
     name: win11_64_25h2
 win116425h2alpha:
   azure2:
