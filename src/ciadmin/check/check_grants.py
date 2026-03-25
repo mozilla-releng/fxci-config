@@ -197,7 +197,11 @@ async def check_inaccessible_pools(generated):
     }
     roles = [role for role in roles if all(i not in role.roleId for i in ignore_roles)]
 
-    pools = [p.workerPoolId for p in generated.filter("WorkerPool=.*")]
+    pools = [
+        p.workerPoolId
+        for p in generated.filter("WorkerPool=.*")
+        if not p.workerPoolId.endswith("-alpha")
+    ]
     remaining_pools = set(pools)
 
     priorities = {
