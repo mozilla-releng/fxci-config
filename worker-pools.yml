@@ -1460,6 +1460,9 @@ pools:
       - pool-group: enterprise-1
       - pool-group: enterprise-3
         chain-of-trust: trusted
+      - pool-group: code-analysis-1
+      - pool-group: code-analysis-3
+        chain-of-trust: trusted
     config:
       implementation: generic-worker/linux-d2g-{chain-of-trust}
       image: ubuntu-2404-headless
