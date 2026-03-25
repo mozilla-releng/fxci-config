@@ -96,8 +96,7 @@ class Repository:
                 if rev_res.status_code == 200:
                     raise http_error
         raise RetryableError(
-            f"Got 404 fetching {url}. The revision may not have "
-            "been replicated yet."
+            f"Got 404 fetching {url}. The revision may not have been replicated yet."
         )
 
     @redo.retriable(

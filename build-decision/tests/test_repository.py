@@ -320,7 +320,9 @@ def test_hg_push_info(mocker, branch, revision, pushes, raises, expected):
                 1: {
                     "user": "me",
                     "date": "now",
-                    "changesets": [{"node": "rev", "parents": ["baserev"], "files": ["file1.py"]}],
+                    "changesets": [
+                        {"node": "rev", "parents": ["baserev"], "files": ["file1.py"]}
+                    ],
                 }
             }
         }
