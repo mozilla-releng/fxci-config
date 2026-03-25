@@ -1,0 +1,83 @@
+---
+firefoxci:
+  root_url: https://firefox-ci-tc.services.mozilla.com
+  providers:
+    aws:
+      implementation: aws
+    azure2:
+      implementation: azure
+    azure_trusted:
+      implementation: azure
+    fxci-level1-gcp:
+      implementation: google
+    fxci-level2-gcp:
+      implementation: google
+    fxci-level3-gcp:
+      implementation: google
+    fxci-test-gcp:
+      implementation: google
+
+  google:
+    wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
+    zones:
+      us-central1: [us-central1-a, us-central1-b, us-central1-c, us-central1-f]
+      us-west1: [us-west1-a, us-west1-b]
+      us-east1: [us-east1-c]
+      northamerica-northeast1: [northamerica-northeast1-a, northamerica-northeast1-b, northamerica-northeast1-c]
+      europe-west4: [europe-west4-a, europe-west4-b, europe-west4-c]
+    invalid_instances:
+      - zones: [us-central1-c]
+        families: [t2a]
+
+  aws:
+    wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
+    availability_zones:
+      us-east-1: [us-east-1a, us-east-1b, us-east-1c, us-east-1d, us-east-1e, us-east-1f]
+      us-west-1: [us-west-1b, us-west-1c]
+      us-west-2: [us-west-2a, us-west-2b, us-west-2c]
+      eu-central-1: [eu-central-1a, eu-central-1b, eu-central-1c]
+    subnets:
+      us-east-1a: subnet-566e060c
+      us-east-1b: subnet-f2c93496
+      us-east-1c: subnet-c52454e9
+      us-east-1d: subnet-e7e6ccaf
+      us-east-1e: subnet-deb5a8e2
+      us-east-1f: subnet-7f720d73
+      us-west-1b: subnet-7641632e
+      us-west-1c: subnet-48a9b82c
+      us-west-2a: subnet-d948b6bf
+      us-west-2b: subnet-2eaaba67
+      us-west-2c: subnet-540a9f0f
+      eu-central-1a: subnet-935645fb
+      eu-central-1b: subnet-6988da13
+      eu-central-1c: subnet-114d525b
+    security_groups:
+      untrusted:
+        us-east-1: [sg-12cd3762]
+        us-west-1: [sg-caed26ac]
+        us-west-2: [sg-2728435d]
+        eu-central-1: [sg-8b3d0de0]
+      windows-untrusted:
+        us-east-1: [sg-0dc9337d]
+        us-west-1: [sg-5be3283d]
+        us-west-2: [sg-09d6be73]
+        eu-central-1: [sg-c03e0eab]
+      trusted:
+        us-east-1: [sg-7aca300a]
+        us-west-1: [sg-5ce02b3a]
+        us-west-2: [sg-a0d6beda]
+        eu-central-1: [sg-e53d0d8e]
+    invalid_instances:
+      - zones: [us-east-1e]
+        families: [m5, m5a, m5ad, m5d, m5dn, m5n, c5, c5d, c5n, r5a, z1d]
+      - zones: [us-east-1b, us-east-1f]
+        families: [r3, m3, c3]
+      - zones: [us-east-1a, us-east-1b, us-east-1d, us-east-1e]
+        families: [r5ad]
+      - zones: [us-east-1c]
+        families: [m5dn]
+
+  azure:
+    wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
+    untrusted_subscription: 108d46d5-fe9b-4850-9a7d-8c914aa6c1f0
+    trusted_subscription: a30e97ab-734a-4f3b-a0e4-c51c0bff0701

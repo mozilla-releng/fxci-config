@@ -1,0 +1,3972 @@
+---
+defaults:
+  owner: release+tc-workers@mozilla.com
+  email_on_error: true
+  description: Worker for Firefox automation.
+  implementation: docker-worker
+  regions:
+  - us-central1
+  - us-west1
+  min_cpu_platform: Intel Cascadelake
+  lifecycle:
+    registrationTimeout: 1800
+    reregistrationTimeout: 345600
+    queueInactivityTimeout: 7200
+  scaling_ratio: 1
+templates:
+  gcp-gw-linux:
+    worker_config:
+      genericWorker:
+        config:
+          cleanUpTaskDirs: true
+          disableReboots: false
+          ed25519SigningKeyLocation: /etc/taskcluster/secrets/gw_cot_private_key
+          idleTimeoutSecs: 300
+          livelogExecutable: /usr/local/bin/livelog
+          numberOfTasksToRun: 0
+          sentryProject: generic-worker
+          shutdownMachineOnIdle: true
+          shutdownMachineOnInternalError: true
+          taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
+          taskclusterProxyPort: 80
+          wstAudience: firefoxcitc
+  azure-win2022:
+    worker_config:
+      genericWorker:
+        config:
+          cachesDir: D:\caches
+          cleanUpTaskDirs: true
+          disableReboots: false
+          downloadsDir: D:\downloads
+          ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+          idleTimeoutSecs: 150
+          livelogExecutable: C:\generic-worker\livelog.exe
+          numberOfTasksToRun: 0
+          runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+          runTasksAsCurrentUser: false
+          sentryProject: generic-worker
+          shutdownMachineOnIdle: true
+          shutdownMachineOnInternalError: true
+          taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+          taskclusterProxyPort: 80
+          tasksDir: D:\
+          wstAudience: firefoxcitc
+    os_profile:
+      windowsConfiguration:
+        enableAutomaticUpdates: false
+        timeZone: UTC
+    diagnostics_profile:
+      bootDiagnostics:
+        enabled: false
+    os_disk:
+      caching: ReadOnly
+      createOption: FromImage
+      diffDiskSettings:
+        option: Local
+      osType: Windows
+    tags:
+      sourceBranch: windows
+      sourceOrganisation: mozilla-platform-ops
+      sourceRepository: ronin_puppet
+      sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
+  gcp-gw-translations:
+    worker_config:
+      genericWorker:
+        config:
+          cleanUpTaskDirs: true
+          containerEngine: docker
+          disableReboots: false
+          ed25519SigningKeyLocation: /etc/generic-worker/ed25519_key
+          enableD2G: true
+          enableInteractive: true
+          idleTimeoutSecs: 300
+          livelogExecutable: /usr/local/bin/livelog
+          maxTaskRunTime: 2592000
+          numberOfTasksToRun: 0
+          sentryProject: generic-worker
+          shutdownMachineOnIdle: true
+          shutdownMachineOnInternalError: true
+          taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
+          taskclusterProxyPort: 80
+          wstAudience: firefoxcitc
+  azure-win2012:
+    worker_config:
+      genericWorker:
+        config:
+          cachesDir: Z:\caches
+          cleanUpTaskDirs: true
+          disableReboots: false
+          downloadsDir: Z:\downloads
+          ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+          idleTimeoutSecs: 1800
+          livelogExecutable: C:\generic-worker\livelog.exe
+          numberOfTasksToRun: 0
+          runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+          runTasksAsCurrentUser: false
+          sentryProject: generic-worker
+          shutdownMachineOnIdle: true
+          shutdownMachineOnInternalError: true
+          taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+          taskclusterProxyPort: 80
+          tasksDir: Z:\
+          wstAudience: firefoxcitc
+    os_profile:
+      windowsConfiguration:
+        enableAutomaticUpdates: false
+        timeZone: UTC
+    diagnostics_profile:
+      bootDiagnostics:
+        enabled: false
+    data_disks:
+    - createOption: Empty
+      diskSizeGB: 120
+      lun: 0
+      managedDisk:
+        storageAccountType: Premium_LRS
+    os_disk:
+      createOption: FromImage
+      osType: Windows
+    tags:
+      sourceBranch: cloud_windows
+      sourceOrganisation: mozilla-platform-ops
+      sourceRepository: ronin_puppet
+      sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  dw-custom:
+    worker_config:
+      shutdown:
+        afterIdleSeconds: 600
+        enabled: true
+  gcp-gw-translations-2:
+    worker_config:
+      genericWorker:
+        config:
+          cachesDir: /home/ubuntu/caches
+          cleanUpTaskDirs: true
+          disableReboots: false
+          downloadsDir: /home/ubuntu/downloads
+          ed25519SigningKeyLocation: /home/ubuntu/generic_worker/ed25519-private.key
+          enableInteractive: true
+          idleTimeoutSecs: 300
+          livelogExecutable: /home/ubuntu/generic_worker/livelog
+          maxTaskRunTime: 2592000
+          numberOfTasksToRun: 0
+          sentryProject: generic-worker
+          shutdownMachineOnIdle: true
+          shutdownMachineOnInternalError: true
+          taskclusterProxyExecutable: /home/ubuntu/generic_worker/taskcluster-proxy
+          taskclusterProxyPort: 8081
+          tasksDir: /home/ubuntu/tasks
+          wstAudience: firefoxcitc
+  gcp-gw-headless:
+    worker_config:
+      genericWorker:
+        config:
+          cleanUpTaskDirs: true
+          disableReboots: false
+          ed25519SigningKeyLocation: /etc/generic-worker/ed25519_key
+          enableD2G: true
+          enableInteractive: true
+          idleTimeoutSecs: 300
+          livelogExecutable: /usr/local/bin/livelog
+          numberOfTasksToRun: 0
+          sentryProject: generic-worker
+          shutdownMachineOnIdle: true
+          shutdownMachineOnInternalError: true
+          taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
+          taskclusterProxyPort: 80
+          wstAudience: firefoxcitc
+  gcp-gw-wayland:
+    worker_config:
+      genericWorker:
+        config:
+          cleanUpTaskDirs: true
+          disableReboots: false
+          ed25519SigningKeyLocation: /etc/taskcluster/secrets/gw_cot_private_key
+          enableInteractive: true
+          idleTimeoutSecs: 300
+          livelogExecutable: /usr/local/bin/livelog
+          numberOfTasksToRun: 0
+          sentryProject: generic-worker
+          shutdownMachineOnIdle: true
+          shutdownMachineOnInternalError: true
+          taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
+          taskclusterProxyPort: 80
+          wstAudience: firefoxcitc
+  dw-docker-config:
+    worker_config:
+      deviceManagement:
+        hostSharedMemory:
+          enabled: false
+        kvm:
+          enabled: true
+      dockerConfig:
+        allowPrivileged: true
+  dw-docker-config-2:
+    worker_config:
+      deviceManagement:
+        hostSharedMemory:
+          enabled: false
+        kvm:
+          enabled: true
+      dockerConfig:
+        allowPrivileged: false
+  azure-win11-arm64:
+    worker_config:
+      genericWorker:
+        config:
+          cachesDir: C:\caches
+          cleanUpTaskDirs: true
+          disableReboots: false
+          downloadsDir: C:\downloads
+          ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+          idleTimeoutSecs: 150
+          livelogExecutable: C:\generic-worker\livelog.exe
+          numberOfTasksToRun: 0
+          provisionerId: gecko-1
+          runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+          runTasksAsCurrentUser: false
+          sentryProject: generic-worker
+          shutdownMachineOnIdle: true
+          shutdownMachineOnInternalError: true
+          taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+          taskclusterProxyPort: 80
+          tasksDir: C:\
+          workerType: win11-a64-24h2-builder-alpha
+          wstAudience: firefoxcitc
+    os_profile:
+      windowsConfiguration:
+        enableAutomaticUpdates: false
+        timeZone: UTC
+    diagnostics_profile:
+      bootDiagnostics:
+        enabled: false
+    os_disk:
+      createOption: FromImage
+      managedDisk:
+        storageAccountType: Premium_LRS
+      osType: Windows
+    tags:
+      sourceBranch: win11Aarch64
+      sourceOrganisation: mozilla-platform-ops
+      sourceRepository: ronin_puppet
+      sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  dw-custom-2:
+    worker_config:
+      shutdown:
+        afterIdleSeconds: 900
+        enabled: true
+  gcp-gw-wayland-2:
+    worker_config:
+      genericWorker:
+        config:
+          cachesDir: /home/ubuntu/caches
+          cleanUpTaskDirs: true
+          disableReboots: false
+          downloadsDir: /home/ubuntu/downloads
+          ed25519SigningKeyLocation: /home/ubuntu/generic_worker/ed25519-private.key
+          idleTimeoutSecs: 5400
+          livelogExecutable: /home/ubuntu/.taskcluster/livelog
+          numberOfTasksToRun: 1
+          sentryProject: generic-worker
+          shutdownMachineOnIdle: true
+          shutdownMachineOnInternalError: true
+          taskclusterProxyExecutable: /home/ubuntu/.taskcluster/taskcluster-proxy
+          taskclusterProxyPort: 8081
+          tasksDir: /home/ubuntu/tasks
+          wstAudience: firefoxcitc
+pools:
+- id: adhoc-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: adhoc-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: adhoc-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: adhoc-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: adhoc-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: adhoc-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: app-services-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 50
+  machine_type: c2-standard-16
+  disks: boot-20gb+ssd+ssd
+- id: app-services-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  min_capacity: 1
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+  template: dw-custom
+- id: app-services-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: app-services-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 100
+  machine_type: c2-standard-16
+  disks: boot-20gb+ssd+ssd
+- id: app-services-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: app-services-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: ci-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: ci-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: ci-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: ci-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: ci-t/linux-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: code-analysis-1/linux-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: code-analysis-1/linux-gw-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 10
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-75gb
+  template: gcp-gw-linux
+- id: code-analysis-3/linux-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: code-analysis-3/linux-gw-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 10
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-75gb
+  template: gcp-gw-linux
+- id: code-coverage/bot-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for the code-coverage bot.
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  min_capacity: 1
+  machine_type: c2-standard-16
+  disks: boot-75gb+ssd+ssd
+  template: dw-custom-2
+- id: code-review/bot-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for the code-review bot.
+  image: monopacker-docker-worker-current
+  max_capacity: 100
+  min_capacity: 1
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+  capacity_per_instance: 2
+  template: dw-custom-2
+- id: comm-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 300
+  machine_type: c2-standard-16
+  disks: boot-20gb+ssd+ssd
+- id: comm-1/b-linux-large-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 20
+  machine_type: n2-custom-32-73728
+  disks: boot-20gb+ssd+ssd+ssd+ssd
+- id: comm-1/b-linux-xlarge-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 20
+  machine_type: n2-custom-64-131072
+  disks: boot-20gb+ssd+ssd+ssd+ssd+ssd+ssd+ssd+ssd
+- id: comm-1/b-win2012-azure
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2012r2-64-l1
+    os_sku: 2012-R2-Datacenter
+    deployment_id: 75bd9ed
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2012
+- id: comm-1/b-win2022
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2022
+- id: comm-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 4
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: comm-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 30
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: comm-2/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 300
+  machine_type: c2-standard-16
+  disks: boot-20gb+ssd+ssd
+- id: comm-2/b-linux-large-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 20
+  machine_type: n2-custom-32-73728
+  disks: boot-20gb+ssd+ssd+ssd+ssd
+- id: comm-2/b-linux-xlarge-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 20
+  machine_type: n2-custom-64-131072
+  disks: boot-20gb+ssd+ssd+ssd+ssd+ssd+ssd+ssd+ssd
+- id: comm-2/b-win2012-azure
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2012r2-64-l1
+    os_sku: 2012-R2-Datacenter
+    deployment_id: 75bd9ed
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2012
+- id: comm-2/b-win2022
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2022
+- id: comm-2/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 4
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: comm-2/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 30
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: comm-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 300
+  machine_type: c2-standard-16
+  disks: boot-20gb+ssd+ssd
+- id: comm-3/b-linux-large-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 20
+  machine_type: n2-custom-32-73728
+  disks: boot-20gb+ssd+ssd+ssd+ssd
+- id: comm-3/b-linux-xlarge-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 20
+  machine_type: n2-custom-64-131072
+  disks: boot-20gb+ssd+ssd+ssd+ssd+ssd+ssd+ssd+ssd
+- id: comm-3/b-win2012-azure
+  provider_id: azure_trusted
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: trusted-win2012r2-64-l3
+    os_sku: 2012-R2-Datacenter
+    deployment_id: 7cde253
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 50
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2012
+- id: comm-3/b-win2022
+  provider_id: azure_trusted
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: trusted-win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 50
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2022
+- id: comm-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 4
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: comm-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 30
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: comm-t/misc-gcp
+  provider_id: fxci-level1-gcp
+  description: Miscellaneous short, low-latency, simple tasks, shared between Gecko SCM levels.  Used for things like indexing
+    tasks.
+  image: monopacker-docker-worker-current
+  max_capacity: 32
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+  capacity_per_instance: 8
+- id: comm-t/t-linux-large-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: comm-t/t-linux-large-noscratch-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-75gb
+- id: comm-t/t-linux-xlarge-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 10
+  machine_type: n2-standard-4
+  disks: boot-75gb+ssd
+- id: comm-t/t-linux-xlarge-noscratch-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 10
+  machine_type: n2-standard-4
+  disks: boot-75gb
+- id: comm-t/t-linux-xlarge-source-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 10
+  machine_type: n2-standard-4
+  disks: boot-75gb+ssd
+- id: comm-t/t-linux-xlarge-source-noscratch-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 10
+  machine_type: n2-standard-4
+  disks: boot-75gb
+- id: comm-t/win11-64-2009
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win11-64-2009
+    os_sku: win11-22h2-avd
+    deployment_id: db0c108
+  locations:
+  - canada-central
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  - west-us-3
+  - north-central-us
+  - central-us
+  - north-europe
+  - south-india
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 600
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: comm-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-2009
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: cloud_windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: comm-t/win11-64-2009-ssd
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win11-64-2009
+    os_sku: win11-22h2-avd
+    deployment_id: db0c108
+  locations:
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  - north-central-us
+  - central-us
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 50
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: comm-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-2009-ssd
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: cloud_windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: comm-t/win11-a64-24h2
+  provider_id: azure2
+  description: ''
+  image:
+    type: gallery
+    resource_group: rg-packer-worker-images
+    gallery: win11_a64_24h2_tester
+    image: win11_a64_24h2_tester
+    version: 1.0.0
+    deployment_id: a03478d
+  locations:
+  - east-us-2
+  - north-central-us
+  - central-us
+  vm_sizes:
+  - Standard_D8ps_v5
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: C:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: C:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: comm-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: C:\
+        workerType: win11-a64-24h2
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    createOption: FromImage
+    osType: Windows
+- id: comm-t/win11-a64-24h2-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: gallery
+    resource_group: rg-packer-worker-images
+    gallery: win11_a64_24h2_tester_alpha
+    image: win11_a64_24h2_tester_alpha
+    version: 1.0.0
+    deployment_id: alpha
+  locations:
+  - east-us-2
+  - north-central-us
+  - central-us
+  vm_sizes:
+  - Standard_D8ps_v5
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: C:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: C:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: comm-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: C:\
+        workerType: win11-a64-24h2-alpha
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    createOption: FromImage
+    osType: Windows
+- id: gecko-1/b-linux-2204-kvm-gcp
+  provider_id: fxci-level1-gcp
+  description: KVM-enabled Ubuntu 22.04 GCP builders.
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 10
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-75gb
+  advanced_machine_features:
+    enableNestedVirtualization: true
+  template: gcp-gw-linux
+- id: gecko-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 1000
+  machine_type: c2-standard-16
+  disks: boot-20gb+ssd+ssd
+- id: gecko-1/b-linux-gcp-aarch64
+  provider_id: fxci-level1-gcp
+  description: Linux ARM64 VM for Firefox automation.
+  image: monopacker-ubuntu-2204-wayland-arm64
+  max_capacity: 10
+  implementation: generic-worker
+  regions:
+  - us-central1
+  min_cpu_platform: Ampere Altra
+  machine_type: t2a-standard-16
+  disks: boot-75gb
+  template: gcp-gw-linux
+- id: gecko-1/b-linux-gcp-test-bug-1882320
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 5
+  regions:
+  - northamerica-northeast1
+  machine_type: c2-standard-16
+  disks: boot-20gb+ssd+ssd
+- id: gecko-1/b-linux-kvm-gcp
+  provider_id: fxci-level1-gcp
+  description: KVM-enabled builders for PGO using docker-worker.
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  machine_type: c2-standard-16
+  disks: boot-75gb+ssd+ssd
+  advanced_machine_features:
+    enableNestedVirtualization: true
+  template: dw-docker-config-2
+- id: gecko-1/b-linux-large-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 1000
+  machine_type: n2-custom-32-73728
+  disks: boot-20gb+ssd+ssd+ssd+ssd
+- id: gecko-1/b-linux-medium-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 200
+  machine_type: c2-standard-8
+  disks: boot-20gb+ssd
+- id: gecko-1/b-linux-xlarge-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 1000
+  machine_type: n2-custom-64-131072
+  disks: boot-20gb+ssd+ssd+ssd+ssd+ssd+ssd+ssd+ssd
+- id: gecko-1/b-linux-xlarge-gcp-bug1797804-c2
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  min_cpu_platform: null
+  machine_type: c2-standard-60
+  disks: boot-20gb+ssd+ssd+ssd+ssd+ssd+ssd+ssd+ssd
+- id: gecko-1/b-win2012-azure
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2012r2-64-l1
+    os_sku: 2012-R2-Datacenter
+    deployment_id: 75bd9ed
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2012
+- id: gecko-1/b-win2022
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2022
+- id: gecko-1/b-win2022-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: alpha
+  locations:
+  - central-us
+  - north-central-us
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 5
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win2022-azure
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: bug1838725
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 40
+  min_capacity: 1
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+  template: dw-custom
+- id: gecko-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 30
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: gecko-1/images-gcp-aarch64
+  provider_id: fxci-level1-gcp
+  description: Builds AArch64 docker images
+  image: monopacker-ubuntu-2204-wayland-arm64
+  max_capacity: 10
+  email_on_error: false
+  implementation: generic-worker
+  regions:
+  - us-central1
+  min_cpu_platform: Ampere Altra
+  machine_type: t2a-standard-4
+  disks: boot-75gb
+  template: gcp-gw-linux
+- id: gecko-1/win11-a64-24h2-builder
+  provider_id: azure2
+  description: ''
+  image:
+    type: gallery
+    resource_group: rg-packer-worker-images
+    gallery: win11_a64_24h2_builder
+    image: win11_a64_24h2_builder
+    version: 1.0.0
+    deployment_id: a03478d
+  locations:
+  - east-us-2
+  - west-us-3
+  - north-central-us
+  - central-us
+  vm_sizes:
+  - Standard_D16ps_v5
+  max_capacity: 250
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win11-arm64
+- id: gecko-1/win11-a64-24h2-builder-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: gallery
+    resource_group: rg-packer-worker-images
+    gallery: win11_a64_24h2_builder_alpha
+    image: win11_a64_24h2_builder_alpha
+    version: 0.0.1
+    deployment_id: alpha
+  locations:
+  - east-us-2
+  - west-us-3
+  - north-central-us
+  - central-us
+  vm_sizes:
+  - Standard_D16ps_v5
+  max_capacity: 250
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win11-arm64
+- id: gecko-2/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 1000
+  machine_type: c2-standard-16
+  disks: boot-20gb+ssd+ssd
+- id: gecko-2/b-linux-gcp-aarch64
+  provider_id: fxci-level1-gcp
+  description: Linux ARM64 VM for Firefox automation.
+  image: monopacker-ubuntu-2204-wayland-arm64
+  max_capacity: 10
+  implementation: generic-worker
+  regions:
+  - us-central1
+  min_cpu_platform: Ampere Altra
+  machine_type: t2a-standard-16
+  disks: boot-75gb
+  template: gcp-gw-linux
+- id: gecko-2/b-linux-kvm-gcp
+  provider_id: fxci-level1-gcp
+  description: KVM-enabled builders for PGO using docker-worker.
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  machine_type: c2-standard-16
+  disks: boot-75gb+ssd+ssd
+  advanced_machine_features:
+    enableNestedVirtualization: true
+  template: dw-docker-config-2
+- id: gecko-2/b-linux-large-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 1000
+  machine_type: n2-custom-32-73728
+  disks: boot-20gb+ssd+ssd+ssd+ssd
+- id: gecko-2/b-linux-xlarge-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 1000
+  machine_type: n2-custom-64-131072
+  disks: boot-20gb+ssd+ssd+ssd+ssd+ssd+ssd+ssd+ssd
+- id: gecko-2/b-win2012-azure
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2012r2-64-l1
+    os_sku: 2012-R2-Datacenter
+    deployment_id: 75bd9ed
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2012
+- id: gecko-2/b-win2022
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2022
+- id: gecko-2/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 4
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: gecko-2/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 30
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: gecko-2/images-gcp-aarch64
+  provider_id: fxci-level1-gcp
+  description: Builds AArch64 docker images
+  image: monopacker-ubuntu-2204-wayland-arm64
+  max_capacity: 10
+  email_on_error: false
+  implementation: generic-worker
+  regions:
+  - us-central1
+  min_cpu_platform: Ampere Altra
+  machine_type: t2a-standard-4
+  disks: boot-75gb
+  template: gcp-gw-linux
+- id: gecko-3/b-linux-2204-kvm-gcp
+  provider_id: fxci-level3-gcp
+  description: KVM-enabled Ubuntu 22.04 GCP builders.
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 10
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-75gb
+  advanced_machine_features:
+    enableNestedVirtualization: true
+  template: gcp-gw-linux
+- id: gecko-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 1000
+  machine_type: c2-standard-16
+  disks: boot-20gb+ssd+ssd
+- id: gecko-3/b-linux-gcp-aarch64
+  provider_id: fxci-level3-gcp
+  description: Linux ARM64 VM for Firefox automation.
+  image: monopacker-ubuntu-2204-wayland-arm64
+  max_capacity: 10
+  implementation: generic-worker
+  regions:
+  - us-central1
+  min_cpu_platform: Ampere Altra
+  machine_type: t2a-standard-16
+  disks: boot-75gb
+  template: gcp-gw-linux
+- id: gecko-3/b-linux-kvm-gcp
+  provider_id: fxci-level3-gcp
+  description: KVM-enabled builders for PGO using docker-worker.
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  machine_type: c2-standard-16
+  disks: boot-75gb+ssd+ssd
+  advanced_machine_features:
+    enableNestedVirtualization: true
+  template: dw-docker-config-2
+- id: gecko-3/b-linux-large-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 1000
+  machine_type: n2-custom-32-73728
+  disks: boot-20gb+ssd+ssd+ssd+ssd
+- id: gecko-3/b-linux-medium-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 100
+  machine_type: c2-standard-8
+  disks: boot-20gb+ssd
+- id: gecko-3/b-linux-xlarge-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 1000
+  machine_type: n2-custom-64-131072
+  disks: boot-20gb+ssd+ssd+ssd+ssd+ssd+ssd+ssd+ssd
+- id: gecko-3/b-win2012-azure
+  provider_id: azure_trusted
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: trusted-win2012r2-64-l3
+    os_sku: 2012-R2-Datacenter
+    deployment_id: 7cde253
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2012
+- id: gecko-3/b-win2022
+  provider_id: azure_trusted
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: trusted-win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2022
+- id: gecko-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 20
+  min_capacity: 1
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+  template: dw-custom
+- id: gecko-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 30
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: gecko-3/images-gcp-aarch64
+  provider_id: fxci-level3-gcp
+  description: Builds AArch64 docker images
+  image: monopacker-ubuntu-2204-wayland-arm64
+  max_capacity: 10
+  email_on_error: false
+  implementation: generic-worker
+  regions:
+  - us-central1
+  min_cpu_platform: Ampere Altra
+  machine_type: t2a-standard-4
+  disks: boot-75gb
+  template: gcp-gw-linux
+- id: gecko-3/t-linux-2204-wayland-arm64-relsre
+  provider_id: fxci-level3-gcp
+  description: Workers for Wayland on Ubuntu 22.04 ARM64. Used by RelSRE to qualify images.
+  image: monopacker-ubuntu-2204-wayland-arm64
+  max_capacity: 10
+  owner: aerickson@mozilla.com
+  implementation: generic-worker
+  regions:
+  - us-central1
+  min_cpu_platform: Ampere Altra
+  machine_type: t2a-standard-4
+  disks: boot-60gb
+  template: gcp-gw-linux
+- id: gecko-3/t-linux-2204-wayland-relsre
+  provider_id: fxci-level3-gcp
+  description: Workers for Wayland on Ubuntu 22.04. Used by RelSRE to qualify images.
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 10
+  owner: aerickson@mozilla.com
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-linux
+- id: gecko-3/t-linux-xlarge-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 2500
+  machine_type: n2-standard-4
+  disks: boot-75gb+ssd
+- id: gecko-3/t-linux-xlarge-noscratch-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 2500
+  machine_type: n2-standard-4
+  disks: boot-75gb
+- id: gecko-3/win11-a64-24h2-builder
+  provider_id: azure_trusted
+  description: ''
+  image:
+    type: gallery
+    resource_group: rg-packer-worker-images
+    gallery: win11_a64_24h2_builder
+    image: win11_a64_24h2_builder
+    version: 1.0.0
+    deployment_id: a03478d
+  locations:
+  - east-us-2
+  - west-us-3
+  - north-central-us
+  - central-us
+  vm_sizes:
+  - Standard_D16ps_v5
+  max_capacity: 250
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win11-arm64
+- id: gecko-t/misc-gcp
+  provider_id: fxci-level1-gcp
+  description: Miscellaneous short, low-latency, simple tasks, shared between Gecko SCM levels.  Used for things like indexing
+    tasks.
+  image: monopacker-docker-worker-current
+  max_capacity: 32
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+  capacity_per_instance: 8
+- id: gecko-t/t-linux-2204-wayland
+  provider_id: fxci-level1-gcp
+  description: Worker for Wayland on Ubuntu 22.04
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 100
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-wayland
+- id: gecko-t/t-linux-2204-wayland-arm64-relsre
+  provider_id: fxci-level1-gcp
+  description: Workers for Wayland on Ubuntu 22.04 ARM64. Used by RelSRE to qualify images.
+  image: monopacker-ubuntu-2204-wayland-arm64
+  max_capacity: 10
+  owner: aerickson@mozilla.com
+  implementation: generic-worker
+  regions:
+  - us-central1
+  min_cpu_platform: Ampere Altra
+  machine_type: t2a-standard-4
+  disks: boot-60gb
+  template: gcp-gw-linux
+- id: gecko-t/t-linux-2204-wayland-relsre
+  provider_id: fxci-level1-gcp
+  description: Workers for Wayland on Ubuntu 22.04. Used by RelSRE to qualify images.
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 10
+  owner: aerickson@mozilla.com
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-linux
+- id: gecko-t/t-linux-2204-wayland-root-exp
+  provider_id: fxci-level1-gcp
+  description: Worker for testing Wayland on Ubuntu 22.04
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 10
+  implementation: generic-worker
+  machine_type: n2-standard-2
+  disks: boot-60gb
+  template: gcp-gw-wayland
+- id: gecko-t/t-linux-2204-wayland-snap
+  provider_id: fxci-level1-gcp
+  description: Worker for Wayland on Ubuntu 22.04
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 100
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-wayland
+- id: gecko-t/t-linux-2404-headless-alpha
+  provider_id: fxci-level1-gcp
+  description: Workers running Ubuntu 24.04. Used by RelSRE to qualify images.
+  image: ubuntu-2404-headless-alpha
+  max_capacity: 10
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  worker_config:
+    genericWorker:
+      config:
+        cleanUpTaskDirs: true
+        disableReboots: false
+        ed25519SigningKeyLocation: /etc/generic-worker/ed25519_key
+        enableD2G: true
+        enableInteractive: true
+        headlessTasks: true
+        idleTimeoutSecs: 300
+        livelogExecutable: /usr/local/bin/livelog
+        numberOfTasksToRun: 0
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
+        taskclusterProxyPort: 80
+        wstAudience: firefoxcitc
+- id: gecko-t/t-linux-2404-relsre
+  provider_id: fxci-level1-gcp
+  description: Workers running Ubuntu 24.04. Used by RelSRE to qualify images.
+  image: relsre-gw-fxci-gcp-2404-amd64-alpha
+  max_capacity: 10
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-headless
+- id: gecko-t/t-linux-2404-wayland
+  provider_id: fxci-level1-gcp
+  description: Worker for Wayland on Ubuntu 24.04
+  image: ubuntu-2404-wayland
+  max_capacity: 100
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-headless
+- id: gecko-t/t-linux-2404-wayland-relsre
+  provider_id: fxci-level1-gcp
+  description: Workers for Wayland on Ubuntu 24.04. Used by RelSRE to qualify images.
+  image: relsre-gw-fxci-gcp-2404-amd64-gui-alpha
+  max_capacity: 10
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-headless
+- id: gecko-t/t-linux-2404-wayland-snap
+  provider_id: fxci-level1-gcp
+  description: Worker for Wayland on Ubuntu 24.04
+  image: ubuntu-2404-wayland
+  max_capacity: 100
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-headless
+- id: gecko-t/t-linux-kvm-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 400
+  machine_type: n2-standard-8
+  disks: boot-75gb+ssd
+  advanced_machine_features:
+    enableNestedVirtualization: true
+  template: dw-docker-config
+- id: gecko-t/t-linux-kvm-gcp-bug1862675
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 400
+  machine_type: c2-standard-8
+  disks: boot-75gb+ssd
+  advanced_machine_features:
+    enableNestedVirtualization: true
+  template: dw-docker-config
+- id: gecko-t/t-linux-kvm-noscratch-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 800
+  machine_type: n2-standard-8
+  disks: boot-75gb
+  advanced_machine_features:
+    enableNestedVirtualization: true
+  template: dw-docker-config
+- id: gecko-t/t-linux-kvm-noscratch-gcp-bug1862675
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 400
+  machine_type: c2-standard-8
+  disks: boot-75gb
+  advanced_machine_features:
+    enableNestedVirtualization: true
+  template: dw-docker-config
+- id: gecko-t/t-linux-large-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 2500
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: gecko-t/t-linux-large-hostub2204-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-relops528
+  max_capacity: 200
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+- id: gecko-t/t-linux-large-noscratch-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 2500
+  machine_type: c2-standard-4
+  disks: boot-75gb
+- id: gecko-t/t-linux-vm-2204-wayland
+  provider_id: fxci-level1-gcp
+  description: Worker for testing Wayland and XWayland on Ubuntu 22.04
+  image: handbuilt-ubuntu-2204-wayland-vm
+  max_capacity: 500
+  implementation: generic-worker
+  machine_type: n2-standard-2
+  disks: boot-60gb
+  advanced_machine_features:
+    enableNestedVirtualization: true
+  template: gcp-gw-wayland-2
+- id: gecko-t/t-linux-vm-2204-wayland-snap
+  provider_id: fxci-level1-gcp
+  description: Worker for testing Wayland and XWayland on Ubuntu 22.04
+  image: handbuilt-ubuntu-2204-wayland-vm
+  max_capacity: 500
+  implementation: generic-worker
+  machine_type: n2-standard-2
+  disks: boot-60gb
+  advanced_machine_features:
+    enableNestedVirtualization: true
+  template: gcp-gw-wayland-2
+- id: gecko-t/t-linux-xlarge-2204-wayland
+  provider_id: fxci-level1-gcp
+  description: Worker for Wayland on Ubuntu 22.04
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 100
+  implementation: generic-worker
+  machine_type: c2-standard-8
+  disks: boot-60gb
+  template: gcp-gw-wayland
+- id: gecko-t/t-linux-xlarge-2404-wayland
+  provider_id: fxci-level1-gcp
+  description: Worker for Wayland on Ubuntu 24.04
+  image: ubuntu-2404-wayland
+  max_capacity: 100
+  implementation: generic-worker
+  machine_type: c2-standard-8
+  disks: boot-60gb
+  template: gcp-gw-headless
+- id: gecko-t/t-linux-xlarge-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 2500
+  machine_type: n2-standard-4
+  disks: boot-75gb+ssd
+- id: gecko-t/t-linux-xlarge-gcp-b1862675
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 2500
+  machine_type: c2-standard-8
+  disks: boot-75gb+ssd
+- id: gecko-t/t-linux-xlarge-noscratch-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 2500
+  machine_type: n2-standard-4
+  disks: boot-75gb
+- id: gecko-t/t-linux-xlarge-ns-gcp-b1862675
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 2500
+  machine_type: c2-standard-8
+  disks: boot-75gb
+- id: gecko-t/t-linux-xlarge-source-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 200
+  machine_type: n2-standard-4
+  disks: boot-75gb+ssd
+- id: gecko-t/t-linux-xlarge-source-gcp-b1862675
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 200
+  machine_type: c2-standard-8
+  disks: boot-75gb+ssd
+- id: gecko-t/t-linux-xlarge-source-noscratch-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 200
+  machine_type: n2-standard-4
+  disks: boot-75gb
+- id: gecko-t/t-linux-xlarge-source-ns-gcp-b1862675
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 200
+  machine_type: c2-standard-8
+  disks: boot-75gb
+- id: gecko-t/win10-64-2009
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win10-64-2009
+    os_sku: win10-22h2-avd
+    deployment_id: '8346140'
+  locations:
+  - canada-central
+  - central-india
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  - west-us-3
+  - north-central-us
+  - central-us
+  - north-europe
+  - south-india
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 600
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win10-64-2009
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win10-64-2009-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win10-64-2009
+    os_sku: win10-22h2-avd
+    deployment_id: alpha
+  locations:
+  - uk-west
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win10-64-2009-alpha
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win10-64-2009-gpu
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win10-64-2009
+    os_sku: win10-22h2-avd
+    deployment_id: '8346140'
+  locations:
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  vm_sizes:
+  - Standard_NV12s_v3
+  max_capacity: 100
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win10-64-2009-gpu
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win10-64-2009-gpu-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win10-64-2009
+    os_sku: win10-22h2-avd
+    deployment_id: alpha
+  locations:
+  - uk-south
+  vm_sizes:
+  - Standard_NV12s_v3
+  max_capacity: 100
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win10-64-2009-gpu-alpha
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win10-64-2009-source
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win10-64-2009
+    os_sku: win10-22h2-avd
+    deployment_id: '8346140'
+  locations:
+  - canada-central
+  - central-india
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  - west-us-3
+  - north-central-us
+  - central-us
+  - north-europe
+  - south-india
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 100
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win10-64-2009-source
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win10-64-2009-source-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win10-64-2009
+    os_sku: win10-22h2-avd
+    deployment_id: alpha
+    location_overrides:
+      west-us-2: win10-64-2009-westus-win10-22h2-avd-alpha
+  locations:
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  - north-central-us
+  - central-us
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 100
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win10-64-2009-source-alpha
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win11-64-2009
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win11-64-2009
+    os_sku: win11-22h2-avd
+    deployment_id: db0c108
+  locations:
+  - canada-central
+  - central-india
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  - west-us-3
+  - north-central-us
+  - central-us
+  - north-europe
+  - south-india
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 1200
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-2009
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: cloud_windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win11-64-2009-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win11-64-2009
+    os_sku: win11-22h2-avd
+    deployment_id: alpha
+  locations:
+  - uk-south
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-2009-alpha
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: cloud_windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win11-64-2009-alpha-test
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win11-64-2009
+    os_sku: win11-22h2-avd
+    deployment_id: 69a7ecf
+  locations:
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 100
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: Z:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: Z:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 5400
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: Z:\
+        workerType: win11-64-2009-alpha
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  data_disks:
+  - createOption: Empty
+    diskSizeGB: 30
+    lun: 0
+    managedDisk:
+      storageAccountType: StandardSSD_LRS
+  os_disk:
+    createOption: FromImage
+    osType: Windows
+- id: gecko-t/win11-64-2009-gpu
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win11-64-2009
+    os_sku: win11-22h2-avd
+    deployment_id: db0c108
+  locations:
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  vm_sizes:
+  - Standard_NV12s_v3
+  max_capacity: 600
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-2009-gpu
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: cloud_windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win11-64-2009-gpu-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win11-64-2009
+    os_sku: win11-22h2-avd
+    deployment_id: alpha
+  locations:
+  - west-us
+  - west-us-2
+  vm_sizes:
+  - Standard_NV12s_v3
+  max_capacity: 100
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-2009-gpu-alpha
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: cloud_windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win11-64-2009-source
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win11-64-2009
+    os_sku: win11-22h2-avd
+    deployment_id: db0c108
+  locations:
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  - north-central-us
+  - central-us
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 100
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-2009-source
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: cloud_windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win11-64-2009-source-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win11-64-2009
+    os_sku: win11-22h2-avd
+    deployment_id: alpha
+  locations:
+  - uk-south
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 100
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-2009-source-alpha
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: cloud_windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win11-64-2009-ssd
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win11-64-2009
+    os_sku: win11-22h2-avd
+    deployment_id: db0c108
+  locations:
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  - north-central-us
+  - central-us
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 100
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-2009-ssd
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: cloud_windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win11-64-2009-ssd-gpu
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win11-64-2009
+    os_sku: win11-22h2-avd
+    deployment_id: db0c108
+  locations:
+  - north-europe
+  - east-us
+  - east-us-2
+  vm_sizes:
+  - Standard_NV12s_v3
+  max_capacity: 100
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-2009-ssd-gpu
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: cloud_windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win11-64-24h2
+  provider_id: azure2
+  description: ''
+  image:
+    type: gallery
+    resource_group: rg-packer-worker-images
+    gallery: win11_a64_24h2
+    image: win11_a64_24h2
+    version: 1.0.0
+    deployment_id: '8346140'
+  locations:
+  - canada-central
+  - central-india
+  - east-us
+  - east-us-2
+  - west-us
+  - west-us-2
+  - west-us-3
+  - north-central-us
+  - central-us
+  - north-europe
+  - south-india
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-24h2
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win11-64-24h2-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: gallery
+    resource_group: rg-packer-worker-images
+    gallery: win11_64_24h2_alpha
+    image: win11_64_24h2_alpha
+    version: 1.0.0
+    deployment_id: alpha
+  locations:
+  - uk-south
+  vm_sizes:
+  - Standard_F8s_v2
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: D:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: D:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: D:\
+        workerType: win11-64-24h2-alpha
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    caching: ReadOnly
+    createOption: FromImage
+    diffDiskSettings:
+      option: Local
+    osType: Windows
+- id: gecko-t/win11-a64-24h2
+  provider_id: azure2
+  description: ''
+  image:
+    type: gallery
+    resource_group: rg-packer-worker-images
+    gallery: win11_a64_24h2_tester
+    image: win11_a64_24h2_tester
+    version: 1.0.0
+    deployment_id: a03478d
+  locations:
+  - east-us-2
+  - north-central-us
+  - central-us
+  vm_sizes:
+  - Standard_D8ps_v5
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: C:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: C:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: C:\
+        workerType: win11-a64-24h2
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: cloud_windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    createOption: FromImage
+    osType: Windows
+- id: gecko-t/win11-a64-24h2-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: gallery
+    resource_group: rg-packer-worker-images
+    gallery: win11_a64_24h2_tester_alpha
+    image: win11_a64_24h2_tester_alpha
+    version: 1.0.0
+    deployment_id: alpha
+  locations:
+  - east-us-2
+  - north-central-us
+  - central-us
+  vm_sizes:
+  - Standard_D8ps_v5
+  max_capacity: 500
+  owner: relops-azure-provisioning@mozilla.com
+  worker_config:
+    genericWorker:
+      config:
+        cachesDir: C:\caches
+        cleanUpTaskDirs: true
+        disableReboots: false
+        downloadsDir: C:\downloads
+        ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+        idleTimeoutSecs: 150
+        livelogExecutable: C:\generic-worker\livelog.exe
+        numberOfTasksToRun: 0
+        provisionerId: gecko-t
+        runAfterUserCreation: C:\generic-worker\task-user-init.cmd
+        runTasksAsCurrentUser: false
+        sentryProject: generic-worker
+        shutdownMachineOnIdle: true
+        shutdownMachineOnInternalError: true
+        taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+        taskclusterProxyPort: 80
+        tasksDir: C:\
+        workerType: win11-a64-24h2-alpha
+        wstAudience: firefoxcitc
+  tags:
+    sourceBranch: windows
+    sourceOrganisation: mozilla-platform-ops
+    sourceRepository: ronin_puppet
+    sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+  os_profile:
+    windowsConfiguration:
+      enableAutomaticUpdates: false
+      timeZone: UTC
+  diagnostics_profile:
+    bootDiagnostics:
+      enabled: false
+  os_disk:
+    createOption: FromImage
+    osType: Windows
+- id: glean-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: glean-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  min_capacity: 1
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+  template: dw-custom
+- id: glean-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: glean-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: glean-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: glean-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: infra/build-decision
+  provider_id: fxci-level1-gcp
+  description: Worker for firefox-ci automation.
+  image: monopacker-docker-worker-current
+  max_capacity: 4
+  min_capacity: 1
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 8
+  worker_config:
+    shutdown:
+      afterIdleSeconds: 86400
+      enabled: true
+- id: mobile-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 50
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: mobile-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  min_capacity: 1
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+  template: dw-custom
+- id: mobile-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: mobile-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 50
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: mobile-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: mobile-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: mozilla-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: mozilla-1/b-win2022
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2022
+- id: mozilla-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  min_capacity: 1
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+  template: dw-custom
+- id: mozilla-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: mozilla-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: mozilla-3/b-win2022
+  provider_id: azure_trusted
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: trusted-win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2022
+- id: mozilla-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: mozilla-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: mozilla-t/t-linux-2204-wayland
+  provider_id: fxci-level1-gcp
+  description: Worker for Wayland on Ubuntu 22.04
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 100
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-wayland
+- id: mozilla-t/t-linux-2404-wayland
+  provider_id: fxci-level1-gcp
+  description: Worker for Wayland on Ubuntu 24.04
+  image: ubuntu-2404-wayland
+  max_capacity: 100
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-headless
+- id: mozilla-t/t-linux-large-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: mozilla-t/t-linux-large-noscratch-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-75gb
+- id: mozillaonline-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  machine_type: c2-standard-16
+  disks: boot-20gb+ssd+ssd
+- id: mozillaonline-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  machine_type: c2-standard-16
+  disks: boot-20gb+ssd+ssd
+- id: mozillavpn-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: mozillavpn-1/b-linux-gcp-gw
+  provider_id: fxci-level1-gcp
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 10
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-linux
+- id: mozillavpn-1/b-linux-large-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  machine_type: n2-custom-32-73728
+  disks: boot-20gb+ssd+ssd+ssd+ssd
+- id: mozillavpn-1/b-win2022
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  worker_purpose: vpn-1
+  template: azure-win2022
+- id: mozillavpn-1/b-win2022-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: alpha
+  locations:
+  - central-us
+  - north-central-us
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  worker_purpose: vpn-1
+  template: azure-win2022
+- id: mozillavpn-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  min_capacity: 1
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+  template: dw-custom
+- id: mozillavpn-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: mozillavpn-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: mozillavpn-3/b-linux-gcp-gw
+  provider_id: fxci-level3-gcp
+  image: monopacker-ubuntu-2204-wayland
+  max_capacity: 10
+  implementation: generic-worker
+  machine_type: c2-standard-4
+  disks: boot-60gb
+  template: gcp-gw-linux
+- id: mozillavpn-3/b-linux-large-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  machine_type: n2-custom-32-73728
+  disks: boot-20gb+ssd+ssd+ssd+ssd
+- id: mozillavpn-3/b-win2022
+  provider_id: azure_trusted
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: trusted-win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  worker_purpose: vpn-3
+  template: azure-win2022
+- id: mozillavpn-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: mozillavpn-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: nss-1/b-win2012-azure
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2012r2-64-vs-py2-l1
+    os_sku: 2012-R2-Datacenter
+    deployment_id: 7aa76c6
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2012
+- id: nss-1/b-win2012-azure-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2012r2-64-vs-py2-l1
+    os_sku: 2012-R2-Datacenter
+    deployment_id: alpha
+  locations:
+  - central-us
+  - north-central-us
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2012
+- id: nss-1/b-win2022-alpha
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: alpha
+  locations:
+  - central-us
+  - north-central-us
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2022
+- id: nss-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: nss-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: nss-1/linux-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-current
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: nss-3/b-win2012-azure
+  provider_id: azure_trusted
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: trusted-win2012r2-64-vs-py2-l3
+    os_sku: 2012-R2-Datacenter
+    deployment_id: 7aa76c6
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 25
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2012
+- id: nss-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: nss-3/linux-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: nss-t/t-linux-xlarge-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 100
+  machine_type: n2-standard-4
+  disks: boot-75gb+ssd
+- id: nss-t/t-linux-xlarge-noscratch-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-gcp-current
+  max_capacity: 100
+  machine_type: n2-standard-4
+  disks: boot-75gb
+- id: releng-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: releng-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: releng-1/linux-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: releng-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: releng-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: releng-3/linux-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: releng-t/linux-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: relops-1/b-win2022
+  provider_id: azure2
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - north-central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 12
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2022
+- id: relops-3/b-win2022
+  provider_id: azure_trusted
+  description: ''
+  image:
+    type: location
+    resource_group: rg-packer-through-cib
+    name_prefix: trusted-win2022-64-2009
+    os_sku: 2022-datacenter-azure-edition
+    deployment_id: '8346140'
+  locations:
+  - central-us
+  - east-us-2
+  - west-us-2
+  vm_sizes:
+  - Standard_F32s_v2
+  max_capacity: 12
+  owner: relops-azure-provisioning@mozilla.com
+  template: azure-win2022
+- id: relops-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: scriptworker-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: scriptworker-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: scriptworker-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: scriptworker-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: scriptworker-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: scriptworker-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: taskgraph-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: taskgraph-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: taskgraph-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: taskgraph-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: taskgraph-t/linux-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for gecko-based automation.
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+- id: translations-1/b-linux-large-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox Translations automation.
+  image: monopacker-docker-worker-current
+  max_capacity: 1000
+  machine_type: n2-custom-32-262144
+  disks: boot-20gb+ssd+ssd+ssd+ssd
+- id: translations-1/b-linux-large-gcp-1tb-32-256
+  provider_id: fxci-level1-gcp
+  description: Preemptible VM workers with 1 TB of disk space, 32 vCPUs, and 256 GiB of RAM. Intended for Firefox Translations
+    only.
+  image: monopacker-docker-worker-current
+  max_capacity: 1000
+  machine_type: n2-custom-32-262144
+  disks: boot-1024gb
+- id: translations-1/b-linux-large-gcp-1tb-32-256-d2g
+  provider_id: fxci-level1-gcp
+  description: Preemptible VM workers with 1 TB of disk space, 32 vCPUs, and 256 GiB of RAM. Intended for Firefox Translations
+    only.
+  image: ubuntu-2404-headless-alpha
+  max_capacity: 1000
+  implementation: generic-worker
+  machine_type: n2-custom-32-262144
+  disks: boot-1024gb
+  template: gcp-gw-translations
+- id: translations-1/b-linux-large-gcp-1tb-32-256-standard
+  provider_id: fxci-level1-gcp
+  description: Standard VM workers with 1 TB of disk space, 32 vCPUs, and 256 GiB of RAM. Intended for Firefox Translations
+    only.
+  image: monopacker-docker-worker-current
+  max_capacity: 16
+  scheduling: standard
+  machine_type: n2-custom-32-262144
+  disks: boot-1024gb
+- id: translations-1/b-linux-large-gcp-1tb-32-256-std-d2g
+  provider_id: fxci-level1-gcp
+  description: Standard VM workers with 1 TB of disk space, 32 vCPUs, and 256 GiB of RAM. Intended for Firefox Translations
+    only.
+  image: ubuntu-2404-headless-alpha
+  max_capacity: 16
+  implementation: generic-worker
+  scheduling: standard
+  machine_type: n2-custom-32-262144
+  disks: boot-1024gb
+  template: gcp-gw-translations
+- id: translations-1/b-linux-large-gcp-1tb-64-512
+  provider_id: fxci-level1-gcp
+  description: Preemptible VM workers with 1 TB of disk space, 64 vCPUs, and 512 GiB of RAM. Intended for Firefox Translations
+    only.
+  image: monopacker-docker-worker-current
+  max_capacity: 1000
+  machine_type: n2-custom-64-524288
+  disks: boot-1024gb
+- id: translations-1/b-linux-large-gcp-1tb-64-512-d2g
+  provider_id: fxci-level1-gcp
+  description: Preemptible VM workers with 1 TB of disk space, 64 vCPUs, and 512 GiB of RAM. Intended for Firefox Translations
+    only.
+  image: ubuntu-2404-headless-alpha
+  max_capacity: 1000
+  implementation: generic-worker
+  machine_type: n2-custom-64-524288
+  disks: boot-1024gb
+  template: gcp-gw-translations
+- id: translations-1/b-linux-large-gcp-1tb-64-512-standard
+  provider_id: fxci-level1-gcp
+  description: Standard VM workers with 1 TB of disk space, 64 vCPUs, and 512 GiB of RAM. Intended for Firefox Translations
+    only.
+  image: monopacker-docker-worker-current
+  max_capacity: 8
+  scheduling: standard
+  machine_type: n2-custom-64-524288
+  disks: boot-1024gb
+- id: translations-1/b-linux-large-gcp-1tb-64-512-std-d2g
+  provider_id: fxci-level1-gcp
+  description: Standard VM workers with 1 TB of disk space, 64 vCPUs, and 512 GiB of RAM. Intended for Firefox Translations
+    only.
+  image: ubuntu-2404-headless-alpha
+  max_capacity: 8
+  implementation: generic-worker
+  scheduling: standard
+  machine_type: n2-custom-64-524288
+  disks: boot-1024gb
+  template: gcp-gw-translations
+- id: translations-1/b-linux-large-gcp-300gb
+  provider_id: fxci-level1-gcp
+  description: Big workers with big disks - intended for Firefox Translations only
+  image: monopacker-docker-worker-current
+  max_capacity: 1000
+  machine_type: n2-custom-32-262144
+  disks: boot-300gb
+- id: translations-1/b-linux-large-gcp-d2g
+  provider_id: fxci-level1-gcp
+  description: Workers using generic-worker on Linux with D2G capability.
+  image: ubuntu-2404-headless-alpha
+  max_capacity: 1000
+  implementation: generic-worker
+  machine_type: n2-custom-32-262144
+  disks: boot-60gb
+  template: gcp-gw-translations
+- id: translations-1/b-linux-large-gcp-d2g-1tb
+  provider_id: fxci-level1-gcp
+  description: Big workers with big disks - intended for Firefox Translations only
+  image: ubuntu-2404-headless-alpha
+  max_capacity: 1000
+  implementation: generic-worker
+  machine_type: n2-custom-32-262144
+  disks: boot-1024gb
+  template: gcp-gw-translations
+- id: translations-1/b-linux-large-gcp-d2g-1tb-standard
+  provider_id: fxci-level1-gcp
+  description: Big workers with big disks - intended for Firefox Translations only
+  image: ubuntu-2404-headless-alpha
+  max_capacity: 1000
+  implementation: generic-worker
+  scheduling: standard
+  machine_type: n2-custom-32-262144
+  disks: boot-1024gb
+  template: gcp-gw-translations
+- id: translations-1/b-linux-large-gcp-d2g-300gb
+  provider_id: fxci-level1-gcp
+  description: Big workers with big disks - intended for Firefox Translations only
+  image: ubuntu-2404-headless-alpha
+  max_capacity: 1000
+  implementation: generic-worker
+  machine_type: n2-custom-32-262144
+  disks: boot-300gb
+  template: gcp-gw-translations
+- id: translations-1/b-linux-v100-gpu
+  provider_id: fxci-level1-gcp
+  description: Worker for machine learning and other high GPU tasks
+  image: monopacker-translations-worker
+  max_capacity: 200
+  implementation: generic-worker
+  regions:
+  - us-central1
+  - us-west1
+  - us-east1
+  min_cpu_platform: Intel Skylake
+  machine_type: n1-highmem-8
+  disks: boot-75gb
+  guest_accelerators:
+  - type: nvidia-tesla-v100
+    count: 1
+  template: gcp-gw-translations-2
+- id: translations-1/b-linux-v100-gpu-4
+  provider_id: fxci-level1-gcp
+  description: Worker for machine learning and other high GPU tasks
+  image: monopacker-translations-worker
+  max_capacity: 128
+  implementation: generic-worker
+  regions:
+  - us-central1
+  - us-west1
+  - us-east1
+  - europe-west4
+  min_cpu_platform: Intel Skylake
+  machine_type: n1-highmem-8
+  disks: boot-75gb
+  guest_accelerators:
+  - type: nvidia-tesla-v100
+    count: 4
+  template: gcp-gw-translations-2
+- id: translations-1/b-linux-v100-gpu-4-1tb
+  provider_id: fxci-level1-gcp
+  description: Worker for machine learning and other high GPU tasks
+  image: monopacker-translations-worker
+  max_capacity: 128
+  implementation: generic-worker
+  regions:
+  - us-central1
+  - us-west1
+  - us-east1
+  - europe-west4
+  min_cpu_platform: Intel Skylake
+  machine_type: n1-custom-40-262144
+  disks: boot-1024gb
+  guest_accelerators:
+  - type: nvidia-tesla-v100
+    count: 4
+  template: gcp-gw-translations-2
+- id: translations-1/b-linux-v100-gpu-4-1tb-standard
+  provider_id: fxci-level1-gcp
+  description: Worker for machine learning tasks that require standard VMs
+  image: monopacker-translations-worker
+  max_capacity: 50
+  implementation: generic-worker
+  scheduling: standard
+  min_cpu_platform: Intel Skylake
+  machine_type: n1-custom-40-262144
+  disks: boot-1024gb
+  guest_accelerators:
+  - type: nvidia-tesla-v100
+    count: 4
+  template: gcp-gw-translations-2
+- id: translations-1/b-linux-v100-gpu-4-2tb
+  provider_id: fxci-level1-gcp
+  description: Worker for machine learning and other high GPU tasks
+  image: monopacker-translations-worker
+  max_capacity: 128
+  implementation: generic-worker
+  regions:
+  - us-central1
+  - us-west1
+  - us-east1
+  - europe-west4
+  min_cpu_platform: Intel Skylake
+  machine_type: n1-custom-40-262144
+  disks: boot-2048gb
+  guest_accelerators:
+  - type: nvidia-tesla-v100
+    count: 4
+  template: gcp-gw-translations-2
+- id: translations-1/b-linux-v100-gpu-4-300gb
+  provider_id: fxci-level1-gcp
+  description: Worker for machine learning and other high GPU tasks
+  image: monopacker-translations-worker
+  max_capacity: 128
+  implementation: generic-worker
+  regions:
+  - us-central1
+  - us-west1
+  - us-east1
+  - europe-west4
+  min_cpu_platform: Intel Skylake
+  machine_type: n1-custom-40-262144
+  disks: boot-300gb
+  guest_accelerators:
+  - type: nvidia-tesla-v100
+    count: 4
+  template: gcp-gw-translations-2
+- id: translations-1/b-linux-v100-gpu-4-300gb-standard
+  provider_id: fxci-level1-gcp
+  description: Worker for machine learning tasks that require standard VMs
+  image: monopacker-translations-worker
+  max_capacity: 50
+  implementation: generic-worker
+  scheduling: standard
+  min_cpu_platform: Intel Skylake
+  machine_type: n1-custom-40-262144
+  disks: boot-300gb
+  guest_accelerators:
+  - type: nvidia-tesla-v100
+    count: 4
+  template: gcp-gw-translations-2
+- id: translations-1/b-linux-v100-gpu-d2g-4
+  provider_id: fxci-level1-gcp
+  description: Worker for machine learning and other high GPU tasks
+  image: ubuntu-2404-headless-alpha
+  max_capacity: 128
+  implementation: generic-worker
+  regions:
+  - us-central1
+  - us-west1
+  - us-east1
+  - europe-west4
+  min_cpu_platform: Intel Skylake
+  machine_type: n1-highmem-8
+  disks: boot-75gb
+  guest_accelerators:
+  - type: nvidia-tesla-v100
+    count: 4
+  template: gcp-gw-translations
+- id: translations-1/b-linux-v100-gpu-d2g-4-300gb
+  provider_id: fxci-level1-gcp
+  description: Worker for machine learning and other high GPU tasks
+  image: ubuntu-2404-headless-alpha
+  max_capacity: 128
+  implementation: generic-worker
+  regions:
+  - us-central1
+  - us-west1
+  - us-east1
+  - europe-west4
+  min_cpu_platform: Intel Skylake
+  machine_type: n1-custom-40-262144
+  disks: boot-300gb
+  guest_accelerators:
+  - type: nvidia-tesla-v100
+    count: 4
+  template: gcp-gw-translations
+- id: translations-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: translations-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: xpi-1/b-linux-gcp
+  provider_id: fxci-level1-gcp
+  image: monopacker-docker-worker-current
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: xpi-1/decision-gcp
+  provider_id: fxci-level1-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: xpi-1/images-gcp
+  provider_id: fxci-level1-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-current
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
+- id: xpi-3/b-linux-gcp
+  provider_id: fxci-level3-gcp
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 100
+  machine_type: c2-standard-4
+  disks: boot-20gb+ssd
+- id: xpi-3/decision-gcp
+  provider_id: fxci-level3-gcp
+  description: Worker for Firefox automation
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: n2-standard-2
+  disks: boot-75gb+ssd
+  capacity_per_instance: 2
+- id: xpi-3/images-gcp
+  provider_id: fxci-level3-gcp
+  description: 'Builds docker images; NOTE: capacity set to 1 instead of 3 to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
+  image: monopacker-docker-worker-trusted-current-gcp
+  max_capacity: 10
+  email_on_error: false
+  machine_type: c2-standard-4
+  disks: boot-75gb+ssd
+  worker_config:
+    dindImage: taskcluster/dind-service:v4.1
