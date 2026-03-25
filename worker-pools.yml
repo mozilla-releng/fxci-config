@@ -348,7 +348,7 @@ pools:
       instance_types:
         - disks:
             - *persistent-disk-75gb
-          machine_type: g1-small
+          machine_type: n1-highcpu-2
   - pool_id: '{pool-group}/b-linux'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
