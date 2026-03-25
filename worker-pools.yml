@@ -3027,7 +3027,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows-builder
       worker-purpose: nss-1
-      locations: [central-us, north-central-us]
+      locations: [central-india, central-us, north-central-us]
       maxCapacity: 25
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3074,7 +3074,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows-builder
       worker-purpose: vpn-1
-      locations: [central-us, north-central-us]
+      locations: [central-india, central-us, north-central-us]
       maxCapacity: 25
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3150,9 +3150,9 @@ pools:
       locations:
         by-suffix:
           alpha: [uk-south]
-          source-alpha: [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
-          gpu-alpha: [uk-south]
-          gpu: [east-us, east-us-2, west-us, west-us-2]
+          source-alpha: [uk-south, west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+          gpu-alpha: [west-us-3, uk-south]
+          gpu: [west-us-3, east-us, east-us-2, west-us, west-us-2]
           default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
       maxCapacity:
         by-suffix:
@@ -3212,23 +3212,23 @@ pools:
           by-vmSize:
             Standard_F8s_v2:
               by-location:
-                central-india: 1
                 west-us-3: 1
-                north-central-us: 1
-                south-india: 0.9
-                central-us: 0.8
-                north-europe: 0.7
-                canada-central: 0.6
-                west-us-2: 0.6
+                north-central-us: 0.95
+                central-india: 0.95
+                south-india: 0.8
+                canada-central: 0.7
+                central-us: 0.6
+                west-us-2: 0.5
                 east-us: 0.5
+                north-europe: 0.4
                 west-us: 0.4
-                east-us-2: 0.4
+                east-us-2: 0.3
                 default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
-                east-us: 1
-                west-us-2: 1
                 west-us-3: 1
+                east-us: 1
+                west-us-2: 0.8
                 east-us-2: 0.8
                 default: 0.5
             default: 1
@@ -3628,14 +3628,14 @@ pools:
         by-pool-group:
           comm-t:
             by-suffix:
-              ssd: [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+              ssd: [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
               (source-)?alpha: [uk-south]
-              (webgpu|gpu): [east-us, east-us-2, west-us, west-us-2]
-              .*gpu-alpha: [west-us, west-us-2]
-              (ssd|source): [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+              (webgpu|gpu): [west-us-3, east-us, east-us-2, west-us, west-us-2]
+              .*gpu-alpha: [west-us-3, west-us, west-us-2]
+              (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
               default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
       maxCapacity:
@@ -3719,23 +3719,23 @@ pools:
           by-vmSize:
             Standard_F8s_v2:
               by-location:
-                central-india: 1
                 west-us-3: 1
-                north-central-us: 1
-                south-india: 0.9
-                central-us: 0.8
-                north-europe: 0.7
-                canada-central: 0.6
-                west-us-2: 0.6
+                north-central-us: 0.95
+                central-india: 0.95
+                south-india: 0.8
+                canada-central: 0.7
+                central-us: 0.6
+                west-us-2: 0.5
                 east-us: 0.5
+                north-europe: 0.4
                 west-us: 0.4
-                east-us-2: 0.4
+                east-us-2: 0.3
                 default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
-                east-us: 1
-                west-us-2: 1
                 west-us-3: 1
+                east-us: 1
+                west-us-2: 0.8
                 east-us-2: 0.8
                 default: 0.5
             Standard_E8ads_v6:
@@ -3863,14 +3863,14 @@ pools:
         by-pool-group:
           comm-t:
             by-suffix:
-              ssd: [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+              ssd: [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
               (source-)?alpha: [uk-south]
-              (webgpu|gpu): [east-us, east-us-2, west-us, west-us-2]
-              .*gpu-alpha: [west-us, west-us-2]
-              (ssd|source): [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+              (webgpu|gpu): [west-us-3, east-us, east-us-2, west-us, west-us-2]
+              .*gpu-alpha: [west-us-3, west-us, west-us-2]
+              (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
               default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
       maxCapacity:
@@ -3946,23 +3946,23 @@ pools:
           by-vmSize:
             Standard_F8s_v2:
               by-location:
-                central-india: 1
                 west-us-3: 1
-                north-central-us: 1
-                south-india: 0.9
-                central-us: 0.8
-                north-europe: 0.7
-                canada-central: 0.6
-                west-us-2: 0.6
+                north-central-us: 0.95
+                central-india: 0.95
+                south-india: 0.8
+                canada-central: 0.7
+                central-us: 0.6
+                west-us-2: 0.5
                 east-us: 0.5
+                north-europe: 0.4
                 west-us: 0.4
-                east-us-2: 0.4
+                east-us-2: 0.3
                 default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
-                east-us: 1
-                west-us-2: 1
                 west-us-3: 1
+                east-us: 1
+                west-us-2: 0.8
                 east-us-2: 0.8
                 default: 0.5
             Standard_E8ads_v6:
@@ -3979,7 +3979,7 @@ pools:
       image: win116425h2alpha
       image_resource_group: rg-packer-worker-images
       implementation: generic-worker/windows
-      locations: [uk-south]
+      locations: [central-india, uk-south]
       maxCapacity: 250
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-v6-nvme/versions/1.0
