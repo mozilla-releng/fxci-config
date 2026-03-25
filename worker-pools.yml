@@ -334,6 +334,22 @@ pools:
       worker-config:
         shutdown:
           afterIdleSeconds: 86400
+  - pool_id: infra/build-decision-alpha
+    description: Worker for firefox-ci automation.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 4
+      maxCapacity: 12
+      regions: *default-gcp-regions
+      image: ubuntu-2404-headless
+      implementation: generic-worker/linux-d2g
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-75gb
+          machine_type: g1-small
   - pool_id: '{pool-group}/b-linux'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
