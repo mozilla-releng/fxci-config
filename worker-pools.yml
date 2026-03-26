@@ -3649,7 +3649,7 @@ pools:
               alpha: 500
               gpu: 600
               default: 100
-          enterprise-t: 900
+          enterprise-t: 300
           default: 5
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3883,7 +3883,7 @@ pools:
               alpha: 500
               gpu: 600
               default: 100
-          enterprise-t: 900
+          enterprise-t: 300
           default: 5
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
