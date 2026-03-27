@@ -5,6 +5,11 @@
 
 from tcadmin.resources import Binding, Hook, Role
 
+from .ciconfig.externally_managed import (
+    get_externally_managed_patterns,
+    manage_individual,
+    manage_with_exclusions,
+)
 from .ciconfig.get import get_ciconfig_file
 from .ciconfig.hooks import Hook as HookConfig
 
@@ -16,12 +21,18 @@ async def update_resources(resources):
     """
 
     hooks = await HookConfig.fetch_all()
+    ext_patterns = await get_externally_managed_patterns()
 
-    resources.manage("Hook=.*")
-    resources.manage("Role=hook-id:.*")
+    manage_with_exclusions(resources, "Hook=.*", ext_patterns)
+    manage_with_exclusions(resources, "Role=hook-id:.*", ext_patterns)
 
     for hook in hooks:
         hook_name = f"{hook.hook_group_id}/{hook.hook_id}"
+
+        # For hooks in externally-managed namespaces, explicitly manage
+        # the individual resources we generate
+        manage_individual(resources, f"Hook={hook_name}")
+        manage_individual(resources, f"Role=hook-id:{hook_name}")
 
         task = await get_ciconfig_file(hook.template_file)
 

@@ -12,6 +12,11 @@ from tcadmin.resources import WorkerPool
 from ..util.keyed_by import evaluate_keyed_by, iter_dot_path, resolve_keyed_by
 from ..util.templates import merge
 from .ciconfig.environment import Environment
+from .ciconfig.externally_managed import (
+    get_externally_managed_patterns,
+    manage_individual,
+    manage_with_exclusions,
+)
 from .ciconfig.get import get_ciconfig_file
 from .ciconfig.worker_images import WorkerImage
 from .ciconfig.worker_pools import WorkerPool as ConfigWorkerPool
@@ -848,8 +853,9 @@ async def update_resources(resources):
     """
     worker_pools = await ConfigWorkerPool.fetch_all()
     worker_images = await WorkerImage.fetch_all()
+    ext_patterns = await get_externally_managed_patterns()
 
-    resources.manage("WorkerPool=.*")
+    manage_with_exclusions(resources, "WorkerPool=.*", ext_patterns)
 
     worker_defaults = (await get_ciconfig_file("worker-pools.yml")).get(
         "worker-defaults"
@@ -857,6 +863,10 @@ async def update_resources(resources):
     environment = await Environment.current()
 
     for wp in generate_pool_variants(worker_pools, environment):
+        # For pools in externally-managed namespaces, explicitly manage
+        # the individual resources we generate
+        manage_individual(resources, f"WorkerPool={wp.pool_id}")
+
         apwt = await make_worker_pool(
             environment, resources, wp, worker_images, copy.deepcopy(worker_defaults)
         )
