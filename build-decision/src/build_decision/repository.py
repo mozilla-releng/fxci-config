@@ -6,6 +6,7 @@ import logging
 
 import attr
 import redo
+import requests
 import yaml
 from requests.exceptions import ChunkedEncodingError, ConnectionError, SSLError
 
@@ -15,6 +16,10 @@ logger = logging.getLogger(__name__)
 
 
 class NoPushesError(Exception):
+    pass
+
+
+class RetryableError(Exception):
     pass
 
 
@@ -66,11 +71,33 @@ class Repository:
         else:
             raise Exception(f"Unknown repository_type {self.repository_type}!")
 
-        res = SESSION.get(url, headers=headers, timeout=60)
-        res.raise_for_status()
-        tcyml = res.text
+        return yaml.safe_load(self._fetch_file(url, headers, revision=revision))
 
-        return yaml.safe_load(tcyml)
+    @redo.retriable(attempts=5, sleeptime=10, retry_exceptions=(RetryableError,))
+    def _fetch_file(self, url, headers, revision=None):
+        res = SESSION.get(url, headers=headers, timeout=60)
+        try:
+            res.raise_for_status()
+        except requests.HTTPError as e:
+            if res.status_code == 404:
+                self._handle_file_not_found(e, url, revision)
+            raise
+        return res.text
+
+    def _handle_file_not_found(self, http_error, url, revision):
+        if self.repository_type == "hg" and revision:
+            try:
+                rev_res = SESSION.get(
+                    f"{self.repo_url}/json-rev/{revision}", timeout=15
+                )
+            except requests.RequestException as probe_error:
+                logger.warning("json-rev probe failed: %s", probe_error)
+            else:
+                if rev_res.status_code == 200:
+                    raise http_error
+        raise RetryableError(
+            f"Got 404 fetching {url}. The revision may not have been replicated yet."
+        )
 
     @redo.retriable(
         attempts=5,
@@ -121,12 +148,14 @@ class Repository:
                     f"Changeset {revision} is not the tip {tip_revision} of the associated push."
                 )
 
+            files = sorted({f for cs in changesets for f in cs.get("files", [])})
             return {
                 "owner": push_info["user"],
                 "pushlog_id": push_id,
                 "pushdate": push_info["date"],
                 "revision": tip_revision,
                 "base_revision": base_revision,
+                "files": files,
             }
         elif self.repository_type == "git":
             if revision:
