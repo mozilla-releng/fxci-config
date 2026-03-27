@@ -4306,7 +4306,7 @@ pools:
       implementation: "{implementation}"
       regions:
         by-suffix:
-          docker-noscratch: [us-central1, us-west1, us-east1]
+          docker-noscratch.*: [us-central1, us-west1, us-east1]
           default: *default-gcp-regions
       image:
         by-implementation:
