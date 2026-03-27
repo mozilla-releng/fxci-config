@@ -87,6 +87,70 @@
     - roles:
         - login-identity:*
 
+# repo-admin:<repo> parameterized role: administrative scopes over a GitHub
+# repo's Taskcluster roles. Assigned per-repo via assume:repo-admin:<repo>.
+- grant:
+    - assume:repo:<..>
+    - auth:create-role:repo:<..>
+    - auth:delete-role:repo:<..>
+    - auth:update-role:repo:<..>
+  to:
+    - roles:
+        - repo-admin:*
+
+# project-admin:<project> parameterized role: administrative scopes over a
+# project's Taskcluster resources. Assigned via assume:project-admin:<project>.
+- grant:
+    - assume:hook-id:project-<..>/*
+    - assume:project:<..>:*
+    - assume:worker-id:proj-<..>/*
+    - assume:worker-pool:proj-<..>/*
+    - auth:create-client:project/<..>/*
+    - auth:create-role:hook-id:project-<..>/*
+    - auth:create-role:project:<..>:*
+    - auth:delete-client:project/<..>/*
+    - auth:delete-role:hook-id:project-<..>/*
+    - auth:delete-role:project:<..>:*
+    - auth:disable-client:project/<..>/*
+    - auth:enable-client:project/<..>/*
+    - auth:reset-access-token:project/<..>/*
+    - auth:update-client:project/<..>/*
+    - auth:update-role:hook-id:project-<..>/*
+    - auth:update-role:project:<..>:*
+    - docker-worker:cache:*
+    - generic-worker:cache:*
+    - hooks:modify-hook:project-<..>/*
+    - hooks:trigger-hook:project-<..>/*
+    - index:insert-task:project.<..>.*
+    - project:<..>:*
+    - purge-cache:proj-<..>/*
+    - queue:claim-work:proj-<..>/*
+    - queue:create-task:high:proj-<..>/*
+    - queue:create-task:highest:proj-<..>/*
+    - queue:create-task:low:proj-<..>/*
+    - queue:create-task:lowest:proj-<..>/*
+    - queue:create-task:medium:proj-<..>/*
+    - queue:create-task:very-high:proj-<..>/*
+    - queue:create-task:very-low:proj-<..>/*
+    - queue:get-artifact:project/<..>/*
+    - queue:quarantine-worker:proj-<..>/*
+    - queue:rerun-task:<..>/*
+    - queue:route:index.project.<..>.*
+    - secrets:get:project/<..>/*
+    - secrets:get:worker-pool:proj-<..>/*
+    - secrets:set:project/<..>/*
+    - secrets:set:worker-pool:proj-<..>/*
+    - worker-manager:create-worker:proj-<..>/*
+    - worker-manager:manage-worker-pool:proj-<..>/*
+    - worker-manager:provider:aws
+    - worker-manager:provider:azure2
+    - worker-manager:provider:fxci-level1-gcp
+    - worker-manager:provider:null-provider
+    - worker-manager:remove-worker:proj-<..>/*
+  to:
+    - roles:
+        - project-admin:*
+
 - grant:
     - queue:claim-work:<..>
     - queue:worker-id:*

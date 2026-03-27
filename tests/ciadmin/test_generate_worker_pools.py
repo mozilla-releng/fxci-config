@@ -13,6 +13,7 @@ from ciadmin.generate.ciconfig.worker_images import WorkerImage, WorkerImages
 from ciadmin.generate.ciconfig.worker_pools import WorkerPool
 from ciadmin.generate.worker_pools import (
     _arm_deployment_resource_group,
+    generate_pool_variants,
     is_invalid_gcp_instance_type,
     make_worker_pool,
 )
@@ -565,3 +566,21 @@ def test_arm_deployment_resource_group(pool_id, loc, per_region, expected):
     assert len(result) <= 90
     if per_region:
         assert result.endswith(f"-{loc}")
+
+
+def test_variant_overrides_owner_and_email():
+    wp = WorkerPool(
+        pool_id="prov/{kind}",
+        description="{kind} pool",
+        owner="default@example.com",
+        email_on_error=True,
+        provider_id="google",
+        config={"minCapacity": 0, "maxCapacity": 1},
+        variants=[
+            {"kind": "a"},
+            {"kind": "b", "owner": "other@example.com", "email_on_error": False},
+        ],
+    )
+    a, b = generate_pool_variants([wp], "cluster")
+    assert (a.owner, a.email_on_error) == ("default@example.com", True)
+    assert (b.owner, b.email_on_error) == ("other@example.com", False)

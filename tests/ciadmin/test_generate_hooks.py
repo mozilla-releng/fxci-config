@@ -47,6 +47,16 @@ def test_substitution():
     ]
 
 
+def test_extra_scopes_per_variant():
+    hook = make_hook(
+        scopes=["queue:scheduler-id:fuzzing"],
+        variants=[{"extra_scopes": ["secrets:get:project/fuzzing/x"]}, {}],
+    )
+    with_extra, without = generate_hook_variants([hook])
+    assert "secrets:get:project/fuzzing/x" in with_extra.scopes
+    assert "secrets:get:project/fuzzing/x" not in without.scopes
+
+
 def test_multiple_variants():
     hook = make_hook(
         hook_id="my-hook-{env}",

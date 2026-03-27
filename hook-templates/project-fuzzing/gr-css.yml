@@ -1,0 +1,40 @@
+---
+provisionerId: proj-fuzzing
+schedulerId: fuzzing
+workerType: ci
+payload:
+  image:
+    type: indexed-image
+    path: public/gr-css-reports.tar.zst
+    namespace: project.fuzzing.orion.gr-css-reports.master
+  features:
+    taskclusterProxy: true
+  maxRunTime: 10800
+  artifacts:
+    project/fuzzing/gr-css:
+      path: /live.log
+      type: file
+metadata:
+  name: gr-css
+  description: Hook for updating gr.css grammar
+  owner: jkratzer@mozilla.com
+  source: 'https://github.com/MozillaSecurity/gr.css.reports'
+expires:
+  $fromNow: 1 months
+deadline:
+  $fromNow: 6 hours
+scopes:
+  - docker-worker:capability:device:hostSharedMemory
+  - docker-worker:capability:device:loopbackAudio
+  - docker-worker:capability:privileged
+  - queue:get-artifact:project/fuzzing/gr-css/*
+  - queue:route:notify.email.jkratzer@mozilla.com.on-failed
+  - queue:scheduler-id:fuzzing
+  - secrets:get:project/fuzzing/deploy-gr-css
+  - secrets:get:project/fuzzing/deploy-gr-css-generator
+  - secrets:get:project/fuzzing/deploy-gr-css-reports
+  - secrets:get:project/fuzzing/deploy-octo-private
+  - secrets:get:project/fuzzing/deploy-npm
+  - secrets:get:project/fuzzing/ci-git-token
+routes:
+  - notify.email.jkratzer@mozilla.com.on-failed
