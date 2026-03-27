@@ -1,0 +1,48 @@
+---
+provisionerId: proj-fuzzing
+schedulerId: fuzzing
+workerType: bugmon-monitor
+payload:
+  image:
+    type: indexed-image
+    path: public/bugmon.tar.zst
+    namespace: project.fuzzing.orion.bugmon.master
+  features:
+    taskclusterProxy: true
+  maxRunTime: 14400
+  env:
+    BUG_ACTION: monitor
+  artifacts:
+    project/fuzzing/bugmon:
+      path: /bugmon-artifacts
+      type: directory
+    project/fuzzing/grizzly:
+      path: /tmp/grizzly
+      type: directory
+metadata:
+  name: bugmon
+  description: Hook for triggering bugmon monitor tasks
+  owner: jkratzer@mozilla.com
+  source: 'https://github.com/MozillaSecurity/bugmon'
+expires:
+  $fromNow: 3 months
+deadline:
+  $fromNow: 6 hours
+scopes:
+  - docker-worker:capability:device:hostSharedMemory
+  - docker-worker:capability:device:loopbackAudio
+  - docker-worker:capability:disableSeccomp
+  - docker-worker:capability:privileged
+  - queue:create-task:highest:proj-fuzzing/bugmon-monitor
+  - queue:create-task:highest:proj-fuzzing/bugmon-processor
+  - queue:create-task:highest:proj-fuzzing/bugmon-processor-windows
+  - queue:create-task:highest:proj-fuzzing/bugmon-pernosco
+  - queue:get-artifact:project/fuzzing/bugmon/*
+  - queue:route:notify.email.jkratzer@mozilla.com.on-failed
+  - queue:scheduler-id:fuzzing
+  - secrets:get:project/fuzzing/bz-api-key
+  - secrets:get:project/fuzzing/pernosco-user
+  - secrets:get:project/fuzzing/pernosco-group
+  - secrets:get:project/fuzzing/pernosco-secret
+routes:
+  - notify.email.jkratzer@mozilla.com.on-failed
