@@ -3646,7 +3646,7 @@ pools:
               default: 50
           gecko-t:
             by-suffix:
-              '': 1200
+              '': 2000
               alpha: 500
               gpu: 600
               default: 100
@@ -3880,7 +3880,7 @@ pools:
               default: 50
           gecko-t:
             by-suffix:
-              '': 1200
+              '': 2000
               alpha: 500
               gpu: 600
               default: 100
