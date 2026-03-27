@@ -1906,6 +1906,8 @@
 - grant:
     - assume:hook-id:project-engwf/reviewer-assignment-infra-testing
     - hooks:modify-hook:project-engwf/reviewer-assignment-infra-testing
+    - secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing
+    - secrets:set:project/engwf/reviewer-assignment/runtime-infra-testing
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|omehani
