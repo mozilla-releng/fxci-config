@@ -1233,6 +1233,7 @@ xpi-manifest:
     - name: main
       level: 3
   trust_domain: xpi
+  lando_repo: firefox-main
   features:
     github-pull-request:
       policy: collaborators
@@ -1243,6 +1244,7 @@ xpi-manifest:
     taskgraph-cron: true
     beetmover: true
     beetmover-get-artifact-scope: true
+    lando: true
 
 staging-xpi-manifest:
   repo: https://github.com/mozilla-releng/staging-xpi-manifest
@@ -1251,6 +1253,7 @@ staging-xpi-manifest:
     - name: "*"
       level: 1
   trust_domain: xpi
+  lando_repo: staging-firefox-main
   features:
     github-pull-request:
       policy: collaborators
@@ -1261,6 +1264,7 @@ staging-xpi-manifest:
     taskgraph-cron: true
     beetmover: true
     beetmover-get-artifact-scope: true
+    lando: true
 
 staging-xpi-public:
   repo: https://github.com/mozilla-releng/staging-xpi-public
