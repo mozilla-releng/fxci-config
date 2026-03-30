@@ -234,10 +234,14 @@ project-engwf/reviewer-assignment-infra-testing:
   owner: omehani@mozilla.com
   email_on_error: true
   scopes:
-    - assume:project:taskcluster:mozilla-github-repository  # XXX: assuming this gives a suitable GITHUB_TOKEN
+    - assume:project:taskcluster:mozilla-github-repository  # XXX: not sure this is needed anymore
+    - index:insert-task:project.engwf.production.reviewer-assignment.*
     - notify:email:*
+    - queue:create-task:lowest:code-coverage/bot  # XXX: will need to change when a dedicated worker is setup (bug 2024115)
+    - queue:route:index.project.engwf.production.reviewer-assignment.latest
     - queue:route:notify.email.*
     - queue:scheduler-id:engwf
+    - secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing
   template_file: hooks/project-engwf/reviewer-assignment-infra-testing.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
@@ -267,7 +271,7 @@ project-engwf/reviewer-assignment-infra-testing:
           action:
             type: string
             description: Action on the PR
-            pattern: "^(opened|synchronize)$"
+            pattern: "^(opened|reopened|synchronize)$"
 
           pull_request:
             type: object
