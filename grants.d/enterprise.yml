@@ -87,6 +87,9 @@
     - project:
         alias: enterprise-firefox
         job: [pull-request:trusted]
+    - project:
+        alias: enterprise-firefox-try
+        job: [action:*, branch:*, cron:*, pull-request:trusted]
 
 - grant:
     - project:{trust_domain}:releng:signing:cert:nightly-signing
