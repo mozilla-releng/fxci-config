@@ -314,7 +314,7 @@ project-engwf/reviewer-assignment-infra-testing:
                 type: string
 
 
-      organisation:
+      organization:
         type: string
         pattern: "^mozilla-firefox$"
 

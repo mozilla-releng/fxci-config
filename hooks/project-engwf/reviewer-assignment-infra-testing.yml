@@ -21,7 +21,7 @@ payload:
       $eval: payload.body.pull_request.html_url
     ORG_NAME:
       # e.g., mozilla-firefox
-      $eval: payload.organisation
+      $eval: payload.organization
     REPO_NAME:
       # e.g., firefox
       $eval: payload.repository
