@@ -282,6 +282,11 @@ project/autophone/gecko-t-lambda-test-3:
     - auth:websocktunnel-token:firefoxcitc/lambda.*
     - queue:claim-work:proj-autophone/gecko-t-lambda-test-3
     - queue:worker-id:lambda/*
+project/enterprise/enterprise-console-backend/dev/artifact-access:
+  description: Static client for Firefox Enterprise to programmatically access private
+    enterprise artifacts.
+  scopes:
+    - queue:get-artifact:project/enterprise/*
 project/packet/docker-worker:
   description: ''
   scopes:
