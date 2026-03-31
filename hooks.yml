@@ -237,7 +237,7 @@ project-engwf/reviewer-assignment-infra-testing:
     - assume:project:taskcluster:mozilla-github-repository  # XXX: not sure this is needed anymore
     - index:insert-task:project.engwf.production.reviewer-assignment.*
     - notify:email:*
-    - queue:create-task:lowest:code-coverage/bot  # XXX: will need to change when a dedicated worker is setup (bug 2024115)
+    - queue:create-task:lowest:code-review/bot  # XXX: will need to change when a dedicated worker is setup (bug 2024115)
     - queue:route:index.project.engwf.production.reviewer-assignment.latest
     - queue:route:notify.email.*
     - queue:scheduler-id:engwf
