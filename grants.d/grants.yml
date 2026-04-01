@@ -1866,14 +1866,6 @@
     - roles:
         - project:relman:code-review/runtime/production
 
-# Reviewer assignment (bug 2027592)
-- grant:
-    - secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing
-  to:
-    - roles:
-        # XXX: How to determine the correct string here?
-        - project:engwf:reviewer-assignment-infra-testing/runtime/production
-
 # Non-Moco Sheriffs-basic
 # contributors in the Sheriffs group that need:
 # * retriggering and rerunning tasks on production trees
