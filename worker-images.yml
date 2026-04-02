@@ -241,3 +241,42 @@ win116424h2alpha:
     resource_group: rg-packer-worker-images
     deployment_id: alpha
     name: win116424h2alpha
+
+# Community-TC fuzzing images (shared from community-tc cloud accounts)
+# GCP images - from projects/community-tc-workers
+fuzzing-gw-ubuntu-24-04:
+  fxci-level1-gcp: projects/community-tc-workers/global/images/generic-worker-ubuntu-24-04-ovbqgpximhptjcjyfkvd
+
+fuzzing-gw-ubuntu-24-04-arm64:
+  fxci-level1-gcp: projects/community-tc-workers/global/images/generic-worker-ubuntu-24-04-arm64-obcbblwwerqeleqspxpc
+
+# AWS images - AMIs shared from community-tc AWS account
+fuzzing-docker-worker-legacy:
+  aws:
+    us-east-1: ami-0ec6d5fc54628fa9b
+    us-east-2: ami-071b3ff08f2d9c1dd
+    us-west-1: ami-03f677a21b2fadb15
+    us-west-2: ami-0de87470eb34a8e36
+
+fuzzing-gw-ubuntu-24-04-staging:
+  aws:
+    us-east-1: ami-0afcb836d0b81a957
+
+# Azure images - shared from community-tc Azure subscription
+# NOTE: version=NA means location-specific image names are used
+fuzzing-gw-win2022-gpu:
+  azure2:
+    version: NA
+    resource_group: rg-tc-eng-images
+    deployment_id: fuzzing
+    sbom: false
+    west-us-2: imageset-esqhtdkwylqgrqxjopqa-westus2
+
+fuzzing-gw-win2022:
+  azure2:
+    version: NA
+    resource_group: rg-tc-eng-images
+    deployment_id: fuzzing
+    sbom: false
+    central-us: imageset-kfdvxgyidelhcvdaaymp-centralus
+    east-us: imageset-qwgfwxeqgaacouljlyyn-eastus
