@@ -9,7 +9,7 @@ from pathlib import Path
 
 from requests.exceptions import HTTPError
 
-from ..repository import NoPushesError
+from ..repository import NoPushesError, RetryableError
 from ..util.keyed_by import evaluate_keyed_by
 from ..util.schema import Schema
 from . import action, decision
@@ -36,6 +36,8 @@ def load_jobs(repository, revision):
         if e.response.status_code == 404:
             return {}
         raise
+    except RetryableError:
+        return {}
     _cron_yml_schema.validate(cron_yml)
 
     # resolve keyed_by fields in each job
