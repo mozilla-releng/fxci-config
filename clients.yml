@@ -1,4 +1,21 @@
 ---
+# This file contains static Taskcluster client definitions for Firefox CI.
+#
+# Structure
+# ---------
+#
+# Each client is keyed by its clientId. The value is an object with:
+#
+# - `description` -- human-readable description of the client's purpose
+# - `scopes` -- list of Taskcluster scopes granted to this client
+# - `environments` -- (optional) list of environments this client applies to,
+#                     e.g. `[staging]`. Omit to apply to all environments.
+#
+# Entries are sorted alphabetically by clientId.
+#
+# For clients whose clientId or scopes depend on a project's trust domain,
+# see `clients-interpreted.yml` instead.
+
 project/autophone/bitbar-x-test-1:
   description: Bitbar client for testing new docker images and other changes. Should
     only be used by RelOps.
