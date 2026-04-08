@@ -321,3 +321,268 @@ project-engwf/reviewer-assignment-infra-testing:
       repository:
         type: string
         pattern: "^infra-testing$"
+
+# Fuzzing hooks (migrated from community-tc)
+project-fuzzing/bugmon:
+  name: bugmon
+  description: Hook for triggering bugmon monitor tasks
+  owner: jkratzer@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 */8 * * 1-5
+  scopes:
+    - docker-worker:capability:device:hostSharedMemory
+    - docker-worker:capability:device:loopbackAudio
+    - docker-worker:capability:disableSeccomp
+    - docker-worker:capability:privileged
+    - queue:create-task:highest:proj-fuzzing/bugmon-monitor
+    - queue:create-task:highest:proj-fuzzing/bugmon-pernosco
+    - queue:create-task:highest:proj-fuzzing/bugmon-processor
+    - queue:create-task:highest:proj-fuzzing/bugmon-processor-windows
+    - queue:get-artifact:project/fuzzing/bugmon/*
+    - queue:route:notify.email.jkratzer@mozilla.com.on-failed
+    - queue:scheduler-id:fuzzing
+    - secrets:get:project/fuzzing/bz-api-key
+    - secrets:get:project/fuzzing/pernosco-group
+    - secrets:get:project/fuzzing/pernosco-secret
+    - secrets:get:project/fuzzing/pernosco-user
+  template_file: hooks/project-fuzzing/bugmon.yml
+  trigger_schema: {}
+
+project-fuzzing/bugmon-confirm:
+  name: bugmon-confirm
+  description: Hook for triggering bugmon forced confirmation tasks
+  owner: jkratzer@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 8 * * 6
+  scopes:
+    - docker-worker:capability:device:hostSharedMemory
+    - docker-worker:capability:device:loopbackAudio
+    - docker-worker:capability:disableSeccomp
+    - docker-worker:capability:privileged
+    - queue:create-task:highest:proj-fuzzing/bugmon-monitor
+    - queue:create-task:highest:proj-fuzzing/bugmon-pernosco
+    - queue:create-task:highest:proj-fuzzing/bugmon-processor
+    - queue:create-task:highest:proj-fuzzing/bugmon-processor-windows
+    - queue:get-artifact:project/fuzzing/bugmon/*
+    - queue:route:notify.email.jkratzer@mozilla.com.on-failed
+    - queue:scheduler-id:fuzzing
+    - secrets:get:project/fuzzing/bz-api-key
+    - secrets:get:project/fuzzing/pernosco-group
+    - secrets:get:project/fuzzing/pernosco-secret
+    - secrets:get:project/fuzzing/pernosco-user
+  template_file: hooks/project-fuzzing/bugmon-confirm.yml
+  trigger_schema: {}
+
+project-fuzzing/coverage-revision:
+  name: coverage-revision
+  description: Hook for pinning m-c revision for periodic fuzzing coverage tasks
+  owner: fuzzing@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 0 * * 1
+  scopes:
+    - queue:create-task:highest:proj-fuzzing/ci
+    - queue:route:index.project.fuzzing.coverage-revision.*
+    - queue:route:notify.email.fuzzing@mozilla.com.on-failed
+  template_file: hooks/project-fuzzing/coverage-revision.yml
+  trigger_schema: {}
+
+project-fuzzing/fuzzing-tc-config-community-update:
+  name: fuzzing-tc-config-community-update
+  description: Run Fuzzing pool rebuild when Community-TC config changes
+  owner: truber@mozilla.com
+  email_on_error: true
+  bindings:
+    - exchange: exchange/taskcluster-github/v1/push
+      routing_key_pattern: primary.taskcluster.community-tc-config
+  scopes:
+    - assume:hook-id:project-fuzzing/linux-pool*
+    - assume:hook-id:project-fuzzing/macos-pool*
+    - assume:hook-id:project-fuzzing/windows-pool*
+    - auth:create-role:hook-id:project-fuzzing/*
+    - auth:delete-role:hook-id:project-fuzzing/*
+    - auth:update-role:hook-id:project-fuzzing/*
+    - docker-worker:capability:device:hostSharedMemory
+    - docker-worker:capability:device:kvm
+    - docker-worker:capability:device:loopbackAudio
+    - docker-worker:capability:privileged
+    - generic-worker:capability:device:hostSharedMemory
+    - generic-worker:capability:device:loopbackAudio
+    - generic-worker:capability:privileged
+    - generic-worker:os-group:proj-fuzzing/*
+    - generic-worker:run-as-administrator:proj-fuzzing/*
+    - hooks:modify-hook:project-fuzzing/*
+    - hooks:trigger-hook:project-fuzzing/*
+    - queue:cancel-task:fuzzing/*
+    - queue:create-task:highest:proj-fuzzing/*
+    - queue:route:notify.*
+    - queue:scheduler-id:fuzzing
+    - secrets:get:project/fuzzing/*
+    - worker-manager:manage-worker-pool:proj-fuzzing/*
+    - worker-manager:provider:community-tc-workers-*
+  template_file: hooks/project-fuzzing/fuzzing-tc-config-community-update.yml
+  trigger_schema:
+    type: object
+    properties:
+      branch:
+        type: string
+        default: main
+    additionalProperties: true
+
+project-fuzzing/gr-css:
+  name: gr-css
+  description: Hook for updating gr.css grammar
+  owner: jkratzer@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 8 * * 6
+  scopes:
+    - docker-worker:capability:device:hostSharedMemory
+    - docker-worker:capability:device:loopbackAudio
+    - docker-worker:capability:privileged
+    - queue:create-task:highest:proj-fuzzing/ci
+    - queue:get-artifact:project/fuzzing/gr-css/*
+    - queue:route:notify.email.jkratzer@mozilla.com.on-failed
+    - queue:scheduler-id:fuzzing
+    - secrets:get:project/fuzzing/ci-git-token
+    - secrets:get:project/fuzzing/deploy-gr-css
+    - secrets:get:project/fuzzing/deploy-gr-css-generator
+    - secrets:get:project/fuzzing/deploy-gr-css-reports
+    - secrets:get:project/fuzzing/deploy-npm
+    - secrets:get:project/fuzzing/deploy-octo-private
+  template_file: hooks/project-fuzzing/gr-css.yml
+  trigger_schema: {}
+
+project-fuzzing/gr-idl-update:
+  name: gr-idl-update
+  description: Hook for updating gr.idl grammar
+  owner: jkratzer@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 8 * * 1
+  scopes:
+    - docker-worker:capability:privileged
+    - queue:create-task:highest:proj-fuzzing/ci
+    - queue:get-artifact:project/fuzzing/gr-idl-update/*
+    - queue:route:notify.email.jkratzer@mozilla.com.on-failed
+    - queue:scheduler-id:fuzzing
+    - secrets:get:project/fuzzing/ci-git-token
+    - secrets:get:project/fuzzing/deploy-gridl
+    - secrets:get:project/fuzzing/deploy-npm
+  template_file: hooks/project-fuzzing/gr-idl-update.yml
+  trigger_schema: {}
+
+project-fuzzing/grizzly-reduce-monitor:
+  name: grizzly-reduce-monitor
+  description: Hook for triggering Grizzly reduce monitor tasks
+  owner: truber@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 */2 * * *
+  scopes:
+    - docker-worker:capability:device:hostSharedMemory
+    - docker-worker:capability:device:loopbackAudio
+    - docker-worker:capability:privileged
+    - generic-worker:os-group:proj-fuzzing/grizzly-reduce-worker-windows-ngpu/Administrators
+    - generic-worker:os-group:proj-fuzzing/grizzly-reduce-worker-windows/Administrators
+    - generic-worker:run-as-administrator:proj-fuzzing/grizzly-reduce-worker-windows
+    - generic-worker:run-as-administrator:proj-fuzzing/grizzly-reduce-worker-windows-ngpu
+    - queue:create-task:highest:proj-fuzzing/decision
+    - queue:create-task:highest:proj-fuzzing/grizzly-reduce-worker*
+    - queue:route:notify.email.truber@mozilla.com.on-failed
+    - queue:route:notify.email.twsmith@mozilla.com.on-failed
+    - secrets:get:project/fuzzing/deploy-bearspray
+    - secrets:get:project/fuzzing/deploy-grizzly-private
+    - secrets:get:project/fuzzing/fuzzmanagerconf
+    - secrets:get:project/fuzzing/google-logging-creds
+    - secrets:get:project/fuzzing/grizzly-reduce-tool-list
+  template_file: hooks/project-fuzzing/grizzly-reduce-monitor.yml
+  trigger_schema: {}
+
+project-fuzzing/grizzly-reduce-reset-error:
+  name: grizzly-reduce-reset-error
+  description: Hook for resetting Grizzly reduce tasks on error
+  owner: truber@mozilla.com
+  email_on_error: true
+  bindings:
+    - exchange: exchange/taskcluster-queue/v1/task-exception
+      routing_key_pattern: primary.#.grizzly-reduce-worker-android.fuzzing.#
+    - exchange: exchange/taskcluster-queue/v1/task-exception
+      routing_key_pattern: primary.#.grizzly-reduce-worker-macos.fuzzing.#
+    - exchange: exchange/taskcluster-queue/v1/task-exception
+      routing_key_pattern: primary.#.grizzly-reduce-worker-windows-ngpu.fuzzing.#
+    - exchange: exchange/taskcluster-queue/v1/task-exception
+      routing_key_pattern: primary.#.grizzly-reduce-worker-windows.fuzzing.#
+    - exchange: exchange/taskcluster-queue/v1/task-exception
+      routing_key_pattern: primary.#.grizzly-reduce-worker.fuzzing.#
+    - exchange: exchange/taskcluster-queue/v1/task-failed
+      routing_key_pattern: primary.#.grizzly-reduce-worker-android.fuzzing.#
+    - exchange: exchange/taskcluster-queue/v1/task-failed
+      routing_key_pattern: primary.#.grizzly-reduce-worker-macos.fuzzing.#
+    - exchange: exchange/taskcluster-queue/v1/task-failed
+      routing_key_pattern: primary.#.grizzly-reduce-worker-windows-ngpu.fuzzing.#
+    - exchange: exchange/taskcluster-queue/v1/task-failed
+      routing_key_pattern: primary.#.grizzly-reduce-worker-windows.fuzzing.#
+    - exchange: exchange/taskcluster-queue/v1/task-failed
+      routing_key_pattern: primary.#.grizzly-reduce-worker.fuzzing.#
+  scopes:
+    - queue:create-task:highest:proj-fuzzing/decision
+    - queue:route:notify.email.truber@mozilla.com.on-failed
+    - queue:route:notify.email.twsmith@mozilla.com.on-failed
+    - secrets:get:project/fuzzing/fuzzmanagerconf
+  template_file: hooks/project-fuzzing/grizzly-reduce-reset-error.yml
+  trigger_schema: {}
+
+project-fuzzing/js-tests-distiller:
+  name: js-tests-distiller
+  description: Hook for distilling JS tests for fuzzing
+  owner: fuzzing@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 0 * * *
+  scopes:
+    - queue:create-task:highest:proj-fuzzing/ci
+    - queue:route:index.project.fuzzing.js-tests-distiller.*
+    - queue:route:notify.email.fuzzing@mozilla.com.on-failed
+    - secrets:get:project/fuzzing/deploy-langfuzz
+  template_file: hooks/project-fuzzing/js-tests-distiller.yml
+  trigger_schema: {}
+
+project-fuzzing/nss-corpus-update:
+  name: nss-corpus-update
+  description: Hook for updating the NSS fuzzing corpus
+  owner: mdauer@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 0 1,15 * *
+  scopes:
+    - docker-worker:capability:privileged
+    - queue:create-task:highest:proj-fuzzing/nss-corpus-update-worker
+    - queue:get-artifact:project/fuzzing/nss-corpus-update/*
+    - queue:route:notify.email.jkratzer@mozilla.com.on-failed
+    - queue:route:notify.email.mdauer@mozilla.com.on-failed
+    - queue:scheduler-id:fuzzing
+    - secrets:get:project/fuzzing/deploy-nss-fuzzing-corpus
+    - secrets:get:project/fuzzing/ossfuzz-gutils
+  template_file: hooks/project-fuzzing/nss-corpus-update.yml
+  trigger_schema: {}
+
+project-fuzzing/orion-cron:
+  name: orion-cron
+  description: Periodically check if any Orion services need to be rebuilt
+  owner: truber@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 0 * * 0
+  scopes:
+    - docker-worker:capability:privileged
+    - index:insert-task:project.fuzzing.orion.*
+    - queue:create-task:highest:proj-fuzzing/ci
+    - queue:create-task:highest:proj-fuzzing/ci-*
+    - queue:create-task:highest:proj-fuzzing/decision
+    - queue:route:index.project.fuzzing.orion.*
+    - secrets:get:project/fuzzing/docker-hub
+  template_file: hooks/project-fuzzing/orion-cron.yml
+  trigger_schema: {}

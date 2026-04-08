@@ -1,0 +1,54 @@
+---
+provisionerId: proj-fuzzing
+schedulerId: fuzzing
+workerType: decision
+payload:
+  features:
+    # Needed for access to secret
+    taskclusterProxy: true
+  maxRunTime: 3600
+  image:
+    type: indexed-image
+    path: public/fuzzing-decision.tar.zst
+    namespace: project.fuzzing.orion.fuzzing-decision.master
+  command:
+    - /bin/sh
+    - -l
+    - -e
+    - -x
+    - -c
+    - >-
+      tc-admin apply --grep Role;
+      tc-admin apply --grep WorkerPool;
+      tc-admin apply;
+  env:
+    TASKCLUSTER_SECRET: project/fuzzing/decision
+    FUZZING_GIT_REPOSITORY: git@github.com:MozillaSecurity/fuzzing-tc-config.git
+    FUZZING_GIT_REVISION: master
+scopes:
+  - assume:hook-id:project-fuzzing/linux-pool*
+  - assume:hook-id:project-fuzzing/macos-pool*
+  - assume:hook-id:project-fuzzing/windows-pool*
+  - auth:create-role:hook-id:project-fuzzing/*
+  - auth:delete-role:hook-id:project-fuzzing/*
+  - auth:update-role:hook-id:project-fuzzing/*
+  - docker-worker:capability:device:hostSharedMemory
+  - docker-worker:capability:device:kvm
+  - docker-worker:capability:device:loopbackAudio
+  - docker-worker:capability:privileged
+  - generic-worker:os-group:proj-fuzzing/*
+  - generic-worker:run-as-administrator:proj-fuzzing/*
+  - hooks:modify-hook:project-fuzzing/*
+  - hooks:trigger-hook:project-fuzzing/*
+  - queue:cancel-task:fuzzing/*
+  - queue:create-task:highest:proj-fuzzing/*
+  - secrets:get:project/fuzzing/*
+  - worker-manager:manage-worker-pool:proj-fuzzing/*
+  - worker-manager:provider:community-tc-workers-*
+metadata:
+  name: Fuzzing Taskcluster apply changes
+  description: Apply potential modifications on the taskcluster instance
+  owner: truber@mozilla.com
+  source: https://github.com/MozillaSecurity/fuzzing-tc-config
+deadline:
+  $fromNow: 2 hours
