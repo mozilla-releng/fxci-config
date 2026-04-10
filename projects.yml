@@ -27,6 +27,7 @@
 #   - 'is-trunk' -- Branches containing 'landed' code destined for nightly builds. These branches have a shared index
 #       that can be referenced by the tip revision on any push.
 #   - `hg-push` -- decision tasks run for pushes to this hg project's repository
+#   - `git-push` -- decision tasks run for pushes to this git project's repository
 #   - `gecko-roles` -- this repository should have gecko-related roles assigned (for users, actions, cron, etc.)
 #   - `mobile-roles` -- this repository should have https://github.com/mozilla-mobile roles assigned (for users, actions, cron, etc.)
 #   - `xpi-roles` -- this repository should have xpi roles assigned (for users, actions, cron, etc.)
@@ -631,6 +632,7 @@ enterprise-firefox-try:
       level: 1
   features:
     gecko-roles: true
+    git-push: true
     github-taskgraph: true
     github-pull-request:
       policy: collaborators

@@ -14,6 +14,7 @@ from ciadmin import modify
 from ciadmin.generate import (
     clients,
     cron_tasks,
+    git_pushes,
     grants,
     hg_pushes,
     hooks,
@@ -25,6 +26,7 @@ from ciadmin.generate import (
 RESOURCES = {
     "clients": clients.update_resources,
     "cron_tasks": cron_tasks.update_resources,
+    "git_pushes": git_pushes.update_resources,
     "grants": grants.update_resources,
     "hg_pushes": hg_pushes.update_resources,
     "hooks": hooks.update_resources,
