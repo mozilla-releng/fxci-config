@@ -10,7 +10,6 @@
 #  - trust_domain -- project's trust domain
 #  - hookGroupId / hookId -- hook identifiers
 #  - project_repo -- repository URL
-#  - project_repo_path -- path portion of the repository URL
 #  - alias -- project alias
 #
 # Uses of `$${..}` and `$$..: ..` are intended to occur in the second rendering.
@@ -38,23 +37,18 @@ payload:
     # https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications
     PULSE_MESSAGE: {$$json: {$$eval: payload}}
   command:
-    $flatten:
-      - hg-push
-      # hard-coded values that can't be changed by the hook payload
-      - --repo-url
-      - ${project_repo}
-      - --project
-      - ${alias}
-      - --level
-      - ${level}
-      - --trust-domain
-      - ${trust_domain}
-      - --repository-type
-      - hg
-      - $if: taskcluster_yml_repo
-        then:
-          - --taskcluster-yml-repo
-          - ${taskcluster_yml_repo}
+    - hg-push
+    # hard-coded values that can't be changed by the hook payload
+    - --repo-url
+    - ${project_repo}
+    - --project
+    - ${alias}
+    - --level
+    - ${level}
+    - --trust-domain
+    - ${trust_domain}
+    - --repository-type
+    - hg
   features:
     taskclusterProxy: true
 
