@@ -15,17 +15,6 @@ async def make_hook(project):
     hookGroupId = "hg-push"
     hookId = project.alias
 
-    if project.taskcluster_yml_project:
-        taskcluster_yml_project = await Project.get(project.taskcluster_yml_project)
-        if project.level > taskcluster_yml_project.level:
-            raise ValueError(
-                f"Cannot use `.taskcluster.yml` from {project.taskcluster_yml_project} which has level {taskcluster_yml_project.level}, "
-                f"for {project.alias} which has level {project.level}."
-            )
-        taskcluster_yml_repo = taskcluster_yml_project.repo
-    else:
-        taskcluster_yml_repo = None
-
     # use the hg-push-template.yml from the fxci-config repository, rendering it
     # with the context values described there
     task_template = await get_ciconfig_file("hg-push-template.yml")
@@ -40,7 +29,6 @@ async def make_hook(project):
             "project_repo": project.repo,
             "project_role_prefix": project.role_prefix,
             "alias": project.alias,
-            "taskcluster_yml_repo": taskcluster_yml_repo,
         },
     )
 
