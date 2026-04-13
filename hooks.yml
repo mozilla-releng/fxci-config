@@ -14,7 +14,7 @@ project-relman/code-coverage-repo-production:
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-production
-  template_file: hooks/project-relman/code-coverage-repo-production.yml
+  template_file: hook-templates/project-relman/code-coverage-repo-production.yml
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
       routing_key_pattern: route.project.codecoverage.v1.tasks_done
@@ -36,7 +36,7 @@ project-relman/code-coverage-repo-testing:
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
-  template_file: hooks/project-relman/code-coverage-repo-testing.yml
+  template_file: hook-templates/project-relman/code-coverage-repo-testing.yml
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
       routing_key_pattern: route.project.codecoverage.v1.tasks_done
@@ -60,7 +60,7 @@ project-relman/code-coverage-cron-production:
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-production
-  template_file: hooks/project-relman/code-coverage-cron-production.yml
+  template_file: hook-templates/project-relman/code-coverage-cron-production.yml
   trigger_schema:
     type: object
     additionalProperties: true
@@ -81,7 +81,7 @@ project-relman/code-coverage-cron-testing:
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
-  template_file: hooks/project-relman/code-coverage-cron-testing.yml
+  template_file: hook-templates/project-relman/code-coverage-cron-testing.yml
   trigger_schema:
     type: object
     additionalProperties: true
@@ -102,7 +102,7 @@ project-relman/code-coverage-crontrigger-production:
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-production
-  template_file: hooks/project-relman/code-coverage-crontrigger-production.yml
+  template_file: hook-templates/project-relman/code-coverage-crontrigger-production.yml
   trigger_schema:
     type: object
     additionalProperties: true
@@ -123,7 +123,7 @@ project-relman/code-coverage-crontrigger-testing:
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
-  template_file: hooks/project-relman/code-coverage-crontrigger-testing.yml
+  template_file: hook-templates/project-relman/code-coverage-crontrigger-testing.yml
   trigger_schema:
     type: object
     additionalProperties: true
@@ -145,7 +145,7 @@ project-relman/code-review-testing:
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-review/runtime-testing
     - docker-worker:cache:code-review-testing-checkout
-  template_file: hooks/project-relman/code-review-testing.yml
+  template_file: hook-templates/project-relman/code-review-testing.yml
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
       routing_key_pattern: route.project.relman.codereview.v1.try_ending
@@ -195,7 +195,7 @@ project-relman/code-review-production:
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-review/runtime-production
     - docker-worker:cache:code-review-production-checkout
-  template_file: hooks/project-relman/code-review-production.yml
+  template_file: hook-templates/project-relman/code-review-production.yml
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
       routing_key_pattern: route.project.relman.codereview.v1.try_ending
@@ -242,7 +242,7 @@ project-engwf/reviewer-assignment-infra-testing:
     - queue:route:notify.email.*
     - queue:scheduler-id:engwf
     - secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing
-  template_file: hooks/project-engwf/reviewer-assignment-infra-testing.yml
+  template_file: hook-templates/project-engwf/reviewer-assignment-infra-testing.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '#.infra-testing.#'  # e.g., primary.mozilla-firefox.infra-testing.opened or primary.mozilla-firefox.infra-testing.synchronize
