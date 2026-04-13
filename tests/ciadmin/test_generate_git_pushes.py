@@ -49,7 +49,7 @@ async def test_make_hook(mock_ciconfig_file):
     hook = await git_pushes.make_hook(GIT_PROJECT, GIT_PROJECT.branches[0])
 
     assert hook.hookGroupId == "git-push"
-    assert hook.hookId == "github.com/mozilla/myproject:branch:main"
+    assert hook.hookId == "mozilla/myproject/main"
     assert "assume:repo:github.com/mozilla/myproject:branch:*" in hook.task["scopes"]
 
     schema = hook.triggerSchema
@@ -103,8 +103,8 @@ async def test_update_resources_filters_by_feature(mock_ciconfig_file):
     await git_pushes.update_resources(r)
 
     hook_ids = {res.hookId for res in r if hasattr(res, "hookId")}
-    assert "github.com/mozilla/with-feature:branch:main" in hook_ids
-    assert "github.com/mozilla/without-feature:branch:main" not in hook_ids
+    assert "mozilla/with-feature/main" in hook_ids
+    assert "mozilla/without-feature/main" not in hook_ids
 
 
 @pytest.mark.asyncio
@@ -131,10 +131,7 @@ async def test_update_resources_one_hook_and_role_per_branch(mock_ciconfig_file)
     assert len(roles) == 2
 
     for i, branch in enumerate(branches):
-        assert (
-            roles[i].roleId
-            == f"hook-id:git-push/github.com/mozilla/myproject:branch:{branch['name']}"
-        )
+        assert roles[i].roleId == f"hook-id:git-push/mozilla/myproject/{branch['name']}"
         assert set(roles[i].scopes) == {
             f"assume:repo:github.com/mozilla/myproject:branch:{branch['name']}",
             "queue:route:index.git-push.v1.myproject.*",

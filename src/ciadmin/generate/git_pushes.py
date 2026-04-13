@@ -13,7 +13,7 @@ from .ciconfig.projects import Project
 
 async def make_hook(project: Project, branch) -> Hook:
     hookGroupId = "git-push"
-    hookId = f"{project.role_prefix.removeprefix('repo:')}:branch:{branch.name}"
+    hookId = f"{project.repo_path}/{branch.name.rstrip('*')}"
 
     task_template = await get_ciconfig_file("git-push-template.yml")
     task = jsone.render(
@@ -99,7 +99,7 @@ async def update_resources(resources):
                 roleId=f"hook-id:{hook.hookGroupId}/{hook.hookId}",
                 description=f"Scopes associated with git pushes to branch `{branch.name}` of project `{project.alias}`",
                 scopes=[
-                    f"assume:repo:{hook.hookId}",
+                    f"assume:{project.role_prefix}:branch:{branch.name}",
                     f"queue:route:index.git-push.v1.{project.alias}.*",
                     "queue:create-task:highest:infra/build-decision",
                 ],
