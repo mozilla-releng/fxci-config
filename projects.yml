@@ -648,14 +648,11 @@ staging-firefox:
   trust_domain: gecko
   trust_project: staging
   branches:
-    - name: main
-      level: 1
-    - name: enterprise-main
-      level: 1
-    - name: tc-github
+    - name: "*"
       level: 1
   features:
     gecko-roles: true
+    git-push: true
     github-taskgraph: true
     pr-actions: true
     taskgraph-actions: true
