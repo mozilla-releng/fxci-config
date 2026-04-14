@@ -28,7 +28,7 @@ expires: {$$fromNow: 3 days}
 scopes:
   - assume:${project_role_prefix}:branch:*
 routes:
-  - index.git-push.v1.${alias}.revision.$${payload.commit_sha}
+  - index.git-push.v1.${alias}.revision.$${payload.sha}
 payload:
   # built by pushes to the fxci-config repository
   image: mozillareleases/build-decision:bd900d7a313c796d48da21fdb54ae35db812e3dc@sha256:2a7e477efee5e8b356ea3b642e30b3b5cb48ffe81b0e72bb223b4522b59345d5
