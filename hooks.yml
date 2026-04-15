@@ -228,7 +228,7 @@ project-relman/code-review-production:
             type: string
             description: Taskcluster Task Group ID triggering the hook (should be a Try Task Group)
 
-project-engwf/reviewer-assignment-infra-testing:
+project-engwf/reviewer-assignment-prod:
   name: Reviewer assignment hook (testing)
   description: Automatically assign reviewers to PRs
   owner: omehani@mozilla.com
@@ -241,11 +241,15 @@ project-engwf/reviewer-assignment-infra-testing:
     - queue:route:index.project.engwf.production.reviewer-assignment.latest
     - queue:route:notify.email.*
     - queue:scheduler-id:engwf
-    - secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing
-  template_file: hooks/project-engwf/reviewer-assignment-infra-testing.yml
+    - secrets:get:project/engwf/reviewer-assignment/runtime-prod
+  template_file: hooks/project-engwf/reviewer-assignment-prod.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: '#.infra-testing.#'  # e.g., primary.mozilla-firefox.infra-testing.opened or primary.mozilla-firefox.infra-testing.synchronize
+      routing_key_pattern: '#.mozilla-firefox.#.opened'  # e.g., primary.mozilla-firefox.firefox.opened or primary.mozilla-firefox.firefox.synchronize
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '#.mozilla-firefox.#.reopened'
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '#.mozilla-firefox.#.synchronize'  # e.g., primary.mozilla-firefox.firefox.opened or primary.mozilla-firefox.firefox.synchronize
   trigger_schema:
     type: object
     # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
@@ -320,4 +324,4 @@ project-engwf/reviewer-assignment-infra-testing:
 
       repository:
         type: string
-        pattern: "^infra-testing$"
+        pattern: "^(infra-testing|firefox)$"
