@@ -54,6 +54,11 @@ def test_build_decision(mocker, dry_run):
     render_kwargs = mock_render.call_args[1]
     assert render_kwargs["taskcluster_root_url"] == taskcluster_root_url
     assert render_kwargs["tasks_for"] == "git-push"
+    as_slugid = render_kwargs["as_slugid"]
+    assert callable(as_slugid)
+    # Same name returns the same slugid; different names return different slugids
+    assert as_slugid("foo") == as_slugid("foo")
+    assert as_slugid("foo") != as_slugid("bar")
     assert render_kwargs["event"] == {
         "ref": "refs/heads/main",
         "before": HOOK_PAYLOAD["base_sha"],
