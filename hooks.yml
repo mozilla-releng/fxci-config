@@ -1,20 +1,25 @@
 ---
-project-relman/code-coverage-repo-production:
-  name: Code coverage hook (production)
+project-relman/code-coverage-repo-{mode}:
+  variants:
+    - mode: production
+      priority: highest
+    - mode: testing
+      priority: lowest
+  name: Code coverage hook ({mode})
   description: Automatically build code coverage reports
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
-    - docker-worker:cache:code-coverage-bot-production
-    - index:insert-task:project.releng.services.project.production.code_coverage_bot.*
-    - index:insert-task:project.relman.code-coverage.production.repo.*
+    - docker-worker:cache:code-coverage-bot-{mode}
+    - index:insert-task:project.releng.services.project.{mode}.code_coverage_bot.*
+    - index:insert-task:project.relman.code-coverage.{mode}.repo.*
     - notify:email:*
-    - queue:create-task:highest:code-coverage/bot
+    - queue:create-task:{priority}:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
-    - secrets:get:project/relman/code-coverage/runtime-production
-  template_file: hook-templates/project-relman/code-coverage-repo-production.yml
+    - secrets:get:project/relman/code-coverage/runtime-{mode}
+  template_file: hook-templates/project-relman/code-coverage-repo-{mode}.yml
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
       routing_key_pattern: route.project.codecoverage.v1.tasks_done
@@ -22,30 +27,13 @@ project-relman/code-coverage-repo-production:
     type: object
     additionalProperties: true
 
-project-relman/code-coverage-repo-testing:
-  name: Code coverage hook (testing)
-  description: Automatically build code coverage reports
-  owner: release-mgmt-analysis@mozilla.com
-  email_on_error: true
-  scopes:
-    - assume:project:taskcluster:mozilla-github-repository
-    - docker-worker:cache:code-coverage-bot-testing
-    - index:insert-task:project.relman.code-coverage.testing.repo.*
-    - notify:email:*
-    - queue:create-task:lowest:code-coverage/bot
-    - queue:route:notify.email.*
-    - queue:scheduler-id:relman
-    - secrets:get:project/relman/code-coverage/runtime-testing
-  template_file: hook-templates/project-relman/code-coverage-repo-testing.yml
-  bindings:
-    - exchange: exchange/taskcluster-queue/v1/task-completed
-      routing_key_pattern: route.project.codecoverage.v1.tasks_done
-  trigger_schema:
-    type: object
-    additionalProperties: true
-
-project-relman/code-coverage-cron-production:
-  name: Code coverage hook (production)
+project-relman/code-coverage-cron-{mode}:
+  variants:
+    - mode: production
+      priority: highest
+    - mode: testing
+      priority: lowest
+  name: Code coverage hook ({mode})
   description: Automatically build code coverage reports
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
@@ -53,149 +41,67 @@ project-relman/code-coverage-cron-production:
     - 0 0 12 * * *
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
-    - docker-worker:cache:code-coverage-bot-production
-    - index:insert-task:project.relman.code-coverage.production.cron.*
+    - docker-worker:cache:code-coverage-bot-{mode}
+    - index:insert-task:project.relman.code-coverage.{mode}.cron.*
     - notify:email:*
-    - queue:create-task:highest:code-coverage/bot
+    - queue:create-task:{priority}:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
-    - secrets:get:project/relman/code-coverage/runtime-production
-  template_file: hook-templates/project-relman/code-coverage-cron-production.yml
+    - secrets:get:project/relman/code-coverage/runtime-{mode}
+  template_file: hook-templates/project-relman/code-coverage-cron-{mode}.yml
   trigger_schema:
     type: object
     additionalProperties: true
 
-project-relman/code-coverage-cron-testing:
-  name: Code coverage hook (testing)
-  description: Automatically build code coverage reports
-  owner: release-mgmt-analysis@mozilla.com
-  email_on_error: true
-  schedule:
-    - 0 0 12 * * *
-  scopes:
-    - assume:project:taskcluster:mozilla-github-repository
-    - docker-worker:cache:code-coverage-bot-testing
-    - index:insert-task:project.relman.code-coverage.testing.cron.*
-    - notify:email:*
-    - queue:create-task:lowest:code-coverage/bot
-    - queue:route:notify.email.*
-    - queue:scheduler-id:relman
-    - secrets:get:project/relman/code-coverage/runtime-testing
-  template_file: hook-templates/project-relman/code-coverage-cron-testing.yml
-  trigger_schema:
-    type: object
-    additionalProperties: true
-
-project-relman/code-coverage-crontrigger-production:
-  name: Code coverage hook (production)
+project-relman/code-coverage-crontrigger-{mode}:
+  variants:
+    - mode: production
+      priority: highest
+    - mode: testing
+      priority: lowest
+  name: Code coverage hook ({mode})
   description: Automatically trigger code coverage ingestion hook
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   schedule:
     - 0 0 */3 * * *
   scopes:
-    - hooks:trigger-hook:project-relman/code-coverage-repo-production
+    - hooks:trigger-hook:project-relman/code-coverage-repo-{mode}
     - assume:project:taskcluster:mozilla-github-repository
-    - index:insert-task:project.relman.code-coverage.production.crontrigger.*
+    - index:insert-task:project.relman.code-coverage.{mode}.crontrigger.*
     - notify:email:*
-    - queue:create-task:highest:code-coverage/bot
+    - queue:create-task:{priority}:code-coverage/bot
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
-    - secrets:get:project/relman/code-coverage/runtime-production
-  template_file: hook-templates/project-relman/code-coverage-crontrigger-production.yml
+    - secrets:get:project/relman/code-coverage/runtime-{mode}
+  template_file: hook-templates/project-relman/code-coverage-crontrigger-{mode}.yml
   trigger_schema:
     type: object
     additionalProperties: true
 
-project-relman/code-coverage-crontrigger-testing:
-  name: Code coverage hook (testing)
-  description: Automatically trigger code coverage ingestion hook
-  owner: release-mgmt-analysis@mozilla.com
-  email_on_error: true
-  schedule:
-    - 0 0 */3 * * *
-  scopes:
-    - hooks:trigger-hook:project-relman/code-coverage-repo-testing
-    - assume:project:taskcluster:mozilla-github-repository
-    - index:insert-task:project.relman.code-coverage.testing.crontrigger.*
-    - notify:email:*
-    - queue:create-task:lowest:code-coverage/bot
-    - queue:route:notify.email.*
-    - queue:scheduler-id:relman
-    - secrets:get:project/relman/code-coverage/runtime-testing
-  template_file: hook-templates/project-relman/code-coverage-crontrigger-testing.yml
-  trigger_schema:
-    type: object
-    additionalProperties: true
-
-project-relman/code-review-testing:
-  name: Code review hook (testing)
+project-relman/code-review-{mode}:
+  variants:
+    - mode: production
+      priority: highest
+    - mode: testing
+      priority: lowest
+  name: Code review hook ({mode})
   description: Automatically create code review publication tasks
   owner: release-mgmt-analysis@mozilla.com
   email_on_error: true
   scopes:
     - assume:project:taskcluster:mozilla-github-repository
-    - hooks:trigger-hook:project-releng/services-testing-*
-    - index:insert-task:project.relman.testing.code-review.*
+    - hooks:trigger-hook:project-releng/services-{mode}-*
+    - index:insert-task:project.relman.{mode}.code-review.*
     - notify:email:*
-    - queue:create-task:lowest:code-review/bot
-    - queue:route:index.project.releng.services.project.testing.static_analysis_bot.*
-    - queue:route:index.project.relman.testing.code-review.*
+    - queue:create-task:{priority}:code-review/bot
+    - queue:route:index.project.releng.services.project.{mode}.static_analysis_bot.*
+    - queue:route:index.project.relman.{mode}.code-review.*
     - queue:route:notify.email.*
     - queue:scheduler-id:relman
-    - secrets:get:project/relman/code-review/runtime-testing
-    - docker-worker:cache:code-review-testing-checkout
-  template_file: hook-templates/project-relman/code-review-testing.yml
-  bindings:
-    - exchange: exchange/taskcluster-queue/v1/task-completed
-      routing_key_pattern: route.project.relman.codereview.v1.try_ending
-    - exchange: exchange/taskcluster-queue/v1/task-group-resolved
-      routing_key_pattern: '#.gecko-level-3.#'
-  trigger_schema:
-    type: object
-    additionalProperties: true
-    properties:
-
-      # Trigger hook from Phabricator with token payload to create a try push
-      build_target_phid:
-        type: string
-        description: Phabricator Build target's PHID triggering the hook
-
-      # Trigger hook from pulse for analyzing results
-      runId:
-        type: integer
-        description: Taskcluster Task Run ID triggering the hook (should be a Try Task run)
-      status:
-        type: object
-        required:
-          - taskId
-          - taskGroupId
-        properties:
-          taskId:
-            type: string
-            description: Taskcluster Task ID triggering the hook (should be a Try Task)
-          taskGroupId:
-            type: string
-            description: Taskcluster Task Group ID triggering the hook (should be a Try Task Group)
-
-project-relman/code-review-production:
-  name: Code review hook (production)
-  description: Automatically create code review publication tasks
-  owner: release-mgmt-analysis@mozilla.com
-  email_on_error: true
-  scopes:
-    - assume:project:taskcluster:mozilla-github-repository
-    - hooks:trigger-hook:project-releng/services-production-*
-    - index:insert-task:project.relman.production.code-review.*
-    - notify:email:*
-    - queue:create-task:highest:code-review/bot
-    - queue:route:index.project.releng.services.project.production.static_analysis_bot.*
-    - queue:route:index.project.relman.production.code-review.*
-    - queue:route:notify.email.*
-    - queue:scheduler-id:relman
-    - secrets:get:project/relman/code-review/runtime-production
-    - docker-worker:cache:code-review-production-checkout
-  template_file: hook-templates/project-relman/code-review-production.yml
+    - secrets:get:project/relman/code-review/runtime-{mode}
+    - docker-worker:cache:code-review-{mode}-checkout
+  template_file: hook-templates/project-relman/code-review-{mode}.yml
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
       routing_key_pattern: route.project.relman.codereview.v1.try_ending
