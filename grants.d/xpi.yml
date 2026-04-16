@@ -106,7 +106,7 @@
         job: action:release-promotion
 
 - grant:
-    - project:releng:lando:action:extension_manifest_version_bump
+    - project:releng:lando:action:version_bump
     - project:releng:lando:repo:staging-firefox-main
   to:
     - project:
