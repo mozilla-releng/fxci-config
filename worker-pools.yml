@@ -4581,3 +4581,19 @@ pools:
           disks:
             - *persistent-disk-75gb
           machine_type: c2-standard-4
+  - pool_id: mozilla-t/pre-commit
+    description: Worker for running pre-commit checks.
+    owner: releng@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 1
+      maxCapacity: 10
+      regions: *default-gcp-regions
+      image: ubuntu-2404-headless
+      implementation: generic-worker/linux-d2g
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-75gb
+          machine_type: n2-standard-2

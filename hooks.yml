@@ -1,4 +1,19 @@
 ---
+meta:
+  github-trigger-schema-properties: &github-trigger-schema-properties
+    tasks_for:
+      type: string
+    organization:
+      type: string
+    repository:
+      type: string
+    body:
+      type: object
+      additionalProperties: true
+    context:
+      type: object
+      additionalProperties: true
+
 project-relman/code-coverage-repo-{mode}:
   variants:
     - mode: production
@@ -133,6 +148,35 @@ project-relman/code-review-{mode}:
           taskGroupId:
             type: string
             description: Taskcluster Task Group ID triggering the hook (should be a Try Task Group)
+
+lint/pre-commit-{version}:
+  variants:
+    - version: v1
+  name: pre-commit ({version})
+  description: Run pre-commit checks
+  owner: release+hooks@mozilla.com
+  email_on_error: true
+  scopes:
+    - queue:create-task:lowest:mozilla-t/pre-commit
+    - queue:scheduler-id:lint
+  template_file: hook-templates/project-releng/pre-commit.yml
+  bindings:
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '#'
+    - exchange: exchange/taskcluster-github/v1/push
+      routing_key_pattern: '#'
+  trigger_schema:
+    type: object
+    additionalProperties: false
+    properties:
+      <<: *github-trigger-schema-properties
+      context:
+        type: object
+        additionalProperties: false
+        properties:
+          pre-commit-version:
+            type: string
+            description: Version of pre-commit to install (e.g. "4.0.0"). Defaults to latest.
 
 project-engwf/reviewer-assignment-infra-testing:
   name: Reviewer assignment hook (testing)
