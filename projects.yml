@@ -56,6 +56,7 @@
 #   - `treescript-phase` -- this repository should have treescript related scopes associated
 #   - `merge-automation` -- this repository should have merge-automation related scopes associated
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
+#   - `pre-commit` -- this repository runs the lint/pre-commit hook
 
 ash:
   repo: https://hg.mozilla.org/projects/ash
