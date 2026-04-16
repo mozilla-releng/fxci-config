@@ -277,6 +277,8 @@
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-privileged-alpha
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-privileged
     - generic-worker:run-as-administrator:gecko-t/win11-64-25h2-alpha
+    - generic-worker:run-as-administrator:gecko-t/win11-64-25h2-privileged-alpha
+    - generic-worker:run-as-administrator:gecko-t/win11-64-25h2-privileged
     - generic-worker:run-as-administrator:gecko-t/win11-64-2009
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-amd
