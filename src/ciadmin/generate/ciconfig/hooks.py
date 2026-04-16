@@ -20,6 +20,8 @@ class Hook:
     trigger_schema = attr.ib(type=dict, factory=lambda: {})
     schedule = attr.ib(type=list, factory=lambda: [])
     bindings = attr.ib(type=list, factory=lambda: [])
+    attributes = attr.ib(factory=dict)
+    variants = attr.ib(factory=lambda: [{}])
 
     @staticmethod
     async def fetch_all():
