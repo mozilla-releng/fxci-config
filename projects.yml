@@ -1533,6 +1533,20 @@ mozilla:
     taskgraph-actions: true
     trust-domain-scopes: true
 
+mozilla-conduit:
+  repo: https://github.com/mozilla-conduit/*
+  repo_type: git
+  trust_domain: mozilla
+  branches:
+    - name: main
+      level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public_restricted
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 mozilla-releng:
   repo: https://github.com/mozilla-releng/*
   repo_type: git
