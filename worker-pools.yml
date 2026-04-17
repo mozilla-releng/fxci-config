@@ -311,6 +311,18 @@ meta:
     disks:
       - *persistent-disk-75gb
     machine_type: c4d-highcpu-8
+  - &n2-standard-4-60gb-lssd
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 60
+      - *scratch-disk
+    machine_type: n2-standard-4
+  - &c3d-standard-4-60gb-lssd
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 60
+      - *scratch-disk
+    machine_type: c3d-standard-4
 
 pools:
   - pool_id: infra/build-decision
@@ -4595,14 +4607,10 @@ pools:
       minCapacity: 0
       maxCapacity: 5
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: fuzzing-gw-ubuntu-24-04
       instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
-            - *scratch-disk
-          machine_type: n2-standard-4
+        - *n2-standard-4-60gb-lssd
 
   - pool_id: proj-fuzzing/bugmon-processor
     description: Fuzzing bugmon processor pool
@@ -4613,14 +4621,10 @@ pools:
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: fuzzing-gw-ubuntu-24-04
       instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
-            - *scratch-disk
-          machine_type: n2-standard-4
+        - *n2-standard-4-60gb-lssd
 
   - pool_id: proj-fuzzing/ci
     description: Fuzzing CI pool
@@ -4631,14 +4635,10 @@ pools:
       minCapacity: 0
       maxCapacity: 20
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: fuzzing-gw-ubuntu-24-04
       instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
-            - *scratch-disk
-          machine_type: c3d-standard-4
+        - *c3d-standard-4-60gb-lssd
 
   - pool_id: proj-fuzzing/ci-arm64
     description: Fuzzing CI ARM64 pool
@@ -4653,8 +4653,7 @@ pools:
       image: fuzzing-gw-ubuntu-24-04-arm64
       instance_types:
         - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
+            - *persistent-disk-60gb
           machine_type: t2a-standard-4
 
   - pool_id: proj-fuzzing/ci-windows
@@ -4688,14 +4687,10 @@ pools:
       minCapacity: 0
       maxCapacity: 5
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: fuzzing-gw-ubuntu-24-04
       instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
-            - *scratch-disk
-          machine_type: n2-standard-4
+        - *n2-standard-4-60gb-lssd
 
   - pool_id: proj-fuzzing/grizzly-reduce-worker
     description: Fuzzing grizzly reduce worker pool
@@ -4706,14 +4701,10 @@ pools:
       minCapacity: 0
       maxCapacity: 20
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: fuzzing-gw-ubuntu-24-04
       instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
-            - *scratch-disk
-          machine_type: n2-standard-4
+        - *n2-standard-4-60gb-lssd
 
   - pool_id: proj-fuzzing/grizzly-reduce-worker-android
     description: Fuzzing grizzly reduce worker pool (Android, nested virt)
@@ -4724,14 +4715,10 @@ pools:
       minCapacity: 0
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: fuzzing-gw-ubuntu-24-04
       instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
-            - *scratch-disk
-          machine_type: n2-standard-4
+        - <<: *n2-standard-4-60gb-lssd
           advancedMachineFeatures:
             enableNestedVirtualization: true
 
@@ -4788,14 +4775,10 @@ pools:
       minCapacity: 0
       maxCapacity: 5
       implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-central1, us-west1]
+      regions: *default-gcp-regions
       image: fuzzing-gw-ubuntu-24-04
       instance_types:
-        - disks:
-            - <<: *persistent-disk
-              diskSizeGb: 60
-            - *scratch-disk
-          machine_type: n2-standard-4
+        - *n2-standard-4-60gb-lssd
 
   - pool_id: proj-fuzzing/bugmon-pernosco
     description: Fuzzing bugmon pernosco pool (docker-worker, metal)

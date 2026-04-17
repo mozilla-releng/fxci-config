@@ -29,26 +29,26 @@ def manage_with_exclusions(resources, base_pattern, exclusion_patterns):
             ["WorkerPool=proj-fuzzing/.*"])
 
     Would manage all worker pools EXCEPT those in proj-fuzzing/.
+
+    Uses a negative lookahead so that tc-admin won't manage (and therefore
+    won't delete) externally-managed resources. Note: tc-admin's
+    Resources.filter() is not suitable here — it filters the generated
+    resources list, not the managed patterns.
     """
-    # Filter exclusion patterns to only those relevant to the base pattern kind
-    # (e.g., if base is "WorkerPool=.*", only include "WorkerPool=..." exclusions)
     kind_match = re.match(r"^(\w+)=", base_pattern)
-    kind_prefix = kind_match.group(1) + "=" if kind_match else ""
-
-    relevant_exclusions = []
-    for pat in exclusion_patterns:
-        if pat.startswith(kind_prefix):
-            # Strip the Kind= prefix for the negative lookahead
-            relevant_exclusions.append(pat)
-
-    if not relevant_exclusions:
+    if not kind_match:
         resources.manage(base_pattern)
         return
 
-    # Build a negative lookahead pattern
-    exclusion_alts = "|".join(relevant_exclusions)
-    pattern = f"(?!{exclusion_alts}){base_pattern}"
-    resources.manage(pattern)
+    kind_prefix = kind_match.group(1) + "="
+    relevant = [p for p in exclusion_patterns if p.startswith(kind_prefix)]
+
+    if not relevant:
+        resources.manage(base_pattern)
+        return
+
+    # Build negative lookahead: (?!pat1|pat2)base_pattern
+    resources.manage(f"(?!{'|'.join(relevant)}){base_pattern}")
 
 
 def manage_individual(resources, resource_id):
