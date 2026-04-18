@@ -95,3 +95,20 @@
     - groups:
         - team_moco
         - team_mozillaonline
+
+# Bug 2025695: lando scopes for newtab XPI version bump
+- grant:
+    - project:releng:lando:action:extension_manifest_version_bump
+    - project:releng:lando:repo:firefox-main
+  to:
+    - project:
+        alias: xpi-manifest
+        job: action:release-promotion
+
+- grant:
+    - project:releng:lando:action:version_bump
+    - project:releng:lando:repo:staging-firefox-main
+  to:
+    - project:
+        alias: staging-xpi-manifest
+        job: action:release-promotion

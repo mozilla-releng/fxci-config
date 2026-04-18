@@ -1,0 +1,72 @@
+---
+# This is the template for the task definition for git push hooks.  Its job is
+# to run a decision task for the given revision of the given repository.
+#
+# This is rendered with JSON-e to create a JSON-e task template in a hook,
+# meaning that the content of this file is rendered *twice* with JSON-e.  The
+# context values for the first rendering are:
+#
+#  - level -- branch level
+#  - trust_domain -- project's trust domain
+#  - hookGroupId / hookId -- hook identifiers
+#  - project_repo -- repository URL
+#  - project_role_prefix -- role prefix for the project
+#  - alias -- project alias
+#
+# Uses of `$${..}` and `$$..: ..` are intended to occur in the second rendering.
+# The context for the second rendering is that provided by the hooks service in
+# response to a triggerHook call with the trigger schema payload.
+
+provisionerId: infra
+workerType: build-decision
+schedulerId: ${trust_domain}-level-${level}
+
+# The "$fromNow" options here are escaped so that they are processed by the hooks service's
+# JSON-e rendering when the hook is fired.
+deadline: {$$fromNow: 30 minutes}
+expires: {$$fromNow: 3 days}
+scopes:
+  - assume:${project_role_prefix}:branch:*
+routes:
+  - index.git-push.v1.${alias}.revision.$${payload.sha}
+payload:
+  # built by pushes to the fxci-config repository
+  image: mozillareleases/build-decision:bd900d7a313c796d48da21fdb54ae35db812e3dc@sha256:2a7e477efee5e8b356ea3b642e30b3b5cb48ffe81b0e72bb223b4522b59345d5
+  env:
+    # pass along the hook trigger payload
+    HOOK_PAYLOAD: {$$json: {$$eval: payload}}
+  command:
+    $flatten:
+      - git-push
+      # hard-coded values that can't be changed by the hook payload
+      - --repo-url
+      - ${project_repo}
+      - --project
+      - ${alias}
+      - --level
+      - ${level}
+      - --trust-domain
+      - ${trust_domain}
+      - --repository-type
+      - git
+  features:
+    taskclusterProxy: true
+
+    # If this task does not succeed immediately, something is probably wrong.  We want to avoid a storm of
+    # decision tasks when that problem is resolved, so we are conservative with the time it can possibly retry
+  maxRunTime: 600
+metadata:
+  $$let:
+    description:
+      $$if: firedBy == "triggerHook"
+      then: Fired by triggerHook call from $${clientId}
+      else: Fired by $${firedBy}
+  in:
+    owner: mozilla-taskcluster-maintenance@mozilla.com
+    source: https://firefox-ci-tc.services.mozilla.com/hooks/${hookGroupId}/${hookId}
+    description: $${description}
+    name: On-Push task for ${project_repo}
+priority: highest
+retries: 5
+tags: {}
+extra: {}

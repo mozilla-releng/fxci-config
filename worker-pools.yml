@@ -3283,17 +3283,23 @@ pools:
           config:
             workerType: win11-a64-24h2-builder-{suffix}
             provisionerId: '{pool-group}'
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
+      armDeployment:
+        by-level:
+          1:
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+          3:
+            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       vmSizes:
-        - vmSize: Standard_D16ps_v5
+        - vmSize: Standard_D16pds_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -3302,11 +3308,12 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
-                managedDisk:
-                  storageAccountType: Premium_LRS
+                caching: ReadOnly
                 createOption: FromImage
+                diffDiskSettings:
+                  option: Local
             hardwareProfile:
-              vmSize: Standard_D16ps_v5
+              vmSize: Standard_D16pds_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -3314,7 +3321,7 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-vmSize:
-            Standard_D16ps_v5:
+            Standard_D16pds_v5:
               by-location:
                 central-india: 1
                 east-us-2: 0.9
@@ -3376,17 +3383,23 @@ pools:
           config:
             workerType: win11-a64-25h2-builder-{suffix}
             provisionerId: '{pool-group}'
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
+      armDeployment:
+        by-level:
+          1:
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+          3:
+            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       vmSizes:
-        - vmSize: Standard_D16ps_v5
+        - vmSize: Standard_D16pds_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -3395,11 +3408,12 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
-                managedDisk:
-                  storageAccountType: Premium_LRS
+                caching: ReadOnly
                 createOption: FromImage
+                diffDiskSettings:
+                  option: Local
             hardwareProfile:
-              vmSize: Standard_D16ps_v5
+              vmSize: Standard_D16pds_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -3407,7 +3421,7 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-vmSize:
-            Standard_D16ps_v5:
+            Standard_D16pds_v5:
               by-location:
                 central-india: 1
                 east-us-2: 0.9
@@ -3646,7 +3660,7 @@ pools:
               default: 50
           gecko-t:
             by-suffix:
-              '': 1200
+              '': 2000
               alpha: 500
               gpu: 600
               default: 100
@@ -3880,7 +3894,7 @@ pools:
               default: 50
           gecko-t:
             by-suffix:
-              '': 1200
+              '': 2000
               alpha: 500
               gpu: 600
               default: 100
@@ -4059,17 +4073,19 @@ pools:
           config:
             workerType: 'win11-a64-25h2-{suffix}'
             provisionerId: '{pool-group}'
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       vmSizes:
-        - vmSize: Standard_D8ps_v5
+        - vmSize: Standard_D8pds_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -4078,9 +4094,12 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
+                caching: ReadOnly
                 createOption: FromImage
+                diffDiskSettings:
+                  option: Local
             hardwareProfile:
-              vmSize: Standard_D8ps_v5
+              vmSize: Standard_D8pds_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -4088,7 +4107,7 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-vmSize:
-            Standard_D16ps_v5:
+            Standard_D8pds_v5:
               by-location:
                 central-india: 1
                 uk-south: 0.9
@@ -4137,17 +4156,19 @@ pools:
           config:
             workerType: 'win11-a64-24h2-{suffix}'
             provisionerId: '{pool-group}'
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       vmSizes:
-        - vmSize: Standard_D8ps_v5
+        - vmSize: Standard_D8pds_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -4156,9 +4177,12 @@ pools:
             storageProfile:
               osDisk:
                 osType: Windows
+                caching: ReadOnly
                 createOption: FromImage
+                diffDiskSettings:
+                  option: Local
             hardwareProfile:
-              vmSize: Standard_D8ps_v5
+              vmSize: Standard_D8pds_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -4166,7 +4190,7 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-vmSize:
-            Standard_D16ps_v5:
+            Standard_D8pds_v5:
               by-location:
                 central-india: 1
                 uk-south: 0.9
@@ -4306,7 +4330,7 @@ pools:
       implementation: "{implementation}"
       regions:
         by-suffix:
-          docker-noscratch: [us-central1, us-west1, us-east1]
+          docker-noscratch.*: [us-central1, us-west1, us-east1]
           default: *default-gcp-regions
       image:
         by-implementation:

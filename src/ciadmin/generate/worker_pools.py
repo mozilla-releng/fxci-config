@@ -5,6 +5,7 @@
 import copy
 import hashlib
 import json
+import re
 
 import attr
 from tcadmin.resources import WorkerPool
@@ -115,6 +116,15 @@ def _normalize_arm_parameters(parameters):
     }
 
 
+def _sanitize_pool_id_for_rg(pool_id):
+    """Sanitize a pool_id for use in an Azure resource group name.
+
+    Azure RG names: max 90 chars, alphanumeric, hyphens, underscores, periods,
+    parentheses. Pool IDs contain '/' which must be replaced.
+    """
+    return re.sub(r"[^a-zA-Z0-9\-_.]", "-", pool_id)
+
+
 def _build_arm_template_launch_config(
     *,
     pool_id,
@@ -176,11 +186,17 @@ def _build_arm_template_launch_config(
         "parameters": parameters,
     }
 
+    sanitized_pool = _sanitize_pool_id_for_rg(pool_id)
+    arm_resource_group = f"rg-tc-{sanitized_pool}"
+    # Azure RG names max 90 chars
+    arm_resource_group = arm_resource_group[:90]
+
     launch_config = {
         "location": loc,
         "tags": merge(tags),
         "workerConfig": merge(worker_config),
         "armDeployment": arm_deployment,
+        "armDeploymentResourceGroup": arm_resource_group,
         "workerManager": merge(worker_manager_config),
     }
 
