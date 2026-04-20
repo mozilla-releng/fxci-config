@@ -2274,7 +2274,7 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [autoland, mozilla-beta]
+        alias: [autoland, mozilla-beta, mozilla-release]
         job: cron:l10n-bumper
 
 - grant:
