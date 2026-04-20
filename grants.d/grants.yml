@@ -644,6 +644,16 @@
         alias: [autoland]
 
 - grant:
+    # Allow the run-missing-tests cron hook to trigger the corresponding generic action.
+    - hooks:trigger-hook:project-{trust_domain}/in-tree-action-{level}-generic/*
+  to:
+    - project:
+        job: [cron:run-missing-tests]
+        trust_domain: gecko
+        level: [3]
+        alias: [mozilla-beta]
+
+- grant:
     - project:comm:thunderbird:releng:balrog:server:esr
   to:
     - project:
