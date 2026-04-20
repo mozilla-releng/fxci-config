@@ -2270,6 +2270,14 @@
         job: cron:android-l10n-sync
 
 - grant:
+    - project:releng:lando:action:android_l10n_sync
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: mozilla-release
+        job: cron:android-l10n-sync-beta-to-release
+
+- grant:
     - project:releng:lando:action:l10n_bump
     - project:releng:lando:repo:{lando_repo}
   to:
