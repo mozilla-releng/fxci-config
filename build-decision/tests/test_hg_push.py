@@ -56,33 +56,43 @@ def test_get_revision_from_pulse_message(mocker, pulse_payload, expected):
 
 
 @pytest.mark.parametrize(
-    "push_age, use_tc_yml_repo, dry_run",
+    "push_age, push_files, use_tc_yml_repo, dry_run",
     (
         (
             # Ignore; too old
             hg_push.MAX_TIME_DRIFT + 5000,
+            ["file1.py"],
             False,
             False,
         ),
         (
             # Don't ignore, dry run
             500,
+            ["file1.py"],
             False,
             True,
         ),
         (
             # Don't ignore, use_tc_yml_repo
             1000,
+            ["file1.py"],
             True,
+            False,
+        ),
+        (
+            # Ignore; tags-only push
+            500,
+            [".hgtags"],
+            False,
             False,
         ),
     ),
 )
-def test_build_decision(mocker, push_age, use_tc_yml_repo, dry_run):
+def test_build_decision(mocker, push_age, push_files, use_tc_yml_repo, dry_run):
     """Add coverage for hg_push.build_decision."""
     taskcluster_root_url = "http://taskcluster.local"
     now_timestamp = 1649974668
-    push = {"pushdate": now_timestamp - push_age}
+    push = {"pushdate": now_timestamp - push_age, "files": push_files}
     fake_repo = mocker.MagicMock()
     fake_repo.get_push_info.return_value = push
     fake_tc_yml_repo = mocker.MagicMock()
@@ -103,7 +113,8 @@ def test_build_decision(mocker, push_age, use_tc_yml_repo, dry_run):
 
     hg_push.build_decision(**args)
 
-    if not dry_run and push_age <= hg_push.MAX_TIME_DRIFT:
+    tags_only = set(push_files) == {".hgtags"}
+    if not dry_run and push_age <= hg_push.MAX_TIME_DRIFT and not tags_only:
         fake_task.submit.assert_called_once_with()
 
         mock_render.assert_called_once()
@@ -112,6 +123,7 @@ def test_build_decision(mocker, push_age, use_tc_yml_repo, dry_run):
         assert render_context == {
             "push": {
                 "pushdate": now_timestamp - push_age,
+                "files": push_files,
             },
             "taskcluster_root_url": taskcluster_root_url,
             "tasks_for": "hg-push",
