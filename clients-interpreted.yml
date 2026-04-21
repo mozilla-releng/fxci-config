@@ -68,6 +68,26 @@
             level: 3
             feature: [shipit]
 
+- client:
+      project/releng/shipit/staging:
+          description: Shipit staging client
+          scopes:
+              - hooks:trigger-hook:project-{trust_domain}/in-tree-action-1-merge-automation/*
+  for:
+      - project:
+            level: 1
+            feature: [shipit, merge-automation]
+
+- client:
+      project/releng/shipit/production:
+          description: ''
+          scopes:
+              - hooks:trigger-hook:project-{trust_domain}/in-tree-action-3-merge-automation/*
+  for:
+      - project:
+            level: 3
+            feature: [shipit, merge-automation]
+
 # Amendments to the shipitscript clients for those that need to be able to
 # rebuild product details.
 - client:

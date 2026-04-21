@@ -255,6 +255,38 @@ project/autophone/gecko-t-lambda-stab:
     - auth:websocktunnel-token:firefoxcitc/lambda.*
     - queue:claim-work:proj-autophone/gecko-t-lambda-stab
     - queue:worker-id:lambda/*
+project/autophone/gecko-t-lambda-test-1:
+  description: Lambdatest pool for Relops testing of various things.
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/lambda.*
+    - queue:claim-work:proj-autophone/gecko-t-lambda-test-1
+    - queue:worker-id:lambda/*
+project/autophone/gecko-t-lambda-test-2:
+  description: Lambdatest pool for Relops testing of various things.
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/lambda.*
+    - queue:claim-work:proj-autophone/gecko-t-lambda-test-2
+    - queue:worker-id:lambda/*
+project/autophone/gecko-t-lambda-test-3:
+  description: Lambdatest pool for Relops testing of various things.
+  scopes:
+    - auth:sentry:tc-worker-script
+    - auth:statsum:tc-worker-script
+    - auth:webhooktunnel
+    - auth:websocktunnel-token:firefoxcitc/lambda.*
+    - queue:claim-work:proj-autophone/gecko-t-lambda-test-3
+    - queue:worker-id:lambda/*
+project/enterprise/enterprise-console-backend/dev/artifact-access:
+  description: Static client for Firefox Enterprise to programmatically access private
+    enterprise artifacts.
+  scopes:
+    - queue:get-artifact:project/enterprise/*
 project/packet/docker-worker:
   description: ''
   scopes:
@@ -334,6 +366,14 @@ project/releng/generic-worker/datacenter-applicationservices-b-3-osx:
   description: Datacenter level 3 MacOS dedicated workers for the application-services trust domain.
   scopes:
     - assume:worker-type:releng-hardware/applicationservices-b-3-osx*
+project/releng/generic-worker/datacenter-enterprise-1-b-osx-arm64:
+  description: Datacenter level 1 MacOS dedicated developer and automation worker.
+  scopes:
+    - assume:worker-type:releng-hardware/enterprise-1-b-osx-arm64*
+project/releng/generic-worker/datacenter-enterprise-3-b-osx-arm64:
+  description: Datacenter level 3 MacOS dedicated developer and automation worker.
+  scopes:
+    - assume:worker-type:releng-hardware/enterprise-3-b-osx-arm64*
 project/releng/generic-worker/datacenter-nss-1-b-osx:
   description: Datacenter level 1 MacOS dedicated workers for the nss trust domain.
   scopes:
@@ -343,11 +383,11 @@ project/releng/generic-worker/datacenter-nss-3-b-osx:
   scopes:
     - assume:worker-type:releng-hardware/nss-3-b-osx*
 project/releng/generic-worker/datacenter-gecko-1-b-osx-arm64:
-  description: MacStadium level 1 MacOS dedicated developer and automation worker.
+  description: Datacenter level 1 MacOS dedicated developer and automation worker.
   scopes:
     - assume:worker-type:releng-hardware/gecko-1-b-osx-arm64*
 project/releng/generic-worker/datacenter-gecko-3-b-osx-arm64:
-  description: AWS level 3 MacOS dedicated developer and automation worker.
+  description: Datacenter level 3 MacOS dedicated developer and automation worker.
   scopes:
     - assume:worker-type:releng-hardware/gecko-3-b-osx-arm64*
 project/releng/generic-worker/datacenter-gecko-1-b-osx-arm64-vms:
@@ -507,31 +547,26 @@ project/releng/generic-worker/win11-64-24h2-hw-perf-sheriff:
   description: Tracking metric variability with performance sheriffing. Tracking in RELOPS-1288.
   scopes:
     - assume:worker-type:releng-hardware/win11-64-24h2-hw-perf-sheriff
-project/releng/generic-worker/datacenter-gecko-t-win10-64-1803-hw:
-  description: Datacenter Windows 10 main production worker. Used for Talos,Raptor,
-    and unittest. 1803 references the os build.
+project/releng/generic-worker/win11-64-25h2-hw:
+  description: Datacenter Windows 11 main production worker. 25H2 references the os build.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-win10-64-1803-hw
-project/releng/generic-worker/win10-64-2009-hw:
-  description: Datacenter Windows 10 speedometer worker. 2009 references the os build.
+    - assume:worker-type:releng-hardware/win11-64-25h2-hw
+project/releng/generic-worker/win11-64-25h2-hw-alpha:
+  description: Datacenter Windows 11 experimental worker. 25H2 references the os build.
   scopes:
-    - assume:worker-type:releng-hardware/win10-64-2009-hw
-project/releng/generic-worker/win10-64-2009-hw-alpha:
-  description: Datacenter Windows 10 alpha worker. 2009 references the os build.
+    - assume:worker-type:releng-hardware/win11-64-25h2-hw-alpha
+project/releng/generic-worker/win11-64-25h2-hw-ref:
+  description: Datacenter Windows 11 main production worker. 25H2 references the os build.
   scopes:
-    - assume:worker-type:releng-hardware/win10-64-2009-hw-alpha
-project/releng/generic-worker/win11-64-2009-hw:
-  description: Datacenter Windows 11 main production worker. 2009 references the os build.
+    - assume:worker-type:releng-hardware/win11-64-25h2-hw-ref
+project/releng/generic-worker/win11-64-25h2-hw-ref-alpha:
+  description: Datacenter Windows 11 experimental worker. 25H2 references the os build.
   scopes:
-    - assume:worker-type:releng-hardware/win11-64-2009-hw
+    - assume:worker-type:releng-hardware/win11-64-25h2-hw-ref-alpha
 project/releng/generic-worker/win11-64-24h2-hw:
   description: Datacenter Windows 11 main production worker. 24H2 references the os build.
   scopes:
     - assume:worker-type:releng-hardware/win11-64-24h2-hw
-project/releng/generic-worker/win11-64-2009-hw-alpha:
-  description: Datacenter Windows 11 experimental worker. 2009 references the os build.
-  scopes:
-    - assume:worker-type:releng-hardware/win11-64-2009-hw-alpha
 project/releng/generic-worker/win11-64-24h2-hw-alpha:
   description: Datacenter Windows 11 experimental worker. 24H2 references the os build.
   scopes:
@@ -540,10 +575,10 @@ project/releng/generic-worker/win11-64-24h2-hw-relops1213:
   description: Temp Datacenter Windows 11 experimental worker for RELOPS-1213.
   scopes:
     - assume:worker-type:releng-hardware/win11-64-24h2-hw-relops1213
-project/releng/generic-worker/win11-64-2009-hw-ref:
-  description: Datacenter Windows 11 main production worker. 2009 references the os build.
+project/releng/generic-worker/win11-64-24h2-hw-perf-debug:
+  description: Temp Datacenter Windows 11 experimental worker for RELOPS-2176.
   scopes:
-    - assume:worker-type:releng-hardware/win11-64-2009-hw-ref
+    - assume:worker-type:releng-hardware/win11-64-24h2-hw-perf-debug
 project/releng/generic-worker/win11-64-24h2-hw-ref:
   description: Datacenter Windows 11 main production worker. 24H2 references the os build.
   scopes:
@@ -552,27 +587,6 @@ project/releng/generic-worker/win11-64-24h2-hw-ref-alpha:
   description: Datacenter Windows 11 experimental worker. 24h2 references the os build.
   scopes:
     - assume:worker-type:releng-hardware/win11-64-24h2-hw-ref-alpha
-project/releng/generic-worker/win11-64-2009-hw-dev:
-  description: Datacenter Windows 11 main RelSRE dev worker. 2009 references the os build.
-  scopes:
-    - assume:worker-type:releng-hardware/win11-64-2009-hw-dev
-project/releng/generic-worker/win11-64-2009-hw-ref-alpha:
-  description: Datacenter Windows 11 experimental worker. 2009 references the os build.
-  scopes:
-    - assume:worker-type:releng-hardware/win11-64-2009-hw-ref-alpha
-project/releng/generic-worker/datacenter-gecko-t-win10-64-dev:
-  description: Windows 10 Dedicated workers for developer hardware testing.
-  scopes:
-    - assume:worker-type:releng-hardware/gecko-t-win10-64-dev
-project/releng/generic-worker/datacenter-gecko-t-win10-64-hb:
-  description: Datacenter Windows 10 beta workers. For automated worker configuration
-    testing.
-  scopes:
-    - assume:worker-type:releng-hardware/gecko-t-win10-64-hb
-project/releng/generic-worker/datacenter-gecko-t-win-talos:
-  description: Datacenter Windows 10 experimental perf  test worker.
-  scopes:
-    - assume:worker-type:releng-hardware/gecko-t-win-talos
 project/releng/generic-worker/azure-gecko-t-win7-32-hw:
   description: Azure Windows 7 32-bit hyper-v nested virtual machines. For Testing and development.
   scopes:
@@ -585,19 +599,6 @@ project/releng/generic-worker/azure-gecko-t-win7-gpu-dev:
   description: Azure Windows 7 32-bit gpu virtual machines. For Testing and development.
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-win7-gpu-dev
-project/releng/generic-worker/datacenter-gecko-t-win10-64-ht:
-  description: Datacenter Windows testing workers. For testing and development.
-  scopes:
-    - assume:worker-type:releng-hardware/gecko-t-win10-64-ht
-project/releng/generic-worker/datacenter-gecko-t-win10-64-hw:
-  description: Datacenter Windows 10 main production worker. Typically for Talos and
-    Raptor performance testing.
-  scopes:
-    - assume:worker-type:releng-hardware/gecko-t-win10-64-hw
-project/releng/generic-worker/datacenter-gecko-t-win10-64-hw-dev:
-  description: Datacenter Windows 10 dedicated developer and automation worker.
-  scopes:
-    - assume:worker-type:releng-hardware/gecko-t-win10-64-hw-dev
 project/releng/generic-worker/gcp-wayland-virtualbox:
   description: GCP Ubuntu 22.04 Wayland VirtualBox workers.
   scopes:
@@ -806,6 +807,7 @@ project/releng/scriptworker/v3/mac-signing/prod/firefoxci-gecko-t:
   description: Dep signing worker pool for Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
     - queue:get-artifact:releng/partner/*
+    - queue:get-artifact:private/openh264/*
     - assume:worker-type:scriptworker-prov-v1/dep-gecko-signing-mac14m2
     - queue:worker-id:dep-gecko-signing-mac14m2/dep-gecko-signing-mac14m2*
 # Gecko m2 mac signers
@@ -813,18 +815,21 @@ project/releng/scriptworker/v3/mac-signing/prod/firefoxci-gecko-3:
   description: Production signing worker pool for Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
     - queue:get-artifact:releng/partner/*
+    - queue:get-artifact:private/openh264/*
     - assume:worker-type:scriptworker-prov-v1/gecko-signing-mac14m2
     - queue:worker-id:gecko-signing-mac14m2/gecko-signing-mac14m2*
 # Enterprise m2 mac signers dep
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-enterprise-t:
   description: Dep signing worker pool for Enterprise Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
+    - queue:get-artifact:project/enterprise/repacks/*
     - assume:worker-type:scriptworker-prov-v1/dep-enterprise-signing-mac14m2
     - queue:worker-id:dep-enterprise-signing-mac14m2/dep-enterprise-signing-mac14m2*
 # Enterprise m2 mac signers
 project/releng/scriptworker/v3/mac-signing/prod/firefoxci-enterprise-3:
   description: Production signing worker pool for Enterprise Firefox on macOS 14 (M2). Handles macOS-specific signing tasks.
   scopes:
+    - queue:get-artifact:project/enterprise/repacks/*
     - assume:worker-type:scriptworker-prov-v1/enterprise-signing-mac14m2
     - queue:worker-id:enterprise-signing-mac14m2/enterprise-signing-mac14m2*
 # TB m2 mac signers dep
@@ -1014,6 +1019,7 @@ project/releng/scriptworker/v2/shipit/dev/firefoxci-gecko-1:
     - project:releng:services/shipit_api/schedule_phase/firefox-android/ship_android
     - project:releng:services/shipit_api/schedule_phase/firefox-android/promote_android
     - project:releng:services/shipit_api/update_release_status
+    - project:releng:services/shipit_api/mark_merge_automation_completed/firefox
     - queue:claim-work:scriptworker-k8s/gecko-1-shipit-dev
     - queue:worker-id:gecko-1-shipit-dev/gecko-1-shipit-dev-*
 project/releng/scriptworker/v2/shipit/prod/firefoxci-comm-1:
@@ -1045,6 +1051,7 @@ project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-1:
     - project:releng:services/shipit_api/schedule_phase/firefox-android/ship_android
     - project:releng:services/shipit_api/schedule_phase/firefox-android/promote_android
     - project:releng:services/shipit_api/update_release_status
+    - project:releng:services/shipit_api/mark_merge_automation_completed/firefox
     - queue:claim-work:scriptworker-k8s/gecko-1-shipit
     - queue:worker-id:gecko-1-shipit/gecko-1-shipit-*
 project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-3:
@@ -1060,12 +1067,14 @@ project/releng/scriptworker/v2/shipit/prod/firefoxci-gecko-3:
     - project:releng:services/shipit_api/schedule_phase/firefox-android/ship_android
     - project:releng:services/shipit_api/schedule_phase/firefox-android/promote_android
     - project:releng:services/shipit_api/update_release_status
+    - project:releng:services/shipit_api/mark_merge_automation_completed/firefox
     - queue:claim-work:scriptworker-k8s/gecko-3-shipit
     - queue:worker-id:gecko-3-shipit/gecko-3-shipit-*
 project/releng/scriptworker/v2/shipit/prod/firefoxci-mobile-1:
   description: "mobile level 1 shipit scriptworker"
   scopes:
     - project:releng:services/shipit_api/add_release/firefox-ios
+    - project:releng:services/shipit_api/mark_merge_automation_completed/firefox-ios
     - project:releng:services/shipit_api/schedule_phase/firefox-ios/promote
     - project:releng:services/shipit_api/schedule_phase/firefox-ios/push
     - project:releng:services/shipit_api/schedule_phase/firefox-ios/ship
@@ -1073,6 +1082,7 @@ project/releng/scriptworker/v2/shipit/prod/firefoxci-mobile-3:
   description: "mobile level 3 shipit scriptworker"
   scopes:
     - project:releng:services/shipit_api/add_release/firefox-ios
+    - project:releng:services/shipit_api/mark_merge_automation_completed/firefox-ios
     - project:releng:services/shipit_api/schedule_phase/firefox-ios/promote
     - project:releng:services/shipit_api/schedule_phase/firefox-ios/push
     - project:releng:services/shipit_api/schedule_phase/firefox-ios/ship
@@ -1080,6 +1090,7 @@ project/releng/scriptworker/v2/shipit/dev/firefoxci-mobile-1:
   description: "mobile level 1 nonprod shipit scriptworker"
   scopes:
     - project:releng:services/shipit_api/add_release/firefox-ios
+    - project:releng:services/shipit_api/mark_merge_automation_completed/firefox-ios
     - project:releng:services/shipit_api/schedule_phase/firefox-ios/promote
     - project:releng:services/shipit_api/schedule_phase/firefox-ios/push
     - project:releng:services/shipit_api/schedule_phase/firefox-ios/ship
@@ -1109,6 +1120,7 @@ project/releng/scriptworker/v2/signing/dev/firefoxci-enterprise-t:
   scopes:
     - queue:claim-work:scriptworker-k8s/enterprise-t-signing-dev
     - queue:worker-id:enterprise-t-signing-dev/enterprise-t-signing-dev-*
+    - queue:get-artifact:project/enterprise/*
 project/releng/scriptworker/v2/signing/dev/firefoxci-mobile-t:
   description: dev mobile signing
   scopes:
@@ -1185,11 +1197,13 @@ project/releng/scriptworker/v2/signing/prod/firefoxci-enterprise-3:
   scopes:
     - queue:claim-work:scriptworker-k8s/enterprise-3-signing
     - queue:worker-id:enterprise-3-signing/enterprise-3-signing-*
+    - queue:get-artifact:project/enterprise/*
 project/releng/scriptworker/v2/signing/prod/firefoxci-enterprise-t:
   description: ''
   scopes:
     - queue:claim-work:scriptworker-k8s/enterprise-t-signing
     - queue:worker-id:enterprise-t-signing/enterprise-t-signing-*
+    - queue:get-artifact:project/enterprise/*
 project/releng/scriptworker/v2/signing/prod/firefoxci-glean-3:
   description: ''
   scopes:
@@ -1302,35 +1316,11 @@ project/releng/treeherder/production:
   description: Treeherder production client
   scopes:
     - notify:email:*
-project/relman/code-coverage/backend-production:
-  description: See [bug 1593751](https://bugzilla.mozilla.org/show_bug.cgi?id=1593751#c20)
-  scopes:
-    - assume:project:relman:code-coverage/runtime/production
-project/relman/code-coverage/backend-testing:
-  description: See [bug 1593751](https://bugzilla.mozilla.org/show_bug.cgi?id=1593751#c20).
-  scopes:
-    - assume:project:relman:code-coverage/runtime/testing
-project/relman/code-coverage/events-production:
-  description: See [bug 1593751](https://bugzilla.mozilla.org/show_bug.cgi?id=1593751#c20)
-  scopes:
-    - assume:project:relman:code-coverage/runtime/production
-project/relman/code-coverage/events-testing:
-  description: See [bug ](https://bugzilla.mozilla.org/show_bug.cgi?id=1593751#c20)
-  scopes:
-    - assume:project:relman:code-coverage/runtime/testing
 project/relman/code-review/backend-production:
   description: See [bug 1593749](https://bugzilla.mozilla.org/show_bug.cgi?id=1593749#c12)
   scopes:
     - assume:project:relman:code-review/runtime/production
 project/relman/code-review/backend-testing:
-  description: See [bug 1593749](https://bugzilla.mozilla.org/show_bug.cgi?id=1593749#c12)
-  scopes:
-    - assume:project:relman:code-review/runtime/testing
-project/relman/code-review/events-production:
-  description: See [bug 1593749](https://bugzilla.mozilla.org/show_bug.cgi?id=1593749#c12)
-  scopes:
-    - assume:project:relman:code-review/runtime/production
-project/relman/code-review/events-testing:
   description: See [bug 1593749](https://bugzilla.mozilla.org/show_bug.cgi?id=1593749#c12)
   scopes:
     - assume:project:relman:code-review/runtime/testing

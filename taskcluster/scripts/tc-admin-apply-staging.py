@@ -7,7 +7,7 @@ import subprocess
 
 import taskcluster
 
-ROOT_URL = "https://stage.taskcluster.nonprod.cloudops.mozgcp.net"
+ROOT_URL = "https://stage.taskcluster.nonprod.webservices.mozgcp.net"
 CLIENT_ID = "project/releng/fxci-config/apply"
 
 assert "TASKCLUSTER_PROXY_URL" in os.environ

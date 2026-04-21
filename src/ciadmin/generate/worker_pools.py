@@ -5,7 +5,7 @@
 import copy
 import hashlib
 import json
-import pprint
+import re
 
 import attr
 from tcadmin.resources import WorkerPool
@@ -91,18 +91,6 @@ def _validate_instance_capacity(pool_id, implementation, instance_types):
             )
 
 
-def _populate_deployment_id(instance_worker_config, image_id):
-    if "genericWorker" not in instance_worker_config or instance_worker_config[
-        "genericWorker"
-    ]["config"].get("deploymentId"):
-        return
-    _hash_config = copy.deepcopy(instance_worker_config)
-    _hash_config["imageId"] = image_id
-    instance_worker_config["genericWorker"]["config"]["deploymentId"] = hashlib.sha256(
-        pprint.pformat(_hash_config).encode("utf-8")
-    ).hexdigest()
-
-
 def _populate_launch_config_id(launch_config, pool_id):
     launch_config_id = launch_config.get("workerManager", {}).get("launchConfigId")
     if launch_config_id is not None:
@@ -121,6 +109,15 @@ def _normalize_arm_parameters(parameters):
         key: value if isinstance(value, dict) and "value" in value else {"value": value}
         for key, value in parameters.items()
     }
+
+
+def _sanitize_pool_id_for_rg(pool_id):
+    """Sanitize a pool_id for use in an Azure resource group name.
+
+    Azure RG names: max 90 chars, alphanumeric, hyphens, underscores, periods,
+    parentheses. Pool IDs contain '/' which must be replaced.
+    """
+    return re.sub(r"[^a-zA-Z0-9\-_.]", "-", pool_id)
 
 
 def _build_arm_template_launch_config(
@@ -184,11 +181,17 @@ def _build_arm_template_launch_config(
         "parameters": parameters,
     }
 
+    sanitized_pool = _sanitize_pool_id_for_rg(pool_id)
+    arm_resource_group = f"rg-tc-{sanitized_pool}"
+    # Azure RG names max 90 chars
+    arm_resource_group = arm_resource_group[:90]
+
     launch_config = {
         "location": loc,
         "tags": merge(tags),
         "workerConfig": merge(worker_config),
         "armDeployment": arm_deployment,
+        "armDeploymentResourceGroup": arm_resource_group,
         "workerManager": merge(worker_manager_config),
     }
 
@@ -316,7 +319,6 @@ def get_aws_provider_config(
                             "wstServerURL", aws_config["wst_server_url"]
                         )
                 image_id = image.get(provider_id, region)
-                _populate_deployment_id(instance_worker_config, image_id)
                 launch_config = {
                     "region": region,
                     "launchConfig": {
@@ -753,10 +755,12 @@ def generate_pool_variants(worker_pools, environment):
         for key in (
             "armDeployment",
             "image",
+            "implementation",
             "instance_types",
             "locations",
             "maxCapacity",
             "minCapacity",
+            "regions",
             "security",
             "tags.sourceBranch",
             "vmSizes.launchConfig.hardwareProfile.vmSize",

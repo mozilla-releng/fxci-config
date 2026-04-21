@@ -1,21 +1,21 @@
 ---
-# This is the template for the task definition for hg push hooks.  Its job is
+# This is the template for the task definition for git push hooks.  Its job is
 # to run a decision task for the given revision of the given repository.
 #
 # This is rendered with JSON-e to create a JSON-e task template in a hook,
 # meaning that the content of this file is rendered *twice* with JSON-e.  The
-# context values for the first rendering are;
+# context values for the first rendering are:
 #
-#  - level -- SCM level
+#  - level -- branch level
 #  - trust_domain -- project's trust domain
 #  - hookGroupId / hookId -- hook identifiers
 #  - project_repo -- repository URL
-#  - project_repo_path -- path portion of the repository URL
+#  - project_role_prefix -- role prefix for the project
 #  - alias -- project alias
 #
 # Uses of `$${..}` and `$$..: ..` are intended to occur in the second rendering.
-# The context for the second rendering is that provided by the hooks service in response
-# to a Pulse message from exchange/hgpushes/v2 or a triggerHook call with the same payload
+# The context for the second rendering is that provided by the hooks service in
+# response to a triggerHook call with the trigger schema payload.
 
 provisionerId: infra
 workerType: build-decision
@@ -28,18 +28,16 @@ expires: {$$fromNow: 3 days}
 scopes:
   - assume:${project_role_prefix}:branch:*
 routes:
-  - index.hg-push.v1.${alias}.revision.$${payload.payload.data.heads[0]}
-  - index.hg-push.v1.${alias}.pushlog-id.$${payload.payload.data.pushlog_pushes[0].pushid}
+  - index.git-push.v1.${alias}.revision.$${payload.sha}
 payload:
   # built by pushes to the fxci-config repository
   image: mozillareleases/build-decision:bd900d7a313c796d48da21fdb54ae35db812e3dc@sha256:2a7e477efee5e8b356ea3b642e30b3b5cb48ffe81b0e72bb223b4522b59345d5
   env:
-    # pass along the hook payload, which is the Pulse message from hg (v2)
-    # https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications
-    PULSE_MESSAGE: {$$json: {$$eval: payload}}
+    # pass along the hook trigger payload
+    HOOK_PAYLOAD: {$$json: {$$eval: payload}}
   command:
     $flatten:
-      - hg-push
+      - git-push
       # hard-coded values that can't be changed by the hook payload
       - --repo-url
       - ${project_repo}
@@ -50,11 +48,7 @@ payload:
       - --trust-domain
       - ${trust_domain}
       - --repository-type
-      - hg
-      - $if: taskcluster_yml_repo
-        then:
-          - --taskcluster-yml-repo
-          - ${taskcluster_yml_repo}
+      - git
   features:
     taskclusterProxy: true
 

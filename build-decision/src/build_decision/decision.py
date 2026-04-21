@@ -42,11 +42,13 @@ class Task:
     task_payload = attr.ib()
 
     def display(self):
-        print("Decision Task:")
-        print(json.dumps(self.task_payload, indent=4, sort_keys=True))
+        logger.info(
+            "Decision Task:\n%s",
+            json.dumps(self.task_payload, indent=4, sort_keys=True),
+        )
 
     def submit(self):
-        print(f"Task Id: {self.task_id}")
+        logger.info("Task Id: %s", self.task_id)
 
         if "TASKCLUSTER_PROXY_URL" in os.environ:
             queue = taskcluster.Queue(

@@ -15,6 +15,9 @@ project-relman/code-coverage-repo-production:
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-production
   template_file: hooks/project-relman/code-coverage-repo-production.yml
+  bindings:
+    - exchange: exchange/taskcluster-queue/v1/task-completed
+      routing_key_pattern: route.project.codecoverage.v1.tasks_done
   trigger_schema:
     type: object
     additionalProperties: true
@@ -34,6 +37,9 @@ project-relman/code-coverage-repo-testing:
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-coverage/runtime-testing
   template_file: hooks/project-relman/code-coverage-repo-testing.yml
+  bindings:
+    - exchange: exchange/taskcluster-queue/v1/task-completed
+      routing_key_pattern: route.project.codecoverage.v1.tasks_done
   trigger_schema:
     type: object
     additionalProperties: true
@@ -221,3 +227,97 @@ project-relman/code-review-production:
           taskGroupId:
             type: string
             description: Taskcluster Task Group ID triggering the hook (should be a Try Task Group)
+
+project-engwf/reviewer-assignment-infra-testing:
+  name: Reviewer assignment hook (testing)
+  description: Automatically assign reviewers to PRs
+  owner: omehani@mozilla.com
+  email_on_error: true
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository  # XXX: not sure this is needed anymore
+    - index:insert-task:project.engwf.production.reviewer-assignment.*
+    - notify:email:*
+    - queue:create-task:lowest:code-review/bot  # XXX: will need to change when a dedicated worker is setup (bug 2024115)
+    - queue:route:index.project.engwf.production.reviewer-assignment.latest
+    - queue:route:notify.email.*
+    - queue:scheduler-id:engwf
+    - secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing
+  template_file: hooks/project-engwf/reviewer-assignment-infra-testing.yml
+  bindings:
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '#.infra-testing.#'  # e.g., primary.mozilla-firefox.infra-testing.opened or primary.mozilla-firefox.infra-testing.synchronize
+  trigger_schema:
+    type: object
+    # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
+    required:
+      - body
+      - organization
+      - repository
+    additionalProperties: true
+    properties:
+
+      body:
+        type: object
+        # https://docs.github.com/en/webhooks/webhook-events-and-payloads#pull_request
+        description: |
+          The raw body of github event (for version 1)
+        required:
+          - action
+          - pull_request
+          - repository
+        additionalProperties: true
+        properties:
+
+          action:
+            type: string
+            description: Action on the PR
+            pattern: "^(opened|reopened|synchronize)$"
+
+          pull_request:
+            type: object
+            description: Pull request metadata
+            required:
+              - base
+              - diff_url
+              - html_url
+            additionalProperties: true
+            properties:
+
+              base:
+                type: object
+                description: Pull request metadata
+                required:
+                  - ref
+                additionalProperties: true
+                properties:
+
+                  ref:
+                    type: string
+                    description: Target branch to merge this PR in
+
+              diff_url:
+                # Note: while binary data is not present in that diff, the paths of the binary files are.
+                type: string
+
+              html_url:
+                type: string
+
+
+          repository:
+            type: object
+            required:
+              - html_url
+            additionalProperties: true
+            properties:
+
+              html_url:
+                type: string
+
+
+      organization:
+        type: string
+        pattern: "^mozilla-firefox$"
+
+      repository:
+        type: string
+        pattern: "^infra-testing$"

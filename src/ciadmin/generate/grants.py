@@ -110,7 +110,7 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         # Only grant scopes to `cron:` or `action:` jobs if the corresponding features
         # are enabled. This allows having generic grants that don't generate unused
         # roles
-        if not project.feature("taskgraph-cron") and not project.feature("gecko-cron"):
+        if not project.feature("taskgraph-cron"):
             non_branch_jobs = {
                 job for job in non_branch_jobs if not job.startswith("cron:")
             }

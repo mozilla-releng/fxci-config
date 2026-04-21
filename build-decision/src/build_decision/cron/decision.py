@@ -5,10 +5,13 @@
 
 import copy
 import json
+import logging
 import os
 import shlex
 
 from ..decision import render_tc_yml
+
+logger = logging.getLogger(__name__)
 
 
 def make_arguments(job):
@@ -43,8 +46,10 @@ def run_decision_task(job_name, job, *, repository, push_info, dry_run):
     cron_input = {}
     if job.get("include-cron-input") and "HOOK_PAYLOAD" in os.environ:
         cron_hook_payload = json.loads(os.environ["HOOK_PAYLOAD"])
-        print("Cron Hook Payload:")
-        print(json.dumps(cron_hook_payload, indent=4, sort_keys=True))
+        logger.info(
+            "Cron Hook Payload:\n%s",
+            json.dumps(cron_hook_payload, indent=4, sort_keys=True),
+        )
         cron_input.update(cron_hook_payload)
 
     cron_info = {

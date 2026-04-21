@@ -9,7 +9,6 @@ import hashlib
 import textwrap
 
 import aiohttp
-import iso8601
 import yaml
 from taskcluster import optionsFromEnvironment
 from taskcluster.aio import Hooks
@@ -35,7 +34,7 @@ HOOK_RETENTION_TIME = datetime.timedelta(days=60)
 
 def should_hash(project):
     if project.feature("gecko-actions"):
-        if not project.feature("hg-push") and not project.feature("gecko-cron"):
+        if not project.feature("hg-push") and not project.feature("taskgraph-cron"):
             return False
         if project.is_try:
             return False
@@ -466,7 +465,7 @@ async def update_resources(resources):
                 continue
 
             # ignore if it's too old; do the arithmetic in days to avoid timezone issues
-            last = iso8601.parse_date(hookStatus["lastFire"]["time"])
+            last = datetime.datetime.fromisoformat(hookStatus["lastFire"]["time"])
             age = datetime.date.today() - last.date()
             if age > HOOK_RETENTION_TIME:
                 continue

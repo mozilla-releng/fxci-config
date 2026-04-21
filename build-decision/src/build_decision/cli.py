@@ -64,6 +64,18 @@ def hg_push(options):
     )
 
 
+@app.command("git-push", help="Create a git-push decision task.")
+@repo_arguments(app)
+@app.argument("--dry-run", action="store_true")
+def git_push(options):
+    from .git_push import build_decision  # noqa: PLC0415
+
+    build_decision(
+        repository=options["repository"],
+        dry_run=options["dry_run"],
+    )
+
+
 @app.command("cron", help="Process `.cron.yml`.")
 @repo_arguments(app)
 @app.argument("--branch")

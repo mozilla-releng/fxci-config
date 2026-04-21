@@ -71,3 +71,4 @@ tasks:
     mirror-public-fetches:
       - ^toolchain.*
       - ^corpus-clean-parallel-bicleaner-ai.*
+      - ^corpus-clean-.*
