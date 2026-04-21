@@ -608,6 +608,8 @@ enterprise-firefox:
       level: 3
     - name: enterprise-release
       level: 3
+    - name: enterprise-beta
+      level: 3
     - name: "*"
       level: 1
   features:
