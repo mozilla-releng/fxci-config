@@ -8,13 +8,13 @@ expires:
 extra: {}
 metadata:
   name: Reviewer assignment
-  description: Assign reviewers for PRs in the mozilla-firefox/infra-testing repo
+  description: Assign reviewers for PRs in the mozilla-firefox org
   owner: omehani@mozilla.com
   source: 'https://github.com/mozilla-conduit/reviewer-selector'
 payload:
   capabilities: {}
   env:
-    TC_SECRET_ID: project/engwf/reviewer-assignment/runtime-infra-testing
+    TC_SECRET_ID: project/engwf/reviewer-assignment/runtime-prod
     DIFF_URL:
       $eval: payload.body.pull_request.diff_url
     PR_URL:
@@ -45,7 +45,7 @@ routes:
 schedulerId: engwf
 scopes:
   - 'notify:email:*'
-  - 'secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing'
+  - 'secrets:get:project/engwf/reviewer-assignment/runtime-prod'
   # XXX: need to check this
   - 'index:insert-task:project.engwf.production.reviewer-assignment.*'
 tags: {}

@@ -1931,10 +1931,10 @@
 
 # Bug 2024347: grant shtrom ability to create / modify review assigner hook
 - grant:
-    - assume:hook-id:project-engwf/reviewer-assignment-infra-testing
-    - hooks:modify-hook:project-engwf/reviewer-assignment-infra-testing
-    - secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing
-    - secrets:set:project/engwf/reviewer-assignment/runtime-infra-testing
+    - assume:hook-id:project-engwf/*
+    - hooks:modify-hook:project-engwf/*
+    - secrets:get:project/engwf/*
+    - secrets:set:project/engwf/*
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|omehani
