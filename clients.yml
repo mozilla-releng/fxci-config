@@ -350,6 +350,16 @@ project/releng/generic-worker/datacenter-gecko-3-b-osx-arm64:
   description: AWS level 3 MacOS dedicated developer and automation worker.
   scopes:
     - assume:worker-type:releng-hardware/gecko-3-b-osx-arm64*
+project/releng/generic-worker/datacenter-gecko-1-b-osx-arm64-vms:
+  description: Datacenter level 1 macOS ARM64 VM-based builder workers.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-1-b-osx-arm64-vms
+    - queue:worker-id:mdc1/mac*
+project/releng/generic-worker/datacenter-gecko-3-b-osx-arm64-vms:
+  description: Datacenter level 3 macOS ARM64 VM-based builder workers.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-3-b-osx-arm64-vms
+    - queue:worker-id:mdc1/mac*
 project/releng/generic-worker/datacenter-mozilla-1-b-osx:
   description: Datacenter tester MacOS dedicated workers for the mozilla trust domain.
   scopes:
