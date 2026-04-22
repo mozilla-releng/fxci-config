@@ -1538,7 +1538,7 @@ mozilla:
 mozilla-conduit:
   repo: https://github.com/mozilla-conduit/*
   repo_type: git
-  trust_domain: mozilla
+  trust_domain: proj-engwf
   branches:
     - name: main
       level: 1

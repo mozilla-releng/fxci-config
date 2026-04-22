@@ -1,0 +1,17 @@
+##
+# mozilla-conduit (Engineering Workflow) roles
+#
+
+# Grant these for all conduit(proj-engwf) repos on github
+- grant:
+    - notify:email:*
+    - queue:route:garbage.*
+    - queue:route:index.garbage.*
+    - queue:route:notify.email.*
+    - queue:route:index.project.engwf.*
+    - queue:route:index.project.engwf.*
+    - queue:create-task:{priority}:{trust_domain}/*
+  to:
+    - project:
+        trust_domain: proj-engwf
+        job: [pull-request:*, branch:main]
