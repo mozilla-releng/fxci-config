@@ -1,0 +1,59 @@
+---
+$let:
+  $switch:
+    'tasks_for[:19] == "github-pull-request"':
+      repoUrl: {$eval: payload.body.pull_request.head.repo.html_url}
+      head_sha: {$eval: payload.body.pull_request.head.sha}
+      head_ref: {$eval: payload.body.pull_request.head.ref}
+      repoName: {$eval: "join(split(payload.body.repository.full_name, '/'), '-')"}
+    'tasks_for == "github-push"':
+      repoUrl: {$eval: payload.body.repository.html_url}
+      head_sha: {$eval: payload.body.after}
+      head_ref: {$eval: payload.body.ref}
+      repoName: {$eval: "join(split(payload.body.repository.full_name, '/'), '-')"}
+in:
+  $let:
+    preCommitInstallSpec:
+      $if: "'context' in payload && 'pre-commit-version' in payload.context"
+      then: {$eval: "'pre-commit==' + payload.context['pre-commit-version']"}
+      else: pre-commit
+  in:
+    created: {$fromNow: 0 seconds}
+    deadline: {$fromNow: 2 hours}
+    expires: {$fromNow: 1 month}
+    metadata:
+      name: pre-commit ({version})
+      description: Run pre-commit checks
+      owner: release+hooks@mozilla.com
+      source: ${repoUrl}
+    payload:
+      capabilities: {}
+      cache:
+        lint-pre-commit-uv-v1: /builds/worker/.cache/uv
+        lint-pre-commit-repos-v1: /builds/worker/.cache/pre-commit
+        lint-pre-commit-checkout-${repoName}-v1: /builds/worker/checkouts
+      env:
+        SRC_HEAD_REPOSITORY: ${repoUrl}
+        SRC_HEAD_REV: ${head_sha}
+        SRC_HEAD_REF: ${head_ref}
+        SRC_REPOSITORY_TYPE: git
+        UV_CACHE_DIR: /builds/worker/.cache/uv
+        PRE_COMMIT_HOME: /builds/worker/.cache/pre-commit
+        REPOSITORIES:
+          $json: {src: Source}
+      features:
+        taskclusterProxy: true
+      image: mozillareleases/taskgraph:run-task-v20.0.0@sha256:a905d5e14a97f0d313319b6bec4e5d670cf4505747e0cbaf360226046c1d4511
+      maxRunTime: 3600
+      command:
+        - run-task
+        - --src-checkout=/builds/worker/checkouts/src
+        - --task-cwd=/builds/worker/checkouts/src
+        - --
+        - bash
+        - -c
+        - uv tool install ${preCommitInstallSpec} && pre-commit run --all-files
+    priority: lowest
+    provisionerId: mozilla-t
+    workerType: pre-commit
+    schedulerId: lint
