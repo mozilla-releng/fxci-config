@@ -48,7 +48,7 @@ def get_revision_from_pulse_message():
     return pulse_payload["data"]["heads"][0]
 
 
-def build_decision(*, repository, taskcluster_yml_repo, dry_run):
+def build_decision(*, repository, dry_run):
     logging.info("Running build-decision task")
     # The hg-push hook can be triggered manually, so we throw out everything
     # from the input, other than the revision, and get the pushinfo from
@@ -63,10 +63,7 @@ def build_decision(*, repository, taskcluster_yml_repo, dry_run):
         return
 
     with timed("Fetching .taskcluster.yml"):
-        if taskcluster_yml_repo is None:
-            taskcluster_yml = repository.get_file(".taskcluster.yml", revision=revision)
-        else:
-            taskcluster_yml = taskcluster_yml_repo.get_file(".taskcluster.yml")
+        taskcluster_yml = repository.get_file(".taskcluster.yml", revision=revision)
 
     with timed("Rendering task"):
         task = render_tc_yml(

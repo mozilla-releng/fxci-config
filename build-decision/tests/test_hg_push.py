@@ -56,36 +56,32 @@ def test_get_revision_from_pulse_message(mocker, pulse_payload, expected):
 
 
 @pytest.mark.parametrize(
-    "push_age, use_tc_yml_repo, dry_run",
+    "push_age, dry_run",
     (
         (
             # Ignore; too old
             hg_push.MAX_TIME_DRIFT + 5000,
             False,
-            False,
         ),
         (
             # Don't ignore, dry run
             500,
-            False,
             True,
         ),
         (
-            # Don't ignore, use_tc_yml_repo
+            # Don't ignore
             1000,
-            True,
             False,
         ),
     ),
 )
-def test_build_decision(mocker, push_age, use_tc_yml_repo, dry_run):
+def test_build_decision(mocker, push_age, dry_run):
     """Add coverage for hg_push.build_decision."""
     taskcluster_root_url = "http://taskcluster.local"
     now_timestamp = 1649974668
     push = {"pushdate": now_timestamp - push_age}
     fake_repo = mocker.MagicMock()
     fake_repo.get_push_info.return_value = push
-    fake_tc_yml_repo = mocker.MagicMock()
     fake_task = mocker.MagicMock()
 
     mocker.patch.object(
@@ -97,7 +93,6 @@ def test_build_decision(mocker, push_age, use_tc_yml_repo, dry_run):
 
     args = {
         "repository": fake_repo,
-        "taskcluster_yml_repo": fake_tc_yml_repo if use_tc_yml_repo else None,
         "dry_run": dry_run,
     }
 
