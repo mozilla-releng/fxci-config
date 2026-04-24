@@ -1514,6 +1514,23 @@ crash-ping-ingest:
     taskgraph-cron: true
     trust-domain-scopes: true
 
+# Bug 2028701: Setup `mozilla-conduit/reviewer-selector` with Taskcluster
+mozilla-conduit:
+  repo: https://github.com/mozilla-conduit/reviewer-selector
+  repo_type: git
+  trust_domain: mozilla
+  trust_project: reviewer-selector
+  branches:
+    - name: main
+      level: 3
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public
+    pr-actions: true
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 # WARNING: These grants apply to entire Github orgs.
 #
 # We should only grant the mozilla trust domain and level 1 context here, as
@@ -1523,20 +1540,6 @@ crash-ping-ingest:
 
 mozilla:
   repo: https://github.com/mozilla/*
-  repo_type: git
-  trust_domain: mozilla
-  branches:
-    - name: main
-      level: 1
-  features:
-    github-taskgraph: true
-    github-pull-request:
-      policy: public_restricted
-    taskgraph-actions: true
-    trust-domain-scopes: true
-
-mozilla-conduit:
-  repo: https://github.com/mozilla-conduit/*
   repo_type: git
   trust_domain: mozilla
   branches:
