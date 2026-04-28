@@ -12,6 +12,7 @@ from ciadmin.generate.ciconfig.environment import Environment
 from ciadmin.generate.ciconfig.worker_images import WorkerImage, WorkerImages
 from ciadmin.generate.ciconfig.worker_pools import WorkerPool
 from ciadmin.generate.worker_pools import (
+    _arm_deployment_resource_group,
     is_invalid_gcp_instance_type,
     make_worker_pool,
 )
@@ -519,3 +520,32 @@ def test_is_invalid_gcp_instance_type(invalid_instances, zone, machine_type, exp
     assert (
         is_invalid_gcp_instance_type(invalid_instances, zone, machine_type) == expected
     )
+
+
+@pytest.mark.parametrize(
+    "pool_id,loc,expected",
+    [
+        (
+            "provId/my-worker-pool",
+            "useast1",
+            "rg-tc-provId-my-worker-pool-useast1",
+        ),
+        (
+            "gecko-t/win11-64-25h2",
+            "australiacentral2",
+            "rg-tc-gecko-t-win11-64-25h2-australiacentral2",
+        ),
+        # Pool ID long enough that the pool segment must be truncated; loc
+        # must still survive intact so per-region split holds.
+        (
+            "provId/" + "x" * 200,
+            "australiacentral2",
+            "rg-tc-provId-" + "x" * 59 + "-australiacentral2",
+        ),
+    ],
+)
+def test_arm_deployment_resource_group(pool_id, loc, expected):
+    result = _arm_deployment_resource_group(pool_id, loc)
+    assert result == expected
+    assert len(result) <= 90
+    assert result.endswith(f"-{loc}")

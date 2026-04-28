@@ -120,6 +120,17 @@ def _sanitize_pool_id_for_rg(pool_id):
     return re.sub(r"[^a-zA-Z0-9\-_.]", "-", pool_id)
 
 
+def _arm_deployment_resource_group(pool_id, loc):
+    """Build the Azure RG name for a pool's deployments in a single region.
+
+    Truncates the pool segment only — `loc` always survives intact so the
+    per-region split holds even for pathologically long pool IDs.
+    """
+    sanitized_pool = _sanitize_pool_id_for_rg(pool_id)
+    max_pool_len = 90 - len("rg-tc-") - 1 - len(loc)
+    return f"rg-tc-{sanitized_pool[:max_pool_len]}-{loc}"
+
+
 def _build_arm_template_launch_config(
     *,
     pool_id,
@@ -181,10 +192,7 @@ def _build_arm_template_launch_config(
         "parameters": parameters,
     }
 
-    sanitized_pool = _sanitize_pool_id_for_rg(pool_id)
-    arm_resource_group = f"rg-tc-{sanitized_pool}-{loc}"
-    # Azure RG names max 90 chars
-    arm_resource_group = arm_resource_group[:90]
+    arm_resource_group = _arm_deployment_resource_group(pool_id, loc)
 
     launch_config = {
         "location": loc,
