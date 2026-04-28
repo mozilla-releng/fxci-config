@@ -65,6 +65,7 @@
         alias: enterprise-firefox-try
 
 - grant:
+    - queue:route:tc-treeherder.v2.enterprise-beta.*
     - queue:route:tc-treeherder.v2.enterprise-main.*
     - queue:route:tc-treeherder.v2.enterprise-release.*
   to:
@@ -98,6 +99,14 @@
     - project:
         alias: enterprise-firefox
         job: [branch:enterprise-main]
+
+- grant:
+    - project:{trust_domain}:releng:signing:cert:release-signing
+    - queue:route:tc-treeherder.v2.enterprise-beta.*
+  to:
+    - project:
+        alias: enterprise-firefox
+        job: [branch:enterprise-beta]
 
 - grant:
     - project:{trust_domain}:releng:signing:cert:release-signing
