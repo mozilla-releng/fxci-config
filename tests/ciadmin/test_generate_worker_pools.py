@@ -263,10 +263,7 @@ def assert_azure_arm(pool):
         "vmSize": {"value": "Standard_F8s_v2"},
     }
 
-    assert (
-        launch_config["armDeploymentResourceGroup"]
-        == "rg-tc-provId-my-worker-pool-useast1"
-    )
+    assert launch_config["armDeploymentResourceGroup"] == "rg-tc-provId-my-worker-pool"
 
     assert "hardwareProfile" not in launch_config
     assert "storageProfile" not in launch_config
@@ -523,29 +520,48 @@ def test_is_invalid_gcp_instance_type(invalid_instances, zone, machine_type, exp
 
 
 @pytest.mark.parametrize(
-    "pool_id,loc,expected",
+    "pool_id,loc,per_region,expected",
     [
+        # Default (per_region=False): one RG per pool, no location suffix.
         (
             "provId/my-worker-pool",
             "useast1",
+            False,
+            "rg-tc-provId-my-worker-pool",
+        ),
+        # Pool ID long enough to require 90-char truncation in default mode.
+        (
+            "provId/" + "x" * 200,
+            "useast1",
+            False,
+            ("rg-tc-provId-" + "x" * 200)[:90],
+        ),
+        # Opt-in (per_region=True): location appended.
+        (
+            "provId/my-worker-pool",
+            "useast1",
+            True,
             "rg-tc-provId-my-worker-pool-useast1",
         ),
         (
             "gecko-t/win11-64-25h2",
             "australiacentral2",
+            True,
             "rg-tc-gecko-t-win11-64-25h2-australiacentral2",
         ),
-        # Pool ID long enough that the pool segment must be truncated; loc
-        # must still survive intact so per-region split holds.
+        # Per-region with a pool ID long enough that the pool segment must
+        # be truncated; loc must still survive intact so the split holds.
         (
             "provId/" + "x" * 200,
             "australiacentral2",
+            True,
             "rg-tc-provId-" + "x" * 59 + "-australiacentral2",
         ),
     ],
 )
-def test_arm_deployment_resource_group(pool_id, loc, expected):
-    result = _arm_deployment_resource_group(pool_id, loc)
+def test_arm_deployment_resource_group(pool_id, loc, per_region, expected):
+    result = _arm_deployment_resource_group(pool_id, loc, per_region=per_region)
     assert result == expected
     assert len(result) <= 90
-    assert result.endswith(f"-{loc}")
+    if per_region:
+        assert result.endswith(f"-{loc}")
