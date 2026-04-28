@@ -153,9 +153,9 @@ win11a6425h2builderalpha:
     name: win11_a64_25h2_builder_alpha
 trusted_win11_a64_25h2_builder:
   azure_trusted:
-    version: 1.0.0
+    version: 1.0.2
     resource_group: rg-packer-worker-images
-    deployment_id: alpha
+    deployment_id: "0e15b55"
     name: trusted_win11_a64_25h2_builder
 ronin_b1_windows11_a64_24h2_builder_alpha:
   azure2:
