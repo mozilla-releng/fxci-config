@@ -182,8 +182,6 @@ def _build_arm_template_launch_config(
     }
 
     sanitized_pool = _sanitize_pool_id_for_rg(pool_id)
-    # Per-region-per-pool deployment RG so Azure's 800-deployments-per-RG
-    # quota is bounded by single-region arrival rate, not pool-wide.
     arm_resource_group = f"rg-tc-{sanitized_pool}-{loc}"
     # Azure RG names max 90 chars
     arm_resource_group = arm_resource_group[:90]
