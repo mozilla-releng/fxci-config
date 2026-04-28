@@ -262,7 +262,10 @@ def assert_azure_arm(pool):
         "vmSize": {"value": "Standard_F8s_v2"},
     }
 
-    assert launch_config["armDeploymentResourceGroup"] == "rg-tc-provId-my-worker-pool"
+    assert (
+        launch_config["armDeploymentResourceGroup"]
+        == "rg-tc-provId-my-worker-pool-useast1"
+    )
 
     assert "hardwareProfile" not in launch_config
     assert "storageProfile" not in launch_config
