@@ -3962,6 +3962,9 @@ pools:
                 west-us-3: 1
                 north-central-us: 0.95
                 central-india: 0.95
+                canada-east: 0.95
+                germany-west-central: 0.95
+                australia-central-2: 0.95
                 south-india: 0.8
                 canada-central: 0.7
                 central-us: 0.6
