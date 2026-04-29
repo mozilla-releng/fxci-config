@@ -213,9 +213,9 @@ ronin_t_windows11_64_24h2_alpha:
     name: win11_64_24h2_alpha
 win116425h2:
   azure2:
-    version: 1.0.2
+    version: 1.0.1
     resource_group: rg-packer-worker-images
-    deployment_id: "0e15b55"
+    deployment_id: "82086a7"
     name: win11_64_25h2
 win116425h2alpha:
   azure2:
