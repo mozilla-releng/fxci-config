@@ -3150,8 +3150,8 @@ pools:
       worker-purpose: gecko-t
       locations:
         by-suffix:
-          alpha: [uk-south]
-          source-alpha: [uk-south, west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+          alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
+          source-alpha: [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
           (webgpu|gpu)(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
           default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
       maxCapacity:
@@ -3479,7 +3479,7 @@ pools:
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
-              (source-)?alpha: [uk-south]
+              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
               webgpu(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
               gpu(-alpha)?: [east-us, east-us-2, west-us, west-us-2]
               (ssd|source): [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
@@ -3646,7 +3646,7 @@ pools:
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
-              (source-)?alpha: [uk-south]
+              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
               webgpu(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
               gpu(-alpha)?: [east-us, east-us-2, west-us, west-us-2]
               (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
@@ -3881,7 +3881,7 @@ pools:
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
-              (source-)?alpha: [uk-south]
+              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
               (webgpu|gpu)(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
               (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
