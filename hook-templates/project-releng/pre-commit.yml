@@ -21,7 +21,7 @@ in:
       $switch:
         'headRef[:10] == "refs/tags/"': '${headRef[10:]}'
         'headRef[:11] == "refs/heads/"': '${headRef[11:]}'
-        $default: '${head_ref}'
+        $default: '${headRef}'
   in:
     created: {$fromNow: 0 seconds}
     deadline: {$fromNow: 2 hours}
