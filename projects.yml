@@ -723,6 +723,7 @@ taskgraph:
     github-pull-request:
       policy: public_restricted
     pr-actions: true
+    pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
@@ -1550,6 +1551,7 @@ mozilla:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
+    pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true
 
