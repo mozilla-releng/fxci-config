@@ -17,7 +17,7 @@ $let:
       pullRequestAction: 'UNDEFINED'
 in:
   $if: >
-     (tasks_for == "github-push")
+     (payload.tasks_for == "github-push")
      || (isPullRequest && pullRequestAction in ["opened", "reopened", "synchronize"])
   then:
     $let:
