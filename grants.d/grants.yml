@@ -1077,6 +1077,13 @@
         has_trust_project: true
         job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
 
+- grant:
+    - hooks:trigger-hook:lint/pre-commit-*
+    - queue:seal-task-group:lint/*
+  to:
+    - project:
+        feature: pre-commit
+
 ##
 # mozilla roles
 #

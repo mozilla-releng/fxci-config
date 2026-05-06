@@ -55,6 +55,12 @@ def generate_hook_variants(hooks):
             for field in fields:
                 resolve_keyed_by(fields, field, hook_name, **attributes)
 
+            scopes = [s.format(**attributes) for s in hook.scopes]
+
+            # Explicitly add the anonymous role to avoid scope errors fetching
+            # public/github/customCheckRunText.md (which TC Github looks for).
+            scopes.append("assume:anonymous")
+
             yield attr.evolve(
                 hook,
                 hook_group_id=hook.hook_group_id.format(**attributes),
@@ -62,7 +68,7 @@ def generate_hook_variants(hooks):
                 name=hook.name.format(**attributes),
                 description=hook.description.format(**attributes),
                 template_file=fields["template_file"].format(**attributes),
-                scopes=[s.format(**attributes) for s in hook.scopes],
+                scopes=scopes,
                 attributes=attributes,
                 variants=[{}],
             )

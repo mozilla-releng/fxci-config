@@ -43,6 +43,7 @@ def test_substitution():
     assert result.scopes == [
         "queue:create-task:highest:my-pool",
         "secrets:get:runtime-production",
+        "assume:anonymous",
     ]
 
 

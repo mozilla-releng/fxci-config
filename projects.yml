@@ -56,6 +56,7 @@
 #   - `treescript-phase` -- this repository should have treescript related scopes associated
 #   - `merge-automation` -- this repository should have merge-automation related scopes associated
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
+#   - `pre-commit` -- this repository runs the lint/pre-commit hook
 
 ash:
   repo: https://hg.mozilla.org/projects/ash
@@ -722,6 +723,7 @@ taskgraph:
     github-pull-request:
       policy: public_restricted
     pr-actions: true
+    pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
@@ -1549,6 +1551,7 @@ mozilla:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
+    pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true
 
@@ -1563,5 +1566,6 @@ mozilla-releng:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
+    pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true
