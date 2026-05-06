@@ -164,11 +164,6 @@ lint/pre-commit-{version}:
     - queue:route:checks
     - queue:scheduler-id:lint
   template_file: hook-templates/project-releng/pre-commit.yml
-  bindings:
-    - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: '#'
-    - exchange: exchange/taskcluster-github/v1/push
-      routing_key_pattern: '#'
   trigger_schema:
     type: object
     additionalProperties: false
