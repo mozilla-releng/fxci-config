@@ -62,6 +62,10 @@ def build_decision(*, repository, taskcluster_yml_repo, dry_run):
         logger.warning("Push is too old, not triggering tasks")
         return
 
+    if set(push.get("files", [])) == {".hgtags"}:
+        logger.warning("Push only modifies .hgtags, not scheduling decision task")
+        return
+
     with timed("Fetching .taskcluster.yml"):
         if taskcluster_yml_repo is None:
             taskcluster_yml = repository.get_file(".taskcluster.yml", revision=revision)

@@ -3,7 +3,7 @@ import requests.exceptions
 import yaml
 
 import build_decision.cron as cron
-from build_decision.repository import NoPushesError
+from build_decision.repository import NoPushesError, RetryableError
 
 from . import TEST_DATA_DIR
 
@@ -29,6 +29,12 @@ def test_load_jobs_404(mocker):
     fake_repo.get_file.side_effect = requests.exceptions.HTTPError(
         response=fake_response
     )
+    assert cron.load_jobs(fake_repo, "rev") == {}
+
+
+def test_load_jobs_retryable_error(mocker):
+    fake_repo = mocker.MagicMock()
+    fake_repo.get_file.side_effect = RetryableError("retries exhausted")
     assert cron.load_jobs(fake_repo, "rev") == {}
 
 
