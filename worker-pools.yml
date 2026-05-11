@@ -3153,7 +3153,7 @@ pools:
           alpha: [uk-south]
           source-alpha: [uk-south, west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
           (webgpu|gpu)(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
-          default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
+          default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india, uk-south]
       maxCapacity:
         by-suffix:
           '': 600
@@ -3213,16 +3213,17 @@ pools:
             Standard_F8s_v2:
               by-location:
                 west-us-3: 1
+                uk-south: 1
                 north-central-us: 0.95
                 central-india: 0.95
+                west-us: 0.8
                 south-india: 0.8
-                canada-central: 0.7
-                central-us: 0.6
-                west-us-2: 0.5
+                central-us: 0.5
                 east-us: 0.5
                 north-europe: 0.4
-                west-us: 0.4
-                east-us-2: 0.3
+                canada-central: 0.3
+                west-us-2: 0.3
+                east-us-2: 0.1
                 default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
@@ -3556,13 +3557,13 @@ pools:
                 west-us-3: 1
                 north-central-us: 1
                 south-india: 0.9
-                central-us: 0.8
-                north-europe: 0.7
-                canada-central: 0.6
-                west-us-2: 0.6
+                west-us: 0.8
+                central-us: 0.5
                 east-us: 0.5
-                west-us: 0.4
-                east-us-2: 0.4
+                north-europe: 0.4
+                canada-central: 0.3
+                west-us-2: 0.3
+                east-us-2: 0.1
                 default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
@@ -3651,7 +3652,7 @@ pools:
               gpu(-alpha)?: [east-us, east-us-2, west-us, west-us-2]
               (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
-              default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
+              default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india, uk-south]
       maxCapacity:
         by-pool-group:
           comm-t:
@@ -3734,16 +3735,17 @@ pools:
             Standard_F8s_v2:
               by-location:
                 west-us-3: 1
+                uk-south: 1
                 north-central-us: 0.95
                 central-india: 0.95
+                west-us: 0.8
                 south-india: 0.8
-                canada-central: 0.7
-                central-us: 0.6
-                west-us-2: 0.5
+                central-us: 0.5
                 east-us: 0.5
                 north-europe: 0.4
-                west-us: 0.4
-                east-us-2: 0.3
+                canada-central: 0.3
+                west-us-2: 0.3
+                east-us-2: 0.1
                 default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
@@ -3965,14 +3967,14 @@ pools:
                 central-india: 0.95
                 canada-east: 0.95
                 southeast-asia: 0.95
+                west-us: 0.8
                 south-india: 0.8
-                canada-central: 0.7
-                central-us: 0.6
-                west-us-2: 0.5
+                central-us: 0.5
                 east-us: 0.5
                 north-europe: 0.4
-                west-us: 0.4
-                east-us-2: 0.3
+                canada-central: 0.3
+                west-us-2: 0.3
+                east-us-2: 0.1
                 default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
