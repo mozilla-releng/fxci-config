@@ -2110,6 +2110,10 @@ pools:
         suffix: '-snap'
       - pool-group: mozilla-t
         suffix: ''
+      - pool-group: enterprise-t
+        suffix: ''
+      - pool-group: enterprise-t
+        suffix: '-snap'
     description: Worker for Wayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
     email_on_error: false
@@ -2307,6 +2311,7 @@ pools:
   - pool_id: '{pool-group}/t-linux-xlarge-2204-wayland'  # Bug 1903073
     variants:
       - pool-group: gecko-t
+      - pool-group: enterprise-t
     description: Worker for Wayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
     email_on_error: false
@@ -4262,6 +4267,7 @@ pools:
       - pool-group: comm-t
       - pool-group: mozilla-t
       - pool-group: nss-t
+      - pool-group: enterprise-t
       # D2G / Intel / noscratch
       - pool-group: gecko-t
         suffix: 'docker-noscratch'
@@ -4316,6 +4322,10 @@ pools:
       - pool-group: gecko-t
         # This is a separate pool from above as it's granted privileged
         # os-groups.
+        suffix: '2404-wayland-snap'
+        implementation: generic-worker/linux
+        instance_types: [*c2-standard-4-60gb]
+      - pool-group: enterprise-t
         suffix: '2404-wayland-snap'
         implementation: generic-worker/linux
         instance_types: [*c2-standard-4-60gb]
@@ -4376,14 +4386,20 @@ pools:
       regions: [us-central1, us-east1]
       image: ubuntu-2404-headless-alpha
       instance_types: []
-  - pool_id: 'gecko-t/t-linux-docker-kvm'
+  - pool_id: '{pool-group}/t-linux-docker-kvm'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: gecko-t
+      - pool-group: enterprise-t
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 1600
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 1600
+          enterprise-t: 100
       regions: *default-gcp-regions
       image: ubuntu-2404-headless
       implementation: generic-worker/linux-d2g
