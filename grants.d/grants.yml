@@ -2364,3 +2364,10 @@
     - project:
         alias: mozilla-release
         job: action:merge-automation
+
+- grant:
+    - generic-worker:os-group:<..>/docker
+  to:
+    - project:
+        alias: reviewer-selector
+        job: action:github-pull-request
