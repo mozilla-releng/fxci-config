@@ -7,7 +7,7 @@ $let:
       headRef: {$eval: payload.event.pull_request.head.ref}
       repoName: {$eval: "join(split(payload.event.repository.full_name, '/'), '-')"}
       isPullRequest: true
-      pullRequestAction: payload.event.action
+      pullRequestAction: {$eval: payload.event.action}
     'payload.tasks_for == "github-push"':
       repoUrl: {$eval: payload.event.repository.html_url}
       headSha: {$eval: payload.event.after}
