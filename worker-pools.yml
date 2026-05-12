@@ -2174,6 +2174,7 @@ pools:
     provider_id: fxci-level1-gcp
     variants:
       - pool-group: gecko-t
+      - pool-group: mozilla-t
     config:
       minCapacity: 0
       maxCapacity: 10
