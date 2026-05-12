@@ -3150,8 +3150,8 @@ pools:
       worker-purpose: gecko-t
       locations:
         by-suffix:
-          alpha: [uk-south]
-          source-alpha: [uk-south, west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+          alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
+          source-alpha: [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
           (webgpu|gpu)(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
           default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india, uk-south]
       maxCapacity:
@@ -3480,7 +3480,7 @@ pools:
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
-              (source-)?alpha: [uk-south]
+              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
               webgpu(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
               gpu(-alpha)?: [east-us, east-us-2, west-us, west-us-2]
               (ssd|source): [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
@@ -3647,7 +3647,7 @@ pools:
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
-              (source-)?alpha: [uk-south]
+              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
               webgpu(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
               gpu(-alpha)?: [east-us, east-us-2, west-us, west-us-2]
               (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
@@ -3661,7 +3661,7 @@ pools:
               default: 50
           gecko-t:
             by-suffix:
-              '': 2000
+              '': 1200
               alpha: 500
               gpu: 600
               default: 100
@@ -3883,8 +3883,8 @@ pools:
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
-              (source-)?alpha: [uk-south]
-              (webgpu|gpu)(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
+              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
+              (webgpu|gpu)(-alpha)?: [west-us-3, east-us, west-us, west-us-2]
               (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
               default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india, uk-south]
@@ -3896,7 +3896,7 @@ pools:
               default: 50
           gecko-t:
             by-suffix:
-              '': 2000
+              '': 1200
               alpha: 500
               gpu: 600
               default: 100
@@ -3978,8 +3978,7 @@ pools:
               by-location:
                 west-us-3: 1
                 east-us: 1
-                west-us-2: 0.8
-                east-us-2: 0.8
+                west-us-2: 1
                 default: 0.5
             Standard_E8ads_v6:
               by-location:
@@ -4584,3 +4583,15 @@ pools:
           disks:
             - *persistent-disk-75gb
           machine_type: c2-standard-4
+  - pool_id: mozilla-t/pre-commit
+    description: Worker for running pre-commit checks.
+    owner: releng@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 1
+      maxCapacity: 10
+      regions: *default-gcp-regions
+      image: ubuntu-2404-headless
+      implementation: generic-worker/linux-d2g
+      instance_types: [*c3d-standard-4]
