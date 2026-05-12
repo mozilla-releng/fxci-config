@@ -4,8 +4,6 @@
 
 from asyncio import Lock
 
-import aiohttp
-
 from ciadmin.util import github
 
 _cache = {}
@@ -39,30 +37,32 @@ async def get(repo_path, repo_type="git"):
             response = await client.request(
                 "GET", branches_endpoint, headers=headers, params=params
             )
-            try:
+            if not response.ok:
+                detail = await response.text()
+                print(
+                    f"Got error when querying {branches_endpoint}: "
+                    f"{response.status} {response.reason}: {detail}"
+                )
                 response.raise_for_status()
-                result = await response.json()
-                branches.extend([b["name"] for b in result])
-                # If `link` is present in the response it will contain
-                # pagination information. We need to examine it to see
-                # if there are additional pages of results to fetch.
-                # See https://docs.github.com/en/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28#using-link-headers
-                # for a full description of the responses.
-                # This icky parsing can probably go away when we switch
-                # to a GitHub app, as we'll likely be using a proper
-                # client at that point.
-                for l in response.headers.get("link", "").split(","):
-                    if 'rel="next"' in l:
-                        branches_endpoint = l.split(">")[0].split("<")[1]
-                        branches_endpoint = branches_endpoint[
-                            len("https://api.github.com") :
-                        ]
-                        break
-                else:
-                    branches_endpoint = None
-            except aiohttp.ClientResponseError as e:
-                print(f"Got error when querying {branches_endpoint}: {e}")
-                raise e
+            result = await response.json()
+            branches.extend([b["name"] for b in result])
+            # If `link` is present in the response it will contain
+            # pagination information. We need to examine it to see
+            # if there are additional pages of results to fetch.
+            # See https://docs.github.com/en/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28#using-link-headers
+            # for a full description of the responses.
+            # This icky parsing can probably go away when we switch
+            # to a GitHub app, as we'll likely be using a proper
+            # client at that point.
+            for l in response.headers.get("link", "").split(","):
+                if 'rel="next"' in l:
+                    branches_endpoint = l.split(">")[0].split("<")[1]
+                    branches_endpoint = branches_endpoint[
+                        len("https://api.github.com") :
+                    ]
+                    break
+            else:
+                branches_endpoint = None
 
         _cache[repo_path] = branches
         return _cache[repo_path]
