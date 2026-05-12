@@ -2366,7 +2366,7 @@
         job: action:merge-automation
 
 - grant:
-    - generic-worker:os-group:<..>/docker
+    - generic-worker:os-group:{trust_domain}-t/t-linux-*/docker
   to:
     - project:
         alias: reviewer-selector
