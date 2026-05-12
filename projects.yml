@@ -56,6 +56,7 @@
 #   - `treescript-phase` -- this repository should have treescript related scopes associated
 #   - `merge-automation` -- this repository should have merge-automation related scopes associated
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
+#   - `pre-commit` -- this repository runs the lint/pre-commit hook
 
 ash:
   repo: https://hg.mozilla.org/projects/ash
@@ -722,6 +723,7 @@ taskgraph:
     github-pull-request:
       policy: public_restricted
     pr-actions: true
+    pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
@@ -1514,6 +1516,23 @@ crash-ping-ingest:
     taskgraph-cron: true
     trust-domain-scopes: true
 
+# Bug 2028701: Setup `mozilla-conduit/reviewer-selector` with Taskcluster
+reviewer-selector:
+  repo: https://github.com/mozilla-conduit/reviewer-selector
+  repo_type: git
+  trust_domain: mozilla
+  trust_project: reviewer-selector
+  branches:
+    - name: main
+      level: 3
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public
+    pr-actions: true
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 # WARNING: These grants apply to entire Github orgs.
 #
 # We should only grant the mozilla trust domain and level 1 context here, as
@@ -1532,20 +1551,7 @@ mozilla:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
-    taskgraph-actions: true
-    trust-domain-scopes: true
-
-mozilla-conduit:
-  repo: https://github.com/mozilla-conduit/*
-  repo_type: git
-  trust_domain: mozilla
-  branches:
-    - name: main
-      level: 1
-  features:
-    github-taskgraph: true
-    github-pull-request:
-      policy: public_restricted
+    pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true
 
@@ -1560,5 +1566,6 @@ mozilla-releng:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
+    pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true
