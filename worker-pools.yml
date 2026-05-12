@@ -4342,6 +4342,10 @@ pools:
             by-suffix:
               .*2404-wayland.*: 100
               default: 2500
+          enterprise-t:
+            by-suffix:
+              docker(-noscratch)?-amd: 200
+              default: 100
           default: 100
       implementation: "{implementation}"
       regions:
