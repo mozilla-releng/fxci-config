@@ -3153,7 +3153,7 @@ pools:
           alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
           source-alpha: [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
           (webgpu|gpu)(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
-          default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india, uk-south]
+          default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
       maxCapacity:
         by-suffix:
           '': 600
@@ -3213,7 +3213,6 @@ pools:
             Standard_F8s_v2:
               by-location:
                 west-us-3: 1
-                uk-south: 1
                 north-central-us: 0.95
                 central-india: 0.95
                 west-us: 0.8
@@ -3652,7 +3651,7 @@ pools:
               gpu(-alpha)?: [east-us, east-us-2, west-us, west-us-2]
               (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
-              default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india, uk-south]
+              default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
       maxCapacity:
         by-pool-group:
           comm-t:
@@ -3735,7 +3734,6 @@ pools:
             Standard_F8s_v2:
               by-location:
                 west-us-3: 1
-                uk-south: 1
                 north-central-us: 0.95
                 central-india: 0.95
                 west-us: 0.8
@@ -3887,7 +3885,7 @@ pools:
               (webgpu|gpu)(-alpha)?: [west-us-3, east-us, west-us, west-us-2]
               (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
-              default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india, uk-south]
+              default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
       maxCapacity:
         by-pool-group:
           comm-t:
@@ -3962,7 +3960,6 @@ pools:
             Standard_F8s_v2:
               by-location:
                 west-us-3: 1
-                uk-south: 1
                 north-central-us: 0.95
                 central-india: 0.95
                 west-us: 0.8
