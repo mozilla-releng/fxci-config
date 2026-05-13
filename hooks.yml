@@ -159,6 +159,7 @@ lint/pre-commit-{version}:
   owner: release+hooks@mozilla.com
   email_on_error: true
   scopes:
+    - assume:anonymous
     - generic-worker:cache:lint-pre-commit-*
     - queue:create-task:low:mozilla-t/pre-commit
     - queue:route:checks
