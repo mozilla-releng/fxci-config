@@ -159,9 +159,10 @@ lint/pre-commit-{version}:
   owner: release+hooks@mozilla.com
   email_on_error: true
   scopes:
-    - assume:anonymous
     - generic-worker:cache:lint-pre-commit-*
     - queue:create-task:low:mozilla-t/pre-commit
+    # Work around https://github.com/taskcluster/taskcluster/issues/8625
+    - queue:get-artifact:public/*
     - queue:route:checks
     - queue:scheduler-id:lint
   template_file: hook-templates/project-releng/pre-commit.yml
