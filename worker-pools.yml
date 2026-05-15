@@ -2171,14 +2171,33 @@ pools:
           disks:
             - *persistent-disk-60gb
           machine_type: t2a-standard-4
-  - pool_id: '{pool-group}/t-linux-2404-wayland-relsre'
-    description: Workers for Wayland on Ubuntu 24.04. Used by RelSRE to qualify images.
+  - pool_id: '{pool-group}/t-linux-2404-wayland-alpha'
+    description: Workers for Wayland on Ubuntu 24.04. Used to qualify candidate images.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
     variants:
       - pool-group: gecko-t
       - pool-group: mozilla-t
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/linux
+      regions: *default-gcp-regions
+      image: relsre-gw-fxci-gcp-2404-amd64-gui-alpha
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-60gb
+          machine_type: c2-standard-4
+  - pool_id: '{pool-group}/t-linux-2404-wayland-snap-alpha'
+    description: Workers for Wayland snap tests on Ubuntu 24.04. Used to qualify candidate images.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+      - pool-group: enterprise-t
     config:
       minCapacity: 0
       maxCapacity: 10
