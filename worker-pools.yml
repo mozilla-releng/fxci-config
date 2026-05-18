@@ -3040,18 +3040,33 @@ pools:
       worker-manager-config:
         capacityPerInstance: 1
         initialWeight:
-          by-vmSize:
-            Standard_D32ads_v5:
-              by-location:
-                central-india: 1
-                north-central-us: 0.9
-                east-us-2: 0.8
-            Standard_D96ads_v5:
-              by-location:
-                central-india: 1
-                north-central-us: 0.9
-                east-us-2: 0.8
-            default: 1
+          by-pool-id:
+            gecko-3/b-win2022:
+              by-vmSize:
+                Standard_D32ads_v5:
+                  by-location:
+                    central-india: 1
+                    north-central-us: 0.9
+                    south-central-us: 0.8
+                Standard_D96ads_v5:
+                  by-location:
+                    central-india: 1
+                    north-central-us: 0.9
+                    south-central-us: 0.8
+                default: 1
+            default:
+              by-vmSize:
+                Standard_D32ads_v5:
+                  by-location:
+                    central-india: 1
+                    north-central-us: 0.9
+                    east-us-2: 0.8
+                Standard_D96ads_v5:
+                  by-location:
+                    central-india: 1
+                    north-central-us: 0.9
+                    east-us-2: 0.8
+                default: 1
   - pool_id: nss-1/b-win2022-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
