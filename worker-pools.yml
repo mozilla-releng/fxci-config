@@ -3941,12 +3941,18 @@ pools:
               '': 1200
               alpha: 500
               gpu: 600
-              gpu-perf-experiment: 600
+              gpu-perf-experiment: 6
               default: 100
           enterprise-t: 200
           default: 5
       armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+        by-suffix:
+          gpu-perf-experiment:
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-dedicated-host/versions/1.0
+            parameters:
+              priority: Regular
+          default:
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config:
