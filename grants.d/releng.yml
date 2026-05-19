@@ -142,7 +142,6 @@
     - generic-worker:os-group:gecko-t/t-linux-2404-wayland-snap-alpha/snap_sudo
     # Similarly, we grant enough scopes to be able to run translations training actions
     - assume:repo:github.com/mozilla/translations:action:train
-    - queue:create-task:low:translations-1/decision-gcp
   to:
     - project:
         alias: fxci-config
