@@ -739,6 +739,16 @@ project/releng/scriptworker/v2/bouncer/prod/firefoxci-gecko-3:
   scopes:
     - queue:claim-work:scriptworker-k8s/gecko-3-bouncer
     - queue:worker-id:gecko-3-bouncer/gecko-3-bouncer-*
+project/releng/scriptworker/v2/builddecision/dev/firefoxci-1:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/builddecision-dev
+    - queue:worker-id:builddecision-dev/builddecision-dev-*
+project/releng/scriptworker/v2/builddecision/prod/firefoxci-1:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/builddecision
+    - queue:worker-id:builddecision/builddecision-*
 project/releng/scriptworker/v2/cloudops-canary:
   description: Allows cloudops' jenkins to trigger scriptworker canary tasks
   scopes:
