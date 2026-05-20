@@ -1528,7 +1528,7 @@ reviewer-selector:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: collaborators
     pr-actions: true
     taskgraph-actions: true
     trust-domain-scopes: true
