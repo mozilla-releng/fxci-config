@@ -320,7 +320,7 @@ pools:
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 1
-      maxCapacity: 4
+      maxCapacity: 16
       regions: *default-gcp-regions
       image: monopacker-docker-worker-current
       instance_types:
