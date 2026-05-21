@@ -3090,7 +3090,7 @@ pools:
               '': 1200
               alpha: 500
               gpu: 600
-              gpu-perf-experiment: 6
+              gpu-perf-experiment: 12
               default: 100
           enterprise-t: 200
           default: 5
