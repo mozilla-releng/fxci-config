@@ -665,11 +665,6 @@ project/releng/scriptworker/v2/balrog/prod/firefoxci-gecko-3:
   scopes:
     - queue:claim-work:scriptworker-k8s/gecko-3-balrog
     - queue:worker-id:gecko-3-balrog/gecko-3-balrog-*
-project/releng/scriptworker/v2/balrog/prod/firefoxci-gecko-3-mozcloud:
-  description: ''
-  scopes:
-    - queue:claim-work:scriptworker-k8s/gecko-3-balrog-mozcloud
-    - queue:worker-id:gecko-3-balrog-mozcloud/gecko-3-balrog-mozcloud-*
 project/releng/scriptworker/v2/balrog/dev/firefoxci-xpi-1:
   description: ''
   scopes:
