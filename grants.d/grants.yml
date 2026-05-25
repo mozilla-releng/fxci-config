@@ -913,10 +913,6 @@
     - secrets:get:project/taskcluster/gecko/hgfingerprint
     - secrets:get:project/taskcluster/gecko/hgmointernal
 
-    # Allow fetching secrets appropriate to this level
-    - secrets:get:project/{trust_domain}/level-{level}/*
-    - secrets:get:project/{trust_domain}/level-any/*
-
     # Allow a sensible scheduler-id
     - queue:scheduler-id:{trust_domain}-level-{level}
     # Allows cancelling tasks with that scheduler-id
@@ -932,6 +928,16 @@
   to:
     - project:
         feature: trust-domain-scopes
+
+- grant:
+    # Allow fetching secrets appropriate to this level
+    - secrets:get:project/{trust_domain}/level-{level}/*
+    - secrets:get:project/{trust_domain}/level-any/*
+  to:
+    - project:
+        feature: trust-domain-scopes
+        # Secrets are granted everywhere _except_ untrusted pull requests
+        job: [action:*, branch:*, cron:*, pr-action:*, pull-request:trusted, release:*]
 
 - grant:
     # routes to support locating tasks that create specific versions of artifacts
@@ -953,10 +959,6 @@
     - queue:route:index.{trust_domain}.v2.{trust_project}.cache.level-{level}.*
     - index:insert-task:{trust_domain}.v2.{trust_project}.cache.level-{level}.*
 
-    # allow fetching secrets appropriate to this level
-    - secrets:get:project/{trust_domain}/{trust_project}/level-{level}/*
-    - secrets:get:project/{trust_domain}/{trust_project}/level-any/*
-
     # allow using worker caches appropriate to this trust domain and level
     - docker-worker:cache:{trust_domain}-project-{trust_project}-level-{level}-*
     - generic-worker:cache:{trust_domain}-project-{trust_project}-level-{level}-*
@@ -964,6 +966,17 @@
     - project:
         feature: trust-domain-scopes
         has_trust_project: true
+
+- grant:
+    # allow fetching secrets appropriate to this level
+    - secrets:get:project/{trust_domain}/{trust_project}/level-{level}/*
+    - secrets:get:project/{trust_domain}/{trust_project}/level-any/*
+  to:
+    - project:
+        feature: trust-domain-scopes
+        has_trust_project: true
+        # Secrets are granted everywhere _except_ untrusted pull requests
+        job: [action:*, branch:*, cron:*, pr-action:*, pull-request:trusted, release:*]
 
 - grant:
     # routes to support locating tasks that create specific versions of artifacts
