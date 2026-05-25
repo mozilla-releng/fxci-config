@@ -107,6 +107,8 @@
 
 - grant:
     - project:releng:lando:action:version_bump
+    - project:releng:lando:action:version_bump:file:browser/extensions/newtab/manifest.json
+    - project:releng:lando:action:version_bump:file:browser/extensions/webcompat/manifest.json
     - project:releng:lando:repo:staging-firefox-main
   to:
     - project:
