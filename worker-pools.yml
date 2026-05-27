@@ -3052,8 +3052,6 @@ pools:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-dedicated-host/versions/1.0
             parameters:
               priority: Regular
-          alpha:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-v6-nvme/versions/1.0
           default:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
@@ -3080,7 +3078,7 @@ pools:
             by-suffix:
               source-alpha: Standard_E8ads_v5
               .*large.*: Standard_E8ads_v5
-              alpha: Standard_D8alds_v6
+              alpha: Standard_D8ads_v5
               .*gpu.*: Standard_NV12ads_A10_v5
               default: Standard_F8s_v2
           launchConfig:
@@ -3101,7 +3099,7 @@ pools:
                 by-suffix:
                   source-alpha: Standard_E8ads_v5
                   .*large.*: Standard_E8ads_v5
-                  alpha: Standard_D8alds_v6
+                  alpha: Standard_D8ads_v5
                   .*gpu.*: Standard_NV12ads_A10_v5
                   default: Standard_F8s_v2
             diagnosticsProfile:
@@ -3125,7 +3123,7 @@ pools:
                 west-us-2: 0.3
                 east-us-2: 0.1
                 default: 0.2
-            Standard_D8alds_v6:
+            Standard_D8ads_v5:
               by-location:
                 west-us-3: 1
                 north-central-us: 0.95
@@ -3162,15 +3160,15 @@ pools:
       locations: [central-india, uk-south]
       maxCapacity: 250
       armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-v6-nvme/versions/1.0
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config:
             workerType: 'win11-64-25h2-amd'
             provisionerId: gecko-t
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -3178,7 +3176,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_D8alds_v6
+        - vmSize: Standard_D8ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -3191,9 +3189,8 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
-                  placement: NvmeDisk
             hardwareProfile:
-              vmSize: Standard_D8alds_v6
+              vmSize: Standard_D8ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
