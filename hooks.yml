@@ -286,3 +286,110 @@ project-engwf/reviewer-assignment-staging:
       repository:
         type: string
         pattern: "^infra-testing$"
+
+project-engwf/reviewer-assignment-production:
+  name: Reviewer assignment hook (production)
+  description: Automatically assign reviewers to PRs
+  owner: omehani@mozilla.com
+  email_on_error: true
+  scopes:
+    - index:insert-task:project.engwf.production.reviewer-assignment.*
+    - queue:create-task:lowest:code-review/bot  # XXX: will need to change when a dedicated worker is setup (bug 2024115)
+    - queue:route:index.project.engwf.production.reviewer-assignment.*
+    - queue:scheduler-id:engwf
+    - secrets:get:project/engwf/reviewer-assignment/runtime-production
+  template_file: hook-templates/project-engwf/reviewer-assignment-production.yml
+  bindings:
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '#.mozilla-firefox.#.opened'  # e.g., primary.mozilla-firefox.firefox.opened or primary.mozilla-firefox.firefox.synchronize
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '#.mozilla-firefox.#.reopened'
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '#.mozilla-firefox.#.synchronize'  # e.g., primary.mozilla-firefox.firefox.opened or primary.mozilla-firefox.firefox.synchronize
+  trigger_schema:
+    type: object
+    # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
+    required:
+      - body
+      - organization
+      - repository
+    additionalProperties: true
+    properties:
+
+      body:
+        type: object
+        # https://docs.github.com/en/webhooks/webhook-events-and-payloads#pull_request
+        description: |
+          The raw body of github event (for version 1)
+        required:
+          - action
+          - number
+          - repository
+        additionalProperties: true
+        properties:
+
+          action:
+            type: string
+            description: Action on the PR
+            pattern: "^(opened|reopened|synchronize)$"
+
+          number:
+            type: integer
+
+          pull_request:
+            type: object
+            description: Pull request metadata
+            required:
+              - base
+              - diff_url
+              - head
+              - html_url
+            additionalProperties: true
+            properties:
+
+              base:
+                type: object
+                required:
+                  - ref
+                additionalProperties: true
+                properties:
+
+                  ref:
+                    type: string
+                    description: Target branch to merge this PR in
+
+              diff_url:
+                # Note: while binary data is not present in that diff, the paths of the binary files are.
+                type: string
+
+              head:
+                type: object
+                required:
+                  - sha
+                additionalProperties: true
+                properties:
+
+                  sha:
+                    type: string
+
+              html_url:
+                type: string
+
+
+          repository:
+            type: object
+            required:
+              - html_url
+            additionalProperties: true
+            properties:
+
+              html_url:
+                type: string
+
+      organization:
+        type: string
+        pattern: "^mozilla-firefox$"
+
+      repository:
+        type: string
+        pattern: "^(firefox)$"
