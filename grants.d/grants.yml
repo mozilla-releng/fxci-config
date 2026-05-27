@@ -1955,8 +1955,8 @@
 - grant:
     - assume:hook-id:project-engwf/reviewer-assignment-staging
     - hooks:modify-hook:project-engwf/reviewer-assignment-staging
-    - secrets:get:project/engwf/reviewer-assignment/runtime-staging
-    - secrets:set:project/engwf/reviewer-assignment/runtime-staging
+    - secrets:get:project/engwf/*
+    - secrets:set:project/engwf/*
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|omehani
