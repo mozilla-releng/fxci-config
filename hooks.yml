@@ -179,21 +179,22 @@ lint/pre-commit-{version}:
             type: string
             description: Version of pre-commit to install (e.g. "4.0.0"). Defaults to latest.
 
-project-engwf/reviewer-assignment-infra-testing:
-  name: Reviewer assignment hook (testing)
+#
+# EngWF Reviewer Selection
+#
+
+project-engwf/reviewer-assignment-staging:
+  name: Reviewer assignment hook (staging)
   description: Automatically assign reviewers to PRs
   owner: omehani@mozilla.com
   email_on_error: true
   scopes:
-    - assume:project:taskcluster:mozilla-github-repository  # XXX: not sure this is needed anymore
-    - index:insert-task:project.engwf.production.reviewer-assignment.*
-    - notify:email:*
+    - index:insert-task:project.engwf.staging.reviewer-assignment.*
     - queue:create-task:lowest:code-review/bot  # XXX: will need to change when a dedicated worker is setup (bug 2024115)
-    - queue:route:index.project.engwf.production.reviewer-assignment.latest
-    - queue:route:notify.email.*
+    - queue:route:index.project.engwf.staging.reviewer-assignment.*
     - queue:scheduler-id:engwf
-    - secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing
-  template_file: hook-templates/project-engwf/reviewer-assignment-infra-testing.yml
+    - secrets:get:project/engwf/reviewer-assignment/runtime-staging
+  template_file: hook-templates/project-engwf/reviewer-assignment-staging.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '#.infra-testing.#'  # e.g., primary.mozilla-firefox.infra-testing.opened or primary.mozilla-firefox.infra-testing.synchronize
@@ -214,6 +215,7 @@ project-engwf/reviewer-assignment-infra-testing:
           The raw body of github event (for version 1)
         required:
           - action
+          - number
           - pull_request
           - repository
         additionalProperties: true
@@ -224,19 +226,22 @@ project-engwf/reviewer-assignment-infra-testing:
             description: Action on the PR
             pattern: "^(opened|reopened|synchronize)$"
 
+          number:
+            type: integer
+
           pull_request:
             type: object
             description: Pull request metadata
             required:
               - base
               - diff_url
+              - head
               - html_url
             additionalProperties: true
             properties:
 
               base:
                 type: object
-                description: Pull request metadata
                 required:
                   - ref
                 additionalProperties: true
@@ -249,6 +254,16 @@ project-engwf/reviewer-assignment-infra-testing:
               diff_url:
                 # Note: while binary data is not present in that diff, the paths of the binary files are.
                 type: string
+
+              head:
+                type: object
+                required:
+                  - sha
+                additionalProperties: true
+                properties:
+
+                  sha:
+                    type: string
 
               html_url:
                 type: string
@@ -263,7 +278,6 @@ project-engwf/reviewer-assignment-infra-testing:
 
               html_url:
                 type: string
-
 
       organization:
         type: string
