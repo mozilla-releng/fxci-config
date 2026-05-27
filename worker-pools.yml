@@ -2122,7 +2122,7 @@ pools:
         by-suffix:
           .*headless.*: generic-worker/windows-builder
           default: generic-worker/windows
-      locations: [central-india, north-central-us, south-central-us]
+      locations: [central-india, north-central-us, south-central-us, west-us-3]
       maxCapacity:
         by-pool-group:
           gecko-.*: 500
@@ -2185,11 +2185,13 @@ pools:
               by-location:
                 central-india: 1
                 north-central-us: 0.9
+                west-us-3: 0.9
                 south-central-us: 0.8
             Standard_D96ads_v5:
               by-location:
                 central-india: 1
                 north-central-us: 0.9
+                west-us-3: 0.9
                 south-central-us: 0.8
             default: 1
   - pool_id: nss-1/b-win2022-alpha
