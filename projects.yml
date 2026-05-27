@@ -1543,6 +1543,10 @@ reviewer-selector:
   branches:
     - name: main
       level: 3
+    - name: staging
+      level: 1
+    - name: develop
+      level: 1
   features:
     github-taskgraph: true
     github-pull-request:
