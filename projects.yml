@@ -1542,7 +1542,7 @@ reviewer-selector:
   trust_project: reviewer-selector
   branches:
     - name: main
-      level: 3
+      level: 1
   features:
     github-taskgraph: true
     github-pull-request:
