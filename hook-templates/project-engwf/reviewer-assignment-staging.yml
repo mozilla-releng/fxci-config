@@ -1,0 +1,54 @@
+---
+created:
+  $fromNow: 0 seconds
+deadline:
+  $fromNow: 2 hours
+expires:
+  $fromNow: 1 month
+extra: {}
+metadata:
+  name: Reviewer assignment
+  description: Assign reviewers for PRs in the mozilla-firefox staging repos (infra-testing)
+  owner: omehani@mozilla.com
+  source: 'https://github.com/mozilla-conduit/reviewer-selector'
+payload:
+  capabilities: {}
+  env:
+    TC_SECRET_ID: project/engwf/reviewer-assignment/runtime-staging
+    DIFF_URL:
+      $eval: payload.body.pull_request.diff_url
+    PR_URL:
+      $eval: payload.body.pull_request.html_url
+    ORG_NAME:
+      # e.g., mozilla-firefox
+      $eval: payload.organization
+    REPO_NAME:
+      # e.g., firefox
+      $eval: payload.repository
+    TARGET_BRANCH_NAME:
+      # e.g., autoland
+      $eval: payload.body.pull_request.base.ref
+    REPO_URL:
+      $eval: payload.body.repository.html_url
+
+  features:
+    taskclusterProxy: true
+  image:
+    type: indexed-image
+    namespace: mozilla.v2.reviewer-selector.branch.staging.latest.docker-image.reviewer-selector
+    path: public/image.tar.zst
+  maxRunTime: 600
+priority: lowest
+provisionerId: code-review
+retries: 3
+routes:
+  - index.project.engwf.staging.reviewer-assignment.latest
+  - index.project.engwf.staging.reviewer-assignment.${payload.organization}.${payload.repository}.latest
+  - index.project.engwf.staging.reviewer-assignment.${payload.organization}.${payload.repository}.pull-request.${payload.body.number}
+  - index.project.engwf.staging.reviewer-assignment.${payload.organization}.${payload.repository}.revision.${payload.body.pull_request.head.sha}
+schedulerId: engwf
+scopes:
+  - 'secrets:get:project/engwf/reviewer-assignment/runtime-staging'
+  - 'index:insert-task:project.engwf.staging.reviewer-assignment.*'
+tags: {}
+workerType: bot  # XXX create dedicated worker (bug 2024115)

@@ -259,7 +259,6 @@
     - generic-worker:os-group:gecko-t/win11-64-2009/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2-privileged/Administrators
-    - generic-worker:os-group:gecko-t/win11-64-24h2-amd/Administrators
     - generic-worker:os-group:gecko-t/win11-64-25h2-amd/Administrators
     - generic-worker:os-group:gecko-t/win11-64-2009-alpha/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2-alpha/Administrators
@@ -281,7 +280,6 @@
     - generic-worker:run-as-administrator:gecko-t/win11-64-25h2-privileged
     - generic-worker:run-as-administrator:gecko-t/win11-64-2009
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2
-    - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-amd
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-source
     - generic-worker:run-as-administrator:gecko-t/win11-64-25h2-amd
     - generic-worker:run-as-administrator:releng-hardware/win11-64*
@@ -1953,10 +1951,10 @@
 
 # Bug 2024347: grant shtrom ability to create / modify review assigner hook
 - grant:
-    - assume:hook-id:project-engwf/reviewer-assignment-infra-testing
-    - hooks:modify-hook:project-engwf/reviewer-assignment-infra-testing
-    - secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing
-    - secrets:set:project/engwf/reviewer-assignment/runtime-infra-testing
+    - assume:hook-id:project-engwf/reviewer-assignment-staging
+    - hooks:modify-hook:project-engwf/reviewer-assignment-staging
+    - secrets:get:project/engwf/*
+    - secrets:set:project/engwf/*
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|omehani
