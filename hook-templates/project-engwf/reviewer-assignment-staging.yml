@@ -44,8 +44,8 @@ retries: 3
 routes:
   - index.project.engwf.staging.reviewer-assignment.latest
   - index.project.engwf.staging.reviewer-assignment.${payload.organization}.${payload.repository}.latest
-  - index.project.engwf.staging.reviewer-assignment.${payload.organization}.${payload.repository}.pull-request.${payload.number}
-  - index.project.engwf.staging.reviewer-assignment.${payload.organization}.${payload.repository}.revision.${payloa.sha}
+  - index.project.engwf.staging.reviewer-assignment.${payload.organization}.${payload.repository}.pull-request.${payload.body.number}
+  - index.project.engwf.staging.reviewer-assignment.${payload.organization}.${payload.repository}.revision.${payload.body.pull_request.head.sha}
 schedulerId: engwf
 scopes:
   - 'secrets:get:project/engwf/reviewer-assignment/runtime-staging'
