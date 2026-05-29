@@ -1949,15 +1949,17 @@
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|pwong
 
-# Bug 2024347: grant shtrom ability to create / modify review assigner hook
+# Bug 2042692: grant engwf permissions to their project namespaces
 - grant:
+    # Bug 2024347: ability to create / modify review assigner hook
     - assume:hook-id:project-engwf/reviewer-assignment-staging
     - hooks:modify-hook:project-engwf/reviewer-assignment-staging
+
     - secrets:get:project/engwf/*
     - secrets:set:project/engwf/*
   to:
     - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|omehani
+        - mozillians-group:engworkflow
 
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
