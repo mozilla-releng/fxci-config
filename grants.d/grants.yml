@@ -815,8 +815,6 @@
     - hooks:modify-hook:project-engwf/reviewer-assignment-staging
 
   to:
-    - groups:
-        - engworkflow
     - roles:
         - mozillians-group:engworkflow
 
@@ -2056,11 +2054,6 @@
   to:
     - roles:
         - mozilla-group:team_mozillaonline
-- grant:
-    - assume:project:releng:ci-group:engworkflow
-  to:
-    - roles:
-        - mozillians-group:engworkflow
 - grant:
     - assume:project:releng:ci-group:shipit_firefox
   to:
