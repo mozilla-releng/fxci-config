@@ -14,7 +14,7 @@ metadata:
 payload:
   capabilities: {}
   env:
-    TC_SECRET_ID: project/engwf/reviewer-assignment/runtime-prod
+    TC_SECRET_ID: project/engwf/reviewer-assignment/runtime-production
     DIFF_URL:
       $eval: payload.body.pull_request.diff_url
     PR_URL:
@@ -48,7 +48,7 @@ routes:
   - index.project.engwf.production.reviewer-assignment.${payload.organization}.${payload.repository}.revision.${payload.body.pull_request.head.sha}
 schedulerId: engwf
 scopes:
-  - 'secrets:get:project/engwf/reviewer-assignment/runtime-prod'
+  - 'secrets:get:project/engwf/reviewer-assignment/runtime-production'
   - 'index:insert-task:project.engwf.production.reviewer-assignment.*'
 tags: {}
 workerType: bot  # XXX create dedicated worker (bug 2024115)

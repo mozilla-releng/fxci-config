@@ -7,6 +7,8 @@ reporting: checks-v1
 policy:
     allowComments: collaborators
     pullRequests: public_restricted
+hooks:
+    - name: lint/pre-commit-v1
 tasks:
     - $let:
           trustDomain: releng
