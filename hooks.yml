@@ -179,6 +179,59 @@ lint/pre-commit-{version}:
             type: string
             description: Version of pre-commit to install (e.g. "4.0.0"). Defaults to latest.
 
+project-xpi/decision-{version}:
+  variants:
+    - version: v1
+  name: XPI Decision Task
+  description: Run Taskgraph Decision task for GitHub events in the mozilla-extensions org
+  owner: release+hooks@mozilla.com
+  email_on_error: true
+  scopes:
+    - queue:create-task:very-low:xpi-*
+    - queue:route:checks
+    - queue:scheduler-id:xpi-*
+  template_file: hook-templates/project-releng/decision.yml
+  trigger_schema:
+    type: object
+    additionalProperties: false
+    properties:
+      <<: *github-trigger-schema-properties
+      context:
+        type: object
+        additionalProperties: false
+        required:
+          - trustDomain
+        properties:
+          trustDomain:
+            type: string
+            description: Trust domain for the project (e.g. "releng")
+          taskgraphVersion:
+            type: string
+            description: >
+              Version of the taskgraph decision image to use (e.g. "23.0.0").
+              Defaults to latest if not specified.
+          branches:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              required:
+                - pattern
+                - level
+              properties:
+                pattern:
+                  type: string
+                  description: >
+                    Branch name or "prefix/*" glob (e.g. "main" or "release/*").
+                level:
+                  type: integer
+                  enum: [1, 2, 3]
+            description: >
+              List of branch patterns with SCM levels.
+              Only matching branches trigger a decision task.
+              If not specified, all pushes trigger at level 1.
+              Pull requests always use level 1.
+
 #
 # EngWF Reviewer Selection
 #
