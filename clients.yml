@@ -1365,29 +1365,6 @@ project/relsre/devicepool:
   scopes:
     - queue:claimed-count:*
     - queue:pending-count:*
-project/taskcluster/legacy-login:
-  description: ''
-  scopes:
-    - assume:github-org-admin:*
-    - assume:github-team:*
-    - assume:login-identity:*
-    - assume:mozilla-group:*
-    - assume:mozillians-group:*
-    - auth:azure-table:read-write:firefoxcitc/AccessTokenTable
-    - auth:azure-table:read-write:firefoxcitc/AuthorizationCodesTable
-    - auth:azure-table:read-write:firefoxcitc/GithubAccessTokenTable
-    - auth:create-client:github/*
-    - auth:create-client:mozilla-auth0/*
-    - auth:delete-client:github/*
-    - auth:delete-client:mozilla-auth0/*
-    - auth:disable-client:github/*
-    - auth:disable-client:mozilla-auth0/*
-    - auth:enable-client:github/*
-    - auth:enable-client:mozilla-auth0/*
-    - auth:reset-access-token:github/*
-    - auth:reset-access-token:mozilla-auth0/*
-    - auth:update-client:github/*
-    - auth:update-client:mozilla-auth0/*
 project/taskcluster/smoketest:
   description: Run smoketests on new Taskcluster deployments
   scopes:
