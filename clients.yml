@@ -304,17 +304,6 @@ project/enterprise/enterprise-console-backend/dev/artifact-access:
     enterprise artifacts.
   scopes:
     - queue:get-artifact:project/enterprise/*
-project/packet/docker-worker:
-  description: ''
-  scopes:
-    - auth:sentry:docker-worker
-    - auth:statsum:docker-worker
-    - queue:claim-task:terraform-packet/*
-    - queue:claim-work:terraform-packet/*
-    - queue:worker-id:packet-*
-    - secrets:get:project/taskcluster/docker-worker/certificate-key
-    - secrets:get:worker-pool:terraform-packet/*
-    - secrets:get:worker-type:terraform-packet/*
 project/releng/fxci-config/apply:
   description: Used to run `tc-admin apply` in mozilla-releng/fxci-config.
   scopes:
