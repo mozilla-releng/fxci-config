@@ -1,0 +1,156 @@
+---
+$let:
+  $merge:
+    - isPullRequest: false
+      pullRequestAction: 'UNDEFINED'
+      repoName: 'UNDEFINED'
+      taskgraphImage:
+        $if: "'taskgraphVersion' in payload.context"
+        then: {$eval: "'mozillareleases/taskgraph:decision-v' + payload.context.taskgraphVersion"}
+        else: 'mozillareleases/taskgraph:decision-latest'
+      trustDomain: {$eval: payload.context.trustDomain}
+    - $switch:
+        'payload.tasks_for[:19] == "github-pull-request"':
+          baseRef: {$eval: payload.event.pull_request.base.ref}
+          baseRepoUrl: {$eval: payload.event.pull_request.base.repo.html_url}
+          baseSha: {$eval: payload.event.pull_request.base.sha}
+          headRef: {$eval: payload.event.pull_request.head.ref}
+          headSha: {$eval: payload.event.pull_request.head.sha}
+          isPullRequest: true
+          ownerEmail: {$eval: "payload.event.pull_request.user.login + '@users.noreply.github.com'"}
+          project: {$eval: payload.event.pull_request.head.repo.name}
+          pullRequestAction: {$eval: payload.event.action}
+          repoName: {$eval: payload.event.pull_request.base.repo.full_name}
+          repoUrl: {$eval: payload.event.pull_request.head.repo.html_url}
+        'payload.tasks_for == "github-push"':
+          baseRef: {$eval: payload.event.ref}
+          baseRepoUrl: {$eval: payload.event.repository.html_url}
+          baseSha: {$eval: payload.event.before}
+          headRef: {$eval: payload.event.ref}
+          headSha: {$eval: payload.event.after}
+          ownerEmail: {$eval: payload.event.pusher.email}
+          project: {$eval: payload.event.repository.name}
+          repoName: {$eval: payload.event.repository.full_name}
+          repoUrl: {$eval: payload.event.repository.html_url}
+in:
+  $let:
+    shortRef:
+      $switch:
+        'headRef[:10] == "refs/tags/"': '${headRef[10:]}'
+        'headRef[:11] == "refs/heads/"': '${headRef[11:]}'
+        $default: '${headRef}'
+  in:
+    $let:
+      branchMatches:
+        $if: "'branches' in payload.context"
+        then:
+          $filter: {$eval: payload.context.branches}
+          each(b): >
+            b.pattern == shortRef
+            || (b.pattern[-1:] == "*"
+                && shortRef[:len(b.pattern)-1] == b.pattern[:-1])
+        else: []
+    in:
+      $if: >
+        (payload.tasks_for == "github-push"
+         && (!('branches' in payload.context)
+             || len(branchMatches) > 0))
+        || (isPullRequest && pullRequestAction in ["opened", "reopened", "synchronize"])
+      then:
+        $let:
+          level:
+            $if: isPullRequest
+            then: 1
+            else:
+              $if: "len(branchMatches) > 0"
+              then: {$eval: "branchMatches[0].level"}
+              else: 1
+        in:
+          taskGroupId: {$eval: payload.taskId}
+          schedulerId: '${trustDomain}-level-${level}'
+          created: {$fromNow: ''}
+          deadline: {$fromNow: '1 day'}
+          expires: {$fromNow: '1 year 1 second'}
+          metadata:
+            owner: '${ownerEmail}'
+            source: '${repoUrl}/raw/${headSha}/.taskcluster.yml'
+            name: 'Decision Task (${payload.tasks_for[7:]})'
+            description: 'The task that creates all of the other tasks in the task graph'
+          provisionerId: '${trustDomain}-${level}'
+          workerType: decision
+          tags:
+            createdForUser: '${ownerEmail}'
+            kind: decision-task
+          routes:
+            $flatten:
+              - checks
+              - $if: 'payload.tasks_for == "github-push"'
+                then:
+                  - 'index.${trustDomain}.v2.${project}.latest.taskgraph.decision'
+                  - 'index.${trustDomain}.v2.${project}.revision.${headSha}.taskgraph.decision'
+                else: []
+          scopes:
+            $if: 'payload.tasks_for == "github-push"'
+            then:
+              - 'assume:repo:github.com/${repoName}:branch:${shortRef}'
+            else:
+              - 'assume:repo:github.com/${repoName}:${payload.tasks_for[7:]}'
+          dependencies: []
+          requires: all-completed
+          priority: very-low
+          retries: 5
+          payload:
+            env:
+              SRC_BASE_REPOSITORY: '${baseRepoUrl}'
+              SRC_BASE_REF: '${baseRef}'
+              SRC_BASE_REV: '${baseSha}'
+              SRC_HEAD_REPOSITORY: '${repoUrl}'
+              SRC_HEAD_REF: '${headRef}'
+              SRC_HEAD_REV: '${headSha}'
+              SRC_REPOSITORY_TYPE: git
+              REPOSITORIES: {$json: {src: Source}}
+            cache:
+              ${trustDomain}-level-${level}-checkouts-sparse-v1: /builds/worker/checkouts
+            features:
+              taskclusterProxy: true
+              chainOfTrust:
+                $if: 'level == 3'
+                then: true
+                else: false
+            image: '${taskgraphImage}'
+            maxRunTime: 1800
+            command:
+              - run-task
+              - '--src-checkout=/builds/worker/checkouts/src'
+              - '--task-cwd=/builds/worker/checkouts/src'
+              - '--'
+              - bash
+              - -cx
+              - >-
+                ln -s /builds/worker/artifacts artifacts &&
+                taskgraph decision
+                --verbose
+                --pushlog-id='0'
+                --pushdate='0'
+                --project='${project}'
+                --owner='${ownerEmail}'
+                --level='${level}'
+                --repository-type=git
+                --tasks-for='${payload.tasks_for}'
+                --base-repository='${baseRepoUrl}'
+                --base-ref='${baseRef}'
+                --base-rev='${baseSha}'
+                --head-repository='${repoUrl}'
+                --head-ref='${headRef}'
+                --head-rev='${headSha}'
+            artifacts:
+              'public':
+                type: 'directory'
+                path: '/builds/worker/artifacts'
+                expires: {$fromNow: '1 year'}
+              'public/docker-contexts':
+                type: 'directory'
+                path: '/builds/worker/checkouts/src/docker-contexts'
+                expires: {$fromNow: '7 day'}
+          extra:
+            tasks_for: '${payload.tasks_for}'
