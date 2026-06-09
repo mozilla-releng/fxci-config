@@ -589,6 +589,7 @@ firefox-dev:
       level: 1
   features:
     gecko-roles: true
+    git-push: true
     github-taskgraph: true
     github-pull-request:
       policy: collaborators
