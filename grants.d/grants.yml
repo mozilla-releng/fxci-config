@@ -117,8 +117,6 @@
     - auth:update-client:project/<..>/*
     - auth:update-role:hook-id:project-<..>/*
     - auth:update-role:project:<..>:*
-    - docker-worker:cache:*
-    - generic-worker:cache:*
     - hooks:modify-hook:project-<..>/*
     - hooks:trigger-hook:project-<..>/*
     - index:insert-task:project.<..>.*
@@ -140,13 +138,6 @@
     - secrets:get:worker-pool:proj-<..>/*
     - secrets:set:project/<..>/*
     - secrets:set:worker-pool:proj-<..>/*
-    - worker-manager:create-worker:proj-<..>/*
-    - worker-manager:manage-worker-pool:proj-<..>/*
-    - worker-manager:provider:aws
-    - worker-manager:provider:azure2
-    - worker-manager:provider:fxci-level1-gcp
-    - worker-manager:provider:null-provider
-    - worker-manager:remove-worker:proj-<..>/*
   to:
     - roles:
         - project-admin:*

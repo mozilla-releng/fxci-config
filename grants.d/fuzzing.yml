@@ -120,6 +120,13 @@
     - queue:get-artifact:private/generic-worker/*
     # Send build / automation notifications
     - notify:email:*
+    - worker-manager:create-worker:proj-fuzzing/*
+    - worker-manager:manage-worker-pool:proj-fuzzing*
+    - worker-manager:provider:aws
+    - worker-manager:provider:azure2
+    - worker-manager:provider:fxci-level1-gcp
+    - worker-manager:provider:null-provider
+    - worker-manager:remove-worker:proj-fuzzing/*
   to:
     - roles:
         - project-admin:fuzzing
