@@ -1153,6 +1153,11 @@
   to:
     - project:
         feature: pre-commit
+    - project:
+        # Tags are not included in the default role set, so grant it
+        # explicitly.
+        feature: pre-commit
+        job: [tag:*]
 
 ##
 # mozilla roles
