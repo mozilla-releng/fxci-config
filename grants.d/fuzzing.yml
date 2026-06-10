@@ -121,7 +121,7 @@
     # Send build / automation notifications
     - notify:email:*
     - worker-manager:create-worker:proj-fuzzing/*
-    - worker-manager:manage-worker-pool:proj-fuzzing*
+    - worker-manager:manage-worker-pool:proj-fuzzing/*
     - worker-manager:provider:aws
     - worker-manager:provider:azure2
     - worker-manager:provider:fxci-level1-gcp
