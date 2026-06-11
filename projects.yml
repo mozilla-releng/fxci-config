@@ -742,7 +742,6 @@ taskgraph:
     github-pull-request:
       policy: public_restricted
     pr-actions: true
-    pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true
     treeherder-reporting: true
@@ -1580,6 +1579,21 @@ mozilla:
 
 mozilla-releng:
   repo: https://github.com/mozilla-releng/*
+  repo_type: git
+  trust_domain: mozilla
+  branches:
+    - name: main
+      level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public_restricted
+    pre-commit: true
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
+taskcluster:
+  repo: https://github.com/taskcluster/*
   repo_type: git
   trust_domain: mozilla
   branches:
