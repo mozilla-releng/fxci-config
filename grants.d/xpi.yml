@@ -12,6 +12,8 @@
     - queue:create-task:highest:xpi-{level}/*
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
+    # Bug 2037926: dev lando worker used by staging-xpi-manifest for staging e2e test
+    - queue:create-task:highest:scriptworker-k8s/xpi-1-lando-dev
     - queue:route:index.{trust_domain}.v2.xpi-manifest.*
     - queue:route:index.xpi.cache.level-{level}.*
   to:
