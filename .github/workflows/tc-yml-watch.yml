@@ -32,11 +32,14 @@
 name: tc-yml-watch
 on:  # yamllint disable-line rule:truthy
   schedule:
-    - cron: "*/10 * * * *"
+    # Offset from the top of the hour to dodge GitHub's peak-load
+    # scheduling delays/drops, while keeping a ~12-minute interval.
+    - cron: "3,14,27,39,52 * * * *"
   workflow_dispatch: {}
 
 permissions:
   contents: read
+  actions: write  # required to delete the single state cache before re-saving
 
 concurrency:
   group: tc-yml-watch
@@ -53,12 +56,7 @@ jobs:
         uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: state.tsv
-          # The run_id makes the exact key always miss, so the restore falls
-          # back to restore-keys and fetches the most recently saved state
-          # (saves use a monotonic run_id key -- see the Save step below).
-          key: tc-yml-watch-state-${{ github.run_id }}
-          restore-keys: |
-            tc-yml-watch-state-
+          key: tc-yml-watch-state
 
       - name: Collect .taskcluster.yml SHAs and detect changes
         id: collect
@@ -153,15 +151,22 @@ jobs:
           echo "--- current state ---"
           cat "$CUR_STATE"
 
+      # Cache entries are immutable, so the key can't be overwritten. Delete the
+      # single existing entry (if any), then re-save under the same key -- this
+      # keeps exactly one cache entry instead of one per change. The concurrency
+      # group above serializes runs, so there is no delete/save race.
+      - name: Delete stale state cache
+        if: steps.collect.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh cache delete tc-yml-watch-state --repo "$GITHUB_REPOSITORY" || true
+
       - name: Save current state
         if: steps.collect.outputs.changed == 'true'
         uses: actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: state.tsv
-          # Monotonic key: github.run_id strictly increases, so each save
-          # creates a new cache and the prefix restore above always returns the
-          # genuinely-latest run's state -- never a stale content-hash collision.
-          key: tc-yml-watch-state-${{ github.run_id }}
+          key: tc-yml-watch-state
 
   deploy:
     needs: check-change
