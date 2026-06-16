@@ -567,6 +567,9 @@ pools:
       - pool-group: enterprise-1
       - pool-group: enterprise-3
         chain-of-trust: trusted
+      - pool-group: nss-1
+      - pool-group: nss-3
+        chain-of-trust: trusted
     email_on_error: true
     provider_id:
       by-chain-of-trust:
@@ -1176,6 +1179,9 @@ pools:
         chain-of-trust: trusted
       - pool-group: enterprise-1
       - pool-group: enterprise-3
+        chain-of-trust: trusted
+      - pool-group: nss-1
+      - pool-group: nss-3
         chain-of-trust: trusted
     email_on_error: false
     provider_id:
