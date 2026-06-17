@@ -35,7 +35,7 @@ payload:
     taskclusterProxy: true
   image:
     type: indexed-image
-    namespace: mozilla.v2.reviewer-selector.branch.main.latest.docker-image.reviewer-selector
+    namespace: mozilla.v2.reviewer-selector.release.latest.docker-image.reviewer-selector
     path: public/image.tar.zst
   maxRunTime: 600
 priority: lowest
