@@ -51,6 +51,7 @@
     - secrets:get:project/releng/gecko/build/level-{level}/gls-gapi.data
     - secrets:get:project/releng/gecko/build/level-{level}/sb-gapi.data
     - secrets:get:project/releng/gecko/build/level-{level}/mozilla-desktop-geoloc-api.key
+    - secrets:get:project/releng/gecko/build/level-{level}/mozilla-fennec-geoloc-api.key
   to:
     - project:
         feature: gecko-roles
