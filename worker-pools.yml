@@ -3579,6 +3579,8 @@ pools:
       worker-purpose: proj-fuzzing
       locations: [central-us, east-us]
       maxCapacity: 10
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config: {}
@@ -3587,7 +3589,8 @@ pools:
           launchConfig:
             hardwareProfile:
               vmSize: Standard_F16s_v2
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
 
   - pool_id: proj-fuzzing/grizzly-reduce-worker-windows{suffix}
     description: '{desc}'
@@ -3613,6 +3616,8 @@ pools:
           gpu: [east-us, east-us-2, south-central-us, west-us-2]
           ngpu: [central-us, east-us]
       maxCapacity: 10
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config: {}
@@ -3627,7 +3632,8 @@ pools:
                 by-kind:
                   gpu: Standard_NV12s_v3
                   ngpu: Standard_F16s_v2
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
 
   - pool_id: proj-fuzzing/bugmon-pernosco
     description: Fuzzing bugmon pernosco pool (docker-worker, metal)
@@ -3673,6 +3679,8 @@ pools:
       worker-purpose: proj-fuzzing
       locations: [east-us, east-us-2, south-central-us, west-us-2]
       maxCapacity: 20
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config: {}
@@ -3681,4 +3689,5 @@ pools:
           launchConfig:
             hardwareProfile:
               vmSize: Standard_NV12s_v3
-      capacityPerInstance: 1
+      worker-manager-config:
+        capacityPerInstance: 1
