@@ -1,0 +1,32 @@
+---
+created: {$fromNow: ''}
+deadline: {$fromNow: '1 hour'}
+schedulerId: fuzzing
+provisionerId: proj-fuzzing
+workerType: decision
+payload:
+  features:
+    taskclusterProxy: true
+  maxRunTime: 3600
+  image: mozillasecurity/orion-decision:latest
+  env:
+    DOCKER_HUB_SECRET: project/fuzzing/docker-hub
+    CLONE_REPO: https://github.com/MozillaSecurity/orion
+    TASKCLUSTER_NOW:
+      $fromNow: 0 seconds
+  command:
+    - cron-decision
+    - -v
+scopes:
+  - docker-worker:capability:privileged
+  - index:insert-task:project.fuzzing.orion.*
+  - queue:create-task:highest:proj-fuzzing/ci
+  - queue:create-task:highest:proj-fuzzing/ci-*
+  - queue:route:index.project.fuzzing.orion.*
+  - queue:scheduler-id:fuzzing
+  - secrets:get:project/fuzzing/docker-hub
+metadata:
+  name: Orion decision task
+  description: Schedule Orion build tasks
+  owner: truber@mozilla.com
+  source: https://github.com/MozillaSecurity/orion

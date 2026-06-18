@@ -1,0 +1,38 @@
+---
+provisionerId: proj-fuzzing
+schedulerId: fuzzing
+workerType: decision
+payload:
+  image:
+    type: indexed-image
+    path: public/grizzly-reduce-monitor.tar.zst
+    namespace: project.fuzzing.orion.grizzly-reduce-monitor.master
+  features:
+    taskclusterProxy: true
+  maxRunTime: 600
+  command:
+    - '/usr/bin/grizzly-reduce-tc-update'
+    - '--crash-from-reduce-task'
+    - '${payload.status.taskId}'
+    - '--auto'
+    - '--only-if-quality'
+    - '4'
+  artifacts:
+    project/fuzzing/private/logs:
+      path: /logs/
+      type: directory
+metadata:
+  name: grizzly-reduce-monitor
+  description: Reset grizzly testcase after failed reduction
+  owner: truber@mozilla.com
+  source: 'https://github.com/MozillaSecurity/grizzly'
+expires:
+  $fromNow: 2 weeks
+deadline:
+  $fromNow: 1 hour
+scopes:
+  - queue:route:notify.email.truber@mozilla.com.on-failed
+  - queue:scheduler-id:fuzzing
+  - secrets:get:project/fuzzing/fuzzmanagerconf
+routes:
+  - notify.email.truber@mozilla.com.on-failed

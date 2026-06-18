@@ -16,6 +16,7 @@ from ..util.matching import (
     project_match,
 )
 from .ciconfig.environment import Environment
+from .ciconfig.externally_managed import manage_with_exclusions
 from .ciconfig.grants import Grant
 from .ciconfig.projects import Project
 
@@ -235,12 +236,12 @@ async def update_resources(resources):
     projects = await Project.fetch_all()
     environment = await Environment.current()
 
-    # manage our resources..
+    # manage our resources, excluding externally managed patterns
     resources.manage("Role=mozilla-group:.*")
     resources.manage("Role=mozillians-group:.*")
     resources.manage("Role=login-identity:.*")
-    resources.manage("Role=hook-id:.*")
-    resources.manage("Role=project:.*")
+    await manage_with_exclusions(resources, "Role=hook-id:.*")
+    await manage_with_exclusions(resources, "Role=project:.*")
     resources.manage("Role=repo:.*")
 
     # calculate scopes..

@@ -94,8 +94,13 @@ async def check_grant_pools(generate_resources):
                 parts = target_pool.split("/")[:2]
                 target_pool = "/".join(parts)
 
-            # Scope uses interpolation (see note above).
-            if "{trust_domain}" in target_pool or "{level}" in target_pool:
+            # Scope uses interpolation (see note above) or a parameterized-role
+            # placeholder (`<..>`), neither of which references a concrete pool.
+            if (
+                "{trust_domain}" in target_pool
+                or "{level}" in target_pool
+                or "<..>" in target_pool
+            ):
                 continue
 
             # Scope uses a wildcard which encompasses providers outside of
