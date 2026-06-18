@@ -772,7 +772,7 @@ reps:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public_restricted
+      policy: public
     taskgraph-actions: true
     trust-domain-scopes: true
 

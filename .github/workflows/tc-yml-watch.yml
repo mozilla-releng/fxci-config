@@ -1,0 +1,177 @@
+---
+# Watches the `.taskcluster.yml` file across multiple Taskcluster-integrated
+# repositories/branches and runs this repo's `deploy` workflow when any of them
+# changes. The set of watched targets is the WATCHED list in the check-change
+# job below -- add/remove a line there to change coverage.
+#
+# TEMPORARY: this is a stopgap. A permanent, general solution -- driven by
+# Taskcluster itself rather than this poller -- is tracked in
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1917274.
+#
+# How it works:
+#   - On a schedule, fetch the latest commit SHA touching `.taskcluster.yml` on
+#     every watched repo/branch.
+#   - Persist that set of SHAs in the Actions cache (state.tsv) and compare the
+#     current set against the previously cached one:
+#       * any SHA changed (or first run) -> run `deploy`
+#       * all SHAs unchanged             -> do nothing
+#   - A target that can't be resolved (transient API error, removed branch)
+#     carries forward its previous SHA and emits a warning, so one flaky target
+#     neither blocks deploys for the others nor causes a spurious deploy.
+#   - A rare cache eviction (keys unused for 7 days) may cause one redundant
+#     deploy. That is safe: `tc-admin apply` is idempotent, so it behaves like
+#     any other push.
+#   - A failed deploy is NOT retried automatically: state advances on the same
+#     tick the change is detected, so the next tick sees no diff. This is
+#     intentional -- deploy.yml posts a Slack alert on failure; recovery is a
+#     manual re-run. (Acceptable for this stopgap.)
+#
+# The deploy reuses `.github/workflows/deploy.yml` as a reusable workflow
+# (`workflow_call`), so no cross-workflow dispatch and no extra PAT are needed --
+# `secrets: inherit` forwards the existing TASKCLUSTER_ACCESS_TOKEN etc.
+name: tc-yml-watch
+on:  # yamllint disable-line rule:truthy
+  schedule:
+    # Offset from the top of the hour to dodge GitHub's peak-load
+    # scheduling delays/drops, while keeping a ~12-minute interval.
+    - cron: "3,14,27,39,52 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  actions: write  # required to delete the single state cache before re-saving
+
+concurrency:
+  group: tc-yml-watch
+  cancel-in-progress: false
+
+jobs:
+  check-change:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.collect.outputs.changed }}
+      reason: ${{ steps.collect.outputs.reason }}
+    steps:
+      - name: Restore previous state
+        uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: state.tsv
+          key: tc-yml-watch-state
+
+      - name: Collect .taskcluster.yml SHAs and detect changes
+        id: collect
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          # Watched targets: one "owner/repo branch" per line.
+          WATCHED=$(cat <<'LIST'
+          mozilla-firefox/firefox autoland
+          mozilla-firefox/firefox beta
+          mozilla-firefox/firefox release
+          mozilla-firefox/firefox esr115
+          mozilla-firefox/firefox esr140
+          mozilla/enterprise-firefox enterprise-main
+          mozilla/enterprise-firefox enterprise-release
+          mozilla/enterprise-firefox enterprise-beta
+          mozilla-mobile/mozilla-vpn-client main
+          mozilla-mobile/firefox-ios main
+          LIST
+          )
+
+          PREV_STATE="previous-state.tsv"
+          CUR_STATE="state.tsv"
+          # state.tsv (if restored) holds the previous run's SHAs; move it aside
+          # so we can diff against it while writing the fresh state.
+          if [ -f "$CUR_STATE" ]; then
+            mv "$CUR_STATE" "$PREV_STATE"
+          fi
+          : > "$CUR_STATE"
+
+          prev_sha() {  # echo the previously recorded SHA for a "repo@branch" key
+            [ -f "$PREV_STATE" ] || return 0
+            awk -F'\t' -v k="$1" '$1 == k {print $2}' "$PREV_STATE"
+          }
+
+          total=0
+          changed_targets=""
+          while read -r repo branch; do
+            if [ -z "$repo" ]; then continue; fi
+            total=$((total + 1))
+            key="${repo}@${branch}"
+            prev=$(prev_sha "$key")
+
+            if cur=$(gh api -X GET "repos/${repo}/commits" \
+                  -f path=.taskcluster.yml -f sha="${branch}" \
+                  --jq '.[0].sha' 2>/dev/null) \
+                && [ -n "$cur" ] && [ "$cur" != "null" ]; then
+              :  # resolved successfully
+            elif [ -n "$prev" ]; then
+              echo "::warning::Could not resolve ${key}; carrying forward ${prev}"
+              cur="$prev"
+            else
+              echo "::warning::Could not resolve ${key} and no previous SHA; skipping"
+              continue
+            fi
+
+            printf '%s\t%s\n' "$key" "$cur" >> "$CUR_STATE"
+            if [ "$cur" != "$prev" ]; then
+              changed_targets="${changed_targets:+$changed_targets, }${key}"
+            fi
+          done <<< "$WATCHED"
+
+          # If nothing resolved at all, something is systemically wrong (auth,
+          # outage). Fail the tick rather than save an empty state; we retry next run.
+          if [ ! -s "$CUR_STATE" ]; then
+            echo "::error::Failed to resolve any of the ${total} watched targets" >&2
+            exit 1
+          fi
+
+          sort -o "$CUR_STATE" "$CUR_STATE"
+
+          if [ ! -f "$PREV_STATE" ]; then
+            changed=true
+            reason="initial baseline (first run): watching ${total} .taskcluster.yml targets"
+          elif [ -n "$changed_targets" ]; then
+            changed=true
+            reason="updated .taskcluster.yml on: ${changed_targets}"
+          else
+            changed=false
+            reason=""
+          fi
+
+          {
+            echo "changed=${changed}"
+            echo "reason=${reason}"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "changed=${changed}"
+          echo "reason=${reason:-<none>}"
+          echo "--- current state ---"
+          cat "$CUR_STATE"
+
+      # Cache entries are immutable, so the key can't be overwritten. Delete the
+      # single existing entry (if any), then re-save under the same key -- this
+      # keeps exactly one cache entry instead of one per change. The concurrency
+      # group above serializes runs, so there is no delete/save race.
+      - name: Delete stale state cache
+        if: steps.collect.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh cache delete tc-yml-watch-state --repo "$GITHUB_REPOSITORY" || true
+
+      - name: Save current state
+        if: steps.collect.outputs.changed == 'true'
+        uses: actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: state.tsv
+          key: tc-yml-watch-state
+
+  deploy:
+    needs: check-change
+    if: needs.check-change.outputs.changed == 'true'
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    with:
+      trigger_reason: ${{ needs.check-change.outputs.reason }}
