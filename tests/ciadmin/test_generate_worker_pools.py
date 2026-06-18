@@ -323,6 +323,49 @@ def assert_guest_accelerators(pool):
     }
 
 
+def test_generate_pool_variants_resolves_scaling_ratio(environment):
+    pool = WorkerPool(
+        pool_id="{pool-group}/win11-64-25h2-{suffix}",
+        description="",
+        owner="user@example.com",
+        provider_id="azure",
+        email_on_error=False,
+        attributes={"suffix": ""},
+        variants=[
+            {"pool-group": "gecko-t"},
+            {"pool-group": "gecko-t", "suffix": "gpu"},
+            {"pool-group": "gecko-t", "suffix": "large"},
+            {"pool-group": "enterprise-t"},
+        ],
+        config={
+            "scalingRatio": {
+                "by-pool-group": {
+                    "gecko-t": {
+                        "by-suffix": {
+                            "": 0.5,
+                            "gpu": 0.5,
+                            "default": 1,
+                        },
+                    },
+                    "default": 1,
+                },
+            },
+        },
+    )
+
+    ratios = {
+        variant.pool_id: variant.config["scalingRatio"]
+        for variant in generate_pool_variants([pool], environment.name)
+    }
+
+    assert ratios == {
+        "gecko-t/win11-64-25h2": 0.5,
+        "gecko-t/win11-64-25h2-gpu": 0.5,
+        "gecko-t/win11-64-25h2-large": 1,
+        "enterprise-t/win11-64-25h2": 1,
+    }
+
+
 @pytest.mark.parametrize(
     "provider,extra_pool_config,extra_cloud_config",
     (
