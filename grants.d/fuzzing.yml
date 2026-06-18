@@ -51,7 +51,6 @@
     - queue:create-task:highest:proj-fuzzing/*
     - queue:scheduler-id:fuzzing
     - queue:cancel-task:fuzzing/*
-    - queue:route:notify.*
     - secrets:get:project/fuzzing/*
     - worker-manager:manage-worker-pool:proj-fuzzing/*
     - worker-manager:provider:aws
@@ -115,11 +114,6 @@
     - queue:schedule-task:taskcluster-github/*
     - queue:schedule-task:taskcluster-ui/*
     - queue:scheduler-id:taskcluster-github
-    # Fetch artifacts from interactive docker-worker / generic-worker tasks
-    - queue:get-artifact:private/docker-worker/*
-    - queue:get-artifact:private/generic-worker/*
-    # Send build / automation notifications
-    - notify:email:*
     - worker-manager:create-worker:proj-fuzzing/*
     - worker-manager:manage-worker-pool:proj-fuzzing/*
     - worker-manager:provider:aws
