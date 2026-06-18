@@ -3583,7 +3583,7 @@ pools:
     provider_id: azure2
     config:
       image: fuzzing-gw-win2022
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
       worker-purpose: proj-fuzzing
       locations: [central-us, east-us]
       maxCapacity: 10
@@ -3617,7 +3617,7 @@ pools:
         by-kind:
           gpu: fuzzing-gw-win2022-gpu
           ngpu: fuzzing-gw-win2022
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
       worker-purpose: proj-fuzzing
       locations:
         by-kind:
@@ -3683,7 +3683,7 @@ pools:
     provider_id: azure2
     config:
       image: fuzzing-gw-win2022-gpu
-      implementation: generic-worker/worker-runner-windows
+      implementation: generic-worker/windows
       worker-purpose: proj-fuzzing
       locations: [east-us, east-us-2, south-central-us, west-us-2]
       maxCapacity: 20
