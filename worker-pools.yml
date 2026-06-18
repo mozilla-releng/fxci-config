@@ -2957,6 +2957,14 @@ pools:
               default: 100
           enterprise-t: 200
           default: 5
+      scalingRatio:
+        by-pool-group:
+          gecko-t:
+            by-suffix:
+              '': 0.5
+              gpu: 0.5
+              default: 1
+          default: 1
       armDeployment:
         by-suffix:
           gpu-perf-experiment:
