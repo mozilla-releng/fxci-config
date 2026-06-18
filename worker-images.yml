@@ -189,3 +189,41 @@ ronin_t_windows11_64_2009:
     resource_group: rg-packer-worker-images
     deployment_id: "96de7f5"
     name: win11_64_2009
+
+# Fuzzing images migrated from community-tc.
+fuzzing-gw-ubuntu-24-04:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-qioehfdraiiishpuvgvl
+
+fuzzing-gw-ubuntu-24-04-arm64:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-mqscbutmsbawtytlroxk
+
+fuzzing-docker-worker-legacy:
+  aws:
+    us-east-1: ami-0a6e926238859761c
+    us-east-2: ami-00f6c9d7fec4fa42b
+    us-west-1: ami-03e4f8db63254ce7e
+    us-west-2: ami-0b5dd0bbb670ec80e
+
+fuzzing-gw-ubuntu-24-04-staging:
+  aws:
+    us-east-1: ami-02619e55246806e8d
+
+fuzzing-gw-win2022-gpu:
+  azure2:
+    version: NA
+    resource_group: rg-packer-worker-images
+    deployment_id: fuzzing
+    sbom: false
+    east-us: imageset-fcxybmrwdcsmxjijwamv-eastus
+    east-us-2: imageset-ofghwxvlubvnimhurgqa-eastus2
+    south-central-us: imageset-hhgwofqoyyhwaxoucnli-southcentralus
+    west-us-2: imageset-owexteqnyghtbsfeuppb-westus2
+
+fuzzing-gw-win2022:
+  azure2:
+    version: NA
+    resource_group: rg-packer-worker-images
+    deployment_id: fuzzing
+    sbom: false
+    central-us: imageset-pytrrvjottfuqbemodpn-centralus
+    east-us: imageset-qqkmmgddstxfhvbsdprj-eastus

@@ -311,6 +311,18 @@ meta:
     disks:
       - *persistent-disk-75gb
     machine_type: c4d-highcpu-8
+  - &n2-standard-4-60gb-lssd
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 60
+      - *scratch-disk
+    machine_type: n2-standard-4
+  - &c3d-standard-4-60gb-lssd
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 60
+      - *scratch-disk
+    machine_type: c3d-standard-4
 
 pools:
   - pool_id: infra/build-decision
@@ -3479,3 +3491,194 @@ pools:
       image: ubuntu-2404-headless
       implementation: generic-worker/linux-d2g
       instance_types: [*c3d-standard-4]
+
+  # Fuzzing pools migrated from community-tc.
+  - pool_id: proj-fuzzing/{kind}
+    description: '{desc}'
+    owner: truber@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    variants:
+      - kind: bugmon-monitor
+        desc: Fuzzing bugmon monitor pool
+        owner: jkratzer@mozilla.com
+        email_on_error: false
+      - kind: bugmon-processor
+        desc: Fuzzing bugmon processor pool
+        owner: jkratzer@mozilla.com
+        email_on_error: false
+      - kind: decision
+        desc: Fuzzing decision pool
+      - kind: grizzly-reduce-worker
+        desc: Fuzzing grizzly reduce worker pool
+      - kind: grizzly-reduce-worker-android
+        desc: Fuzzing grizzly reduce worker pool (Android, nested virt)
+      - kind: nss-corpus-update-worker
+        desc: Fuzzing NSS corpus update worker pool
+        owner: mdauer@mozilla.com
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-kind:
+          bugmon-monitor: 5
+          bugmon-processor: 20
+          decision: 5
+          grizzly-reduce-worker: 20
+          grizzly-reduce-worker-android: 10
+          nss-corpus-update-worker: 5
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: *default-gcp-regions
+      image: fuzzing-gw-ubuntu-24-04
+      instance_types:
+        by-kind:
+          grizzly-reduce-worker-android:
+            - <<: *n2-standard-4-60gb-lssd
+              advancedMachineFeatures:
+                enableNestedVirtualization: true
+          default:
+            - *n2-standard-4-60gb-lssd
+
+  - pool_id: proj-fuzzing/ci
+    description: Fuzzing CI pool
+    owner: fuzzing+taskcluster@mozilla.com
+    email_on_error: false
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 20
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: *default-gcp-regions
+      image: fuzzing-gw-ubuntu-24-04
+      instance_types:
+        - *c3d-standard-4-60gb-lssd
+
+  - pool_id: proj-fuzzing/ci-arm64
+    description: Fuzzing CI ARM64 pool
+    owner: fuzzing+taskcluster@mozilla.com
+    email_on_error: false
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-central1]
+      image: fuzzing-gw-ubuntu-24-04-arm64
+      instance_types:
+        - disks:
+            - *persistent-disk-60gb
+          machine_type: t2a-standard-4
+
+  - pool_id: proj-fuzzing/ci-windows
+    description: Fuzzing CI Windows pool
+    owner: fuzzing+taskcluster@mozilla.com
+    email_on_error: false
+    provider_id: azure2
+    config:
+      image: fuzzing-gw-win2022
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: proj-fuzzing
+      locations: [central-us, east-us]
+      maxCapacity: 10
+      worker-config:
+        genericWorker:
+          config: {}
+      vmSizes:
+        - vmSize: Standard_F16s_v2
+          launchConfig:
+            hardwareProfile:
+              vmSize: Standard_F16s_v2
+      capacityPerInstance: 1
+
+  - pool_id: proj-fuzzing/grizzly-reduce-worker-windows{suffix}
+    description: '{desc}'
+    owner: truber@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    variants:
+      - kind: gpu
+        suffix: ''
+        desc: Fuzzing grizzly reduce worker Windows GPU pool
+      - kind: ngpu
+        suffix: -ngpu
+        desc: Fuzzing grizzly reduce worker Windows non-GPU pool
+    config:
+      image:
+        by-kind:
+          gpu: fuzzing-gw-win2022-gpu
+          ngpu: fuzzing-gw-win2022
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: proj-fuzzing
+      locations:
+        by-kind:
+          gpu: [east-us, east-us-2, south-central-us, west-us-2]
+          ngpu: [central-us, east-us]
+      maxCapacity: 10
+      worker-config:
+        genericWorker:
+          config: {}
+      vmSizes:
+        - vmSize:
+            by-kind:
+              gpu: Standard_NV12s_v3
+              ngpu: Standard_F16s_v2
+          launchConfig:
+            hardwareProfile:
+              vmSize:
+                by-kind:
+                  gpu: Standard_NV12s_v3
+                  ngpu: Standard_F16s_v2
+      capacityPerInstance: 1
+
+  - pool_id: proj-fuzzing/bugmon-pernosco
+    description: Fuzzing bugmon pernosco pool (docker-worker, metal)
+    owner: jkratzer@mozilla.com
+    email_on_error: false
+    provider_id: aws
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      regions: [us-east-1, us-west-1, us-west-2]
+      image: fuzzing-docker-worker-legacy
+      security: untrusted
+      instance_types:
+        - instanceType: m5d.metal
+      worker-config:
+        dockerConfig:
+          allowPrivileged: true
+          allowDisableSeccomp: true
+
+  - pool_id: proj-fuzzing/bugmon-pernosco-staging
+    description: Fuzzing bugmon pernosco staging pool
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: aws
+    config:
+      minCapacity: 0
+      maxCapacity: 5
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-east-1]
+      image: fuzzing-gw-ubuntu-24-04-staging
+      security: untrusted
+      instance_types:
+        - instanceType: m5d.metal
+
+  - pool_id: proj-fuzzing/bugmon-processor-windows
+    description: Fuzzing bugmon processor Windows GPU pool
+    owner: jkratzer@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: fuzzing-gw-win2022-gpu
+      implementation: generic-worker/worker-runner-windows
+      worker-purpose: proj-fuzzing
+      locations: [east-us, east-us-2, south-central-us, west-us-2]
+      maxCapacity: 20
+      worker-config:
+        genericWorker:
+          config: {}
+      vmSizes:
+        - vmSize: Standard_NV12s_v3
+          launchConfig:
+            hardwareProfile:
+              vmSize: Standard_NV12s_v3
+      capacityPerInstance: 1
