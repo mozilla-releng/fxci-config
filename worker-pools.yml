@@ -74,6 +74,16 @@ worker-defaults:
             taskclusterProxyPort: 80
             tasksDir: Z:\
             wstAudience: firefoxcitc
+      generic-worker/windows-fuzzing:
+        genericWorker:
+          config:
+            livelogExecutable: C:\generic-worker\livelog.exe
+            ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+            idleTimeoutSecs: 15
+            shutdownMachineOnIdle: true
+            shutdownMachineOnInternalError: true
+            taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+            wstAudience: firefoxcitc
       generic-worker/windows-builder:
         genericWorker:
           config:
@@ -3583,7 +3593,7 @@ pools:
     provider_id: azure2
     config:
       image: fuzzing-gw-win2022
-      implementation: generic-worker/windows
+      implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
       locations: [central-us, east-us]
       maxCapacity: 10
@@ -3617,7 +3627,7 @@ pools:
         by-kind:
           gpu: fuzzing-gw-win2022-gpu
           ngpu: fuzzing-gw-win2022
-      implementation: generic-worker/windows
+      implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
       locations:
         by-kind:
@@ -3683,7 +3693,7 @@ pools:
     provider_id: azure2
     config:
       image: fuzzing-gw-win2022-gpu
-      implementation: generic-worker/windows
+      implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
       locations: [east-us, east-us-2, south-central-us, west-us-2]
       maxCapacity: 20
@@ -3691,7 +3701,8 @@ pools:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
-          config: {}
+          config:
+            numberOfTasksToRun: 1
       vmSizes:
         - vmSize: Standard_NV12s_v3
           launchConfig:
