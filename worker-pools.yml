@@ -78,7 +78,7 @@ worker-defaults:
         genericWorker:
           config:
             livelogExecutable: C:\generic-worker\livelog.exe
-            ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
+            ed25519SigningKeyLocation: C:\generic-worker\generic-worker-ed25519-signing-key.key
             idleTimeoutSecs: 15
             shutdownMachineOnIdle: true
             shutdownMachineOnInternalError: true
