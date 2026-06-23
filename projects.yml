@@ -173,6 +173,29 @@ mozilla-esr140:
     targets:
       - periodic-update
       - pinning-update
+mozilla-esr153:
+  repo: https://hg.mozilla.org/releases/mozilla-esr153
+  lando_repo: firefox-esr153
+  repo_type: hg
+  access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
+  trust_domain: gecko
+  features:
+    gecko-actions: true
+    gecko-roles: true
+    hg-push: true
+    lando: true
+    merge-automation: true
+    shipit: true
+    taskgraph-cron: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+  cron:
+    targets:
+      - periodic-update
+      - pinning-update
 comm-esr115:
   repo: https://hg.mozilla.org/releases/comm-esr115
   repo_type: hg

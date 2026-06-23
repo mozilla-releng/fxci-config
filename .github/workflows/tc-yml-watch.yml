@@ -72,6 +72,7 @@ jobs:
           mozilla-firefox/firefox release
           mozilla-firefox/firefox esr115
           mozilla-firefox/firefox esr140
+          mozilla-firefox/firefox esr153
           mozilla/enterprise-firefox enterprise-main
           mozilla/enterprise-firefox enterprise-release
           mozilla/enterprise-firefox enterprise-beta
