@@ -573,7 +573,7 @@
         job: [action:release-promotion]
         trust_domain: gecko
         level: [3]
-        alias: [mozilla-esr140, mozilla-esr115, mozilla-release, mozilla-beta]
+        alias: [mozilla-esr115, mozilla-esr140, mozilla-esr153, mozilla-release, mozilla-beta]
 
 - grant:
     - project:releng:googleplay:product:fenix
@@ -2382,7 +2382,7 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140]
+        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140, mozilla-esr153]
         job: action:release-promotion
 
 - grant:
@@ -2392,7 +2392,7 @@
     - project:
         # mozilla-central is not needed here because those version bumps are
         # done through a `merge_day` task
-        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140]
+        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140, mozilla-esr153]
         job: action:release-promotion
 
 
@@ -2409,7 +2409,7 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr140]
+        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr140, mozilla-esr153]
         job: action:merge-automation
 
 # granting scopes for cross-repo updates is also straightforward, but it looks
@@ -2433,7 +2433,7 @@
         job: action:merge-automation
 
 - grant:
-    - project:releng:lando:repo:esr140
+    - project:releng:lando:repo:esr153
   to:
     - project:
         alias: mozilla-release
