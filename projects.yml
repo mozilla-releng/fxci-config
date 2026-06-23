@@ -207,6 +207,23 @@ comm-esr140:
     treeherder-reporting: true
     trust-domain-scopes: true
     shipit: true
+comm-esr153:
+  repo: https://hg.mozilla.org/releases/comm-esr153
+  repo_type: hg
+  access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
+  trust_domain: comm
+  parent_repo: https://hg.mozilla.org/releases/mozilla-esr153
+  features:
+    gecko-actions: true
+    gecko-roles: true
+    hg-push: true
+    taskgraph-cron: false
+    treeherder-reporting: true
+    trust-domain-scopes: true
+    shipit: true
 oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
