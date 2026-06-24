@@ -99,22 +99,22 @@ ronin_b1_windows2022_64_2009_alpha:
     name: win2022_64_2009_alpha
 ronin_b1_windows2022_64_2009:
   azure2:
-    version: 1.3.4
+    version: 1.3.5
     resource_group: rg-packer-worker-images
-    deployment_id: "757b34d"
+    deployment_id: "82415f4"
     name: win2022_64_2009
 ronin_b3_windows2022_64_2009:
   azure_trusted:
-    version: 1.3.4
+    version: 1.3.5
     resource_group: rg-packer-worker-images
-    deployment_id: "757b34d"
+    deployment_id: "82415f4"
     name: trusted_win2022_64_2009
 # Windows 10
 ronin_t_windows10_64_2009_prod:
   azure2:
-    version: 1.3.4
+    version: 1.3.5
     resource_group: rg-packer-worker-images
-    deployment_id: "757b34d"
+    deployment_id: "82415f4"
     name: win10_64_2009
 ronin_t_windows10_64_2009_alpha:
   azure2:
@@ -125,9 +125,9 @@ ronin_t_windows10_64_2009_alpha:
 # Windows 11
 win11a6425h2builder:
   azure2:
-    version: 1.0.4
+    version: 1.0.5
     resource_group: rg-packer-worker-images
-    deployment_id: "757b34d"
+    deployment_id: "82415f4"
     name: win11_a64_25h2_builder
 win11a6425h2builderalpha:
   azure2:
@@ -137,15 +137,15 @@ win11a6425h2builderalpha:
     name: win11_a64_25h2_builder_alpha
 trusted_win11_a64_25h2_builder:
   azure_trusted:
-    version: 1.0.4
+    version: 1.0.5
     resource_group: rg-packer-worker-images
-    deployment_id: "757b34d"
+    deployment_id: "82415f4"
     name: trusted_win11_a64_25h2_builder
 win11a6425h2tester:
   azure2:
-    version: 1.0.4
+    version: 1.0.5
     resource_group: rg-packer-worker-images
-    deployment_id: "757b34d"
+    deployment_id: "82415f4"
     name: win11_a64_25h2_tester
 win11a6425h2testeralpha:
   azure2:
@@ -155,9 +155,9 @@ win11a6425h2testeralpha:
     name: win11_a64_25h2_tester_alpha
 ronin_t_windows11_64_24h2:
   azure2:
-    version: 1.3.4
+    version: 1.3.5
     resource_group: rg-packer-worker-images
-    deployment_id: "757b34d"
+    deployment_id: "82415f4"
     name: win11_64_24h2
 ronin_t_windows11_64_24h2_alpha:
   azure2:
@@ -167,9 +167,9 @@ ronin_t_windows11_64_24h2_alpha:
     name: win11_64_24h2_alpha
 win116425h2:
   azure2:
-    version: 1.0.4
+    version: 1.0.5
     resource_group: rg-packer-worker-images
-    deployment_id: "757b34d"
+    deployment_id: "82415f4"
     name: win11_64_25h2
 win116425h2alpha:
   azure2:
