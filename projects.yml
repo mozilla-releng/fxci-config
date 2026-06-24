@@ -196,23 +196,6 @@ mozilla-esr153:
     targets:
       - periodic-update
       - pinning-update
-comm-esr115:
-  repo: https://hg.mozilla.org/releases/comm-esr115
-  repo_type: hg
-  access: scm_level_3
-  branches:
-    - name: "*"
-    - name: default
-  trust_domain: comm
-  parent_repo: https://hg.mozilla.org/releases/mozilla-esr115
-  features:
-    gecko-actions: true
-    gecko-roles: true
-    hg-push: true
-    taskgraph-cron: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-    shipit: true
 comm-esr140:
   repo: https://hg.mozilla.org/releases/comm-esr140
   repo_type: hg
