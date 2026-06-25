@@ -2366,6 +2366,9 @@
     - project:
         alias: [autoland, mozilla-beta, mozilla-release]
         job: cron:l10n-bumper
+    - project:
+        alias: [comm-central, comm-beta, comm-release, comm-esr140, comm-esr153]
+        job: cron:l10n-bumper
 
 - grant:
     - project:releng:lando:action:tag
@@ -2373,6 +2376,9 @@
   to:
     - project:
         alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140, mozilla-esr153]
+        job: action:release-promotion
+    - project:
+        alias: [comm-beta, comm-release, comm-esr140, comm-esr153]
         job: action:release-promotion
 
 - grant:
@@ -2383,6 +2389,11 @@
         # mozilla-central is not needed here because those version bumps are
         # done through a `merge_day` task
         alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140, mozilla-esr153]
+        job: action:release-promotion
+    - project:
+        # comm-central is not needed here because those version bumps are
+        # done through a `merge_day` task
+        alias: [comm-beta, comm-release, comm-esr140, comm-esr153]
         job: action:release-promotion
 
 
