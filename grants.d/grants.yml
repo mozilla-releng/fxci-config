@@ -866,9 +866,14 @@
     # Grant engwf team access to secrets and artifacts for engwf
     - secrets:get:project/engwf/*
     - secrets:set:project/engwf/*
+
+    # Bug 2024347: ability to create / modify review assigner hook
+    - assume:hook-id:project-engwf/reviewer-assignment-staging
+    - hooks:modify-hook:project-engwf/reviewer-assignment-staging
+
   to:
-    - groups:
-        - engworkflow
+    - roles:
+        - mozillians-group:engworkflow
 
 - grant:
     # Bug 1599870
@@ -2011,16 +2016,6 @@
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|pwong
 
-# Bug 2024347: grant shtrom ability to create / modify review assigner hook
-- grant:
-    - assume:hook-id:project-engwf/reviewer-assignment-staging
-    - hooks:modify-hook:project-engwf/reviewer-assignment-staging
-    - secrets:get:project/engwf/*
-    - secrets:set:project/engwf/*
-  to:
-    - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|omehani
-
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
 # access to the root credentials.
@@ -2121,11 +2116,6 @@
   to:
     - roles:
         - mozilla-group:team_mozillaonline
-- grant:
-    - assume:project:releng:ci-group:engworkflow
-  to:
-    - roles:
-        - mozillians-group:engworkflow
 - grant:
     - assume:project:releng:ci-group:shipit_firefox
   to:
@@ -2376,6 +2366,9 @@
     - project:
         alias: [autoland, mozilla-beta, mozilla-release]
         job: cron:l10n-bumper
+    - project:
+        alias: [comm-central, comm-beta, comm-release, comm-esr140, comm-esr153]
+        job: cron:l10n-bumper
 
 - grant:
     - project:releng:lando:action:tag
@@ -2383,6 +2376,9 @@
   to:
     - project:
         alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140, mozilla-esr153]
+        job: action:release-promotion
+    - project:
+        alias: [comm-beta, comm-release, comm-esr140, comm-esr153]
         job: action:release-promotion
 
 - grant:
@@ -2393,6 +2389,11 @@
         # mozilla-central is not needed here because those version bumps are
         # done through a `merge_day` task
         alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140, mozilla-esr153]
+        job: action:release-promotion
+    - project:
+        # comm-central is not needed here because those version bumps are
+        # done through a `merge_day` task
+        alias: [comm-beta, comm-release, comm-esr140, comm-esr153]
         job: action:release-promotion
 
 
