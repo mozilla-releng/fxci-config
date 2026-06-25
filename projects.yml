@@ -113,6 +113,7 @@ mozilla-release:
       - periodic-update
 comm-release:
   repo: https://hg.mozilla.org/releases/comm-release
+  lando_repo: thunderbird-release
   repo_type: hg
   access: scm_level_3
   branches:
@@ -198,6 +199,7 @@ mozilla-esr153:
       - pinning-update
 comm-esr140:
   repo: https://hg.mozilla.org/releases/comm-esr140
+  lando_repo: thunderbird-esr140
   repo_type: hg
   access: scm_level_3
   branches:
@@ -215,6 +217,7 @@ comm-esr140:
     shipit: true
 comm-esr153:
   repo: https://hg.mozilla.org/releases/comm-esr153
+  lando_repo: thunderbird-esr153
   repo_type: hg
   access: scm_level_3
   branches:
@@ -313,6 +316,7 @@ mozilla-beta:
       - pinning-update
 comm-beta:
   repo: https://hg.mozilla.org/releases/comm-beta
+  lando_repo: thunderbird-beta
   repo_type: hg
   access: scm_level_3
   branches:
@@ -370,6 +374,7 @@ mozilla-central:
         allow-input: true
 comm-central:
   repo: https://hg.mozilla.org/comm-central
+  lando_repo: thunderbird-main
   repo_type: hg
   access: scm_level_3
   branches:
