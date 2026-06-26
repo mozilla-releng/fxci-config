@@ -1698,6 +1698,13 @@
     - groups:
         - team_services_ops
 
+# Bug 2048320
+- grant:
+    - auth:reset-access-token:project/perf-ai/bot
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|dpalmeiro
+
 ##
 # hook scopes
 
