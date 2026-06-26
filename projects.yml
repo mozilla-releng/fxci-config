@@ -418,7 +418,7 @@ cedar:
 birch:
   repo: https://hg.mozilla.org/projects/birch
   repo_type: hg
-  access: scm_level_2
+  access: scm_level_1
   branches:
     - name: "*"
     - name: default
