@@ -2023,6 +2023,14 @@
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|pwong
 
+# Bug 2048352: grant nhadji access to secret for reviewbot migration testing
+- grant:
+    - secrets:get:project/releng/reviewbot-testing-github-staging-firefox-ssh
+    - secrets:set:project/releng/reviewbot-testing-github-staging-firefox-ssh
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|nhadji
+
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
 # access to the root credentials.
