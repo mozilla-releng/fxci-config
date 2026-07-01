@@ -739,7 +739,7 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-60gb
+            - *persistent-disk-75gb
           machine_type: n2-highmem-32
   - pool_id: '{pool-group}/b-linux-large-gcp-d2g-1tb'
     description: Big workers with big disks - intended for Firefox Translations only
