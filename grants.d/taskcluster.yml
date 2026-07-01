@@ -1,0 +1,211 @@
+# Taskcluster project grants
+
+- grant:
+    - notify:manage-denylist
+    # This is the taskcluster channel
+    - queue:route:notify.matrix-room.!whDRjjSmICCgrhFHsQ:mozilla.org.*
+  to:
+    - roles:
+        - project-admin:taskcluster
+
+- grant:
+    - queue:create-task:highest:proj-taskcluster/ci
+    # For replacing the docker-worker pool (proj-taskcluster/ci) for d2g work
+    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
+    # The account and secret for the Azure testing storage account.
+    # This is secret but ok for use by PRs.
+    - secrets:get:project/taskcluster/testing/azure
+    # This is the taskcluster channel
+    - queue:route:notify.matrix-room.!whDRjjSmICCgrhFHsQ:mozilla.org.*
+  to:
+    - roles:
+        - repo:github.com/taskcluster/*
+
+- grant:
+    - queue:create-task:highest:proj-taskcluster/ci
+  to:
+    - roles:
+        - repo:github.com/mozilla/hawk:*
+
+- grant:
+    - secrets:get:project/taskcluster/testing/client-libraries
+    - secrets:get:project/taskcluster/testing/taskcluster-*
+    - docker-worker:cache:taskcluster-*
+  to:
+    - roles:
+        - repo:github.com/taskcluster/taskcluster:*
+
+- grant:
+    - queue:create-task:highest:proj-taskcluster/release
+    - secrets:get:project/taskcluster/release
+  to:
+    - roles:
+        - repo:github.com/taskcluster/taskcluster:tag:v*
+
+- grant:
+    - queue:create-task:highest:proj-taskcluster/release
+    - secrets:get:project/taskcluster/staging-release
+  to:
+    - roles:
+    # both pre- and post-bug-1635455
+        - repo:github.com/taskcluster/taskcluster:branch:staging-release/*
+        - repo:github.com/taskcluster/staging-releases:*
+
+- grant:
+    # pushes to main and releases can notify on failure
+    - queue:route:notify.email.taskcluster-internal@mozilla.com.*
+    - queue:route:notify.email.taskcluster-notifications@mozilla.com.*
+    - queue:route:notify.irc-channel.#taskcluster-bots.*
+  to:
+    - roles:
+        - repo:github.com/taskcluster/taskcluster:branch:main
+        - repo:github.com/taskcluster/taskcluster:tag:v*
+
+- grant:
+    - queue:create-task:highest:proj-taskcluster/ci
+  to:
+    - roles:
+        - repo:github.com/json-e/json-e:*
+
+- grant:
+    # pushes to json-e main can read secrets for deploying the site
+    - secrets:get:project/taskcluster/json-e-deploy
+    # ..and notify on failure
+    - queue:route:notify.email.taskcluster-notifications@mozilla.com.*
+  to:
+    - roles:
+        - repo:github.com/json-e/json-e:branch:main
+
+- grant:
+    - assume:project:taskcluster:worker-test-scopes
+    - assume:worker-id:docker-worker/docker-worker
+    - assume:worker-id:random-local-worker/docker-worker
+    - docker-worker:cache:docker-worker-garbage-*
+    - docker-worker:capability:device:hostSharedMemory
+    - docker-worker:capability:device:hostSharedMemory:null-provisioner/*
+    - docker-worker:capability:device:loopbackAudio
+    - docker-worker:capability:device:loopbackAudio:null-provisioner/*
+    - docker-worker:capability:device:loopbackVideo
+    - docker-worker:capability:device:loopbackVideo:null-provisioner/*
+    - docker-worker:capability:disableSeccomp
+    - docker-worker:capability:disableSeccomp:null-provisioner/*
+    - docker-worker:capability:privileged
+    - docker-worker:capability:privileged:null-provisioner/*
+    - docker-worker:image:localhost:*
+    - purge-cache:null-provisioner/*
+    - queue:cancel-task
+    - queue:cancel-task-group:taskcluster-level-1/*
+    - queue:cancel-task:docker-worker-tests/*
+    - queue:claim-task
+    - queue:claim-task:null-provisioner/*
+    - queue:claim-work:null-provisioner/*
+    - queue:create-artifact:*
+    - queue:create-task:lowest:null-provisioner/*
+    - queue:create-task:lowest:proj-taskcluster/ci
+    - queue:get-artifact:private/docker-worker-tests/*
+    - queue:rerun-task:taskcluster-level-1/*
+    - queue:resolve-task
+    - queue:route:statuses
+    - queue:scheduler-id:docker-worker-tests
+    - queue:scheduler-id:taskcluster-github
+    - queue:seal-task-group:taskcluster-level-1/*
+    - queue:worker-id:docker-worker/docker-worker
+    - queue:worker-id:random-local-worker/docker-worker
+    - queue:worker-id:random-local-worker/dummy-worker-*
+    - secrets:get:project/taskcluster/taskcluster-worker/stateless-dns
+    - secrets:get:project/taskcluster/testing/docker-worker/ci-creds
+    - secrets:get:project/taskcluster/testing/docker-worker/pulse-creds
+  to:
+    - roles:
+        - repo:github.com/taskcluster/taskcluster:*
+        - project:taskcluster:docker-worker-tester
+
+- grant:
+    - auth:create-client:project/taskcluster/smoketest/*
+    - auth:create-role:project:taskcluster:smoketest:*
+    - auth:delete-client:project/taskcluster/smoketest/*
+    - auth:delete-role:project:taskcluster:smoketest:*
+    - auth:reset-access-token:project/taskcluster/smoketest/*
+    - auth:update-client:project/taskcluster/smoketest/*
+    - auth:update-role:project:taskcluster:smoketest:*
+    - project:taskcluster:smoketest:*
+    - purge-cache:built-in/succeed:smoketest-cache
+    - queue:create-task:highest:built-in/*
+    - queue:create-task:highest:built-in/fail
+    - queue:create-task:highest:built-in/succeed
+    - queue:route:index.project.taskcluster.smoketest.*
+    - queue:scheduler-id:smoketest
+    - secrets:get:project/taskcluster/smoketest/*
+    - secrets:set:project/taskcluster/smoketest/*
+  to:
+    - roles:
+        - project:taskcluster:smoketests
+
+- grant:
+    - assume:project:taskcluster:smoketests
+  to:
+    - roles:
+        - github-team:taskcluster/smoketesters
+
+- grant:
+    - assume:worker-id:test-worker-group/test-worker-id
+    - assume:worker-pool:test-provisioner/*
+    - assume:worker-type:test-provisioner/*
+    - auth:create-client:project/taskcluster:generic-worker-tester/TestReclaimCancelledTask
+    - auth:create-client:project/taskcluster:generic-worker-tester/TestResolveResolvedTask
+    - auth:sentry:generic-worker-tests
+    - docker-worker:cache:d2g-test
+    - docker-worker:capability:privileged:test-provisioner/test-*
+    - docker-worker:capability:device:hostSharedMemory:test-provisioner/test-*
+    - docker-worker:capability:device:kvm:test-provisioner/test-*
+    - docker-worker:capability:device:loopbackAudio
+    - docker-worker:capability:device:loopbackAudio:test-provisioner/test-*
+    - docker-worker:capability:device:loopbackVideo
+    - docker-worker:capability:device:loopbackVideo:test-provisioner/test-*
+    - docker-worker:feature:allowPtrace
+    - generic-worker:cache:apple-cache
+    - generic-worker:cache:banana-cache
+    - generic-worker:cache:devtools-app
+    - generic-worker:cache:test-modifications
+    - generic-worker:cache:unknown-issuer-app-cache
+    - generic-worker:os-group:test-provisioner/*
+    - generic-worker:run-as-administrator:test-provisioner/*
+    - generic-worker:run-task-as-current-user:test-provisioner/*
+    - generic-worker:loopback-audio:test-provisioner/test-*
+    - generic-worker:loopback-video:test-provisioner/test-*
+    - index:find-task:garbage.generic-worker-tests.*
+    - index:insert-task:garbage.generic-worker-tests.*
+    - queue:cancel-task:test-scheduler/*
+    - queue:create-artifact:public/*
+    - queue:create-task:highest:test-provisioner/*
+    - queue:get-artifact:SampleArtifacts/_/X.txt
+    - queue:get-artifact:SampleArtifacts/_/non-existent-artifact.txt
+    - queue:get-artifact:SampleArtifacts/b/c/d.jpg
+    - queue:resolve-task
+    - queue:scheduler-id:test-scheduler
+  to:
+    - roles:
+        - project:taskcluster:generic-worker-tester
+
+- grant:
+    - assume:project:taskcluster:generic-worker-tester
+    - queue:create-task:highest:proj-taskcluster/*
+    - generic-worker:cache:taskcluster-*
+    - generic-worker:run-task-as-current-user:proj-taskcluster/*
+    - generic-worker:os-group:proj-taskcluster/gw-ubuntu-24-04-gui/docker
+    - secrets:get:project/taskcluster/testing/generic-worker/ci-creds
+    - queue:scheduler-id:taskcluster-level-1
+    - queue:route:checks
+    - queue:route:index.taskcluster.cache.pr.docker-images.v2.*
+    - queue:route:index.taskcluster.cache.level-1.docker-images.v2.*
+  to:
+    - roles:
+        - repo:github.com/taskcluster/taskcluster:*
+        - repo:github.com/taskcluster/staging-releases:*
+
+- grant:
+    - queue:create-task:medium:proj-taskcluster/gw-ubuntu-24-04-gui
+  to:
+    - roles:
+        - repo:github.com/taskcluster/docker-exec-websocket-server:*
+        - repo:github.com/taskcluster/docker-exec-websocket-client:*

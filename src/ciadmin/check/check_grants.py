@@ -65,11 +65,13 @@ async def check_grant_pools(generate_resources):
         "bitbar",
         "built-in",
         "lambda",
+        "null-provisioner",
         "performance-hardware",
         "proj-autophone",
         "releng-hardware",
         "scriptworker-k8s",
         "scriptworker-prov-v1",
+        "test-provisioner",
     }
 
     # We validate the raw grants rather than the generated grants to allow for

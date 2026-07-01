@@ -1349,10 +1349,27 @@ project/relsre/devicepool:
   scopes:
     - queue:claimed-count:*
     - queue:pending-count:*
+
 project/taskcluster/smoketest:
-  description: Run smoketests on new Taskcluster deployments
+  description: For running smoke tests against firefox-ci services (typically when deploying updated serivces)
   scopes:
     - assume:project:taskcluster:smoketests
+project/taskcluster/generic-worker/ci-macos:
+  description: Client for all workers in static workerpool proj-taskcluster/gw-ci-macos.
+  scopes:
+    - assume:worker-pool:proj-taskcluster/gw-ci-macos
+    - assume:worker-id:proj-taskcluster/*
+project/taskcluster/generic-worker/taskcluster-ci:
+  description: |
+    A client used by generic-worker CI tests.
+  scopes:
+    - assume:project:taskcluster:generic-worker-tester
+project/taskcluster/testing/client-libraries:
+  description: |
+    This client is used to test the client libraries in Taskcluster CI.
+  scopes:
+    - "object:upload:taskcluster:taskcluster/test/*"
+    - "object:download:taskcluster/test/*"
 project/taskcluster/audit-reports:
   description: Used for auditing worker versions across pools.
   scopes:
@@ -1360,6 +1377,7 @@ project/taskcluster/audit-reports:
     - queue:scheduler-id:smoketest
     - queue:seal-task-group:smoketest/*
     - queue:get-artifact:public/*
+
 project/wpt/wptsync:
   description: Created in Bug 1596469 - Secret handed to :jgraham
   scopes:

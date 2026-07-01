@@ -19,3 +19,9 @@ fuzzing:
   - "Hook=project-fuzzing/.*"
   - "Role=hook-id:project-fuzzing/.*"
   - "Secret=project/fuzzing/.*"
+
+taskcluster:
+  # smoketests create these resources, and also cleans them up, so leave
+  # them alone here...
+  - "Client=project/taskcluster/smoketest/.*"
+  - "Role=project:taskcluster:smoketest:.*"
