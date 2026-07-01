@@ -1018,7 +1018,7 @@ dev = [
     { name = "pytest-mock" },
     { name = "pytest-taskgraph", specifier = ">=0.1.0" },
     { name = "responses", specifier = ">=0.25.3" },
-    { name = "taskcluster-taskgraph", specifier = "==23.0.0" },
+    { name = "taskcluster-taskgraph", specifier = "==24.1.1" },
 ]
 
 [[package]]
@@ -2337,7 +2337,7 @@ wheels = [
 
 [[package]]
 name = "taskcluster-taskgraph"
-version = "23.0.0"
+version = "24.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "appdirs" },
@@ -2353,9 +2353,9 @@ dependencies = [
     { name = "taskcluster-urls" },
     { name = "voluptuous" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/86/84/ec58d1b52cb43536594aeca6f28a67a59a93a5fefb66f1426e9e0e9d23a0/taskcluster_taskgraph-23.0.0.tar.gz", hash = "sha256:21f1c482f12608e585e1b74341786b0a20b081edd87e14a59399058fbe49c344", size = 550534, upload-time = "2026-05-04T15:30:49.705Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/44/74/f89b93a0517cffc205316f5d7920683105401d0c435308e6bc7e649a2836/taskcluster_taskgraph-24.1.1.tar.gz", hash = "sha256:49df0d02004811c1651631cecc705f7fd24f0c793ed44534c7298dff9a96c32d", size = 613647, upload-time = "2026-06-11T15:57:07.168Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3a/c5/55c240ac0acd916970f965107fac1e8be4d5810ddecb4be6e2a38ce039e2/taskcluster_taskgraph-23.0.0-py3-none-any.whl", hash = "sha256:cac5460db5a9d30ab6c8aeb3799f2fc9bae12be62c899e10147b12e947bd93dc", size = 209689, upload-time = "2026-05-04T15:30:47.578Z" },
+    { url = "https://files.pythonhosted.org/packages/ed/fb/9804c7f96455404661705d1f53de35859fcc0f6967364c5ca1ec6307a9ff/taskcluster_taskgraph-24.1.1-py3-none-any.whl", hash = "sha256:07118c4e8ab02350adf7a2b230feca72eb558949f2a18da81217bfcbbedd41fa", size = 211050, upload-time = "2026-06-11T15:57:05.678Z" },
 ]
 
 [[package]]
