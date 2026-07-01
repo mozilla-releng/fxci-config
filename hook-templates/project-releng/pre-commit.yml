@@ -57,7 +57,7 @@ in:
             $json: {src: Source}
         features:
           taskclusterProxy: true
-        image: mozillareleases/taskgraph:run-task-v20.0.0@sha256:a905d5e14a97f0d313319b6bec4e5d670cf4505747e0cbaf360226046c1d4511
+        image: mozillareleases/taskgraph:run-task-v24.1.1@sha256:9b9a1a3ca42025bb8d7eba19e1b8759f04504097265074df25bbc997bd802543
         maxRunTime: 3600
         command:
           - run-task
