@@ -2398,6 +2398,10 @@
 
 - grant:
     - project:releng:lando:action:version_bump
+    - project:releng:lando:action:version_bump:file:browser/config/version.txt
+    - project:releng:lando:action:version_bump:file:browser/config/version_display.txt
+    - project:releng:lando:action:version_bump:file:config/milestone.txt
+    - project:releng:lando:action:version_bump:file:mobile/android/version.txt
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
