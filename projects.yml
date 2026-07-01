@@ -125,6 +125,7 @@ comm-release:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -211,6 +212,7 @@ comm-esr140:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
     taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -229,6 +231,7 @@ comm-esr153:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
     taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -328,6 +331,7 @@ comm-beta:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -387,6 +391,7 @@ comm-central:
     gecko-roles: true
     hg-push: true
     is-trunk: true
+    lando: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
