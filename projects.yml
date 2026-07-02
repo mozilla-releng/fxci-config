@@ -775,6 +775,22 @@ nss-try:
     treeherder-reporting: true
     taskgraph-actions: true
 
+nss-infra-testing:
+  repo: https://github.com/mozilla/nss-infra-testing
+  repo_type: git
+  trust_domain: nss
+  branches:
+    - name: "*"
+      level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
+    pr-actions: true
+    taskgraph-actions: true
+    taskgraph-cron: true
+    trust-domain-scopes: true
+
 fxci-config:
   repo: https://github.com/mozilla-releng/fxci-config
   repo_type: git
