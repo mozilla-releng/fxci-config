@@ -485,6 +485,7 @@ try:
     trust-domain-scopes: true
 try-comm-central:
   repo: https://hg.mozilla.org/try-comm-central
+  lando_repo: thunderbird-infra-testing-main
   repo_type: hg
   access: scm_level_1
   branches:
@@ -496,6 +497,7 @@ try-comm-central:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
     taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true

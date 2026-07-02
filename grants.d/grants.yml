@@ -2343,6 +2343,13 @@
 
 - grant:
     - project:releng:lando:action:*
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: try-comm-central
+
+- grant:
+    - project:releng:lando:action:*
     # there are staging versions of all production repos; allow access
     # to all of them
     - project:releng:lando:repo:staging-firefox-*
