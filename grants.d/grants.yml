@@ -2332,16 +2332,21 @@
         - mozillians-group:windows-laf-token-managers
 
 ### landoscript scopes
-# on try, we're fairly liberal with these scopes for ease of testing, and
-# allow all actions to be run through any means.
+# on try and in PRs, we're fairly liberal with these scopes for ease of testing,
+# and allow all actions to be run through any means.
 - grant:
     - project:releng:lando:action:*
-    # there are staging versions of all production repos; allow try access
-    # to all of them
-    - project:releng:lando:repo:staging-*
+    - project:releng:lando:repo:{lando_repo}
   to:
     - project:
         alias: try
+
+- grant:
+    - project:releng:lando:action:*
+    # there are staging versions of all production repos; allow access
+    # to all of them
+    - project:releng:lando:repo:staging-firefox-*
+  to:
     - project:
         alias: firefox
         job: [pull-request:trusted]
