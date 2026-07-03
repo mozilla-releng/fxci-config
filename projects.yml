@@ -462,7 +462,10 @@ cypress:
       - nightly-desktop-win64-aarch64
 try:
   repo: https://hg.mozilla.org/try
-  lando_repo: ff-test-dev
+  # This is used as a substitution in grants; the try repo is allowed to
+  # use grants for all staging repositories (to allow for testing against
+  # the staging beta, release, etc. repositories).
+  lando_repo: staging-firefox-*
   repo_type: hg
   access: scm_level_1
   branches:
