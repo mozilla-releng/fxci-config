@@ -1491,7 +1491,7 @@ translations:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     taskgraph-cron: true
     trust-domain-scopes: true
@@ -1518,7 +1518,7 @@ staging-firefox-translations-training:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     taskgraph-cron: true
     trust-domain-scopes: true
