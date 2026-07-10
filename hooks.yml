@@ -197,7 +197,11 @@ project-engwf/reviewer-assignment-staging:
   template_file: hook-templates/project-engwf/reviewer-assignment-staging.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: '#.infra-testing.#'  # e.g., primary.mozilla-firefox.infra-testing.opened or primary.mozilla-firefox.infra-testing.synchronize
+      routing_key_pattern: '#.infra-testing.opened'
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '#.infra-testing.reopened'
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '#.infra-testing.synchronized'
   trigger_schema:
     type: object
     # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
@@ -214,17 +218,11 @@ project-engwf/reviewer-assignment-staging:
         description: |
           The raw body of github event (for version 1)
         required:
-          - action
           - number
           - pull_request
           - repository
         additionalProperties: true
         properties:
-
-          action:
-            type: string
-            description: Action on the PR
-            pattern: "^(opened|reopened|synchronize)$"
 
           number:
             type: integer
@@ -301,11 +299,11 @@ project-engwf/reviewer-assignment-production:
   template_file: hook-templates/project-engwf/reviewer-assignment-production.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: '#.mozilla-firefox.#.opened'  # e.g., primary.mozilla-firefox.firefox.opened or primary.mozilla-firefox.firefox.synchronize
+      routing_key_pattern: '#.mozilla-firefox.#.opened'
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '#.mozilla-firefox.#.reopened'
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: '#.mozilla-firefox.#.synchronize'  # e.g., primary.mozilla-firefox.firefox.opened or primary.mozilla-firefox.firefox.synchronize
+      routing_key_pattern: '#.mozilla-firefox.#.synchronize'
   trigger_schema:
     type: object
     # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
@@ -327,11 +325,6 @@ project-engwf/reviewer-assignment-production:
           - repository
         additionalProperties: true
         properties:
-
-          action:
-            type: string
-            description: Action on the PR
-            pattern: "^(opened|reopened|synchronize)$"
 
           number:
             type: integer
