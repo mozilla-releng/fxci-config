@@ -327,11 +327,10 @@ meta:
         diskSizeGb: 60
       - *scratch-disk
     machine_type: n2-standard-4
-  - &c3d-standard-4-60gb-lssd
+  - &c3d-standard-4-60gb
     disks:
       - <<: *persistent-disk
         diskSizeGb: 60
-      - *scratch-disk
     machine_type: c3d-standard-4
 
 pools:
@@ -3590,7 +3589,7 @@ pools:
       regions: *default-gcp-regions
       image: fuzzing-gw-ubuntu-24-04
       instance_types:
-        - *c3d-standard-4-60gb-lssd
+        - *c3d-standard-4-60gb
 
   - pool_id: proj-fuzzing/ci-arm64
     description: Fuzzing CI ARM64 pool
