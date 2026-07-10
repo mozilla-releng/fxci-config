@@ -438,14 +438,14 @@ pools:
         instance_types: [*c3d-standard-16-lssd]
       # Updatebot runs on-task LLMs so isolate to mitigate prompt injections
       - pool-group: gecko-1
-        suffix: 'updatebot'
+        suffix: '-updatebot'
         instance_types: [*c3d-standard-16-lssd]
       - pool-group: gecko-2
-        suffix: 'updatebot'
+        suffix: '-updatebot'
         instance_types: [*c3d-standard-16-lssd]
       - pool-group: gecko-3
         chain-of-trust: trusted
-        suffix: 'updatebot'
+        suffix: '-updatebot'
         instance_types: [*c3d-standard-16-lssd]
       - pool-group: comm-1
         suffix: ''
