@@ -197,11 +197,11 @@ project-engwf/reviewer-assignment-staging:
   template_file: hook-templates/project-engwf/reviewer-assignment-staging.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: '#.infra-testing.opened'
+      routing_key_pattern: 'primary.mozilla-firefox.infra-testing.opened'
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: '#.infra-testing.reopened'
+      routing_key_pattern: 'primary.mozilla-firefox.infra-testing.reopened'
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: '#.infra-testing.synchronized'
+      routing_key_pattern: 'primary.mozilla-firefox.infra-testing.synchronize'
   trigger_schema:
     type: object
     # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
@@ -299,11 +299,11 @@ project-engwf/reviewer-assignment-production:
   template_file: hook-templates/project-engwf/reviewer-assignment-production.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: '#.mozilla-firefox.#.opened'
+      routing_key_pattern: 'primary.mozilla-firefox.firefox.opened'
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: '#.mozilla-firefox.#.reopened'
+      routing_key_pattern: 'primary.mozilla-firefox.firefox.reopened'
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: '#.mozilla-firefox.#.synchronize'
+      routing_key_pattern: 'primary.mozilla-firefox.firefox.synchronize'
   trigger_schema:
     type: object
     # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
