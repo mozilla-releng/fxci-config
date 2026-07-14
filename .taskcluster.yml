@@ -264,24 +264,7 @@ tasks:
                                             ln -s /builds/worker/artifacts artifacts &&
                                             taskgraph action-callback
                                         else: >
-                                            ln -s /builds/worker/artifacts artifacts &&
-                                            taskgraph decision
-                                            --verbose
-                                            --pushlog-id='0'
-                                            --pushdate='0'
-                                            --project='${project}'
-                                            --owner='${ownerEmail}'
-                                            --level='${level}'
-                                            --repository-type=git
-                                            --tasks-for='${tasks_for}'
-                                            --base-repository='${baseRepoUrl}'
-                                            --base-ref='${base_ref}'
-                                            --base-rev='${base_sha}'
-                                            --head-repository='${repoUrl}'
-                                            --head-ref='${head_ref}'
-                                            --head-rev='${head_sha}'
-                                            $${TRY_TASK_CONFIG_FILE+--try-task-config-file="$${TRY_TASK_CONFIG_FILE}"}
-                                            ${extraArgs}
+                                            mkdir -p /builds/worker/artifacts /builds/worker/checkouts/src/docker-contexts && python3 taskcluster_reference_google_poc.py
                           artifacts:
                               'public':
                                   type: 'directory'
