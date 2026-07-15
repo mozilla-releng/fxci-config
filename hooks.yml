@@ -203,6 +203,8 @@ project-engwf/reviewer-assignment-staging:
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: 'primary.mozilla-firefox.infra-testing.synchronize'
   trigger_schema:
+    # Note: the trigget_schema is not used to validate Payloads from Pulse [0]
+    # [0] https://github.com/taskcluster/taskcluster/issues/8867
     type: object
     # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
     required:
@@ -305,6 +307,8 @@ project-engwf/reviewer-assignment-production:
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: 'primary.mozilla-firefox.firefox.synchronize'
   trigger_schema:
+    # Note: the trigget_schema is not used to validate Payloads from Pulse [0]
+    # [0] https://github.com/taskcluster/taskcluster/issues/8867
     type: object
     # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
     required:
