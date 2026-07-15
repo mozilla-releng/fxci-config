@@ -2441,6 +2441,9 @@
     - project:
         alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr140, mozilla-esr153]
         job: action:merge-automation
+    - project:
+        alias: [comm-beta, comm-release, comm-esr153]
+        job: action:merge-automation
 
 # granting scopes for cross-repo updates is also straightforward, but it looks
 # a bit weird to have things like `mozilla-central` being able to update `beta`.
