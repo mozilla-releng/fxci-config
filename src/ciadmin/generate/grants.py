@@ -89,6 +89,17 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
 
         pr_policy = (project.feature("github-pull-request", key="policy") or "").strip()
 
+        # When the project's role_prefix ends with a wildcard itself (eg.
+        # `repo:github.com/mozilla/*`), it already encompasses pull-request
+        # roles. Therefore we need to skip granting to this project if
+        # grantee.include_pull_requests is False.
+        if (
+            project.role_prefix.endswith("*")
+            and pr_policy
+            and not grantee.include_pull_requests
+        ):
+            continue
+
         if (
             "*" in non_branch_jobs
             and project.repo_type == "git"

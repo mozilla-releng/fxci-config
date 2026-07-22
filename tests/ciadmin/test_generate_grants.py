@@ -575,6 +575,46 @@ class TestAddScopesForGithubPullRequest:
             )
 
 
+class TestAddScopesForOrgWideWildcard:
+    projects = [
+        Project(
+            alias="mozilla",
+            branches=[
+                {
+                    "name": "main",
+                    "level": 1,
+                }
+            ],
+            repo="https://github.com/mozilla/*",
+            repo_type="git",
+            trust_domain="foo",
+            features={
+                "github-pull-request": {
+                    "enabled": True,
+                    "policy": "public_restricted",
+                },
+                "trust-domain-scopes": True,
+            },
+        ),
+    ]
+
+    def test_include_pull_requests_false_skips_wildcard_role(self, add_scope):
+        grantee = ProjectGrantee(
+            include_pull_requests=False, feature="trust-domain-scopes"
+        )
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        assert add_scope.added == set()
+
+    def test_include_pull_requests_true_still_grants_wildcard_role(self, add_scope):
+        grantee = ProjectGrantee(feature="trust-domain-scopes")
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        assert add_scope.added == set([("repo:github.com/mozilla/*", "sc")])
+
+
 class TestAddScopesForGithubPush:
     def test_grant_to_all_branches(self, add_scope, sample_projects):
         grantee = ProjectGrantee(alias="limited_branches")
