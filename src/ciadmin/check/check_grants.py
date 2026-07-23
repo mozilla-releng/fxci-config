@@ -189,10 +189,6 @@ async def check_insecure_grants(generate_resources):
 
 NON_PR_INDEX_WRITE_EXCEPTIONS = {
     (
-        "repo:github.com/mozilla-releng/adhoc-signing:pull-request",
-        "queue:route:index.adhoc.v2.adhoc-signing.*",
-    ),
-    (
         "repo:github.com/mozilla-releng/scriptworker-scripts:pull-request",
         "queue:route:index.scriptworker.v2.scriptworker-scripts.*",
     ),
