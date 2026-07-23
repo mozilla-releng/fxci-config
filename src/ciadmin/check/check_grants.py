@@ -189,22 +189,6 @@ async def check_insecure_grants(generate_resources):
 
 NON_PR_INDEX_WRITE_EXCEPTIONS = {
     (
-        "repo:github.com/mozilla-extensions/xpi-manifest:pull-request",
-        "queue:route:index.xpi.v2.*",
-    ),
-    (
-        "repo:github.com/mozilla-releng/staging-xpi-manifest:pull-request",
-        "queue:route:index.xpi.v2.*",
-    ),
-    (
-        "repo:github.com/mozilla-releng/staging-xpi-private:pull-request",
-        "queue:route:index.xpi.v2.*",
-    ),
-    (
-        "repo:github.com/mozilla-releng/staging-xpi-public:pull-request",
-        "queue:route:index.xpi.v2.*",
-    ),
-    (
         "repo:github.com/mozilla-releng/adhoc-signing:pull-request",
         "queue:route:index.adhoc.v2.adhoc-signing.*",
     ),
