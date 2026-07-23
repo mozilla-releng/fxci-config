@@ -187,14 +187,6 @@ async def check_insecure_grants(generate_resources):
     assert not insecure_scopes
 
 
-NON_PR_INDEX_WRITE_EXCEPTIONS = {
-    (
-        "repo:github.com/mozilla-releng/scriptworker-scripts:pull-request",
-        "queue:route:index.scriptworker.v2.scriptworker-scripts.*",
-    ),
-}
-
-
 @pytest.mark.asyncio
 async def check_no_pull_request_index_writes(generated):
     """Ensures that pull-request roles can't write to an index namespace that
@@ -216,8 +208,6 @@ async def check_no_pull_request_index_writes(generated):
             if not match:
                 continue
             if safe_namespace.search(match.group(1)):
-                continue
-            if (role.roleId, scope) in NON_PR_INDEX_WRITE_EXCEPTIONS:
                 continue
             insecure_scopes[role.roleId].add(scope)
 
