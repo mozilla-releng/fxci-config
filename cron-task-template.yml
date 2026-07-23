@@ -69,7 +69,7 @@ metadata:
   source: https://firefox-ci-tc.services.mozilla.com/hooks/#${hookGroupId}/${hookId}
   description: See https://firefox-ci-tc.services.mozilla.com/hooks/#${hookGroupId}/${hookId}
   name: Cron task for ${project_repo}
-priority: normal
+priority: lowest
 retries: 5
 tags: {}
 extra: {}
