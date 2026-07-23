@@ -187,6 +187,71 @@ async def check_insecure_grants(generate_resources):
     assert not insecure_scopes
 
 
+NON_PR_INDEX_WRITE_EXCEPTIONS = {
+    (
+        "repo:github.com/mozilla-extensions/xpi-manifest:pull-request",
+        "queue:route:index.xpi.v2.*",
+    ),
+    (
+        "repo:github.com/mozilla-releng/staging-xpi-manifest:pull-request",
+        "queue:route:index.xpi.v2.*",
+    ),
+    (
+        "repo:github.com/mozilla-releng/staging-xpi-private:pull-request",
+        "queue:route:index.xpi.v2.*",
+    ),
+    (
+        "repo:github.com/mozilla-releng/staging-xpi-public:pull-request",
+        "queue:route:index.xpi.v2.*",
+    ),
+    (
+        "repo:github.com/mozilla-releng/adhoc-signing:pull-request",
+        "queue:route:index.adhoc.v2.adhoc-signing.*",
+    ),
+    (
+        "repo:github.com/mozilla-releng/scriptworker-scripts:pull-request",
+        "queue:route:index.scriptworker.v2.scriptworker-scripts.*",
+    ),
+}
+
+
+@pytest.mark.asyncio
+async def check_no_pull_request_index_writes(generated):
+    """Ensures that pull-request roles can't write to an index namespace that
+    isn't confined to pull-requests."""
+    roles = generated.filter("Role=.*")
+    pr = re.compile(r":pull-request(-untrusted)?$")
+    index_write_scope = re.compile(r"^(?:index:insert-task:|queue:route:index\.)(.+)$")
+    safe_namespace = re.compile(
+        r"(?:^|[.-])(?:pr|head|level-1|garbage|staging)(?:[.-]|$)"
+    )
+
+    insecure_scopes = defaultdict(set)
+    for role in roles:
+        if not pr.search(role.roleId):
+            continue
+
+        for scope in role.scopes:
+            match = index_write_scope.match(scope)
+            if not match:
+                continue
+            if safe_namespace.search(match.group(1)):
+                continue
+            if (role.roleId, scope) in NON_PR_INDEX_WRITE_EXCEPTIONS:
+                continue
+            insecure_scopes[role.roleId].add(scope)
+
+    if insecure_scopes:
+        print(
+            "Pull-request roles are granted write access to non pull-request indexes:"
+        )
+        for roleId, scopes in sorted(insecure_scopes.items()):
+            print(f"{roleId} is granted the following index scopes:")
+            print(sorted(scopes))
+            print()
+    assert not insecure_scopes
+
+
 @pytest.mark.asyncio
 async def check_inaccessible_pools(generated):
     """
