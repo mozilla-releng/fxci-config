@@ -635,6 +635,16 @@
         alias: [mozilla-beta]
 
 - grant:
+    # Bug 2056977: Allow the bhr-aggregate cron to fetch its secrets.
+    - secrets:get:project/bhr/*
+  to:
+    - project:
+        job: [cron:bhr-aggregate]
+        trust_domain: gecko
+        level: [3]
+        alias: [mozilla-central]
+
+- grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
   to:
     - project:
