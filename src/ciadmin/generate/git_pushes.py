@@ -80,15 +80,26 @@ async def make_hook(project: Project, branch) -> Hook:
     )
 
 
+async def register_managed(resources):
+    """
+    Declare the resource patterns managed by this generator.
+
+    This must be cheap (no network access) so that, in `--resources` subset
+    mode, the patterns of *unselected* generators can be collected without
+    generating their resources. See `ciadmin.boot`.
+    """
+    resources.manage("Hook=git-push/.*")
+    resources.manage("Role=hook-id:git-push/.*")
+
+
 async def update_resources(resources):
     """
     Manage the hooks and roles for git-push resources.
     """
+    await register_managed(resources)
+
     projects = await Project.fetch_all()
     projects = [p for p in projects if p.feature("git-push")]
-
-    resources.manage("Hook=git-push/.*")
-    resources.manage("Role=hook-id:git-push/.*")
 
     for project in projects:
         for branch in project.branches:

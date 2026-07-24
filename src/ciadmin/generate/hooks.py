@@ -82,6 +82,18 @@ def generate_hook_variants(hooks):
             )
 
 
+async def register_managed(resources):
+    """
+    Declare the resource patterns managed by this generator.
+
+    This must be cheap (no network access) so that, in `--resources` subset
+    mode, the patterns of *unselected* generators can be collected without
+    generating their resources. See `ciadmin.boot`.
+    """
+    await manage_with_exclusions(resources, "Hook=.*")
+    await manage_with_exclusions(resources, "Role=hook-id:.*")
+
+
 async def update_resources(resources):
     """
     Manage custom hooks.  This file interprets `hooks.yml` in fxci-config.
@@ -90,8 +102,7 @@ async def update_resources(resources):
 
     hooks = generate_hook_variants(await HookConfig.fetch_all())
 
-    await manage_with_exclusions(resources, "Hook=.*")
-    await manage_with_exclusions(resources, "Role=hook-id:.*")
+    await register_managed(resources)
 
     for hook in hooks:
         hook_name = f"{hook.hook_group_id}/{hook.hook_id}"

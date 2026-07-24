@@ -329,6 +329,32 @@ def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
     )
 
 
+# Generating in-tree action hooks fetches `.taskcluster.yml` from every repo,
+# which is slow and needs network access. In `--resources` subset mode, when
+# this generator is *unselected*, `ciadmin.boot` falls back to the (narrow)
+# `register_managed` patterns to attribute ownership instead of generating.
+REQUIRES_NETWORK = True
+
+
+async def register_managed(resources):
+    """
+    Declare the resource patterns managed by this generator.
+
+    This must be cheap (no network access) so that, in `--resources` subset
+    mode, the patterns of *unselected* generators can be collected without
+    generating their resources. See `ciadmin.boot`.
+    """
+    actions = await Action.fetch_all()
+
+    # manage the in-tree-action-* hooks, and corresponding roles, for each trust domain
+    trust_domains = set(action.trust_domain for action in actions)
+    for trust_domain in trust_domains:
+        resources.manage(f"Hook=project-{trust_domain}/in-tree-action-.*")
+        resources.manage(f"Role=hook-id:project-{trust_domain}/in-tree-action-.*")
+        resources.manage(f"Hook=project-{trust_domain}/in-tree-pr-action-.*")
+        resources.manage(f"Role=hook-id:project-{trust_domain}/in-tree-pr-action-.*")
+
+
 async def update_resources(resources):
     """
     Manage the hooks and accompanying hook-id:.. roles for in-tree actions.
@@ -342,13 +368,8 @@ async def update_resources(resources):
         if p.feature("gecko-actions") or p.feature("taskgraph-actions")
     ]
 
-    # manage the in-tree-action-* hooks, and corresponding roles, for each trust domain
+    await register_managed(resources)
     trust_domains = set(action.trust_domain for action in actions)
-    for trust_domain in trust_domains:
-        resources.manage(f"Hook=project-{trust_domain}/in-tree-action-.*")
-        resources.manage(f"Role=hook-id:project-{trust_domain}/in-tree-action-.*")
-        resources.manage(f"Hook=project-{trust_domain}/in-tree-pr-action-.*")
-        resources.manage(f"Role=hook-id:project-{trust_domain}/in-tree-pr-action-.*")
 
     projects_by_level_and_trust_domain = {}
     for project in projects:
