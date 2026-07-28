@@ -1863,6 +1863,9 @@
     # Grant everyone with Try access the schedulerId taskcluster-ui, so they can
     # create tasks with the task-creator in the UI
     - queue:scheduler-id:taskcluster-ui
+    # Grant everyone with Try access the ability to fetch the deploy key for
+    # mozilla-releng/git-backing (used by ./mach try).
+    - secrets:get:project/releng/releng-github-git-backing-ssh
   to:
     - groups:
         - active_scm_level_1
