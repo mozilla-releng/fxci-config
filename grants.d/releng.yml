@@ -27,7 +27,7 @@
   to:
     - project:
         alias: balrog
-        job: [pull-request:*, branch:main]
+        job: [pull-request:trusted, branch:main]
 
 - grant:
     - queue:route:index.project.balrog.*
@@ -69,7 +69,7 @@
   to:
     - projects:
         alias: tooltool
-        job: [branch:*, pull-request:*]
+        job: [branch:*, pull-request:trusted]
 
 - grant:
     - secrets:get:project/releng/tooltool/deploy
