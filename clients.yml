@@ -549,21 +549,8 @@ project/releng/generic-worker/datacenter-gecko-t-osx-1500-m-vms:
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-osx*
     - queue:worker-id:mdc1/mac*
-    # Required by workerManager.reportWorkerError, whose scopes are
-    # AllOf['assume:worker-pool:<workerPoolId>', 'assume:worker-id:<workerGroup>/<workerId>']
-    # (taskcluster services/worker-manager/src/api.js). Without these a worker can
-    # claim tasks but CANNOT report its own failures: every attempt is rejected
-    # InsufficientScopes, so the error never reaches listWorkerPoolErrors and the
-    # pool looks healthy while workers die.
-    #
-    # This is not hypothetical. On 2026-07-28 three VMs in this pool
-    # (mac-5bfe33, mac-e927a6, mac-ae1a76) were found in a crash-reboot loop from
-    # exhausted guest disk -- "Not able to free up enough disk space ... nothing
-    # left to delete" -> panic -> exit 69 -> reboot, every ~84s. They had been
-    # trying to report it 8875, 4624 and 10705 times respectively and every single
-    # report bounced on scopes. The slots were silently out of production for
-    # weeks; nothing surfaced because this is the channel that would have surfaced
-    # it.
+    # Required by workerManager.reportWorkerError; without both, workers can claim
+    # tasks but cannot report their own failures.
     - assume:worker-pool:releng-hardware/gecko-t-osx-1500-m-vms
     - assume:worker-id:mdc1/mac*
 project/releng/generic-worker/win11-64-24h2-hw-perf-sheriff:
