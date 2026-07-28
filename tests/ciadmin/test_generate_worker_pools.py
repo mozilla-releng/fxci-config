@@ -12,6 +12,8 @@ from ciadmin.generate.ciconfig.environment import Environment
 from ciadmin.generate.ciconfig.worker_images import WorkerImage, WorkerImages
 from ciadmin.generate.ciconfig.worker_pools import WorkerPool
 from ciadmin.generate.worker_pools import (
+    _arm_deployment_resource_group,
+    generate_pool_variants,
     is_invalid_gcp_instance_type,
     make_worker_pool,
 )
@@ -321,6 +323,49 @@ def assert_guest_accelerators(pool):
     }
 
 
+def test_generate_pool_variants_resolves_scaling_ratio(environment):
+    pool = WorkerPool(
+        pool_id="{pool-group}/win11-64-25h2-{suffix}",
+        description="",
+        owner="user@example.com",
+        provider_id="azure",
+        email_on_error=False,
+        attributes={"suffix": ""},
+        variants=[
+            {"pool-group": "gecko-t"},
+            {"pool-group": "gecko-t", "suffix": "gpu"},
+            {"pool-group": "gecko-t", "suffix": "large"},
+            {"pool-group": "enterprise-t"},
+        ],
+        config={
+            "scalingRatio": {
+                "by-pool-group": {
+                    "gecko-t": {
+                        "by-suffix": {
+                            "": 0.5,
+                            "gpu": 0.5,
+                            "default": 1,
+                        },
+                    },
+                    "default": 1,
+                },
+            },
+        },
+    )
+
+    ratios = {
+        variant.pool_id: variant.config["scalingRatio"]
+        for variant in generate_pool_variants([pool], environment.name)
+    }
+
+    assert ratios == {
+        "gecko-t/win11-64-25h2": 0.5,
+        "gecko-t/win11-64-25h2-gpu": 0.5,
+        "gecko-t/win11-64-25h2-large": 1,
+        "enterprise-t/win11-64-25h2": 1,
+    }
+
+
 @pytest.mark.parametrize(
     "provider,extra_pool_config,extra_cloud_config",
     (
@@ -516,3 +561,69 @@ def test_is_invalid_gcp_instance_type(invalid_instances, zone, machine_type, exp
     assert (
         is_invalid_gcp_instance_type(invalid_instances, zone, machine_type) == expected
     )
+
+
+@pytest.mark.parametrize(
+    "pool_id,loc,per_region,expected",
+    [
+        # Default (per_region=False): one RG per pool, no location suffix.
+        (
+            "provId/my-worker-pool",
+            "useast1",
+            False,
+            "rg-tc-provId-my-worker-pool",
+        ),
+        # Pool ID long enough to require 90-char truncation in default mode.
+        (
+            "provId/" + "x" * 200,
+            "useast1",
+            False,
+            ("rg-tc-provId-" + "x" * 200)[:90],
+        ),
+        # Opt-in (per_region=True): location appended.
+        (
+            "provId/my-worker-pool",
+            "useast1",
+            True,
+            "rg-tc-provId-my-worker-pool-useast1",
+        ),
+        (
+            "gecko-t/win11-64-25h2",
+            "australiacentral2",
+            True,
+            "rg-tc-gecko-t-win11-64-25h2-australiacentral2",
+        ),
+        # Per-region with a pool ID long enough that the pool segment must
+        # be truncated; loc must still survive intact so the split holds.
+        (
+            "provId/" + "x" * 200,
+            "australiacentral2",
+            True,
+            "rg-tc-provId-" + "x" * 59 + "-australiacentral2",
+        ),
+    ],
+)
+def test_arm_deployment_resource_group(pool_id, loc, per_region, expected):
+    result = _arm_deployment_resource_group(pool_id, loc, per_region=per_region)
+    assert result == expected
+    assert len(result) <= 90
+    if per_region:
+        assert result.endswith(f"-{loc}")
+
+
+def test_variant_overrides_owner_and_email():
+    wp = WorkerPool(
+        pool_id="prov/{kind}",
+        description="{kind} pool",
+        owner="default@example.com",
+        email_on_error=True,
+        provider_id="google",
+        config={"minCapacity": 0, "maxCapacity": 1},
+        variants=[
+            {"kind": "a"},
+            {"kind": "b", "owner": "other@example.com", "email_on_error": False},
+        ],
+    )
+    a, b = generate_pool_variants([wp], "cluster")
+    assert (a.owner, a.email_on_error) == ("default@example.com", True)
+    assert (b.owner, b.email_on_error) == ("other@example.com", False)

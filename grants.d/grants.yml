@@ -87,6 +87,61 @@
     - roles:
         - login-identity:*
 
+# repo-admin:<repo> parameterized role: administrative scopes over a GitHub
+# repo's Taskcluster roles. Assigned per-repo via assume:repo-admin:<repo>.
+- grant:
+    - assume:repo:<..>
+    - auth:create-role:repo:<..>
+    - auth:delete-role:repo:<..>
+    - auth:update-role:repo:<..>
+  to:
+    - roles:
+        - repo-admin:*
+
+# project-admin:<project> parameterized role: administrative scopes over a
+# project's Taskcluster resources. Assigned via assume:project-admin:<project>.
+- grant:
+    - assume:hook-id:project-<..>/*
+    - assume:project:<..>:*
+    - assume:worker-id:proj-<..>/*
+    - assume:worker-pool:proj-<..>/*
+    - auth:create-client:project/<..>/*
+    - auth:create-role:hook-id:project-<..>/*
+    - auth:create-role:project:<..>:*
+    - auth:delete-client:project/<..>/*
+    - auth:delete-role:hook-id:project-<..>/*
+    - auth:delete-role:project:<..>:*
+    - auth:disable-client:project/<..>/*
+    - auth:enable-client:project/<..>/*
+    - auth:reset-access-token:project/<..>/*
+    - auth:update-client:project/<..>/*
+    - auth:update-role:hook-id:project-<..>/*
+    - auth:update-role:project:<..>:*
+    - hooks:modify-hook:project-<..>/*
+    - hooks:trigger-hook:project-<..>/*
+    - index:insert-task:project.<..>.*
+    - project:<..>:*
+    - purge-cache:proj-<..>/*
+    - queue:claim-work:proj-<..>/*
+    - queue:create-task:high:proj-<..>/*
+    - queue:create-task:highest:proj-<..>/*
+    - queue:create-task:low:proj-<..>/*
+    - queue:create-task:lowest:proj-<..>/*
+    - queue:create-task:medium:proj-<..>/*
+    - queue:create-task:very-high:proj-<..>/*
+    - queue:create-task:very-low:proj-<..>/*
+    - queue:get-artifact:project/<..>/*
+    - queue:quarantine-worker:proj-<..>/*
+    - queue:rerun-task:<..>/*
+    - queue:route:index.project.<..>.*
+    - secrets:get:project/<..>/*
+    - secrets:get:worker-pool:proj-<..>/*
+    - secrets:set:project/<..>/*
+    - secrets:set:worker-pool:proj-<..>/*
+  to:
+    - roles:
+        - project-admin:*
+
 - grant:
     - queue:claim-work:<..>
     - queue:worker-id:*
@@ -259,7 +314,6 @@
     - generic-worker:os-group:gecko-t/win11-64-2009/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2-privileged/Administrators
-    - generic-worker:os-group:gecko-t/win11-64-24h2-amd/Administrators
     - generic-worker:os-group:gecko-t/win11-64-25h2-amd/Administrators
     - generic-worker:os-group:gecko-t/win11-64-2009-alpha/Administrators
     - generic-worker:os-group:gecko-t/win11-64-24h2-alpha/Administrators
@@ -270,7 +324,7 @@
     - generic-worker:os-group:gecko-t/win11-64-24h2-source/Administrators
     - generic-worker:os-group:gecko-t/t-linux-2204-wayland-snap/snap_sudo
     - generic-worker:os-group:gecko-t/t-linux-2404-wayland-snap/snap_sudo
-    - generic-worker:os-group:gecko-t/t-linux-2404-wayland-relsre/snap_sudo
+    - generic-worker:os-group:gecko-t/t-linux-2404-wayland-snap-alpha/snap_sudo
     - generic-worker:run-as-administrator:gecko-t/win10-64-2009-source
     - generic-worker:run-as-administrator:gecko-t/win11-64-2009-alpha
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-alpha
@@ -281,7 +335,6 @@
     - generic-worker:run-as-administrator:gecko-t/win11-64-25h2-privileged
     - generic-worker:run-as-administrator:gecko-t/win11-64-2009
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2
-    - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-amd
     - generic-worker:run-as-administrator:gecko-t/win11-64-24h2-source
     - generic-worker:run-as-administrator:gecko-t/win11-64-25h2-amd
     - generic-worker:run-as-administrator:releng-hardware/win11-64*
@@ -304,6 +357,7 @@
     - project:releng:googleplay:product:focus-android:dep
     - project:releng:microsoftstore:mock
     - project:releng:ship-it:action:create-new-release
+    - project:releng:ship-it:action:create-new-nightly-release
     - project:releng:ship-it:action:mark-as-shipped
     - project:releng:ship-it:action:mark-as-started
     - project:releng:ship-it:action:update-product-channel-version
@@ -354,6 +408,7 @@
     - project:releng:flathub:firefox:mock
     - project:releng:microsoftstore:mock
     - project:releng:ship-it:action:create-new-release
+    - project:releng:ship-it:action:create-new-nightly-release
     - project:releng:ship-it:action:mark-as-shipped
     - project:releng:ship-it:action:mark-as-started
     - project:releng:ship-it:action:update-product-channel-version
@@ -518,7 +573,7 @@
         job: [action:release-promotion]
         trust_domain: gecko
         level: [3]
-        alias: [mozilla-esr140, mozilla-esr115, mozilla-release, mozilla-beta]
+        alias: [mozilla-esr115, mozilla-esr140, mozilla-esr153, mozilla-release, mozilla-beta]
 
 - grant:
     - project:releng:googleplay:product:fenix
@@ -578,6 +633,16 @@
         trust_domain: gecko
         level: [3]
         alias: [mozilla-beta]
+
+- grant:
+    # Bug 2056977: Allow the bhr-aggregate cron to fetch its secrets.
+    - secrets:get:project/bhr/*
+  to:
+    - project:
+        job: [cron:bhr-aggregate]
+        trust_domain: gecko
+        level: [3]
+        alias: [mozilla-central]
 
 - grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
@@ -660,7 +725,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr140, comm-esr115]
+        alias: [comm-esr153, comm-esr140]
 
 - grant:
     - project:comm:thunderbird:releng:balrog:server:release
@@ -693,7 +758,7 @@
   to:
     - project:
         level: [3]
-        alias: [comm-esr140, comm-esr115, comm-release, comm-beta]
+        alias: [comm-esr153, comm-esr140, comm-release, comm-beta]
 
 - grant:
     - project:comm:thunderbird:releng:beetmover:bucket:release
@@ -706,7 +771,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr140, comm-esr115, comm-release, comm-beta]
+        alias: [comm-esr153, comm-esr140, comm-release, comm-beta]
 
 - grant:
     - project:comm:thunderbird:releng:microsoftstore:esr
@@ -715,7 +780,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr140]
+        alias: [comm-esr153, comm-esr140]
 
 - grant:
     - project:comm:thunderbird:releng:microsoftstore:release
@@ -744,7 +809,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr140]
+        alias: [comm-esr153, comm-esr140]
 
 - grant:
     - project:comm:thunderbird:releng:flathub:stable
@@ -811,9 +876,14 @@
     # Grant engwf team access to secrets and artifacts for engwf
     - secrets:get:project/engwf/*
     - secrets:set:project/engwf/*
+
+    # Bug 2024347: ability to create / modify review assigner hook
+    - assume:hook-id:project-engwf/reviewer-assignment-staging
+    - hooks:modify-hook:project-engwf/reviewer-assignment-staging
+
   to:
-    - groups:
-        - engworkflow
+    - roles:
+        - mozillians-group:engworkflow
 
 - grant:
     # Bug 1599870
@@ -832,6 +902,7 @@
     - secrets:get:project/updatebot/2/try-sshkey
     - secrets:get:project/updatebot/2/phabricator-token
     - secrets:get:project/updatebot/2/bugzilla-api-key
+    - secrets:get:project/updatebot/2/ai-api-key
     - secrets:get:project/updatebot/2/database-password
     - secrets:get:project/updatebot/2/sentry-url
     - secrets:get:project/updatebot/2/sql-proxy-config
@@ -860,6 +931,7 @@
     - secrets:get:project/updatebot/3/try-sshkey
     - secrets:get:project/updatebot/3/phabricator-token
     - secrets:get:project/updatebot/3/bugzilla-api-key
+    - secrets:get:project/updatebot/3/ai-api-key
     - secrets:get:project/updatebot/3/database-password
     - secrets:get:project/updatebot/3/sentry-url
     - secrets:get:project/updatebot/3/sql-proxy-config
@@ -893,6 +965,7 @@
   to:
     - project:
         alias:
+          - comm-central
           - try
           - try-comm-central
           - mozilla-central
@@ -912,10 +985,6 @@
     - secrets:get:project/taskcluster/gecko/hgfingerprint
     - secrets:get:project/taskcluster/gecko/hgmointernal
 
-    # Allow fetching secrets appropriate to this level
-    - secrets:get:project/{trust_domain}/level-{level}/*
-    - secrets:get:project/{trust_domain}/level-any/*
-
     # Allow a sensible scheduler-id
     - queue:scheduler-id:{trust_domain}-level-{level}
     # Allows cancelling tasks with that scheduler-id
@@ -931,6 +1000,16 @@
   to:
     - project:
         feature: trust-domain-scopes
+
+- grant:
+    # Allow fetching secrets appropriate to this level
+    - secrets:get:project/{trust_domain}/level-{level}/*
+    - secrets:get:project/{trust_domain}/level-any/*
+  to:
+    - project:
+        feature: trust-domain-scopes
+        # Secrets are granted everywhere _except_ untrusted pull requests
+        job: [action:*, branch:*, cron:*, pr-action:*, pull-request:trusted, release:*]
 
 - grant:
     # routes to support locating tasks that create specific versions of artifacts
@@ -952,10 +1031,6 @@
     - queue:route:index.{trust_domain}.v2.{trust_project}.cache.level-{level}.*
     - index:insert-task:{trust_domain}.v2.{trust_project}.cache.level-{level}.*
 
-    # allow fetching secrets appropriate to this level
-    - secrets:get:project/{trust_domain}/{trust_project}/level-{level}/*
-    - secrets:get:project/{trust_domain}/{trust_project}/level-any/*
-
     # allow using worker caches appropriate to this trust domain and level
     - docker-worker:cache:{trust_domain}-project-{trust_project}-level-{level}-*
     - generic-worker:cache:{trust_domain}-project-{trust_project}-level-{level}-*
@@ -963,6 +1038,17 @@
     - project:
         feature: trust-domain-scopes
         has_trust_project: true
+
+- grant:
+    # allow fetching secrets appropriate to this level
+    - secrets:get:project/{trust_domain}/{trust_project}/level-{level}/*
+    - secrets:get:project/{trust_domain}/{trust_project}/level-any/*
+  to:
+    - project:
+        feature: trust-domain-scopes
+        has_trust_project: true
+        # Secrets are granted everywhere _except_ untrusted pull requests
+        job: [action:*, branch:*, cron:*, pr-action:*, pull-request:trusted, release:*]
 
 - grant:
     # routes to support locating tasks that create specific versions of artifacts
@@ -1076,6 +1162,19 @@
         feature: private-artifacts
         has_trust_project: true
         job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
+
+- grant:
+    - hooks:trigger-hook:lint/pre-commit-*
+    - queue:cancel-task-group:lint/*
+    - queue:seal-task-group:lint/*
+  to:
+    - project:
+        feature: pre-commit
+    - project:
+        # Tags are not included in the default role set, so grant it
+        # explicitly.
+        feature: pre-commit
+        job: [tag:*]
 
 ##
 # mozilla roles
@@ -1611,6 +1710,13 @@
     - groups:
         - team_services_ops
 
+# Bug 2048320
+- grant:
+    - auth:reset-access-token:project/perf-ai/bot
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|dpalmeiro
+
 ##
 # hook scopes
 
@@ -1929,15 +2035,13 @@
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|pwong
 
-# Bug 2024347: grant shtrom ability to create / modify review assigner hook
+# Bug 2048352: grant nhadji access to secret for reviewbot migration testing
 - grant:
-    - assume:hook-id:project-engwf/reviewer-assignment-infra-testing
-    - hooks:modify-hook:project-engwf/reviewer-assignment-infra-testing
-    - secrets:get:project/engwf/reviewer-assignment/runtime-infra-testing
-    - secrets:set:project/engwf/reviewer-assignment/runtime-infra-testing
+    - secrets:get:project/releng/reviewbot-testing-github-staging-firefox-ssh
+    - secrets:set:project/releng/reviewbot-testing-github-staging-firefox-ssh
   to:
     - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|omehani
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|nhadji
 
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
@@ -2039,11 +2143,6 @@
   to:
     - roles:
         - mozilla-group:team_mozillaonline
-- grant:
-    - assume:project:releng:ci-group:engworkflow
-  to:
-    - roles:
-        - mozillians-group:engworkflow
 - grant:
     - assume:project:releng:ci-group:shipit_firefox
   to:
@@ -2243,16 +2342,28 @@
         - mozillians-group:windows-laf-token-managers
 
 ### landoscript scopes
-# on try, we're fairly liberal with these scopes for ease of testing, and
-# allow all actions to be run through any means.
+# on try and in PRs, we're fairly liberal with these scopes for ease of testing,
+# and allow all actions to be run through any means.
 - grant:
     - project:releng:lando:action:*
-    # there are staging versions of all production repos; allow try access
-    # to all of them
-    - project:releng:lando:repo:staging-*
+    - project:releng:lando:repo:{lando_repo}
   to:
     - project:
         alias: try
+
+- grant:
+    - project:releng:lando:action:*
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: try-comm-central
+
+- grant:
+    - project:releng:lando:action:*
+    # there are staging versions of all production repos; allow access
+    # to all of them
+    - project:releng:lando:repo:staging-firefox-*
+  to:
     - project:
         alias: firefox
         job: [pull-request:trusted]
@@ -2294,13 +2405,19 @@
     - project:
         alias: [autoland, mozilla-beta, mozilla-release]
         job: cron:l10n-bumper
+    - project:
+        alias: [comm-central, comm-beta, comm-release, comm-esr140, comm-esr153]
+        job: cron:l10n-bumper
 
 - grant:
     - project:releng:lando:action:tag
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140]
+        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140, mozilla-esr153]
+        job: action:release-promotion
+    - project:
+        alias: [comm-beta, comm-release, comm-esr140, comm-esr153]
         job: action:release-promotion
 
 - grant:
@@ -2310,7 +2427,12 @@
     - project:
         # mozilla-central is not needed here because those version bumps are
         # done through a `merge_day` task
-        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140]
+        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140, mozilla-esr153]
+        job: action:release-promotion
+    - project:
+        # comm-central is not needed here because those version bumps are
+        # done through a `merge_day` task
+        alias: [comm-beta, comm-release, comm-esr140, comm-esr153]
         job: action:release-promotion
 
 
@@ -2327,7 +2449,10 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr140]
+        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr140, mozilla-esr153]
+        job: action:merge-automation
+    - project:
+        alias: [comm-beta, comm-release, comm-esr153]
         job: action:merge-automation
 
 # granting scopes for cross-repo updates is also straightforward, but it looks
@@ -2351,7 +2476,7 @@
         job: action:merge-automation
 
 - grant:
-    - project:releng:lando:repo:esr140
+    - project:releng:lando:repo:esr153
   to:
     - project:
         alias: mozilla-release

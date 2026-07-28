@@ -3,7 +3,6 @@
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
     - queue:create-task:highest:scriptworker-{level}/*
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
-    - queue:route:index.{trust_domain}.v2.{alias}.*
     - queue:route:index.scriptworker.cache.level-{level}.*
     # explicitly grant level 1 scopes for PRs
     - queue:scheduler-id:scriptworker-level-1
@@ -13,7 +12,15 @@
     - project:
         alias:
           - scriptworker-scripts
-        job: [branch:*, action:*, pull-request:*, action:*, cron:*]
+        job: [branch:*, pull-request:*, action:*, cron:*]
+
+- grant:
+    - queue:route:index.{trust_domain}.v2.{alias}.*
+  to:
+    - project:
+        alias:
+          - scriptworker-scripts
+        job: [branch:*, action:*, cron:*]
 
 # XXX delete these once we port scriptworker-scripts cloudops deploys to CoT
 #     downloads

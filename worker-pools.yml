@@ -74,6 +74,16 @@ worker-defaults:
             taskclusterProxyPort: 80
             tasksDir: Z:\
             wstAudience: firefoxcitc
+      generic-worker/windows-fuzzing:
+        genericWorker:
+          config:
+            livelogExecutable: C:\generic-worker\livelog.exe
+            ed25519SigningKeyLocation: C:\generic-worker\generic-worker-ed25519-signing-key.key
+            idleTimeoutSecs: 15
+            shutdownMachineOnIdle: true
+            shutdownMachineOnInternalError: true
+            taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
+            wstAudience: firefoxcitc
       generic-worker/windows-builder:
         genericWorker:
           config:
@@ -311,6 +321,17 @@ meta:
     disks:
       - *persistent-disk-75gb
     machine_type: c4d-highcpu-8
+  - &n2-standard-4-60gb-lssd
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 60
+      - *scratch-disk
+    machine_type: n2-standard-4
+  - &c3d-standard-4-60gb
+    disks:
+      - <<: *persistent-disk
+        diskSizeGb: 60
+    machine_type: c3d-standard-4
 
 pools:
   - pool_id: infra/build-decision
@@ -320,7 +341,7 @@ pools:
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 1
-      maxCapacity: 4
+      maxCapacity: 16
       regions: *default-gcp-regions
       image: monopacker-docker-worker-current
       instance_types:
@@ -394,66 +415,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
-  - pool_id: '{pool-group}/b-linux-gcp'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: gecko-1
-      - pool-group: gecko-2
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-      - pool-group: comm-1
-      - pool-group: comm-2
-      - pool-group: comm-3
-        chain-of-trust: trusted
-      - pool-group: app-services-1
-      - pool-group: app-services-3
-        chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-.*: 1000
-          comm-.*: 300
-          app-services-1: 50
-          app-services-3: 100
-          default: 100
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-20gb
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: c2-standard-16
-  - pool_id: '{pool-group}/b-linux-gcp-relops1411'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: gecko-1
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 100
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-2025-06-13-relops1411
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-20gb
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: c2-standard-16
   - pool_id: '{pool-group}/b-linux-docker{suffix}-amd'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -474,6 +435,17 @@ pools:
         chain-of-trust: trusted
         suffix: ''
         instance_types: [*c3d-standard-16-lssd]
+      # Updatebot runs on-task LLMs so isolate to mitigate prompt injections
+      - pool-group: gecko-1
+        suffix: '-updatebot'
+        instance_types: [*c3d-standard-16-lssd]
+      - pool-group: gecko-2
+        suffix: '-updatebot'
+        instance_types: [*c3d-standard-16-lssd]
+      - pool-group: gecko-3
+        chain-of-trust: trusted
+        suffix: '-updatebot'
+        instance_types: [*c3d-standard-16-lssd]
       - pool-group: comm-1
         suffix: ''
         instance_types: [*c3d-standard-16-lssd]
@@ -562,7 +534,10 @@ pools:
       minCapacity: 0
       maxCapacity:
         by-pool-group:
-          gecko-.*: 1000
+          gecko-.*:
+            by-suffix:
+              updatebot: 5
+              default: 1000
           comm-.*: 300
           app-services-1: 50
           app-services-3: 100
@@ -570,103 +545,6 @@ pools:
       regions: [us-central1, us-east1]
       implementation: generic-worker/linux-d2g-{chain-of-trust}
       image: ubuntu-2404-headless
-      instance_types: []
-  - pool_id: '{pool-group}/b-linux{suffix}-amd'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    attributes:
-      # Used to populate scratch disks
-      scratch-disk-definition: *scratch-disk
-    variants:
-      # Base 16-core (gecko, comm, app-services)
-      - pool-group: gecko-1
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      - pool-group: gecko-2
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      - pool-group: comm-1
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      - pool-group: comm-2
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      - pool-group: comm-3
-        chain-of-trust: trusted
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      - pool-group: app-services-1
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      - pool-group: app-services-3
-        chain-of-trust: trusted
-        suffix: ''
-        instance_types: [*c3d-standard-16-lssd]
-      # Large 30-core (gecko, comm)
-      - pool-group: gecko-1
-        suffix: '-large'
-        instance_types: [*c3d-standard-30-lssd]
-      - pool-group: gecko-2
-        suffix: '-large'
-        instance_types: [*c3d-standard-30-lssd]
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-        suffix: '-large'
-        instance_types: [*c3d-standard-30-lssd]
-      - pool-group: comm-1
-        suffix: '-large'
-        instance_types: [*c3d-standard-30-lssd]
-      - pool-group: comm-2
-        suffix: '-large'
-        instance_types: [*c3d-standard-30-lssd]
-      - pool-group: comm-3
-        chain-of-trust: trusted
-        suffix: '-large'
-        instance_types: [*c3d-standard-30-lssd]
-      # XLarge 60-core (gecko, comm)
-      - pool-group: gecko-1
-        suffix: '-xlarge'
-        instance_types: [*c3d-standard-60-lssd]
-      - pool-group: gecko-2
-        suffix: '-xlarge'
-        instance_types: [*c3d-standard-60-lssd]
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-        suffix: '-xlarge'
-        instance_types: [*c3d-standard-60-lssd]
-      - pool-group: comm-1
-        suffix: '-xlarge'
-        instance_types: [*c3d-standard-60-lssd]
-      - pool-group: comm-2
-        suffix: '-xlarge'
-        instance_types: [*c3d-standard-60-lssd]
-      - pool-group: comm-3
-        chain-of-trust: trusted
-        suffix: '-xlarge'
-        instance_types: [*c3d-standard-60-lssd]
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-.*: 1000
-          comm-.*: 300
-          app-services-1: 50
-          app-services-3: 100
-          default: 100
-      regions: [us-central1, us-east1]
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
       instance_types: []
   - pool_id: '{pool-group}/b-linux-docker-alpha'
     description: Worker for Firefox automation.
@@ -695,25 +573,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: c2-standard-16
-  - pool_id: '{pool-group}/b-linux-gcp-test-bug-1882320'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: gecko-1
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 5
-      regions: [northamerica-northeast1]
-      image: monopacker-docker-worker-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-20gb
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: c2-standard-16
   - pool_id: '{pool-group}/b-linux-aarch64'
     description: Linux ARM64 VM for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -730,6 +589,9 @@ pools:
         chain-of-trust: trusted
       - pool-group: enterprise-1
       - pool-group: enterprise-3
+        chain-of-trust: trusted
+      - pool-group: nss-1
+      - pool-group: nss-3
         chain-of-trust: trusted
     email_on_error: true
     provider_id:
@@ -825,77 +687,6 @@ pools:
             - *persistent-disk-60gb
             - *scratch-disk
           machine_type: c2-standard-4
-  - pool_id: '{pool-group}/b-linux{suffix}'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    attributes:
-      suffix: "-gcp"
-      implementation: "docker-worker"
-    variants:
-      - pool-group: glean-1
-      - pool-group: glean-3
-        chain-of-trust: trusted
-      - pool-group: mobile-1
-      - pool-group: mobile-3
-        chain-of-trust: trusted
-      - pool-group: mozilla-1
-      - pool-group: mozilla-3
-        chain-of-trust: trusted
-      - pool-group: mozillavpn-1
-      - pool-group: mozillavpn-1
-        suffix: "-gcp-gw"
-        implementation: generic-worker/worker-runner-linux-multi
-      - pool-group: mozillavpn-3
-        chain-of-trust: trusted
-      - pool-group: mozillavpn-3
-        suffix: "-gcp-gw"
-        implementation: generic-worker/worker-runner-linux-multi
-        chain-of-trust: trusted
-      - pool-group: scriptworker-1
-      - pool-group: scriptworker-3
-        chain-of-trust: trusted
-      - pool-group: xpi-1
-      - pool-group: xpi-3
-        chain-of-trust: trusted
-      - pool-group: releng-1
-      - pool-group: releng-3
-        chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          mobile-.*: 50
-          mozilla-.*: 10
-          mozillavpn-.*: 10
-          default: 100
-      regions: *default-gcp-regions
-      image:
-        by-implementation:
-          docker-worker:
-            by-chain-of-trust:
-              trusted: monopacker-docker-worker-trusted-current-gcp
-              default: monopacker-docker-worker-current
-          generic-worker/.*: monopacker-ubuntu-2204-wayland
-      implementation: "{implementation}"
-      instance_types:
-        by-implementation:
-          # Scratch disks aren't configured on generic-worker images yet.
-          generic-worker/.*:
-            - minCpuPlatform: Intel Cascadelake
-              disks:
-                - *persistent-disk-60gb
-              machine_type: c2-standard-4
-          default:
-            - minCpuPlatform: Intel Cascadelake
-              disks:
-                - *persistent-disk-20gb
-                - *scratch-disk
-              machine_type: c2-standard-4
   - pool_id: '{pool-group}/b-linux-large'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -932,51 +723,6 @@ pools:
         - minCpuPlatform: Intel Cascadelake
           disks:
             - *persistent-disk-60gb
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: n2-standard-32
-  - pool_id: '{pool-group}/b-linux-large{suffix}'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    attributes:
-      suffix: "-gcp"
-      implementation: "docker-worker"
-    variants:
-      - pool-group: gecko-1
-      - pool-group: gecko-2
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-      - pool-group: comm-1
-      - pool-group: comm-2
-      - pool-group: comm-3
-        chain-of-trust: trusted
-      - pool-group: mozillavpn-1
-      - pool-group: mozillavpn-3
-        chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-.*: 1000
-          comm-.*: 20
-          default: 10
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      implementation: "{implementation}"
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-20gb
             - *scratch-disk
             - *scratch-disk
             - *scratch-disk
@@ -1232,38 +978,6 @@ pools:
             - *persistent-disk-60gb
             - *scratch-disk
           machine_type: c2-standard-8
-  - pool_id: '{pool-group}/b-linux-medium-gcp'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: gecko-1
-      - pool-group: gecko-2
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-1: 200
-          gecko-2: 50
-          gecko-3: 200
-          default: 10
-      regions: [us-central1, us-west1, northamerica-northeast1]
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-20gb
-            - *scratch-disk
-          machine_type: c2-standard-8
   - pool_id: '{pool-group}/b-linux-xlarge'
     description: Worker for Firefox automation.
     owner: release+tc-workers@mozilla.com
@@ -1306,117 +1020,6 @@ pools:
             - *scratch-disk
             - *scratch-disk
           machine_type: n2-standard-64
-  - pool_id: '{pool-group}/b-linux-xlarge-gcp'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: gecko-1
-      - pool-group: gecko-2
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-      - pool-group: comm-1
-      - pool-group: comm-2
-      - pool-group: comm-3
-        chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-.*: 1000
-          comm-.*: 20
-          default: 10
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-20gb
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: n2-standard-64
-  - pool_id: '{pool-group}/b-linux-xlarge-gcp-bug1797804-c2'
-    description: Worker for Firefox automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: gecko-1
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 10
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      instance_types:
-        - disks:
-            - *persistent-disk-20gb
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: c2-standard-60
-  - pool_id: '{pool-group}/decision-gcp'
-    description: Worker for Firefox automation
-    owner: release+tc-workers@mozilla.com
-    email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    variants:
-      - pool-group: gecko-1
-      - pool-group: gecko-2
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-      - pool-group: comm-1
-      - pool-group: comm-2
-      - pool-group: comm-3
-        chain-of-trust: trusted
-    config:
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      minCapacity:
-        by-pool-group:
-          gecko-3: 1
-          default: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-1: 100
-          gecko-3: 20
-          default: 4
-      instance_types: [*c4d-standard-8]
-      worker-config:
-        shutdown:
-          afterIdleSeconds:
-            by-pool-group:
-              gecko-[13]: 600
-              default: 120
   - pool_id: '{pool-group}/decision'
     description: Worker for Firefox automation
     owner: release+tc-workers@mozilla.com
@@ -1504,116 +1107,6 @@ pools:
                 - *persistent-disk-75gb
                 - *scratch-disk
               machine_type: n2-standard-2
-  - pool_id: '{pool-group}/decision-gcp-{suffix}-amd-bug1990935'
-    description: Decision task worker
-    owner: release+tc-workers@mozilla.com
-    email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    variants:
-      - pool-group: gecko-1
-        suffix: 'c3d4'
-        instance_types: [*c3d-standard-4]
-      - pool-group: gecko-1
-        suffix: 'c3d8'
-        instance_types: [*c3d-standard-8]
-      - pool-group: gecko-1
-        suffix: 'c4d4'
-        instance_types: [*c4d-standard-4]
-      - pool-group: gecko-1
-        suffix: 'c4d8'
-        instance_types: [*c4d-standard-8]
-      - pool-group: gecko-1
-        suffix: 'c4d8-lssd'
-        instance_types: [*c4d-standard-8-lssd]
-      - pool-group: gecko-1
-        suffix: 'c4d4-hcpu'
-        instance_types: [*c4d-highcpu-4]
-      - pool-group: gecko-1
-        suffix: 'c4d8-hcpu'
-        instance_types: [*c4d-highcpu-8]
-    config:
-      regions: [us-central1]
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      minCapacity: 0
-      maxCapacity: 20
-      instance_types: []
-      worker-config:
-        shutdown:
-          afterIdleSeconds: 300
-  - pool_id: '{pool-group}/decision-gcp'
-    description: Worker for Firefox automation
-    owner: release+tc-workers@mozilla.com
-    email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    variants:
-      - pool-group: app-services-1
-      - pool-group: app-services-3
-        chain-of-trust: trusted
-      - pool-group: glean-1
-      - pool-group: glean-3
-        chain-of-trust: trusted
-      - pool-group: mozillavpn-1
-      - pool-group: mozillavpn-3
-        chain-of-trust: trusted
-      - pool-group: scriptworker-1
-      - pool-group: scriptworker-3
-        chain-of-trust: trusted
-      - pool-group: xpi-1
-      - pool-group: xpi-3
-        chain-of-trust: trusted
-      - pool-group: taskgraph-1
-      - pool-group: taskgraph-3
-        chain-of-trust: trusted
-      - pool-group: releng-1
-      - pool-group: releng-3
-        chain-of-trust: trusted
-      - pool-group: relops-1
-      - pool-group: relops-3
-        chain-of-trust: trusted
-      - pool-group: mobile-1
-      - pool-group: mobile-3
-        chain-of-trust: trusted
-      - pool-group: mozilla-1
-      - pool-group: mozilla-3
-        chain-of-trust: trusted
-      - pool-group: translations-1
-      - pool-group: nss-1
-      - pool-group: nss-3
-        chain-of-trust: trusted
-    config:
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      minCapacity:
-        by-pool-group:
-          '(app-services|glean|mozillavpn|mobile|mozilla|translations)-1': 1
-          default: 0
-      maxCapacity: 10
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75gb
-            - *scratch-disk
-          machine_type: n2-standard-2
-          worker-manager-config:
-            capacityPerInstance: 2
-      worker-config:
-        shutdown:
-          afterIdleSeconds:
-            by-pool-group:
-              '(app-services|glean|mozillavpn|mobile|mozilla)-1': 600
-              default: 120
   - pool_id: '{pool-group}/images'
     description: 'Builds docker images'
     owner: release+tc-workers@mozilla.com
@@ -1693,85 +1186,6 @@ pools:
                 - *persistent-disk-75gb
                 - *scratch-disk
               machine_type: c2-standard-4
-  - pool_id: '{pool-group}/images-gcp'
-    description: 'Builds docker images; NOTE: capacity set to 1 instead of 3
-      to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)'
-    owner: release+tc-workers@mozilla.com
-    email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    variants:
-      - pool-group: gecko-1
-      - pool-group: gecko-2
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-      - pool-group: comm-1
-      - pool-group: comm-2
-      - pool-group: comm-3
-        chain-of-trust: trusted
-      - pool-group: app-services-1
-      - pool-group: app-services-3
-        chain-of-trust: trusted
-      - pool-group: mozilla-1
-      - pool-group: mozilla-3
-        chain-of-trust: trusted
-      - pool-group: mozillavpn-1
-      - pool-group: mozillavpn-3
-        chain-of-trust: trusted
-      - pool-group: mobile-1
-      - pool-group: mobile-3
-        chain-of-trust: trusted
-      - pool-group: nss-1
-      - pool-group: nss-3
-        chain-of-trust: trusted
-      - pool-group: glean-1
-      - pool-group: glean-3
-        chain-of-trust: trusted
-      - pool-group: xpi-1
-      - pool-group: xpi-3
-        chain-of-trust: trusted
-      - pool-group: taskgraph-1
-      - pool-group: taskgraph-3
-        chain-of-trust: trusted
-      - pool-group: relops-1
-      - pool-group: relops-3
-        chain-of-trust: trusted
-      - pool-group: scriptworker-1
-      - pool-group: scriptworker-3
-        chain-of-trust: trusted
-      - pool-group: translations-1
-    config:
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          (comm|gecko)-.*: 30
-          default: 10
-      worker-config: {dindImage: taskcluster/dind-service:v4.1}
-      regions: *default-gcp-regions
-      instance_types:
-        by-pool-group:
-          (taskgraph|ci)-.*:
-            - minCpuPlatform: Intel Cascadelake
-              disks:
-                - *persistent-disk-75gb
-                - *scratch-disk
-              machine_type: n2-standard-2
-              worker-manager-config:
-                capacityPerInstance: 1
-          default:
-            - minCpuPlatform: Intel Cascadelake
-              disks:
-                - *persistent-disk-75gb
-                - *scratch-disk
-              machine_type: c2-standard-4
-              worker-manager-config:
-                capacityPerInstance: 1
   - pool_id: '{pool-group}/images-aarch64'
     description: Builds AArch64 docker images
     owner: release+tc-workers@mozilla.com
@@ -1788,6 +1202,9 @@ pools:
         chain-of-trust: trusted
       - pool-group: enterprise-1
       - pool-group: enterprise-3
+        chain-of-trust: trusted
+      - pool-group: nss-1
+      - pool-group: nss-3
         chain-of-trust: trusted
     email_on_error: false
     provider_id:
@@ -1809,175 +1226,6 @@ pools:
           disks:
             - *persistent-disk-75gb
           machine_type: t2a-standard-4
-  - pool_id: '{pool-group}/images-gcp-aarch64'
-    description: Builds AArch64 docker images
-    owner: release+tc-workers@mozilla.com
-    variants:
-      - pool-group: gecko-1
-      - pool-group: gecko-2
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-      - pool-group: comm-1
-      - pool-group: comm-2
-      - pool-group: comm-3
-        chain-of-trust: trusted
-    email_on_error: false
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          (gecko|comm)-.*: 10
-      implementation: generic-worker/worker-runner-linux-multi
-      # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
-      regions: [us-central1]
-      image: monopacker-ubuntu-2204-wayland-arm64
-      instance_types:
-        - minCpuPlatform: Ampere Altra
-          disks:
-            - *persistent-disk-75gb
-          machine_type: t2a-standard-4
-  - pool_id: '{pool-group}/t-linux-xlarge{suffix}-gcp'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    variants:
-      - pool-group: gecko-t
-        suffix: ''
-      - pool-group: comm-t
-        suffix: ''
-      - pool-group: gecko-t
-        suffix: -source
-      - pool-group: comm-t
-        suffix: -source
-      - pool-group: nss-t
-        suffix: ''
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-.*:
-            by-suffix:
-              '': 2500
-              -source: 200
-          nss-t: 100
-          comm-t: 10
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75gb
-            - *scratch-disk
-          machine_type: n2-standard-4
-  - pool_id: '{pool-group}/t-linux-xlarge{suffix}-noscratch-gcp'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    variants:
-      - pool-group: gecko-t
-        suffix: ''
-      - pool-group: comm-t
-        suffix: ''
-      - pool-group: gecko-t
-        suffix: -source
-      - pool-group: comm-t
-        suffix: -source
-      - pool-group: nss-t
-        suffix: ''
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-.*:
-            by-suffix:
-              '': 2500
-              -source: 200
-          nss-t: 100
-          comm-t: 10
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75gb
-          machine_type: n2-standard-4
-  - pool_id: 'gecko-t/t-linux-kvm-gcp'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 400
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
-      worker-config:
-        deviceManagement:
-          kvm:
-            enabled: true
-        dockerConfig:
-          allowPrivileged: true
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75gb
-            - *scratch-disk
-          machine_type: n2-standard-8
-          advancedMachineFeatures:
-            enableNestedVirtualization: true
-  - pool_id: 'gecko-t/t-linux-kvm-gcp-relops1411'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 400
-      regions: *default-gcp-regions
-      image: handbuilt-docker-worker-tester-20250616
-      worker-config:
-        deviceManagement:
-          kvm:
-            enabled: true
-        dockerConfig:
-          allowPrivileged: true
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75gb
-            - *scratch-disk
-          machine_type: n2-standard-8
-          advancedMachineFeatures:
-            enableNestedVirtualization: true
-  - pool_id: 'gecko-t/t-linux-kvm-noscratch-gcp'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 800
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
-      worker-config:
-        deviceManagement:
-          kvm:
-            enabled: true
-        dockerConfig:
-          allowPrivileged: true
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75gb
-          machine_type: n2-standard-8
-          advancedMachineFeatures:
-            enableNestedVirtualization: true
   - pool_id: '{pool-group}/b-linux-kvm'
     description: 'KVM-enabled builders for PGO using d2g.'
     owner: release+tc-workers@mozilla.com
@@ -2004,42 +1252,6 @@ pools:
           config:
             d2gConfig:
               allowKVM: true
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75gb
-            - *scratch-disk
-            - *scratch-disk
-          machine_type: c2-standard-16
-          advancedMachineFeatures:
-            enableNestedVirtualization: true
-  - pool_id: '{pool-group}/b-linux-kvm-gcp'
-    description: 'KVM-enabled builders for PGO using docker-worker.'
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: gecko-1
-      - pool-group: gecko-2
-      - pool-group: gecko-3
-        chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 30
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current  # or monopacker-docker-worker-gcp-current? not sure the diff.
-      worker-config:
-        deviceManagement:
-          kvm:
-            enabled: true
-        dockerConfig:
-          allowPrivileged: false  # not allowed on l3
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -2110,6 +1322,10 @@ pools:
         suffix: '-snap'
       - pool-group: mozilla-t
         suffix: ''
+      - pool-group: enterprise-t
+        suffix: ''
+      - pool-group: enterprise-t
+        suffix: '-snap'
     description: Worker for Wayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
     email_on_error: false
@@ -2167,13 +1383,33 @@ pools:
           disks:
             - *persistent-disk-60gb
           machine_type: t2a-standard-4
-  - pool_id: '{pool-group}/t-linux-2404-wayland-relsre'
-    description: Workers for Wayland on Ubuntu 24.04. Used by RelSRE to qualify images.
+  - pool_id: '{pool-group}/t-linux-2404-wayland-alpha'
+    description: Workers for Wayland on Ubuntu 24.04. Used to qualify candidate images.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     provider_id: fxci-level1-gcp
     variants:
       - pool-group: gecko-t
+      - pool-group: mozilla-t
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/linux
+      regions: *default-gcp-regions
+      image: relsre-gw-fxci-gcp-2404-amd64-gui-alpha
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-60gb
+          machine_type: c2-standard-4
+  - pool_id: '{pool-group}/t-linux-2404-wayland-snap-alpha'
+    description: Workers for Wayland snap tests on Ubuntu 24.04. Used to qualify candidate images.
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: gecko-t
+      - pool-group: enterprise-t
     config:
       minCapacity: 0
       maxCapacity: 10
@@ -2306,6 +1542,7 @@ pools:
   - pool_id: '{pool-group}/t-linux-xlarge-2204-wayland'  # Bug 1903073
     variants:
       - pool-group: gecko-t
+      - pool-group: enterprise-t
     description: Worker for Wayland on Ubuntu 22.04
     owner: release+tc-workers@mozilla.com
     email_on_error: false
@@ -2827,28 +2064,6 @@ pools:
         - disks:
             - *persistent-disk-60gb
           machine_type: g1-small
-  - pool_id: '{pool-group}/misc-gcp'
-    description: Miscellaneous short, low-latency, simple tasks, shared between Gecko
-      SCM levels.  Used for things like indexing tasks.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: gecko-t
-      - pool-group: comm-t
-    provider_id: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity: 32
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-20gb
-            - *scratch-disk
-          machine_type: c2-standard-4
-          worker-manager-config:
-            capacityPerInstance: 8
   # Windows Server 2022
   - pool_id: gecko-1/b-win2022-alpha
     description: ''
@@ -2919,6 +2134,14 @@ pools:
       - pool-group: gecko-3
         chain-of-trust: trusted
         suffix: headless
+      # Updatebot runs on-task LLMs so isolate to mitigate prompt injection
+      - pool-group: gecko-1
+        suffix: updatebot
+      - pool-group: gecko-2
+        suffix: updatebot
+      - pool-group: gecko-3
+        suffix: updatebot
+        chain-of-trust: trusted
       - pool-group: comm-1
       - pool-group: comm-3
         chain-of-trust: trusted
@@ -2948,7 +2171,7 @@ pools:
         by-suffix:
           .*headless.*: generic-worker/windows-builder
           default: generic-worker/windows
-      locations: [central-india, north-central-us, east-us-2]
+      locations: [central-india, north-central-us, south-central-us, west-us-3]
       maxCapacity:
         by-pool-group:
           gecko-.*: 500
@@ -3011,12 +2234,14 @@ pools:
               by-location:
                 central-india: 1
                 north-central-us: 0.9
-                east-us-2: 0.8
+                west-us-3: 0.9
+                south-central-us: 0.8
             Standard_D96ads_v5:
               by-location:
                 central-india: 1
                 north-central-us: 0.9
-                east-us-2: 0.8
+                west-us-3: 0.9
+                south-central-us: 0.8
             default: 1
   - pool_id: nss-1/b-win2022-alpha
     description: ''
@@ -3123,6 +2348,7 @@ pools:
       implementation: generic-worker/windows
     variants:
       - pool-group: gecko-t
+      - pool-group: enterprise-t
       - pool-group: gecko-t
         suffix: gpu
       - pool-group: gecko-t
@@ -3147,18 +2373,21 @@ pools:
           default: ronin_t_windows10_64_2009_prod
       image_resource_group: rg-packer-through-cib
       implementation: '{implementation}'
-      worker-purpose: gecko-t
+      worker-purpose: '{pool-group}'
       locations:
         by-suffix:
-          alpha: [uk-south]
-          source-alpha: [uk-south, west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+          alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
+          source-alpha: [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
           (webgpu|gpu)(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
           default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
       maxCapacity:
-        by-suffix:
-          '': 600
-          alpha: 500
-          default: 100
+        by-pool-group:
+          enterprise-t: 200
+          default:
+            by-suffix:
+              '': 600
+              alpha: 500
+              default: 100
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
@@ -3215,14 +2444,14 @@ pools:
                 west-us-3: 1
                 north-central-us: 0.95
                 central-india: 0.95
+                west-us: 0.8
                 south-india: 0.8
-                canada-central: 0.7
-                central-us: 0.6
-                west-us-2: 0.5
+                central-us: 0.5
                 east-us: 0.5
                 north-europe: 0.4
-                west-us: 0.4
-                east-us-2: 0.3
+                canada-central: 0.3
+                west-us-2: 0.3
+                east-us-2: 0.1
                 default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
@@ -3233,102 +2462,6 @@ pools:
                 default: 0.5
             default: 1
   # Windows 11
-  - pool_id: '{pool-group}/win11-a64-24h2-builder-{suffix}'
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    attributes:
-      suffix: ''
-      level: 1
-      implementation: generic-worker/windows
-    variants:
-      - pool-group: gecko-1
-      - pool-group: gecko-3
-        level: 3
-      - pool-group: gecko-1
-        suffix: alpha
-        implementation: generic-worker/windows
-      - pool-group: enterprise-1
-      - pool-group: enterprise-3
-        level: 3
-      - pool-group: mozillavpn-1
-      - pool-group: mozillavpn-3
-        level: 3
-      - pool-group: nss-1
-        suffix: alpha
-        implementation: generic-worker/windows
-      - pool-group: nss-1
-      - pool-group: nss-3
-        level: 3
-    provider_id:
-      by-level:
-        1: azure2
-        3: azure_trusted
-    config:
-      image: 'ronin_b{level}_windows11_a64_24h2_builder_{suffix}'
-      implementation: '{implementation}'
-      worker-purpose:
-        by-pool-group:
-          mozillavpn-1: vpn-1
-          mozillavpn-3: vpn-3
-          default: null  # defaults to pool-group
-      locations: [central-india, east-us-2, north-central-us, central-us]
-      maxCapacity:
-        by-pool-group:
-          nss-.*: 25
-          gecko.*: 250
-          default: 10
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win11-a64-24h2-builder-{suffix}
-            provisionerId: '{pool-group}'
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      armDeployment:
-        by-level:
-          1:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
-          3:
-            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
-      vmSizes:
-        - vmSize: Standard_D16pds_v5
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_D16pds_v5
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      worker-manager-config:
-        capacityPerInstance: 1
-        initialWeight:
-          by-vmSize:
-            Standard_D16pds_v5:
-              by-location:
-                central-india: 1
-                east-us-2: 0.9
-                north-central-us: 0.9
-                central-us: 0.8
-                default: 0.5
-            default: 1
   - pool_id: '{pool-group}/win11-a64-25h2-builder-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -3479,7 +2612,7 @@ pools:
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
-              (source-)?alpha: [uk-south]
+              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
               webgpu(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
               gpu(-alpha)?: [east-us, east-us-2, west-us, west-us-2]
               (ssd|source): [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
@@ -3556,13 +2689,13 @@ pools:
                 west-us-3: 1
                 north-central-us: 1
                 south-india: 0.9
-                central-us: 0.8
-                north-europe: 0.7
-                canada-central: 0.6
-                west-us-2: 0.6
+                west-us: 0.8
+                central-us: 0.5
                 east-us: 0.5
-                west-us: 0.4
-                east-us-2: 0.4
+                north-europe: 0.4
+                canada-central: 0.3
+                west-us-2: 0.3
+                east-us-2: 0.1
                 default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
@@ -3597,10 +2730,14 @@ pools:
         implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: large
+      - pool-group: enterprise-t
+        suffix: large
       - pool-group: gecko-t
         suffix: large-alpha
         implementation: generic-worker/windows
       - pool-group: gecko-t
+        suffix: gpu
+      - pool-group: enterprise-t
         suffix: gpu
       - pool-group: gecko-t
         suffix: gpu-alpha
@@ -3646,7 +2783,7 @@ pools:
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
-              (source-)?alpha: [uk-south]
+              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
               webgpu(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
               gpu(-alpha)?: [east-us, east-us-2, west-us, west-us-2]
               (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
@@ -3660,11 +2797,11 @@ pools:
               default: 50
           gecko-t:
             by-suffix:
-              '': 2000
+              '': 1200
               alpha: 500
               gpu: 600
               default: 100
-          enterprise-t: 300
+          enterprise-t: 200
           default: 5
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3736,14 +2873,14 @@ pools:
                 west-us-3: 1
                 north-central-us: 0.95
                 central-india: 0.95
+                west-us: 0.8
                 south-india: 0.8
-                canada-central: 0.7
-                central-us: 0.6
-                west-us-2: 0.5
+                central-us: 0.5
                 east-us: 0.5
                 north-europe: 0.4
-                west-us: 0.4
-                east-us-2: 0.3
+                canada-central: 0.3
+                west-us-2: 0.3
+                east-us-2: 0.1
                 default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
@@ -3757,56 +2894,6 @@ pools:
                 central-india: 1
                 default: 0.5
             default: 1
-  - pool_id: 'gecko-t/win11-64-24h2-amd'
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: win116424h2alpha
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/windows
-      locations: [uk-south, central-india]
-      maxCapacity: 100
-      armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-v6-nvme/versions/1.0
-      worker-config:
-        genericWorker:
-          config:
-            workerType: 'win11-64-24h2-amd'
-            provisionerId: gecko-t
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_E8ads_v6
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-                  placement: NvmeDisk
-            hardwareProfile:
-              vmSize: Standard_E8ads_v6
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      worker-manager-config:
-        capacityPerInstance: 1
-        initialWeight: 1
   - pool_id: '{pool-group}/win11-64-25h2-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -3818,6 +2905,8 @@ pools:
     variants:
       - pool-group: gecko-t
       - pool-group: gecko-t
+        suffix: privileged
+      - pool-group: enterprise-t
         suffix: privileged
       - pool-group: gecko-t
         suffix: unprivileged
@@ -3832,14 +2921,22 @@ pools:
         implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: large
+      - pool-group: enterprise-t
+        suffix: large
       - pool-group: gecko-t
         suffix: large-alpha
         implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: gpu
+      - pool-group: enterprise-t
+        suffix: gpu
       - pool-group: gecko-t
         suffix: gpu-alpha
       - pool-group: gecko-t
+        suffix: gpu-perf-experiment
+      - pool-group: gecko-t
+        suffix: webgpu
+      - pool-group: enterprise-t
         suffix: webgpu
       - pool-group: gecko-t
         suffix: webgpu-alpha
@@ -3881,8 +2978,9 @@ pools:
               default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
           default:
             by-suffix:
-              (source-)?alpha: [uk-south]
-              (webgpu|gpu)(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
+              gpu-perf-experiment: [west-us-3]
+              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
+              (webgpu|gpu)(-alpha)?: [west-us-3, east-us, west-us, west-us-2]
               (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
               default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
@@ -3894,14 +2992,30 @@ pools:
               default: 50
           gecko-t:
             by-suffix:
-              '': 2000
+              '': 1200
               alpha: 500
               gpu: 600
+              gpu-perf-experiment: 12
+              large: 150
               default: 100
-          enterprise-t: 300
+          enterprise-t: 200
           default: 5
+      scalingRatio:
+        by-pool-group:
+          gecko-t:
+            by-suffix:
+              '': 0.5
+              gpu: 0.5
+              default: 1
+          default: 1
       armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+        by-suffix:
+          gpu-perf-experiment:
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-dedicated-host/versions/1.0
+            parameters:
+              priority: Regular
+          default:
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config:
@@ -3926,7 +3040,7 @@ pools:
             by-suffix:
               source-alpha: Standard_E8ads_v5
               .*large.*: Standard_E8ads_v5
-              alpha: Standard_F8s_v2
+              alpha: Standard_D8ads_v5
               .*gpu.*: Standard_NV12ads_A10_v5
               default: Standard_F8s_v2
           launchConfig:
@@ -3947,7 +3061,7 @@ pools:
                 by-suffix:
                   source-alpha: Standard_E8ads_v5
                   .*large.*: Standard_E8ads_v5
-                  alpha: Standard_F8s_v2
+                  alpha: Standard_D8ads_v5
                   .*gpu.*: Standard_NV12ads_A10_v5
                   default: Standard_F8s_v2
             diagnosticsProfile:
@@ -3962,21 +3076,34 @@ pools:
                 west-us-3: 1
                 north-central-us: 0.95
                 central-india: 0.95
+                west-us: 0.8
                 south-india: 0.8
-                canada-central: 0.7
-                central-us: 0.6
-                west-us-2: 0.5
+                central-us: 0.5
                 east-us: 0.5
                 north-europe: 0.4
-                west-us: 0.4
-                east-us-2: 0.3
+                canada-central: 0.3
+                west-us-2: 0.3
+                east-us-2: 0.1
+                default: 0.2
+            Standard_D8ads_v5:
+              by-location:
+                west-us-3: 1
+                north-central-us: 0.95
+                central-india: 0.95
+                west-us: 0.8
+                south-india: 0.8
+                central-us: 0.5
+                east-us: 0.5
+                north-europe: 0.4
+                canada-central: 0.3
+                west-us-2: 0.3
+                east-us-2: 0.1
                 default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
                 west-us-3: 1
                 east-us: 1
-                west-us-2: 0.8
-                east-us-2: 0.8
+                west-us-2: 1
                 default: 0.5
             Standard_E8ads_v6:
               by-location:
@@ -3995,15 +3122,15 @@ pools:
       locations: [central-india, uk-south]
       maxCapacity: 250
       armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-v6-nvme/versions/1.0
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
         genericWorker:
           config:
             workerType: 'win11-64-25h2-amd'
             provisionerId: gecko-t
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -4011,7 +3138,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_E8ads_v6
+        - vmSize: Standard_D8ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -4024,9 +3151,8 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
-                  placement: NvmeDisk
             hardwareProfile:
-              vmSize: Standard_E8ads_v6
+              vmSize: Standard_D8ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -4116,122 +3242,6 @@ pools:
                 central-us: 0.6
                 default: 0.5
             default: 1
-  - pool_id: '{pool-group}/win11-a64-24h2-{suffix}'
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    attributes:
-      suffix: ''
-      implementation: generic-worker/windows
-    variants:
-      - pool-group: gecko-t
-      - pool-group: gecko-t
-        suffix: alpha
-        implementation: generic-worker/windows
-      - pool-group: comm-t
-      - pool-group: comm-t
-        suffix: alpha
-        implementation: generic-worker/windows
-      - pool-group: nss-1
-      - pool-group: nss-1
-        suffix: alpha
-        implementation: generic-worker/windows
-      - pool-group: nss-t
-      - pool-group: nss-t
-        suffix: alpha
-        implementation: generic-worker/windows
-    config:
-      image: ronin_t_windows11_a64_24h2_tester_{suffix}
-      implementation: '{implementation}'
-      worker-purpose: '{pool-group}'
-      locations: [central-india, east-us-2, north-central-us, central-us, uk-south]
-      maxCapacity:
-        by-pool-group:
-          gecko-t: 500
-          comm-t: 500
-          default: 50
-      worker-config:
-        genericWorker:
-          config:
-            workerType: 'win11-a64-24h2-{suffix}'
-            provisionerId: '{pool-group}'
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
-      vmSizes:
-        - vmSize: Standard_D8pds_v5
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_D8pds_v5
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      worker-manager-config:
-        capacityPerInstance: 1
-        initialWeight:
-          by-vmSize:
-            Standard_D8pds_v5:
-              by-location:
-                central-india: 1
-                uk-south: 0.9
-                east-us-2: 0.8
-                north-central-us: 0.7
-                central-us: 0.6
-                default: 0.5
-            default: 1
-  - pool_id: '{pool-group}/t-linux-large-gcp'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    provider_id: fxci-level1-gcp
-    variants:
-      - pool-group: gecko-t
-      - pool-group: comm-t
-      - pool-group: mozilla-t
-    email_on_error: true
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-t: 2500
-          comm-t: 100
-          mozilla-t: 100
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-          machine_type: c2-standard-4
   - pool_id: '{pool-group}/t-linux-{suffix}'
     description: Worker for test tasks.
     owner: release+tc-workers@mozilla.com
@@ -4246,6 +3256,7 @@ pools:
       - pool-group: comm-t
       - pool-group: mozilla-t
       - pool-group: nss-t
+      - pool-group: enterprise-t
       # D2G / Intel / noscratch
       - pool-group: gecko-t
         suffix: 'docker-noscratch'
@@ -4303,6 +3314,10 @@ pools:
         suffix: '2404-wayland-snap'
         implementation: generic-worker/linux
         instance_types: [*c2-standard-4-60gb]
+      - pool-group: enterprise-t
+        suffix: '2404-wayland-snap'
+        implementation: generic-worker/linux
+        instance_types: [*c2-standard-4-60gb]
       - pool-group: mozilla-t
         suffix: '2404-wayland'
         implementation: generic-worker/linux
@@ -4326,6 +3341,10 @@ pools:
             by-suffix:
               .*2404-wayland.*: 100
               default: 2500
+          enterprise-t:
+            by-suffix:
+              docker(-noscratch)?-amd: 200
+              default: 100
           default: 100
       implementation: "{implementation}"
       regions:
@@ -4356,14 +3375,20 @@ pools:
       regions: [us-central1, us-east1]
       image: ubuntu-2404-headless-alpha
       instance_types: []
-  - pool_id: 'gecko-t/t-linux-docker-kvm'
+  - pool_id: '{pool-group}/t-linux-docker-kvm'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: gecko-t
+      - pool-group: enterprise-t
     email_on_error: true
     provider_id: fxci-level1-gcp
     config:
       minCapacity: 0
-      maxCapacity: 1600
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 1600
+          enterprise-t: 100
       regions: *default-gcp-regions
       image: ubuntu-2404-headless
       implementation: generic-worker/linux-d2g
@@ -4407,59 +3432,6 @@ pools:
           disks:
             - *persistent-disk-75gb
           machine_type: t2a-standard-4
-  - pool_id: '{pool-group}/t-linux-large-noscratch-gcp'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    provider_id: fxci-level1-gcp
-    variants:
-      - pool-group: gecko-t
-      - pool-group: comm-t
-      - pool-group: mozilla-t
-    email_on_error: true
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          gecko-t: 2500
-          comm-t: 100
-          mozilla-t: 100
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-gcp-current
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-          machine_type: c2-standard-4
-  - pool_id: 'gecko-t/t-linux-large-hostub2204-gcp'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    provider_id: fxci-level1-gcp
-    email_on_error: true
-    config:
-      minCapacity: 0
-      maxCapacity: 200
-      regions: *default-gcp-regions
-      image: monopacker-docker-worker-relops528
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - autoDelete: true
-              boot: true
-              initializeParams:
-                diskSizeGb: 75
-                sourceImage: <image>
-              type: PERSISTENT
-            - autoDelete: true
-              initializeParams:
-                diskType: diskTypes/local-ssd
-              type: SCRATCH
-              interface: NVME
-          machine_type: n2-standard-2
   - pool_id: '{pool-group}/bot'
     description: Worker for the {pool-group} bot.
     owner: release+tc-workers@mozilla.com
@@ -4480,41 +3452,6 @@ pools:
         by-pool-group:
           code-review: 100
           code-coverage: 10
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75gb
-            - *scratch-disk
-          machine_type: c2-standard-4
-  - pool_id: '{pool-group}/linux-gcp'
-    description: Worker for gecko-based automation.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    variants:
-      - pool-group: code-analysis-1
-      - pool-group: code-analysis-3
-        chain-of-trust: trusted
-      - pool-group: nss-1
-      - pool-group: nss-3
-        chain-of-trust: trusted
-      - pool-group: releng-1
-      - pool-group: releng-3
-        chain-of-trust: trusted
-    provider_id:
-      by-chain-of-trust:
-        trusted: fxci-level3-gcp
-        default: fxci-level1-gcp
-    config:
-      minCapacity: 0
-      maxCapacity:
-        by-pool-group:
-          nss-.*: 100
-          default: 10
-      regions: *default-gcp-regions
-      image:
-        by-chain-of-trust:
-          trusted: monopacker-docker-worker-trusted-current-gcp
-          default: monopacker-docker-worker-current
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -4581,3 +3518,216 @@ pools:
           disks:
             - *persistent-disk-75gb
           machine_type: c2-standard-4
+  - pool_id: mozilla-t/pre-commit
+    description: Worker for running pre-commit checks.
+    owner: releng@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 1
+      maxCapacity: 10
+      regions: *default-gcp-regions
+      image: ubuntu-2404-headless
+      implementation: generic-worker/linux-d2g
+      instance_types: [*c3d-standard-4]
+
+  # Fuzzing pools migrated from community-tc.
+  - pool_id: proj-fuzzing/{kind}
+    description: '{desc}'
+    owner: truber@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    variants:
+      - kind: bugmon-monitor
+        desc: Fuzzing bugmon monitor pool
+        owner: jkratzer@mozilla.com
+        email_on_error: false
+      - kind: bugmon-processor
+        desc: Fuzzing bugmon processor pool
+        owner: jkratzer@mozilla.com
+        email_on_error: false
+      - kind: decision
+        desc: Fuzzing decision pool
+      - kind: grizzly-reduce-worker
+        desc: Fuzzing grizzly reduce worker pool
+      - kind: grizzly-reduce-worker-android
+        desc: Fuzzing grizzly reduce worker pool (Android, nested virt)
+      - kind: nss-corpus-update-worker
+        desc: Fuzzing NSS corpus update worker pool
+        owner: mdauer@mozilla.com
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-kind:
+          bugmon-monitor: 5
+          bugmon-processor: 20
+          decision: 5
+          grizzly-reduce-worker: 20
+          grizzly-reduce-worker-android: 10
+          nss-corpus-update-worker: 5
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: *default-gcp-regions
+      image: fuzzing-gw-ubuntu-24-04
+      instance_types:
+        by-kind:
+          grizzly-reduce-worker-android:
+            - <<: *n2-standard-4-60gb-lssd
+              advancedMachineFeatures:
+                enableNestedVirtualization: true
+          default:
+            - *n2-standard-4-60gb-lssd
+
+  - pool_id: proj-fuzzing/ci
+    description: Fuzzing CI pool
+    owner: fuzzing+taskcluster@mozilla.com
+    email_on_error: false
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 20
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: *default-gcp-regions
+      image: fuzzing-gw-ubuntu-24-04
+      instance_types:
+        - *c3d-standard-4-60gb
+
+  - pool_id: proj-fuzzing/ci-arm64
+    description: Fuzzing CI ARM64 pool
+    owner: fuzzing+taskcluster@mozilla.com
+    email_on_error: false
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-central1]
+      image: fuzzing-gw-ubuntu-24-04-arm64
+      instance_types:
+        - disks:
+            - *persistent-disk-60gb
+          machine_type: t2a-standard-4
+
+  - pool_id: proj-fuzzing/ci-windows
+    description: Fuzzing CI Windows pool
+    owner: fuzzing+taskcluster@mozilla.com
+    email_on_error: false
+    provider_id: azure2
+    config:
+      image: fuzzing-gw-win2022
+      implementation: generic-worker/windows-fuzzing
+      worker-purpose: proj-fuzzing
+      locations: [central-us, east-us]
+      maxCapacity: 10
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+      worker-config:
+        genericWorker:
+          config: {}
+      vmSizes:
+        - vmSize: Standard_F16s_v2
+          launchConfig:
+            hardwareProfile:
+              vmSize: Standard_F16s_v2
+      worker-manager-config:
+        capacityPerInstance: 1
+
+  - pool_id: proj-fuzzing/grizzly-reduce-worker-windows{suffix}
+    description: '{desc}'
+    owner: truber@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    variants:
+      - kind: gpu
+        suffix: ''
+        desc: Fuzzing grizzly reduce worker Windows GPU pool
+      - kind: ngpu
+        suffix: -ngpu
+        desc: Fuzzing grizzly reduce worker Windows non-GPU pool
+    config:
+      image:
+        by-kind:
+          gpu: fuzzing-gw-win2022-gpu
+          ngpu: fuzzing-gw-win2022
+      implementation: generic-worker/windows-fuzzing
+      worker-purpose: proj-fuzzing
+      locations:
+        by-kind:
+          gpu: [east-us, east-us-2, south-central-us, west-us-2]
+          ngpu: [central-us, east-us]
+      maxCapacity: 10
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+      worker-config:
+        genericWorker:
+          config: {}
+      vmSizes:
+        - vmSize:
+            by-kind:
+              gpu: Standard_NV12s_v3
+              ngpu: Standard_F16s_v2
+          launchConfig:
+            hardwareProfile:
+              vmSize:
+                by-kind:
+                  gpu: Standard_NV12s_v3
+                  ngpu: Standard_F16s_v2
+      worker-manager-config:
+        capacityPerInstance: 1
+
+  - pool_id: proj-fuzzing/bugmon-pernosco
+    description: Fuzzing bugmon pernosco pool (docker-worker, metal)
+    owner: jkratzer@mozilla.com
+    email_on_error: false
+    provider_id: aws
+    config:
+      minCapacity: 0
+      maxCapacity: 10
+      regions: [us-east-1, us-west-1, us-west-2]
+      image: fuzzing-docker-worker-legacy
+      security: untrusted
+      instance_types:
+        - instanceType: m5d.metal
+      worker-config:
+        dockerConfig:
+          allowPrivileged: true
+          allowDisableSeccomp: true
+
+  - pool_id: proj-fuzzing/bugmon-pernosco-staging
+    description: Fuzzing bugmon pernosco staging pool
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: aws
+    config:
+      minCapacity: 0
+      maxCapacity: 5
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: [us-east-1]
+      image: fuzzing-gw-ubuntu-24-04-staging
+      security: untrusted
+      instance_types:
+        - instanceType: m5d.metal
+
+  - pool_id: proj-fuzzing/bugmon-processor-windows
+    description: Fuzzing bugmon processor Windows GPU pool
+    owner: jkratzer@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: fuzzing-gw-win2022-gpu
+      implementation: generic-worker/windows-fuzzing
+      worker-purpose: proj-fuzzing
+      locations: [east-us, east-us-2, south-central-us, west-us-2]
+      maxCapacity: 20
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+      worker-config:
+        genericWorker:
+          config:
+            numberOfTasksToRun: 1
+      vmSizes:
+        - vmSize: Standard_NV12s_v3
+          launchConfig:
+            hardwareProfile:
+              vmSize: Standard_NV12s_v3
+      worker-manager-config:
+        capacityPerInstance: 1

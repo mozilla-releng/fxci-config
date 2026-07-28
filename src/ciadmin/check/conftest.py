@@ -15,16 +15,6 @@ from tcadmin.util.sessions import with_aiohttp_session
 from ciadmin.boot import appconfig
 
 
-# Imported from pytest-asyncio, but with scope session
-# https://github.com/pytest-dev/pytest-asyncio/issues/75
-@pytest.fixture(scope="session")
-def event_loop(request):
-    """Create an instance of the default event loop for each test run."""
-    loop = asyncio.get_event_loop_policy().new_event_loop()
-    yield loop
-    loop.close()
-
-
 @pytest.fixture(scope="session")
 async def generate_resources():
     """Generate and return a subset of resources.

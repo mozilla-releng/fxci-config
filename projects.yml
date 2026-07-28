@@ -56,6 +56,7 @@
 #   - `treescript-phase` -- this repository should have treescript related scopes associated
 #   - `merge-automation` -- this repository should have merge-automation related scopes associated
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
+#   - `pre-commit` -- this repository runs the lint/pre-commit hook
 
 ash:
   repo: https://hg.mozilla.org/projects/ash
@@ -112,6 +113,7 @@ mozilla-release:
       - periodic-update
 comm-release:
   repo: https://hg.mozilla.org/releases/comm-release
+  lando_repo: thunderbird-desktop-release
   repo_type: hg
   access: scm_level_3
   branches:
@@ -123,6 +125,7 @@ comm-release:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -172,25 +175,32 @@ mozilla-esr140:
     targets:
       - periodic-update
       - pinning-update
-comm-esr115:
-  repo: https://hg.mozilla.org/releases/comm-esr115
+mozilla-esr153:
+  repo: https://hg.mozilla.org/releases/mozilla-esr153
+  lando_repo: firefox-esr153
   repo_type: hg
   access: scm_level_3
   branches:
     - name: "*"
     - name: default
-  trust_domain: comm
-  parent_repo: https://hg.mozilla.org/releases/mozilla-esr115
+  trust_domain: gecko
   features:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
+    merge-automation: true
+    shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    shipit: true
+  cron:
+    targets:
+      - periodic-update
+      - pinning-update
 comm-esr140:
   repo: https://hg.mozilla.org/releases/comm-esr140
+  lando_repo: thunderbird-desktop-esr140
   repo_type: hg
   access: scm_level_3
   branches:
@@ -202,6 +212,26 @@ comm-esr140:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
+    taskgraph-cron: false
+    treeherder-reporting: true
+    trust-domain-scopes: true
+    shipit: true
+comm-esr153:
+  repo: https://hg.mozilla.org/releases/comm-esr153
+  lando_repo: thunderbird-desktop-esr153
+  repo_type: hg
+  access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
+  trust_domain: comm
+  parent_repo: https://hg.mozilla.org/releases/mozilla-esr153
+  features:
+    gecko-actions: true
+    gecko-roles: true
+    hg-push: true
+    lando: true
     taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -289,6 +319,7 @@ mozilla-beta:
       - pinning-update
 comm-beta:
   repo: https://hg.mozilla.org/releases/comm-beta
+  lando_repo: thunderbird-desktop-beta
   repo_type: hg
   access: scm_level_3
   branches:
@@ -300,6 +331,7 @@ comm-beta:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -346,6 +378,7 @@ mozilla-central:
         allow-input: true
 comm-central:
   repo: https://hg.mozilla.org/comm-central
+  lando_repo: thunderbird-desktop-main
   repo_type: hg
   access: scm_level_3
   branches:
@@ -358,6 +391,7 @@ comm-central:
     gecko-roles: true
     hg-push: true
     is-trunk: true
+    lando: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -389,7 +423,7 @@ cedar:
 birch:
   repo: https://hg.mozilla.org/projects/birch
   repo_type: hg
-  access: scm_level_2
+  access: scm_level_1
   branches:
     - name: "*"
     - name: default
@@ -428,7 +462,10 @@ cypress:
       - nightly-desktop-win64-aarch64
 try:
   repo: https://hg.mozilla.org/try
-  lando_repo: ff-test-dev
+  # This is used as a substitution in grants; the try repo is allowed to
+  # use grants for all staging repositories (to allow for testing against
+  # the staging beta, release, etc. repositories).
+  lando_repo: staging-firefox-*
   repo_type: hg
   access: scm_level_1
   branches:
@@ -448,6 +485,7 @@ try:
     trust-domain-scopes: true
 try-comm-central:
   repo: https://hg.mozilla.org/try-comm-central
+  lando_repo: thunderbird-infra-testing-main
   repo_type: hg
   access: scm_level_1
   branches:
@@ -459,6 +497,7 @@ try-comm-central:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
+    lando: true
     taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -579,6 +618,25 @@ firefox:
     treeherder-reporting: true
     trust-domain-scopes: true
 
+firefox-dev:
+  repo: https://github.com/mozilla/firefox-dev
+  repo_type: git
+  trust_domain: gecko
+  branches:
+    - name: "*"
+      level: 1
+  features:
+    gecko-roles: true
+    git-push: true
+    github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
+    pr-actions: true
+    taskgraph-actions: true
+    taskgraph-cron: false
+    treeherder-reporting: true
+    trust-domain-scopes: true
+
 firefox-prototypes:
   repo: https://github.com/Firefox-AI/firefox-prototypes
   repo_type: git
@@ -641,6 +699,32 @@ enterprise-firefox-try:
     pr-actions: true
     scriptworker: true
     taskgraph-actions: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+
+enterprise-thunderbird:
+  repo: https://github.com/mozilla/enterprise-thunderbird
+  repo_type: git
+  default_branch: enterprise-main
+  trust_domain: enterprise
+  branches:
+    - name: enterprise-main
+      level: 3
+    - name: enterprise-release
+      level: 3
+    - name: enterprise-beta
+      level: 3
+    - name: "*"
+      level: 1
+  features:
+    gecko-roles: true
+    github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
+    pr-actions: true
+    scriptworker: true
+    taskgraph-actions: true
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
 
@@ -752,7 +836,7 @@ reps:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public_restricted
+      policy: public
     taskgraph-actions: true
     trust-domain-scopes: true
 
@@ -1407,7 +1491,7 @@ translations:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     taskgraph-cron: true
     trust-domain-scopes: true
@@ -1434,7 +1518,7 @@ staging-firefox-translations-training:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     taskgraph-cron: true
     trust-domain-scopes: true
@@ -1514,6 +1598,27 @@ crash-ping-ingest:
     taskgraph-cron: true
     trust-domain-scopes: true
 
+# Bug 2028701: Setup `mozilla-conduit/reviewer-selector` with Taskcluster
+reviewer-selector:
+  repo: https://github.com/mozilla-conduit/reviewer-selector
+  repo_type: git
+  trust_domain: mozilla
+  trust_project: reviewer-selector
+  branches:
+    - name: main
+      level: 3
+    - name: staging
+      level: 1
+    - name: develop
+      level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
+    pr-actions: true
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
 # WARNING: These grants apply to entire Github orgs.
 #
 # We should only grant the mozilla trust domain and level 1 context here, as
@@ -1532,20 +1637,7 @@ mozilla:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
-    taskgraph-actions: true
-    trust-domain-scopes: true
-
-mozilla-conduit:
-  repo: https://github.com/mozilla-conduit/*
-  repo_type: git
-  trust_domain: mozilla
-  branches:
-    - name: main
-      level: 1
-  features:
-    github-taskgraph: true
-    github-pull-request:
-      policy: public_restricted
+    pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true
 
@@ -1560,5 +1652,21 @@ mozilla-releng:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
+    pre-commit: true
+    taskgraph-actions: true
+    trust-domain-scopes: true
+
+taskcluster:
+  repo: https://github.com/taskcluster/*
+  repo_type: git
+  trust_domain: mozilla
+  branches:
+    - name: main
+      level: 1
+  features:
+    github-taskgraph: true
+    github-pull-request:
+      policy: public_restricted
+    pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true

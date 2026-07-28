@@ -107,8 +107,19 @@ to specific changes.
      the resources to be modified (much shorter!)
    * `tc-admin check --environment=firefoxci`
 
-1. Submit changes to Phabricator for review.  On landing, the changes will be
-   applied automaticallyi.
+1. Submit changes for review. On landing, changes are automatically applied to
+   the **`firefoxci`** (production) environment only.
+
+## Staging Environment
+
+The `staging` environment is validated (via `tc-admin check`) on every PR and push,
+but is **not** automatically applied. To apply changes to staging:
+
+* Comment `/taskcluster apply-staging` on your pull request, **or**
+* Run locally: `tc-admin apply --environment=staging`
+
+When testing changes that affect scopes, worker configs, or fxci-config itself,
+validate against staging before production.
 
 To apply changes locally (not recommended):
 

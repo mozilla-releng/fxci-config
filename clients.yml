@@ -1,4 +1,21 @@
 ---
+# This file contains static Taskcluster client definitions for Firefox CI.
+#
+# Structure
+# ---------
+#
+# Each client is keyed by its clientId. The value is an object with:
+#
+# - `description` -- human-readable description of the client's purpose
+# - `scopes` -- list of Taskcluster scopes granted to this client
+# - `environments` -- (optional) list of environments this client applies to,
+#                     e.g. `[staging]`. Omit to apply to all environments.
+#
+# Entries are sorted alphabetically by clientId.
+#
+# For clients whose clientId or scopes depend on a project's trust domain,
+# see `clients-interpreted.yml` instead.
+
 project/autophone/bitbar-x-test-1:
   description: Bitbar client for testing new docker images and other changes. Should
     only be used by RelOps.
@@ -287,17 +304,6 @@ project/enterprise/enterprise-console-backend/dev/artifact-access:
     enterprise artifacts.
   scopes:
     - queue:get-artifact:project/enterprise/*
-project/packet/docker-worker:
-  description: ''
-  scopes:
-    - auth:sentry:docker-worker
-    - auth:statsum:docker-worker
-    - queue:claim-task:terraform-packet/*
-    - queue:claim-work:terraform-packet/*
-    - queue:worker-id:packet-*
-    - secrets:get:project/taskcluster/docker-worker/certificate-key
-    - secrets:get:worker-pool:terraform-packet/*
-    - secrets:get:worker-type:terraform-packet/*
 project/releng/fxci-config/apply:
   description: Used to run `tc-admin apply` in mozilla-releng/fxci-config.
   scopes:
@@ -751,6 +757,16 @@ project/releng/scriptworker/v2/bouncer/prod/firefoxci-gecko-3:
   scopes:
     - queue:claim-work:scriptworker-k8s/gecko-3-bouncer
     - queue:worker-id:gecko-3-bouncer/gecko-3-bouncer-*
+project/releng/scriptworker/v2/builddecision/dev/firefoxci-1:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/builddecision-dev
+    - queue:worker-id:builddecision-dev/builddecision-dev-*
+project/releng/scriptworker/v2/builddecision/prod/firefoxci-1:
+  description: ''
+  scopes:
+    - queue:claim-work:scriptworker-k8s/builddecision
+    - queue:worker-id:builddecision/builddecision-*
 project/releng/scriptworker/v2/cloudops-canary:
   description: Allows cloudops' jenkins to trigger scriptworker canary tasks
   scopes:
@@ -1350,29 +1366,6 @@ project/relsre/devicepool:
   scopes:
     - queue:claimed-count:*
     - queue:pending-count:*
-project/taskcluster/legacy-login:
-  description: ''
-  scopes:
-    - assume:github-org-admin:*
-    - assume:github-team:*
-    - assume:login-identity:*
-    - assume:mozilla-group:*
-    - assume:mozillians-group:*
-    - auth:azure-table:read-write:firefoxcitc/AccessTokenTable
-    - auth:azure-table:read-write:firefoxcitc/AuthorizationCodesTable
-    - auth:azure-table:read-write:firefoxcitc/GithubAccessTokenTable
-    - auth:create-client:github/*
-    - auth:create-client:mozilla-auth0/*
-    - auth:delete-client:github/*
-    - auth:delete-client:mozilla-auth0/*
-    - auth:disable-client:github/*
-    - auth:disable-client:mozilla-auth0/*
-    - auth:enable-client:github/*
-    - auth:enable-client:mozilla-auth0/*
-    - auth:reset-access-token:github/*
-    - auth:reset-access-token:mozilla-auth0/*
-    - auth:update-client:github/*
-    - auth:update-client:mozilla-auth0/*
 project/taskcluster/smoketest:
   description: Run smoketests on new Taskcluster deployments
   scopes:
@@ -1388,6 +1381,12 @@ project/wpt/wptsync:
   description: Created in Bug 1596469 - Secret handed to :jgraham
   scopes:
     - assume:repo:hg.mozilla.org/try:*
+project/perf-ai/bot:
+  description: Performance AI bot for triggering in-tree actions (Bug 2048320)
+  scopes:
+    - hooks:trigger-hook:project-gecko/in-tree-action-3-backfill/*
+    - hooks:trigger-hook:project-gecko/in-tree-action-3-generic/*
+
 project/perf-sheriffs/treeherder/bot:
   description: Performance Sheriffing backfill bot
   scopes:

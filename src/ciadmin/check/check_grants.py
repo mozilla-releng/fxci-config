@@ -94,8 +94,13 @@ async def check_grant_pools(generate_resources):
                 parts = target_pool.split("/")[:2]
                 target_pool = "/".join(parts)
 
-            # Scope uses interpolation (see note above).
-            if "{trust_domain}" in target_pool or "{level}" in target_pool:
+            # Scope uses interpolation (see note above) or a parameterized-role
+            # placeholder (`<..>`), neither of which references a concrete pool.
+            if (
+                "{trust_domain}" in target_pool
+                or "{level}" in target_pool
+                or "<..>" in target_pool
+            ):
                 continue
 
             # Scope uses a wildcard which encompasses providers outside of
@@ -177,6 +182,41 @@ async def check_insecure_grants(generate_resources):
         print("Level 3 scopes are granted to level 1 contexts:")
         for roleId, scopes in insecure_scopes.items():
             print(f"{roleId} is granted the follow scopes that are considered level 3:")
+            print(sorted(scopes))
+            print()
+    assert not insecure_scopes
+
+
+@pytest.mark.asyncio
+async def check_no_pull_request_index_writes(generated):
+    """Ensures that pull-request roles can't write to an index namespace that
+    isn't confined to pull-requests."""
+    roles = generated.filter("Role=.*")
+    pr = re.compile(r":pull-request(-untrusted)?$")
+    index_write_scope = re.compile(r"^(?:index:insert-task:|queue:route:index\.)(.+)$")
+    safe_namespace = re.compile(
+        r"(?:^|[.-])(?:pr|head|level-1|garbage|staging)(?:[.-]|$)"
+    )
+
+    insecure_scopes = defaultdict(set)
+    for role in roles:
+        if not pr.search(role.roleId):
+            continue
+
+        for scope in role.scopes:
+            match = index_write_scope.match(scope)
+            if not match:
+                continue
+            if safe_namespace.search(match.group(1)):
+                continue
+            insecure_scopes[role.roleId].add(scope)
+
+    if insecure_scopes:
+        print(
+            "Pull-request roles are granted write access to non pull-request indexes:"
+        )
+        for roleId, scopes in sorted(insecure_scopes.items()):
+            print(f"{roleId} is granted the following index scopes:")
             print(sorted(scopes))
             print()
     assert not insecure_scopes

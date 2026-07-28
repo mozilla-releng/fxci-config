@@ -11,6 +11,10 @@ import yaml
 from tcadmin.resources import Binding, Hook, Role
 
 from ..util.keyed_by import resolve_keyed_by
+from .ciconfig.externally_managed import (
+    manage_individual,
+    manage_with_exclusions,
+)
 from .ciconfig.hooks import Hook as HookConfig
 
 
@@ -55,6 +59,15 @@ def generate_hook_variants(hooks):
             for field in fields:
                 resolve_keyed_by(fields, field, hook_name, **attributes)
 
+            scopes = [
+                s.format(**attributes)
+                for s in hook.scopes + variant.get("extra_scopes", [])
+            ]
+
+            # Explicitly add the anonymous role to avoid scope errors fetching
+            # public/github/customCheckRunText.md (which TC Github looks for).
+            scopes.append("assume:anonymous")
+
             yield attr.evolve(
                 hook,
                 hook_group_id=hook.hook_group_id.format(**attributes),
@@ -62,7 +75,8 @@ def generate_hook_variants(hooks):
                 name=hook.name.format(**attributes),
                 description=hook.description.format(**attributes),
                 template_file=fields["template_file"].format(**attributes),
-                scopes=[s.format(**attributes) for s in hook.scopes],
+                schedule=[s.format(**attributes) for s in hook.schedule],
+                scopes=scopes,
                 attributes=attributes,
                 variants=[{}],
             )
@@ -76,11 +90,14 @@ async def update_resources(resources):
 
     hooks = generate_hook_variants(await HookConfig.fetch_all())
 
-    resources.manage("Hook=.*")
-    resources.manage("Role=hook-id:.*")
+    await manage_with_exclusions(resources, "Hook=.*")
+    await manage_with_exclusions(resources, "Role=hook-id:.*")
 
     for hook in hooks:
         hook_name = f"{hook.hook_group_id}/{hook.hook_id}"
+
+        manage_individual(resources, f"Hook={hook_name}")
+        manage_individual(resources, f"Role=hook-id:{hook_name}")
 
         with open(hook.template_file) as f:
             task = yaml.safe_load(

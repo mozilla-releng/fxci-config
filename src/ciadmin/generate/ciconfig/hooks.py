@@ -29,8 +29,10 @@ class Hook:
         hooks = await get_ciconfig_file("hooks.yml")
 
         for hook_name in hooks:
+            if hook_name == "meta":
+                continue
             if hook_name.count("/") < 1:
-                raise ValueError("hook name must be of the form `hookGroupId/hookDi`")
+                raise ValueError("hook name must be of the form `hookGroupId/hookId`")
 
         def hgid(hook_name):
             return hook_name.split("/", 1)[0]
@@ -41,4 +43,5 @@ class Hook:
         return [
             Hook(hook_group_id=hgid(hook_name), hook_id=hid(hook_name), **info)
             for hook_name, info in hooks.items()
+            if hook_name != "meta"
         ]

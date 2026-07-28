@@ -36,12 +36,22 @@
         trust_domain: enterprise
 
 - grant:
+    # Snap tests on Enterprise Wayland pools need sudo access to manage snapd.
+    - generic-worker:os-group:enterprise-t/t-linux-2204-wayland-snap/snap_sudo
+    - generic-worker:os-group:enterprise-t/t-linux-2404-wayland-snap/snap_sudo
+  to:
+    - project:
+        feature: gecko-roles
+        trust_domain: enterprise
+
+- grant:
     # Grant some Gecko build secrets to Enterprise Firefox as the values for both
     # will be the same regardless.
     - secrets:get:project/releng/gecko/build/level-{level}/gecko-symbol-upload
     - secrets:get:project/releng/gecko/build/level-{level}/gls-gapi.data
     - secrets:get:project/releng/gecko/build/level-{level}/sb-gapi.data
     - secrets:get:project/releng/gecko/build/level-{level}/mozilla-desktop-geoloc-api.key
+    - secrets:get:project/releng/gecko/build/level-{level}/mozilla-fennec-geoloc-api.key
   to:
     - project:
         feature: gecko-roles
@@ -135,3 +145,4 @@
   to:
     - groups:
         - team_moco
+        - team_mzla

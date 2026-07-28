@@ -7,6 +7,8 @@ reporting: checks-v1
 policy:
     allowComments: collaborators
     pullRequests: public_restricted
+hooks:
+    - name: lint/pre-commit-v1
 tasks:
     - $let:
           trustDomain: releng
@@ -236,7 +238,7 @@ tasks:
                               taskclusterProxy: true
                               chainOfTrust: true
                           # Keep this synced with the version in `pyproject.toml`.
-                          image: mozillareleases/taskgraph:decision-v20.0.0@sha256:afae5e5d3caaeb10a93fae56bc3176d1e73faf9b616c01facf811e488db4eafe
+                          image: mozillareleases/taskgraph:decision-v24.1.1@sha256:c2cf963f7621b0f64dc142a04ddcc179d36afdd05c6dc1c2d198d97b55ecb394
                           maxRunTime: 1800
                           command:
                               $flatten:

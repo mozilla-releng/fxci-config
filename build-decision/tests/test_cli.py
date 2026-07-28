@@ -7,8 +7,7 @@ import build_decision.cron as cron
 import build_decision.hg_push as hg_push
 
 
-@pytest.mark.parametrize("tc_yml_repo", (True, False))
-def test_hg_push(mocker, tc_yml_repo):
+def test_hg_push(mocker):
     """Add hg-push cli coverage."""
     options = {
         "dry_run": True,
@@ -18,19 +17,12 @@ def test_hg_push(mocker, tc_yml_repo):
         "level": "fakelevel",
         "repository_type": "fake_repository_type",
         "trust_domain": "fake_trust_domain",
-        "taskcluster_yml_repo": None,
     }
-    if tc_yml_repo:
-        options["taskcluster_yml_repo"] = "fake_tc_yml_repo"
 
     fake_repo = mocker.MagicMock()
 
-    def fake_build_decision(repository, taskcluster_yml_repo, dry_run):
+    def fake_build_decision(repository, dry_run):
         assert repository is fake_repo
-        if tc_yml_repo:
-            assert taskcluster_yml_repo is fake_repo
-        else:
-            assert taskcluster_yml_repo is None
         assert dry_run
 
     mocker.patch.object(hg_push, "build_decision", new=fake_build_decision)

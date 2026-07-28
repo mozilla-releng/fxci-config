@@ -1,0 +1,36 @@
+---
+provisionerId: proj-fuzzing
+schedulerId: fuzzing
+workerType: ci
+payload:
+  image:
+    type: indexed-image
+    namespace: project.fuzzing.orion.coverage-revision.master
+    path: public/coverage-revision.tar.zst
+  maxRunTime: 900
+  onExitStatus:
+    retry:
+      - 124
+  artifacts:
+    public/coverage-revision.txt:
+      path: /coverage-revision.txt
+      type: file
+    public/source.zip:
+      path: /source.zip
+      type: file
+metadata:
+  name: coverage-revision
+  description: Hook for pinning m-c revision for periodic fuzzing coverage tasks
+  owner: fuzzing@mozilla.com
+  source: 'https://github.com/MozillaSecurity'
+expires:
+  $fromNow: 4 weeks
+deadline:
+  $fromNow: 3 hours
+scopes:
+  - queue:route:index.project.fuzzing.coverage-revision.latest
+  - queue:route:notify.email.fuzzing@mozilla.com.on-failed
+  - queue:scheduler-id:fuzzing
+routes:
+  - index.project.fuzzing.coverage-revision.latest
+  - notify.email.fuzzing@mozilla.com.on-failed

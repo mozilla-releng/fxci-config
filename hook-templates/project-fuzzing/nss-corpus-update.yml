@@ -1,0 +1,32 @@
+---
+provisionerId: proj-fuzzing
+schedulerId: fuzzing
+workerType: nss-corpus-update-worker
+expires:
+  $fromNow: 1 months
+deadline:
+  $fromNow: 6 hours
+payload:
+  features:
+    taskclusterProxy: true
+  image:
+    path: public/nss-corpus-update.tar.zst
+    type: indexed-image
+    namespace: project.fuzzing.orion.nss-corpus-update.master
+  maxRunTime: 32400
+routes:
+  - notify.email.mdauer@mozilla.com.on-failed
+  - notify.email.jkratzer@mozilla.com.on-failed
+scopes:
+  - docker-worker:capability:privileged
+  - queue:get-artifact:project/fuzzing/nss-corpus-update/*
+  - queue:route:notify.email.mdauer@mozilla.com.on-failed
+  - queue:route:notify.email.jkratzer@mozilla.com.on-failed
+  - queue:scheduler-id:fuzzing
+  - secrets:get:project/fuzzing/deploy-nss-fuzzing-corpus
+  - secrets:get:project/fuzzing/ossfuzz-gutils
+metadata:
+  name: nss-corpus-update
+  owner: mdauer@mozilla.com
+  source: https://github.com/MozillaSecurity/orion/tree/master/services/nss-corpus-update
+  description: Hook for updating the NSS fuzzing corpus

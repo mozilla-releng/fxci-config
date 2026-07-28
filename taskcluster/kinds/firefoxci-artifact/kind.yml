@@ -70,5 +70,6 @@ tasks:
     # unmirrored, non-docker image task in addition to a mirrored task.
     mirror-public-fetches:
       - ^toolchain.*
+      - ^build-vocab.*
       - ^corpus-clean-parallel-bicleaner-ai.*
       - ^corpus-clean-.*

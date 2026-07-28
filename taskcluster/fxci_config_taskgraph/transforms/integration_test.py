@@ -7,6 +7,7 @@ import json
 import os
 import re
 import shlex
+from collections import defaultdict
 from textwrap import dedent
 from typing import Any
 
@@ -285,6 +286,7 @@ def make_integration_test_description(
     modified to work with staging.
     """
     assert "TASK_ID" in os.environ
+    task_name = f"{name_prefix}-{task_def['metadata']['name']}"
     task_def.update(
         {
             "schedulerId": "releng-level-1",
@@ -307,9 +309,9 @@ def make_integration_test_description(
         if key in task_def:
             task_def[key] = task_def[key].replace("3", "1")
 
-    task_def["metadata"]["name"] = f"{name_prefix}-{task_def['metadata']['name']}"
+    task_def["metadata"]["name"] = task_name
     taskdesc = {
-        "label": task_def["metadata"]["name"],
+        "label": task_name,
         "description": task_def["metadata"]["description"],
         "task": task_def,
         "dependencies": {
@@ -346,7 +348,7 @@ def make_integration_test_description(
         .get("MOZ_FETCHES", {})
         .get("task-reference", "{}")
     )
-    task_locations = set()
+    task_locations = defaultdict(set)
     for f in fetches:
         name = f["task"].strip("<>")
         # It would be preferable if we checked for full task labels rather
@@ -354,13 +356,13 @@ def make_integration_test_description(
         # depend on one another, and we don't try to create them in graph order,
         # there's no guarantee that this check would reliably.
         if name in artifact_tasks or name.startswith(f"{name_prefix}-"):
-            task_locations.add("stage")
+            task_locations["stage"].add(name)
         else:
-            task_locations.add("prod")
+            task_locations["prod"].add(name)
 
     if len(task_locations) == 2:
         raise Exception(
-            "Cannot run a task with fetches from stage and production clusters."
+            f"Cannot run a task with fetches from stage and production clusters. {task_name} depends on the following task/clusters: {task_locations}"
         )
 
     if "prod" in task_locations:

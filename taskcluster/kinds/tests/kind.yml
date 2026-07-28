@@ -37,7 +37,9 @@ tasks:
             command: >-
                 uv run --package build-decision pytest build-decision/tests -vv
         when:
-            files-changed: ["build-decision/**"]
+            files-changed:
+                - build-decision/**
+                - uv.lock
 
     unit-fxci-config-taskgraph:
         description: "Run fxci_config_taskgraph unit tests to validate the latest changes"
@@ -45,4 +47,6 @@ tasks:
             command: >-
                 uv run pytest taskcluster/test -vv
         when:
-            files-changed: ["taskcluster/**"]
+            files-changed:
+                - taskcluster/**
+                - uv.lock

@@ -45,21 +45,12 @@ def repo_arguments(app):
 
 @app.command("hg-push", help="Create an hg-push decision task.")
 @repo_arguments(app)
-@app.argument("--taskcluster-yml-repo")
 @app.argument("--dry-run", action="store_true")
 def hg_push(options):
     from .hg_push import build_decision  # noqa: PLC0415
 
-    if options["taskcluster_yml_repo"]:
-        taskcluster_yml_repo = Repository(
-            repo_url=options["taskcluster_yml_repo"],
-            repository_type="hg",
-        )
-    else:
-        taskcluster_yml_repo = None
     build_decision(
         repository=options["repository"],
-        taskcluster_yml_repo=taskcluster_yml_repo,
         dry_run=options["dry_run"],
     )
 

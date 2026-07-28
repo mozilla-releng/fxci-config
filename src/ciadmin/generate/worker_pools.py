@@ -13,6 +13,10 @@ from tcadmin.resources import WorkerPool
 from ..util.keyed_by import evaluate_keyed_by, iter_dot_path, resolve_keyed_by
 from ..util.templates import merge
 from .ciconfig.environment import Environment
+from .ciconfig.externally_managed import (
+    manage_individual,
+    manage_with_exclusions,
+)
 from .ciconfig.get import get_ciconfig_file
 from .ciconfig.worker_images import WorkerImage
 from .ciconfig.worker_pools import WorkerPool as ConfigWorkerPool
@@ -120,6 +124,22 @@ def _sanitize_pool_id_for_rg(pool_id):
     return re.sub(r"[^a-zA-Z0-9\-_.]", "-", pool_id)
 
 
+def _arm_deployment_resource_group(pool_id, loc, per_region=False):
+    """Build the Azure RG name for a pool's deployments.
+
+    When per_region is False (default), returns one RG per pool
+    (`rg-tc-<pool>`) — the layout from #922. When True, splits per region
+    (`rg-tc-<pool>-<loc>`) so a pool can't fill its RG to Azure's
+    800-deployments-per-RG cap during a burst. In the per-region case the
+    pool segment is truncated as needed; `loc` always survives intact.
+    """
+    sanitized_pool = _sanitize_pool_id_for_rg(pool_id)
+    if per_region:
+        max_pool_len = 90 - len("rg-tc-") - 1 - len(loc)
+        return f"rg-tc-{sanitized_pool[:max_pool_len]}-{loc}"
+    return f"rg-tc-{sanitized_pool}"[:90]
+
+
 def _build_arm_template_launch_config(
     *,
     pool_id,
@@ -181,10 +201,10 @@ def _build_arm_template_launch_config(
         "parameters": parameters,
     }
 
-    sanitized_pool = _sanitize_pool_id_for_rg(pool_id)
-    arm_resource_group = f"rg-tc-{sanitized_pool}"
-    # Azure RG names max 90 chars
-    arm_resource_group = arm_resource_group[:90]
+    per_region_rg = pool_cfg.get("armDeploymentResourceGroupPerRegion", False)
+    arm_resource_group = _arm_deployment_resource_group(
+        pool_id, loc, per_region=per_region_rg
+    )
 
     launch_config = {
         "location": loc,
@@ -761,6 +781,7 @@ def generate_pool_variants(worker_pools, environment):
             "maxCapacity",
             "minCapacity",
             "regions",
+            "scalingRatio",
             "security",
             "tags.sourceBranch",
             "vmSizes.launchConfig.hardwareProfile.vmSize",
@@ -851,6 +872,8 @@ def generate_pool_variants(worker_pools, environment):
                 wp,
                 pool_id=name,
                 description=description,
+                owner=variant.get("owner", wp.owner),
+                email_on_error=variant.get("email_on_error", wp.email_on_error),
                 provider_id=evaluate_keyed_by(wp.provider_id, name, attributes),
                 config=update_config(wp.config, name, attributes),
                 attributes={},
@@ -865,7 +888,7 @@ async def update_resources(resources):
     worker_pools = await ConfigWorkerPool.fetch_all()
     worker_images = await WorkerImage.fetch_all()
 
-    resources.manage("WorkerPool=.*")
+    await manage_with_exclusions(resources, "WorkerPool=.*")
 
     worker_defaults = (await get_ciconfig_file("worker-pools.yml")).get(
         "worker-defaults"
@@ -873,6 +896,10 @@ async def update_resources(resources):
     environment = await Environment.current()
 
     for wp in generate_pool_variants(worker_pools, environment):
+        # For pools in externally-managed namespaces, explicitly manage
+        # the individual resources we generate
+        manage_individual(resources, f"WorkerPool={wp.pool_id}")
+
         apwt = await make_worker_pool(
             environment, resources, wp, worker_images, copy.deepcopy(worker_defaults)
         )

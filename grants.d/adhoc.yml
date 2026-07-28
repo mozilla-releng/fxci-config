@@ -10,7 +10,6 @@
     - queue:create-task:highest:scriptworker-prov-v1/{trust_domain}-{level}-*
     - queue:create-task:highest:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2*
     - project:adhoc:releng:signing:cert:dep-signing
-    - queue:route:index.{trust_domain}.v2.{alias}.*
     - queue:route:index.{trust_domain}.v2.staging-adhoc-manifest.*
     - queue:route:index.adhoc-signing.cache.level-{level}.*
     - queue:route:notify.email.*
@@ -18,6 +17,13 @@
     - project:
         feature: adhoc-roles
         job: [branch:*, pull-request:*, action:*, cron:*]
+
+- grant:
+    - queue:route:index.{trust_domain}.v2.{alias}.*
+  to:
+    - project:
+        feature: adhoc-roles
+        job: [branch:*, action:*, cron:*]
 
 # Only grant private artifact scopes to trusted contexts (including pull requests from trusted users)
 - grant:

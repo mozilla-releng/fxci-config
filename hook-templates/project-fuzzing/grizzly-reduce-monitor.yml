@@ -1,0 +1,47 @@
+---
+provisionerId: proj-fuzzing
+schedulerId: fuzzing
+workerType: decision
+payload:
+  image:
+    type: indexed-image
+    path: public/grizzly-reduce-monitor.tar.zst
+    namespace: project.fuzzing.orion.grizzly-reduce-monitor.master
+  features:
+    taskclusterProxy: true
+  maxRunTime: 3600
+  command:
+    - '/usr/bin/grizzly-reduce-tc-monitor'
+  artifacts:
+    project/fuzzing/private/logs:
+      path: /logs/
+      type: directory
+metadata:
+  name: grizzly-reduce-monitor
+  description: Create grizzly testcases reduction tasks
+  owner: truber@mozilla.com
+  source: 'https://github.com/MozillaSecurity/grizzly'
+expires:
+  $fromNow: 2 weeks
+deadline:
+  $fromNow: 3 hours
+scopes:
+  - docker-worker:capability:device:hostSharedMemory
+  - docker-worker:capability:device:loopbackAudio
+  - docker-worker:capability:privileged
+  - generic-worker:os-group:proj-fuzzing/grizzly-reduce-worker-windows/Administrators
+  - generic-worker:run-as-administrator:proj-fuzzing/grizzly-reduce-worker-windows
+  - generic-worker:os-group:proj-fuzzing/grizzly-reduce-worker-windows-ngpu/Administrators
+  - generic-worker:run-as-administrator:proj-fuzzing/grizzly-reduce-worker-windows-ngpu
+  - queue:create-task:highest:proj-fuzzing/grizzly-reduce-worker*
+  - queue:route:notify.email.truber@mozilla.com.on-failed
+  - queue:route:notify.email.twsmith@mozilla.com.on-failed
+  - queue:scheduler-id:fuzzing
+  - secrets:get:project/fuzzing/deploy-bearspray
+  - secrets:get:project/fuzzing/deploy-grizzly-private
+  - secrets:get:project/fuzzing/fuzzmanagerconf
+  - secrets:get:project/fuzzing/google-logging-creds
+  - secrets:get:project/fuzzing/grizzly-reduce-tool-list
+routes:
+  - notify.email.truber@mozilla.com.on-failed
+  - notify.email.twsmith@mozilla.com.on-failed
