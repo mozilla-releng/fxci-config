@@ -316,7 +316,8 @@ project/releng/fxci-config/fetch-firefoxci-artifacts:
 project/releng/fxci-config/generate:
   description: Used to run `tc-admin {generate|diff}` in mozilla-releng/fxci-config.
   scopes:
-    - auth:list:clients
+    - auth:list-clients
+    - hooks:list-hooks:*
 project/releng/generic-worker/azure-gecko-t-win10-64:
   description: Windows 10 64bit experimental production worker.
   scopes:
