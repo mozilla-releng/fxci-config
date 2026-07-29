@@ -836,7 +836,7 @@ reps:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     trust-domain-scopes: true
 
@@ -852,7 +852,7 @@ redo:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     trust-domain-scopes: true
 
@@ -1077,7 +1077,7 @@ k8s-autoscale:
   trust_project: k8s-autoscale
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     github-taskgraph: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1108,7 +1108,7 @@ shipit:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     trust-domain-scopes: true
   trust_domain: releng
@@ -1137,7 +1137,7 @@ tooltool:
   trust_project: tooltool
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     github-taskgraph: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1151,7 +1151,7 @@ balrog:
       level: 3
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     github-taskgraph: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1179,7 +1179,7 @@ winsign:
   trust_domain: releng
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     github-taskgraph: true
     trust-domain-scopes: true
@@ -1193,7 +1193,7 @@ mozilla-version:
   trust_domain: releng
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
 
 build-mar:
@@ -1208,7 +1208,7 @@ build-mar:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     trust-domain-scopes: true
 
@@ -1222,7 +1222,7 @@ firefox-ci-playground:
   trust_project: firefox-ci-playground
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     github-taskgraph: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1239,7 +1239,7 @@ firefox-ci-playground-private:
     github-private-repo: true
     private-artifacts: true
     github-pull-request:
-      policy: public
+      policy: collaborators
     github-taskgraph: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1350,19 +1350,6 @@ staging-xpi-manifest:
     beetmover-get-artifact-scope: true
     lando: true
 
-staging-xpi-public:
-  repo: https://github.com/mozilla-releng/staging-xpi-public
-  repo_type: git
-  branches:
-    - name: "*"
-      level: 1
-  trust_domain: xpi
-  features:
-    github-pull-request:
-      policy: public
-    trust-domain-scopes: true
-    xpi-roles: true
-
 staging-xpi-private:
   repo: https://github.com/mozilla-releng/staging-xpi-private
   repo_type: git
@@ -1385,7 +1372,7 @@ staging-adhoc-signing:
   branches:
     - name: "*"
       level: 1
-  default_branch: master
+  default_branch: main
   trust_domain: adhoc
   features:
     trust-domain-scopes: true
@@ -1393,7 +1380,7 @@ staging-adhoc-signing:
     taskgraph-actions: true
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
 
 adhoc-signing:
   repo: https://github.com/mozilla-releng/adhoc-signing
@@ -1408,7 +1395,7 @@ adhoc-signing:
     taskgraph-actions: true
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
 
 # Bug 1614312: Add code-analysis project for code-review & code-coverage
 code-review:
@@ -1451,7 +1438,7 @@ scriptworker-scripts:
     taskgraph-actions: true
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
 
 # Bug 1617635: Support building & indexing code-coverage docker image
 code-coverage:
