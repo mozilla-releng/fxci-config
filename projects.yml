@@ -1372,7 +1372,7 @@ staging-adhoc-signing:
   branches:
     - name: "*"
       level: 1
-  default_branch: master
+  default_branch: main
   trust_domain: adhoc
   features:
     trust-domain-scopes: true
