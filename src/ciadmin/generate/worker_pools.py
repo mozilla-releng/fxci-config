@@ -881,6 +881,17 @@ def generate_pool_variants(worker_pools, environment):
             )
 
 
+async def register_managed(resources):
+    """
+    Declare the resource patterns managed by this generator.
+
+    This must be cheap (no network access) so that, in `--resources` subset
+    mode, the patterns of *unselected* generators can be collected without
+    generating their resources. See `ciadmin.boot`.
+    """
+    await manage_with_exclusions(resources, "WorkerPool=.*")
+
+
 async def update_resources(resources):
     """
     Manage the worker-pool configurations
@@ -888,7 +899,7 @@ async def update_resources(resources):
     worker_pools = await ConfigWorkerPool.fetch_all()
     worker_images = await WorkerImage.fetch_all()
 
-    await manage_with_exclusions(resources, "WorkerPool=.*")
+    await register_managed(resources)
 
     worker_defaults = (await get_ciconfig_file("worker-pools.yml")).get(
         "worker-defaults"

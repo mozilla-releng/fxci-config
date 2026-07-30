@@ -237,6 +237,23 @@ def add_scopes_for_roles(grant, grantee, add_scope):
             add_scope(role, scope.format())
 
 
+async def register_managed(resources):
+    """
+    Declare the resource patterns managed by this generator.
+
+    This must be cheap (no network access) so that, in `--resources` subset
+    mode, the patterns of *unselected* generators can be collected without
+    generating their resources. See `ciadmin.boot`.
+    """
+    # manage our resources, excluding externally managed patterns
+    resources.manage("Role=mozilla-group:.*")
+    resources.manage("Role=mozillians-group:.*")
+    resources.manage("Role=login-identity:.*")
+    await manage_with_exclusions(resources, "Role=hook-id:.*")
+    await manage_with_exclusions(resources, "Role=project:.*")
+    resources.manage("Role=repo:.*")
+
+
 async def update_resources(resources):
     """
     Manage the scopes granted to projects.  This file interprets `grants.d` yml files
@@ -247,13 +264,7 @@ async def update_resources(resources):
     projects = await Project.fetch_all()
     environment = await Environment.current()
 
-    # manage our resources, excluding externally managed patterns
-    resources.manage("Role=mozilla-group:.*")
-    resources.manage("Role=mozillians-group:.*")
-    resources.manage("Role=login-identity:.*")
-    await manage_with_exclusions(resources, "Role=hook-id:.*")
-    await manage_with_exclusions(resources, "Role=project:.*")
-    resources.manage("Role=repo:.*")
+    await register_managed(resources)
 
     # calculate scopes..
     roles = {}

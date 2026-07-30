@@ -131,18 +131,31 @@ async def make_hook(project):
     )
 
 
-async def update_resources(resources):
+async def register_managed(resources):
     """
-    Manage the hooks and roles for cron tasks
+    Declare the resource patterns managed by this generator.
+
+    This must be cheap (no network access) so that, in `--resources` subset
+    mode, the patterns of *unselected* generators can be collected without
+    generating their resources. See `ciadmin.boot`.
     """
     projects = await Project.fetch_all()
     projects = [p for p in projects if p.feature("hg-push")]
-    trust_domains = set(project.trust_domain for project in projects)
 
     # manage the hg-push/* hooks, and corresponding roles
-    for trust_domain in trust_domains:
+    for _ in set(project.trust_domain for project in projects):
         resources.manage("Hook=hg-push/.*")
         resources.manage("Role=hook-id:hg-push/.*")
+
+
+async def update_resources(resources):
+    """
+    Manage the hooks and roles for hg-push resources.
+    """
+    await register_managed(resources)
+
+    projects = await Project.fetch_all()
+    projects = [p for p in projects if p.feature("hg-push")]
 
     for project in projects:
         hook = await make_hook(project)

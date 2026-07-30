@@ -11,16 +11,27 @@ from .ciconfig.projects import Project
 from .grants import project_match
 
 
+async def register_managed(resources):
+    """
+    Declare the resource patterns managed by this generator.
+
+    This must be cheap (no network access) so that, in `--resources` subset
+    mode, the patterns of *unselected* generators can be collected without
+    generating their resources. See `ciadmin.boot`.
+    """
+    resources.manage("Client=(?!mozilla-auth0/|static/taskcluster/)")
+
+
 async def update_resources(resources):
     """
-    Manage the hooks and roles for cron tasks
+    Manage the static and interpreted clients.
     """
     clients = await ClientConfig.fetch_all()
     interpreted_clients = await InterpretedClientConfig.fetch_all()
     projects = await Project.fetch_all()
     environment = await Environment.current()
 
-    resources.manage("Client=(?!mozilla-auth0/|static/taskcluster/)")
+    await register_managed(resources)
 
     for client in clients:
         if client.environments and environment.name not in client.environments:

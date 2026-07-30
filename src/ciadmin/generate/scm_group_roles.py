@@ -9,6 +9,17 @@ from tcadmin.resources.role import normalizeScopes
 from .ciconfig.projects import Project
 
 
+async def register_managed(resources):
+    """
+    Declare the resource patterns managed by this generator.
+
+    This must be cheap (no network access) so that, in `--resources` subset
+    mode, the patterns of *unselected* generators can be collected without
+    generating their resources. See `ciadmin.boot`.
+    """
+    resources.manage("Role=mozilla-group:active_scm_level_[123]")
+
+
 async def update_resources(resources):
     """
     Manage the `mozilla-group:active_scm_level_L` roles.
@@ -18,7 +29,7 @@ async def update_resources(resources):
     scopes available to all repos at level L or lower.  That is a lot, and there is
     work afoot to change it in bug 1470625.
     """
-    resources.manage("Role=mozilla-group:active_scm_level_[123]")
+    await register_managed(resources)
 
     projects = await Project.fetch_all()
 

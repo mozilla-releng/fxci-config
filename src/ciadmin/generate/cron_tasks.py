@@ -158,6 +158,21 @@ async def make_hooks(project, environment):
     return resources
 
 
+async def register_managed(resources):
+    """
+    Declare the resource patterns managed by this generator.
+
+    This must be cheap (no network access) so that, in `--resources` subset
+    mode, the patterns of *unselected* generators can be collected without
+    generating their resources. See `ciadmin.boot`.
+
+    These are all nested under project-releng but should probably move to
+    project-{gecko,comm} someday..
+    """
+    resources.manage("Hook=project-releng/cron-task-.*")
+    resources.manage("Role=hook-id:project-releng/cron-task-.*")
+
+
 async def update_resources(resources):
     """
     Manage the hooks and roles for cron tasks
@@ -165,11 +180,7 @@ async def update_resources(resources):
     projects = await Project.fetch_all()
     environment = await Environment.current()
 
-    # manage the cron-task-* hooks, and corresponding roles;
-    # these are all nested under project-releng
-    # but should probably move to project-{gecko,comm} someday..
-    resources.manage("Hook=project-releng/cron-task-.*")
-    resources.manage("Role=hook-id:project-releng/cron-task-.*")
+    await register_managed(resources)
 
     for project in projects:
         # if this project does not thave the `taskgraph-cron` feature, it does not get
