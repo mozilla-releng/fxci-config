@@ -39,7 +39,7 @@ payload:
     path: public/image.tar.zst
   maxRunTime: 600
 priority: lowest
-provisionerId: code-review
+provisionerId: reviewer-assignment
 retries: 3
 routes:
   - index.project.engwf.staging.reviewer-assignment.latest
