@@ -19,6 +19,9 @@ def make_hook(**kwargs):
         email_on_error=False,
         scopes=["queue:create-task:lowest:my-pool"],
         template_file="hook-templates/project-foo/my-hook.yml",
+        bindings=[
+            {"exchange": "exchange/test/hook", "routing_key_pattern": "routing.key"}
+        ],
     )
     defaults.update(kwargs)
     return Hook(**defaults)
@@ -32,6 +35,12 @@ def test_substitution():
         description="A hook for {env}",
         template_file="hook-templates/my-hook-{env}.yml",
         scopes=["queue:create-task:{priority}:my-pool", "secrets:get:runtime-{env}"],
+        bindings=[
+            {
+                "exchange": "exchange/test/{env}",
+                "routing_key_pattern": "routing.key.{env}",
+            }
+        ],
         variants=[{"group": "foo", "env": "production", "priority": "highest"}],
     )
     (result,) = generate_hook_variants([hook])
@@ -44,6 +53,12 @@ def test_substitution():
         "queue:create-task:highest:my-pool",
         "secrets:get:runtime-production",
         "assume:anonymous",
+    ]
+    assert result.bindings == [
+        {
+            "exchange": "exchange/test/production",
+            "routing_key_pattern": "routing.key.production",
+        }
     ]
 
 

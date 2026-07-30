@@ -68,6 +68,10 @@ def generate_hook_variants(hooks):
             # public/github/customCheckRunText.md (which TC Github looks for).
             scopes.append("assume:anonymous")
 
+            bindings = [
+                {f: b[f].format(**attributes) for f in b} for b in hook.bindings
+            ]
+
             yield attr.evolve(
                 hook,
                 hook_group_id=hook.hook_group_id.format(**attributes),
@@ -78,6 +82,7 @@ def generate_hook_variants(hooks):
                 schedule=[s.format(**attributes) for s in hook.schedule],
                 scopes=scopes,
                 attributes=attributes,
+                bindings=bindings,
                 variants=[{}],
             )
 
