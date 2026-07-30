@@ -329,6 +329,13 @@ def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
     )
 
 
+# Generating in-tree action hooks fetches `.taskcluster.yml` from every repo,
+# which is slow and needs network access. In `--resources` subset mode, when
+# this generator is *unselected*, `ciadmin.boot` falls back to the (narrow)
+# `register_managed` patterns to attribute ownership instead of generating.
+REQUIRES_NETWORK = True
+
+
 async def register_managed(resources):
     """
     Declare the resource patterns managed by this generator.
