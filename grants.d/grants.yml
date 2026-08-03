@@ -378,6 +378,7 @@
     - secrets:get:project/mobile/firefox-android/focus-android/firebase
     - secrets:get:project/mobile/firefox-android/fenix/firebase
     - secrets:get:project/mobile/ci/testrail
+    - secrets:get:project/mozilla/fx-desktop-qa-automation/level-{level}/*
   to:
     - projects:
         feature: gecko-roles
