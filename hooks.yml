@@ -183,25 +183,32 @@ lint/pre-commit-{version}:
 # EngWF Reviewer Selection
 #
 
-project-engwf/reviewer-assignment-staging:
-  name: Reviewer assignment hook (staging)
+project-engwf/reviewer-assignment-{mode}:
+  variants:
+    - mode: production
+      routing_key_prefix: primary.mozilla-firefox.firefox
+      priority: highest
+    - mode: staging
+      routing_key_prefix: primary.mozilla-firefox.infra-testing
+      priority: lowest
+  name: Reviewer assignment hook ({mode})
   description: Automatically assign reviewers to PRs
-  owner: omehani@mozilla.com
+  owner: conduit-team@mozilla.com
   email_on_error: true
   scopes:
-    - index:insert-task:project.engwf.staging.reviewer-assignment.*
-    - queue:create-task:lowest:code-review/bot  # XXX: will need to change when a dedicated worker is setup (bug 2024115)
-    - queue:route:index.project.engwf.staging.reviewer-assignment.*
+    - index:insert-task:project.engwf.{mode}.reviewer-assignment.*
+    - queue:create-task:{priority}:code-review/bot  # XXX: will need to change when a dedicated worker is setup (bug 2024115)
+    - queue:route:index.project.engwf.{mode}.reviewer-assignment.*
     - queue:scheduler-id:engwf
-    - secrets:get:project/engwf/reviewer-assignment/runtime-staging
-  template_file: hook-templates/project-engwf/reviewer-assignment-staging.yml
+    - secrets:get:project/engwf/reviewer-assignment/runtime-{mode}
+  template_file: hook-templates/project-engwf/reviewer-assignment-{mode}.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: 'primary.mozilla-firefox.infra-testing.opened'
+      routing_key_pattern: '{routing_key_prefix}.opened'
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: 'primary.mozilla-firefox.infra-testing.reopened'
+      routing_key_pattern: '{routing_key_prefix}.reopened'
     - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: 'primary.mozilla-firefox.infra-testing.synchronize'
+      routing_key_pattern: '{routing_key_prefix}.synchronize'
   trigger_schema:
     # Note: the trigget_schema is not used to validate Payloads from Pulse [0]
     # [0] https://github.com/taskcluster/taskcluster/issues/8867
@@ -220,6 +227,7 @@ project-engwf/reviewer-assignment-staging:
         description: |
           The raw body of github event (for version 1)
         required:
+          - action
           - number
           - pull_request
           - repository
@@ -281,115 +289,10 @@ project-engwf/reviewer-assignment-staging:
 
       organization:
         type: string
-        pattern: "^mozilla-firefox$"
 
       repository:
         type: string
-        pattern: "^infra-testing$"
 
-project-engwf/reviewer-assignment-production:
-  name: Reviewer assignment hook (production)
-  description: Automatically assign reviewers to PRs
-  owner: omehani@mozilla.com
-  email_on_error: true
-  scopes:
-    - index:insert-task:project.engwf.production.reviewer-assignment.*
-    - queue:create-task:lowest:code-review/bot  # XXX: will need to change when a dedicated worker is setup (bug 2024115)
-    - queue:route:index.project.engwf.production.reviewer-assignment.*
-    - queue:scheduler-id:engwf
-    - secrets:get:project/engwf/reviewer-assignment/runtime-production
-  template_file: hook-templates/project-engwf/reviewer-assignment-production.yml
-  bindings:
-    - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: 'primary.mozilla-firefox.firefox.opened'
-    - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: 'primary.mozilla-firefox.firefox.reopened'
-    - exchange: exchange/taskcluster-github/v1/pull-request
-      routing_key_pattern: 'primary.mozilla-firefox.firefox.synchronize'
-  trigger_schema:
-    # Note: the trigget_schema is not used to validate Payloads from Pulse [0]
-    # [0] https://github.com/taskcluster/taskcluster/issues/8867
-    type: object
-    # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
-    required:
-      - body
-      - organization
-      - repository
-    additionalProperties: true
-    properties:
-
-      body:
-        type: object
-        # https://docs.github.com/en/webhooks/webhook-events-and-payloads#pull_request
-        description: |
-          The raw body of github event (for version 1)
-        required:
-          - action
-          - number
-          - repository
-        additionalProperties: true
-        properties:
-
-          number:
-            type: integer
-
-          pull_request:
-            type: object
-            description: Pull request metadata
-            required:
-              - base
-              - diff_url
-              - head
-              - html_url
-            additionalProperties: true
-            properties:
-
-              base:
-                type: object
-                required:
-                  - ref
-                additionalProperties: true
-                properties:
-
-                  ref:
-                    type: string
-                    description: Target branch to merge this PR in
-
-              diff_url:
-                # Note: while binary data is not present in that diff, the paths of the binary files are.
-                type: string
-
-              head:
-                type: object
-                required:
-                  - sha
-                additionalProperties: true
-                properties:
-
-                  sha:
-                    type: string
-
-              html_url:
-                type: string
-
-
-          repository:
-            type: object
-            required:
-              - html_url
-            additionalProperties: true
-            properties:
-
-              html_url:
-                type: string
-
-      organization:
-        type: string
-        pattern: "^mozilla-firefox$"
-
-      repository:
-        type: string
-        pattern: "^(firefox)$"
 
 # Fuzzing hooks (migrated from community-tc)
 project-fuzzing/bugmon{suffix}:
