@@ -197,7 +197,7 @@ project-engwf/reviewer-assignment-{mode}:
   email_on_error: true
   scopes:
     - index:insert-task:project.engwf.{mode}.reviewer-assignment.*
-    - queue:create-task:{priority}:code-review/bot  # XXX: will need to change when a dedicated worker is setup (bug 2024115)
+    - queue:create-task:{priority}:reviewer-assignment/bot
     - queue:route:index.project.engwf.{mode}.reviewer-assignment.*
     - queue:scheduler-id:engwf
     - secrets:get:project/engwf/reviewer-assignment/runtime-{mode}
