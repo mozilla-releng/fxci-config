@@ -373,7 +373,7 @@
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1-dev
     - queue:create-task:low:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
     - queue:get-artifact:releng/partner/*
-    - secrets:get:project/dtetest/level-{level}/*
+    - secrets:get:project/dtetest/*
     # TODO(bug 1824855): move mobile secrets into the gecko namespace
     - secrets:get:project/mobile/firefox-android/android-components/firebase
     - secrets:get:project/mobile/firefox-android/focus-android/firebase
@@ -2031,19 +2031,13 @@
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mh
 
-# Bug 1973252: grant pwong access to run release promotion on Try
+# Desktop Test Eng scopes for secrets, running tests on release
 - grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-1-release-promotion/*
+    - secrets:set:project/desktop-test-ops/level-{level}/*
   to:
-    - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
-
-# Token to kick off Desktop Test Eng automations
-- grant:
-    - secrets:set:project/dtetest/level-{level}/*
-  to:
-    - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
+    - group:
+        - desktop-test-ops
 
 # Bug 2048352: grant nhadji access to secret for reviewbot migration testing
 - grant:
