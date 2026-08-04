@@ -373,12 +373,12 @@
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1-dev
     - queue:create-task:low:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
     - queue:get-artifact:releng/partner/*
+    - secrets:get:project/dtetest/level-{level}/*
     # TODO(bug 1824855): move mobile secrets into the gecko namespace
     - secrets:get:project/mobile/firefox-android/android-components/firebase
     - secrets:get:project/mobile/firefox-android/focus-android/firebase
     - secrets:get:project/mobile/firefox-android/fenix/firebase
     - secrets:get:project/mobile/ci/testrail
-    - secrets:get:project/mozilla/fx-desktop-qa-automation/level-{level}/*
   to:
     - projects:
         feature: gecko-roles
@@ -2037,7 +2037,13 @@
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|pwong
+
+# Token to kick off Desktop Test Eng automations
+- grant:
+    - secrets:set:project/dtetest/level-{level}/*
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
 
 # Bug 2048352: grant nhadji access to secret for reviewbot migration testing
 - grant:
