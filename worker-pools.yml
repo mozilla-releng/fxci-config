@@ -3439,6 +3439,7 @@ pools:
     variants:
       - pool-group: code-review
       - pool-group: code-coverage
+      - pool-group: reviewer-assignment
     provider_id: fxci-level1-gcp
     config:
       regions: *default-gcp-regions
@@ -3448,10 +3449,12 @@ pools:
         by-pool-group:
           code-review: 1
           code-coverage: 0
+          reviewer-assignment: 1
       maxCapacity:
         by-pool-group:
           code-review: 100
           code-coverage: 10
+          reviewer-assignment: 10
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:

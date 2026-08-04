@@ -35,11 +35,11 @@ payload:
     taskclusterProxy: true
   image:
     type: indexed-image
-    namespace: mozilla.v2.reviewer-selector.branch.staging.latest.docker-image.reviewer-selector
+    namespace: mozilla.v2.reviewer-selector.branch.main.latest.docker-image.reviewer-selector
     path: public/image.tar.zst
   maxRunTime: 600
 priority: lowest
-provisionerId: code-review
+provisionerId: reviewer-assignment
 retries: 3
 routes:
   - index.project.engwf.staging.reviewer-assignment.latest
