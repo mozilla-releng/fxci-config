@@ -2034,7 +2034,7 @@
 # Desktop Test Eng scopes for secrets, running tests on release
 - grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-1-release-promotion/*
-    - secrets:set:project/desktop-test-ops/level-{level}/*
+    - secrets:set:project/desktop-test-ops/*
   to:
     - group:
         - desktop_test_ops
