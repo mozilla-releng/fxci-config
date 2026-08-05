@@ -373,7 +373,7 @@
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1-dev
     - queue:create-task:low:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
     - queue:get-artifact:releng/partner/*
-    - secrets:get:project/dtetest/*
+    - secrets:get:project/desktop-test-ops/*
     # TODO(bug 1824855): move mobile secrets into the gecko namespace
     - secrets:get:project/mobile/firefox-android/android-components/firebase
     - secrets:get:project/mobile/firefox-android/focus-android/firebase
