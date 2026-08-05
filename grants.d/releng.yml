@@ -159,3 +159,16 @@
     - project:
         alias: worker-images
         job: [cron:run-integration-tests]
+
+# Windows hardware os-integration (RELOPS-2503). Separate from the anchor above,
+# which fxci-config PRs also get. Production -hw/-hw-ref deliberately excluded.
+- grant:
+    - queue:create-task:low:releng-hardware/win11-64-24h2-hw-alpha
+    - queue:create-task:low:releng-hardware/win11-64-24h2-hw-ref-alpha
+    - queue:create-task:low:releng-hardware/win11-64-24h2-hw-relops1213
+    - queue:create-task:low:releng-hardware/win11-64-24h2-hw-perf-debug
+    - queue:create-task:low:releng-hardware/win11-64-24h2-hw-perf-sheriff
+  to:
+    - project:
+        alias: worker-images
+        job: [cron:run-hw-integration-tests]
