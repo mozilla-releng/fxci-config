@@ -1215,9 +1215,6 @@
     - queue:create-task:highest:mobile-{level}/*
     - queue:create-task:{priority}:built-in/*
     - queue:get-artifact:mobile/android-sdk/*
-    - queue:route:notify.*
-    - notify:email:*
-    - notify:slack-channel:*
     - project:mobile:{trust_project}:releng:signing:cert:dep-signing
     - project:mobile:{trust_project}:releng:signing:format:*
     # TODO Legacy non-project trust-domain scopes. Unless there is good reason
@@ -1228,6 +1225,15 @@
   to:
     - project:
         feature: mobile-roles
+
+- grant:
+    - queue:route:notify.*
+    - notify:email:*
+    - notify:slack-channel:*
+  to:
+    - project:
+        feature: mobile-roles
+        job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
 
 - grant:
     - secrets:get:project/releng/mobile/github-cron-token
