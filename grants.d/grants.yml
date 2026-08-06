@@ -2081,6 +2081,11 @@
     - roles:
         - mozilla-group:mobile_test_ops
 - grant:
+    - assume:project:releng:ci-group:desktop_test_ops
+  to:
+    - roles:
+        - mozilla-group:desktop_test_ops
+- grant:
     - assume:project:releng:ci-group:team_moco
   to:
     - roles:
