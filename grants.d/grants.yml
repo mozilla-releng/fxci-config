@@ -2037,7 +2037,7 @@
     - secrets:set:project/desktop-test-ops/*
   to:
     - groups:
-      - desktop_test_ops
+        - desktop_test_ops
 
 # Bug 2048352: grant nhadji access to secret for reviewbot migration testing
 - grant:
