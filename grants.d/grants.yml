@@ -2036,8 +2036,8 @@
     - hooks:trigger-hook:project-gecko/in-tree-action-1-release-promotion/*
     - secrets:set:project/desktop-test-ops/*
   to:
-    - roles:
-      - mozilla-group:desktop_test_ops
+    - groups:
+      - desktop_test_ops
 
 # Bug 2048352: grant nhadji access to secret for reviewbot migration testing
 - grant:
