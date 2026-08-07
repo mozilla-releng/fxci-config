@@ -45,7 +45,7 @@ tasks:
         description: "Run fxci_config_taskgraph unit tests to validate the latest changes"
         run:
             command: >-
-                uv run pytest taskcluster/test -vv
+                uv run --group decision pytest taskcluster/test -vv
         when:
             files-changed:
                 - taskcluster/**

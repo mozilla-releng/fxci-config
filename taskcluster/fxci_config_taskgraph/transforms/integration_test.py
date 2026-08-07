@@ -11,6 +11,9 @@ from collections import defaultdict
 from textwrap import dedent
 from typing import Any
 
+from mozilla_taskgraph.transforms.replicate import (
+    rewrite_task as replicate_rewrite_task,
+)
 from taskgraph.transforms.base import TransformSequence
 from taskgraph.util.schema import LegacySchema
 from voluptuous import ALLOW_EXTRA, Optional, Required
@@ -138,25 +141,6 @@ def rewrite_mounts(task_def: dict[str, Any]) -> None:
             del content["taskId"]
 
 
-def rewrite_caches(task_def: dict[str, Any]) -> None:
-    """Adjust worker caches to releng-level-1."""
-    if cache := task_def["payload"].get("cache"):
-        for name, value in cache.copy().items():
-            del cache[name]
-            name = name.replace("gecko-level-3", "releng-level-1")
-            cache[name] = value
-
-    if mounts := task_def["payload"].get("mounts"):
-        for mount in mounts:
-            if "cacheName" in mount:
-                mount["cacheName"] = mount["cacheName"].replace(
-                    "gecko-level-3", "releng-level-1"
-                )
-
-    for i, scope in enumerate(task_def.get("scopes", [])):
-        task_def["scopes"][i] = scope.replace("gecko-level-3", "releng-level-1")
-
-
 def rewrite_docker_image(taskdesc: dict[str, Any]) -> None:
     """Re-write the docker-image task id to the equivalent `firefoxci-artifact`
     task.
@@ -274,58 +258,40 @@ def rewrite_mirrored_dependencies(
 
 
 def make_integration_test_description(
-    task_def: dict[str, Any],
+    taskdesc: dict[str, Any],
+    orig_dependencies: list[str],
     name_prefix: str,
     mirrored_tasks: dict[str, Any],
     include_deps: list[str],
     artifact_tasks: dict[str, Any],
 ):
-    """Schedule a task on the staging Taskcluster instance.
+    """Finish adapting a task for scheduling on the staging Taskcluster
+    instance.
 
     Typically task_def will come from the firefox-ci instance and will be
     modified to work with staging.
     """
-    assert "TASK_ID" in os.environ
-    task_name = f"{name_prefix}-{task_def['metadata']['name']}"
-    task_def.update(
-        {
-            "schedulerId": "releng-level-1",
-            "taskGroupId": os.environ["TASK_ID"],
-            "priority": "low",
-            "routes": ["checks"],
-        }
-    )
+    task_def = taskdesc["task"]
+    task_name = task_def["metadata"]["name"]
 
-    orig_dependencies = task_def["dependencies"]
+    # The raw TC `dependencies` list still refers to firefox-ci-only task
+    # ids, which don't exist in staging. Drop it in favor of the
+    # taskgraph-level `dependencies` dict, which gets resolved to real
+    # staging task ids at generation time.
     del task_def["dependencies"]
-    if "treeherder" in task_def["extra"]:
-        del task_def["extra"]["treeherder"]
 
-    rewrite_mounts(task_def)
-    rewrite_caches(task_def)
-
-    # Drop down to level 1 to match the current context.
-    for key in ("taskQueueId", "provisionerId", "worker-type"):
-        if key in task_def:
-            task_def[key] = task_def[key].replace("3", "1")
-
-    task_def["metadata"]["name"] = task_name
-    taskdesc = {
-        "label": task_name,
-        "description": task_def["metadata"]["description"],
-        "task": task_def,
-        "dependencies": {
-            "apply": "tc-admin-apply-staging",
-        },
-        "attributes": {"integration": name_prefix},
-        "optimization": {
-            "integration-test": [
-                "taskcluster/fxci_config_taskgraph/**",
-                "taskcluster/kinds/firefoxci-artifact/kind.yml",
-                "taskcluster/kinds/integration-test/kind.yml",
-            ]
-        },
+    taskdesc["dependencies"] = {
+        "apply": "tc-admin-apply-staging",
     }
+    taskdesc["attributes"] = {"integration": taskdesc["attributes"].pop("replicate")}
+    taskdesc["optimization"] = {
+        "integration-test": [
+            "taskcluster/fxci_config_taskgraph/**",
+            "taskcluster/kinds/firefoxci-artifact/kind.yml",
+            "taskcluster/kinds/integration-test/kind.yml",
+        ]
+    }
+    rewrite_mounts(task_def)
     rewrite_docker_image(taskdesc)
     rewrite_private_fetches(taskdesc)
     rewrite_mirrored_dependencies(
@@ -388,6 +354,7 @@ def schedule_tasks_at_index(config, tasks):
         include_attrs = task.pop("include-attrs", {})
         exclude_attrs = task.pop("exclude-attrs", {})
         include_deps = task.pop("include-deps", [])
+        name_prefix = task["name"]
         for decision_index_path in task.pop("decision-index-paths"):
             # `find_tasks` can return tasks with duplicate labels when
             # `include_deps` is used (eg: graphs with leaf nodes that have
@@ -403,17 +370,29 @@ def schedule_tasks_at_index(config, tasks):
                 include_deps,
             )
 
-            for task_def in found_tasks.values():
-                # `task_def` will be modified by the function called below;
-                # we need a copy of the original name to add it to
-                # `created_tasks` afterwards
+            rewritten = dict(
+                zip(
+                    found_tasks.keys(),
+                    replicate_rewrite_task(
+                        config,
+                        (
+                            {
+                                "task": copy.deepcopy(task_def),
+                                "name-prefix": name_prefix,
+                            }
+                            for task_def in found_tasks.values()
+                        ),
+                    ),
+                )
+            )
+
+            for task_id, task_def in found_tasks.items():
                 orig_name = task_def["metadata"]["name"]
                 if orig_name not in created_tasks:
-                    # task_def is copied to avoid modifying the version in `tasks`, which
-                    # may be used to modify parts of the new task description
                     yield make_integration_test_description(
-                        copy.deepcopy(task_def),
-                        task["name"],
+                        rewritten[task_id],
+                        task_def["dependencies"],
+                        name_prefix,
                         found_tasks,
                         include_deps,
                         artifact_tasks,

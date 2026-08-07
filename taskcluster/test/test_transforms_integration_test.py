@@ -106,7 +106,10 @@ def run_test(monkeypatch, run_transform, make_transform_config, responses):
                 "include-deps": include_deps,
                 "name": name,
             },
-            make_transform_config(kind_dependencies_tasks=kind_dependencies_tasks),
+            make_transform_config(
+                kind_dependencies_tasks=kind_dependencies_tasks,
+                extra_graph_config={"trust-domain": "releng"},
+            ),
         )
         if not result:
             return None
