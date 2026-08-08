@@ -16,6 +16,19 @@ GITHUB_TOKEN_SECRET = "project/releng/mobile/github-cron-token"
 DEFAULT_OWNER = "default-owner@example.com"
 GECKO_OWNER = "gecko-owner@example.com"
 
+HOOK_GROUP_ID = "project-releng"
+
+# The ids `github_project()` generates. Renaming a hook is a delete plus a
+# create, so these are spelled out rather than derived.
+BASE_HOOK_ID = "cron-task-mozilla-releng-fxci-config"
+TARGET_HOOK_ID = f"{BASE_HOOK_ID}/test-build-decision"
+BASE_ROLE_ID = f"hook-id:{HOOK_GROUP_ID}/{BASE_HOOK_ID}"
+TARGET_ROLE_ID = f"hook-id:{HOOK_GROUP_ID}/{TARGET_HOOK_ID}"
+
+# And the ones `hg_gecko_project()` generates.
+HG_BASE_HOOK_ID = "cron-task-mozilla-central"
+HG_TARGET_HOOK_ID = f"{HG_BASE_HOOK_ID}/nightly-desktop"
+
 # Mirrors the parts of cron-task-template.yml that consume context values we
 # care about. Kept minimal on purpose: this is a test of the context built by
 # `make_hooks`, not of the real template's formatting.
@@ -101,9 +114,10 @@ def cron_template(mock_ciconfig_file):
     mock_ciconfig_file("cron-task-template.yml", SIMPLE_TEMPLATE)
 
 
-def hooks_and_roles(resources):
-    hooks = [r for r in resources if hasattr(r, "hookId")]
-    roles = [r for r in resources if hasattr(r, "roleId")]
+def by_id(resources):
+    """Split generated resources into {hookId: Hook} and {roleId: Role}."""
+    hooks = {r.hookId: r for r in resources if hasattr(r, "hookId")}
+    roles = {r.roleId: r for r in resources if hasattr(r, "roleId")}
     return hooks, roles
 
 
@@ -111,79 +125,98 @@ def command_of(hook):
     return hook.task["payload"]["command"]
 
 
-# ---------------------------------------------------------------------------
-# Identity: hookId and roleId are resource identities
-# ---------------------------------------------------------------------------
+def value_of(hook, option):
+    """Return the value of a command-line option in a hook's task payload."""
+    command = command_of(hook)
+    return command[command.index(option) + 1]
 
 
 @pytest.mark.asyncio
-async def test_base_hook_identity(cron_template):
+async def test_github_project(cron_template):
+    """Hooks and roles for a github project with one branch and one target"""
     resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
+    hooks, roles = by_id(resources)
 
-    base = hooks[0]
-    assert base.hookGroupId == "project-releng"
-    assert base.hookId == "cron-task-mozilla-releng-fxci-config"
-    assert base.name == "project-releng/cron-task-mozilla-releng-fxci-config"
+    # One base hook plus one per target, and a role named after each hook.
+    assert set(hooks) == {BASE_HOOK_ID, TARGET_HOOK_ID}
+    assert set(roles) == {BASE_ROLE_ID, TARGET_ROLE_ID}
+
+    base = hooks[BASE_HOOK_ID]
+    target = hooks[TARGET_HOOK_ID]
+
+    assert base.hookGroupId == HOOK_GROUP_ID
+    assert base.name == f"{HOOK_GROUP_ID}/{BASE_HOOK_ID}"
+    assert target.hookGroupId == HOOK_GROUP_ID
+    assert target.name == f"{HOOK_GROUP_ID}/{TARGET_HOOK_ID}"
+
+    # Only the base hook is scheduled. The target has no trigger and takes
+    # no input.
+    assert base.schedule == ("0 0,15,30,45 * * * *",)
+    assert target.schedule == ()
+    assert target.bindings == ()
+    assert target.triggerSchema["additionalProperties"] is False
+
+    # Both hooks carry the same context
+    for hook in (base, target):
+        assert value_of(hook, "--branch") == "main"
+        assert value_of(hook, "--level") == "3"
+        assert hook.task["schedulerId"] == "releng-level-3"
+        assert value_of(hook, "--github-token-secret") == GITHUB_TOKEN_SECRET
+
+    # Only the target hook forces a specific cron job to run.
+    assert not any(a.startswith("--force-run") for a in command_of(base))
+    assert "--force-run=test-build-decision" in command_of(target)
+
+    # The base role may run any cron target.
+    # Each target role runs only its own.
+    role_prefix = "assume:repo:github.com/mozilla-releng/fxci-config"
+    assert f"{role_prefix}:cron:*" in roles[BASE_ROLE_ID].scopes
+    assert f"{role_prefix}:cron:test-build-decision" in roles[TARGET_ROLE_ID].scopes
+    assert f"{role_prefix}:cron:*" not in roles[TARGET_ROLE_ID].scopes
+
+    # Only the target role attaches the secret scope directly.
+    assert f"secrets:get:{GITHUB_TOKEN_SECRET}" not in roles[BASE_ROLE_ID].scopes
+    assert f"secrets:get:{GITHUB_TOKEN_SECRET}" in roles[TARGET_ROLE_ID].scopes
+
+    assert base.owner == DEFAULT_OWNER
 
 
 @pytest.mark.asyncio
-async def test_target_hook_identity(cron_template):
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
+async def test_hg_gecko_project(cron_template):
+    resources = await cron_tasks.make_hooks(hg_gecko_project(), ENVIRONMENT)
+    hooks, roles = by_id(resources)
 
-    target = hooks[1]
-    assert target.hookGroupId == "project-releng"
-    assert target.hookId == "cron-task-mozilla-releng-fxci-config/test-build-decision"
+    assert set(hooks) == {HG_BASE_HOOK_ID, HG_TARGET_HOOK_ID}
 
+    for hook in hooks.values():
+        assert value_of(hook, "--branch") == "default"
+        assert value_of(hook, "--level") == "3"
+        assert "--github-token-secret" not in command_of(hook)
 
-@pytest.mark.asyncio
-async def test_role_ids_track_hook_ids(cron_template):
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    hooks, roles = hooks_and_roles(resources)
+    for role in roles.values():
+        assert not any(s.startswith("secrets:get:") for s in role.scopes)
 
-    # Every hook has exactly one role, named after it. A hook whose role goes
-    # missing runs with no scopes at all.
-    assert {r.roleId for r in roles} == {
-        f"hook-id:{h.hookGroupId}/{h.hookId}" for h in hooks
-    }
+    assert hooks[HG_BASE_HOOK_ID].owner == GECKO_OWNER
 
 
 @pytest.mark.asyncio
-async def test_one_hook_and_role_per_target_plus_base(cron_template):
+async def test_one_hook_and_role_per_target(cron_template):
     project = github_project(cron={"targets": ["alpha", "beta", "gamma"]})
     resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
-    hooks, roles = hooks_and_roles(resources)
+    hooks, roles = by_id(resources)
 
-    assert len(hooks) == 4  # one base + one per target
-    assert len(roles) == 4
-
-
-# ---------------------------------------------------------------------------
-# Triggers: only the base hook is scheduled.
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.asyncio
-async def test_base_hook_runs_every_fifteen_minutes(cron_template):
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
-
-    # tcadmin normalizes schedule to a tuple.
-    assert hooks[0].schedule == ("0 0,15,30,45 * * * *",)
+    assert set(hooks) == {
+        BASE_HOOK_ID,
+        f"{BASE_HOOK_ID}/alpha",
+        f"{BASE_HOOK_ID}/beta",
+        f"{BASE_HOOK_ID}/gamma",
+    }
+    assert set(roles) == {f"hook-id:{HOOK_GROUP_ID}/{hook_id}" for hook_id in hooks}
 
 
 @pytest.mark.asyncio
-async def test_target_hooks_are_not_scheduled(cron_template):
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
-
-    # Target hooks are fired by hand or by a pulse binding, never by the clock.
-    assert hooks[1].schedule == ()
-
-
-@pytest.mark.asyncio
-async def test_pulse_bindings_are_forwarded(cron_template):
+async def test_target_with_pulse_bindings(cron_template):
+    """A bound target forwards its bindings and accepts input by default."""
     project = github_project(
         cron={
             "targets": [
@@ -192,7 +225,7 @@ async def test_pulse_bindings_are_forwarded(cron_template):
                     "bindings": [
                         {
                             "exchange": "exchange/taskcluster-github/v1/push",
-                            "routing_key_pattern": "primary.mozilla.example",
+                            "routing_key_pattern": "primary.mozilla-releng.fxci-config",
                         }
                     ],
                 }
@@ -200,168 +233,25 @@ async def test_pulse_bindings_are_forwarded(cron_template):
         }
     )
     resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
+    hooks, _ = by_id(resources)
 
-    binding = hooks[1].bindings[0]
+    target = hooks[f"{BASE_HOOK_ID}/on-push"]
+    (binding,) = target.bindings
     assert binding.exchange == "exchange/taskcluster-github/v1/push"
-    assert binding.routingKeyPattern == "primary.mozilla.example"
+    assert binding.routingKeyPattern == "primary.mozilla-releng.fxci-config"
+    assert target.triggerSchema["additionalProperties"] is True
 
 
 @pytest.mark.asyncio
-async def test_allow_input_defaults_to_false_without_bindings(cron_template):
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
-
-    assert hooks[1].triggerSchema["additionalProperties"] is False
-
-
-@pytest.mark.asyncio
-async def test_allow_input_defaults_to_true_with_bindings(cron_template):
-    project = github_project(
-        cron={
-            "targets": [
-                {
-                    "target": "on-push",
-                    "bindings": [
-                        {
-                            "exchange": "exchange/taskcluster-github/v1/push",
-                            "routing_key_pattern": "primary.mozilla.example",
-                        }
-                    ],
-                }
-            ]
-        }
-    )
-    resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
-
-    assert hooks[1].triggerSchema["additionalProperties"] is True
-
-
-@pytest.mark.asyncio
-async def test_allow_input_can_be_set_explicitly(cron_template):
+async def test_allow_input_can_be_set_without_bindings(cron_template):
     project = github_project(
         cron={"targets": [{"target": "canary", "allow-input": True}]}
     )
     resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
+    hooks, _ = by_id(resources)
 
-    assert hooks[1].triggerSchema["additionalProperties"] is True
-
-
-# ---------------------------------------------------------------------------
-# Task content: the branch and level handed to build-decision.
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.asyncio
-async def test_branch_passed_to_build_decision(cron_template):
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
-
-    for hook in hooks:
-        command = command_of(hook)
-        assert "--branch" in command
-        assert command[command.index("--branch") + 1] == "main"
-
-
-@pytest.mark.asyncio
-async def test_level_comes_from_the_default_branch(cron_template):
-    # The project's only branch is `main` at level 3, so every generated task
-    # carries level 3 -- in the argument *and* in the schedulerId.
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
-
-    for hook in hooks:
-        command = command_of(hook)
-        assert command[command.index("--level") + 1] == "3"
-        assert hook.task["schedulerId"] == "releng-level-3"
-
-
-@pytest.mark.asyncio
-async def test_force_run_only_on_target_hooks(cron_template):
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
-
-    assert not any(a.startswith("--force-run") for a in command_of(hooks[0]))
-    assert "--force-run=test-build-decision" in command_of(hooks[1])
-
-
-@pytest.mark.asyncio
-async def test_github_projects_get_a_token_secret(cron_template):
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    hooks, roles = hooks_and_roles(resources)
-
-    for hook in hooks:
-        command = command_of(hook)
-        assert command[command.index("--github-token-secret") + 1] == (
-            GITHUB_TOKEN_SECRET
-        )
-
-    # Only the target role attaches this scope directly.
-    base_role, target_role = roles
-    assert f"secrets:get:{GITHUB_TOKEN_SECRET}" not in base_role.scopes
-    assert f"secrets:get:{GITHUB_TOKEN_SECRET}" in target_role.scopes
-
-
-@pytest.mark.asyncio
-async def test_hg_projects_get_no_token_secret(cron_template):
-    resources = await cron_tasks.make_hooks(hg_gecko_project(), ENVIRONMENT)
-    hooks, roles = hooks_and_roles(resources)
-
-    for hook in hooks:
-        assert "--github-token-secret" not in command_of(hook)
-    for role in roles:
-        assert not any(s.startswith("secrets:get:") for s in role.scopes)
-
-
-# ---------------------------------------------------------------------------
-# Scopes.
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.asyncio
-async def test_base_role_holds_scopes_for_every_target(cron_template):
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    _, roles = hooks_and_roles(resources)
-
-    assert "assume:repo:github.com/mozilla-releng/fxci-config:cron:*" in (
-        roles[0].scopes
-    )
-
-
-@pytest.mark.asyncio
-async def test_target_role_is_scoped_to_its_target_only(cron_template):
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    _, roles = hooks_and_roles(resources)
-
-    scopes = roles[1].scopes
-    assert (
-        "assume:repo:github.com/mozilla-releng/fxci-config:cron:test-build-decision"
-        in scopes
-    )
-    assert "assume:repo:github.com/mozilla-releng/fxci-config:cron:*" not in scopes
-
-
-# ---------------------------------------------------------------------------
-# Per-environment cron config.
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.asyncio
-async def test_gecko_projects_use_the_gecko_cron_config(cron_template):
-    resources = await cron_tasks.make_hooks(hg_gecko_project(), ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
-
-    assert hooks[0].owner == GECKO_OWNER
-
-
-@pytest.mark.asyncio
-async def test_other_projects_use_the_default_cron_config(cron_template):
-    resources = await cron_tasks.make_hooks(github_project(), ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
-
-    assert hooks[0].owner == DEFAULT_OWNER
+    target = hooks[f"{BASE_HOOK_ID}/canary"]
+    assert target.triggerSchema["additionalProperties"] is True
 
 
 @pytest.mark.asyncio
@@ -370,18 +260,19 @@ async def test_project_can_override_hooks_owner(cron_template):
         cron={"targets": ["test-build-decision"], "hooks_owner": "me@example.com"}
     )
     resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
+    hooks, _ = by_id(resources)
 
-    assert hooks[0].owner == "me@example.com"
-
-
-# ---------------------------------------------------------------------------
-# Target shorthand.
-# ---------------------------------------------------------------------------
+    assert hooks[BASE_HOOK_ID].owner == "me@example.com"
+    assert hooks[TARGET_HOOK_ID].owner == "me@example.com"
 
 
 @pytest.mark.asyncio
 async def test_string_target_is_equivalent_to_dict_target(cron_template):
+    """`targets: [nightly]` and its expanded form must generate the same thing.
+
+    Almost every project in projects.yml uses the bare string form, and
+    `_convert_cron_targets` is where a richer target schema would be added.
+    """
     from_string = await cron_tasks.make_hooks(
         github_project(cron={"targets": ["nightly"]}), ENVIRONMENT
     )
@@ -390,15 +281,15 @@ async def test_string_target_is_equivalent_to_dict_target(cron_template):
         ENVIRONMENT,
     )
 
-    assert [r.to_json() for r in from_string] == [r.to_json() for r in from_dict]
+    assert from_string == from_dict
 
 
 # ---------------------------------------------------------------------------
-# The multi-branch gap this module's refactor has to close (bug 2030902).
+# The gap bug 2030902 has to close.
 #
-# `cron_tasks.py` already reads a per-target `branch` key, but the hookId is
-# derived from the repo path alone -- so two branches of the same target
-# collapse onto one resource. The test below pins that behaviour deliberately.
+# A target can already name a branch, but the hookId is built from the repo
+# path only. Two branches of the same target end up with the same hookId, so
+# only one of them survives. The tests below record that.
 # ---------------------------------------------------------------------------
 
 
@@ -409,22 +300,15 @@ async def test_per_target_branch_overrides_the_default(cron_template):
         cron={"targets": [{"target": "nightly", "branch": "beta"}]},
     )
     resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
-    hooks, _ = hooks_and_roles(resources)
+    hooks, _ = by_id(resources)
 
-    base, target = hooks
-    assert command_of(base)[command_of(base).index("--branch") + 1] == "main"
-    assert command_of(target)[command_of(target).index("--branch") + 1] == "beta"
+    # The override applies to the target only; the base hook stays put.
+    assert value_of(hooks[BASE_HOOK_ID], "--branch") == "main"
+    assert value_of(hooks[f"{BASE_HOOK_ID}/nightly"], "--branch") == "beta"
 
 
 @pytest.mark.asyncio
 async def test_branch_does_not_appear_in_the_hook_id(cron_template):
-    """Two branches of one target currently produce one hookId.
-
-    This is the collision bug 2030902 has to resolve. When it does, this test
-    should be replaced by one asserting the branch *is* part of the identity --
-    and every other identity test in this module must still pass unchanged, so
-    that single-branch projects keep the hookIds they have today.
-    """
     on_main = await cron_tasks.make_hooks(
         github_project(cron={"targets": [{"target": "nightly", "branch": "main"}]}),
         ENVIRONMENT,
@@ -437,15 +321,10 @@ async def test_branch_does_not_appear_in_the_hook_id(cron_template):
         ENVIRONMENT,
     )
 
-    main_hooks, _ = hooks_and_roles(on_main)
-    beta_hooks, _ = hooks_and_roles(on_beta)
+    main_hooks, _ = by_id(on_main)
+    beta_hooks, _ = by_id(on_beta)
 
-    assert [h.hookId for h in main_hooks] == [h.hookId for h in beta_hooks]
-
-
-# ---------------------------------------------------------------------------
-# update_resources: which projects get hooks at all.
-# ---------------------------------------------------------------------------
+    assert set(main_hooks) == set(beta_hooks)
 
 
 @pytest.mark.asyncio
@@ -492,6 +371,6 @@ async def test_update_resources_skips_projects_without_the_feature(
     with set_environment("test"):
         await cron_tasks.update_resources(resources)
 
-    hook_ids = {r.hookId for r in resources if hasattr(r, "hookId")}
-    assert "cron-task-mozilla-with-cron" in hook_ids
-    assert "cron-task-mozilla-without-cron" not in hook_ids
+    hooks, _ = by_id(resources)
+    assert "cron-task-mozilla-with-cron" in hooks
+    assert "cron-task-mozilla-without-cron" not in hooks
