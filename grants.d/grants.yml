@@ -1215,9 +1215,6 @@
     - queue:create-task:highest:mobile-{level}/*
     - queue:create-task:{priority}:built-in/*
     - queue:get-artifact:mobile/android-sdk/*
-    - queue:route:notify.*
-    - notify:email:*
-    - notify:slack-channel:*
     - project:mobile:{trust_project}:releng:signing:cert:dep-signing
     - project:mobile:{trust_project}:releng:signing:format:*
     # TODO Legacy non-project trust-domain scopes. Unless there is good reason
@@ -1228,6 +1225,15 @@
   to:
     - project:
         feature: mobile-roles
+
+- grant:
+    - queue:route:notify.*
+    - notify:email:*
+    - notify:slack-channel:*
+  to:
+    - project:
+        feature: mobile-roles
+        job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
 
 - grant:
     - secrets:get:project/releng/mobile/github-cron-token
@@ -2036,7 +2042,7 @@
     - hooks:trigger-hook:project-gecko/in-tree-action-1-release-promotion/*
     - secrets:set:project/desktop-test-ops/*
   to:
-    - group:
+    - groups:
         - desktop_test_ops
 
 # Bug 2048352: grant nhadji access to secret for reviewbot migration testing
@@ -2080,6 +2086,11 @@
   to:
     - roles:
         - mozilla-group:mobile_test_ops
+- grant:
+    - assume:project:releng:ci-group:desktop_test_ops
+  to:
+    - roles:
+        - mozilla-group:desktop_test_ops
 - grant:
     - assume:project:releng:ci-group:team_moco
   to:

@@ -3127,10 +3127,14 @@ pools:
       image: win116425h2alpha
       image_resource_group: rg-packer-worker-images
       implementation: generic-worker/windows
-      locations: [central-india, uk-south]
+      locations: [uk-south, east-us-2]
       maxCapacity: 250
       armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+        parameters:
+          diffDiskOption: Local
+          diffDiskPlacement: NvmeDisk
+          osDiskCaching: ReadOnly
       worker-config:
         genericWorker:
           config:
@@ -3142,11 +3146,12 @@ pools:
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
+        sourceCommit: c1b0efebc418108fb4ed9ceb3d104c2bba0c4ef0
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_D8ads_v5
+        - vmSize: Standard_F8alds_v7
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -3159,8 +3164,9 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
+                  placement: NvmeDisk
             hardwareProfile:
-              vmSize: Standard_D8ads_v5
+              vmSize: Standard_F8alds_v7
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
