@@ -46,6 +46,7 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                     },
                 ],
                 "default_branch": "default",
+                "cron_branches": ["default"],
                 "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
@@ -82,6 +83,7 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                     },
                 ],
                 "default_branch": "main",
+                "cron_branches": ["main"],
                 "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
@@ -155,6 +157,7 @@ async def test_fetch_defaults(
                     ],
                 },
                 "default_branch": "default",
+                "cron_branches": ["default"],
                 "features": {
                     "hg-push": {"enabled": True},
                     "taskgraph-cron": {"enabled": False},
@@ -213,6 +216,7 @@ async def test_fetch_defaults(
                     ],
                 },
                 "default_branch": "main",
+                "cron_branches": ["main"],
                 "features": {
                     "hg-push": {"enabled": True},
                     "taskgraph-cron": {"enabled": False},

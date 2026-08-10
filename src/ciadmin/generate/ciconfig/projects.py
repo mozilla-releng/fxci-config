@@ -2,6 +2,8 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+import re
+
 import attr
 from mozilla_repo_urls import parse
 
@@ -15,6 +17,7 @@ SYMBOLIC_GROUP_LEVELS = {
     "scm_allow_direct_push": 3,
     "scm_firefoxci": 3,
 }
+CRON_BRANCH_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
 
 def _convert_cron_targets(values):
@@ -68,6 +71,10 @@ class Project:
     is_try = attr.ib(type=bool, default=False)
     features = attr.ib(type=dict, factory=lambda: {})
     cron = attr.ib(type=dict, factory=lambda: {})
+    cron_branches = attr.ib(
+        type=list,
+        default=attr.Factory(lambda self: [self.default_branch], takes_self=True),
+    )
 
     _parsed_url = attr.ib(
         eq=False,
@@ -91,6 +98,16 @@ class Project:
         the values received are sane together
         """
         self.cron["targets"] = _convert_cron_targets(self.cron.get("targets", []))
+
+        for branch in self.cron_branches:
+            if not CRON_BRANCH_RE.match(branch):
+                raise ValueError(
+                    f"Invalid cron branch {branch!r} in project {self.alias}: "
+                    "cron branches cannot be globs and may only contain "
+                    "letters, digits, hyphens and underscores"
+                )
+        if len(set(self.cron_branches)) != len(self.cron_branches):
+            raise ValueError(f"Duplicate cron branches in project {self.alias}")
 
         # if neither `access` nor `level` are present, bail out
         if not self.access and any([b.level is None for b in self.branches]):
