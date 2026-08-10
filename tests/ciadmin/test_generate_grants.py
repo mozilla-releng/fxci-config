@@ -874,3 +874,58 @@ async def test_update_resources(mock_ciconfig_file, set_environment):
             break
     else:
         assert 0, "no role defined"
+
+
+@pytest.mark.asyncio
+async def test_update_resources_does_not_overclaim(mock_ciconfig_file, set_environment):
+    """
+    grants must only declare ownership of the role namespaces it actually owns.
+    Claiming roles owned by other generators (scm_group_roles' `active_scm_level_*`
+    roles, or the `hook-id` namespace owned by hooks/in_tree_actions/cron_tasks/
+    git_pushes/hg_pushes) makes `ci-admin diff --resources grants` report those as
+    spurious deletions.
+    """
+    mock_ciconfig_file(
+        "projects.yml",
+        {
+            "proj1": dict(
+                repo="https://hg.mozilla.org/foo/proj1",
+                repo_type="hg",
+                access="scm_level_1",
+                branches=[{"name": "default"}],
+                trust_domain="gecko",
+            )
+        },
+    )
+    mock_ciconfig_file(
+        "dir:grants.d",
+        [{"grant": ["scope1:*"], "to": [{"project": {}}]}],
+    )
+    mock_ciconfig_file(
+        "environments.yml",
+        {
+            "test-env": {
+                "root_url": "http://taskcluster/",
+                "modify_resources": [],
+                "worker_manager": {},
+            }
+        },
+    )
+
+    # Note: no pre-`manage()` here, so we test grants' own declarations.
+    resources = Resources()
+    with set_environment("test-env"):
+        await grants.update_resources(resources)
+
+    # grants owns ordinary repo / mozilla-group roles
+    assert resources.is_managed("Role=repo:hg.mozilla.org/foo/proj1:*")
+    assert resources.is_managed("Role=mozilla-group:releng")
+
+    # ...but NOT the active_scm_level roles (owned by scm_group_roles)
+    assert not resources.is_managed("Role=mozilla-group:active_scm_level_1")
+    assert not resources.is_managed("Role=mozilla-group:active_scm_level_3")
+
+    # ...and NOT the broad hook-id namespace (owned by hooks/in_tree_actions/etc.)
+    assert not resources.is_managed(
+        "Role=hook-id:project-gecko/in-tree-action-1-generic/*"
+    )
