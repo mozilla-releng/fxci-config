@@ -17,9 +17,24 @@ from .ciconfig.projects import Project
 GITHUB_TOKEN_SECRET = "project/releng/mobile/github-cron-token"
 
 
-async def make_hooks(project, environment):
-    hookGroupId = "project-releng"
+def hook_id(project, branch):
+    """The hookId for this project's cron hooks on `branch`."""
     hookId = "cron-task-{}".format(project.repo_path.replace("/", "-"))
+    if branch == project.default_branch:
+        return hookId
+    return f"{hookId}_{branch}"
+
+
+async def make_hooks(project, environment):
+    resources = []
+    for branch in project.cron_branches:
+        resources.extend(await make_branch_hooks(project, environment, branch))
+    return resources
+
+
+async def make_branch_hooks(project, environment, branch):
+    hookGroupId = "project-releng"
+    hookId = hook_id(project, branch)
 
     if project.feature("taskgraph-cron"):
         key = "default"
@@ -34,7 +49,7 @@ async def make_hooks(project, environment):
         raise Exception("Unknown cron task type.")
 
     context = {
-        "level": project.default_branch_level,
+        "level": project.get_level(branch),
         "trust_domain": project.trust_domain,
         "hookGroupId": hookGroupId,
         "hookId": hookId,
@@ -45,7 +60,7 @@ async def make_hooks(project, environment):
         "repo_type": project.repo_type,
         "cron_options": [],
         "allow_input": False,
-        "branch": project.default_branch,
+        "branch": branch,
         "cron_notify_emails": project.cron.get(
             "notify_emails", cron_config.get("notify_emails", [])
         ),
@@ -105,13 +120,11 @@ async def make_hooks(project, environment):
         pulse_bindings = target_desc.get("bindings", [])
         # Default to allowing input if we are bound to a pulse exchgange.
         allow_input = target_desc.get("allow-input", bool(pulse_bindings))
-        branch = target_desc.get("branch", project.default_branch)
 
         target_context = copy.deepcopy(context)
         target_context["cron_options"] += [f"--force-run={cron_target}"]
         target_context["hookId"] = f"{hookId}/{cron_target}"
         target_context["allow_input"] = allow_input
-        target_context["branch"] = branch
         task = jsone.render(task_template, target_context)
         scopes = [
             f"assume:{project.role_prefix}:cron:{cron_target}",
