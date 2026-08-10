@@ -100,7 +100,6 @@ async def make_hook(project):
                                                 },
                                                 "user": {
                                                     "type": "string",
-                                                    "format": "email",
                                                     "default": "nobody@mozilla.com",
                                                 },
                                                 # not used by the hook
