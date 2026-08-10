@@ -1264,6 +1264,9 @@ worker-images:
     targets:
       - target: run-integration-tests
         allow-input: true
+      # Windows hardware counterpart; input is the pool list (RELOPS-2503).
+      - target: run-hw-integration-tests
+        allow-input: true
 
 # Mozilla VPN
 mozilla-vpn-client:
