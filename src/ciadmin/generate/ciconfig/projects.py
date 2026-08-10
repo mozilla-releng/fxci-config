@@ -20,11 +20,21 @@ SYMBOLIC_GROUP_LEVELS = {
 CRON_BRANCH_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
 
+CRON_TARGET_KEYS = {"target", "bindings", "allow-input"}
+
+
 def _convert_cron_targets(values):
     def convert(value):
         if isinstance(value, str):
             return {"target": value, "bindings": []}
         elif isinstance(value, dict):
+            unknown = set(value) - CRON_TARGET_KEYS
+            if unknown:
+                raise ValueError(
+                    f"Unknown keys in cron target {value.get('target')!r}: "
+                    f"{sorted(unknown)}. To run cron on another branch, list it "
+                    "in the project's `cron_branches`."
+                )
             return value
         raise ValueError(f"Unknowon type of cron target: {value!r}")
 

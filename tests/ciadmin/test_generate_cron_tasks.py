@@ -348,6 +348,12 @@ def test_cron_branches_may_not_repeat():
         github_project(cron_branches=["main", "main"])
 
 
+def test_unknown_cron_target_keys_are_rejected():
+    """A target used to take its own `branch`; that moved to cron_branches."""
+    with pytest.raises(ValueError, match="cron_branches"):
+        github_project(cron={"targets": [{"target": "nightly", "branch": "beta"}]})
+
+
 @pytest.mark.asyncio
 async def test_update_resources_skips_projects_without_the_feature(
     cron_template, mock_ciconfig_file, set_environment
