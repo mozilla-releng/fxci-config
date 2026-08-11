@@ -2059,7 +2059,7 @@
     - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/android-l10n-sync
   to:
     - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|flodolo
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|flodolo2
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|cpedraza
 
 - grant:
@@ -2067,7 +2067,7 @@
     - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/l10n-bumper
   to:
     - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|flodolo
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|flodolo2
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bolsson
 
 
