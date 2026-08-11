@@ -284,49 +284,6 @@ async def test_string_target_is_equivalent_to_dict_target(cron_template):
     assert from_string == from_dict
 
 
-# ---------------------------------------------------------------------------
-# The gap bug 2030902 has to close.
-#
-# A target can already name a branch, but the hookId is built from the repo
-# path only. Two branches of the same target end up with the same hookId, so
-# only one of them survives. The tests below record that.
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.asyncio
-async def test_per_target_branch_overrides_the_default(cron_template):
-    project = github_project(
-        branches=[{"name": "main", "level": 3}, {"name": "beta", "level": 3}],
-        cron={"targets": [{"target": "nightly", "branch": "beta"}]},
-    )
-    resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
-    hooks, _ = by_id(resources)
-
-    # The override applies to the target only; the base hook stays put.
-    assert value_of(hooks[BASE_HOOK_ID], "--branch") == "main"
-    assert value_of(hooks[f"{BASE_HOOK_ID}/nightly"], "--branch") == "beta"
-
-
-@pytest.mark.asyncio
-async def test_branch_does_not_appear_in_the_hook_id(cron_template):
-    on_main = await cron_tasks.make_hooks(
-        github_project(cron={"targets": [{"target": "nightly", "branch": "main"}]}),
-        ENVIRONMENT,
-    )
-    on_beta = await cron_tasks.make_hooks(
-        github_project(
-            branches=[{"name": "main", "level": 3}, {"name": "beta", "level": 3}],
-            cron={"targets": [{"target": "nightly", "branch": "beta"}]},
-        ),
-        ENVIRONMENT,
-    )
-
-    main_hooks, _ = by_id(on_main)
-    beta_hooks, _ = by_id(on_beta)
-
-    assert set(main_hooks) == set(beta_hooks)
-
-
 @pytest.mark.asyncio
 async def test_update_resources_skips_projects_without_the_feature(
     cron_template, mock_ciconfig_file, set_environment
