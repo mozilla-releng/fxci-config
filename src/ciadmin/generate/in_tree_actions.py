@@ -23,6 +23,7 @@ from ciadmin.util.matching import glob_match
 
 from . import branches, tcyml
 from .ciconfig.actions import Action
+from .ciconfig.externally_managed import manage_with_exclusions
 from .ciconfig.projects import Project
 
 # Any existing hooks that no longer correspond to active .taskcluster.yml files
@@ -342,13 +343,21 @@ async def update_resources(resources):
         if p.feature("gecko-actions") or p.feature("taskgraph-actions")
     ]
 
-    # manage the in-tree-action-* hooks, and corresponding roles, for each trust domain
+    # Manage the in-tree-action hooks/roles across *all* trust domains (not just
+    # the ones currently in actions.yml) so hooks left behind by a removed trust
+    # domain are still cleaned up. The `in-tree-action`/`in-tree-pr-action`
+    # suffix keeps these from overlapping other generators' hooks, so
+    # `--resources hooks` no longer treats these as deletions. Exclude
+    # externally-managed namespaces (e.g. project-fuzzing) like the other
+    # broad-pattern generators.
+    await manage_with_exclusions(resources, "Hook=project-.*/in-tree-action-.*")
+    await manage_with_exclusions(resources, "Role=hook-id:project-.*/in-tree-action-.*")
+    await manage_with_exclusions(resources, "Hook=project-.*/in-tree-pr-action-.*")
+    await manage_with_exclusions(
+        resources, "Role=hook-id:project-.*/in-tree-pr-action-.*"
+    )
+
     trust_domains = set(action.trust_domain for action in actions)
-    for trust_domain in trust_domains:
-        resources.manage(f"Hook=project-{trust_domain}/in-tree-action-.*")
-        resources.manage(f"Role=hook-id:project-{trust_domain}/in-tree-action-.*")
-        resources.manage(f"Hook=project-{trust_domain}/in-tree-pr-action-.*")
-        resources.manage(f"Role=hook-id:project-{trust_domain}/in-tree-pr-action-.*")
 
     projects_by_level_and_trust_domain = {}
     for project in projects:
