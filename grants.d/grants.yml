@@ -2053,6 +2053,24 @@
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|nhadji
 
+# Grant appropriate l10n folks access to trigger l10n hooks
+- grant:
+    - hooks:trigger-hook:project-releng/cron-task-integration-autoland/android-l10n-import
+    - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/android-l10n-sync
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|flodolo
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|cpedraza
+
+- grant:
+    - hooks:trigger-hook:project-releng/cron-task-integration-autoland/l10n-bumper
+    - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/l10n-bumper
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|flodolo
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bolsson
+
+
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
 # access to the root credentials.
