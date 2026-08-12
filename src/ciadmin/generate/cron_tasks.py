@@ -10,6 +10,7 @@ import jsone
 from tcadmin.resources import Binding, Hook, Role
 from tcadmin.util.root_url import root_url
 
+from . import branches
 from .ciconfig.environment import Environment
 from .ciconfig.get import get_ciconfig_file
 from .ciconfig.projects import Project
@@ -17,24 +18,37 @@ from .ciconfig.projects import Project
 GITHUB_TOKEN_SECRET = "project/releng/mobile/github-cron-token"
 
 
-def hook_id(project, branch):
+async def get_default_branch(project):
+    """The branch whose hooks keep the unsuffixed hookId."""
+    if project.repo_type == "git":
+        return await branches.get_default_branch(project.repo_path)
+    elif project.repo_type == "hg":
+        # hg repos always have the same default branch.
+        return "default"
+    raise Exception(f"Unknown repo_type {project.repo_type}!")
+
+
+def hook_id(project, branch, default_branch):
     """The hookId for this project's cron hooks on `branch`."""
     hookId = "cron-task-{}".format(project.repo_path.replace("/", "-"))
-    if branch == project.default_branch:
+    if branch == default_branch:
         return hookId
-    return f"{hookId}_{branch}"
+    return f"{hookId}-{branch}"
 
 
 async def make_hooks(project, environment):
+    default_branch = await get_default_branch(project)
     resources = []
     for branch in project.cron_branches:
-        resources.extend(await make_branch_hooks(project, environment, branch))
+        resources.extend(
+            await make_branch_hooks(project, environment, branch, default_branch)
+        )
     return resources
 
 
-async def make_branch_hooks(project, environment, branch):
+async def make_branch_hooks(project, environment, branch, default_branch):
     hookGroupId = "project-releng"
-    hookId = hook_id(project, branch)
+    hookId = hook_id(project, branch, default_branch)
 
     if project.feature("taskgraph-cron"):
         key = "default"

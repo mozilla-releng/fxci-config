@@ -74,3 +74,26 @@ async def test_get_403_saml_enforcement(capsys):
     captured = capsys.readouterr()
     assert "403" in captured.out
     assert "SAML enforcement" in captured.out
+
+
+@pytest.mark.asyncio
+async def test_get_default_branch_403_rate_limit_exceeded(capsys):
+    branches_module._default_branch_cache.clear()
+    body = json.dumps(
+        {
+            "message": "API rate limit exceeded for 1.2.3.4. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
+            "documentation_url": "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting",
+        }
+    )
+    response = make_403_response(body)
+    client = make_mock_client(response)
+
+    with patch(
+        "ciadmin.generate.branches.github.get_client", AsyncMock(return_value=client)
+    ):
+        with pytest.raises(aiohttp.ClientResponseError):
+            await branches_module.get_default_branch("mozilla-releng/fxci-config")
+
+    captured = capsys.readouterr()
+    assert "403" in captured.out
+    assert "API rate limit exceeded" in captured.out

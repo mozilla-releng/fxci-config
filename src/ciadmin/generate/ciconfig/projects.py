@@ -81,10 +81,7 @@ class Project:
     is_try = attr.ib(type=bool, default=False)
     features = attr.ib(type=dict, factory=lambda: {})
     cron = attr.ib(type=dict, factory=lambda: {})
-    cron_branches = attr.ib(
-        type=list,
-        default=attr.Factory(lambda self: [self.default_branch], takes_self=True),
-    )
+    cron_branches = attr.ib(type=list, factory=lambda: [])
 
     _parsed_url = attr.ib(
         eq=False,
@@ -153,6 +150,12 @@ class Project:
                 self.features[name] = {"enabled": val}
             else:
                 raise ValueError(f"Feature {name} must be a dict or boolean")
+
+        # checked last, because it relies on the features above being converted
+        if self.feature("taskgraph-cron") and not self.cron_branches:
+            raise ValueError(
+                f"Project {self.alias} runs cron and must list its `cron_branches`"
+            )
 
     @staticmethod
     async def fetch_all():
