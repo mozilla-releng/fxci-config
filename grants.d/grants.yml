@@ -882,6 +882,10 @@
     - assume:hook-id:project-engwf/reviewer-assignment-staging
     - hooks:modify-hook:project-engwf/reviewer-assignment-staging
 
+    # Bug 2062875: retrigger reviewer-assignment
+    - index:insert-task:project.engwf.production.reviewer-assignment.*
+    - queue:route:index.project.engwf.production.reviewer-assignment.*
+
   to:
     - roles:
         - mozillians-group:engworkflow
