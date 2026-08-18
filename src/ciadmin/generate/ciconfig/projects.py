@@ -29,11 +29,16 @@ def _convert_cron_targets(values):
             return {"target": value, "bindings": []}
         elif isinstance(value, dict):
             unknown = set(value) - CRON_TARGET_KEYS
+            if unknown == {"branch"}:
+                raise ValueError(
+                    f"Cron target {value.get('target')!r} cannot set `branch`. "
+                    "List the branches to run cron on in the project's "
+                    "`cron_branches`."
+                )
             if unknown:
                 raise ValueError(
                     f"Unknown keys in cron target {value.get('target')!r}: "
-                    f"{sorted(unknown)}. To run cron on another branch, list it "
-                    "in the project's `cron_branches`."
+                    f"{sorted(unknown)}"
                 )
             return value
         raise ValueError(f"Unknowon type of cron target: {value!r}")
