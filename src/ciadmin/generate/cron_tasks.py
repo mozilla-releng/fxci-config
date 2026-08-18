@@ -18,16 +18,6 @@ from .ciconfig.projects import Project
 GITHUB_TOKEN_SECRET = "project/releng/mobile/github-cron-token"
 
 
-async def get_default_branch(project):
-    """The branch whose hooks keep the unsuffixed hookId."""
-    if project.repo_type == "git":
-        return await branches.get_default_branch(project.repo_path)
-    elif project.repo_type == "hg":
-        # hg repos always have the same default branch.
-        return "default"
-    raise Exception(f"Unknown repo_type {project.repo_type}!")
-
-
 def hook_id(project, branch, default_branch):
     """The hookId for this project's cron hooks on `branch`."""
     hookId = "cron-task-{}".format(project.repo_path.replace("/", "-"))
@@ -37,7 +27,15 @@ def hook_id(project, branch, default_branch):
 
 
 async def make_hooks(project, environment):
-    default_branch = await get_default_branch(project)
+    # the default branch is the one whose hooks keep the unsuffixed hookId
+    if project.repo_type == "git":
+        default_branch = await branches.get_default_branch(project.repo_path)
+    elif project.repo_type == "hg":
+        # hg repos always have the same default branch.
+        default_branch = "default"
+    else:
+        raise Exception(f"Unknown repo_type {project.repo_type}!")
+
     resources = []
     for branch in project.cron_branches:
         resources.extend(
