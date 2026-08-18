@@ -232,6 +232,50 @@ async def test_fetch_defaults(
                 "trust_project": None,
             },
         ),
+        (
+            "cron-project",  # runs cron on more than one branch
+            {
+                "branches": [
+                    {"name": "main", "level": 3},
+                    {"name": "beta", "level": 1},
+                ],
+                "cron": {
+                    "targets": ["a"],
+                },
+                "cron_branches": ["main", "beta"],
+                "features": {
+                    "taskgraph-cron": {"enabled": True},
+                },
+                "repo_type": "git",
+                "repo": "https://github.com/mozilla-releng/cron-project",
+                "trust_domain": "releng",
+            },
+            {
+                "access": None,
+                "alias": "cron-project",
+                "branches": [
+                    {"name": "main", "level": 3},
+                    {"name": "beta", "level": 1},
+                ],
+                "cron": {
+                    "targets": [{"target": "a", "bindings": []}],
+                },
+                "cron_branches": ["main", "beta"],
+                "default_branch": "main",
+                "features": {
+                    "taskgraph-cron": {"enabled": True},
+                },
+                "is_try": False,
+                "lando_repo": None,
+                "parent_repo": None,
+                "repo": "https://github.com/mozilla-releng/cron-project",
+                "repo_path": "mozilla-releng/cron-project",
+                "repo_type": "git",
+                "role_prefix": "repo:github.com/mozilla-releng/cron-project",
+                "trust_domain": "releng",
+                "trust_project": None,
+            },
+        ),
     ),
 )
 @pytest.mark.asyncio
@@ -511,6 +555,17 @@ def test_project_level_failing_validators(project_data, error_type):
                 "repo": "https://hg.mozilla.org/prj",
                 "repo_type": "git",
                 "access": "scm_level_3",
+            },
+            ValueError,
+        ),
+        (
+            # runs cron, but does not say on which branches
+            {
+                "alias": "prj",
+                "branches": [{"name": "main", "level": 3}],
+                "repo": "https://github.com/mozilla-releng/prj",
+                "repo_type": "git",
+                "features": {"taskgraph-cron": True},
             },
             ValueError,
         ),
