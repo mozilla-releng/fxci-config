@@ -109,6 +109,25 @@ ronin_b3_windows2022_64_2009:
     resource_group: rg-packer-worker-images
     deployment_id: "82415f4"
     name: trusted_win2022_64_2009
+# Windows Server 2025
+ronin_b1_windows2025_64_24h2_alpha:
+  azure2:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: alpha
+    name: win2025_64_24h2_alpha
+ronin_b1_windows2025_64_24h2:
+  azure2:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: "NA"
+    name: win2025_64_24h2
+ronin_b3_windows2025_64_24h2:
+  azure_trusted:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: "NA"
+    name: trusted_win2025_64_24h2
 # Windows 10
 ronin_t_windows10_64_2009_prod:
   azure2:
