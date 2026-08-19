@@ -2431,10 +2431,7 @@ pools:
             tasksDir: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch:
-          by-suffix:
-            alpha: relops-2407-win2025-core
-            default: master
+        sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       priority: Spot
