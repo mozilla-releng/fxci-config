@@ -149,6 +149,15 @@ async def check_insecure_grants(generate_resources):
     level_3 = re.compile(f"({'|'.join(level_prefixes)})[-_]3")
     pr = re.compile(r":pull-request(-untrusted)?$")
 
+    # Many hooks don't encode a level in their roleIds. So we instead attempt
+    # to obtain the level from the rendered task.
+    scheduler_id_level = re.compile(r"-level-(\d+)$")
+    hook_levels = {}
+    for hook in resources.filter("Hook=.*"):
+        match = scheduler_id_level.search(hook.task.get("schedulerId", ""))
+        if match:
+            hook_levels[f"{hook.hookGroupId}/{hook.hookId}"] = int(match.group(1))
+
     def is_level_1(role):
         if role.startswith("repo:"):
             # Check whether the associated project is level 1.
@@ -169,6 +178,10 @@ async def check_insecure_grants(generate_resources):
             # Check whether the role corresponds to a pull request.
             if pr.search(role):
                 return True
+
+        elif role.startswith("hook-id:"):
+            if level := hook_levels.get(role.removeprefix("hook-id:")):
+                return level == 1
 
         # Fallback to whether the level-1 regex matches.
         return bool(level_1.search(role))
