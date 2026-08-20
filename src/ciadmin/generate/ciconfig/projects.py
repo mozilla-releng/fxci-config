@@ -32,8 +32,8 @@ def _convert_cron_targets(values):
             if unknown == {"branch"}:
                 raise ValueError(
                     f"Cron target {value.get('target')!r} cannot set `branch`. "
-                    "List the branches to run cron on in the project's "
-                    "`cron_branches`."
+                    "Mark the branches to run cron on with `cron: true` in the "
+                    "project's `branches` instead."
                 )
             if unknown:
                 raise ValueError(
@@ -57,6 +57,7 @@ class Branch:
             attr.validators.optional(attr.validators.in_([1, 2, 3])),
         ],
     )
+    cron = attr.ib(type=bool, default=False)
 
 
 @attr.s(frozen=True)
@@ -86,7 +87,6 @@ class Project:
     is_try = attr.ib(type=bool, default=False)
     features = attr.ib(type=dict, factory=lambda: {})
     cron = attr.ib(type=dict, factory=lambda: {})
-    cron_branches = attr.ib(type=list, factory=lambda: [])
 
     _parsed_url = attr.ib(
         eq=False,
@@ -111,15 +111,13 @@ class Project:
         """
         self.cron["targets"] = _convert_cron_targets(self.cron.get("targets", []))
 
-        for branch in self.cron_branches:
-            if not CRON_BRANCH_RE.match(branch):
+        for branch in self.branches:
+            if branch.cron and not CRON_BRANCH_RE.match(branch.name):
                 raise ValueError(
-                    f"Invalid cron branch {branch!r} in project {self.alias}: "
+                    f"Invalid cron branch {branch.name!r} in project {self.alias}: "
                     "cron branches cannot be globs and may only contain "
                     "letters, digits, hyphens and underscores"
                 )
-        if len(set(self.cron_branches)) != len(self.cron_branches):
-            raise ValueError(f"Duplicate cron branches in project {self.alias}")
 
         # if neither `access` nor `level` are present, bail out
         if not self.access and any([b.level is None for b in self.branches]):
@@ -157,9 +155,10 @@ class Project:
                 raise ValueError(f"Feature {name} must be a dict or boolean")
 
         # checked last, because it relies on the features above being converted
-        if self.feature("taskgraph-cron") and not self.cron_branches:
+        if self.feature("taskgraph-cron") and not any(b.cron for b in self.branches):
             raise ValueError(
-                f"Project {self.alias} runs cron and must list its `cron_branches`"
+                f"Project {self.alias} runs cron and must mark at least one "
+                "branch with `cron: true`"
             )
 
     @staticmethod

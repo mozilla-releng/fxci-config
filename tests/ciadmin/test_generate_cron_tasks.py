@@ -74,10 +74,9 @@ def github_project(**overrides):
         "alias": "fxci-config",
         "repo": "https://github.com/mozilla-releng/fxci-config",
         "repo_type": "git",
-        "branches": [{"name": "main", "level": 3}],
+        "branches": [{"name": "main", "level": 3, "cron": True}],
         "trust_domain": "releng",
         "features": {"taskgraph-cron": True},
-        "cron_branches": ["main"],
         "cron": {"targets": ["test-build-decision"]},
     }
     kwargs.update(overrides)
@@ -90,10 +89,9 @@ def hg_gecko_project(**overrides):
         "repo": "https://hg.mozilla.org/mozilla-central",
         "repo_type": "hg",
         "access": "scm_level_3",
-        "branches": [{"name": "default"}],
+        "branches": [{"name": "default", "cron": True}],
         "trust_domain": "gecko",
         "features": {"taskgraph-cron": True},
-        "cron_branches": ["default"],
         "cron": {"targets": ["nightly-desktop"]},
     }
     kwargs.update(overrides)
@@ -302,8 +300,8 @@ async def test_string_target_is_equivalent_to_dict_target(cron_template):
 
 
 def test_cron_branches_are_required():
-    with pytest.raises(ValueError, match="must list its `cron_branches`"):
-        github_project(cron_branches=[])
+    with pytest.raises(ValueError, match="must mark at least one branch"):
+        github_project(branches=[{"name": "main", "level": 3, "cron": False}])
 
 
 @pytest.mark.asyncio
@@ -318,8 +316,10 @@ async def test_default_branch_comes_from_github(cron_template, monkeypatch):
     project = github_project(
         # projects.yml disagrees with github on purpose here
         default_branch="main",
-        branches=[{"name": "trunk", "level": 3}, {"name": "main", "level": 3}],
-        cron_branches=["trunk", "main"],
+        branches=[
+            {"name": "trunk", "level": 3, "cron": True},
+            {"name": "main", "level": 3, "cron": True},
+        ],
     )
     hooks, _ = by_id(await cron_tasks.make_hooks(project, ENVIRONMENT))
 
@@ -332,8 +332,10 @@ async def test_default_branch_comes_from_github(cron_template, monkeypatch):
 @pytest.mark.asyncio
 async def test_each_branch_gets_its_own_hooks(cron_template):
     project = github_project(
-        branches=[{"name": "main", "level": 3}, {"name": "beta", "level": 3}],
-        cron_branches=["main", "beta"],
+        branches=[
+            {"name": "main", "level": 3, "cron": True},
+            {"name": "beta", "level": 3, "cron": True},
+        ],
     )
     resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
     hooks, roles = by_id(resources)
@@ -356,8 +358,10 @@ async def test_each_branch_gets_its_own_hooks(cron_template):
 async def test_each_branch_gets_its_own_level(cron_template):
     """A cron task runs at the level of the branch it runs on."""
     project = github_project(
-        branches=[{"name": "main", "level": 3}, {"name": "dev", "level": 1}],
-        cron_branches=["main", "dev"],
+        branches=[
+            {"name": "main", "level": 3, "cron": True},
+            {"name": "dev", "level": 1, "cron": True},
+        ],
     )
     resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
     hooks, _ = by_id(resources)
@@ -369,17 +373,16 @@ async def test_each_branch_gets_its_own_level(cron_template):
 
 def test_cron_branches_may_not_be_globs():
     with pytest.raises(ValueError, match="cannot be globs"):
-        github_project(cron_branches=["main", "releases/*"])
-
-
-def test_cron_branches_may_not_repeat():
-    with pytest.raises(ValueError, match="Duplicate cron branches"):
-        github_project(cron_branches=["main", "main"])
+        github_project(
+            branches=[
+                {"name": "main", "level": 3, "cron": True},
+                {"name": "releases/*", "level": 3, "cron": True},
+            ]
+        )
 
 
 def test_unknown_cron_target_keys_are_rejected():
-    """A target used to take its own `branch`; that moved to cron_branches."""
-    with pytest.raises(ValueError, match="cron_branches"):
+    with pytest.raises(ValueError, match="cron: true"):
         github_project(cron={"targets": [{"target": "nightly", "branch": "beta"}]})
 
 
@@ -407,9 +410,8 @@ async def test_update_resources_skips_projects_without_the_feature(
                 "repo": "https://github.com/mozilla/with-cron",
                 "repo_type": "git",
                 "trust_domain": "foo",
-                "branches": [{"name": "main", "level": 3}],
+                "branches": [{"name": "main", "level": 3, "cron": True}],
                 "features": {"taskgraph-cron": True},
-                "cron_branches": ["main"],
                 "cron": {"targets": ["nightly"]},
             },
             "without-cron": {
