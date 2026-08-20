@@ -174,11 +174,13 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         # sort the jobs so that roles are always generated in the same order,
         # regardless of the iteration order of the sets above
         for job in sorted(non_branch_jobs):
-            # Action roles are granted per-repository, not per-branch, but
+            # Action and cron roles are granted per-repository, not per-branch, but
             # we still need to generate a role per level actually present among
             # this project's branches.
-            if job.startswith("action:"):
-                if project.access:
+            if job.startswith("action:") or job.startswith("cron:"):
+                if job.startswith("cron:"):
+                    levels = {project.get_level(b) for b in project.cron_branches}
+                elif project.access:
                     levels = {project.default_branch_level}
                 else:
                     levels = {b.level for b in project.branches}
@@ -201,7 +203,7 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             level = project.default_branch_level
 
             # If the grantee has a level, use the default_branch_level to filter out
-            # pull requests and cron.
+            # pull requests.
             if (
                 project.repo_type == "git"
                 and not job.startswith("pull-request")
