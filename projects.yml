@@ -17,6 +17,9 @@
 # - `access` -- the name of the group with access to this repository; typically `scm_level_{1,2,3}`.
 # - `branches` -- a list of dicts with the names and levels of branches used by this project.
 #                 for example: [{"name": "main", "level": 3}, {"name": "dev", "level": 1}]
+#                 a branch may also set `cron: true` to have cron tasks (see the
+#                 `taskgraph-cron` feature below) run on it; branch names used this way
+#                 cannot be globs.
 # - `trust_domain` -- separation within an access level of projects with different organizations
 # - `parent_repo` -- for projects like comm where the repo is checked out within a "parent" repo
 # - 'is_try' -- if present and true, this is a "try" repo, meaning that users typically push new heads
@@ -81,9 +84,8 @@ elm:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -99,9 +101,8 @@ mozilla-release:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -123,10 +124,9 @@ comm-release:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/releases/mozilla-release
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -144,9 +144,8 @@ mozilla-esr115:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -168,9 +167,8 @@ mozilla-esr140:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -193,9 +191,8 @@ mozilla-esr153:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -255,9 +252,8 @@ oak:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -274,9 +270,8 @@ pine:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -315,9 +310,8 @@ mozilla-beta:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -343,10 +337,9 @@ comm-beta:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/releases/mozilla-beta
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -367,9 +360,8 @@ mozilla-central:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -406,10 +398,9 @@ comm-central:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/mozilla-central
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -431,9 +422,8 @@ cedar:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -453,9 +443,8 @@ birch:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -472,9 +461,8 @@ cypress:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -554,9 +542,8 @@ maple:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -590,9 +577,8 @@ autoland:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
-  cron_branches:
-    - default
   features:
     gecko-actions: true
     gecko-roles: true
@@ -698,14 +684,13 @@ enterprise-firefox:
   branches:
     - name: enterprise-main
       level: 3
+      cron: true
     - name: enterprise-release
       level: 3
     - name: enterprise-beta
       level: 3
     - name: "*"
       level: 1
-  cron_branches:
-    - enterprise-main
   features:
     gecko-roles: true
     github-taskgraph: true
@@ -746,14 +731,13 @@ enterprise-thunderbird:
   branches:
     - name: enterprise-main
       level: 3
+      cron: true
     - name: enterprise-release
       level: 3
     - name: enterprise-beta
       level: 3
     - name: "*"
       level: 1
-  cron_branches:
-    - enterprise-main
   features:
     gecko-roles: true
     github-taskgraph: true
@@ -774,8 +758,9 @@ staging-firefox:
   branches:
     - name: "*"
       level: 1
-  cron_branches:
-    - main
+    - name: main
+      level: 1
+      cron: true
   features:
     gecko-roles: true
     git-push: true
@@ -822,8 +807,7 @@ fxci-config:
   branches:
     - name: main
       level: 3
-  cron_branches:
-    - main
+      cron: true
   features:
     github-taskgraph: true
     github-pull-request:
@@ -922,9 +906,8 @@ reference-browser:
   branches:
     - name: master
       level: 3
+      cron: true
   default_branch: master
-  cron_branches:
-    - master
   features:
     autophone: true
     github-taskgraph: true
@@ -955,9 +938,8 @@ staging-reference-browser:
   branches:
     - name: master
       level: 1
+      cron: true
   default_branch: master
-  cron_branches:
-    - master
   features:
     autophone: true
     github-taskgraph: true
@@ -988,10 +970,9 @@ firefox-ios:
   branches:
     - name: main
       level: 3
+      cron: true
     - name: release/*
       level: 3
-  cron_branches:
-    - main
   features:
     bitrise: true
     github-taskgraph: true
@@ -1022,10 +1003,9 @@ staging-firefox-ios:
   branches:
     - name: main
       level: 1
+      cron: true
     - name: release/*
       level: 1
-  cron_branches:
-    - main
   features:
     bitrise: true
     github-publication: true
@@ -1052,11 +1032,10 @@ application-services:
   branches:
     - name: main
       level: 3
+      cron: true
     - name: "release-*"
       level: 3
   trust_domain: app-services
-  cron_branches:
-    - main
   features:
     # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
     # across projects.
@@ -1078,11 +1057,10 @@ staging-application-services:
   branches:
     - name: main
       level: 1
+      cron: true
     - name: "release-*"
       level: 1
   trust_domain: app-services
-  cron_branches:
-    - main
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1304,10 +1282,9 @@ worker-images:
   branches:
     - name: main
       level: 3
+      cron: true
   trust_domain: relops
   trust_project: worker-images
-  cron_branches:
-    - main
   features:
     github-pull-request:
       policy: public_restricted
@@ -1377,9 +1354,8 @@ xpi-manifest:
   branches:
     - name: main
       level: 3
+      cron: true
   trust_domain: xpi
-  cron_branches:
-    - main
   features:
     github-pull-request:
       policy: collaborators
@@ -1398,9 +1374,10 @@ staging-xpi-manifest:
   branches:
     - name: "*"
       level: 1
+    - name: main
+      level: 1
+      cron: true
   trust_domain: xpi
-  cron_branches:
-    - main
   features:
     github-pull-request:
       policy: collaborators
@@ -1532,14 +1509,13 @@ translations:
   branches:
     - name: main
       level: 1
+      cron: true
     - name: "release*"
       level: 1
     - name: "dev*"
       level: 1
   trust_domain: translations
   # https://github.com/mozilla/translations/issues/206
-  cron_branches:
-    - main
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1566,9 +1542,8 @@ staging-firefox-translations-training:
   branches:
     - name: main
       level: 1
+      cron: true
   trust_domain: translations
-  cron_branches:
-    - main
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1593,8 +1568,7 @@ fx-desktop-qa-automation:
   branches:
     - name: main
       level: 3
-  cron_branches:
-    - main
+      cron: true
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1629,8 +1603,7 @@ process-top-crashes:
   branches:
     - name: main
       level: 1
-  cron_branches:
-    - main
+      cron: true
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1648,8 +1621,7 @@ crash-ping-ingest:
   branches:
     - name: main
       level: 1
-  cron_branches:
-    - main
+      cron: true
   features:
     github-taskgraph: true
     github-pull-request:

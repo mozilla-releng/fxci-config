@@ -37,9 +37,11 @@ async def make_hooks(project, environment):
         raise Exception(f"Unknown repo_type {project.repo_type}!")
 
     resources = []
-    for branch in project.cron_branches:
+    for branch in project.branches:
+        if not branch.cron:
+            continue
         resources.extend(
-            await make_branch_hooks(project, environment, branch, default_branch)
+            await make_branch_hooks(project, environment, branch.name, default_branch)
         )
     return resources
 
