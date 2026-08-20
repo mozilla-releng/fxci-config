@@ -181,6 +181,20 @@ def test_run(mocker, force_run, jobs):
     cron.run(repository=fake_repo, branch="branch", force_run=force_run, dry_run=True)
 
 
+def test_run_force_run_undefined_job(mocker):
+    """Force-running a job this branch doesn't define names the job and branch."""
+    fake_repo = mocker.MagicMock()
+    mocker.patch.object(cron, "load_jobs", return_value={"nightly": {}})
+
+    with pytest.raises(Exception, match="pinning-update is not defined"):
+        cron.run(
+            repository=fake_repo,
+            branch="esr140",
+            force_run="pinning-update",
+            dry_run=True,
+        )
+
+
 def test_run_no_pushes(mocker):
     """Ensure that running cron.hook does nothing when no pushes are found,
     and doesn't raise an Exception."""
