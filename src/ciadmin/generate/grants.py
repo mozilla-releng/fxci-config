@@ -33,12 +33,14 @@ def job_to_role_suffix(job, pr_policy):
     return job
 
 
-def format_role_id(project, job, pr_policy):
+def format_role_id(project, job, pr_policy, level=None):
     suffix = job_to_role_suffix(job, pr_policy)
     if project.role_prefix.endswith("*"):
         return project.role_prefix
-    else:
-        return f"{project.role_prefix}:{suffix}"
+    if level is not None:
+        kind, perm = suffix.split(":", 1)
+        suffix = f"{kind}-{level}:{perm}"
+    return f"{project.role_prefix}:{suffix}"
 
 
 def format_scope(project, scope, level, priority):
@@ -172,12 +174,34 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         # sort the jobs so that roles are always generated in the same order,
         # regardless of the iteration order of the sets above
         for job in sorted(non_branch_jobs):
+            # Action roles are granted per-repository, not per-branch, but
+            # we still need to generate a role per level actually present among
+            # this project's branches.
+            if job.startswith("action:"):
+                if project.access:
+                    levels = {project.default_branch_level}
+                else:
+                    levels = {b.level for b in project.branches}
+
+                for level in sorted(levels):
+                    if (
+                        project.repo_type == "git"
+                        and grantee.level
+                        and level not in grantee.level
+                    ):
+                        continue
+
+                    roleId = format_role_id(project, job, pr_policy, level=level)
+                    priority = LEVEL_PRIORITIES[level]
+                    for scope in grant.scopes:
+                        add_scope(roleId, format_scope(project, scope, level, priority))
+                continue
+
             roleId = format_role_id(project, job, pr_policy)
             level = project.default_branch_level
 
             # If the grantee has a level, use the default_branch_level to filter out
-            # actions and cron. Pull requests are hardcoded to L1 and were already
-            # filtered out above.
+            # pull requests and cron.
             if (
                 project.repo_type == "git"
                 and not job.startswith("pull-request")
