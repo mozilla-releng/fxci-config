@@ -43,10 +43,10 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                     {
                         "name": "default",
                         "level": None,
+                        "cron": False,
                     },
                 ],
                 "default_branch": "default",
-                "cron_branches": [],
                 "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
@@ -80,10 +80,10 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                     {
                         "name": "main",
                         "level": 3,
+                        "cron": False,
                     },
                 ],
                 "default_branch": "main",
-                "cron_branches": [],
                 "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
@@ -146,6 +146,7 @@ async def test_fetch_defaults(
                     {
                         "name": "default",
                         "level": None,
+                        "cron": False,
                     },
                 ],
                 "cron": {
@@ -157,7 +158,6 @@ async def test_fetch_defaults(
                     ],
                 },
                 "default_branch": "default",
-                "cron_branches": [],
                 "features": {
                     "hg-push": {"enabled": True},
                     "taskgraph-cron": {"enabled": False},
@@ -205,6 +205,7 @@ async def test_fetch_defaults(
                     {
                         "name": "main",
                         "level": 3,
+                        "cron": False,
                     },
                 ],
                 "cron": {
@@ -216,7 +217,6 @@ async def test_fetch_defaults(
                     ],
                 },
                 "default_branch": "main",
-                "cron_branches": [],
                 "features": {
                     "hg-push": {"enabled": True},
                     "taskgraph-cron": {"enabled": False},
@@ -236,13 +236,12 @@ async def test_fetch_defaults(
             "cron-project",  # runs cron on more than one branch
             {
                 "branches": [
-                    {"name": "main", "level": 3},
-                    {"name": "beta", "level": 1},
+                    {"name": "main", "level": 3, "cron": True},
+                    {"name": "beta", "level": 1, "cron": True},
                 ],
                 "cron": {
                     "targets": ["a"],
                 },
-                "cron_branches": ["main", "beta"],
                 "features": {
                     "taskgraph-cron": {"enabled": True},
                 },
@@ -254,13 +253,12 @@ async def test_fetch_defaults(
                 "access": None,
                 "alias": "cron-project",
                 "branches": [
-                    {"name": "main", "level": 3},
-                    {"name": "beta", "level": 1},
+                    {"name": "main", "level": 3, "cron": True},
+                    {"name": "beta", "level": 1, "cron": True},
                 ],
                 "cron": {
                     "targets": [{"target": "a", "bindings": []}],
                 },
-                "cron_branches": ["main", "beta"],
                 "default_branch": "main",
                 "features": {
                     "taskgraph-cron": {"enabled": True},
