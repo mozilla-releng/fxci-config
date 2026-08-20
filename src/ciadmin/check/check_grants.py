@@ -3,10 +3,12 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 import re
 from collections import defaultdict
+from pprint import pprint
 from urllib.parse import urlparse
 
 import pytest
 from taskcluster.utils import scopeMatch
+from tcadmin.util.scopes import Resolver
 
 from ciadmin.generate.ciconfig.grants import Grant
 from ciadmin.generate.ciconfig.projects import Project
@@ -136,7 +138,9 @@ async def check_insecure_grants(generate_resources):
     """
     Ensures we don't grant any level 3 scopes to level 1 contexts.
     """
-    roles = (await generate_resources()).filter("Role=.*")
+    resources = await generate_resources()
+    roles = resources.filter("Role=.*")
+    resolver = Resolver.from_resources(resources)
     projects = await Project.fetch_all()
 
     level_prefixes = {"level", "in-tree-action"}
@@ -174,15 +178,16 @@ async def check_insecure_grants(generate_resources):
         if not is_level_1(role.roleId):
             continue
 
-        level_3_scopes = {s for s in role.scopes if level_3.search(s)}
+        expanded_scopes = resolver.expandScopes(list(role.scopes))
+        level_3_scopes = {s for s in expanded_scopes if level_3.search(s)}
         if level_3_scopes:
             insecure_scopes[role.roleId].update(level_3_scopes)
 
     if insecure_scopes:
         print("Level 3 scopes are granted to level 1 contexts:")
         for roleId, scopes in insecure_scopes.items():
-            print(f"{roleId} is granted the follow scopes that are considered level 3:")
-            print(sorted(scopes))
+            print(f"L1 role `{roleId}` has the following L3 scopes:")
+            print("  " + "\n  ".join([f"- {s}" for s in scopes]))
             print()
     assert not insecure_scopes
 
@@ -217,7 +222,7 @@ async def check_no_pull_request_index_writes(generated):
         )
         for roleId, scopes in sorted(insecure_scopes.items()):
             print(f"{roleId} is granted the following index scopes:")
-            print(sorted(scopes))
+            pprint(sorted(scopes), indent=2)
             print()
     assert not insecure_scopes
 
