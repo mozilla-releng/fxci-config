@@ -25,13 +25,6 @@ async def get_client():
             client_cls = client_from_env("mozilla-releng", ["fxci-config"])
             _client = client_cls()  # type: ignore
 
-            # simple_github marks itself set up before the session it
-            # promises exists, and takes no lock in between, so concurrent
-            # callers can observe that gap. Build the session here, while we
-            # hold ours. Drop this once simple-github#200 is released:
-            # https://github.com/mozilla-releng/simple-github/pull/200
-            await _client._get_aiohttp_session()
-
     return _client
 
 
