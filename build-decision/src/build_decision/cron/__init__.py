@@ -90,6 +90,12 @@ def run(*, repository, branch, force_run, dry_run):
 
     if force_run:
         job_name = force_run
+        if job_name not in jobs:
+            # a target in projects.yml can name a job this branch doesn't define
+            raise Exception(
+                f"cron job {job_name} is not defined in .cron.yml on {branch}! "
+                f"jobs defined here: {sorted(jobs)}"
+            )
         logger.info(f'force-running cron job "{job_name}"')
         run_job(
             job_name,
