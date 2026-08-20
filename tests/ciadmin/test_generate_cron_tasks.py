@@ -7,7 +7,7 @@ from tcadmin.appconfig import AppConfig
 from tcadmin.resources import Resources
 from tcadmin.util import root_url as root_url_mod
 
-from ciadmin.generate import cron_tasks
+from ciadmin.generate import branches, cron_tasks
 from ciadmin.generate.ciconfig.environment import Environment
 from ciadmin.generate.ciconfig.projects import Project
 
@@ -77,6 +77,7 @@ def github_project(**overrides):
         "branches": [{"name": "main", "level": 3}],
         "trust_domain": "releng",
         "features": {"taskgraph-cron": True},
+        "cron_branches": ["main"],
         "cron": {"targets": ["test-build-decision"]},
     }
     kwargs.update(overrides)
@@ -92,10 +93,21 @@ def hg_gecko_project(**overrides):
         "branches": [{"name": "default"}],
         "trust_domain": "gecko",
         "features": {"taskgraph-cron": True},
+        "cron_branches": ["default"],
         "cron": {"targets": ["nightly-desktop"]},
     }
     kwargs.update(overrides)
     return Project(**kwargs)
+
+
+@pytest.fixture(autouse=True)
+def github_default_branch(monkeypatch):
+    """`github_project()`'s repo reports `main` as its default branch."""
+
+    async def fake_default_branch(repo_path):
+        return "main"
+
+    monkeypatch.setattr(branches, "get_default_branch", fake_default_branch)
 
 
 @pytest.fixture(autouse=True)
@@ -284,6 +296,93 @@ async def test_string_target_is_equivalent_to_dict_target(cron_template):
     assert from_string == from_dict
 
 
+# ---------------------------------------------------------------------------
+# Cron on more than one branch (bug 2030902).
+# ---------------------------------------------------------------------------
+
+
+def test_cron_branches_are_required():
+    with pytest.raises(ValueError, match="must list its `cron_branches`"):
+        github_project(cron_branches=[])
+
+
+@pytest.mark.asyncio
+async def test_default_branch_comes_from_github(cron_template, monkeypatch):
+    """The unsuffixed hookId follows GitHub, not projects.yml."""
+
+    async def default_is_trunk(repo_path):
+        return "trunk"
+
+    monkeypatch.setattr(branches, "get_default_branch", default_is_trunk)
+
+    project = github_project(
+        # projects.yml disagrees with github on purpose here
+        default_branch="main",
+        branches=[{"name": "trunk", "level": 3}, {"name": "main", "level": 3}],
+        cron_branches=["trunk", "main"],
+    )
+    hooks, _ = by_id(await cron_tasks.make_hooks(project, ENVIRONMENT))
+
+    # `trunk` is the default now, so it keeps the plain id and `main` is
+    # the one that gets suffixed.
+    assert value_of(hooks[BASE_HOOK_ID], "--branch") == "trunk"
+    assert value_of(hooks[f"{BASE_HOOK_ID}-main"], "--branch") == "main"
+
+
+@pytest.mark.asyncio
+async def test_each_branch_gets_its_own_hooks(cron_template):
+    project = github_project(
+        branches=[{"name": "main", "level": 3}, {"name": "beta", "level": 3}],
+        cron_branches=["main", "beta"],
+    )
+    resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
+    hooks, roles = by_id(resources)
+
+    # The default branch keeps the ids it already had; the extra branch adds
+    # its own. Nothing an existing project generates today changes.
+    assert set(hooks) == {
+        BASE_HOOK_ID,
+        TARGET_HOOK_ID,
+        f"{BASE_HOOK_ID}-beta",
+        f"{BASE_HOOK_ID}-beta/test-build-decision",
+    }
+    assert set(roles) == {f"hook-id:{HOOK_GROUP_ID}/{hook_id}" for hook_id in hooks}
+
+    assert value_of(hooks[BASE_HOOK_ID], "--branch") == "main"
+    assert value_of(hooks[f"{BASE_HOOK_ID}-beta"], "--branch") == "beta"
+
+
+@pytest.mark.asyncio
+async def test_each_branch_gets_its_own_level(cron_template):
+    """A cron task runs at the level of the branch it runs on."""
+    project = github_project(
+        branches=[{"name": "main", "level": 3}, {"name": "dev", "level": 1}],
+        cron_branches=["main", "dev"],
+    )
+    resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
+    hooks, _ = by_id(resources)
+
+    for hook_id, level in ((BASE_HOOK_ID, "3"), (f"{BASE_HOOK_ID}-dev", "1")):
+        assert value_of(hooks[hook_id], "--level") == level
+        assert hooks[hook_id].task["schedulerId"] == f"releng-level-{level}"
+
+
+def test_cron_branches_may_not_be_globs():
+    with pytest.raises(ValueError, match="cannot be globs"):
+        github_project(cron_branches=["main", "releases/*"])
+
+
+def test_cron_branches_may_not_repeat():
+    with pytest.raises(ValueError, match="Duplicate cron branches"):
+        github_project(cron_branches=["main", "main"])
+
+
+def test_unknown_cron_target_keys_are_rejected():
+    """A target used to take its own `branch`; that moved to cron_branches."""
+    with pytest.raises(ValueError, match="cron_branches"):
+        github_project(cron={"targets": [{"target": "nightly", "branch": "beta"}]})
+
+
 @pytest.mark.asyncio
 async def test_update_resources_skips_projects_without_the_feature(
     cron_template, mock_ciconfig_file, set_environment
@@ -310,6 +409,7 @@ async def test_update_resources_skips_projects_without_the_feature(
                 "trust_domain": "foo",
                 "branches": [{"name": "main", "level": 3}],
                 "features": {"taskgraph-cron": True},
+                "cron_branches": ["main"],
                 "cron": {"targets": ["nightly"]},
             },
             "without-cron": {

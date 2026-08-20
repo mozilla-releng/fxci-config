@@ -2,6 +2,8 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+import re
+
 import attr
 from mozilla_repo_urls import parse
 
@@ -15,6 +17,10 @@ SYMBOLIC_GROUP_LEVELS = {
     "scm_allow_direct_push": 3,
     "scm_firefoxci": 3,
 }
+CRON_BRANCH_RE = re.compile(r"^[A-Za-z0-9_-]+$")
+
+
+CRON_TARGET_KEYS = {"target", "bindings", "allow-input"}
 
 
 def _convert_cron_targets(values):
@@ -22,6 +28,18 @@ def _convert_cron_targets(values):
         if isinstance(value, str):
             return {"target": value, "bindings": []}
         elif isinstance(value, dict):
+            unknown = set(value) - CRON_TARGET_KEYS
+            if unknown == {"branch"}:
+                raise ValueError(
+                    f"Cron target {value.get('target')!r} cannot set `branch`. "
+                    "List the branches to run cron on in the project's "
+                    "`cron_branches`."
+                )
+            if unknown:
+                raise ValueError(
+                    f"Unknown keys in cron target {value.get('target')!r}: "
+                    f"{sorted(unknown)}"
+                )
             return value
         raise ValueError(f"Unknowon type of cron target: {value!r}")
 
@@ -68,6 +86,7 @@ class Project:
     is_try = attr.ib(type=bool, default=False)
     features = attr.ib(type=dict, factory=lambda: {})
     cron = attr.ib(type=dict, factory=lambda: {})
+    cron_branches = attr.ib(type=list, factory=lambda: [])
 
     _parsed_url = attr.ib(
         eq=False,
@@ -91,6 +110,16 @@ class Project:
         the values received are sane together
         """
         self.cron["targets"] = _convert_cron_targets(self.cron.get("targets", []))
+
+        for branch in self.cron_branches:
+            if not CRON_BRANCH_RE.match(branch):
+                raise ValueError(
+                    f"Invalid cron branch {branch!r} in project {self.alias}: "
+                    "cron branches cannot be globs and may only contain "
+                    "letters, digits, hyphens and underscores"
+                )
+        if len(set(self.cron_branches)) != len(self.cron_branches):
+            raise ValueError(f"Duplicate cron branches in project {self.alias}")
 
         # if neither `access` nor `level` are present, bail out
         if not self.access and any([b.level is None for b in self.branches]):
@@ -126,6 +155,12 @@ class Project:
                 self.features[name] = {"enabled": val}
             else:
                 raise ValueError(f"Feature {name} must be a dict or boolean")
+
+        # checked last, because it relies on the features above being converted
+        if self.feature("taskgraph-cron") and not self.cron_branches:
+            raise ValueError(
+                f"Project {self.alias} runs cron and must list its `cron_branches`"
+            )
 
     @staticmethod
     async def fetch_all():
