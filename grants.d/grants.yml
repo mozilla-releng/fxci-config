@@ -1169,7 +1169,7 @@
         job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
 
 - grant:
-    - hooks:trigger-hook:lint/pre-commit-*
+    - github:trigger-hook:lint/pre-commit-*
     - queue:cancel-task-group:lint/*
     - queue:seal-task-group:lint/*
   to:
