@@ -986,7 +986,7 @@ requires-dist = [
     { name = "pytest" },
     { name = "pytest-asyncio" },
     { name = "pyyaml", specifier = ">=5.3" },
-    { name = "simple-github", specifier = ">=2.2.0" },
+    { name = "simple-github", specifier = ">=3.2.1" },
     { name = "taskcluster" },
     { name = "tc-admin", specifier = ">=5.2.1" },
 ]
@@ -2247,7 +2247,7 @@ wheels = [
 
 [[package]]
 name = "simple-github"
-version = "3.1.0"
+version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp", extra = ["speedups"] },
@@ -2256,9 +2256,9 @@ dependencies = [
     { name = "pyjwt", extra = ["crypto"] },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/68/6d/cab06643d1e7ab7f33e07e7c49c446cbb84af8d02b1df96693673c27ec64/simple_github-3.1.0.tar.gz", hash = "sha256:b78dc5ee4faa5e30a2d53620c5222da9b44bddc4942abeeed862388ac1fc7f25", size = 172789, upload-time = "2026-03-10T15:52:56.32Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e0/e6/c3ba1e14366a19b85d7206cb901be081f65a7b96bc0ea36ea8a66a9f072b/simple_github-3.2.1.tar.gz", hash = "sha256:8b574c4a295d9e2a87c177b044d162eaf2760d400959874ab87ccf0f3e01c667", size = 179139, upload-time = "2026-08-20T14:31:28.914Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fd/ef/175b5b391797b1859a053678b963fbc27e8d7b39275b61cf0d813c220499/simple_github-3.1.0-py3-none-any.whl", hash = "sha256:8c6f6d88c95c94f1bb196693c90336c1d7f75f85ad8437e95e89ede0cb03872b", size = 14141, upload-time = "2026-03-10T15:52:54.906Z" },
+    { url = "https://files.pythonhosted.org/packages/b6/a7/6f54e8a08111bcdf861bd65cafefa9d1cb4b699df45393fd60cc2058df3a/simple_github-3.2.1-py3-none-any.whl", hash = "sha256:c9c1b3808129301fc4b6e95fd700001560694984fab551149a814c71091f914b", size = 14622, upload-time = "2026-08-20T14:31:27.565Z" },
 ]
 
 [[package]]
