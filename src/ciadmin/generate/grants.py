@@ -103,11 +103,16 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         if (
             "*" in non_branch_jobs
             and project.repo_type == "git"
-            and project.default_branch_level != 1
+            and (
+                project.default_branch_level != 1
+                or (pr_policy and not grantee.include_pull_requests)
+            )
         ):
-            # Github mixes pull-requests and other tasks under the same prefix
-            # Since pull-requests should be level-1, we need to explicitly
-            # split based on the job
+            # Github mixes pull-requests and other tasks under the same prefix,
+            # so a `*` job role would also apply to pull-requests. We need to
+            # explicitly split based on the job when pull-requests must be
+            # treated differently: either because they should be level-1, or
+            # because the grantee excludes them.
             non_branch_jobs.remove("*")
             non_branch_jobs.update(
                 {

@@ -575,6 +575,79 @@ class TestAddScopesForGithubPullRequest:
             )
 
 
+class TestAddScopesForLevel1PullRequest:
+    """Level-1 repos don't need the `*` job split for level reasons, but still
+    have to honour include_pull_requests."""
+
+    projects = [
+        Project(
+            alias="level1",
+            branches=[
+                {
+                    "name": "main",
+                    "level": 1,
+                }
+            ],
+            repo="https://github.com/mozilla/level1",
+            repo_type="git",
+            trust_domain="foo",
+            features={
+                "github-pull-request": {
+                    "enabled": True,
+                    "policy": "public_restricted",
+                }
+            },
+        ),
+        Project(
+            alias="level1-no-prs",
+            branches=[
+                {
+                    "name": "main",
+                    "level": 1,
+                }
+            ],
+            repo="https://github.com/mozilla/level1-no-prs",
+            repo_type="git",
+            trust_domain="foo",
+        ),
+    ]
+
+    def test_include_pull_requests_false(self, add_scope):
+        grantee = ProjectGrantee(include_pull_requests=False)
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        # Dump expected for copy/paste.
+        pprint(add_scope.added)
+        # The `*` job role would also cover pull-requests, so it must be split
+        # into the individual non pull-request jobs. Repos without
+        # pull-requests enabled keep the `*` role.
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/level1:branch:main", "sc"),
+                ("repo:github.com/mozilla/level1:release:*", "sc"),
+                ("repo:github.com/mozilla/level1-no-prs:branch:main", "sc"),
+                ("repo:github.com/mozilla/level1-no-prs:*", "sc"),
+            ]
+        )
+
+    def test_include_pull_requests_true(self, add_scope):
+        grantee = ProjectGrantee()
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        # Dump expected for copy/paste.
+        pprint(add_scope.added)
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/level1:branch:main", "sc"),
+                ("repo:github.com/mozilla/level1:*", "sc"),
+                ("repo:github.com/mozilla/level1-no-prs:branch:main", "sc"),
+                ("repo:github.com/mozilla/level1-no-prs:*", "sc"),
+            ]
+        )
+
+
 class TestAddScopesForOrgWideWildcard:
     projects = [
         Project(
