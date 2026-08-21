@@ -164,7 +164,9 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         elif pr_policy.startswith("collaborators"):
             non_branch_jobs.discard("pull-request:untrusted")
 
-        for job in non_branch_jobs:
+        # sort the jobs so that roles are always generated in the same order,
+        # regardless of the iteration order of the sets above
+        for job in sorted(non_branch_jobs):
             roleId = format_role_id(project, job, pr_policy)
             level = project.default_branch_level
 
@@ -196,7 +198,7 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             if not branch_match(grantee, branch):
                 continue
 
-            for job in branch_jobs:
+            for job in sorted(branch_jobs):
                 # skip jobs that don't match the current branch. this avoids cases
                 # where we have things like:
                 # grantee.jobs = ["branch:main", "branch:other"]
