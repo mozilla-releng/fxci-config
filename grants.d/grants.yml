@@ -467,6 +467,16 @@
         feature: gecko-roles
         level: [2, 3]
 
+# Cisco OpenH264 plugin, restricted to avoid public distribution ourselves.
+# Readily available from Cisco's public servers.
+- grant:
+    - queue:get-artifact:project/openh264/*
+  to:
+    - projects:
+        feature: gecko-roles
+        level: [1, 2, 3]
+        trust_domain: gecko
+
 # moz-tree:level:3:*
 - grant:
     - secrets:get:project/taskcluster/gecko/build/level-3/*
