@@ -1353,7 +1353,7 @@ project/relsre/devicepool:
     - queue:pending-count:*
 
 project/taskcluster/smoketest:
-  description: For running smoke tests against firefox-ci services (typically when deploying updated serivces)
+  description: Run smoketests on new Taskcluster deployments
   scopes:
     - assume:project:taskcluster:smoketests
 project/taskcluster/generic-worker/ci-macos:
