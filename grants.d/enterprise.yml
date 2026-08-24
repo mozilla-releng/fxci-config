@@ -127,10 +127,13 @@
         job: [branch:enterprise-release]
 
 # Bug 2013033: project maintenance scopes for enterprise-developers
+# Bug 2066147: release-promotion scopes
 - grant:
     - hooks:trigger-hook:project-enterprise/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-enterprise/in-tree-pr-action-1-generic/*
     - hooks:trigger-hook:project-enterprise/in-tree-action-3-generic/*
+    - hooks:trigger-hook:project-enterprise/in-tree-action-1-release-promotion/*
+    - hooks:trigger-hook:project-enterprise/in-tree-pr-action-1-release-promotion/*
     - secrets:set:project/enterprise/*
     - secrets:get:project/enterprise/*
     - queue:rerun-task:enterprise-level-*
