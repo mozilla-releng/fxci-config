@@ -117,9 +117,7 @@ def project_match(grantee, project):
         return False
     if not match(grantee.repo_type, project.repo_type):
         return False
-    if project.access and not match(
-        grantee.level, project.get_level(project.default_branch)
-    ):
+    if project.access and not match(grantee.level, project.default_branch.level):
         return False
     if not match(grantee.alias, project.alias):
         return False
@@ -137,7 +135,12 @@ def project_match(grantee, project):
     return True
 
 
-def branch_match(grantee, branch):
+def branch_match(grantee, project, branch):
+    # Mercurial repos don't have meaningfully distinct branches. Level scoped
+    # branch grants are only intended for Git repos.
+    if grantee.level is not None and project.repo_type == "hg":
+        return False
+
     if not match(grantee.level, branch.level):
         return False
 

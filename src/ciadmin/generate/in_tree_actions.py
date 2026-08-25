@@ -90,7 +90,7 @@ async def hash_taskcluster_ymls():
         # not explicitly named in `branches`. This is primarily to ensure that
         # cases where `*` is the only branch explicitly listed, that we still
         # generate actions for the default branch.
-        configured_branches.append(p.default_branch)
+        configured_branches.append(p.default_branch.name)
         for b in await get_project_branches(p):
             if glob_match(configured_branches, b):
 
@@ -125,7 +125,7 @@ async def hash_taskcluster_ymls():
                     rv[project.alias][branch_name] = {
                         "parsed": parsed,
                         "hash": hash(tcy),
-                        "level": project.get_level(branch_name),
+                        "level": project.get_branch(branch_name).level,
                         "alias": project.alias,
                     }
 
@@ -354,7 +354,7 @@ async def update_resources(resources):
     for project in projects:
         for branch in project.branches:
             projects_by_level_and_trust_domain.setdefault(
-                (project.trust_domain, project.get_level(branch.name)), []
+                (project.trust_domain, branch.level), []
             ).append(project)
 
     # generate the hooks themselves and corresponding hook-id roles
@@ -372,7 +372,7 @@ async def update_resources(resources):
                 if branch_name not in hashed_tcymls[project.alias]:
                     # Branch didn't exist, or doesn't have a parseable tcyml
                     continue
-                if project.get_level(branch_name) < action.level:
+                if project.get_branch(branch_name).level < action.level:
                     continue
                 if project.trust_domain != action.trust_domain:
                     continue
