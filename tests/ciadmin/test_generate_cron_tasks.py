@@ -356,19 +356,54 @@ async def test_each_branch_gets_its_own_hooks(cron_template):
 
 @pytest.mark.asyncio
 async def test_each_branch_gets_its_own_level(cron_template):
-    """A cron task runs at the level of the branch it runs on."""
+    """
+    A cron task runs at the level of the branch it runs on.
+
+    Only branches at or above the default branch's level may run cron; see
+    `test_cron_branches_may_not_be_below_the_default_branch` below.
+    """
     project = github_project(
         branches=[
-            {"name": "main", "level": 3, "cron": True},
-            {"name": "dev", "level": 1, "cron": True},
+            {"name": "main", "level": 1, "cron": True},
+            {"name": "production", "level": 3, "cron": True},
         ],
     )
     resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
     hooks, _ = by_id(resources)
 
-    for hook_id, level in ((BASE_HOOK_ID, "3"), (f"{BASE_HOOK_ID}-dev", "1")):
+    for hook_id, level in ((BASE_HOOK_ID, "1"), (f"{BASE_HOOK_ID}-production", "3")):
         assert value_of(hooks[hook_id], "--level") == level
         assert hooks[hook_id].task["schedulerId"] == f"releng-level-{level}"
+
+
+@pytest.mark.asyncio
+async def test_cron_branch_hooks_share_role(cron_template):
+    """
+    Cron hooks are per-branch, but the scopes they grant are not: each branch's
+    role points at the same repo-wide `cron:*` role, whose scopes are generated
+    at the project's `default_branch.level`.
+    """
+    project = github_project(
+        branches=[
+            {"name": "main", "level": 1, "cron": True},
+            {"name": "production", "level": 3, "cron": True},
+        ],
+    )
+    _, roles = by_id(await cron_tasks.make_hooks(project, ENVIRONMENT))
+
+    scope = f"assume:{project.role_prefix}:cron:*"
+    assert scope in roles[BASE_ROLE_ID].scopes
+    assert scope in roles[f"{BASE_ROLE_ID}-production"].scopes
+
+
+def test_cron_branches_may_not_be_below_the_default_branch(cron_template):
+    with pytest.raises(ValueError):
+        github_project(
+            branches=[
+                {"name": "main", "level": 3, "cron": True},
+                {"name": "dev", "level": 1, "cron": True},
+            ],
+        )
 
 
 def test_cron_branches_may_not_be_globs():
