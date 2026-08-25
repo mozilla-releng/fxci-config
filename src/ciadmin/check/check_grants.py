@@ -159,7 +159,7 @@ async def check_insecure_grants(generate_resources):
 
                 if ":branch:" in role:
                     branch = role.split(":")[-1]
-                    if project.get_level(branch) == 1:
+                    if project.get_branch(branch).level == 1:
                         return True
 
             # Check whether the role corresponds to a pull request.

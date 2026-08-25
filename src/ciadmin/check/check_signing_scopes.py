@@ -24,7 +24,7 @@ async def project_scopes(resolver, level):
     scopes = [f"assume:mozilla-group:active_scm_level_{level}"]
     for project in projects:
         for branch in project.branches:
-            if project.get_level(branch.name) == level:
+            if branch.level == level:
                 if project.role_prefix.endswith(
                     "*"
                 ):  # Needed for Github org wide grants

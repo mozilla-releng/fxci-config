@@ -3,6 +3,7 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import re
+from functools import cached_property
 
 import attr
 from mozilla_repo_urls import parse
@@ -21,6 +22,15 @@ CRON_BRANCH_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
 
 CRON_TARGET_KEYS = {"target", "bindings", "allow-input"}
+
+
+def _level_from_access(access):
+    "Derive an scm level from a project's `access` value, or None if not possible"
+    if not access:
+        return None
+    if access.startswith("scm_level_"):
+        return int(access[-1])
+    return SYMBOLIC_GROUP_LEVELS.get(access)
 
 
 def _convert_cron_targets(values):
@@ -73,7 +83,7 @@ class Project:
     branches = attr.ib(
         type=list, default=[], converter=lambda b: [Branch(**d) for d in b]
     )
-    default_branch = attr.ib(
+    _default_branch = attr.ib(
         type=str,
         default=attr.Factory(
             lambda self: "main" if self.repo_type == "git" else "default",
@@ -111,6 +121,8 @@ class Project:
         """
         self.cron["targets"] = _convert_cron_targets(self.cron.get("targets", []))
 
+        explicit_levels = [b.level is not None for b in self.branches]
+
         for branch in self.branches:
             if branch.cron and not CRON_BRANCH_RE.match(branch.name):
                 raise ValueError(
@@ -120,7 +132,7 @@ class Project:
                 )
 
         # if neither `access` nor `level` are present, bail out
-        if not self.access and any([b.level is None for b in self.branches]):
+        if not self.access and not all(explicit_levels):
             raise RuntimeError(f"No access or level specified for project {self.alias}")
         # `access` is mandatory while `level` forbidden for hg based projects
         # and vice-versa for non-hg repositories
@@ -130,12 +142,12 @@ class Project:
                     f"Mercurial repo {self.alias} needs to provide an input for "
                     "its `access` value"
                 )
-            if any([b.level is not None for b in self.branches]):
+            if any(explicit_levels):
                 raise ValueError(
                     f"Mercurial repo {self.alias} cannot define a `level` property"
                 )
         else:
-            if any([b.level is None for b in self.branches]):
+            if not all(explicit_levels):
                 raise ValueError(
                     f"Non-hg repo {self.alias} needs to provide an input for "
                     "its `level` value"
@@ -144,6 +156,14 @@ class Project:
                 raise ValueError(
                     f"Non-hg repo {self.alias} cannot define an `access` property"
                 )
+
+        # derive each branch's level from `access`, if not already set explicitly
+        for i, branch in enumerate(self.branches):
+            if branch.level:
+                continue
+
+            if level := _level_from_access(self.access):
+                self.branches[i] = attr.evolve(branch, level=level)
 
         # Convert boolean features into a dict of the form {"enabled": <val>}
         for name, val in self.features.items():
@@ -190,19 +210,21 @@ class Project:
         "The list of enabled features"
         return [f for f, val in self.features.items() if val["enabled"]]
 
-    def get_level(self, branch):
-        "Get the level, or None if the access level does not define a level"
-        if self.access and self.access.startswith("scm_level_"):
-            return int(self.access[-1])
-        elif self.access and self.access in SYMBOLIC_GROUP_LEVELS:
-            return SYMBOLIC_GROUP_LEVELS[self.access]
-        else:
-            for b in self.branches:
-                if glob_match([b.name], branch):
-                    return b.level
+    def get_branch(self, name: str):
+        """Get the branch object given a name."""
+        for branch in self.branches:
+            if glob_match([branch.name], name):
+                return branch
 
-            return None
-
-    @property
-    def default_branch_level(self):
-        return self.get_level(self.default_branch)
+    @cached_property
+    def default_branch(self):
+        matched = self.get_branch(self._default_branch)
+        if matched is None:
+            return Branch(
+                name=self._default_branch, level=_level_from_access(self.access)
+            )
+        if matched.name == self._default_branch:
+            return matched
+        # `matched` came from a glob (eg. a `"*"` entry), so its `name` isn't
+        # the default branch's actual name
+        return attr.evolve(matched, name=self._default_branch)

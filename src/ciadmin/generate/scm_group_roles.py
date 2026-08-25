@@ -32,7 +32,7 @@ async def update_resources(resources):
         for project in projects:
             if project.repo_type == "hg":
                 for branch in project.branches:
-                    if project.get_level(branch.name) == 1:
+                    if branch.level == 1:
                         scopes.append(f"assume:{project.role_prefix}:*")
 
         if scopes:

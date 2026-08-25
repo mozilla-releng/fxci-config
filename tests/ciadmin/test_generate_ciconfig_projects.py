@@ -19,7 +19,7 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
 
 
 @pytest.mark.parametrize(
-    "project_name,project_data,expected_data",
+    "project_name,project_data,expected_data,expected_default_branch",
     (
         (
             "ash",
@@ -42,11 +42,11 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                 "branches": [
                     {
                         "name": "default",
-                        "level": None,
+                        "level": 2,
                         "cron": False,
                     },
                 ],
-                "default_branch": "default",
+                "_default_branch": "default",
                 "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
@@ -60,6 +60,7 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                 "trust_project": None,
                 # defaults
             },
+            Branch(name="default", level=2, cron=False),
         ),
         (
             "fenix",
@@ -83,7 +84,7 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                         "cron": False,
                     },
                 ],
-                "default_branch": "main",
+                "_default_branch": "main",
                 "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
@@ -96,12 +97,17 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                 "trust_domain": None,
                 "trust_project": None,
             },
+            Branch(name="main", level=3, cron=False),
         ),
     ),
 )
 @pytest.mark.asyncio
 async def test_fetch_defaults(
-    mock_ciconfig_file, project_name, project_data, expected_data
+    mock_ciconfig_file,
+    project_name,
+    project_data,
+    expected_data,
+    expected_default_branch,
 ):
     "Test a fetch of project data only the required fields, applying defaults"
     mock_ciconfig_file("projects.yml", {project_name: project_data})
@@ -109,10 +115,11 @@ async def test_fetch_defaults(
     assert len(prjs) == 1
     project = attr.asdict(prjs[0], filter=_filter_out_parsed_url)
     assert project == expected_data
+    assert prjs[0].default_branch == expected_default_branch
 
 
 @pytest.mark.parametrize(
-    "project_name,project_data,expected_data",
+    "project_name,project_data,expected_data,expected_default_branch",
     (
         (
             "ash",
@@ -145,7 +152,7 @@ async def test_fetch_defaults(
                 "branches": [
                     {
                         "name": "default",
-                        "level": None,
+                        "level": 2,
                         "cron": False,
                     },
                 ],
@@ -157,7 +164,7 @@ async def test_fetch_defaults(
                         {"target": "b", "bindings": []},
                     ],
                 },
-                "default_branch": "default",
+                "_default_branch": "default",
                 "features": {
                     "hg-push": {"enabled": True},
                     "taskgraph-cron": {"enabled": False},
@@ -172,6 +179,7 @@ async def test_fetch_defaults(
                 "trust_domain": "gecko",
                 "trust_project": None,
             },
+            Branch(name="default", level=2, cron=False),
         ),
         (
             "beetmoverscript",  # git project but not mobile
@@ -216,7 +224,7 @@ async def test_fetch_defaults(
                         {"target": "b", "bindings": []},
                     ],
                 },
-                "default_branch": "main",
+                "_default_branch": "main",
                 "features": {
                     "hg-push": {"enabled": True},
                     "taskgraph-cron": {"enabled": False},
@@ -231,6 +239,7 @@ async def test_fetch_defaults(
                 "trust_domain": "beet",
                 "trust_project": None,
             },
+            Branch(name="main", level=3, cron=False),
         ),
         (
             "cron-project",  # runs cron on more than one branch
@@ -259,7 +268,7 @@ async def test_fetch_defaults(
                 "cron": {
                     "targets": [{"target": "a", "bindings": []}],
                 },
-                "default_branch": "main",
+                "_default_branch": "main",
                 "features": {
                     "taskgraph-cron": {"enabled": True},
                 },
@@ -273,12 +282,17 @@ async def test_fetch_defaults(
                 "trust_domain": "releng",
                 "trust_project": None,
             },
+            Branch(name="main", level=3, cron=True),
         ),
     ),
 )
 @pytest.mark.asyncio
 async def test_fetch_nodefaults(
-    mock_ciconfig_file, project_name, project_data, expected_data
+    mock_ciconfig_file,
+    project_name,
+    project_data,
+    expected_data,
+    expected_default_branch,
 ):
     "Test a fetch of project data with all required fields supplied"
     mock_ciconfig_file("projects.yml", {project_name: project_data})
@@ -286,6 +300,7 @@ async def test_fetch_nodefaults(
     assert len(prjs) == 1
     project = attr.asdict(prjs[0], filter=_filter_out_parsed_url)
     assert project == expected_data
+    assert prjs[0].default_branch == expected_default_branch
 
 
 def test_project_feature():
@@ -342,7 +357,7 @@ def test_project_enabled_features():
                 "trust_domain": "gecko",
             },
             [
-                Branch(name="default", level=None),
+                Branch(name="default", level=3),
             ],
         ),
         (
@@ -359,7 +374,7 @@ def test_project_enabled_features():
                 "trust_domain": "gecko",
             },
             [
-                Branch(name="default", level=None),
+                Branch(name="default", level=2),
             ],
         ),
         (
@@ -376,7 +391,7 @@ def test_project_enabled_features():
                 "trust_domain": "gecko",
             },
             [
-                Branch(name="default", level=None),
+                Branch(name="default", level=1),
             ],
         ),
         (
@@ -393,7 +408,7 @@ def test_project_enabled_features():
                 "trust_domain": "gecko",
             },
             [
-                Branch(name="default", level=None),
+                Branch(name="default", level=3),
             ],
         ),
         (
