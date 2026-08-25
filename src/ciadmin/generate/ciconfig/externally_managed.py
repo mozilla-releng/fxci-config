@@ -62,5 +62,16 @@ def manage_individual(resources, resource_id):
     """
     Manage a single specific resource by its exact ID.
     Used for resources in externally-managed namespaces that we DO generate.
+
+    WORKAROUND for https://github.com/taskcluster/tc-admin/issues/327:
+    tcadmin's `current.hooks.fetch_hooks` decides whether to query a hook group
+    by checking whether a managed pattern *string* starts with `Hook=<group>/`.
+    `re.escape` rewrites the `-` in group names (e.g. `project-fuzzing`) as `\\-`,
+    which breaks that prefix check -- so the group is skipped, and the hooks we
+    generate in it appear as phantom additions (they exist in Taskcluster but
+    never get fetched into the "current" set). `-` is a literal outside a
+    character class, so leaving it unescaped keeps this an exact-match pattern
+    while restoring the prefix `fetch_hooks` looks for. Remove once tc-admin#327
+    is fixed.
     """
-    resources.manage(re.escape(resource_id) + "$")
+    resources.manage(re.escape(resource_id).replace(r"\-", "-") + "$")
