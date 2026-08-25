@@ -63,7 +63,7 @@ async def make_branch_hooks(project, environment, branch, default_branch):
         raise Exception("Unknown cron task type.")
 
     context = {
-        "level": project.get_level(branch),
+        "level": project.get_branch(branch).level,
         "trust_domain": project.trust_domain,
         "hookGroupId": hookGroupId,
         "hookId": hookId,
