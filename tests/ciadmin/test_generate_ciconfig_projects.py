@@ -246,7 +246,7 @@ async def test_fetch_defaults(
             {
                 "branches": [
                     {"name": "main", "level": 3, "cron": True},
-                    {"name": "beta", "level": 1, "cron": True},
+                    {"name": "beta", "level": 3, "cron": True},
                 ],
                 "cron": {
                     "targets": ["a"],
@@ -263,7 +263,7 @@ async def test_fetch_defaults(
                 "alias": "cron-project",
                 "branches": [
                     {"name": "main", "level": 3, "cron": True},
-                    {"name": "beta", "level": 1, "cron": True},
+                    {"name": "beta", "level": 3, "cron": True},
                 ],
                 "cron": {
                     "targets": [{"target": "a", "bindings": []}],
@@ -582,12 +582,81 @@ def test_project_level_failing_validators(project_data, error_type):
             },
             ValueError,
         ),
+        (
+            # cron branch below the default branch's level: its hook would hold
+            # the repo's level-3 `cron:*` scopes
+            {
+                "alias": "prj",
+                "branches": [
+                    {"name": "main", "level": 3, "cron": True},
+                    {"name": "staging", "level": 1, "cron": True},
+                ],
+                "repo": "https://github.com/mozilla-releng/prj",
+                "repo_type": "git",
+                "features": {"taskgraph-cron": True},
+            },
+            ValueError,
+        ),
+        (
+            # same, but the cron branch only gets its level from a `*` catch-all
+            {
+                "alias": "prj",
+                "branches": [
+                    {"name": "main", "level": 3},
+                    {"name": "*", "level": 1, "cron": True},
+                ],
+                "repo": "https://github.com/mozilla-releng/prj",
+                "repo_type": "git",
+                "features": {"taskgraph-cron": True},
+            },
+            ValueError,
+        ),
+        (
+            # default branch not matched by any `branches` entry
+            {
+                "alias": "prj",
+                "branches": [{"name": "production", "level": 3, "cron": True}],
+                "repo": "https://github.com/mozilla-releng/prj",
+                "repo_type": "git",
+                "features": {"taskgraph-cron": True},
+            },
+            ValueError,
+        ),
     ),
 )
 def test_project_level_failing_post_init_checks(project_data, error_type):
     "Test the level attribute"
     with pytest.raises(error_type):
         Project(**project_data)
+
+
+@pytest.mark.parametrize(
+    "branches",
+    (
+        # the common case: cron runs on the default branch only
+        [{"name": "main", "level": 3, "cron": True}],
+        # several branches, all at the default branch's level
+        [
+            {"name": "main", "level": 3, "cron": True},
+            {"name": "beta", "level": 3, "cron": True},
+        ],
+        # a cron branch *above* the default branch's level is allowed: the
+        # `cron:*` role it points at is under-privileged, not over-privileged
+        [
+            {"name": "main", "level": 1, "cron": True},
+            {"name": "production", "level": 3, "cron": True},
+        ],
+    ),
+)
+def test_project_valid_cron_branch_levels(branches):
+    "None of these branch layouts should raise"
+    Project(
+        alias="prj",
+        branches=branches,
+        repo="https://github.com/mozilla-releng/prj",
+        repo_type="git",
+        features={"taskgraph-cron": True},
+    )
 
 
 def test_project_repo_path_property():

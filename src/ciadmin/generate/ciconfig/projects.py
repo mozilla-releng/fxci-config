@@ -175,11 +175,30 @@ class Project:
                 raise ValueError(f"Feature {name} must be a dict or boolean")
 
         # checked last, because it relies on the features above being converted
-        if self.feature("taskgraph-cron") and not any(b.cron for b in self.branches):
-            raise ValueError(
-                f"Project {self.alias} runs cron and must mark at least one "
-                "branch with `cron: true`"
-            )
+        if self.feature("taskgraph-cron"):
+            if not any(b.cron for b in self.branches):
+                raise ValueError(
+                    f"Project {self.alias} runs cron and must mark at least one "
+                    "branch with `cron: true`"
+                )
+
+            # Reject cron branches below the project's `default_branch.level`.
+            if self.default_branch.level is None:
+                raise ValueError(
+                    f"Project {self.alias} runs cron but its default branch "
+                    f"{self.default_branch.name!r} is not matched by any entry in "
+                    "`branches`, so it has no level"
+                )
+
+            for branch in self.branches:
+                if not branch.cron:
+                    continue
+
+                if branch.level < self.default_branch.level:
+                    raise ValueError(
+                        f"Project {self.alias} must not have cron branch '{branch.name}' "
+                        f"with lower level than default branch '{self.default_branch.name}'."
+                    )
 
     @staticmethod
     async def fetch_all():
