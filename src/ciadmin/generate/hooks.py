@@ -95,8 +95,20 @@ async def update_resources(resources):
 
     hooks = generate_hook_variants(await HookConfig.fetch_all())
 
-    await manage_with_exclusions(resources, "Hook=.*")
-    await manage_with_exclusions(resources, "Role=hook-id:.*")
+    # Manage the Hook / hook-id namespace except the parts owned by other
+    # generators, so we still clean up stale hooks without treating theirs as
+    # deletions under `--resources hooks`.
+    owned_elsewhere = "|".join(
+        (
+            "project-.*/in-tree-action-.*",  # in_tree_actions
+            "project-.*/in-tree-pr-action-.*",  # in_tree_actions
+            "project-releng/cron-task-.*",  # cron_tasks
+            "git-push/.*",  # git_pushes
+            "hg-push/.*",  # hg_pushes
+        )
+    )
+    await manage_with_exclusions(resources, f"Hook=(?!{owned_elsewhere}).*")
+    await manage_with_exclusions(resources, f"Role=hook-id:(?!{owned_elsewhere}).*")
 
     for hook in hooks:
         hook_name = f"{hook.hook_group_id}/{hook.hook_id}"

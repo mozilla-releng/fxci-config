@@ -254,11 +254,11 @@ async def update_resources(resources):
     projects = await Project.fetch_all()
     environment = await Environment.current()
 
-    # manage our resources, excluding externally managed patterns
-    resources.manage("Role=mozilla-group:.*")
+    # Manage only the role namespaces grants owns; `active_scm_level_*` roles are
+    # managed by scm_group_roles and hook-id roles by hooks/in_tree_actions/etc.
+    resources.manage("Role=mozilla-group:(?!active_scm_level_[123]).*")
     resources.manage("Role=mozillians-group:.*")
     resources.manage("Role=login-identity:.*")
-    await manage_with_exclusions(resources, "Role=hook-id:.*")
     await manage_with_exclusions(resources, "Role=project:.*")
     resources.manage("Role=repo:.*")
 
