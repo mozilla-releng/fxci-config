@@ -6,7 +6,11 @@
 from tcadmin.resources import Role
 from tcadmin.resources.role import normalizeScopes
 
+from .ciconfig.externally_managed import manage_patterns
 from .ciconfig.projects import Project
+
+# The resource id namespace(s) this module owns.
+MANAGED_PATTERNS = ("Role=mozilla-group:active_scm_level_[123]",)
 
 
 async def update_resources(resources):
@@ -18,7 +22,7 @@ async def update_resources(resources):
     scopes available to all repos at level L or lower.  That is a lot, and there is
     work afoot to change it in bug 1470625.
     """
-    resources.manage("Role=mozilla-group:active_scm_level_[123]")
+    await manage_patterns(resources, MANAGED_PATTERNS)
 
     projects = await Project.fetch_all()
 

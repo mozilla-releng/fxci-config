@@ -16,11 +16,21 @@ from ..util.matching import (
     project_match,
 )
 from .ciconfig.environment import Environment
-from .ciconfig.externally_managed import manage_with_exclusions
+from .ciconfig.externally_managed import manage_patterns
 from .ciconfig.grants import Grant
 from .ciconfig.projects import Project
 
 LEVEL_PRIORITIES = {1: "low", 2: "low", 3: "highest"}
+
+# The resource id namespace(s) this module owns; `active_scm_level_*` roles
+# are managed by scm_group_roles and hook-id roles by hooks/in_tree_actions/etc.
+MANAGED_PATTERNS = (
+    "Role=mozilla-group:(?!active_scm_level_[123]).*",
+    "Role=mozillians-group:.*",
+    "Role=login-identity:.*",
+    ("Role=project:.*", True),
+    "Role=repo:.*",
+)
 
 
 def job_to_role_suffix(job, pr_policy):
@@ -255,13 +265,7 @@ async def update_resources(resources):
     projects = await Project.fetch_all()
     environment = await Environment.current()
 
-    # Manage only the role namespaces grants owns; `active_scm_level_*` roles are
-    # managed by scm_group_roles and hook-id roles by hooks/in_tree_actions/etc.
-    resources.manage("Role=mozilla-group:(?!active_scm_level_[123]).*")
-    resources.manage("Role=mozillians-group:.*")
-    resources.manage("Role=login-identity:.*")
-    await manage_with_exclusions(resources, "Role=project:.*")
-    resources.manage("Role=repo:.*")
+    await manage_patterns(resources, MANAGED_PATTERNS)
 
     # calculate scopes..
     roles = {}
