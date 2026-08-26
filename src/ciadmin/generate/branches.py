@@ -2,6 +2,7 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+import sys
 from asyncio import Lock
 
 from ciadmin.util import github
@@ -26,7 +27,8 @@ async def get_default_branch(repo_path):
             detail = await response.text()
             print(
                 f"Got error when querying {endpoint}: "
-                f"{response.status} {response.reason}: {detail}"
+                f"{response.status} {response.reason}: {detail}",
+                file=sys.stderr,
             )
             response.raise_for_status()
 

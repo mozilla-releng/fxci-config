@@ -3,6 +3,7 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import hashlib
+import sys
 from asyncio import Lock
 
 import aiohttp
@@ -72,7 +73,7 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
                     response.raise_for_status()
                     result = await response.read()
                 except aiohttp.ClientResponseError as e:
-                    print(f"Got error when querying {url}: {e}")
+                    print(f"Got error when querying {url}: {e}", file=sys.stderr)
                     raise e
 
             _cache[cache_key] = result
@@ -112,7 +113,7 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
                 response.raise_for_status()
                 result = await response.read()
             except aiohttp.ClientResponseError as e:
-                print(f"Got error when querying {endpoint}: {e}")
+                print(f"Got error when querying {endpoint}: {e}", file=sys.stderr)
                 raise e
 
             _cache[cache_key] = result
