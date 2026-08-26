@@ -24,7 +24,6 @@ jobs:
       matrix:
         environment: ["staging", "firefoxci"]
     env:
-      TASKCLUSTER_ROOT_URL: ${{vars.TASKCLUSTER_ROOT_URL}}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GCP_CHECK_TOKEN: ${{ secrets.GCP_CHECK_TOKEN }}
     steps:
@@ -38,9 +37,9 @@ jobs:
       - name: Set root url
         run: |
           if [ "${{ matrix.environment }}" == "staging" ]; then
-            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> $GITHUB_ENV;
+            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> "$GITHUB_ENV"
           elif [ "${{ matrix.environment }}" == "firefoxci" ]; then
-            echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> $GITHUB_ENV;
+            echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> "$GITHUB_ENV"
           fi
       - name: Run checks
         run: uv run tc-admin check --environment ${{matrix.environment}}
@@ -52,7 +51,8 @@ jobs:
       matrix:
         environment: ["staging", "firefoxci"]
     env:
-      TASKCLUSTER_ROOT_URL: ${{vars.TASKCLUSTER_ROOT_URL}}
+      # Github doesn't set these on PR events from a fork, but that's ok as we
+      # skip generating resources that require scopes with PRs anyway.
       TASKCLUSTER_CLIENT_ID: ${{vars.TASKCLUSTER_CLIENT_ID}}
       TASKCLUSTER_ACCESS_TOKEN: ${{secrets.TASKCLUSTER_ACCESS_TOKEN}}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -67,9 +67,9 @@ jobs:
       - name: Set root url
         run: |
           if [ "${{ matrix.environment }}" == "staging" ]; then
-            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> $GITHUB_ENV;
+            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> "$GITHUB_ENV"
           elif [ "${{ matrix.environment }}" == "firefoxci" ]; then
-            echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> $GITHUB_ENV;
+            echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> "$GITHUB_ENV"
           fi
       - name: Generate diff
         run: |
