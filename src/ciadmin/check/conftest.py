@@ -5,13 +5,24 @@
 import asyncio
 from collections import defaultdict
 
+import click
 import pytest
 from tcadmin import current
 from tcadmin.resources import Resources
 from tcadmin.util.scopes import Resolver
 from tcadmin.util.sessions import with_aiohttp_session
 
-from ciadmin.boot import appconfig
+from ciadmin.boot import RESOURCE_MODULES, appconfig
+from ciadmin.util.generated import filter_generated, load_generated
+
+
+def _generated_path():
+    """Return the path passed via tc-admin's `--generated` flag, if any."""
+    try:
+        ctx = click.get_current_context()
+    except RuntimeError:
+        return None
+    return ctx.params.get("generated")
 
 
 @pytest.fixture(scope="session")
@@ -20,11 +31,21 @@ async def generate_resources():
 
     This function will generate resources lazily. Subsequent calls will return
     cached results for the modules that have already been generated.
+
+    If `tc-admin check --generated PATH` was used, the resources are instead
+    loaded once from PATH and module filtering is then done by matching each
+    resource's id against the requested modules' `managed` MatchLists.
     """
     cache = {}
+    generated_path = _generated_path()
 
     @with_aiohttp_session
     async def inner(*modules):
+        if generated_path:
+            if "resources" not in cache:
+                cache["resources"] = load_generated(generated_path)
+            return filter_generated(cache["resources"], modules, RESOURCE_MODULES)
+
         callables = dict(appconfig.generators.callables)
         if modules:
             callables = {
