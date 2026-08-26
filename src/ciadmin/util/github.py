@@ -3,6 +3,7 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import asyncio
+import sys
 
 from simple_github import AsyncClient, client_from_env
 
@@ -36,3 +37,33 @@ async def close_client():
         if _client is not None:
             await _client.close()
             _client = None
+
+
+async def graphql(query, **variables):
+    """Run `query` against GitHub's GraphQL API.
+
+    Returns `(data, errors)`, both for the caller to interpret. GitHub answers
+    a partially resolvable query with both: asking for a file across many
+    branches yields the branches that have it in `data`, plus one `NOT_FOUND`
+    error per branch that doesn't. Only the caller knows which of those errors
+    it can ignore, so this raises for nothing that GitHub itself answered.
+
+    `data` is None when the query didn't run at all -- a bad field, a
+    repository the token can't see. GitHub reports that as HTTP 200 with the
+    failure only in the body, and always alongside an error explaining it.
+    """
+    client = await get_client()
+    response = await client.request(
+        "POST", "/graphql", json={"query": query, "variables": variables}
+    )
+    if not response.ok:
+        detail = await response.text()
+        print(
+            f"Got error when querying the GraphQL API: "
+            f"{response.status} {response.reason}: {detail}",
+            file=sys.stderr,
+        )
+        response.raise_for_status()
+
+    body = await response.json()
+    return body.get("data"), body.get("errors") or []
