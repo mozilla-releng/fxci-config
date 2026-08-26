@@ -182,9 +182,9 @@ async def test_github_project(cron_template):
     # The base role may run any cron target.
     # Each target role runs only its own.
     role_prefix = "assume:repo:github.com/mozilla-releng/fxci-config"
-    assert f"{role_prefix}:cron:*" in roles[BASE_ROLE_ID].scopes
-    assert f"{role_prefix}:cron:test-build-decision" in roles[TARGET_ROLE_ID].scopes
-    assert f"{role_prefix}:cron:*" not in roles[TARGET_ROLE_ID].scopes
+    assert f"{role_prefix}:cron-3:*" in roles[BASE_ROLE_ID].scopes
+    assert f"{role_prefix}:cron-3:test-build-decision" in roles[TARGET_ROLE_ID].scopes
+    assert f"{role_prefix}:cron-3:*" not in roles[TARGET_ROLE_ID].scopes
 
     # Only the target role attaches the secret scope directly.
     assert f"secrets:get:{GITHUB_TOKEN_SECRET}" not in roles[BASE_ROLE_ID].scopes

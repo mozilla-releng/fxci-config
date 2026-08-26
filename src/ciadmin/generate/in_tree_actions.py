@@ -276,12 +276,17 @@ def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
                 # but the hooks service checks that this is satisfied by the
                 # `hook-id:<hookGroupId>/<hookId>` role, which is set up above to only
                 # contain scopes for repositories at this level. Note that the
-                # action_perm is *not* based on user input, but is fixed in the
-                # hookPayload template.  We would like to get rid of this parameter and
-                # calculate it directly in .taskcluster.yml, once all the other work
-                # for actions-as-hooks has finished
+                # action_perm and action_level are *not* based on user input, but are
+                # fixed in the hookPayload template. We would like to get rid of the
+                # parameters and calculate them directly in .taskcluster.yml, once all
+                # the other work for actions-as-hooks has finished
                 "repo_scope": "assume:repo:"
-                "${" + scope_repo_location + "[8:]}:action:" + action.action_perm,
+                "${"
+                + scope_repo_location
+                + "[8:]}:action-"
+                + str(action.level)
+                + ":"
+                + action.action_perm,
                 "action_perm": action.action_perm,
             },
             # remaining sections are copied en masse from the hook payload
@@ -412,7 +417,7 @@ async def update_resources(resources):
             f"on each repo at level {action.level}",
             scopes=normalizeScopes(
                 [
-                    f"assume:{p.role_prefix}:action:{action.action_perm}"
+                    f"assume:{p.role_prefix}:action-{action.level}:{action.action_perm}"
                     for p in projects_by_level_and_trust_domain.get(
                         (action.trust_domain, action.level), []
                     )

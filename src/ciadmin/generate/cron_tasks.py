@@ -115,12 +115,13 @@ async def make_branch_hooks(project, environment, branch, default_branch):
         ),
         Role(
             roleId=f"hook-id:{hookGroupId}/{hookId}",
-            description=f"Scopes associated with cron tasks for project `{project.alias}`",
+            description=f"Scopes associated with cron tasks for project `{project.alias}` "
+            f"on branch `{branch}`",
             # this task has the scopes of *all* cron tasks in this project;
             # the tasks it creates will have the scopes for a specific cron task
             # (replacing * with the task name)
             scopes=[
-                f"assume:{project.role_prefix}:cron:*",
+                f"assume:{project.role_prefix}:cron-{context['level']}:*",
                 "queue:route:notify.email.*",
                 "queue:create-task:highest:infra/build-decision",
             ],
@@ -139,7 +140,7 @@ async def make_branch_hooks(project, environment, branch, default_branch):
         target_context["allow_input"] = allow_input
         task = jsone.render(task_template, target_context)
         scopes = [
-            f"assume:{project.role_prefix}:cron:{cron_target}",
+            f"assume:{project.role_prefix}:cron-{context['level']}:{cron_target}",
             "queue:route:notify.email.*",
             "queue:create-task:highest:infra/build-decision",
         ]
