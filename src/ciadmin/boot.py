@@ -5,8 +5,10 @@
 import os
 
 import click
+from tcadmin import generate as tcadmin_generate
 from tcadmin.appconfig import AppConfig
 from tcadmin.main import main
+from tcadmin.options import with_options
 from tcadmin.resources import Resources
 from tcadmin.util.matchlist import MatchList
 
@@ -22,6 +24,7 @@ from ciadmin.generate import (
     scm_group_roles,
     worker_pools,
 )
+from ciadmin.util.generated import filter_generated, load_generated
 
 RESOURCE_MODULES = {
     "clients": clients,
@@ -34,6 +37,28 @@ RESOURCE_MODULES = {
     "scm_group_roles": scm_group_roles,
     "worker_pools": worker_pools,
 }
+
+
+_orig_generate_resources = tcadmin_generate.resources
+
+
+@with_options("generated", "only")
+async def _generate_resources(generated=None, only=None):
+    """Generate resources respecting --only alongside --generated.
+
+    Upstream `tcadmin.generate.resources` ignores `--only` whenever
+    `--generated` is set, returning the full cached resource set unfiltered.
+    This breaks PR-triggered diffs which rely on `--only` to skip generating
+    resource types (e.g. clients) that need scopes we don't grant to pull
+    requests.
+    """
+    if generated and only:
+        modules = [name.strip() for name in only.split(",") if name.strip()]
+        return filter_generated(load_generated(generated), modules, RESOURCE_MODULES)
+    return await _orig_generate_resources()
+
+
+tcadmin_generate.resources = _generate_resources
 
 
 def _managed_resources(module):
