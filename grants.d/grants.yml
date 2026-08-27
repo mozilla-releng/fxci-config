@@ -2119,6 +2119,11 @@
     - roles:
         - mozilla-group:team_moco
 - grant:
+    - assume:project:releng:ci-group:team_mzla
+  to:
+    - roles:
+        - mozilla-group:team_mzla
+- grant:
     - assume:project:releng:ci-group:sheriff
   to:
     - roles:
