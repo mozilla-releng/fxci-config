@@ -5,6 +5,7 @@
 from tcadmin.util.root_url import root_url as get_root_url
 
 from ciadmin.generate.ciconfig.environment import Environment
+from ciadmin.util import github
 
 MODIFIERS = {}
 
@@ -12,6 +13,23 @@ MODIFIERS = {}
 def modifier(fn):
     MODIFIERS[fn.__name__] = fn
     return fn
+
+
+# Deliberately not a `@modifier`: those are named per-environment in
+# `environments.yml` and rewrite resources. This one always runs and leaves
+# them alone.
+async def close_github_client(resources):
+    """
+    Close the shared GitHub client now that every generator has finished.
+
+    No generator can do this itself. They all run under one `asyncio.gather`,
+    so none of them knows whether a sibling is still using the client, and
+    closing it first tears the connector out from under any request still in
+    flight. Modifiers run after every generator has returned, which is the
+    first point where closing is safe.
+    """
+    await github.close_client()
+    return resources
 
 
 @modifier
