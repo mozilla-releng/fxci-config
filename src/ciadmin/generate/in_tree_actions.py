@@ -4,7 +4,6 @@
 
 import asyncio
 import datetime
-import functools
 import hashlib
 import textwrap
 
@@ -20,7 +19,7 @@ from tcadmin.util.sessions import aiohttp_session
 
 from ciadmin.util.matching import glob_match
 
-from . import branches, tcyml
+from . import tcyml
 from .ciconfig.actions import Action
 from .ciconfig.externally_managed import manage_with_exclusions
 from .ciconfig.projects import Project
@@ -54,93 +53,121 @@ def should_hash(project):
         return False
 
 
-async def get_project_branches(project):
-    if project.repo_type == "git":
-        return await branches.get(project.repo_path)
-    elif project.repo_type == "hg":
-        return ["default"]
+def configured_branches(project):
+    """The branch names, possibly globbed, that `project` generates actions for."""
+    # If "*" is a configured branch we explicitly ignore it; otherwise
+    # we could end up fetching 100s or 1000s of tcymls and generating
+    # hooks for them. Substring globs may still exist, and are
+    # supported.
+    names = [b.name for b in project.branches if b.name != "*"]
+    # The default branch is considered to be _always_ configured, even if
+    # not explicitly named in `branches`. This is primarily to ensure that
+    # cases where `*` is the only branch explicitly listed, that we still
+    # generate actions for the default branch.
+    names.append(project.default_branch.name)
+    return names
 
-    raise Exception(f"unsupported repo type {project.repo_type} for {project.alias}")
+
+def parse_and_hash(tcy):
+    """
+    Parse a `.taskcluster.yml` and hash it, returning (parsed, hash).
+
+    Returns None for the files we can't generate action hooks from, which is
+    every shape other than `{tasks: [..]}`.
+    """
+    # some ancient projects have no .taskcluster.yml
+    if not tcy:
+        return None
+
+    # some old projects have .taskcluster.yml's that are not valid YAML
+    # (back in the day, mozilla-taskcluster used mustache to templatize
+    # the text before parsing it..). Ignore those projects.
+    try:
+        parsed = yaml.safe_load(tcy)
+    except Exception:
+        return None
+
+    # some slightly less old projects have
+    # {tasks: $let: .., in: [..]} instead of the expected
+    # {tasks: [{$let: .., in: ..}]}.  Those can be ignored too.
+    if not isinstance(parsed, dict) or not isinstance(parsed.get("tasks"), list):
+        return None
+
+    # hash the value of this .taskcluster.yml.  Note that this must match the
+    # hashing in taskgraph/actions/registry.py
+    return parsed, hashlib.sha256(tcy).hexdigest()[:10]
 
 
 async def hash_taskcluster_ymls():
     """
     Download and hash .taskcluster.yml from every project repository.  Returns
-    {alias: (parsed content, hash)}.
+    {alias: {branch: (parsed content, hash)}}.
     """
     projects = await Project.fetch_all()
-
-    # hash the value of this .taskcluster.yml.  Note that this must match the
-    # hashing in taskgraph/actions/registry.py
-    def hash(val):
-        return hashlib.sha256(val).hexdigest()[:10]
-
     tcyml_projects = list(filter(should_hash, projects))
-    futures = []
-    rv = {}
-    for p in tcyml_projects:
-        rv[p.alias] = {}
-
-        # If "*" is a configured branch we explicitly ignore it; otherwise
-        # we could end up fetching 100s or 1000s of tcymls and generating
-        # hooks for them. Substring globs may still exist, and are
-        # supported.
-        configured_branches = [b.name for b in p.branches if b.name != "*"]
-        # The default branch is considered to be _always_ configured, even if
-        # not explicitly named in `branches`. This is primarily to ensure that
-        # cases where `*` is the only branch explicitly listed, that we still
-        # generate actions for the default branch.
-        configured_branches.append(p.default_branch.name)
-        for b in await get_project_branches(p):
-            if glob_match(configured_branches, b):
-
-                def process(project, branch_name, task):
-                    try:
-                        tcy = task.result()
-                    except aiohttp.ClientResponseError as e:
-                        # .taskcluster.yml doesn't exist. This can happen if
-                        # a project owner moves it away to disable Taskcluster.
-                        if e.status == 404:
-                            return
-                        raise e
-
-                    # some ancient projects have no .taskcluster.yml
-                    if not tcy:
-                        return
-
-                    # some old projects have .taskcluster.yml's that are not valid YAML
-                    # (back in the day, mozilla-taskcluster used mustache to templatize
-                    # the text before parsing it..). Ignore those projects.
-                    try:
-                        parsed = yaml.safe_load(tcy)
-                    except Exception:
-                        return
-
-                    # some slightly less old projects have
-                    # {tasks: $let: .., in: [..]} instead of the expected
-                    # {tasks: [{$let: .., in: ..}]}.  Those can be ignored too.
-                    if not isinstance(parsed["tasks"], list):
-                        return
-
-                    rv[project.alias][branch_name] = {
-                        "parsed": parsed,
-                        "hash": hash(tcy),
-                        "level": project.get_branch(branch_name).level,
-                        "alias": project.alias,
-                    }
-
-                future = asyncio.ensure_future(
-                    tcyml.get(p.repo, repo_type=p.repo_type, default_branch=b)
-                )
-                future.add_done_callback(functools.partial(process, p, b))
-                futures.append(future)
+    rv = {p.alias: {} for p in tcyml_projects}
 
     # `return_exceptions` is set to False to ensure any errors fetching
     # tcymls are bubbled up. Any issue retrieving them will result in
     # incomplete action hook generation, and attempts to generate or deploy
     # changes should be aborted because of this.
-    await asyncio.gather(*futures, return_exceptions=False)
+    await asyncio.gather(
+        *(_hash_project_ymls(p, rv[p.alias]) for p in tcyml_projects),
+        return_exceptions=False,
+    )
     return rv
+
+
+async def _hash_project_ymls(project, hashes):
+    """Fill `hashes` with {branch: (parsed content, hash)} for one project."""
+
+    def record(branch, parsed):
+        """Add a `parse_and_hash` result to `hashes`, unless it came back None."""
+        if parsed is None:
+            return
+        content, tcyml_hash = parsed
+        hashes[branch] = {
+            "parsed": content,
+            "hash": tcyml_hash,
+            "level": project.get_branch(branch).level,
+            "alias": project.alias,
+        }
+
+    if project.repo_type == "hg":
+        # An hg project has the one branch, so there is nothing to index.
+        if not glob_match(configured_branches(project), "default"):
+            return
+        try:
+            tcy = await tcyml.get(project.repo, repo_type="hg")
+        except aiohttp.ClientResponseError as e:
+            # .taskcluster.yml doesn't exist. This can happen if a project
+            # owner moves it away to disable Taskcluster.
+            if e.status == 404:
+                return
+            raise e
+        record("default", parse_and_hash(tcy))
+        return
+
+    if project.repo_type != "git":
+        raise Exception(
+            f"unsupported repo type {project.repo_type} for {project.alias}"
+        )
+
+    configured = configured_branches(project)
+    # A branch with no `.taskcluster.yml` has no oid, and needs no fetching --
+    # the same case the git path used to handle as a 404.
+    oids = {
+        branch: oid
+        for branch, oid in (await tcyml.get_blob_oids(project.repo_path)).items()
+        if oid and glob_match(configured, branch)
+    }
+
+    blobs = await tcyml.get_blobs(project.repo_path, set(oids.values()))
+    # Branches sharing an oid share a file, so each distinct one is parsed and
+    # hashed a single time no matter how many branches carry it.
+    by_oid = {oid: parse_and_hash(tcy) for oid, tcy in blobs.items()}
+    for branch, oid in oids.items():
+        record(branch, by_oid[oid])
 
 
 def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
@@ -381,12 +408,9 @@ async def update_resources(resources):
             if not should_hash(project):
                 continue
 
-            for branch_name in await get_project_branches(project):
-                if project.alias not in hashed_tcymls:
-                    continue
-                if branch_name not in hashed_tcymls[project.alias]:
-                    # Branch didn't exist, or doesn't have a parseable tcyml
-                    continue
+            # Only the branches that exist and have a parseable tcyml are in
+            # here, which is everything this loop used to filter down to.
+            for branch_name in hashed_tcymls.get(project.alias, {}):
                 if project.get_branch(branch_name).level < action.level:
                     continue
                 if project.trust_domain != action.trust_domain:
