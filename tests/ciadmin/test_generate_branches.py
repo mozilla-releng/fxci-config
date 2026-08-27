@@ -31,7 +31,7 @@ def make_403_response(body_text):
 
 @pytest.mark.asyncio
 async def test_get_403_rate_limit_exceeded(capsys):
-    branches_module._cache.clear()
+    branches_module._default_branch_cache.clear()
     body = json.dumps(
         {
             "message": "API rate limit exceeded for 1.2.3.4. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
@@ -45,7 +45,7 @@ async def test_get_403_rate_limit_exceeded(capsys):
         "ciadmin.generate.branches.github.get_client", AsyncMock(return_value=client)
     ):
         with pytest.raises(aiohttp.ClientResponseError):
-            await branches_module.get("mozilla-releng/fxci-config")
+            await branches_module.get_default_branch("mozilla-releng/fxci-config")
 
     captured = capsys.readouterr()
     assert "403" in captured.out
@@ -54,7 +54,7 @@ async def test_get_403_rate_limit_exceeded(capsys):
 
 @pytest.mark.asyncio
 async def test_get_403_saml_enforcement(capsys):
-    branches_module._cache.clear()
+    branches_module._default_branch_cache.clear()
     body = json.dumps(
         {
             "message": "Resource protected by organization SAML enforcement. You must grant your Personal Access token access to this organization.",
@@ -69,7 +69,7 @@ async def test_get_403_saml_enforcement(capsys):
         "ciadmin.generate.branches.github.get_client", AsyncMock(return_value=client)
     ):
         with pytest.raises(aiohttp.ClientResponseError):
-            await branches_module.get("taskcluster/taskgraph")
+            await branches_module.get_default_branch("taskcluster/taskgraph")
 
     captured = capsys.readouterr()
     assert "403" in captured.out
