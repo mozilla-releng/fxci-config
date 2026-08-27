@@ -2471,3 +2471,24 @@
     - project:
         alias: mozilla-release
         job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:thunderbird-desktop-beta
+  to:
+    - project:
+        alias: comm-central
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:thunderbird-desktop-release
+  to:
+    - project:
+        alias: comm-beta
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:thunderbird-desktop-esr153
+  to:
+    - project:
+        alias: comm-release
+        job: action:merge-automation
