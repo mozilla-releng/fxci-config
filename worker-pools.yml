@@ -2396,6 +2396,10 @@ pools:
       image:
         by-suffix:
           alpha: ronin_b1_windows2025_64_24h2_alpha
+          headless:
+            by-level:
+              1: ronin_b1_windows2025_64_24h2_alpha
+              3: ronin_b3_windows2025_64_24h2
           default: ronin_b{level}_windows2025_64_24h2
       implementation:
         by-suffix:
