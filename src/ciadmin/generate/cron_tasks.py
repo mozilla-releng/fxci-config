@@ -10,6 +10,7 @@ import jsone
 from tcadmin.resources import Binding, Hook, Role
 from tcadmin.util.root_url import root_url
 
+from . import branches
 from .ciconfig.environment import Environment
 from .ciconfig.get import get_ciconfig_file
 from .ciconfig.projects import Project
@@ -17,9 +18,37 @@ from .ciconfig.projects import Project
 GITHUB_TOKEN_SECRET = "project/releng/mobile/github-cron-token"
 
 
-async def make_hooks(project, environment):
-    hookGroupId = "project-releng"
+def hook_id(project, branch, default_branch):
+    """The hookId for this project's cron hooks on `branch`."""
     hookId = "cron-task-{}".format(project.repo_path.replace("/", "-"))
+    if branch == default_branch:
+        return hookId
+    return f"{hookId}-{branch}"
+
+
+async def make_hooks(project, environment):
+    # the default branch is the one whose hooks keep the unsuffixed hookId
+    if project.repo_type == "git":
+        default_branch = await branches.get_default_branch(project.repo_path)
+    elif project.repo_type == "hg":
+        # hg repos always have the same default branch.
+        default_branch = "default"
+    else:
+        raise Exception(f"Unknown repo_type {project.repo_type}!")
+
+    resources = []
+    for branch in project.branches:
+        if not branch.cron:
+            continue
+        resources.extend(
+            await make_branch_hooks(project, environment, branch.name, default_branch)
+        )
+    return resources
+
+
+async def make_branch_hooks(project, environment, branch, default_branch):
+    hookGroupId = "project-releng"
+    hookId = hook_id(project, branch, default_branch)
 
     if project.feature("taskgraph-cron"):
         key = "default"
@@ -34,7 +63,7 @@ async def make_hooks(project, environment):
         raise Exception("Unknown cron task type.")
 
     context = {
-        "level": project.default_branch_level,
+        "level": project.get_branch(branch).level,
         "trust_domain": project.trust_domain,
         "hookGroupId": hookGroupId,
         "hookId": hookId,
@@ -45,7 +74,7 @@ async def make_hooks(project, environment):
         "repo_type": project.repo_type,
         "cron_options": [],
         "allow_input": False,
-        "branch": project.default_branch,
+        "branch": branch,
         "cron_notify_emails": project.cron.get(
             "notify_emails", cron_config.get("notify_emails", [])
         ),
@@ -105,13 +134,11 @@ async def make_hooks(project, environment):
         pulse_bindings = target_desc.get("bindings", [])
         # Default to allowing input if we are bound to a pulse exchgange.
         allow_input = target_desc.get("allow-input", bool(pulse_bindings))
-        branch = target_desc.get("branch", project.default_branch)
 
         target_context = copy.deepcopy(context)
         target_context["cron_options"] += [f"--force-run={cron_target}"]
         target_context["hookId"] = f"{hookId}/{cron_target}"
         target_context["allow_input"] = allow_input
-        target_context["branch"] = branch
         task = jsone.render(task_template, target_context)
         scopes = [
             f"assume:{project.role_prefix}:cron:{cron_target}",

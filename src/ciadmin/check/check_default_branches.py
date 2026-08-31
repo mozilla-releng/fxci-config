@@ -45,7 +45,7 @@ async def check_default_branches_for_git_repos():
 
     # TODO: find a better flag to filter out private repos
     branches_in_projects = {
-        project.alias: project.default_branch
+        project.alias: project.default_branch.name
         for project in projects
         if project.repo_type == "git" and "private" not in project.repo
     }

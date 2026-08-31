@@ -19,6 +19,9 @@ def make_hook(**kwargs):
         email_on_error=False,
         scopes=["queue:create-task:lowest:my-pool"],
         template_file="hook-templates/project-foo/my-hook.yml",
+        bindings=[
+            {"exchange": "exchange/test/hook", "routing_key_pattern": "routing.key"}
+        ],
     )
     defaults.update(kwargs)
     return Hook(**defaults)
@@ -32,6 +35,12 @@ def test_substitution():
         description="A hook for {env}",
         template_file="hook-templates/my-hook-{env}.yml",
         scopes=["queue:create-task:{priority}:my-pool", "secrets:get:runtime-{env}"],
+        bindings=[
+            {
+                "exchange": "exchange/test/{env}",
+                "routing_key_pattern": "routing.key.{env}",
+            }
+        ],
         variants=[{"group": "foo", "env": "production", "priority": "highest"}],
     )
     (result,) = generate_hook_variants([hook])
@@ -44,6 +53,12 @@ def test_substitution():
         "queue:create-task:highest:my-pool",
         "secrets:get:runtime-production",
         "assume:anonymous",
+    ]
+    assert result.bindings == [
+        {
+            "exchange": "exchange/test/production",
+            "routing_key_pattern": "routing.key.production",
+        }
     ]
 
 
@@ -173,6 +188,49 @@ async def test_template_unknown_variable_raises(
     with set_environment("production"), pytest.raises(KeyError, match="typo"):
         resources = Resources([], ["Hook=.*", "Role=hook-id:.*"])
         await update_resources(resources)
+
+
+@pytest.mark.asyncio
+async def test_update_resources_does_not_overclaim(
+    mock_ciconfig_file, set_environment, tmp_path
+):
+    """
+    hooks must only claim the hook groups it defines, not the whole `Hook=.*`
+    namespace (which is shared with in_tree_actions/cron_tasks/git_pushes/
+    hg_pushes). Claiming the whole namespace makes `--resources hooks` treat
+    those generators' hooks as deletions.
+    """
+    template = tmp_path / "my-hook.yml"
+    template.write_text("provisionerId: test\n")
+    mock_ciconfig_file(
+        "hooks.yml",
+        {
+            "project-foo/my-hook": {
+                "name": "My Hook",
+                "description": "A hook",
+                "owner": "test@example.com",
+                "email_on_error": False,
+                "scopes": [],
+                "template_file": str(template),
+                "variants": [{}],
+            }
+        },
+    )
+
+    # No pre-`manage()` here, so we test hooks' own declarations.
+    resources = Resources()
+    with set_environment("production"):
+        await update_resources(resources)
+
+    # hooks owns the groups it defines...
+    assert resources.is_managed("Hook=project-foo/my-hook")
+    assert resources.is_managed("Role=hook-id:project-foo/my-hook")
+
+    # ...but not namespaces owned by other generators
+    assert not resources.is_managed("Hook=project-gecko/in-tree-action-1-generic/x")
+    assert not resources.is_managed(
+        "Role=hook-id:project-gecko/in-tree-action-1-generic/x"
+    )
 
 
 @pytest.mark.asyncio

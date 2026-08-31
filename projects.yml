@@ -17,6 +17,9 @@
 # - `access` -- the name of the group with access to this repository; typically `scm_level_{1,2,3}`.
 # - `branches` -- a list of dicts with the names and levels of branches used by this project.
 #                 for example: [{"name": "main", "level": 3}, {"name": "dev", "level": 1}]
+#                 a branch may also set `cron: true` to have cron tasks (see the
+#                 `taskgraph-cron` feature below) run on it; branch names used this way
+#                 cannot be globs.
 # - `trust_domain` -- separation within an access level of projects with different organizations
 # - `parent_repo` -- for projects like comm where the repo is checked out within a "parent" repo
 # - 'is_try' -- if present and true, this is a "try" repo, meaning that users typically push new heads
@@ -81,6 +84,7 @@ elm:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -97,6 +101,7 @@ mozilla-release:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -119,6 +124,7 @@ comm-release:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/releases/mozilla-release
   features:
@@ -138,6 +144,7 @@ mozilla-esr115:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -160,6 +167,7 @@ mozilla-esr140:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -183,6 +191,7 @@ mozilla-esr153:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -249,6 +258,7 @@ oak:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -266,6 +276,7 @@ pine:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -305,6 +316,7 @@ mozilla-beta:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -331,6 +343,7 @@ comm-beta:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/releases/mozilla-beta
   features:
@@ -353,6 +366,7 @@ mozilla-central:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -390,6 +404,7 @@ comm-central:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/mozilla-central
   features:
@@ -413,6 +428,7 @@ cedar:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -433,6 +449,7 @@ birch:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -450,6 +467,7 @@ cypress:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -530,6 +548,7 @@ maple:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -564,6 +583,7 @@ autoland:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
@@ -670,6 +690,7 @@ enterprise-firefox:
   branches:
     - name: enterprise-main
       level: 3
+      cron: true
     - name: enterprise-release
       level: 3
     - name: enterprise-beta
@@ -716,6 +737,7 @@ enterprise-thunderbird:
   branches:
     - name: enterprise-main
       level: 3
+      cron: true
     - name: enterprise-release
       level: 3
     - name: enterprise-beta
@@ -742,6 +764,9 @@ staging-firefox:
   branches:
     - name: "*"
       level: 1
+    - name: main
+      level: 1
+      cron: true
   features:
     gecko-roles: true
     git-push: true
@@ -788,6 +813,7 @@ fxci-config:
   branches:
     - name: main
       level: 3
+      cron: true
   features:
     github-taskgraph: true
     github-pull-request:
@@ -842,7 +868,7 @@ reps:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     trust-domain-scopes: true
 
@@ -858,7 +884,7 @@ redo:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     trust-domain-scopes: true
 
@@ -886,6 +912,7 @@ reference-browser:
   branches:
     - name: master
       level: 3
+      cron: true
   default_branch: master
   features:
     autophone: true
@@ -917,6 +944,7 @@ staging-reference-browser:
   branches:
     - name: master
       level: 1
+      cron: true
   default_branch: master
   features:
     autophone: true
@@ -948,6 +976,7 @@ firefox-ios:
   branches:
     - name: main
       level: 3
+      cron: true
     - name: release/*
       level: 3
   features:
@@ -980,6 +1009,7 @@ staging-firefox-ios:
   branches:
     - name: main
       level: 1
+      cron: true
     - name: release/*
       level: 1
   features:
@@ -1008,6 +1038,7 @@ application-services:
   branches:
     - name: main
       level: 3
+      cron: true
     - name: "release-*"
       level: 3
   trust_domain: app-services
@@ -1032,6 +1063,7 @@ staging-application-services:
   branches:
     - name: main
       level: 1
+      cron: true
     - name: "release-*"
       level: 1
   trust_domain: app-services
@@ -1083,7 +1115,7 @@ k8s-autoscale:
   trust_project: k8s-autoscale
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     github-taskgraph: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1114,7 +1146,7 @@ shipit:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     trust-domain-scopes: true
   trust_domain: releng
@@ -1143,7 +1175,7 @@ tooltool:
   trust_project: tooltool
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     github-taskgraph: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1157,7 +1189,7 @@ balrog:
       level: 3
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     github-taskgraph: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1185,7 +1217,7 @@ winsign:
   trust_domain: releng
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     github-taskgraph: true
     trust-domain-scopes: true
@@ -1199,7 +1231,7 @@ mozilla-version:
   trust_domain: releng
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
 
 build-mar:
@@ -1214,7 +1246,7 @@ build-mar:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     trust-domain-scopes: true
 
@@ -1228,7 +1260,7 @@ firefox-ci-playground:
   trust_project: firefox-ci-playground
   features:
     github-pull-request:
-      policy: public
+      policy: public_restricted
     github-taskgraph: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1245,7 +1277,7 @@ firefox-ci-playground-private:
     github-private-repo: true
     private-artifacts: true
     github-pull-request:
-      policy: public
+      policy: collaborators
     github-taskgraph: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1256,6 +1288,7 @@ worker-images:
   branches:
     - name: main
       level: 3
+      cron: true
   trust_domain: relops
   trust_project: worker-images
   features:
@@ -1269,6 +1302,9 @@ worker-images:
   cron:
     targets:
       - target: run-integration-tests
+        allow-input: true
+      # Windows hardware counterpart; input is the pool list (RELOPS-2503).
+      - target: run-hw-integration-tests
         allow-input: true
 
 # Mozilla VPN
@@ -1324,6 +1360,7 @@ xpi-manifest:
   branches:
     - name: main
       level: 3
+      cron: true
   trust_domain: xpi
   features:
     github-pull-request:
@@ -1343,6 +1380,9 @@ staging-xpi-manifest:
   branches:
     - name: "*"
       level: 1
+    - name: main
+      level: 1
+      cron: true
   trust_domain: xpi
   features:
     github-pull-request:
@@ -1355,19 +1395,6 @@ staging-xpi-manifest:
     beetmover: true
     beetmover-get-artifact-scope: true
     lando: true
-
-staging-xpi-public:
-  repo: https://github.com/mozilla-releng/staging-xpi-public
-  repo_type: git
-  branches:
-    - name: "*"
-      level: 1
-  trust_domain: xpi
-  features:
-    github-pull-request:
-      policy: public
-    trust-domain-scopes: true
-    xpi-roles: true
 
 staging-xpi-private:
   repo: https://github.com/mozilla-releng/staging-xpi-private
@@ -1391,7 +1418,7 @@ staging-adhoc-signing:
   branches:
     - name: "*"
       level: 1
-  default_branch: master
+  default_branch: main
   trust_domain: adhoc
   features:
     trust-domain-scopes: true
@@ -1399,7 +1426,7 @@ staging-adhoc-signing:
     taskgraph-actions: true
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
 
 adhoc-signing:
   repo: https://github.com/mozilla-releng/adhoc-signing
@@ -1414,7 +1441,7 @@ adhoc-signing:
     taskgraph-actions: true
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
 
 # Bug 1614312: Add code-analysis project for code-review & code-coverage
 code-review:
@@ -1457,7 +1484,7 @@ scriptworker-scripts:
     taskgraph-actions: true
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
 
 # Bug 1617635: Support building & indexing code-coverage docker image
 code-coverage:
@@ -1488,6 +1515,7 @@ translations:
   branches:
     - name: main
       level: 1
+      cron: true
     - name: "release*"
       level: 1
     - name: "dev*"
@@ -1520,6 +1548,7 @@ staging-firefox-translations-training:
   branches:
     - name: main
       level: 1
+      cron: true
   trust_domain: translations
   features:
     github-taskgraph: true
@@ -1545,6 +1574,7 @@ fx-desktop-qa-automation:
   branches:
     - name: main
       level: 3
+      cron: true
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1579,6 +1609,7 @@ process-top-crashes:
   branches:
     - name: main
       level: 1
+      cron: true
   features:
     github-taskgraph: true
     github-pull-request:
@@ -1596,6 +1627,7 @@ crash-ping-ingest:
   branches:
     - name: main
       level: 1
+      cron: true
   features:
     github-taskgraph: true
     github-pull-request:

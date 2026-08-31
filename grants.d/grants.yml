@@ -373,6 +373,7 @@
     - queue:create-task:low:scriptworker-prov-v1/depsigning-mac-v1-dev
     - queue:create-task:low:scriptworker-prov-v1/dep-{trust_domain}-signing-mac14m2
     - queue:get-artifact:releng/partner/*
+    - secrets:get:project/desktop-test-ops/*
     # TODO(bug 1824855): move mobile secrets into the gecko namespace
     - secrets:get:project/mobile/firefox-android/android-components/firebase
     - secrets:get:project/mobile/firefox-android/focus-android/firebase
@@ -635,6 +636,16 @@
         alias: [mozilla-beta]
 
 - grant:
+    # Bug 2056977: Allow the bhr-aggregate cron to fetch its secrets.
+    - secrets:get:project/bhr/*
+  to:
+    - project:
+        job: [cron:bhr-aggregate]
+        trust_domain: gecko
+        level: [3]
+        alias: [mozilla-central]
+
+- grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
   to:
     - project:
@@ -870,6 +881,10 @@
     # Bug 2024347: ability to create / modify review assigner hook
     - assume:hook-id:project-engwf/reviewer-assignment-staging
     - hooks:modify-hook:project-engwf/reviewer-assignment-staging
+
+    # Bug 2062875: retrigger reviewer-assignment
+    - index:insert-task:project.engwf.production.reviewer-assignment.*
+    - queue:route:index.project.engwf.production.reviewer-assignment.*
 
   to:
     - roles:
@@ -1154,7 +1169,7 @@
         job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
 
 - grant:
-    - hooks:trigger-hook:lint/pre-commit-*
+    - github:trigger-hook:lint/pre-commit-*
     - queue:cancel-task-group:lint/*
     - queue:seal-task-group:lint/*
   to:
@@ -1204,9 +1219,6 @@
     - queue:create-task:highest:mobile-{level}/*
     - queue:create-task:{priority}:built-in/*
     - queue:get-artifact:mobile/android-sdk/*
-    - queue:route:notify.*
-    - notify:email:*
-    - notify:slack-channel:*
     - project:mobile:{trust_project}:releng:signing:cert:dep-signing
     - project:mobile:{trust_project}:releng:signing:format:*
     # TODO Legacy non-project trust-domain scopes. Unless there is good reason
@@ -1217,6 +1229,15 @@
   to:
     - project:
         feature: mobile-roles
+
+- grant:
+    - queue:route:notify.*
+    - notify:email:*
+    - notify:slack-channel:*
+  to:
+    - project:
+        feature: mobile-roles
+        job: [action:*, branch:*, cron:*, pull-request:trusted, release:*]
 
 - grant:
     - secrets:get:project/releng/mobile/github-cron-token
@@ -1853,6 +1874,9 @@
     # Grant everyone with Try access the schedulerId taskcluster-ui, so they can
     # create tasks with the task-creator in the UI
     - queue:scheduler-id:taskcluster-ui
+    # Grant everyone with Try access the ability to fetch the deploy key for
+    # mozilla-releng/git-backing (used by ./mach try).
+    - secrets:get:project/releng/releng-github-git-backing-ssh
   to:
     - groups:
         - active_scm_level_1
@@ -2017,13 +2041,13 @@
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|mh
 
-# Bug 1973252: grant pwong access to run release promotion on Try
+# Desktop Test Eng scopes for secrets, running tests on release
 - grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-1-release-promotion/*
+    - secrets:set:project/desktop-test-ops/*
   to:
-    - roles:
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bchatterton
-        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|pwong
+    - groups:
+        - desktop_test_ops
 
 # Bug 2048352: grant nhadji access to secret for reviewbot migration testing
 - grant:
@@ -2032,6 +2056,24 @@
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|nhadji
+
+# Grant appropriate l10n folks access to trigger l10n hooks
+- grant:
+    - hooks:trigger-hook:project-releng/cron-task-integration-autoland/android-l10n-import
+    - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/android-l10n-sync
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|flodolo2
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|cpedraza
+
+- grant:
+    - hooks:trigger-hook:project-releng/cron-task-integration-autoland/l10n-bumper
+    - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/l10n-bumper
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|flodolo2
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|bolsson
+
 
 # Mappings from `mozilla-group`s to `project-releng:ci-group`s
 # This indirection exists because modifying `mozilla-group`s requires
@@ -2067,10 +2109,20 @@
     - roles:
         - mozilla-group:mobile_test_ops
 - grant:
+    - assume:project:releng:ci-group:desktop_test_ops
+  to:
+    - roles:
+        - mozilla-group:desktop_test_ops
+- grant:
     - assume:project:releng:ci-group:team_moco
   to:
     - roles:
         - mozilla-group:team_moco
+- grant:
+    - assume:project:releng:ci-group:team_mzla
+  to:
+    - roles:
+        - mozilla-group:team_mzla
 - grant:
     - assume:project:releng:ci-group:sheriff
   to:
@@ -2441,6 +2493,9 @@
     - project:
         alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr140, mozilla-esr153]
         job: action:merge-automation
+    - project:
+        alias: [comm-beta, comm-release, comm-esr153]
+        job: action:merge-automation
 
 - grant:
     - project:releng:lando:action:merge_day
@@ -2475,4 +2530,25 @@
   to:
     - project:
         alias: mozilla-release
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:thunderbird-desktop-beta
+  to:
+    - project:
+        alias: comm-central
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:thunderbird-desktop-release
+  to:
+    - project:
+        alias: comm-beta
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:thunderbird-desktop-esr153
+  to:
+    - project:
+        alias: comm-release
         job: action:merge-automation

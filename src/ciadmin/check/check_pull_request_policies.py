@@ -17,7 +17,7 @@ async def _get_pull_request_policy(project):
             project.repo,
             repo_type=project.repo_type,
             revision=None,
-            default_branch=project.default_branch,
+            default_branch=project.default_branch.name,
         )
     )
     await github.close_client()

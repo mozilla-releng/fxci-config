@@ -1100,7 +1100,7 @@ pools:
       regions: [us-central1, us-east1]
       instance_types:
         by-pool-group:
-          (gecko|comm)-.*: [*c4d-standard-8-lssd]
+          (gecko|comm|enterprise)-.*: [*c4d-standard-8-lssd]
           default:
             - minCpuPlatform: Intel Cascadelake
               disks:
@@ -2337,6 +2337,120 @@ pools:
                 enabled: false
       worker-manager-config:
         capacityPerInstance: 1
+  # Windows Server 2025
+  - pool_id: '{pool-group}/b-win2025-{suffix}'
+    description: ''
+    owner: relops-azure-provisioning@mozilla.com
+    email_on_error: true
+    attributes:
+      suffix: ''
+      level: 1
+    variants:
+      - pool-group: gecko-1
+      - pool-group: gecko-1
+        suffix: alpha
+      - pool-group: gecko-1
+        suffix: xxlarge
+      - pool-group: gecko-1
+        suffix: headless
+      - pool-group: gecko-1
+        suffix: updatebot
+      - pool-group: gecko-2
+      - pool-group: gecko-2
+        suffix: updatebot
+      - pool-group: gecko-3
+        level: 3
+      - pool-group: gecko-3
+        level: 3
+        suffix: xxlarge
+      - pool-group: gecko-3
+        level: 3
+        suffix: headless
+      - pool-group: gecko-3
+        level: 3
+        suffix: updatebot
+      - pool-group: comm-1
+      - pool-group: comm-3
+        level: 3
+      - pool-group: mozilla-1
+      - pool-group: mozilla-3
+        level: 3
+      - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-1
+        suffix: alpha
+      - pool-group: mozillavpn-3
+        level: 3
+      - pool-group: nss-1
+      - pool-group: nss-1
+        suffix: alpha
+      - pool-group: nss-3
+        level: 3
+      - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        level: 3
+    provider_id:
+      by-level:
+        1: azure2
+        3: azure_trusted
+    config:
+      image:
+        by-suffix:
+          alpha: ronin_b1_windows2025_64_24h2_alpha
+          default: ronin_b{level}_windows2025_64_24h2
+      implementation:
+        by-suffix:
+          .*headless.*: generic-worker/windows-builder
+          default: generic-worker/windows
+      locations: [east-us-2]
+      maxCapacity:
+        by-suffix:
+          alpha:
+            by-pool-group:
+              gecko-.*: 10
+              default: 25
+          default:
+            by-pool-group:
+              gecko-.*: 500
+              comm-3: 50
+              default: 25
+      armDeployment:
+        by-level:
+          1:
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+          3:
+            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+      worker-purpose:
+        by-pool-group:
+          mozillavpn-1: vpn-1
+          mozillavpn-3: vpn-3
+          default: null
+      worker-config:
+        genericWorker:
+          config:
+            workerType: b-win2025-{suffix}
+            provisionerId: '{pool-group}'
+            cachesDir: D:\caches
+            downloadsDir: D:\downloads
+            tasksDir: D:\
+      tags:
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
+        sourceBranch: master
+        sourceRepository: ronin_puppet
+        sourceOrganisation: mozilla-platform-ops
+      priority: Spot
+      vmSizes:
+        - vmSize:
+            by-suffix:
+              .*xxlarge.*: Standard_D96ads_v7
+              default: Standard_D32ads_v7
+          armDeployment:
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: NvmeDisk
+              osDiskCaching: ReadOnly
+      worker-manager-config:
+        capacityPerInstance: 1
+        initialWeight: 1
   # Windows 10
   - pool_id: '{pool-group}/win10-64-2009-{suffix}'
     description: ''
@@ -2974,16 +3088,17 @@ pools:
         by-pool-group:
           comm-t:
             by-suffix:
-              ssd: [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
-              default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
+              ssd: [central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
+              default: [central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
           default:
             by-suffix:
               gpu-perf-experiment: [west-us-3]
+              alpha: [uk-south, east-us-2]
               (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
               (webgpu|gpu)(-alpha)?: [west-us-3, east-us, west-us, west-us-2]
-              (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
+              (ssd|source): [central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
-              default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
+              default: [central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
       maxCapacity:
         by-pool-group:
           comm-t:
@@ -3014,6 +3129,12 @@ pools:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-dedicated-host/versions/1.0
             parameters:
               priority: Regular
+          alpha:
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: NvmeDisk
+              osDiskCaching: ReadOnly
           default:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
@@ -3040,9 +3161,18 @@ pools:
             by-suffix:
               source-alpha: Standard_E8ads_v5
               .*large.*: Standard_E8ads_v5
-              alpha: Standard_D8ads_v5
+              alpha: Standard_F8alds_v7
               .*gpu.*: Standard_NV12ads_A10_v5
-              default: Standard_F8s_v2
+              default: Standard_F8alds_v7
+          armDeployment:
+            by-vmSize:
+              Standard_F8alds_v7:
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+                parameters:
+                  diffDiskOption: Local
+                  diffDiskPlacement: NvmeDisk
+                  osDiskCaching: ReadOnly
+              default: {}
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -3061,9 +3191,9 @@ pools:
                 by-suffix:
                   source-alpha: Standard_E8ads_v5
                   .*large.*: Standard_E8ads_v5
-                  alpha: Standard_D8ads_v5
+                  alpha: Standard_F8alds_v7
                   .*gpu.*: Standard_NV12ads_A10_v5
-                  default: Standard_F8s_v2
+                  default: Standard_F8alds_v7
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -3071,20 +3201,17 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-vmSize:
-            Standard_F8s_v2:
+            Standard_F8alds_v7:
               by-location:
+                central-us: 1
+                east-us-2: 1
+                west-us-2: 1
                 west-us-3: 1
-                north-central-us: 0.95
-                central-india: 0.95
+                east-us: 0.95
+                north-europe: 0.9
+                uk-south: 0.85
                 west-us: 0.8
-                south-india: 0.8
-                central-us: 0.5
-                east-us: 0.5
-                north-europe: 0.4
-                canada-central: 0.3
-                west-us-2: 0.3
-                east-us-2: 0.1
-                default: 0.2
+                default: 0.1
             Standard_D8ads_v5:
               by-location:
                 west-us-3: 1
@@ -3119,10 +3246,14 @@ pools:
       image: win116425h2alpha
       image_resource_group: rg-packer-worker-images
       implementation: generic-worker/windows
-      locations: [central-india, uk-south]
+      locations: [uk-south, east-us-2]
       maxCapacity: 250
       armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+        parameters:
+          diffDiskOption: Local
+          diffDiskPlacement: NvmeDisk
+          osDiskCaching: ReadOnly
       worker-config:
         genericWorker:
           config:
@@ -3134,11 +3265,12 @@ pools:
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
+        sourceCommit: c1b0efebc418108fb4ed9ceb3d104c2bba0c4ef0
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_D8ads_v5
+        - vmSize: Standard_F8alds_v7
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -3151,8 +3283,9 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
+                  placement: NvmeDisk
             hardwareProfile:
-              vmSize: Standard_D8ads_v5
+              vmSize: Standard_F8alds_v7
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -3439,6 +3572,7 @@ pools:
     variants:
       - pool-group: code-review
       - pool-group: code-coverage
+      - pool-group: reviewer-assignment
     provider_id: fxci-level1-gcp
     config:
       regions: *default-gcp-regions
@@ -3448,10 +3582,12 @@ pools:
         by-pool-group:
           code-review: 1
           code-coverage: 0
+          reviewer-assignment: 1
       maxCapacity:
         by-pool-group:
           code-review: 100
           code-coverage: 10
+          reviewer-assignment: 10
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:

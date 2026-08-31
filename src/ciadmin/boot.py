@@ -45,6 +45,9 @@ appconfig.options.add(
 
 appconfig.check_path = os.path.join(os.path.dirname(__file__), "check")
 
+# Registered first so the client is closed even when `modify_resources`
+# rejects the environment.
+appconfig.modifiers.register(modify.close_github_client)
 appconfig.modifiers.register(modify.modify_resources)
 
 appconfig.description_prefix = (

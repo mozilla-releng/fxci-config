@@ -316,7 +316,8 @@ project/releng/fxci-config/fetch-firefoxci-artifacts:
 project/releng/fxci-config/generate:
   description: Used to run `tc-admin {generate|diff}` in mozilla-releng/fxci-config.
   scopes:
-    - auth:list:clients
+    - auth:list-clients
+    - hooks:list-hooks:*
 project/releng/generic-worker/azure-gecko-t-win10-64:
   description: Windows 10 64bit experimental production worker.
   scopes:
@@ -1341,9 +1342,10 @@ project/relman/code-review/backend-testing:
   scopes:
     - assume:project:relman:code-review/runtime/testing
 project/relops/worker-images/run-integration-tests:
-  description: Client used to trigger the 'run-integration-tests' hook from Github Actions (Bug 1981245)
+  description: Client used to trigger the worker-images os-integration hooks from Github Actions (Bug 1981245, RELOPS-2503)
   scopes:
     - hooks:trigger-hook:project-releng/cron-task-mozilla-platform-ops-worker-images/run-integration-tests
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-platform-ops-worker-images/run-hw-integration-tests
 project/relsre/devicepool:
   description: Used by the Android bitbar-taskcluster-devicepool software (for Bitbar and LambdaTest). Contact point is aerickson/RelSRE/SEIO.
   scopes:

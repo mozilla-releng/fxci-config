@@ -11,16 +11,13 @@
 # How it works:
 #   - On a schedule, fetch the latest commit SHA touching `.taskcluster.yml` on
 #     every watched repo/branch.
-#   - Persist that set of SHAs in the Actions cache (state.tsv) and compare the
-#     current set against the previously cached one:
+#   - Persist that set of SHAs as a workflow artifact (state.tsv) and compare the
+#     current set against the previously stored one:
 #       * any SHA changed (or first run) -> run `deploy`
 #       * all SHAs unchanged             -> do nothing
 #   - A target that can't be resolved (transient API error, removed branch)
 #     carries forward its previous SHA and emits a warning, so one flaky target
 #     neither blocks deploys for the others nor causes a spurious deploy.
-#   - A rare cache eviction (keys unused for 7 days) may cause one redundant
-#     deploy. That is safe: `tc-admin apply` is idempotent, so it behaves like
-#     any other push.
 #   - A failed deploy is NOT retried automatically: state advances on the same
 #     tick the change is detected, so the next tick sees no diff. This is
 #     intentional -- deploy.yml posts a Slack alert on failure; recovery is a
@@ -39,7 +36,7 @@ on:  # yamllint disable-line rule:truthy
 
 permissions:
   contents: read
-  actions: write  # required to delete the single state cache before re-saving
+  actions: read  # required to list and download the previous state artifact
 
 concurrency:
   group: tc-yml-watch
@@ -52,11 +49,26 @@ jobs:
       changed: ${{ steps.collect.outputs.changed }}
       reason: ${{ steps.collect.outputs.reason }}
     steps:
-      - name: Restore previous state
-        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      - name: Find previous state
+        id: prev
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          run_id=$(gh api \
+            "repos/${GITHUB_REPOSITORY}/actions/artifacts?name=tc-yml-watch-state&per_page=100" \
+            --jq '[.artifacts[] | select(.expired == false)]
+                  | sort_by(.created_at) | last | .workflow_run.id // empty')
+          echo "run-id=${run_id}" >> "$GITHUB_OUTPUT"
+
+      - name: Download previous state
+        if: steps.prev.outputs.run-id != ''
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
         with:
-          path: state.tsv
-          key: tc-yml-watch-state
+          name: tc-yml-watch-state
+          run-id: ${{ steps.prev.outputs.run-id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: prevdir
 
       - name: Collect .taskcluster.yml SHAs and detect changes
         id: collect
@@ -83,12 +95,11 @@ jobs:
 
           PREV_STATE="previous-state.tsv"
           CUR_STATE="state.tsv"
-          # state.tsv (if restored) holds the previous run's SHAs; move it aside
-          # so we can diff against it while writing the fresh state.
-          if [ -f "$CUR_STATE" ]; then
-            mv "$CUR_STATE" "$PREV_STATE"
-          fi
           : > "$CUR_STATE"
+
+          if [ -f prevdir/state.tsv ]; then
+            mv prevdir/state.tsv "$PREV_STATE"
+          fi
 
           prev_sha() {  # echo the previously recorded SHA for a "repo@branch" key
             [ -f "$PREV_STATE" ] || return 0
@@ -152,22 +163,12 @@ jobs:
           echo "--- current state ---"
           cat "$CUR_STATE"
 
-      # Cache entries are immutable, so the key can't be overwritten. Delete the
-      # single existing entry (if any), then re-save under the same key -- this
-      # keeps exactly one cache entry instead of one per change. The concurrency
-      # group above serializes runs, so there is no delete/save race.
-      - name: Delete stale state cache
-        if: steps.collect.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh cache delete tc-yml-watch-state --repo "$GITHUB_REPOSITORY" || true
-
       - name: Save current state
-        if: steps.collect.outputs.changed == 'true'
-        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
+          name: tc-yml-watch-state
           path: state.tsv
-          key: tc-yml-watch-state
+          retention-days: 1
 
   deploy:
     needs: check-change

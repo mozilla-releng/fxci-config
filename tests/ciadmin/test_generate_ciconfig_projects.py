@@ -19,7 +19,7 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
 
 
 @pytest.mark.parametrize(
-    "project_name,project_data,expected_data",
+    "project_name,project_data,expected_data,expected_default_branch",
     (
         (
             "ash",
@@ -42,10 +42,11 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                 "branches": [
                     {
                         "name": "default",
-                        "level": None,
+                        "level": 2,
+                        "cron": False,
                     },
                 ],
-                "default_branch": "default",
+                "_default_branch": "default",
                 "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
@@ -59,6 +60,7 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                 "trust_project": None,
                 # defaults
             },
+            Branch(name="default", level=2, cron=False),
         ),
         (
             "fenix",
@@ -79,9 +81,10 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                     {
                         "name": "main",
                         "level": 3,
+                        "cron": False,
                     },
                 ],
-                "default_branch": "main",
+                "_default_branch": "main",
                 "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
@@ -94,12 +97,17 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                 "trust_domain": None,
                 "trust_project": None,
             },
+            Branch(name="main", level=3, cron=False),
         ),
     ),
 )
 @pytest.mark.asyncio
 async def test_fetch_defaults(
-    mock_ciconfig_file, project_name, project_data, expected_data
+    mock_ciconfig_file,
+    project_name,
+    project_data,
+    expected_data,
+    expected_default_branch,
 ):
     "Test a fetch of project data only the required fields, applying defaults"
     mock_ciconfig_file("projects.yml", {project_name: project_data})
@@ -107,10 +115,11 @@ async def test_fetch_defaults(
     assert len(prjs) == 1
     project = attr.asdict(prjs[0], filter=_filter_out_parsed_url)
     assert project == expected_data
+    assert prjs[0].default_branch == expected_default_branch
 
 
 @pytest.mark.parametrize(
-    "project_name,project_data,expected_data",
+    "project_name,project_data,expected_data,expected_default_branch",
     (
         (
             "ash",
@@ -143,7 +152,8 @@ async def test_fetch_defaults(
                 "branches": [
                     {
                         "name": "default",
-                        "level": None,
+                        "level": 2,
+                        "cron": False,
                     },
                 ],
                 "cron": {
@@ -154,7 +164,7 @@ async def test_fetch_defaults(
                         {"target": "b", "bindings": []},
                     ],
                 },
-                "default_branch": "default",
+                "_default_branch": "default",
                 "features": {
                     "hg-push": {"enabled": True},
                     "taskgraph-cron": {"enabled": False},
@@ -169,6 +179,7 @@ async def test_fetch_defaults(
                 "trust_domain": "gecko",
                 "trust_project": None,
             },
+            Branch(name="default", level=2, cron=False),
         ),
         (
             "beetmoverscript",  # git project but not mobile
@@ -202,6 +213,7 @@ async def test_fetch_defaults(
                     {
                         "name": "main",
                         "level": 3,
+                        "cron": False,
                     },
                 ],
                 "cron": {
@@ -212,7 +224,7 @@ async def test_fetch_defaults(
                         {"target": "b", "bindings": []},
                     ],
                 },
-                "default_branch": "main",
+                "_default_branch": "main",
                 "features": {
                     "hg-push": {"enabled": True},
                     "taskgraph-cron": {"enabled": False},
@@ -227,12 +239,60 @@ async def test_fetch_defaults(
                 "trust_domain": "beet",
                 "trust_project": None,
             },
+            Branch(name="main", level=3, cron=False),
+        ),
+        (
+            "cron-project",  # runs cron on more than one branch
+            {
+                "branches": [
+                    {"name": "main", "level": 3, "cron": True},
+                    {"name": "beta", "level": 3, "cron": True},
+                ],
+                "cron": {
+                    "targets": ["a"],
+                },
+                "features": {
+                    "taskgraph-cron": {"enabled": True},
+                },
+                "repo_type": "git",
+                "repo": "https://github.com/mozilla-releng/cron-project",
+                "trust_domain": "releng",
+            },
+            {
+                "access": None,
+                "alias": "cron-project",
+                "branches": [
+                    {"name": "main", "level": 3, "cron": True},
+                    {"name": "beta", "level": 3, "cron": True},
+                ],
+                "cron": {
+                    "targets": [{"target": "a", "bindings": []}],
+                },
+                "_default_branch": "main",
+                "features": {
+                    "taskgraph-cron": {"enabled": True},
+                },
+                "is_try": False,
+                "lando_repo": None,
+                "parent_repo": None,
+                "repo": "https://github.com/mozilla-releng/cron-project",
+                "repo_path": "mozilla-releng/cron-project",
+                "repo_type": "git",
+                "role_prefix": "repo:github.com/mozilla-releng/cron-project",
+                "trust_domain": "releng",
+                "trust_project": None,
+            },
+            Branch(name="main", level=3, cron=True),
         ),
     ),
 )
 @pytest.mark.asyncio
 async def test_fetch_nodefaults(
-    mock_ciconfig_file, project_name, project_data, expected_data
+    mock_ciconfig_file,
+    project_name,
+    project_data,
+    expected_data,
+    expected_default_branch,
 ):
     "Test a fetch of project data with all required fields supplied"
     mock_ciconfig_file("projects.yml", {project_name: project_data})
@@ -240,6 +300,7 @@ async def test_fetch_nodefaults(
     assert len(prjs) == 1
     project = attr.asdict(prjs[0], filter=_filter_out_parsed_url)
     assert project == expected_data
+    assert prjs[0].default_branch == expected_default_branch
 
 
 def test_project_feature():
@@ -296,7 +357,7 @@ def test_project_enabled_features():
                 "trust_domain": "gecko",
             },
             [
-                Branch(name="default", level=None),
+                Branch(name="default", level=3),
             ],
         ),
         (
@@ -313,7 +374,7 @@ def test_project_enabled_features():
                 "trust_domain": "gecko",
             },
             [
-                Branch(name="default", level=None),
+                Branch(name="default", level=2),
             ],
         ),
         (
@@ -330,7 +391,7 @@ def test_project_enabled_features():
                 "trust_domain": "gecko",
             },
             [
-                Branch(name="default", level=None),
+                Branch(name="default", level=1),
             ],
         ),
         (
@@ -347,7 +408,7 @@ def test_project_enabled_features():
                 "trust_domain": "gecko",
             },
             [
-                Branch(name="default", level=None),
+                Branch(name="default", level=3),
             ],
         ),
         (
@@ -510,12 +571,92 @@ def test_project_level_failing_validators(project_data, error_type):
             },
             ValueError,
         ),
+        (
+            # runs cron, but does not say on which branches
+            {
+                "alias": "prj",
+                "branches": [{"name": "main", "level": 3}],
+                "repo": "https://github.com/mozilla-releng/prj",
+                "repo_type": "git",
+                "features": {"taskgraph-cron": True},
+            },
+            ValueError,
+        ),
+        (
+            # cron branch below the default branch's level: its hook would hold
+            # the repo's level-3 `cron:*` scopes
+            {
+                "alias": "prj",
+                "branches": [
+                    {"name": "main", "level": 3, "cron": True},
+                    {"name": "staging", "level": 1, "cron": True},
+                ],
+                "repo": "https://github.com/mozilla-releng/prj",
+                "repo_type": "git",
+                "features": {"taskgraph-cron": True},
+            },
+            ValueError,
+        ),
+        (
+            # same, but the cron branch only gets its level from a `*` catch-all
+            {
+                "alias": "prj",
+                "branches": [
+                    {"name": "main", "level": 3},
+                    {"name": "*", "level": 1, "cron": True},
+                ],
+                "repo": "https://github.com/mozilla-releng/prj",
+                "repo_type": "git",
+                "features": {"taskgraph-cron": True},
+            },
+            ValueError,
+        ),
+        (
+            # default branch not matched by any `branches` entry
+            {
+                "alias": "prj",
+                "branches": [{"name": "production", "level": 3, "cron": True}],
+                "repo": "https://github.com/mozilla-releng/prj",
+                "repo_type": "git",
+                "features": {"taskgraph-cron": True},
+            },
+            ValueError,
+        ),
     ),
 )
 def test_project_level_failing_post_init_checks(project_data, error_type):
     "Test the level attribute"
     with pytest.raises(error_type):
         Project(**project_data)
+
+
+@pytest.mark.parametrize(
+    "branches",
+    (
+        # the common case: cron runs on the default branch only
+        [{"name": "main", "level": 3, "cron": True}],
+        # several branches, all at the default branch's level
+        [
+            {"name": "main", "level": 3, "cron": True},
+            {"name": "beta", "level": 3, "cron": True},
+        ],
+        # a cron branch *above* the default branch's level is allowed: the
+        # `cron:*` role it points at is under-privileged, not over-privileged
+        [
+            {"name": "main", "level": 1, "cron": True},
+            {"name": "production", "level": 3, "cron": True},
+        ],
+    ),
+)
+def test_project_valid_cron_branch_levels(branches):
+    "None of these branch layouts should raise"
+    Project(
+        alias="prj",
+        branches=branches,
+        repo="https://github.com/mozilla-releng/prj",
+        repo_type="git",
+        features={"taskgraph-cron": True},
+    )
 
 
 def test_project_repo_path_property():

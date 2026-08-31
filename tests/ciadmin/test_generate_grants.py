@@ -575,6 +575,119 @@ class TestAddScopesForGithubPullRequest:
             )
 
 
+class TestAddScopesForLevel1PullRequest:
+    """Level-1 repos don't need the `*` job split for level reasons, but still
+    have to honour include_pull_requests."""
+
+    projects = [
+        Project(
+            alias="level1",
+            branches=[
+                {
+                    "name": "main",
+                    "level": 1,
+                }
+            ],
+            repo="https://github.com/mozilla/level1",
+            repo_type="git",
+            trust_domain="foo",
+            features={
+                "github-pull-request": {
+                    "enabled": True,
+                    "policy": "public_restricted",
+                }
+            },
+        ),
+        Project(
+            alias="level1-no-prs",
+            branches=[
+                {
+                    "name": "main",
+                    "level": 1,
+                }
+            ],
+            repo="https://github.com/mozilla/level1-no-prs",
+            repo_type="git",
+            trust_domain="foo",
+        ),
+    ]
+
+    def test_include_pull_requests_false(self, add_scope):
+        grantee = ProjectGrantee(include_pull_requests=False)
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        # Dump expected for copy/paste.
+        pprint(add_scope.added)
+        # The `*` job role would also cover pull-requests, so it must be split
+        # into the individual non pull-request jobs. Repos without
+        # pull-requests enabled keep the `*` role.
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/level1:branch:main", "sc"),
+                ("repo:github.com/mozilla/level1:release:*", "sc"),
+                ("repo:github.com/mozilla/level1-no-prs:branch:main", "sc"),
+                ("repo:github.com/mozilla/level1-no-prs:*", "sc"),
+            ]
+        )
+
+    def test_include_pull_requests_true(self, add_scope):
+        grantee = ProjectGrantee()
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        # Dump expected for copy/paste.
+        pprint(add_scope.added)
+        assert add_scope.added == set(
+            [
+                ("repo:github.com/mozilla/level1:branch:main", "sc"),
+                ("repo:github.com/mozilla/level1:*", "sc"),
+                ("repo:github.com/mozilla/level1-no-prs:branch:main", "sc"),
+                ("repo:github.com/mozilla/level1-no-prs:*", "sc"),
+            ]
+        )
+
+
+class TestAddScopesForOrgWideWildcard:
+    projects = [
+        Project(
+            alias="mozilla",
+            branches=[
+                {
+                    "name": "main",
+                    "level": 1,
+                }
+            ],
+            repo="https://github.com/mozilla/*",
+            repo_type="git",
+            trust_domain="foo",
+            features={
+                "github-pull-request": {
+                    "enabled": True,
+                    "policy": "public_restricted",
+                },
+                "trust-domain-scopes": True,
+            },
+        ),
+    ]
+
+    def test_include_pull_requests_false_skips_wildcard_role(self, add_scope):
+        grantee = ProjectGrantee(
+            include_pull_requests=False, feature="trust-domain-scopes"
+        )
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        assert add_scope.added == set()
+
+    def test_include_pull_requests_true_still_grants_wildcard_role(self, add_scope):
+        grantee = ProjectGrantee(feature="trust-domain-scopes")
+        grants.add_scopes_for_projects(
+            Grant(scopes=["sc"], grantees=[grantee]), grantee, add_scope, self.projects
+        )
+        assert add_scope.added == set([("repo:github.com/mozilla/*", "sc")])
+
+
 class TestAddScopesForGithubPush:
     def test_grant_to_all_branches(self, add_scope, sample_projects):
         grantee = ProjectGrantee(alias="limited_branches")
@@ -761,3 +874,58 @@ async def test_update_resources(mock_ciconfig_file, set_environment):
             break
     else:
         assert 0, "no role defined"
+
+
+@pytest.mark.asyncio
+async def test_update_resources_does_not_overclaim(mock_ciconfig_file, set_environment):
+    """
+    grants must only declare ownership of the role namespaces it actually owns.
+    Claiming roles owned by other generators (scm_group_roles' `active_scm_level_*`
+    roles, or the `hook-id` namespace owned by hooks/in_tree_actions/cron_tasks/
+    git_pushes/hg_pushes) makes `ci-admin diff --resources grants` report those as
+    spurious deletions.
+    """
+    mock_ciconfig_file(
+        "projects.yml",
+        {
+            "proj1": dict(
+                repo="https://hg.mozilla.org/foo/proj1",
+                repo_type="hg",
+                access="scm_level_1",
+                branches=[{"name": "default"}],
+                trust_domain="gecko",
+            )
+        },
+    )
+    mock_ciconfig_file(
+        "dir:grants.d",
+        [{"grant": ["scope1:*"], "to": [{"project": {}}]}],
+    )
+    mock_ciconfig_file(
+        "environments.yml",
+        {
+            "test-env": {
+                "root_url": "http://taskcluster/",
+                "modify_resources": [],
+                "worker_manager": {},
+            }
+        },
+    )
+
+    # Note: no pre-`manage()` here, so we test grants' own declarations.
+    resources = Resources()
+    with set_environment("test-env"):
+        await grants.update_resources(resources)
+
+    # grants owns ordinary repo / mozilla-group roles
+    assert resources.is_managed("Role=repo:hg.mozilla.org/foo/proj1:*")
+    assert resources.is_managed("Role=mozilla-group:releng")
+
+    # ...but NOT the active_scm_level roles (owned by scm_group_roles)
+    assert not resources.is_managed("Role=mozilla-group:active_scm_level_1")
+    assert not resources.is_managed("Role=mozilla-group:active_scm_level_3")
+
+    # ...and NOT the broad hook-id namespace (owned by hooks/in_tree_actions/etc.)
+    assert not resources.is_managed(
+        "Role=hook-id:project-gecko/in-tree-action-1-generic/*"
+    )

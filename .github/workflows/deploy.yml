@@ -45,6 +45,62 @@ jobs:
       - name: Run checks
         run: uv run tc-admin check --environment ${{matrix.environment}}
 
+  diff:
+    runs-on: ubuntu-latest
+    environment: diff-${{matrix.environment}}
+    strategy:
+      matrix:
+        environment: ["staging", "firefoxci"]
+    env:
+      TASKCLUSTER_ROOT_URL: ${{vars.TASKCLUSTER_ROOT_URL}}
+      TASKCLUSTER_CLIENT_ID: ${{vars.TASKCLUSTER_CLIENT_ID}}
+      TASKCLUSTER_ACCESS_TOKEN: ${{secrets.TASKCLUSTER_ACCESS_TOKEN}}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.14'
+      - name: Install uv
+        uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
+      - name: Set root url
+        run: |
+          if [ "${{ matrix.environment }}" == "staging" ]; then
+            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> $GITHUB_ENV;
+          elif [ "${{ matrix.environment }}" == "firefoxci" ]; then
+            echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> $GITHUB_ENV;
+          fi
+      - name: Generate diff
+        if: github.event_name == 'pull_request'
+        # skip generating clients for pull requests; we require scopes for that,
+        # and we don't want to give scopes to pull requests
+        run: |
+          exit_code=0
+          uv run tc-admin diff --environment ${{matrix.environment}} --resources cron_tasks,git_pushes,grants,hg_pushes,hooks,in_tree_actions,scm_group_roles,worker_pools || exit_code=$?
+
+          if [ "${exit_code}" == "2" ]; then
+            # exit code 2 means a diff was found; this is not an error
+            exit 0;
+          fi
+
+          # other errors should be raised
+          exit "${exit_code}"
+
+      - name: Generate diff
+        if: github.event_name == 'push'
+        run: |
+          exit_code=0
+          uv run tc-admin diff --environment ${{matrix.environment}} || exit_code=$?
+
+          if [ "${exit_code}" == "2" ]; then
+            # exit code 2 means a diff was found; this is not an error
+            exit 0;
+          fi
+
+          # other errors should be raised
+          exit "${exit_code}"
+
   apply:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
     runs-on: ubuntu-latest

@@ -4,10 +4,8 @@
 
 # Grant these for all releng repos on github
 - grant:
-    - notify:email:*
     - queue:route:garbage.*
     - queue:route:index.garbage.*
-    - queue:route:notify.email.*
     - queue:scheduler-id:taskcluster-github
     - queue:create-task:{priority}:{trust_domain}-{level}/*
     - queue:create-task:{priority}:{trust_domain}-t/*
@@ -15,13 +13,21 @@
     - project:
         trust_domain: releng
 
+- grant:
+    - notify:email:*
+    - queue:route:notify.email.*
+  to:
+    - project:
+        trust_domain: releng
+        include_pull_requests: false
+
 # - balrog specific roles
 - grant:
     - secrets:get:repo:github.com/mozilla-releng/balrog:coveralls
   to:
     - project:
         alias: balrog
-        job: [pull-request:*, branch:main]
+        job: [pull-request:trusted, branch:main]
 
 - grant:
     - queue:route:index.project.balrog.*
@@ -63,7 +69,7 @@
   to:
     - projects:
         alias: tooltool
-        job: [branch:*, pull-request:*]
+        job: [branch:*, pull-request:trusted]
 
 - grant:
     - secrets:get:project/releng/tooltool/deploy
@@ -153,3 +159,16 @@
     - project:
         alias: worker-images
         job: [cron:run-integration-tests]
+
+# Windows hardware os-integration (RELOPS-2503). Separate from the anchor above,
+# which fxci-config PRs also get. Production -hw/-hw-ref deliberately excluded.
+- grant:
+    - queue:create-task:low:releng-hardware/win11-64-24h2-hw-alpha
+    - queue:create-task:low:releng-hardware/win11-64-24h2-hw-ref-alpha
+    - queue:create-task:low:releng-hardware/win11-64-24h2-hw-relops1213
+    - queue:create-task:low:releng-hardware/win11-64-24h2-hw-perf-debug
+    - queue:create-task:low:releng-hardware/win11-64-24h2-hw-perf-sheriff
+  to:
+    - project:
+        alias: worker-images
+        job: [cron:run-hw-integration-tests]

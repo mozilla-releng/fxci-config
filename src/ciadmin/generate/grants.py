@@ -89,14 +89,30 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
 
         pr_policy = (project.feature("github-pull-request", key="policy") or "").strip()
 
+        # When the project's role_prefix ends with a wildcard itself (eg.
+        # `repo:github.com/mozilla/*`), it already encompasses pull-request
+        # roles. Therefore we need to skip granting to this project if
+        # grantee.include_pull_requests is False.
+        if (
+            project.role_prefix.endswith("*")
+            and pr_policy
+            and not grantee.include_pull_requests
+        ):
+            continue
+
         if (
             "*" in non_branch_jobs
             and project.repo_type == "git"
-            and project.default_branch_level != 1
+            and (
+                project.default_branch.level != 1
+                or (pr_policy and not grantee.include_pull_requests)
+            )
         ):
-            # Github mixes pull-requests and other tasks under the same prefix
-            # Since pull-requests should be level-1, we need to explicitly
-            # split based on the job
+            # Github mixes pull-requests and other tasks under the same prefix,
+            # so a `*` job role would also apply to pull-requests. We need to
+            # explicitly split based on the job when pull-requests must be
+            # treated differently: either because they should be level-1, or
+            # because the grantee excludes them.
             non_branch_jobs.remove("*")
             non_branch_jobs.update(
                 {
@@ -153,11 +169,13 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         elif pr_policy.startswith("collaborators"):
             non_branch_jobs.discard("pull-request:untrusted")
 
-        for job in non_branch_jobs:
+        # sort the jobs so that roles are always generated in the same order,
+        # regardless of the iteration order of the sets above
+        for job in sorted(non_branch_jobs):
             roleId = format_role_id(project, job, pr_policy)
-            level = project.default_branch_level
+            level = project.default_branch.level
 
-            # If the grantee has a level, use the default_branch_level to filter out
+            # If the grantee has a level, use default_branch.level to filter out
             # actions and cron. Pull requests are hardcoded to L1 and were already
             # filtered out above.
             if (
@@ -182,10 +200,10 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
                 add_scope(roleId, format_scope(project, scope, level, priority))
 
         for branch in project.branches:
-            if not branch_match(grantee, branch):
+            if not branch_match(grantee, project, branch):
                 continue
 
-            for job in branch_jobs:
+            for job in sorted(branch_jobs):
                 # skip jobs that don't match the current branch. this avoids cases
                 # where we have things like:
                 # grantee.jobs = ["branch:main", "branch:other"]
@@ -195,8 +213,7 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
                     continue
 
                 # skip branches that don't match the grantee's level, if specified.
-                level = project.get_level(branch.name)
-                if grantee.level and level not in grantee.level:
+                if grantee.level and branch.level not in grantee.level:
                     continue
 
                 # We always use the branch name from the `project` even if the job is
@@ -205,10 +222,12 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
                 # can _still_ be granted things, but only if there is a branch named `*`
                 # in the project configuration.
                 roleId = format_role_id(project, f"branch:{branch.name}", "")
-                priority = LEVEL_PRIORITIES[level]
+                priority = LEVEL_PRIORITIES[branch.level]
 
                 for scope in grant.scopes:
-                    add_scope(roleId, format_scope(project, scope, level, priority))
+                    add_scope(
+                        roleId, format_scope(project, scope, branch.level, priority)
+                    )
 
 
 def add_scopes_for_groups(grant, grantee, add_scope):
@@ -236,11 +255,11 @@ async def update_resources(resources):
     projects = await Project.fetch_all()
     environment = await Environment.current()
 
-    # manage our resources, excluding externally managed patterns
-    resources.manage("Role=mozilla-group:.*")
+    # Manage only the role namespaces grants owns; `active_scm_level_*` roles are
+    # managed by scm_group_roles and hook-id roles by hooks/in_tree_actions/etc.
+    resources.manage("Role=mozilla-group:(?!active_scm_level_[123]).*")
     resources.manage("Role=mozillians-group:.*")
     resources.manage("Role=login-identity:.*")
-    await manage_with_exclusions(resources, "Role=hook-id:.*")
     await manage_with_exclusions(resources, "Role=project:.*")
     resources.manage("Role=repo:.*")
 

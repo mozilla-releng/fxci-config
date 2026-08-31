@@ -22,7 +22,7 @@ async def make_hook(project):
     task = jsone.render(
         task_template,
         {
-            "level": project.default_branch_level,
+            "level": project.default_branch.level,
             "trust_domain": project.trust_domain,
             "hookGroupId": hookGroupId,
             "hookId": hookId,
@@ -100,7 +100,6 @@ async def make_hook(project):
                                                 },
                                                 "user": {
                                                     "type": "string",
-                                                    "format": "email",
                                                     "default": "nobody@mozilla.com",
                                                 },
                                                 # not used by the hook
@@ -133,14 +132,13 @@ async def make_hook(project):
 
 async def update_resources(resources):
     """
-    Manage the hooks and roles for cron tasks
+    Manage the hooks and roles for hg-push resources.
     """
     projects = await Project.fetch_all()
     projects = [p for p in projects if p.feature("hg-push")]
-    trust_domains = set(project.trust_domain for project in projects)
 
     # manage the hg-push/* hooks, and corresponding roles
-    for trust_domain in trust_domains:
+    if projects:
         resources.manage("Hook=hg-push/.*")
         resources.manage("Role=hook-id:hg-push/.*")
 
