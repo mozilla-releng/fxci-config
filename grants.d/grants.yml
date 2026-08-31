@@ -2497,6 +2497,14 @@
         alias: [comm-beta, comm-release, comm-esr153]
         job: action:merge-automation
 
+- grant:
+    - project:releng:lando:action:merge_day
+    - project:releng:lando:repo:{lando_repo}
+  to:
+    - project:
+        alias: [comm-central, comm-beta, comm-esr140, comm-esr153]
+        job: action:merge-automation
+
 # granting scopes for cross-repo updates is also straightforward, but it looks
 # a bit weird to have things like `mozilla-central` being able to update `beta`.
 # in an ideal world perhaps we'd run the actions on the target repositories
