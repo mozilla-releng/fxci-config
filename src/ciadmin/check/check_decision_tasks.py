@@ -27,7 +27,12 @@ PRIORITY_LEVELS = [
 # Decision tasks whose full task-graph is used to verify that the currently
 # generated grants still satisfy everything the graph creates.
 DECISION_TASK_INDEXES = [
+    "enterprise.v2.enterprise-firefox.latest.taskgraph.decision",
+    "gecko.v2.mozilla-beta.latest.taskgraph.decision",
     "gecko.v2.mozilla-central.latest.taskgraph.decision",
+    "gecko.v2.mozilla-release.latest.taskgraph.decision",
+    "mozillavpn.v2.mozilla-vpn-client.branch.main.latest.taskgraph.decision",
+    "taskgraph.v2.taskgraph.latest.taskgraph.decision",
 ]
 
 
