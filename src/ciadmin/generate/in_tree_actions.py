@@ -18,7 +18,6 @@ from tcadmin.util.matchlist import MatchList
 from tcadmin.util.scopes import normalizeScopes
 from tcadmin.util.sessions import aiohttp_session
 
-from ciadmin.util import github
 from ciadmin.util.matching import glob_match
 
 from . import branches, tcyml
@@ -446,8 +445,6 @@ async def update_resources(resources):
                 ),
             )
             resources.add(role)
-
-    await github.close_client()
 
     # download all existing hooks and check the last time they were used
     hooks = Hooks(optionsFromEnvironment(), session=aiohttp_session())
