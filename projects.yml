@@ -217,6 +217,9 @@ comm-esr140:
     treeherder-reporting: true
     trust-domain-scopes: true
     shipit: true
+  cron:
+    targets:
+      - l10n-bumper
 comm-esr153:
   repo: https://hg.mozilla.org/releases/comm-esr153
   lando_repo: thunderbird-desktop-esr153
@@ -236,6 +239,9 @@ comm-esr153:
     treeherder-reporting: true
     trust-domain-scopes: true
     shipit: true
+  cron:
+    targets:
+      - l10n-bumper
 oak:
   repo: https://hg.mozilla.org/projects/oak
   repo_type: hg
