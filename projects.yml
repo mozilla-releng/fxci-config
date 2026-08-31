@@ -215,6 +215,7 @@ comm-esr140:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/releases/mozilla-esr140
   features:
@@ -237,6 +238,7 @@ comm-esr153:
   branches:
     - name: "*"
     - name: default
+      cron: true
   trust_domain: comm
   parent_repo: https://hg.mozilla.org/releases/mozilla-esr153
   features:
