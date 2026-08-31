@@ -213,7 +213,7 @@ comm-esr140:
     gecko-roles: true
     hg-push: true
     lando: true
-    taskgraph-cron: false
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
     shipit: true
@@ -232,7 +232,7 @@ comm-esr153:
     gecko-roles: true
     hg-push: true
     lando: true
-    taskgraph-cron: false
+    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
     shipit: true
