@@ -274,6 +274,13 @@
         - team_moco
 
 - grant:
+    - queue:get-artifact:private/widevine/*
+  to:
+    - project:
+        feature: gecko-roles
+        trust_domain: gecko
+
+- grant:
     # access to OSX testers
     - queue:create-task:{priority}:releng-hardware/gecko-t-osx-*
   to:
