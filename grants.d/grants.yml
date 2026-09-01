@@ -1609,6 +1609,18 @@
 - grant:
     - queue:cancel-task:gecko-level-*
     - queue:rerun-task:gecko-level-*
+    # Allow sheriffs and relman to ajdust priority of tasks on gecko workers
+    - queue:change-task-priority-in-queue:bitbar/gecko-*
+    - queue:change-task-priority-in-queue:gecko-1/*
+    - queue:change-task-priority-in-queue:gecko-3/*
+    - queue:change-task-priority-in-queue:gecko-t/*
+    - queue:change-task-priority-in-queue:proj-autophone/gecko-*
+    - queue:change-task-priority-in-queue:releng-hardware/gecko-*
+    - queue:change-task-priority-in-queue:releng-hardware/win11-64-24h2-hw/mdc1/*
+    - queue:change-task-priority-in-queue:releng-hardware/win11-64-24h2-hw-ref/mdc1/*
+    - queue:change-task-priority-in-queue:releng-hardware/win11-64-25h2-hw/mdc1/*
+    - queue:change-task-priority-in-queue:releng-hardware/win11-64-25h2-hw-ref/mdc1/*
+    - queue:change-task-priority-in-queue:mobile-*
   to:
     - groups:
         - perf_sheriff
