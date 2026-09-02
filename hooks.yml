@@ -241,9 +241,16 @@ project-engwf/reviewer-assignment-{mode}:
     - mode: production
       routing_key_prefix: primary.mozilla-firefox.firefox
       priority: highest
+      template_file: hook-templates/project-engwf/reviewer-assignment-production.yml
     - mode: staging
       routing_key_prefix: primary.mozilla-firefox.infra-testing
       priority: lowest
+      template_file: hook-templates/project-engwf/reviewer-assignment-staging.yml
+    - mode: development
+      routing_key_prefix: primary.mozilla-conduit.ff-test
+      priority: lowest
+      # We reuse the staging template here, as we don't need a different one.
+      template_file: hook-templates/project-engwf/reviewer-assignment-staging.yml
   name: Reviewer assignment hook ({mode})
   description: Automatically assign reviewers to PRs
   owner: conduit-team@mozilla.com
@@ -254,7 +261,7 @@ project-engwf/reviewer-assignment-{mode}:
     - queue:route:index.project.engwf.{mode}.reviewer-assignment.*
     - queue:scheduler-id:engwf
     - secrets:get:project/engwf/reviewer-assignment/runtime-{mode}
-  template_file: hook-templates/project-engwf/reviewer-assignment-{mode}.yml
+  template_file: {template_file}
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '{routing_key_prefix}.opened'
