@@ -1772,6 +1772,7 @@
     - hooks:trigger-hook:project-gecko/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-comm/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-mozilla/in-tree-action-1-generic/*
+    - hooks:trigger-hook:project-nss/in-tree-action-1-generic/*
     - hooks:trigger-hook:project-gecko/in-tree-action-1-backfill/*
     - hooks:trigger-hook:project-comm/in-tree-action-1-backfill/*
     - hooks:trigger-hook:project-gecko/in-tree-action-1-merge-automation/*
@@ -1808,6 +1809,12 @@
         - active_scm_level_3
         - sheriff
         - perf_sheriff
+
+- grant:
+    - hooks:trigger-hook:project-nss/in-tree-action-3-generic/*
+  to:
+    - roles:
+        - mozilla-group:active_scm_nss
 
 # retriggering a decision requires a lot of scopes, so only sheriffs
 # and releng can do it
