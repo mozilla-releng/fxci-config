@@ -261,7 +261,7 @@ project-engwf/reviewer-assignment-{mode}:
     - queue:route:index.project.engwf.{mode}.reviewer-assignment.*
     - queue:scheduler-id:engwf
     - secrets:get:project/engwf/reviewer-assignment/runtime-{mode}
-  template_file: {template_file}
+  template_file: '{template_file}'
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '{routing_key_prefix}.opened'
