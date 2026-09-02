@@ -263,8 +263,6 @@ project-engwf/reviewer-assignment-{mode}:
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '{routing_key_prefix}.synchronize'
   trigger_schema:
-    # Note: the trigget_schema is not used to validate Payloads from Pulse [0]
-    # [0] https://github.com/taskcluster/taskcluster/issues/8867
     type: object
     # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
     required:
