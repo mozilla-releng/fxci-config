@@ -150,6 +150,25 @@ async def replay_hg_push(options):
     await replay_hg_push(alias=options["alias"], revision=options["revision"])
 
 
+@app.command(
+    "invalidates-hooks",
+    help="Report whether a push to a branch leaves an in-tree action hook stale.",
+    description="Prints `true` if this repository and branch have their "
+    "`.taskcluster.yml` baked into an in-tree action hook, meaning fxci-config "
+    "must be applied again for the hook to match; `false` otherwise.",
+)
+@app.argument("repository", help="Repository that was pushed to, as `owner/repo`.")
+@app.argument("branch", help="Branch that was pushed to.")
+@ciconfig_arguments(app, use_environment=False)
+@run_async
+async def invalidates_hooks(options):
+    from ciadmin.generate.in_tree_actions import invalidates_hooks  # noqa: PLC0415
+
+    os.chdir(str(pathlib.Path(__file__).parent.parent.parent))
+    answer = await invalidates_hooks(options["repository"], options["branch"])
+    print("true" if answer else "false")
+
+
 @app.command("list-workers")
 @app.argument("worker-pool")
 @app.argument(
