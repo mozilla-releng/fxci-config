@@ -653,6 +653,17 @@
         alias: [mozilla-central]
 
 - grant:
+    # Bug 2059445: the same secret for the action that runs the aggregation for
+    # a chosen build date, used to backfill a day the cron missed.
+    - secrets:get:project/bhr/*
+  to:
+    - project:
+        job: [action:bhr-aggregate]
+        trust_domain: gecko
+        level: [3]
+        alias: [mozilla-central]
+
+- grant:
     - hooks:trigger-hook:project-gecko/in-tree-action-3-merge-automation/*
   to:
     - project:

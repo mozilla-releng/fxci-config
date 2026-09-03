@@ -27,6 +27,14 @@
     - scriptworker-canary
     - googleplay
 
+# Level 3 only: the task this action creates reads production BigQuery with a
+# stored credential granted to mozilla-central alone, and the in-tree action is
+# gated to that project.
+- trust_domain: gecko
+  levels: [3]
+  action_perms:
+    - bhr-aggregate
+
 - trust_domain: comm
   levels: [1, 2, 3]
   action_perms:
