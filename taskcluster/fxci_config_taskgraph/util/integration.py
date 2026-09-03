@@ -71,49 +71,6 @@ def _fetch_task_graph(decision_index_path: str) -> dict[str, dict[str, Any]]:
     return task_graph
 
 
-def _rewrite_task_datestamps(task_def):
-    """Rewrite absolute datestamps from a concrete task definition into
-    relative ones that can then be used to schedule a new task."""
-    # Arguably, we should try to figure out what these values should be from
-    # the repo that created them originally. In practice it probably doesn't
-    # matter.
-    task_def["created"] = {"relative-datestamp": "0 seconds"}
-    task_def["deadline"] = {"relative-datestamp": "1 day"}
-    task_def["expires"] = {"relative-datestamp": "1 month"}
-
-    if "payload" in task_def:
-        if "artifacts" in task_def["payload"]:
-            if isinstance(task_def["payload"]["artifacts"], dict):
-                for key, _ in task_def["payload"]["artifacts"].items():
-                    if "expires" in task_def["payload"]["artifacts"][key]:
-                        task_def["payload"]["artifacts"][key]["expires"] = {
-                            "relative-datestamp": "1 month"
-                        }
-            elif isinstance(task_def["payload"]["artifacts"], list):
-                new_artifacts = []
-                for a in task_def["payload"]["artifacts"]:
-                    if "expires" in a:
-                        a["expires"] = {"relative-datestamp": "1 month"}
-                    new_artifacts.append(a)
-                task_def["payload"]["artifacts"] = new_artifacts
-
-    return task_def
-
-
-def _remove_task_revisions(task_def):
-    """Rewrite revisions in task payloads to ensure that tasks do not refer to
-    out of date revisions."""
-    to_remove = set()
-    for k in task_def.get("payload", {}).get("env", {}):
-        if k.endswith("_REV"):
-            to_remove.add(k)
-
-    for k in to_remove:
-        del task_def["payload"]["env"][k]
-
-    return task_def
-
-
 def find_tasks(
     decision_index_path: str,
     include_attrs: dict[str, list[str]],
@@ -150,7 +107,7 @@ def find_tasks(
             if attrmatch(attributes, **excludes):
                 continue
 
-        tasks[task_id] = _rewrite_task_datestamps(task["task"])
+        tasks[task_id] = task["task"]
         # get_ancestors can be expensive; don't run it unless we might actually
         # use the results.
         if include_deps:
@@ -180,14 +137,6 @@ def find_tasks(
             if "taskQueueId" in task_def:
                 del task_def["taskQueueId"]
 
-            # All datestamps come in as absolute ones, many of which
-            # will be in the past. We need to rewrite these to relative
-            # ones to make the task reschedulable.
-            # We also need to remove absolute revisions from payloads
-            # to avoid issues with revisions not matching the refs
-            # that are given.
-            tasks[upstream_task_id] = _remove_task_revisions(
-                _rewrite_task_datestamps(task_def)
-            )
+            tasks[upstream_task_id] = task_def
 
     return tasks
