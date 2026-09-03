@@ -187,6 +187,7 @@ project-xpi/decision-{version}:
   owner: release+hooks@mozilla.com
   email_on_error: true
   scopes:
+    - assume:repo:github.com/mozilla-extensions/*
     - queue:create-task:very-low:xpi-*
     - queue:route:checks
     - queue:scheduler-id:xpi-*
