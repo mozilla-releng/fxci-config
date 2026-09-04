@@ -18,15 +18,54 @@ permissions:
   contents: read
 
 jobs:
-  check:
+  generate:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         environment: ["staging", "firefoxci"]
     env:
-      TASKCLUSTER_ROOT_URL: ${{vars.TASKCLUSTER_ROOT_URL}}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      FXCI_CONFIG_CACHE: ${{github.workspace}}/cache.${{matrix.environment}}.json
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.14'
+      - name: Install uv
+        uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
+      - name: Load environment config
+        # Hardcoded (not sourced from vars) because GitHub withholds
+        # environment-scoped vars/secrets from pull_request runs triggered
+        # from forks; the root URL isn't sensitive, so it doesn't need to
+        # live behind that gate. No TASKCLUSTER_CLIENT_ID/ACCESS_TOKEN here:
+        # `generate` never calls `current.resources()`, so it never
+        # authenticates against Taskcluster.
+        run: |
+          if [ "${{ matrix.environment }}" == "staging" ]; then
+            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> "$GITHUB_ENV"
+          elif [ "${{ matrix.environment }}" == "firefoxci" ]; then
+            echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> "$GITHUB_ENV"
+          fi
+      - name: Generate config
+        run: uv run tc-admin generate --environment ${{matrix.environment}} --resources all --json > "$FXCI_CONFIG_CACHE"
+      - name: Upload config cache
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fxci-config-cache-${{matrix.environment}}
+          path: ${{ env.FXCI_CONFIG_CACHE }}
+          retention-days: 1
+
+  check:
+    runs-on: ubuntu-latest
+    needs: generate
+    strategy:
+      matrix:
+        environment: ["staging", "firefoxci"]
+    env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GCP_CHECK_TOKEN: ${{ secrets.GCP_CHECK_TOKEN }}
+      FXCI_CONFIG_CACHE: ${{github.workspace}}/cache.${{matrix.environment}}.json
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - name: Set up Python
@@ -38,24 +77,32 @@ jobs:
       - name: Set root url
         run: |
           if [ "${{ matrix.environment }}" == "staging" ]; then
-            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> $GITHUB_ENV;
+            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> "$GITHUB_ENV"
           elif [ "${{ matrix.environment }}" == "firefoxci" ]; then
-            echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> $GITHUB_ENV;
+            echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> "$GITHUB_ENV"
           fi
+      - name: Download config cache
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fxci-config-cache-${{matrix.environment}}
+          path: ${{github.workspace}}
       - name: Run checks
-        run: uv run tc-admin check --environment ${{matrix.environment}}
+        run: uv run tc-admin check --environment ${{matrix.environment}} --generated "$FXCI_CONFIG_CACHE"
 
   diff:
     runs-on: ubuntu-latest
     environment: diff-${{matrix.environment}}
+    needs: generate
     strategy:
       matrix:
         environment: ["staging", "firefoxci"]
     env:
-      TASKCLUSTER_ROOT_URL: ${{vars.TASKCLUSTER_ROOT_URL}}
+      # Github doesn't set these on PR events from a fork, but that's ok as we
+      # skip generating resources that require scopes with PRs anyway.
       TASKCLUSTER_CLIENT_ID: ${{vars.TASKCLUSTER_CLIENT_ID}}
       TASKCLUSTER_ACCESS_TOKEN: ${{secrets.TASKCLUSTER_ACCESS_TOKEN}}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      FXCI_CONFIG_CACHE: ${{github.workspace}}/cache.${{matrix.environment}}.json
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - name: Set up Python
@@ -67,31 +114,27 @@ jobs:
       - name: Set root url
         run: |
           if [ "${{ matrix.environment }}" == "staging" ]; then
-            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> $GITHUB_ENV;
+            echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> "$GITHUB_ENV"
           elif [ "${{ matrix.environment }}" == "firefoxci" ]; then
-            echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> $GITHUB_ENV;
+            echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> "$GITHUB_ENV"
           fi
+      - name: Download config cache
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fxci-config-cache-${{matrix.environment}}
+          path: ${{github.workspace}}
       - name: Generate diff
-        if: github.event_name == 'pull_request'
-        # skip generating clients for pull requests; we require scopes for that,
-        # and we don't want to give scopes to pull requests
         run: |
           exit_code=0
-          uv run tc-admin diff --environment ${{matrix.environment}} --resources cron_tasks,git_pushes,grants,hg_pushes,hooks,in_tree_actions,scm_group_roles,worker_pools || exit_code=$?
 
-          if [ "${exit_code}" == "2" ]; then
-            # exit code 2 means a diff was found; this is not an error
-            exit 0;
+          resources_args=()
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            # skip diffing clients for pull requests; we require scopes for
+            # that, and we don't want to give scopes to pull requests.
+            resources_args=(--resources cron_tasks,git_pushes,grants,hg_pushes,hooks,in_tree_actions,scm_group_roles,worker_pools)
           fi
 
-          # other errors should be raised
-          exit "${exit_code}"
-
-      - name: Generate diff
-        if: github.event_name == 'push'
-        run: |
-          exit_code=0
-          uv run tc-admin diff --environment ${{matrix.environment}} || exit_code=$?
+          uv run tc-admin diff --environment ${{matrix.environment}} --generated "$FXCI_CONFIG_CACHE" ${resources_args[@]}" || exit_code=$?
 
           if [ "${exit_code}" == "2" ]; then
             # exit code 2 means a diff was found; this is not an error
@@ -104,7 +147,7 @@ jobs:
   apply:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
     runs-on: ubuntu-latest
-    needs: check
+    needs: [generate, check]
     environment: apply-${{matrix.environment}}
     # Serialize only the actual deploy into a single group so only one apply
     # ever runs at a time. A trigger arriving mid-deploy queues one pending
@@ -122,6 +165,7 @@ jobs:
       TASKCLUSTER_CLIENT_ID: ${{vars.TASKCLUSTER_CLIENT_ID}}
       TASKCLUSTER_ACCESS_TOKEN: ${{secrets.TASKCLUSTER_ACCESS_TOKEN}}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      FXCI_CONFIG_CACHE: ${{github.workspace}}/cache.${{matrix.environment}}.json
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - name: Set up Python
@@ -130,9 +174,14 @@ jobs:
           python-version: '3.14'
       - name: Install uv
         uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
+      - name: Download config cache
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fxci-config-cache-${{matrix.environment}}
+          path: ${{github.workspace}}
       - name: Deploy environment
         id: apply_config
-        run: uv run tc-admin apply --environment ${{matrix.environment}}
+        run: uv run tc-admin apply --environment ${{matrix.environment}} --generated "$FXCI_CONFIG_CACHE"
 
   notify:
     if: always() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')

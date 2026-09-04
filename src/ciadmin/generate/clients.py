@@ -7,8 +7,12 @@ from tcadmin.resources import Client
 from .ciconfig.clients import Client as ClientConfig
 from .ciconfig.clients_interpreted import Client as InterpretedClientConfig
 from .ciconfig.environment import Environment
+from .ciconfig.externally_managed import manage_patterns
 from .ciconfig.projects import Project
 from .grants import project_match
+
+# The resource id namespace(s) this module owns.
+MANAGED_PATTERNS = ("Client=(?!mozilla-auth0/|static/taskcluster/)",)
 
 
 async def update_resources(resources):
@@ -20,7 +24,7 @@ async def update_resources(resources):
     projects = await Project.fetch_all()
     environment = await Environment.current()
 
-    resources.manage("Client=(?!mozilla-auth0/|static/taskcluster/)")
+    await manage_patterns(resources, MANAGED_PATTERNS)
 
     for client in clients:
         if client.environments and environment.name not in client.environments:

@@ -21,7 +21,7 @@ from ciadmin.util.matching import glob_match
 
 from . import tcyml
 from .ciconfig.actions import Action
-from .ciconfig.externally_managed import manage_with_exclusions
+from .ciconfig.externally_managed import manage_patterns
 from .ciconfig.projects import Project
 
 # Any existing hooks that no longer correspond to active .taskcluster.yml files
@@ -29,6 +29,15 @@ from .ciconfig.projects import Project
 # last fired.  This ensures that any "popular" hooks stick around, for example
 # to support try jobs run against old revisions.
 HOOK_RETENTION_TIME = datetime.timedelta(days=60)
+
+# The resource id namespace(s) this module owns. All excluded from
+# externally-managed namespaces, like the other broad-pattern generators.
+MANAGED_PATTERNS = (
+    ("Hook=project-.*/in-tree-action-.*", True),
+    ("Role=hook-id:project-.*/in-tree-action-.*", True),
+    ("Hook=project-.*/in-tree-pr-action-.*", True),
+    ("Role=hook-id:project-.*/in-tree-pr-action-.*", True),
+)
 
 
 def should_hash(project):
@@ -376,12 +385,7 @@ async def update_resources(resources):
     # `--resources hooks` no longer treats these as deletions. Exclude
     # externally-managed namespaces (e.g. project-fuzzing) like the other
     # broad-pattern generators.
-    await manage_with_exclusions(resources, "Hook=project-.*/in-tree-action-.*")
-    await manage_with_exclusions(resources, "Role=hook-id:project-.*/in-tree-action-.*")
-    await manage_with_exclusions(resources, "Hook=project-.*/in-tree-pr-action-.*")
-    await manage_with_exclusions(
-        resources, "Role=hook-id:project-.*/in-tree-pr-action-.*"
-    )
+    await manage_patterns(resources, MANAGED_PATTERNS)
 
     trust_domains = set(action.trust_domain for action in actions)
 

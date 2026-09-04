@@ -7,8 +7,12 @@ import textwrap
 import jsone
 from tcadmin.resources import Binding, Hook, Role
 
+from .ciconfig.externally_managed import manage_patterns
 from .ciconfig.get import get_ciconfig_file
 from .ciconfig.projects import Project
+
+# The resource id namespace(s) this module owns.
+MANAGED_PATTERNS = ("Hook=hg-push/.*", "Role=hook-id:hg-push/.*")
 
 
 async def make_hook(project):
@@ -139,8 +143,7 @@ async def update_resources(resources):
 
     # manage the hg-push/* hooks, and corresponding roles
     if projects:
-        resources.manage("Hook=hg-push/.*")
-        resources.manage("Role=hook-id:hg-push/.*")
+        await manage_patterns(resources, MANAGED_PATTERNS)
 
     for project in projects:
         hook = await make_hook(project)

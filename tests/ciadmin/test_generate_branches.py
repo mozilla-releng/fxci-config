@@ -48,8 +48,8 @@ async def test_get_403_rate_limit_exceeded(capsys):
             await branches_module.get_default_branch("mozilla-releng/fxci-config")
 
     captured = capsys.readouterr()
-    assert "403" in captured.out
-    assert "API rate limit exceeded" in captured.out
+    assert "403" in captured.err
+    assert "API rate limit exceeded" in captured.err
 
 
 @pytest.mark.asyncio
@@ -72,5 +72,5 @@ async def test_get_403_saml_enforcement(capsys):
             await branches_module.get_default_branch("taskcluster/taskgraph")
 
     captured = capsys.readouterr()
-    assert "403" in captured.out
-    assert "SAML enforcement" in captured.out
+    assert "403" in captured.err
+    assert "SAML enforcement" in captured.err
