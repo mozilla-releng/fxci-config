@@ -280,7 +280,9 @@ def get_aws_provider_config(
                 {"availability-zone": availability_zone},
             )
 
-            for instance_type in sorted(instance_types):
+            for instance_type in sorted(
+                instance_types, key=lambda x: x["instanceType"]
+            ):
                 if is_invalid_aws_instance_type(
                     aws_config["invalid-instances"],
                     availability_zone,
