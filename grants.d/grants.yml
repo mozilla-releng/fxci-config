@@ -644,21 +644,12 @@
 
 - grant:
     # Bug 2056977: Allow the bhr-aggregate cron to fetch its secrets.
+    # Bug 2059445: and the action that runs the same aggregation for a chosen
+    # build date, to backfill a day the cron missed.
     - secrets:get:project/bhr/*
   to:
     - project:
-        job: [cron:bhr-aggregate]
-        trust_domain: gecko
-        level: [3]
-        alias: [mozilla-central]
-
-- grant:
-    # Bug 2059445: the same secret for the action that runs the aggregation for
-    # a chosen build date, used to backfill a day the cron missed.
-    - secrets:get:project/bhr/*
-  to:
-    - project:
-        job: [action:bhr-aggregate]
+        job: [cron:bhr-aggregate, action:bhr-aggregate]
         trust_domain: gecko
         level: [3]
         alias: [mozilla-central]
