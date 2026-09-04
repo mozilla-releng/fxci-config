@@ -8,13 +8,13 @@ expires:
 extra: {}
 metadata:
   name: Reviewer assignment
-  description: Assign reviewers for PRs in the mozilla-firefox staging repos (infra-testing)
+  description: Assign reviewers for PRs in the mozilla-conduit dev repos (ff-test)
   owner: conduit-team@mozilla.com
   source: 'https://github.com/mozilla-conduit/reviewer-selector'
 payload:
   capabilities: {}
   env:
-    TC_SECRET_ID: project/engwf/reviewer-assignment/runtime-staging
+    TC_SECRET_ID: project/engwf/reviewer-assignment/runtime-development
     DIFF_URL:
       $eval: payload.body.pull_request.diff_url
     PR_URL:
@@ -42,13 +42,13 @@ priority: lowest
 provisionerId: reviewer-assignment
 retries: 3
 routes:
-  - index.project.engwf.staging.reviewer-assignment.latest
-  - index.project.engwf.staging.reviewer-assignment.${payload.organization}.${payload.repository}.latest
-  - index.project.engwf.staging.reviewer-assignment.${payload.organization}.${payload.repository}.pull-request.${payload.body.number}
-  - index.project.engwf.staging.reviewer-assignment.${payload.organization}.${payload.repository}.revision.${payload.body.pull_request.head.sha}
+  - index.project.engwf.development.reviewer-assignment.latest
+  - index.project.engwf.development.reviewer-assignment.${payload.organization}.${payload.repository}.latest
+  - index.project.engwf.development.reviewer-assignment.${payload.organization}.${payload.repository}.pull-request.${payload.body.number}
+  - index.project.engwf.development.reviewer-assignment.${payload.organization}.${payload.repository}.revision.${payload.body.pull_request.head.sha}
 schedulerId: engwf
 scopes:
-  - 'secrets:get:project/engwf/reviewer-assignment/runtime-staging'
-  - 'index:insert-task:project.engwf.staging.reviewer-assignment.*'
+  - 'secrets:get:project/engwf/reviewer-assignment/runtime-development'
+  - 'index:insert-task:project.engwf.development.reviewer-assignment.*'
 tags: {}
 workerType: bot

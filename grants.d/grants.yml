@@ -885,6 +885,9 @@
     - secrets:get:project/engwf/*
     - secrets:set:project/engwf/*
 
+    # Bug 2063962: reviewer-assignment-development support mozilla-conduit/ff-test
+    - assume:hook-id:project-engwf/reviewer-assignment-development
+    - hooks:modify-hook:project-engwf/reviewer-assignment-development
     # Bug 2024347: ability to create / modify review assigner hook
     - assume:hook-id:project-engwf/reviewer-assignment-staging
     - hooks:modify-hook:project-engwf/reviewer-assignment-staging
