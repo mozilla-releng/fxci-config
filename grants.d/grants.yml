@@ -355,6 +355,7 @@
     - project:releng:beetmover:bucket:dep-partner
     - project:releng:beetmover:bucket:maven-staging
     - project:releng:beetmover:bucket:maven-nightly-staging
+    - project:releng:beetmover:bucket:linuxfirefoxcom-stage
     - project:releng:beetmover:yum-repo:dep
     - project:releng:bouncer:action:*
     - project:releng:bouncer:server:staging
@@ -685,6 +686,15 @@
         trust_domain: gecko
         level: [3]
         alias: [autoland]
+
+- grant:
+    - project:releng:beetmover:bucket:linuxfirefoxcom
+    - project:releng:beetmover:action:direct-push-to-bucket
+  to:
+    - project:
+        trust_domain: gecko
+        level: [3]
+        alias: [mozilla-central]
 
 - grant:
     # Allow the scriptworker-canary cron hook to trigger the corresponding action.
