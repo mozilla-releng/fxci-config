@@ -9,7 +9,7 @@ extra: {}
 metadata:
   name: Reviewer assignment
   description: Assign reviewers for PRs in the mozilla-firefox org
-  owner: omehani@mozilla.com
+  owner: conduit-team@mozilla.com
   source: 'https://github.com/mozilla-conduit/reviewer-selector'
 payload:
   capabilities: {}
@@ -51,4 +51,4 @@ scopes:
   - 'secrets:get:project/engwf/reviewer-assignment/runtime-production'
   - 'index:insert-task:project.engwf.production.reviewer-assignment.*'
 tags: {}
-workerType: bot  # XXX create dedicated worker (bug 2024115)
+workerType: bot
