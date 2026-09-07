@@ -355,6 +355,7 @@
     - project:releng:beetmover:bucket:dep-partner
     - project:releng:beetmover:bucket:maven-staging
     - project:releng:beetmover:bucket:maven-nightly-staging
+    - project:releng:beetmover:bucket:linuxfirefoxcom-stage
     - project:releng:beetmover:yum-repo:dep
     - project:releng:bouncer:action:*
     - project:releng:bouncer:server:staging
