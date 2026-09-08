@@ -149,7 +149,7 @@ worker-defaults:
             wstAudience: firefoxcitc
       generic-worker/worker-runner-linux-multi:  # for images built with monopacker 22.04 community configuration
         genericWorker:
-          config:
+          config: &worker-runner-linux-multi-config
             cleanUpTaskDirs: true
             disableReboots: false
             ed25519SigningKeyLocation: /etc/taskcluster/secrets/gw_cot_private_key
@@ -162,6 +162,13 @@ worker-defaults:
             taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
             taskclusterProxyPort: 80
             wstAudience: firefoxcitc
+      generic-worker/worker-runner-linux-multi-trusted:
+        genericWorker:
+          config:
+            <<: *worker-runner-linux-multi-config
+            # enableInteractive defaults to true in generic-worker; disable it
+            # on trusted (level 3) pools.
+            enableInteractive: false
       # generic-worker configs for images built from worker-images
       generic-worker/linux:
         genericWorker:
@@ -616,6 +623,8 @@ pools:
   - pool_id: '{pool-group}/b-linux-gcp-aarch64'
     description: Linux ARM64 VM for Firefox automation.
     owner: release+tc-workers@mozilla.com
+    attributes:
+      chain-of-trust: ''
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-2
@@ -635,7 +644,7 @@ pools:
       maxCapacity:
         by-pool-group:
           (gecko|comm)-.*: 10
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/worker-runner-linux-multi-{chain-of-trust}
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
       image: monopacker-ubuntu-2204-wayland-arm64
@@ -1265,6 +1274,8 @@ pools:
     description: 'KVM-enabled Ubuntu 22.04 GCP builders.'
     owner: release+tc-workers@mozilla.com
     email_on_error: true
+    attributes:
+      chain-of-trust: ''
     variants:
       - pool-group: gecko-1
       - pool-group: gecko-3
@@ -1274,7 +1285,7 @@ pools:
         trusted: fxci-level3-gcp
         default: fxci-level1-gcp
     config:
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/worker-runner-linux-multi-{chain-of-trust}
       regions: *default-gcp-regions
       image: monopacker-ubuntu-2204-wayland  # use temporarily until monopacker-ubuntu-2204 is working.
       minCapacity: 0
@@ -2192,6 +2203,12 @@ pools:
       worker-config:
         genericWorker:
           config:
+            # enableInteractive defaults to true in generic-worker; keep it
+            # disabled on trusted (level 3) pools.
+            enableInteractive:
+              by-chain-of-trust:
+                trusted: false
+                default: true
             cachesDir: D:\caches
             downloadsDir: D:\downloads
             tasksDir: D:\
@@ -2427,6 +2444,12 @@ pools:
       worker-config:
         genericWorker:
           config:
+            # enableInteractive defaults to true in generic-worker; keep it
+            # disabled on trusted (level 3) pools.
+            enableInteractive:
+              by-level:
+                1: true
+                3: false
             workerType: b-win2025-{suffix}
             provisionerId: '{pool-group}'
             cachesDir: D:\caches
@@ -2628,6 +2651,12 @@ pools:
       worker-config:
         genericWorker:
           config:
+            # enableInteractive defaults to true in generic-worker; keep it
+            # disabled on trusted (level 3) pools.
+            enableInteractive:
+              by-level:
+                1: true
+                3: false
             workerType: win11-a64-25h2-builder-{suffix}
             provisionerId: '{pool-group}'
             cachesDir: D:\caches
@@ -3635,6 +3664,8 @@ pools:
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
+    attributes:
+      chain-of-trust: ''
     variants:
       - pool-group: code-analysis-1
       - pool-group: code-analysis-3
@@ -3646,7 +3677,7 @@ pools:
     config:
       minCapacity: 0
       maxCapacity: 10
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/worker-runner-linux-multi-{chain-of-trust}
       regions: *default-gcp-regions
       image: monopacker-ubuntu-2204-wayland
       instance_types:
