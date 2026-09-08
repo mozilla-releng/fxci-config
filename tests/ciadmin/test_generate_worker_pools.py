@@ -270,6 +270,14 @@ def assert_azure_arm(pool):
     assert "storageProfile" not in launch_config
 
 
+def assert_azure_arm_regular(pool):
+    assert_common(pool)
+    priority = pool.config["launchConfigs"][0]["armDeployment"]["parameters"][
+        "priority"
+    ]
+    assert priority == {"value": "Regular"}
+
+
 def assert_azure_arm_disabled(pool):
     assert_common(pool)
 
@@ -405,6 +413,17 @@ def test_generate_pool_variants_resolves_scaling_ratio(environment):
             },
             None,
             id="azure_arm",
+        ),
+        pytest.param(
+            "azure",
+            {
+                "armDeployment": {
+                    "templateSpecId": "/subscriptions/subscription_id/resourceGroups/templates/providers/Microsoft.Resources/templateSpecs/fxci-test/versions/42",  # noqa: E501
+                },
+                "spot": False,
+            },
+            None,
+            id="azure_arm_regular",
         ),
         pytest.param(
             "azure",

@@ -3076,6 +3076,7 @@ pools:
       - pool-group: gecko-t
         suffix: gpu-alpha
       - pool-group: gecko-t
+        # See docs/foofrix-windows-worker.md for the task and access model.
         suffix: gpu-perf-experiment
       - pool-group: gecko-t
         suffix: webgpu
@@ -3139,11 +3140,19 @@ pools:
               '': 1200
               alpha: 500
               gpu: 600
-              gpu-perf-experiment: 12
+              gpu-perf-experiment: 3
               large: 150
               default: 100
           enterprise-t: 200
           default: 5
+      minCapacity:
+        by-pool-group:
+          gecko-t:
+            by-suffix:
+              # Keep one worker available for the long-running FooFrix agent.
+              gpu-perf-experiment: 1
+              default: 0
+          default: 0
       scalingRatio:
         by-pool-group:
           gecko-t:
@@ -3176,6 +3185,11 @@ pools:
                 privileged: 1
                 privileged-alpha: 1
                 default: 0
+            maxTaskRunTime:
+              by-suffix:
+                # Allow the FooFrix agent to run for four days per task.
+                gpu-perf-experiment: 345600
+                default: 86400
             cachesDir: D:\caches
             downloadsDir: D:\downloads
             tasksDir: D:\
@@ -3184,7 +3198,10 @@ pools:
         sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot: true
+      spot:
+        by-suffix:
+          gpu-perf-experiment: false
+          default: true
       vmSizes:
         - vmSize:
             by-suffix:
