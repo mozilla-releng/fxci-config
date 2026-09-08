@@ -3734,7 +3734,7 @@ pools:
           nss-corpus-update-worker: 5
       implementation: generic-worker/worker-runner-linux-multi
       regions: *default-gcp-regions
-      image: fuzzing-gw-ubuntu-24-04
+      image: gw-ubuntu-24-04
       instance_types:
         by-kind:
           grizzly-reduce-worker-android:
@@ -3754,7 +3754,7 @@ pools:
       maxCapacity: 20
       implementation: generic-worker/worker-runner-linux-multi
       regions: *default-gcp-regions
-      image: fuzzing-gw-ubuntu-24-04
+      image: gw-ubuntu-24-04
       instance_types:
         - *c3d-standard-4-60gb
 
@@ -3768,7 +3768,7 @@ pools:
       maxCapacity: 10
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-central1]
-      image: fuzzing-gw-ubuntu-24-04-arm64
+      image: gw-ubuntu-24-04-arm64
       instance_types:
         - disks:
             - *persistent-disk-60gb
@@ -3780,7 +3780,7 @@ pools:
     email_on_error: false
     provider_id: azure2
     config:
-      image: fuzzing-gw-win2022
+      image: gw-win2022
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
       locations: [central-us, east-us]
@@ -3813,8 +3813,8 @@ pools:
     config:
       image:
         by-kind:
-          gpu: fuzzing-gw-win2022-gpu
-          ngpu: fuzzing-gw-win2022
+          gpu: gw-win2022-gpu
+          ngpu: gw-win2022
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
       locations:
@@ -3869,7 +3869,7 @@ pools:
       maxCapacity: 5
       implementation: generic-worker/worker-runner-linux-multi
       regions: [us-east-1]
-      image: fuzzing-gw-ubuntu-24-04-staging
+      image: gw-ubuntu-24-04-staging
       security: untrusted
       instance_types:
         - instanceType: m5d.metal
@@ -3880,7 +3880,7 @@ pools:
     email_on_error: true
     provider_id: azure2
     config:
-      image: fuzzing-gw-win2022-gpu
+      image: gw-win2022-gpu
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
       locations: [east-us, east-us-2, south-central-us, west-us-2]
@@ -3898,3 +3898,83 @@ pools:
               vmSize: Standard_NV12s_v3
       worker-manager-config:
         capacityPerInstance: 1
+
+  # proj-taskcluster: Taskcluster's own CI (github.com/taskcluster/*), migrated
+  # from community-tc. Linux pools run on GCP, Windows pools on Azure. Only the
+  # pools used by the CI graph are defined here; community's manually-operated
+  # staging/GPU/arm64 pools are not (yet) migrated.
+  - pool_id: 'proj-taskcluster/{name}'
+    description: '{description}'
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    variants:
+      - name: ci
+        description: Taskcluster CI pool
+        email_on_error: false
+      - name: release
+        description: Trusted worker to build Taskcluster releases (only!)
+      - name: gw-ubuntu-24-04
+        description: Taskcluster generic-worker Ubuntu 24.04 pool
+      - name: gw-ubuntu-24-04-gui
+        description: Taskcluster generic-worker Ubuntu 24.04 GUI pool
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-name:
+          ci: 10
+          release: 1
+          gw-ubuntu-24-04: 50
+          gw-ubuntu-24-04-gui: 20
+      implementation: generic-worker/worker-runner-linux-multi
+      regions: *default-gcp-regions
+      image: gw-ubuntu-24-04
+      instance_types:
+        - *n2-standard-4-60gb-lssd
+      worker-config:
+        genericWorker:
+          config:
+            # *-gui pools have headlessTasks: false for real GUI needed by GW CI tests.
+            headlessTasks:
+              by-name:
+                .*-gui: false
+                default: true
+            # The ci pool is usable by every repo in the taskcluster org
+            # (including untrusted PRs), so keep run-task-as-current-user off.
+            enableRunTaskAsCurrentUser:
+              by-name:
+                ci: false
+                default: null  # inherit worker-defaults
+            idleTimeoutSecs: 300
+
+  - pool_id: 'proj-taskcluster/{name}'
+    description: '{description}'
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    variants:
+      - name: gw-windows-2022
+        description: Taskcluster generic-worker Windows 2022 pool
+      - name: gw-windows-2022-gui
+        description: Taskcluster generic-worker Windows 2022 GUI pool
+    config:
+      image: gw-win2022
+      implementation: generic-worker/windows-fuzzing
+      worker-purpose: proj-taskcluster
+      locations: [central-us, east-us]
+      maxCapacity: 10
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+      vmSizes:
+        - vmSize: Standard_F16s_v2
+      worker-manager-config:
+        capacityPerInstance: 1
+      worker-config:
+        genericWorker:
+          config:
+            # *-gui pools have headlessTasks: false for real GUI needed by GW CI tests.
+            headlessTasks:
+              by-name:
+                .*-gui: false
+                default: true
+            idleTimeoutSecs: 300

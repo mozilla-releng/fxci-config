@@ -65,11 +65,13 @@ async def check_grant_pools(generate_resources):
         "bitbar",
         "built-in",
         "lambda",
+        "null-provisioner",
         "performance-hardware",
         "proj-autophone",
         "releng-hardware",
         "scriptworker-k8s",
         "scriptworker-prov-v1",
+        "test-provisioner",
     }
 
     # We validate the raw grants rather than the generated grants to allow for
@@ -169,12 +171,25 @@ async def check_insecure_grants(generate_resources):
         # Fallback to whether the level-1 regex matches.
         return bool(level_1.search(role))
 
+    # The taskcluster/taskcluster CI mirrors community-tc: trusted pull requests
+    # (from collaborators, or untrusted PRs a collaborator explicitly runs via
+    # comment) share the project's own `taskcluster-level-3` namespace with
+    # pushes and tags, while untrusted pull requests are isolated in
+    # `taskcluster-level-1`. These are scheduler-id / task-group namespaces,
+    # not fxci trust levels: they grant no access to level-3 worker pools.
+    taskcluster_trusted_pr = "repo:github.com/taskcluster/taskcluster:pull-request"
+    taskcluster_level_3_ns = re.compile(r":taskcluster-level-3(?:/|$)")
+
     insecure_scopes = defaultdict(set)
     for role in roles:
         if not is_level_1(role.roleId):
             continue
 
         level_3_scopes = {s for s in role.scopes if level_3.search(s)}
+        if role.roleId == taskcluster_trusted_pr:
+            level_3_scopes = {
+                s for s in level_3_scopes if not taskcluster_level_3_ns.search(s)
+            }
         if level_3_scopes:
             insecure_scopes[role.roleId].update(level_3_scopes)
 
