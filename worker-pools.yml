@@ -3076,7 +3076,6 @@ pools:
       - pool-group: gecko-t
         suffix: gpu-alpha
       - pool-group: gecko-t
-        # See docs/foofrix-windows-worker.md for the task and access model.
         suffix: gpu-perf-experiment
       - pool-group: gecko-t
         suffix: webgpu
