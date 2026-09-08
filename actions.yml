@@ -51,6 +51,7 @@
     - generic
     - purge-caches
     - retrigger-decision
+    - enterprise-release-promotion
 
 - trust_domain: xpi
   levels: [1, 3]
