@@ -3148,7 +3148,6 @@ pools:
         by-pool-group:
           gecko-t:
             by-suffix:
-              # Keep one worker available for the long-running FooFrix agent.
               gpu-perf-experiment: 1
               default: 0
           default: 0
@@ -3186,7 +3185,6 @@ pools:
                 default: 0
             maxTaskRunTime:
               by-suffix:
-                # Allow the FooFrix agent to run for four days per task.
                 gpu-perf-experiment: 345600
                 default: 86400
             cachesDir: D:\caches
@@ -3197,10 +3195,7 @@ pools:
         sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot:
-        by-suffix:
-          gpu-perf-experiment: false
-          default: true
+      spot: true
       vmSizes:
         - vmSize:
             by-suffix:

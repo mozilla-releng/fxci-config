@@ -189,9 +189,7 @@ def _build_arm_template_launch_config(
             "imageId": image_reference_id,
             "location": loc,
             "subnetId": subnet_id,
-            "priority": pool_cfg.get(
-                "priority", "Spot" if pool_cfg.get("spot", True) else "Regular"
-            ),
+            "priority": pool_cfg.get("priority", "Spot"),
         }
     )
 
@@ -785,7 +783,6 @@ def generate_pool_variants(worker_pools, environment):
             "regions",
             "scalingRatio",
             "security",
-            "spot",
             "tags.sourceBranch",
             "vmSizes.launchConfig.hardwareProfile.vmSize",
             "worker-purpose",
