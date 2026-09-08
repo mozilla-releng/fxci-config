@@ -17,22 +17,25 @@ async def check_privileged_is_untrusted(generate_resources):
     have privileged config options turned off:
 
     - for docker-worker, ensure that `allowPrivileged` is disabled
-    - for generic-worker, ensure that `enableRunTaskAsCurrentUser` is disabled
+    - for generic-worker, ensure that `enableRunTaskAsCurrentUser` and
+      `enableInteractive` are disabled
     - for d2g, ensure that `allowPrivileged`, `allowGPUs`, `allowInteractive`,
       `allowLoopbackAudio` and `allowLoopbackVideo` are disabled
     """
     environment = await Environment.current()
     worker_pools = await WorkerPoolConfig.fetch_all()
     trusted_pools = set()
+    # monopacker 2204 images run generic-worker 64.3.0, which is too old to
+    # support enableRunTaskAsCurrentUser, so that particular check is skipped
+    # for them. enableInteractive (available since 49.2.0) is still checked.
+    monopacker_pools = set()
     for pool in generate_pool_variants(worker_pools, environment):
         if "trusted" in pool.config.get("image", ""):
             trusted_pools.add(pool.pool_id)
-        elif "monopacker" in pool.config.get("image", ""):
-            # FIXME ignore monopacker images for now, their generic-worker
-            # version doesn't support enableRunTaskAsCurrentUser
-            continue
         elif "trusted" in pool.provider_id or "level3" in pool.provider_id:
             trusted_pools.add(pool.pool_id)
+            if "monopacker" in pool.config.get("image", ""):
+                monopacker_pools.add(pool.pool_id)
     assert trusted_pools
 
     resources = await generate_resources("worker_pools")
@@ -52,7 +55,14 @@ async def check_privileged_is_untrusted(generate_resources):
                 "genericWorker", {}
             ):
                 # generic-worker
-                if gwConfig.get("config", {}).get("enableRunTaskAsCurrentUser", True):
+                if pool.workerPoolId not in monopacker_pools and gwConfig.get(
+                    "config", {}
+                ).get("enableRunTaskAsCurrentUser", True):
+                    privileged = True
+                    break
+                # enableInteractive defaults to true in generic-worker, so it
+                # must be explicitly disabled to keep trusted pools locked down.
+                if gwConfig.get("config", {}).get("enableInteractive", True):
                     privileged = True
                     break
                 if (
