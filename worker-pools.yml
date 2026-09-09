@@ -169,6 +169,27 @@ worker-defaults:
             # enableInteractive defaults to true in generic-worker; disable it
             # on trusted (level 3) pools.
             enableInteractive: false
+      # generic-worker config for the tceng Ubuntu 24.04 images (community-tc's
+      # `generic-worker-ubuntu-24-04` imageset, built by worker-images
+      # scripts/linux/tceng/). Those images bake no worker config, so this
+      # mirrors the imageset's workerConfig in community-tc-config
+      # config/imagesets.yml: the signing key lives at
+      # /etc/generic-worker/ed25519_key (not the monopacker path above) and d2g
+      # is enabled, since Taskcluster's decision task is a docker-worker payload.
+      generic-worker/linux-tceng:
+        genericWorker:
+          config:
+            d2gConfig:
+              enableD2G: true
+            ed25519SigningKeyLocation: /etc/generic-worker/ed25519_key
+            enableInteractive: true
+            idleTimeoutSecs: 300  # 5 minutes
+            livelogExecutable: /usr/local/bin/livelog
+            sentryProject: generic-worker
+            shutdownMachineOnIdle: true
+            shutdownMachineOnInternalError: true
+            taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
+            wstAudience: firefoxcitc
       # generic-worker configs for images built from worker-images
       generic-worker/linux:
         genericWorker:
@@ -3926,7 +3947,7 @@ pools:
           release: 1
           gw-ubuntu-24-04: 50
           gw-ubuntu-24-04-gui: 20
-      implementation: generic-worker/worker-runner-linux-multi
+      implementation: generic-worker/linux-tceng
       regions: *default-gcp-regions
       image: gw-ubuntu-24-04
       instance_types:
@@ -3948,13 +3969,12 @@ pools:
             enableRunTaskAsCurrentUser:
               by-name:
                 ci: false
-                default: null  # inherit worker-defaults
+                default: null  # generic-worker default (true)
             # No interactive sessions on the pool that holds publishing credentials.
             enableInteractive:
               by-name:
                 release: false
                 default: null  # implementation default (true)
-            idleTimeoutSecs: 300
 
   - pool_id: 'proj-taskcluster/{name}'
     description: '{description}'
