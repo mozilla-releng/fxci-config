@@ -65,7 +65,6 @@ async def check_grant_pools(generate_resources):
         "bitbar",
         "built-in",
         "lambda",
-        "null-provisioner",
         "performance-hardware",
         "proj-autophone",
         "releng-hardware",
