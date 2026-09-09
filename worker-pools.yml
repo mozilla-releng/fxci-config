@@ -3949,6 +3949,11 @@ pools:
               by-name:
                 ci: false
                 default: null  # inherit worker-defaults
+            # No interactive sessions on the pool that holds publishing credentials.
+            enableInteractive:
+              by-name:
+                release: false
+                default: null  # implementation default (true)
             idleTimeoutSecs: 300
 
   - pool_id: 'proj-taskcluster/{name}'
