@@ -7,6 +7,8 @@ import os
 import click
 from tcadmin.appconfig import AppConfig
 from tcadmin.main import main
+from tcadmin.resources import Resources
+from tcadmin.util.matchlist import MatchList
 
 from ciadmin import modify
 from ciadmin.generate import (
@@ -21,17 +23,37 @@ from ciadmin.generate import (
     worker_pools,
 )
 
-RESOURCES = {
-    "clients": clients.update_resources,
-    "cron_tasks": cron_tasks.update_resources,
-    "git_pushes": git_pushes.update_resources,
-    "grants": grants.update_resources,
-    "hg_pushes": hg_pushes.update_resources,
-    "hooks": hooks.update_resources,
-    "in_tree_actions": in_tree_actions.update_resources,
-    "scm_group_roles": scm_group_roles.update_resources,
-    "worker_pools": worker_pools.update_resources,
+RESOURCE_MODULES = {
+    "clients": clients,
+    "cron_tasks": cron_tasks,
+    "git_pushes": git_pushes,
+    "grants": grants,
+    "hg_pushes": hg_pushes,
+    "hooks": hooks,
+    "in_tree_actions": in_tree_actions,
+    "scm_group_roles": scm_group_roles,
+    "worker_pools": worker_pools,
 }
+
+
+def _managed_resources(module):
+    """Wrap a generator module's `update_resources` so it implicitly claims
+    the module's `managed` MatchList before running, instead of requiring
+    every module to call `resources.managed.extend(managed)` itself.
+
+    The module only ever sees a `Resources` object scoped to its own
+    `managed` list, so `resources.add()` enforces that everything it
+    generates is actually covered by its own declaration.
+    """
+
+    async def update_resources(resources):
+        resources.managed.extend(module.managed)
+        scoped = Resources(managed=MatchList(list(module.managed)))
+        await module.update_resources(scoped)
+        resources.update(scoped)
+
+    return update_resources
+
 
 appconfig = AppConfig()
 
@@ -43,8 +65,8 @@ appconfig.options.add(
 
 appconfig.check_path = os.path.join(os.path.dirname(__file__), "check")
 
-for name, reso_module in RESOURCES.items():
-    appconfig.generators.register(reso_module, name=name)
+for name, reso_module in RESOURCE_MODULES.items():
+    appconfig.generators.register(_managed_resources(reso_module), name=name)
 
 # Registered first so the client is closed even when `modify_resources`
 # rejects the environment.

@@ -8,6 +8,7 @@ import textwrap
 
 import jsone
 from tcadmin.resources import Binding, Hook, Role
+from tcadmin.util.matchlist import MatchList
 from tcadmin.util.root_url import root_url
 
 from . import branches
@@ -16,6 +17,15 @@ from .ciconfig.get import get_ciconfig_file
 from .ciconfig.projects import Project
 
 GITHUB_TOKEN_SECRET = "project/releng/mobile/github-cron-token"
+
+# These are all nested under project-releng, but should probably move to
+# project-{gecko,comm} someday..
+managed = MatchList(
+    [
+        "Hook=project-releng/cron-task-.*",
+        "Role=hook-id:project-releng/cron-task-.*",
+    ]
+)
 
 
 def hook_id(project, branch, default_branch):
@@ -191,12 +201,6 @@ async def update_resources(resources):
     """
     projects = await Project.fetch_all()
     environment = await Environment.current()
-
-    # manage the cron-task-* hooks, and corresponding roles;
-    # these are all nested under project-releng
-    # but should probably move to project-{gecko,comm} someday..
-    resources.manage("Hook=project-releng/cron-task-.*")
-    resources.manage("Role=hook-id:project-releng/cron-task-.*")
 
     for project in projects:
         # if this project does not thave the `taskgraph-cron` feature, it does not get

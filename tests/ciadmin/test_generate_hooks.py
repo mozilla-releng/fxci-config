@@ -5,6 +5,7 @@
 import pytest
 from tcadmin.resources import Resources
 
+from ciadmin.generate import hooks
 from ciadmin.generate.ciconfig.hooks import Hook
 from ciadmin.generate.hooks import generate_hook_variants, update_resources
 
@@ -217,8 +218,8 @@ async def test_update_resources_does_not_overclaim(
         },
     )
 
-    # No pre-`manage()` here, so we test hooks' own declarations.
     resources = Resources()
+    resources.managed.extend(hooks.managed)
     with set_environment("production"):
         await update_resources(resources)
 

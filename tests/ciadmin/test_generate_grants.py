@@ -576,9 +576,8 @@ class TestAddScopesForGithubPullRequest:
 
 
 class TestAddScopesForLevel1PullRequest:
-    """Level-1 git repos must still split the `*` job so pull-requests never
-    inherit the bare `repo:<..>:*` role. Pull-request roles are only ever
-    created for repos that declare a `github-pull-request` policy."""
+    """Level-1 repos don't need the `*` job split for level reasons, but still
+    have to honour include_pull_requests."""
 
     projects = [
         Project(
@@ -886,9 +885,9 @@ async def test_update_resources(mock_ciconfig_file, set_environment):
 @pytest.mark.asyncio
 async def test_update_resources_does_not_overclaim(mock_ciconfig_file, set_environment):
     """
-    grants must only declare ownership of the role namespaces it actually owns.
-    Claiming roles owned by other generators (scm_group_roles' `active_scm_level_*`
-    roles, or the `hook-id` namespace owned by hooks/in_tree_actions/cron_tasks/
+    grants must only manage the role namespaces it actually manages.
+    Claiming roles managed by other generators (scm_group_roles' `active_scm_level_*`
+    roles, or the `hook-id` namespace managed by hooks/in_tree_actions/cron_tasks/
     git_pushes/hg_pushes) makes `ci-admin diff --only grants` report those as
     spurious deletions.
     """
@@ -919,8 +918,10 @@ async def test_update_resources_does_not_overclaim(mock_ciconfig_file, set_envir
         },
     )
 
-    # Note: no pre-`manage()` here, so we test grants' own declarations.
+    # Only extend with grants' own `managed` list (as boot.py's wrapper would),
+    # so we test grants' own declarations.
     resources = Resources()
+    resources.managed.extend(grants.managed)
     with set_environment("test-env"):
         await grants.update_resources(resources)
 

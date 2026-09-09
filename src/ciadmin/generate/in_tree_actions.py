@@ -13,7 +13,7 @@ from taskcluster import optionsFromEnvironment
 from taskcluster.aio import Hooks
 from taskcluster.exceptions import TaskclusterRestFailure
 from tcadmin.resources import Hook, Role
-from tcadmin.util.matchlist import MatchList
+from tcadmin.util.matchlist import Match, MatchList
 from tcadmin.util.scopes import normalizeScopes
 from tcadmin.util.sessions import aiohttp_session
 
@@ -21,7 +21,6 @@ from ciadmin.util.matching import glob_match
 
 from . import tcyml
 from .ciconfig.actions import Action
-from .ciconfig.externally_managed import manage_with_exclusions
 from .ciconfig.projects import Project
 
 # Any existing hooks that no longer correspond to active .taskcluster.yml files
@@ -29,6 +28,32 @@ from .ciconfig.projects import Project
 # last fired.  This ensures that any "popular" hooks stick around, for example
 # to support try jobs run against old revisions.
 HOOK_RETENTION_TIME = datetime.timedelta(days=60)
+
+# The `in-tree-action`/`in-tree-pr-action` suffix keeps these namespaces from
+# overlapping other generators' hooks, so `--resources hooks` no longer
+# treats them as deletions -- but they're still excluded from external
+# systems' namespaces (e.g. project-fuzzing) like the other broad-pattern
+# generators.
+managed = MatchList(
+    [
+        Match(
+            "Hook=project-.*/in-tree-action-.*",
+            excludes=["Hook=project-fuzzing/.*"],
+        ),
+        Match(
+            "Role=hook-id:project-.*/in-tree-action-.*",
+            excludes=["Role=hook-id:project-fuzzing/.*"],
+        ),
+        Match(
+            "Hook=project-.*/in-tree-pr-action-.*",
+            excludes=["Hook=project-fuzzing/.*"],
+        ),
+        Match(
+            "Role=hook-id:project-.*/in-tree-pr-action-.*",
+            excludes=["Role=hook-id:project-fuzzing/.*"],
+        ),
+    ]
+)
 
 
 def should_hash(project):
@@ -383,18 +408,7 @@ async def update_resources(resources):
 
     # Manage the in-tree-action hooks/roles across *all* trust domains (not just
     # the ones currently in actions.yml) so hooks left behind by a removed trust
-    # domain are still cleaned up. The `in-tree-action`/`in-tree-pr-action`
-    # suffix keeps these from overlapping other generators' hooks, so
-    # `--only hooks` no longer treats these as deletions. Exclude
-    # externally-managed namespaces (e.g. project-fuzzing) like the other
-    # broad-pattern generators.
-    await manage_with_exclusions(resources, "Hook=project-.*/in-tree-action-.*")
-    await manage_with_exclusions(resources, "Role=hook-id:project-.*/in-tree-action-.*")
-    await manage_with_exclusions(resources, "Hook=project-.*/in-tree-pr-action-.*")
-    await manage_with_exclusions(
-        resources, "Role=hook-id:project-.*/in-tree-pr-action-.*"
-    )
-
+    # domain are still cleaned up.
     trust_domains = set(action.trust_domain for action in actions)
 
     projects_by_level_and_trust_domain = {}

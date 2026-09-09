@@ -2,9 +2,8 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
-import re
-
 from tcadmin.resources import Role
+from tcadmin.util.matchlist import Match, MatchList
 from tcadmin.util.scopes import normalizeScopes
 
 from ..util.matching import (
@@ -16,11 +15,51 @@ from ..util.matching import (
     project_match,
 )
 from .ciconfig.environment import Environment
-from .ciconfig.externally_managed import manage_with_exclusions
 from .ciconfig.grants import Grant
 from .ciconfig.projects import Project
 
 LEVEL_PRIORITIES = {1: "low", 2: "low", 3: "highest"}
+
+# Manage only the role namespaces that grants own; `active_scm_level_*` roles are
+# managed by scm_group_roles and hook-id roles by hooks/in_tree_actions/etc.
+managed = MatchList(
+    [
+        Match(
+            "Role=.*",
+            excludes=[
+                "Role=hook-id:.*",  # managed by hooks / in_tree_actions
+                "Role=mozilla-group:active_scm_level_[123]",  # managed by scm_group_roles
+                "Role=project:fuzzing/.*",  # managed externally
+                # These roles exist externally, it's not clear if they're
+                # actually used and need to be excluded or if we should just
+                # allow tc-admin to delete them.
+                "Role=gecko-t/win11-64-24h2-alpha",
+                "Role=team_taskcluster",
+                "Role=worker-pool:gecko-1/b-win2012-beta",
+                "Role=worker-pool:gecko-1/win2012-azure",
+                r"Role=worker-pool:gecko-1/win2012-azure-\*",
+                "Role=worker-pool:gecko-t/azure-windows-7",
+                "Role=worker-pool:gecko-t/t-win10-64-beta",
+                "Role=worker-pool:gecko-t/t-win10-64-gpu-b",
+                "Role=worker-pool:gecko-t/t-win7-32-beta",
+                "Role=worker-pool:gecko-t/t-win7-32-gpu-b",
+                "Role=worker-pool:gecko-t/win10-64-2004",
+                "Role=worker-pool:gecko-t/win10-64-azure",
+                r"Role=worker-pool:gecko-t/win10-64-azure-\*",
+                "Role=worker-pool:gecko-t/win10-64-azure-gpu",
+                "Role=worker-pool:gecko-t/win10-64-gpu-azure",
+                "Role=worker-pool:gecko-t/win11-64-2009",
+                r"Role=worker-pool:gecko-t/win11-64-2009\*",
+                "Role=worker-pool:gecko-t/win7-32-azure",
+                "Role=worker-pool:gecko-t/win7-32-gpu-azure",
+                "Role=worker-pool:gecko-t/windows10-64-2004",
+                r"Role=worker-pool:gecko-t/windows10-64-2004-\*",
+                "Role=worker-pool:relops-3/decision",
+            ],
+        ),
+        r"Role=hook-id:project\-fuzzing/\*$",
+    ]
+)
 
 
 def job_to_role_suffix(job, pr_policy):
@@ -253,14 +292,6 @@ async def update_resources(resources):
     projects = await Project.fetch_all()
     environment = await Environment.current()
 
-    # Manage only the role namespaces grants owns; `active_scm_level_*` roles are
-    # managed by scm_group_roles and hook-id roles by hooks/in_tree_actions/etc.
-    resources.manage("Role=mozilla-group:(?!active_scm_level_[123]).*")
-    resources.manage("Role=mozillians-group:.*")
-    resources.manage("Role=login-identity:.*")
-    await manage_with_exclusions(resources, "Role=project:.*")
-    resources.manage("Role=repo:.*")
-
     # calculate scopes..
     roles = {}
 
@@ -283,7 +314,6 @@ async def update_resources(resources):
 
     # ..and add the roles
     for roleId, scopes in roles.items():
-        resources.manage(f"Role={re.escape(roleId)}")
         role = Role(
             roleId=roleId,
             scopes=normalizeScopes(scopes),
