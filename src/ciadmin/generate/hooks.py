@@ -9,13 +9,52 @@ import string
 import attr
 import yaml
 from tcadmin.resources import Binding, Hook, Role
+from tcadmin.util.matchlist import Match, MatchList
 
 from ..util.keyed_by import resolve_keyed_by
-from .ciconfig.externally_managed import (
-    manage_individual,
-    manage_with_exclusions,
-)
 from .ciconfig.hooks import Hook as HookConfig
+
+# Namespaces managed by other generators, carved out here so we still clean up
+# stale hooks without treating theirs as deletions under `--resources hooks`.
+_SIBLING_HOOKS = [
+    "project-.*/in-tree-action-.*",  # sibling:in_tree_actions
+    "project-.*/in-tree-pr-action-.*",  # sibling:in_tree_actions
+    "project-releng/cron-task-.*",  # sibling:cron_tasks
+    "git-push/.*",  # sibling:git_pushes
+    "hg-push/.*",  # sibling:hg_pushes
+]
+
+# While fuzzing can mange its own namespaces and are excluded from the blanket
+# matches, there are several fuzzing hooks that *do* get managed here.
+_FUZZING_HOOKS = [
+    "bugmon",
+    "coverage-revision",
+    "js-tests-distiller",
+    "fuzzing-tc-config-community-update",
+    "gr-css",
+    "gr-idl-update",
+    "grizzly-reduce-monitor",
+    "grizzly-reduce-reset-error",
+    "nss-corpus-update",
+    "orion-cron",
+]
+
+managed = MatchList(
+    [
+        Match(
+            "Hook=.*",
+            excludes=[f"Hook={p}" for p in _SIBLING_HOOKS]
+            + ["Hook=project-fuzzing/.*"],  # fuzzing-tc-config
+        ),
+        Match(
+            "Role=hook-id:.*",
+            excludes=[f"Role=hook-id:{p}" for p in _SIBLING_HOOKS]
+            + ["Role=hook-id:project-fuzzing/.*"],  # fuzzing-tc-config
+        ),
+    ]
+    + [f"Hook=project-fuzzing/{name}" for name in _FUZZING_HOOKS]
+    + [f"Role=hook-id:project-fuzzing/{name}" for name in _FUZZING_HOOKS]
+)
 
 
 class HookInterpolator(string.Template):
@@ -95,53 +134,33 @@ async def update_resources(resources):
 
     hooks = generate_hook_variants(await HookConfig.fetch_all())
 
-    # Manage the Hook / hook-id namespace except the parts owned by other
-    # generators, so we still clean up stale hooks without treating theirs as
-    # deletions under `--only hooks`.
-    owned_elsewhere = "|".join(
-        (
-            "project-.*/in-tree-action-.*",  # in_tree_actions
-            "project-.*/in-tree-pr-action-.*",  # in_tree_actions
-            "project-releng/cron-task-.*",  # cron_tasks
-            "git-push/.*",  # git_pushes
-            "hg-push/.*",  # hg_pushes
-        )
-    )
-    await manage_with_exclusions(resources, f"Hook=(?!{owned_elsewhere}).*")
-    await manage_with_exclusions(resources, f"Role=hook-id:(?!{owned_elsewhere}).*")
-
     for hook in hooks:
         hook_name = f"{hook.hook_group_id}/{hook.hook_id}"
-
-        manage_individual(resources, f"Hook={hook_name}")
-        manage_individual(resources, f"Role=hook-id:{hook_name}")
 
         with open(hook.template_file) as f:
             task = yaml.safe_load(
                 HookInterpolator(f.read()).substitute(hook.attributes)
             )
 
-        resources.add(
-            Role(roleId="hook-id:" + hook_name, description="", scopes=hook.scopes)
-        )
+        role = Role(roleId="hook-id:" + hook_name, description="", scopes=hook.scopes)
+        resources.add(role)
 
-        resources.add(
-            Hook(
-                hookGroupId=hook.hook_group_id,
-                hookId=hook.hook_id,
-                name=hook.name,
-                description=hook.description,
-                owner=hook.owner,
-                emailOnError=hook.email_on_error,
-                schedule=tuple(hook.schedule),
-                bindings=[
-                    Binding(
-                        exchange=binding["exchange"],
-                        routingKeyPattern=binding["routing_key_pattern"],
-                    )
-                    for binding in hook.bindings
-                ],
-                task=task,
-                triggerSchema=hook.trigger_schema,
-            )
+        hook_resource = Hook(
+            hookGroupId=hook.hook_group_id,
+            hookId=hook.hook_id,
+            name=hook.name,
+            description=hook.description,
+            owner=hook.owner,
+            emailOnError=hook.email_on_error,
+            schedule=tuple(hook.schedule),
+            bindings=[
+                Binding(
+                    exchange=binding["exchange"],
+                    routingKeyPattern=binding["routing_key_pattern"],
+                )
+                for binding in hook.bindings
+            ],
+            task=task,
+            triggerSchema=hook.trigger_schema,
         )
+        resources.add(hook_resource)

@@ -9,17 +9,38 @@ import re
 
 import attr
 from tcadmin.resources import WorkerPool
+from tcadmin.util.matchlist import Match, MatchList
 
 from ..util.keyed_by import evaluate_keyed_by, iter_dot_path, resolve_keyed_by
 from ..util.templates import merge
 from .ciconfig.environment import Environment
-from .ciconfig.externally_managed import (
-    manage_individual,
-    manage_with_exclusions,
-)
 from .ciconfig.get import get_ciconfig_file
 from .ciconfig.worker_images import WorkerImage
 from .ciconfig.worker_pools import WorkerPool as ConfigWorkerPool
+
+# fuzzing-tc-config deploys additional pools into the proj-fuzzing namespace;
+# we must not delete those. We do generate a handful of pools inside it
+# ourselves (see worker-pools.yml), so those are individually listed here
+# instead of falling under the blanket exclusion.
+managed = MatchList(
+    [
+        Match("WorkerPool=.*", excludes=["WorkerPool=proj-fuzzing/.*"]),
+        "WorkerPool=proj-fuzzing/bugmon-monitor$",
+        "WorkerPool=proj-fuzzing/bugmon-pernosco$",
+        "WorkerPool=proj-fuzzing/bugmon-pernosco-staging$",
+        "WorkerPool=proj-fuzzing/bugmon-processor$",
+        "WorkerPool=proj-fuzzing/bugmon-processor-windows$",
+        "WorkerPool=proj-fuzzing/ci$",
+        "WorkerPool=proj-fuzzing/ci-arm64$",
+        "WorkerPool=proj-fuzzing/ci-windows$",
+        "WorkerPool=proj-fuzzing/decision$",
+        "WorkerPool=proj-fuzzing/grizzly-reduce-worker$",
+        "WorkerPool=proj-fuzzing/grizzly-reduce-worker-android$",
+        "WorkerPool=proj-fuzzing/grizzly-reduce-worker-windows$",
+        "WorkerPool=proj-fuzzing/grizzly-reduce-worker-windows-ngpu$",
+        "WorkerPool=proj-fuzzing/nss-corpus-update-worker$",
+    ]
+)
 
 
 def is_invalid_aws_instance_type(invalid_instances, zone, instance_type):
@@ -891,18 +912,12 @@ async def update_resources(resources):
     worker_pools = await ConfigWorkerPool.fetch_all()
     worker_images = await WorkerImage.fetch_all()
 
-    await manage_with_exclusions(resources, "WorkerPool=.*")
-
     worker_defaults = (await get_ciconfig_file("worker-pools.yml")).get(
         "worker-defaults"
     )
     environment = await Environment.current()
 
     for wp in generate_pool_variants(worker_pools, environment):
-        # For pools in externally-managed namespaces, explicitly manage
-        # the individual resources we generate
-        manage_individual(resources, f"WorkerPool={wp.pool_id}")
-
         apwt = await make_worker_pool(
             environment, resources, wp, worker_images, copy.deepcopy(worker_defaults)
         )

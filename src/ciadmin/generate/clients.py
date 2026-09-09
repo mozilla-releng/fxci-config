@@ -3,12 +3,25 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 from tcadmin.resources import Client
+from tcadmin.util.matchlist import Match, MatchList
 
 from .ciconfig.clients import Client as ClientConfig
 from .ciconfig.clients_interpreted import Client as InterpretedClientConfig
 from .ciconfig.environment import Environment
 from .ciconfig.projects import Project
 from .grants import project_match
+
+managed = MatchList(
+    [
+        Match(
+            "Client=.*",
+            excludes=[
+                "Client=mozilla-auth0/.*",
+                "Client=static/taskcluster/.*",
+            ],
+        ),
+    ]
+)
 
 
 async def update_resources(resources):
@@ -19,8 +32,6 @@ async def update_resources(resources):
     interpreted_clients = await InterpretedClientConfig.fetch_all()
     projects = await Project.fetch_all()
     environment = await Environment.current()
-
-    resources.manage("Client=(?!mozilla-auth0/|static/taskcluster/)")
 
     for client in clients:
         if client.environments and environment.name not in client.environments:

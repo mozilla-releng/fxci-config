@@ -3,7 +3,6 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import asyncio
-import inspect
 from collections import defaultdict
 
 import pytest
@@ -26,10 +25,7 @@ async def generate_resources():
 
     @with_aiohttp_session
     async def inner(*modules):
-        callables = {
-            inspect.getmodule(func).__name__.rsplit(".", 1)[-1]: func
-            for func in appconfig.generators
-        }
+        callables = dict(appconfig.generators.callables)
         if modules:
             callables = {
                 name: func for name, func in callables.items() if name in modules

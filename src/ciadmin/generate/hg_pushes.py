@@ -6,9 +6,17 @@ import textwrap
 
 import jsone
 from tcadmin.resources import Binding, Hook, Role
+from tcadmin.util.matchlist import MatchList
 
 from .ciconfig.get import get_ciconfig_file
 from .ciconfig.projects import Project
+
+managed = MatchList(
+    [
+        "Hook=hg-push/.*",
+        "Role=hook-id:hg-push/.*",
+    ]
+)
 
 
 async def make_hook(project):
@@ -136,11 +144,6 @@ async def update_resources(resources):
     """
     projects = await Project.fetch_all()
     projects = [p for p in projects if p.feature("hg-push")]
-
-    # manage the hg-push/* hooks, and corresponding roles
-    if projects:
-        resources.manage("Hook=hg-push/.*")
-        resources.manage("Role=hook-id:hg-push/.*")
 
     for project in projects:
         hook = await make_hook(project)

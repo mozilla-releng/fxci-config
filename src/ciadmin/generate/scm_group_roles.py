@@ -5,8 +5,11 @@
 
 from tcadmin.resources import Role
 from tcadmin.resources.role import normalizeScopes
+from tcadmin.util.matchlist import MatchList
 
 from .ciconfig.projects import Project
+
+managed = MatchList(["Role=mozilla-group:active_scm_level_[123]"])
 
 
 async def update_resources(resources):
@@ -18,8 +21,6 @@ async def update_resources(resources):
     scopes available to all repos at level L or lower.  That is a lot, and there is
     work afoot to change it in bug 1470625.
     """
-    resources.manage("Role=mozilla-group:active_scm_level_[123]")
-
     projects = await Project.fetch_all()
 
     for level in [1, 2, 3]:
