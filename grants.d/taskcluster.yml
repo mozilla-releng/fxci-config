@@ -127,6 +127,7 @@
     - queue:create-task:highest:proj-taskcluster/ci
     - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
     - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04-gui
+    - queue:create-task:highest:proj-taskcluster/gw-ci-macos
     - queue:create-task:highest:proj-taskcluster/gw-windows-2022
     - queue:create-task:highest:proj-taskcluster/gw-windows-2022-gui
     - queue:create-task:highest:built-in/succeed
@@ -167,9 +168,9 @@
         - repo:github.com/taskcluster/staging-releases:branch:*
 
 # Workers in the project's pools report to Sentry (generic-worker's
-# `sentryProject`); community grants this via its per-pool worker roles.
+# `sentryProject`), as for the hardware provisioners in grants.yml.
 - grant:
     - auth:sentry:generic-worker
   to:
     - roles:
-        - worker-pool:proj-taskcluster/*
+        - worker-type:proj-taskcluster/*

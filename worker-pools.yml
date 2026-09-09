@@ -4007,3 +4007,14 @@ pools:
                 .*-gui: false
                 default: true
             idleTimeoutSecs: 300
+
+  # Static Mac minis, registered with worker-manager's static provider (or run
+  # with the project/taskcluster/generic-worker/ci-macos client credentials).
+  - pool_id: proj-taskcluster/gw-ci-macos
+    description: Taskcluster generic-worker macOS CI pool
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: static
+    config:
+      lifecycle:
+        reregistrationTimeout: 2592000  # 30 days

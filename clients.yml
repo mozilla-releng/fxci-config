@@ -1359,8 +1359,7 @@ project/taskcluster/smoketest:
 project/taskcluster/generic-worker/ci-macos:
   description: Client for all workers in static workerpool proj-taskcluster/gw-ci-macos.
   scopes:
-    - assume:worker-pool:proj-taskcluster/gw-ci-macos
-    - assume:worker-id:proj-taskcluster/*
+    - assume:worker-type:proj-taskcluster/gw-ci-macos
 project/taskcluster/generic-worker/taskcluster-ci:
   description: |
     A client used by generic-worker CI tests.
