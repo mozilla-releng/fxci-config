@@ -15,12 +15,6 @@
     - project:
         alias: taskcluster
 
-- grant:
-    - queue:create-task:highest:proj-taskcluster/ci
-  to:
-    - roles:
-        - repo:github.com/mozilla/hawk:*
-
 # Trusted pull requests, branches, and tags use level 3. Untrusted pull
 # requests use a separate level-1 namespace below.
 - grant:
@@ -66,7 +60,6 @@
     # pushes to main and releases can notify on failure
     - queue:route:notify.email.taskcluster-internal@mozilla.com.*
     - queue:route:notify.email.taskcluster-notifications@mozilla.com.*
-    - queue:route:notify.irc-channel.#taskcluster-bots.*
   to:
     - roles:
         - repo:github.com/taskcluster/taskcluster:branch:main
@@ -184,13 +177,6 @@
         - repo:github.com/taskcluster/taskcluster:branch:*
         - repo:github.com/taskcluster/taskcluster:tag:*
         - repo:github.com/taskcluster/staging-releases:branch:*
-
-- grant:
-    - queue:create-task:medium:proj-taskcluster/gw-ubuntu-24-04-gui
-  to:
-    - roles:
-        - repo:github.com/taskcluster/docker-exec-websocket-server:*
-        - repo:github.com/taskcluster/docker-exec-websocket-client:*
 
 # Workers in the project's pools report to Sentry (generic-worker's
 # `sentryProject`); community grants this via its per-pool worker roles.
