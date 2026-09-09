@@ -2,7 +2,6 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 import re
-import warnings
 from collections import defaultdict
 from urllib.parse import urlparse
 
@@ -12,22 +11,6 @@ from taskcluster.utils import scopeMatch
 from ciadmin.generate.ciconfig.grants import Grant
 from ciadmin.generate.ciconfig.projects import Project
 from ciadmin.util.matching import ProjectGrantee
-
-# Known level 3 scopes granted to level 1 contexts that we tolerate for now,
-# keyed by role. `check_insecure_grants` warns about these instead of failing,
-# and fails if an entry no longer matches anything (strict xfail), so the list
-# can't go stale. These are bugs to fix, not supported configurations; remove
-# each entry once the underlying grant is gone.
-XFAIL_INSECURE_GRANTS = {
-    # taskcluster/taskcluster runs collaborator pull requests in its own
-    # `taskcluster-level-3` namespace, as it did on community-tc (PR #1062).
-    # They should move to level 2 once RFC 0057 (GitHub trust levels) lands.
-    "repo:github.com/taskcluster/taskcluster:pull-request": {
-        "queue:cancel-task-group:taskcluster-level-3/*",
-        "queue:scheduler-id:taskcluster-level-3",
-        "queue:seal-task-group:taskcluster-level-3/*",
-    },
-}
 
 
 @pytest.mark.asyncio
@@ -188,38 +171,13 @@ async def check_insecure_grants(generate_resources):
         return bool(level_1.search(role))
 
     insecure_scopes = defaultdict(set)
-    xfailed_scopes = defaultdict(set)
     for role in roles:
         if not is_level_1(role.roleId):
             continue
 
         level_3_scopes = {s for s in role.scopes if level_3.search(s)}
-        xfail = XFAIL_INSECURE_GRANTS.get(role.roleId, set())
-        xfailed_scopes[role.roleId] = level_3_scopes & xfail
-        level_3_scopes -= xfail
         if level_3_scopes:
             insecure_scopes[role.roleId].update(level_3_scopes)
-
-    for roleId, scopes in xfailed_scopes.items():
-        if scopes:
-            warnings.warn(
-                f"XFAIL: {roleId} is granted level 3 scopes {sorted(scopes)} "
-                "(known issue, see XFAIL_INSECURE_GRANTS)",
-                stacklevel=1,
-            )
-
-    # Strict xfail: every listed scope must still be granted, otherwise the
-    # entry is stale and must be removed.
-    stale_xfails = {
-        roleId: sorted(set(scopes) - xfailed_scopes.get(roleId, set()))
-        for roleId, scopes in XFAIL_INSECURE_GRANTS.items()
-        if set(scopes) - xfailed_scopes.get(roleId, set())
-    }
-    if stale_xfails:
-        print("Stale XFAIL_INSECURE_GRANTS entries (no longer granted; remove them):")
-        for roleId, scopes in stale_xfails.items():
-            print(f"{roleId}: {scopes}")
-    assert not stale_xfails
 
     if insecure_scopes:
         print("Level 3 scopes are granted to level 1 contexts:")

@@ -1,73 +1,119 @@
-# Taskcluster project grants
-#
+# Taskcluster project grants (github.com/taskcluster/*, json-e/json-e)
+
+# Any repo in the taskcluster GitHub org may use the shared CI pools and
+# notify the team's Matrix room.
 - grant:
     - queue:create-task:highest:proj-taskcluster/ci
-    # For replacing the docker-worker pool (proj-taskcluster/ci) for d2g work
     - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
-    # This is the taskcluster channel
     - queue:route:notify.matrix-room.!whDRjjSmICCgrhFHsQ:mozilla.org.*
   to:
     - project:
-        alias: taskcluster
+        alias: taskcluster-org
 
-# Trusted pull requests, branches, and tags use level 3. Untrusted pull
-# requests use a separate level-1 namespace below. Credentials used by
-# integration tests are restricted to trusted code.
+# taskcluster/taskcluster: the decision task and the PR graph.
 - grant:
-    - docker-worker:cache:taskcluster-*
-    # The account and secret for the Azure testing storage account.
+    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
+    - queue:create-task:highest:built-in/succeed
+  to:
+    - project:
+        alias: taskcluster
+        job: [pull-request:*, branch:*, tag:*]
+
+# Trusted code (collaborator PRs, pushes, tags) may use every CI pool and run
+# the worker integration tests, which need credentials.
+- grant:
+    - queue:create-task:highest:proj-taskcluster/ci
+    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
+    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04-gui
+    - queue:create-task:highest:proj-taskcluster/gw-ci-macos
+    - queue:create-task:highest:proj-taskcluster/gw-windows-2022
+    - queue:create-task:highest:proj-taskcluster/gw-windows-2022-gui
+    - queue:create-task:highest:built-in/succeed
+    - assume:project:taskcluster:generic-worker-tester
+    - generic-worker:run-task-as-current-user:proj-taskcluster/gw-*
+    - generic-worker:os-group:proj-taskcluster/gw-ubuntu-24-04-gui/docker
+    - secrets:get:project/taskcluster/testing/generic-worker/ci-creds
+  to:
+    - project:
+        alias: taskcluster
+        job: [pull-request:trusted, branch:*, tag:*]
+    - project:
+        alias: taskcluster-staging-releases
+        job: [branch:*, tag:*]
+
+- grant:
     - secrets:get:project/taskcluster/testing/azure
     - secrets:get:project/taskcluster/testing/client-libraries
     - secrets:get:project/taskcluster/testing/taskcluster-*
   to:
-    - roles:
-        - repo:github.com/taskcluster/taskcluster:pull-request
-        - repo:github.com/taskcluster/taskcluster:branch:*
-        - repo:github.com/taskcluster/taskcluster:tag:*
+    - project:
+        alias: taskcluster
+        job: [pull-request:trusted, branch:*, tag:*]
 
+# Releases and staging releases build on the release pool.
 - grant:
     - queue:create-task:highest:proj-taskcluster/release
     - generic-worker:run-task-as-current-user:proj-taskcluster/release
     - secrets:get:project/taskcluster/release
   to:
-    - roles:
-        - repo:github.com/taskcluster/taskcluster:tag:v*
+    - project:
+        alias: taskcluster
+        job: [tag:v*]
 
 - grant:
     - queue:create-task:highest:proj-taskcluster/release
     - generic-worker:run-task-as-current-user:proj-taskcluster/release
     - secrets:get:project/taskcluster/staging-release
   to:
-    - roles:
-        # both pre- and post-bug-1635455
-        - repo:github.com/taskcluster/taskcluster:branch:staging-release/*
-        - repo:github.com/taskcluster/staging-releases:branch:*
-        - repo:github.com/taskcluster/staging-releases:tag:*
+    - project:
+        alias: taskcluster
+        job: [branch:staging-release/*]
+    - project:
+        alias: taskcluster-staging-releases
+        job: [branch:*, tag:*]
 
+# Releases are tag pushes, which fxci's generic trust-domain grants (keyed on
+# branches, pull requests and GitHub releases) don't cover; mirror them for tags.
 - grant:
-    # pushes to main and releases can notify on failure
+    - queue:scheduler-id:{trust_domain}-level-{level}
+    - queue:cancel-task:{trust_domain}-level-{level}/*
+    - queue:rerun-task:{trust_domain}-level-{level}/*
+    - docker-worker:cache:{trust_domain}-level-{level}-*
+    - generic-worker:cache:{trust_domain}-level-{level}-*
+    - queue:route:index.{trust_domain}.cache.level-{level}.*
+    - index:insert-task:{trust_domain}.cache.level-{level}.*
+  to:
+    - project:
+        alias: [taskcluster, taskcluster-staging-releases]
+        job: [tag:*]
+
+# Pushes to main and releases can notify on failure.
+- grant:
     - queue:route:notify.email.taskcluster-internal@mozilla.com.*
     - queue:route:notify.email.taskcluster-notifications@mozilla.com.*
   to:
-    - roles:
-        - repo:github.com/taskcluster/taskcluster:branch:main
-        - repo:github.com/taskcluster/taskcluster:tag:v*
+    - project:
+        alias: taskcluster
+        job: [branch:main, tag:v*]
 
 - grant:
     - queue:create-task:highest:proj-taskcluster/ci
   to:
-    - roles:
-        - repo:github.com/json-e/json-e:*
+    - project:
+        alias: json-e
+        job: [pull-request:*, branch:*]
 
+# Pushes to json-e main deploy the site and can notify on failure.
 - grant:
-    # pushes to json-e main can read secrets for deploying the site
     - secrets:get:project/taskcluster/json-e-deploy
-    # ..and notify on failure
     - queue:route:notify.email.taskcluster-notifications@mozilla.com.*
   to:
-    - roles:
-        - repo:github.com/json-e/json-e:branch:main
+    - project:
+        alias: json-e
+        job: [branch:main]
 
+# Scopes for the generic-worker integration tests, which run a worker inside
+# the task against the test-provisioner namespace.
 - grant:
     - assume:worker-id:test-worker-group/test-worker-id
     - assume:worker-pool:test-provisioner/*
@@ -106,66 +152,6 @@
   to:
     - roles:
         - project:taskcluster:generic-worker-tester
-
-# Untrusted pull requests can run only the isolated, non-GUI CI graph.
-# (`queue:route:checks` comes from the generic GitHub grant in grants.yml.)
-- grant:
-    - docker-worker:cache:taskcluster-level-1-*
-    - generic-worker:cache:taskcluster-level-1-*
-    - queue:cancel-task-group:taskcluster-level-1/*
-    - queue:create-task:highest:built-in/succeed
-    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
-    - queue:scheduler-id:taskcluster-level-1
-    - queue:seal-task-group:taskcluster-level-1/*
-  to:
-    - roles:
-        - repo:github.com/taskcluster/taskcluster:pull-request-untrusted
-
-# Trusted code may use CI pools, but the release pool is deliberately
-# absent. Release access is granted only to release tags and staging above.
-- grant:
-    - queue:create-task:highest:proj-taskcluster/ci
-    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
-    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04-gui
-    - queue:create-task:highest:proj-taskcluster/gw-ci-macos
-    - queue:create-task:highest:proj-taskcluster/gw-windows-2022
-    - queue:create-task:highest:proj-taskcluster/gw-windows-2022-gui
-    - queue:create-task:highest:built-in/succeed
-    - generic-worker:cache:taskcluster-*
-    - queue:cancel-task-group:taskcluster-level-3/*
-    - queue:scheduler-id:taskcluster-level-3
-    - queue:seal-task-group:taskcluster-level-3/*
-    - queue:route:index.taskcluster.cache.pr.docker-images.v2.*
-  to:
-    - roles:
-        - repo:github.com/taskcluster/taskcluster:pull-request
-        - repo:github.com/taskcluster/taskcluster:branch:*
-        - repo:github.com/taskcluster/taskcluster:tag:*
-        - repo:github.com/taskcluster/staging-releases:branch:*
-        - repo:github.com/taskcluster/staging-releases:tag:*
-
-# External worker integration tests can mutate Taskcluster resources and
-# require credentials, so only trusted code may run them.
-- grant:
-    - assume:project:taskcluster:generic-worker-tester
-    - generic-worker:run-task-as-current-user:proj-taskcluster/gw-*
-    - generic-worker:os-group:proj-taskcluster/gw-ubuntu-24-04-gui/docker
-    - secrets:get:project/taskcluster/testing/generic-worker/ci-creds
-  to:
-    - roles:
-        - repo:github.com/taskcluster/taskcluster:pull-request
-        - repo:github.com/taskcluster/taskcluster:branch:*
-        - repo:github.com/taskcluster/taskcluster:tag:*
-        - repo:github.com/taskcluster/staging-releases:branch:*
-        - repo:github.com/taskcluster/staging-releases:tag:*
-
-- grant:
-    - queue:route:index.taskcluster.cache.level-3.docker-images.v2.*
-  to:
-    - roles:
-        - repo:github.com/taskcluster/taskcluster:branch:*
-        - repo:github.com/taskcluster/taskcluster:tag:*
-        - repo:github.com/taskcluster/staging-releases:branch:*
 
 # Workers in the project's pools report to Sentry (generic-worker's
 # `sentryProject`), as for the hardware provisioners in grants.yml.
