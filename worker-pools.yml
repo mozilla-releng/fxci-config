@@ -3930,7 +3930,11 @@ pools:
       regions: *default-gcp-regions
       image: gw-ubuntu-24-04
       instance_types:
-        - *n2-standard-4-60gb-lssd
+        # n2-standard-4 with a 60 GB boot disk only, as on community: the tceng
+        # image doesn't mount a local SSD, so the -lssd shape would just cost more.
+        - disks:
+            - *persistent-disk-60gb
+          machine_type: n2-standard-4
       worker-config:
         genericWorker:
           config:
