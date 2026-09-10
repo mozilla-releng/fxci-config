@@ -211,7 +211,7 @@ ronin_t_windows11_64_2009:
 
 # Images migrated from community-tc (shared across projects).
 gw-ubuntu-24-04:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-qioehfdraiiishpuvgvl
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-9ed5a812d3d844ac9e4e
 
 gw-ubuntu-24-04-arm64:
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-mqscbutmsbawtytlroxk
