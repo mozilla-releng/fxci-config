@@ -145,3 +145,11 @@
   to:
     - roles:
         - worker-type:proj-taskcluster/*
+
+# Re-runs from the GitHub checks UI: tc-github assumes this role.
+- grant:
+    - queue:rerun-task:taskcluster-level-1/*
+    - queue:rerun-task:taskcluster-level-3/*
+  to:
+    - roles:
+        - repo:github.com/taskcluster/taskcluster:rerun
