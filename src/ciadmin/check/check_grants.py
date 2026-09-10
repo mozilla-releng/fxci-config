@@ -12,6 +12,24 @@ from ciadmin.generate.ciconfig.grants import Grant
 from ciadmin.generate.ciconfig.projects import Project
 from ciadmin.util.matching import ProjectGrantee
 
+RUN_AS_ADMINISTRATOR_PREFIX = "generic-worker:run-as-administrator:"
+
+
+def _is_windows_worker_pool(worker_pool_id):
+    return "win" in worker_pool_id.split("/", 1)[-1].lower()
+
+
+def _runs_one_task(worker_pool):
+    launch_configs = worker_pool.config.get("launchConfigs", [])
+    return bool(launch_configs) and all(
+        launch_config.get("workerConfig", {})
+        .get("genericWorker", {})
+        .get("config", {})
+        .get("numberOfTasksToRun")
+        == 1
+        for launch_config in launch_configs
+    )
+
 
 @pytest.mark.asyncio
 async def check_grant_aliases():
@@ -130,6 +148,52 @@ async def check_grant_pools(generate_resources):
             + "\n".join(sorted(invalid_scopes))
         )
     assert not invalid_scopes
+
+
+@pytest.mark.asyncio
+async def check_run_as_administrator_pools_run_one_task(generate_resources):
+    """Ensure administrator tasks cannot persist changes for subsequent tasks."""
+    generated = await generate_resources("grants", "worker_pools")
+    windows_pools = {
+        pool.workerPoolId: pool
+        for pool in generated.filter("WorkerPool=.*")
+        if _is_windows_worker_pool(pool.workerPoolId)
+        and not pool.workerPoolId.startswith("proj-fuzzing/")
+    }
+    administrator_scopes = {
+        scope
+        for role in generated.filter("Role=.*")
+        for scope in role.scopes
+        if scope.startswith(RUN_AS_ADMINISTRATOR_PREFIX)
+        and not scope.startswith(f"{RUN_AS_ADMINISTRATOR_PREFIX}proj-fuzzing/")
+    }
+
+    ineligible_pools = defaultdict(set)
+    for scope in administrator_scopes:
+        matches = {
+            pool_id
+            for pool_id in windows_pools
+            if scopeMatch([scope], [[f"{RUN_AS_ADMINISTRATOR_PREFIX}{pool_id}"]])
+        }
+        if not matches:
+            ineligible_pools[scope].add("<no configured matching pool>")
+            continue
+
+        ineligible_pools[scope].update(
+            pool_id for pool_id in matches if not _runs_one_task(windows_pools[pool_id])
+        )
+
+    ineligible_pools = {
+        scope: pools for scope, pools in ineligible_pools.items() if pools
+    }
+    if ineligible_pools:
+        print(
+            "Administrator scopes may only target Windows pools configured to run "
+            "one task:"
+        )
+        for scope, pools in sorted(ineligible_pools.items()):
+            print(f"{scope}: {', '.join(sorted(pools))}")
+    assert not ineligible_pools
 
 
 @pytest.mark.asyncio
