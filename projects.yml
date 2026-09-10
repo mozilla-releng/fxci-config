@@ -1691,8 +1691,6 @@ taskcluster:
   branches:
     - name: main
       level: 3
-    - name: staging-release/*
-      level: 3
   features:
     github-pull-request:
       policy: public_restricted
@@ -1717,6 +1715,8 @@ json-e:
   branches:
     - name: main
       level: 3
+    - name: "*"
+      level: 1
   features:
     github-pull-request:
       policy: public

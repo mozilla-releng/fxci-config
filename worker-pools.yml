@@ -172,8 +172,9 @@ worker-defaults:
       # generic-worker config for the tceng Ubuntu 24.04 images (community-tc's
       # `generic-worker-ubuntu-24-04` imageset, built by worker-images
       # scripts/linux/tceng/). Those images bake no worker config, so this
-      # mirrors the imageset's workerConfig in community-tc-config
-      # config/imagesets.yml: the signing key lives at
+      # follows the imageset's workerConfig in community-tc-config
+      # config/imagesets.yml (plus fxci's usual paths and idle timeout): the
+      # signing key lives at
       # /etc/generic-worker/ed25519_key (not the monopacker path above) and d2g
       # is enabled, since Taskcluster's decision task is a docker-worker payload.
       generic-worker/linux-tceng:

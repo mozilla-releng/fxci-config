@@ -10,7 +10,8 @@
     - project:
         alias: taskcluster-org
 
-# taskcluster/taskcluster: the decision task and the PR graph.
+# taskcluster/taskcluster: the decision task and the PR graph (also granted
+# org-wide above; repeated so the project doesn't depend on the wildcard).
 - grant:
     - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
     - queue:create-task:highest:built-in/succeed
@@ -66,15 +67,13 @@
     - secrets:get:project/taskcluster/staging-release
   to:
     - project:
-        alias: taskcluster
-        job: [branch:staging-release/*]
-    - project:
         alias: taskcluster-staging-releases
         job: [branch:*, tag:*]
 
-# Releases are tag pushes, which fxci's generic trust-domain grants (keyed on
-# branches, pull requests and GitHub releases) don't cover; mirror them for tags.
+# Releases are tag pushes, which fxci's generic grants (keyed on branches, pull
+# requests and GitHub releases) don't cover; mirror them for tags.
 - grant:
+    - queue:route:checks
     - queue:scheduler-id:{trust_domain}-level-{level}
     - queue:cancel-task:{trust_domain}-level-{level}/*
     - queue:rerun-task:{trust_domain}-level-{level}/*
@@ -102,15 +101,6 @@
     - project:
         alias: json-e
         job: [pull-request:*, branch:*]
-
-# Pushes to json-e main deploy the site and can notify on failure.
-- grant:
-    - secrets:get:project/taskcluster/json-e-deploy
-    - queue:route:notify.email.taskcluster-notifications@mozilla.com.*
-  to:
-    - project:
-        alias: json-e
-        job: [branch:main]
 
 # Scopes for the generic-worker integration tests, which run a worker inside
 # the task against the test-provisioner namespace.
