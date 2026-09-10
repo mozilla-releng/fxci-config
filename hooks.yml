@@ -118,6 +118,9 @@ project-relman/code-review-{mode}:
     - queue:scheduler-id:relman
     - secrets:get:project/relman/code-review/runtime-{mode}
     - docker-worker:cache:code-review-{mode}-checkout
+    # needed to cancel stale reviewbot pushes to try
+    - queue:seal-task-group:gecko-level-1/*
+    - queue:cancel-task-group:gecko-level-1/*
   template_file: hook-templates/project-relman/code-review-{mode}.yml
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed

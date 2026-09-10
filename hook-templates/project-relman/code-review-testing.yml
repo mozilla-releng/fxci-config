@@ -72,5 +72,8 @@ scopes:
   - 'index:insert-task:project.relman.testing.code-review.*'
   - 'notify:email:*'
   - 'docker-worker:cache:code-review-testing-checkout'
+  # needed to cancel stale reviewbot pushes to try
+  - 'queue:seal-task-group:gecko-level-1/*'
+  - 'queue:cancel-task-group:gecko-level-1/*'
 tags: {}
 workerType: bot
