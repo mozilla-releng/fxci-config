@@ -3200,7 +3200,6 @@ pools:
                 parameters:
                   diffDiskOption: Local
                   diffDiskPlacement: NvmeDisk
-                  enableFullCaching: true
                   osDiskCaching: ReadOnly
               default: {}
           launchConfig:
