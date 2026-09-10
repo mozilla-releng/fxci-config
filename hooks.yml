@@ -179,6 +179,43 @@ lint/pre-commit-{version}:
             type: string
             description: Version of pre-commit to install (e.g. "4.0.0"). Defaults to latest.
 
+project-releng/taskcluster-yml-redeploy:
+  name: taskcluster.yml redeploy
+  description: >-
+    Redeploy fxci-config when a repository it manages changes its
+    `.taskcluster.yml`, so that the in-tree action hooks generated from that
+    file stop being stale.
+  owner: release+hooks@mozilla.com
+  email_on_error: true
+  scopes:
+    - queue:create-task:low:infra/build-decision
+    - queue:scheduler-id:releng-level-3
+    - secrets:get:project/releng/fxci-config/deploy-token
+  template_file: hook-templates/project-releng/taskcluster-yml-redeploy.yml
+  bindings:
+    # Every repository: which ones we manage is decided in the task.
+    - exchange: exchange/taskcluster-github/v1/taskcluster-yml-update
+      routing_key_pattern: '#'
+  trigger_schema:
+    type: object
+    # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/taskcluster-yml-update-message.yml
+    # A rejected message is a hook left stale, so check the shape only.
+    additionalProperties: true
+    properties:
+      organization:
+        type: string
+      repository:
+        type: string
+      ref:
+        type: string
+      eventId:
+        type: string
+    required:
+      - organization
+      - repository
+      - ref
+      - eventId
+
 project-xpi/decision-{version}:
   variants:
     - version: v1
@@ -266,8 +303,6 @@ project-engwf/reviewer-assignment-{mode}:
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '{routing_key_prefix}.synchronize'
   trigger_schema:
-    # Note: the trigget_schema is not used to validate Payloads from Pulse [0]
-    # [0] https://github.com/taskcluster/taskcluster/issues/8867
     type: object
     # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
     required:

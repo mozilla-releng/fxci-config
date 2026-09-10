@@ -1,0 +1,48 @@
+---
+# The dispatch below carries no inputs, so a push in one repository can only
+# ever redeploy whatever is already on fxci-config's `main`.
+created: {$fromNow: 0 seconds}
+deadline: {$fromNow: 1 hour}
+expires: {$fromNow: 1 month}
+metadata:
+  name: taskcluster.yml redeploy
+  description: Redeploy fxci-config when a repository it manages changes its `.taskcluster.yml`
+  owner: release+hooks@mozilla.com
+  source: https://github.com/mozilla-releng/fxci-config
+priority: low
+provisionerId: infra
+workerType: build-decision
+schedulerId: releng-level-3
+retries: 3
+scopes:
+  - assume:hook-id:project-releng/taskcluster-yml-redeploy
+payload:
+  features:
+    # Needed for access to the deploy token secret
+    taskclusterProxy: true
+  image: mozillareleases/taskgraph:run-task-v24.1.1@sha256:9b9a1a3ca42025bb8d7eba19e1b8759f04504097265074df25bbc997bd802543
+  maxRunTime: 900
+  env:
+    ORGANIZATION: {$eval: payload.organization}
+    REPOSITORY: {$eval: payload.repository}
+    REF: {$eval: payload.ref}
+    EVENT_ID: {$eval: payload.eventId}
+    TASKCLUSTER_SECRET: project/releng/fxci-config/deploy-token
+    # No revision: the lookup runs against the projects.yml the deploy applies.
+    FXCI_HEAD_REPOSITORY: https://github.com/mozilla-releng/fxci-config
+    FXCI_HEAD_REF: refs/heads/main
+    FXCI_REPOSITORY_TYPE: git
+    REPOSITORIES:
+      $json: {fxci: fxci-config}
+  command:
+    - run-task
+    - --fxci-checkout=/builds/worker/checkouts/fxci
+    - --task-cwd=/builds/worker/checkouts/fxci
+    - --
+    - bash
+    - -c
+    - >-
+      uv run python taskcluster/scripts/redeploy-on-tcyml-change.py
+      --deploy-repo mozilla-releng/fxci-config
+      --deploy-workflow deploy.yml
+      --deploy-ref main
