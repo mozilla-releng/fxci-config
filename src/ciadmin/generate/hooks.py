@@ -13,7 +13,7 @@ from tcadmin.resources import Binding, Hook, Role
 from ..util.keyed_by import resolve_keyed_by
 from .ciconfig.externally_managed import (
     manage_individual,
-    manage_with_exclusions,
+    manage_patterns,
 )
 from .ciconfig.hooks import Hook as HookConfig
 
@@ -87,6 +87,26 @@ def generate_hook_variants(hooks):
             )
 
 
+# Namespaces owned by other generators, excluded from the patterns below so
+# we still clean up stale hooks without treating theirs as deletions under
+# `--resources hooks`.
+_OWNED_ELSEWHERE = "|".join(
+    (
+        "project-.*/in-tree-action-.*",  # in_tree_actions
+        "project-.*/in-tree-pr-action-.*",  # in_tree_actions
+        "project-releng/cron-task-.*",  # cron_tasks
+        "git-push/.*",  # git_pushes
+        "hg-push/.*",  # hg_pushes
+    )
+)
+
+# The resource id namespace(s) this module owns.
+MANAGED_PATTERNS = (
+    (f"Hook=(?!{_OWNED_ELSEWHERE}).*", True),
+    (f"Role=hook-id:(?!{_OWNED_ELSEWHERE}).*", True),
+)
+
+
 async def update_resources(resources):
     """
     Manage custom hooks.  This file interprets `hooks.yml` in fxci-config.
@@ -95,20 +115,7 @@ async def update_resources(resources):
 
     hooks = generate_hook_variants(await HookConfig.fetch_all())
 
-    # Manage the Hook / hook-id namespace except the parts owned by other
-    # generators, so we still clean up stale hooks without treating theirs as
-    # deletions under `--resources hooks`.
-    owned_elsewhere = "|".join(
-        (
-            "project-.*/in-tree-action-.*",  # in_tree_actions
-            "project-.*/in-tree-pr-action-.*",  # in_tree_actions
-            "project-releng/cron-task-.*",  # cron_tasks
-            "git-push/.*",  # git_pushes
-            "hg-push/.*",  # hg_pushes
-        )
-    )
-    await manage_with_exclusions(resources, f"Hook=(?!{owned_elsewhere}).*")
-    await manage_with_exclusions(resources, f"Role=hook-id:(?!{owned_elsewhere}).*")
+    await manage_patterns(resources, MANAGED_PATTERNS)
 
     for hook in hooks:
         hook_name = f"{hook.hook_group_id}/{hook.hook_id}"

@@ -15,11 +15,14 @@ from ..util.templates import merge
 from .ciconfig.environment import Environment
 from .ciconfig.externally_managed import (
     manage_individual,
-    manage_with_exclusions,
+    manage_patterns,
 )
 from .ciconfig.get import get_ciconfig_file
 from .ciconfig.worker_images import WorkerImage
 from .ciconfig.worker_pools import WorkerPool as ConfigWorkerPool
+
+# The resource id namespace(s) this module owns.
+MANAGED_PATTERNS = (("WorkerPool=.*", True),)
 
 
 def is_invalid_aws_instance_type(invalid_instances, zone, instance_type):
@@ -888,7 +891,7 @@ async def update_resources(resources):
     worker_pools = await ConfigWorkerPool.fetch_all()
     worker_images = await WorkerImage.fetch_all()
 
-    await manage_with_exclusions(resources, "WorkerPool=.*")
+    await manage_patterns(resources, MANAGED_PATTERNS)
 
     worker_defaults = (await get_ciconfig_file("worker-pools.yml")).get(
         "worker-defaults"

@@ -58,6 +58,25 @@ async def manage_with_exclusions(resources, base_pattern):
     resources.manage(f"(?!{'|'.join(relevant)}){base_pattern}")
 
 
+async def manage_patterns(resources, patterns):
+    """
+    Call resources.manage() for each pattern in `patterns`.
+
+    Each entry is either a plain pattern string, or a `(pattern,
+    use_exclusions)` tuple where `use_exclusions=True` routes the pattern
+    through `manage_with_exclusions` instead of `resources.manage` directly.
+    """
+    for pattern in patterns:
+        use_exclusions = False
+        if isinstance(pattern, tuple):
+            pattern, use_exclusions = pattern
+
+        if use_exclusions:
+            await manage_with_exclusions(resources, pattern)
+        else:
+            resources.manage(pattern)
+
+
 def manage_individual(resources, resource_id):
     """
     Manage a single specific resource by its exact ID.

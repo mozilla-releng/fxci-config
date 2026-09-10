@@ -7,12 +7,13 @@ import inspect
 from collections import defaultdict
 
 import pytest
+import tcadmin.generate
 from tcadmin import current
 from tcadmin.resources import Resources
 from tcadmin.util.scopes import Resolver
 from tcadmin.util.sessions import with_aiohttp_session
 
-from ciadmin.boot import appconfig
+from ciadmin.boot import appconfig, filter_resources_by_modules
 
 
 @pytest.fixture(scope="session")
@@ -22,10 +23,29 @@ async def generate_resources():
     This function will generate resources lazily. Subsequent calls will return
     cached results for the modules that have already been generated.
     """
-    cache = {}
+    module_cache = {}
+    generated_cache = []
 
     @with_aiohttp_session
     async def inner(*modules):
+        # tc-admin's `--generated` flag loads a complete resource set from a
+        # cache file rather than running generators live, so there's nothing
+        # to gain by only generating a subset of modules. Narrow it down to
+        # the requested module(s) here instead.
+        if appconfig.options.get("generated"):
+            if not generated_cache:
+                generated_cache.append(await tcadmin.generate.resources())
+            resources = generated_cache[0]
+            if modules:
+                gen_modules = (inspect.getmodule(func) for func in appconfig.generators)
+                gen_modules = {
+                    mod.__name__.rsplit(".", 1)[-1]: mod for mod in gen_modules
+                }
+                resources = await filter_resources_by_modules(
+                    resources, [gen_modules[m] for m in modules]
+                )
+            return resources
+
         callables = {
             inspect.getmodule(func).__name__.rsplit(".", 1)[-1]: func
             for func in appconfig.generators
@@ -41,8 +61,8 @@ async def generate_resources():
         resources = defaultdict(lambda: Resources())
         tasks = []
         for name, func in callables.items():
-            if name in cache:
-                resources[name] = cache[name]
+            if name in module_cache:
+                resources[name] = module_cache[name]
             else:
                 r = resources[name]
                 r.manage(".*")
@@ -53,7 +73,7 @@ async def generate_resources():
         for mod in appconfig.modifiers:
             resources = {k: await mod(v) for k, v in resources.items()}
 
-        cache.update(resources)
+        module_cache.update(resources)
 
         # Gather resources from each module back together.
         all_resources = Resources()
