@@ -124,6 +124,12 @@
     - auth:reset-access-token:project/releng/fxci-config/apply
     # This is used to fetch private artifacts from the fxci instance.
     - secrets:get:project/releng/fxci-config/firefoxci-artifact-client
+    # firefoxci-artifact republishes production artifacts into the level-1
+    # cache index so integration test tasks can locate them. It indexes into
+    # cache.level-1 directly rather than the per-PR cache.pr namespace, so PRs
+    # (really github-issue-comment) need these routes explicitly.
+    - queue:route:index.releng.cache.level-1.firefoxci-artifact.v1.*
+    - index:insert-task:releng.cache.level-1.firefoxci-artifact.v1.*
     # This is only used to authenticate as the taskcluster-staging app to avoid
     # Github rate limits.
     - secrets:get:project/releng/tc-github-private-key
