@@ -1,0 +1,147 @@
+# Taskcluster project grants (github.com/taskcluster/*, json-e/json-e)
+
+# Any repo in the taskcluster GitHub org may use the shared CI pools and
+# notify the team's Matrix room.
+- grant:
+    - queue:create-task:highest:proj-taskcluster/ci
+    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
+    - queue:route:notify.matrix-room.!whDRjjSmICCgrhFHsQ:mozilla.org.*
+  to:
+    - project:
+        alias: taskcluster-org
+
+# taskcluster/taskcluster: the decision task and the PR graph (also granted
+# org-wide above; repeated so the project doesn't depend on the wildcard).
+- grant:
+    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
+    - queue:create-task:highest:built-in/succeed
+  to:
+    - project:
+        alias: taskcluster
+        job: [pull-request:*, branch:*, tag:*]
+
+# Trusted code (collaborator PRs, pushes, tags) may use every CI pool and run
+# the worker integration tests, which need credentials.
+- grant:
+    - queue:create-task:highest:proj-taskcluster/ci
+    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
+    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04-gui
+    - queue:create-task:highest:proj-taskcluster/gw-ci-macos
+    - queue:create-task:highest:proj-taskcluster/gw-windows-2022
+    - queue:create-task:highest:proj-taskcluster/gw-windows-2022-gui
+    - queue:create-task:highest:built-in/succeed
+    - assume:project:taskcluster:generic-worker-tester
+    - generic-worker:run-task-as-current-user:proj-taskcluster/gw-*
+    - generic-worker:os-group:proj-taskcluster/gw-ubuntu-24-04-gui/docker
+    - secrets:get:project/taskcluster/testing/generic-worker/ci-creds
+  to:
+    - project:
+        alias: taskcluster
+        job: [pull-request:trusted, branch:*, tag:*]
+    - project:
+        alias: taskcluster-staging-releases
+        job: [branch:*, tag:*]
+
+- grant:
+    - secrets:get:project/taskcluster/testing/azure
+    - secrets:get:project/taskcluster/testing/client-libraries
+    - secrets:get:project/taskcluster/testing/taskcluster-*
+  to:
+    - project:
+        alias: taskcluster
+        job: [pull-request:trusted, branch:*, tag:*]
+
+# Releases and staging releases build on the release pool.
+- grant:
+    - queue:create-task:highest:proj-taskcluster/release
+    - generic-worker:run-task-as-current-user:proj-taskcluster/release
+    - secrets:get:project/taskcluster/release
+  to:
+    - project:
+        alias: taskcluster
+        job: [tag:v*]
+
+- grant:
+    - queue:create-task:highest:proj-taskcluster/release
+    - generic-worker:run-task-as-current-user:proj-taskcluster/release
+    - secrets:get:project/taskcluster/staging-release
+  to:
+    - project:
+        alias: taskcluster-staging-releases
+        job: [branch:*, tag:*]
+
+# Releases are tag pushes, which fxci's generic grants (keyed on branches, pull
+# requests and GitHub releases) don't cover; mirror them for tags.
+- grant:
+    - queue:route:checks
+    - queue:scheduler-id:{trust_domain}-level-{level}
+    - queue:cancel-task:{trust_domain}-level-{level}/*
+    - queue:rerun-task:{trust_domain}-level-{level}/*
+    - docker-worker:cache:{trust_domain}-level-{level}-*
+    - generic-worker:cache:{trust_domain}-level-{level}-*
+    - queue:route:index.{trust_domain}.cache.level-{level}.*
+    - index:insert-task:{trust_domain}.cache.level-{level}.*
+  to:
+    - project:
+        alias: [taskcluster, taskcluster-staging-releases]
+        job: [tag:*]
+
+# Pushes to main and releases can notify on failure.
+- grant:
+    - queue:route:notify.email.taskcluster-internal@mozilla.com.*
+    - queue:route:notify.email.taskcluster-notifications@mozilla.com.*
+  to:
+    - project:
+        alias: taskcluster
+        job: [branch:main, tag:v*]
+
+- grant:
+    - queue:create-task:highest:proj-taskcluster/ci
+  to:
+    - project:
+        alias: json-e
+        job: [pull-request:*, branch:*]
+
+# Scopes for the generic-worker integration tests, which run a worker inside
+# the task against the test-provisioner namespace.
+- grant:
+    - assume:worker-id:test-worker-group/test-worker-id
+    - assume:worker-pool:test-provisioner/*
+    - assume:worker-type:test-provisioner/*
+    - auth:create-client:project/taskcluster:generic-worker-tester/TestReclaimCancelledTask
+    - auth:create-client:project/taskcluster:generic-worker-tester/TestResolveResolvedTask
+    - auth:sentry:generic-worker-tests
+    - docker-worker:cache:d2g-test
+    - docker-worker:capability:privileged:test-provisioner/test-*
+    - docker-worker:capability:device:hostSharedMemory:test-provisioner/test-*
+    - docker-worker:capability:device:kvm:test-provisioner/test-*
+    - docker-worker:capability:device:loopbackAudio
+    - docker-worker:capability:device:loopbackAudio:test-provisioner/test-*
+    - docker-worker:capability:device:loopbackVideo
+    - docker-worker:capability:device:loopbackVideo:test-provisioner/test-*
+    - docker-worker:feature:allowPtrace
+    - generic-worker:cache:tc-test-*
+    - generic-worker:os-group:test-provisioner/*
+    - generic-worker:run-as-administrator:test-provisioner/*
+    - generic-worker:run-task-as-current-user:test-provisioner/*
+    - generic-worker:loopback-audio:test-provisioner/test-*
+    - generic-worker:loopback-video:test-provisioner/test-*
+    - index:find-task:garbage.generic-worker-tests.*
+    - index:insert-task:garbage.generic-worker-tests.*
+    - queue:cancel-task:test-scheduler/*
+    - queue:create-task:highest:test-provisioner/*
+    - queue:get-artifact:SampleArtifacts/_/X.txt
+    - queue:get-artifact:SampleArtifacts/_/non-existent-artifact.txt
+    - queue:get-artifact:SampleArtifacts/b/c/d.jpg
+    - queue:scheduler-id:test-scheduler
+  to:
+    - roles:
+        - project:taskcluster:generic-worker-tester
+
+# Workers in the project's pools report to Sentry (generic-worker's
+# `sentryProject`), as for the hardware provisioners in grants.yml.
+- grant:
+    - auth:sentry:generic-worker
+  to:
+    - roles:
+        - worker-type:proj-taskcluster/*

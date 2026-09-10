@@ -70,6 +70,16 @@ async def test_proj_fuzzing_pools_are_ignored():
 
 
 @pytest.mark.asyncio
+async def test_test_provisioner_scopes_are_ignored():
+    resources = resources_for("generic-worker:run-as-administrator:test-provisioner/*")
+
+    async def generate_resources(*modules):
+        return resources
+
+    await check_run_as_administrator_pools_run_one_task(generate_resources)
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     ("scope", "number_of_tasks"),
     [

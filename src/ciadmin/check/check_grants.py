@@ -88,6 +88,7 @@ async def check_grant_pools(generate_resources):
         "releng-hardware",
         "scriptworker-k8s",
         "scriptworker-prov-v1",
+        "test-provisioner",
     }
 
     # We validate the raw grants rather than the generated grants to allow for
@@ -165,6 +166,7 @@ async def check_run_as_administrator_pools_run_one_task(generate_resources):
         for scope in role.scopes
         if scope.startswith(RUN_AS_ADMINISTRATOR_PREFIX)
         and not scope.startswith(f"{RUN_AS_ADMINISTRATOR_PREFIX}proj-fuzzing/")
+        and not scope.startswith(f"{RUN_AS_ADMINISTRATOR_PREFIX}test-provisioner/")
     }
 
     ineligible_pools = defaultdict(set)

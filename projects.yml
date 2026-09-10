@@ -1669,7 +1669,7 @@ mozilla-releng:
     taskgraph-actions: true
     trust-domain-scopes: true
 
-taskcluster:
+taskcluster-org:
   repo: https://github.com/taskcluster/*
   repo_type: git
   trust_domain: mozilla
@@ -1683,3 +1683,40 @@ taskcluster:
     pre-commit: true
     taskgraph-actions: true
     trust-domain-scopes: true
+
+taskcluster:
+  repo: https://github.com/taskcluster/taskcluster
+  repo_type: git
+  trust_domain: taskcluster
+  branches:
+    - name: main
+      level: 3
+  features:
+    github-pull-request:
+      policy: public_restricted
+    trust-domain-scopes: true
+
+taskcluster-staging-releases:
+  repo: https://github.com/taskcluster/staging-releases
+  repo_type: git
+  trust_domain: taskcluster
+  branches:
+    - name: main
+      level: 3
+    - name: staging-release/*
+      level: 3
+  features:
+    trust-domain-scopes: true
+
+json-e:
+  repo: https://github.com/json-e/json-e
+  repo_type: git
+  trust_domain: taskcluster
+  branches:
+    - name: main
+      level: 3
+    - name: "*"
+      level: 1
+  features:
+    github-pull-request:
+      policy: public
