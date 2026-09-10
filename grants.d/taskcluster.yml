@@ -133,7 +133,6 @@
     - index:find-task:garbage.generic-worker-tests.*
     - index:insert-task:garbage.generic-worker-tests.*
     - queue:cancel-task:test-scheduler/*
-    - queue:create-artifact:public/*
     - queue:create-task:highest:test-provisioner/*
     - queue:get-artifact:SampleArtifacts/_/X.txt
     - queue:get-artifact:SampleArtifacts/_/non-existent-artifact.txt
