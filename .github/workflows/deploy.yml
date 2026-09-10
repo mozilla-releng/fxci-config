@@ -21,6 +21,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         environment: ["staging", "firefoxci"]
     env:
@@ -49,6 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: diff-${{matrix.environment}}
     strategy:
+      fail-fast: false
       matrix:
         environment: ["staging", "firefoxci"]
     env:
