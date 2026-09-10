@@ -76,5 +76,6 @@ scopes:
   # needed to cancel stale reviewbot pushes to try
   - 'queue:seal-task-group:gecko-level-1/*'
   - 'queue:cancel-task-group:gecko-level-1/*'
+  - 'queue:cancel-task:relman/*'
 tags: {}
 workerType: bot
