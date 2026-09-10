@@ -1379,6 +1379,7 @@ project/taskcluster/testing/client-libraries:
   description: |
     This client is used to test the client libraries in Taskcluster CI.
   scopes:
+    - auth:list-clients
     - "object:upload:taskcluster:taskcluster/test/*"
     - "object:download:taskcluster/test/*"
 project/taskcluster/audit-reports:
