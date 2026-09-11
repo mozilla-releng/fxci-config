@@ -97,7 +97,7 @@ async def update_resources(resources):
 
     # Manage the Hook / hook-id namespace except the parts owned by other
     # generators, so we still clean up stale hooks without treating theirs as
-    # deletions under `--resources hooks`.
+    # deletions under `--only hooks`.
     owned_elsewhere = "|".join(
         (
             "project-.*/in-tree-action-.*",  # in_tree_actions

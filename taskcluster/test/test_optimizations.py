@@ -68,5 +68,5 @@ Registering resource: worker_pools
     args, kwargs = mock_run.call_args
     cmd = " ".join(args[0])
     assert "--environment firefoxci" in cmd
-    assert "--resources worker_pools" in cmd
+    assert "--only worker_pools" in cmd
     assert kwargs["env"].get("TASKCLUSTER_ROOT_URL") == FIREFOXCI_ROOT_URL

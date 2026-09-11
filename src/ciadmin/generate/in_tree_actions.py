@@ -373,7 +373,7 @@ async def update_resources(resources):
     # the ones currently in actions.yml) so hooks left behind by a removed trust
     # domain are still cleaned up. The `in-tree-action`/`in-tree-pr-action`
     # suffix keeps these from overlapping other generators' hooks, so
-    # `--resources hooks` no longer treats these as deletions. Exclude
+    # `--only hooks` no longer treats these as deletions. Exclude
     # externally-managed namespaces (e.g. project-fuzzing) like the other
     # broad-pattern generators.
     await manage_with_exclusions(resources, "Hook=project-.*/in-tree-action-.*")
