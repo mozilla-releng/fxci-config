@@ -3,8 +3,6 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
-import re
-import sys
 
 import click
 from tcadmin.appconfig import AppConfig
@@ -45,6 +43,9 @@ appconfig.options.add(
 
 appconfig.check_path = os.path.join(os.path.dirname(__file__), "check")
 
+for name, reso_module in RESOURCES.items():
+    appconfig.generators.register(reso_module, name=name)
+
 # Registered first so the client is closed even when `modify_resources`
 # rejects the environment.
 appconfig.modifiers.register(modify.close_github_client)
@@ -65,54 +66,4 @@ def boot():
             err=True,
         )
 
-    @click.command(
-        context_settings={"ignore_unknown_options": True, "allow_extra_args": True}
-    )
-    @click.option(
-        "--resources",
-        required=False,
-        default="all",
-        help=f"Comma-separated list of resources to generate. Allowed values are: all,{','.join(RESOURCES.keys())}",
-    )
-    def register_resources_and_run(resources: str):
-        resources_list = resources.split(",")
-        if "all" in resources_list:
-            for reso_module in RESOURCES.values():
-                appconfig.generators.register(reso_module)
-        else:
-            for reso in resources_list:
-                if resource_module := RESOURCES.get(reso, None):
-                    click.echo(f"Registering resource: {reso}", err=True)
-                    appconfig.generators.register(resource_module)
-                else:
-                    click.echo(f"Ignoring invalid resource: {reso}.", err=True)
-            if "clients" not in resources_list:
-                from tcadmin.current import clients  # noqa: PLC0415
-
-                async def fetch_clients(resources):
-                    return
-
-                clients.fetch_clients = fetch_clients
-
-        # Remove the --resources arguments from sys.argv so inner "click.command"s don't complain
-        # Handle parameter with =
-        arg_regex = re.compile(r"^--resources\=.*")
-        sys.argv = [arg for arg in sys.argv if not arg_regex.match(arg)]
-        # Handle parameter with space
-        while "--resources" in sys.argv:
-            reso_arg_index = sys.argv.index("--resources")
-            sys.argv = sys.argv[:reso_arg_index] + sys.argv[reso_arg_index + 2 :]
-
-        main(appconfig)
-
-    # if --help, then add the option to global and let main() handle it
-    if "--help" in sys.argv:
-        appconfig.options.add(
-            "--resources",
-            required=False,
-            default="all",
-            help=f"Comma-separated list of resources to generate. Allowed values are: all,{','.join(RESOURCES.keys())}",
-        )
-        main(appconfig)
-    else:
-        register_resources_and_run()
+    main(appconfig)

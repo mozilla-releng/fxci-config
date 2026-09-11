@@ -23,7 +23,7 @@ class IntegrationTestStrategy(OptimizationStrategy):
             "diff",
             "--environment",
             "firefoxci",
-            "--resources",
+            "--only",
             "worker_pools",
             "--ids-only",
         ]
