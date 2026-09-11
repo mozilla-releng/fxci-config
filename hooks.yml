@@ -121,6 +121,7 @@ project-relman/code-review-{mode}:
     # needed to cancel stale reviewbot pushes to try
     - queue:seal-task-group:gecko-level-1/*
     - queue:cancel-task-group:gecko-level-1/*
+    - queue:cancel-task:relman/*
   template_file: hook-templates/project-relman/code-review-{mode}.yml
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
