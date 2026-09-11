@@ -4,6 +4,10 @@
     - queue:route:index.docker.images.v1.{alias}.*
     - project:releng:services/tooltool/api/download/internal
     - project:releng:services/tooltool/api/download/public
+    # NSS's Windows ARM64 build borrows gecko's Visual Studio toolchain
+    # artifact: the VS 2017 package it otherwise builds with predates the
+    # ARM64 desktop compiler. See bug 2030245.
+    - queue:get-artifact:project/gecko/vs/*
   to:
     - project:
         trust_domain: nss
