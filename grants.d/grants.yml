@@ -1832,6 +1832,17 @@
         - sheriff
         - perf_sheriff
 
+# Bug 2069053: the BHR aggregation action, which re-runs the daily hang
+# aggregation for a chosen build date to backfill a day the cron missed or
+# produced before a change to the artifact format. Level 3 and mozilla-central
+# only, as the action itself is; anyone who can land there can already make the
+# cron run their code against the same credential.
+- grant:
+    - hooks:trigger-hook:project-gecko/in-tree-action-3-bhr-aggregate/*
+  to:
+    - groups:
+        - active_scm_level_3
+
 - grant:
     - hooks:trigger-hook:project-nss/in-tree-action-3-generic/*
   to:
