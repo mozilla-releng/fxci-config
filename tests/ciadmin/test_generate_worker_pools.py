@@ -366,6 +366,44 @@ def test_generate_pool_variants_resolves_scaling_ratio(environment):
     }
 
 
+def test_generate_pool_variants_resolves_machine_type(environment):
+    pool = WorkerPool(
+        pool_id="{pool-group}/bot",
+        description="",
+        owner="user@example.com",
+        provider_id="google",
+        email_on_error=False,
+        attributes={},
+        variants=[
+            {"pool-group": "code-review"},
+            {"pool-group": "code-coverage"},
+        ],
+        config={
+            "instance_types": [
+                {
+                    "disks": [],
+                    "machine_type": {
+                        "by-pool-group": {
+                            "code-coverage": "c2-standard-8",
+                            "default": "c2-standard-4",
+                        },
+                    },
+                },
+            ],
+        },
+    )
+
+    machine_types = {
+        variant.pool_id: variant.config["instance_types"][0]["machine_type"]
+        for variant in generate_pool_variants([pool], environment.name)
+    }
+
+    assert machine_types == {
+        "code-review/bot": "c2-standard-4",
+        "code-coverage/bot": "c2-standard-8",
+    }
+
+
 @pytest.mark.parametrize(
     "provider,extra_pool_config,extra_cloud_config",
     (
