@@ -197,7 +197,7 @@ async def test_update_resources_does_not_overclaim(
     """
     hooks must only claim the hook groups it defines, not the whole `Hook=.*`
     namespace (which is shared with in_tree_actions/cron_tasks/git_pushes/
-    hg_pushes). Claiming the whole namespace makes `--resources hooks` treat
+    hg_pushes). Claiming the whole namespace makes `--only hooks` treat
     those generators' hooks as deletions.
     """
     template = tmp_path / "my-hook.yml"

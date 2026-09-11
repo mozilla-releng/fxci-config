@@ -882,7 +882,7 @@ async def test_update_resources_does_not_overclaim(mock_ciconfig_file, set_envir
     grants must only declare ownership of the role namespaces it actually owns.
     Claiming roles owned by other generators (scm_group_roles' `active_scm_level_*`
     roles, or the `hook-id` namespace owned by hooks/in_tree_actions/cron_tasks/
-    git_pushes/hg_pushes) makes `ci-admin diff --resources grants` report those as
+    git_pushes/hg_pushes) makes `ci-admin diff --only grants` report those as
     spurious deletions.
     """
     mock_ciconfig_file(
