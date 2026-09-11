@@ -153,3 +153,13 @@
   to:
     - roles:
         - repo:github.com/taskcluster/taskcluster:rerun
+
+# The azure-attested-document hook refreshes worker-manager's
+# azure_signature_good.json fixture, whose leaf certificate expires roughly
+# every 180 days. Allow a run to be forced when it expires, rather than waiting
+# for the weekly schedule.
+- grant:
+    - hooks:trigger-hook:project-taskcluster/azure-attested-document
+  to:
+    - roles:
+        - mozilla-group:team_taskcluster

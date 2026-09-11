@@ -588,3 +588,24 @@ project-fuzzing/orion-cron:
     - secrets:get:project/fuzzing/docker-hub
   template_file: hook-templates/project-fuzzing/orion-cron.yml
   trigger_schema: {}
+
+project-taskcluster/azure-attested-document:
+  name: azure-attested-document
+  description: >-
+    Fetch an Azure IMDS attested document and instance metadata, and publish
+    them as indexed artifacts for refreshing worker-manager's
+    `services/worker-manager/test/fixtures/azure_signature_good.json`.
+    Fetch the latest with:
+    `curl https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/project.taskcluster.azure.attested-document.latest/artifacts/public/attested.json`
+    See https://github.com/taskcluster/taskcluster/issues/8533
+  owner: taskcluster-notifications@mozilla.com
+  email_on_error: true
+  schedule:
+    - 0 3 * * 1  # 03:00 UTC every Monday
+  scopes:
+    - queue:create-task:lowest:proj-taskcluster/gw-windows-2022-gui
+    - queue:route:index.project.taskcluster.azure.attested-document.*
+    - queue:route:notify.email.taskcluster-notifications@mozilla.com.on-failed
+    - queue:scheduler-id:taskcluster
+  template_file: hook-templates/project-taskcluster/azure-attested-document.yml
+  trigger_schema: {}

@@ -1,0 +1,45 @@
+---
+schedulerId: taskcluster
+provisionerId: proj-taskcluster
+workerType: gw-windows-2022-gui
+priority: lowest
+deadline: {$fromNow: "3 hours"}
+# The artifacts and the index entry die with the task; ~6 months keeps a
+# document fetchable for about one certificate lifetime
+expires: {$fromNow: "180 days"}
+routes:
+  - index.project.taskcluster.azure.attested-document.latest
+  - notify.email.taskcluster-notifications@mozilla.com.on-failed
+payload:
+  maxRunTime: 300
+  command:
+    # Set-Content, not Out-File: Out-File applies console-width
+    # formatting, which would wrap (and thus corrupt) the ~4KB signature.
+    - >-
+      powershell -Command "(Invoke-WebRequest -UseBasicParsing -Headers
+      @{Metadata='true'} -Uri
+      'http://169.254.169.254/metadata/attested/document?api-version=2021-05-01').Content
+      | Set-Content -Encoding ascii -NoNewline -Path attested.json"
+    - >-
+      powershell -Command "(Invoke-WebRequest -UseBasicParsing -Headers
+      @{Metadata='true'} -Uri
+      'http://169.254.169.254/metadata/instance?api-version=2021-05-01').Content
+      | Set-Content -Encoding ascii -NoNewline -Path instance.json"
+    # Re-print the files rather than re-querying IMDS, so that the log
+    # and the artifacts are guaranteed to be the same document (a second
+    # request returns a different nonce and timestamp).
+    - powershell -Command "Get-Content -Raw attested.json; Get-Content -Raw instance.json"
+  artifacts:
+    - name: public/attested.json
+      path: attested.json
+      type: file
+    - name: public/instance.json
+      path: instance.json
+      type: file
+metadata:
+  name: azure-attested-document
+  description: >-
+    Fetch and index an Azure IMDS attested document, for refreshing
+    worker-manager's azure_signature_good.json test fixture.
+  owner: taskcluster-notifications@mozilla.com
+  source: https://github.com/mozilla-releng/fxci-config/blob/main/hooks.yml
