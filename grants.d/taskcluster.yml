@@ -153,3 +153,28 @@
   to:
     - roles:
         - repo:github.com/taskcluster/taskcluster:rerun
+
+# Cron jobs (.cron.yml)
+- grant:
+    - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
+  to:
+    - project:
+        alias: taskcluster
+        job: [cron:*]
+
+- grant:
+    - queue:create-task:high:proj-taskcluster/gw-ubuntu-24-04  # docker-image rebuilds on cache miss
+    - queue:create-task:lowest:proj-taskcluster/gw-windows-2022-gui
+    - queue:route:index.project.taskcluster.azure.attested-document.*
+    - queue:route:notify.email.taskcluster-notifications@mozilla.com.on-failed
+  to:
+    - project:
+        alias: taskcluster
+        job: [cron:azure-attested-document]
+
+# Force a refresh out of band, e.g. when the pinned fixture's certificate expires.
+- grant:
+    - hooks:trigger-hook:project-releng/cron-task-taskcluster-taskcluster/azure-attested-document
+  to:
+    - groups:
+        - team_taskcluster

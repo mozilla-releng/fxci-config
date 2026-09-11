@@ -1691,10 +1691,17 @@ taskcluster:
   branches:
     - name: main
       level: 3
+      cron: true
   features:
     github-pull-request:
       policy: public_restricted
+    taskgraph-cron: true
     trust-domain-scopes: true
+  cron:
+    targets:
+      # Refreshes worker-manager's Azure attested-document test fixture; a
+      # target hook lets the team force a run when the fixture's cert expires.
+      - azure-attested-document
 
 taskcluster-staging-releases:
   repo: https://github.com/taskcluster/staging-releases
