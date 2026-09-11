@@ -779,6 +779,7 @@ def generate_pool_variants(worker_pools, environment):
             "image",
             "implementation",
             "instance_types",
+            "instance_types.machine_type",
             "locations",
             "maxCapacity",
             "minCapacity",

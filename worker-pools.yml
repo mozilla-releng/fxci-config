@@ -3640,7 +3640,10 @@ pools:
           disks:
             - *persistent-disk-75gb
             - *scratch-disk
-          machine_type: c2-standard-4
+          machine_type:
+            by-pool-group:
+              code-coverage: c2-standard-8
+              default: c2-standard-4
   - pool_id: '{pool-group}/linux-docker'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
