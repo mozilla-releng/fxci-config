@@ -3098,8 +3098,6 @@ pools:
       - pool-group: gecko-t
         suffix: gpu-alpha
       - pool-group: gecko-t
-        suffix: gpu-perf-experiment
-      - pool-group: gecko-t
         suffix: webgpu
       - pool-group: enterprise-t
         suffix: webgpu
@@ -3143,7 +3141,6 @@ pools:
               default: [central-india, central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
           default:
             by-suffix:
-              gpu-perf-experiment: [west-us-3]
               alpha: [uk-south, east-us-2]
               (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
               (webgpu|gpu)(-alpha)?: [west-us-3, east-us, west-us, west-us-2]
@@ -3161,7 +3158,6 @@ pools:
               '': 1200
               alpha: 500
               gpu: 600
-              gpu-perf-experiment: 12
               large: 150
               default: 100
           enterprise-t: 200
@@ -3176,10 +3172,6 @@ pools:
           default: 1
       armDeployment:
         by-suffix:
-          gpu-perf-experiment:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-dedicated-host/versions/1.0
-            parameters:
-              priority: Regular
           alpha:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
             parameters:
