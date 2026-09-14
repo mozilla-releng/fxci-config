@@ -2340,7 +2340,7 @@ wheels = [
 
 [[package]]
 name = "tc-admin"
-version = "5.2.1"
+version = "5.4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -2352,9 +2352,9 @@ dependencies = [
     { name = "sortedcontainers" },
     { name = "taskcluster" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/16/de/01fcef8b2ae58edb227839beb16841864139bb67411fdedd586571b79b8b/tc_admin-5.2.1.tar.gz", hash = "sha256:ad254dc0792fefa6d5b5339f8309f4423917afec9cfe79c78aac46a906e0bcbe", size = 32730, upload-time = "2026-04-30T14:41:11.184Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/42/10/4241ed0a30b85d8f24389bae986e9714d2df8c4bc57a45897d251129cb22/tc_admin-5.4.1.tar.gz", hash = "sha256:59cfc3036518311cf0cc08293a39972055cbc7f3a7a535459102f25a03a9a281", size = 34494, upload-time = "2026-09-14T16:03:20.709Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bf/b0/99e6aabff1a13f4224b9c36986838968e0638ab43131f1b4f0e5e2e0c77c/tc_admin-5.2.1-py3-none-any.whl", hash = "sha256:0cdfa09ba275772253400a7be89fb69b0ff9a077d4f4645a17a330ae9b6e10b9", size = 46467, upload-time = "2026-04-30T14:41:10.133Z" },
+    { url = "https://files.pythonhosted.org/packages/c5/dc/f3ad028ac68edb9aee4b127c28d3d7a8ea911f7f804764e4022b0243bd3f/tc_admin-5.4.1-py3-none-any.whl", hash = "sha256:56129bd19613a1bfcadd6856816cb8d08cdc589f8b4e051936ae871b351ce239", size = 48028, upload-time = "2026-09-14T16:03:19.642Z" },
 ]
 
 [[package]]
