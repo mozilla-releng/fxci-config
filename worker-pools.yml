@@ -3634,7 +3634,7 @@ pools:
           code-review: 1
           code-coverage: 0
           reviewer-assignment: 1
-      maxCapacity: 10
+      maxCapacity: 20
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
