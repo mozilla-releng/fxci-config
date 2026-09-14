@@ -3139,17 +3139,17 @@ pools:
         by-pool-group:
           comm-t:
             by-suffix:
-              ssd: [central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
-              default: [central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
+              ssd: [central-india, central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
+              default: [central-india, central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
           default:
             by-suffix:
               gpu-perf-experiment: [west-us-3]
               alpha: [uk-south, east-us-2]
               (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
               (webgpu|gpu)(-alpha)?: [west-us-3, east-us, west-us, west-us-2]
-              (ssd|source): [central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
+              (ssd|source): [central-india, central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
               ssd-gpu: [north-europe, east-us, east-us-2]
-              default: [central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
+              default: [central-india, central-us, east-us-2, west-us-2, west-us-3, east-us, north-europe, uk-south, west-us]
       maxCapacity:
         by-pool-group:
           comm-t:
@@ -3254,14 +3254,15 @@ pools:
           by-vmSize:
             Standard_F8alds_v7:
               by-location:
-                central-us: 1
-                east-us-2: 1
-                west-us-2: 1
-                west-us-3: 1
-                east-us: 0.95
-                north-europe: 0.9
-                uk-south: 0.85
-                west-us: 0.8
+                central-india: 1
+                central-us: 0.5
+                east-us-2: 0.5
+                west-us-2: 0.5
+                west-us-3: 0.5
+                east-us: 0.45
+                north-europe: 0.4
+                uk-south: 0.35
+                west-us: 0.3
                 default: 0.1
             Standard_D8ads_v5:
               by-location:
