@@ -68,6 +68,18 @@ def configured_branches(project):
     return names
 
 
+async def invalidates_hooks(repo_path, branch):
+    """Whether an action hook is generated from this branch's `.taskcluster.yml`."""
+    projects = await Project.fetch_all()
+    return any(
+        p.repo_type == "git"
+        and p.repo_path.rstrip("/").lower() == repo_path.lower()
+        and should_hash(p)
+        and glob_match(configured_branches(p), branch)
+        for p in projects
+    )
+
+
 def parse_and_hash(tcy):
     """
     Parse a `.taskcluster.yml` and hash it, returning (parsed, hash).
