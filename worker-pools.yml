@@ -2741,10 +2741,6 @@ pools:
         suffix: alpha
         implementation: generic-worker/windows
       - pool-group: gecko-t
-        suffix: gpu
-      - pool-group: gecko-t
-        suffix: gpu-alpha
-      - pool-group: gecko-t
         suffix: webgpu
       - pool-group: gecko-t
         suffix: webgpu-alpha
@@ -2756,8 +2752,6 @@ pools:
         implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: ssd
-      - pool-group: gecko-t
-        suffix: ssd-gpu
       - pool-group: comm-t
       - pool-group: comm-t
         suffix: ssd
@@ -2902,8 +2896,6 @@ pools:
         implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: gpu
-      - pool-group: enterprise-t
-        suffix: gpu
       - pool-group: gecko-t
         suffix: gpu-alpha
       - pool-group: gecko-t
@@ -2926,8 +2918,6 @@ pools:
         implementation: generic-worker/windows
       - pool-group: gecko-t
         suffix: ssd
-      - pool-group: gecko-t
-        suffix: ssd-gpu
       - pool-group: comm-t
       - pool-group: comm-t
         suffix: ssd
