@@ -100,6 +100,51 @@ async def check_providers():
     assert not invalid_pools
 
 
+@pytest.mark.asyncio
+async def check_d2g_disables_native_payloads(generate_resources):
+    """
+    Ensures that any pool with d2g enabled (`d2gConfig.enableD2G`) also disables
+    native (generic-worker) payloads (`disableNativePayloads`).
+
+    `disableNativePayloads` defaults to false in generic-worker, so it must be
+    set explicitly to true.
+    """
+    # The taskcluster team's own CI pools intentionally run both native and
+    # d2g-translated payloads to exercise generic-worker itself.
+    ignore = (
+        "proj-taskcluster/ci",
+        "proj-taskcluster/release",
+        "proj-taskcluster/gw-ubuntu-24-04",
+        "proj-taskcluster/gw-ubuntu-24-04-gui",
+    )
+    invalid_pools = set()
+
+    resources = await generate_resources("worker_pools")
+    for pool in resources.filter("WorkerPool=.*"):
+        if pool.workerPoolId in ignore:
+            continue
+        for launchConfig in pool.config.get("launchConfigs", []):
+            config = (
+                launchConfig.get("workerConfig", {})
+                .get("genericWorker", {})
+                .get("config", {})
+            )
+            if config.get("d2gConfig", {}).get("enableD2G", False) and not config.get(
+                "disableNativePayloads", False
+            ):
+                invalid_pools.add(pool.workerPoolId)
+                break
+
+    if invalid_pools:
+        print(
+            "Pools with d2g enabled (d2gConfig.enableD2G) must also set "
+            "disableNativePayloads: true. The following pools do not:\n"
+            + "\n".join(sorted(invalid_pools))
+        )
+
+    assert not invalid_pools
+
+
 GCP_MACHINE_TYPE_REGEX = re.compile(
     r"""
     ^(?P<machine_series>[^-]+)
