@@ -1632,6 +1632,8 @@
     - queue:cancel-task:gecko-level-*
     - queue:rerun-task:gecko-level-*
     # Allow sheriffs and relman to ajdust priority of tasks on gecko workers
+    - queue:change-task-group-priority:gecko-level-*
+    - queue:change-task-group-priority:mobile-level-*
     - queue:change-task-priority-in-queue:bitbar/gecko-*
     - queue:change-task-priority-in-queue:gecko-1/*
     - queue:change-task-priority-in-queue:gecko-3/*
