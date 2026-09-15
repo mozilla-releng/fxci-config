@@ -46,10 +46,13 @@ async def test_graphql_returns_data_and_no_errors():
     response = make_response({"data": {"repository": {"id": "abc"}}})
 
     with patch_client(response) as get_client:
-        data, errors = await github.graphql(QUERY, owner="mozilla")
+        data, errors = await github.graphql("mozilla/example", QUERY, owner="mozilla")
 
     assert data == {"repository": {"id": "abc"}}
     assert errors == []
+
+    # The client is chosen per repository, so the repo path has to reach it.
+    get_client.assert_awaited_once_with("mozilla/example")
 
     # The query and its variables go out as a POST body, not a URL.
     client = get_client.return_value
@@ -89,7 +92,9 @@ async def test_graphql_errors(data):
     response = make_response({"data": data, "errors": errors})
 
     with patch_client(response):
-        got_data, got_errors = await github.graphql(QUERY, owner="mozilla")
+        got_data, got_errors = await github.graphql(
+            "mozilla/example", QUERY, owner="mozilla"
+        )
 
     assert got_data == data
     assert got_errors == errors
@@ -110,7 +115,7 @@ async def test_graphql_reports_an_http_error_before_raising(capsys):
 
     with patch_client(response):
         with pytest.raises(aiohttp.ClientResponseError):
-            await github.graphql(QUERY, owner="mozilla")
+            await github.graphql("mozilla/example", QUERY, owner="mozilla")
 
     captured = capsys.readouterr()
     assert "403" in captured.err

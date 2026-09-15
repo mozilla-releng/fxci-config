@@ -12,12 +12,12 @@ _client: AsyncClient | None = None
 _client_lock = asyncio.Lock()
 
 
-async def get_client():
-    """Get a shared GitHub client that can be reused across all GitHub API calls.
+async def get_client(repo_path):
+    """Get a GitHub client that can reach the repository at `repo_path`.
 
-    This helps avoid resource exhaustion by avoiding creation of hundreds of
-    individual client sessions, each with their own connection pools and DNS
-    resolvers.
+    `repo_path` is `owner/name`. One client serves every repository, so that
+    ci-admin does not open hundreds of sessions, each carrying its own
+    connection pool and DNS resolver.
     """
     global _client, _client_lock
 
@@ -39,8 +39,8 @@ async def close_client():
             _client = None
 
 
-async def graphql(query, **variables):
-    """Run `query` against GitHub's GraphQL API.
+async def graphql(repo_path, query, **variables):
+    """Run `query` against GitHub's GraphQL API for the repository `repo_path`.
 
     Returns `(data, errors)`, both for the caller to interpret. GitHub answers
     a partially resolvable query with both: asking for a file across many
@@ -52,7 +52,7 @@ async def graphql(query, **variables):
     repository the token can't see. GitHub reports that as HTTP 200 with the
     failure only in the body, and always alongside an error explaining it.
     """
-    client = await get_client()
+    client = await get_client(repo_path)
     response = await client.request(
         "POST", "/graphql", json={"query": query, "variables": variables}
     )

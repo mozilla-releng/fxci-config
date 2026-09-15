@@ -21,7 +21,7 @@ async def get_default_branch(repo_path):
         if repo_path in _default_branch_cache:
             return _default_branch_cache[repo_path]
 
-        client = await github.get_client()
+        client = await github.get_client(repo_path)
         response = await client.request("GET", endpoint)
         if not response.ok:
             detail = await response.text()
