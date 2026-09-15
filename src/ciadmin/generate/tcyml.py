@@ -104,7 +104,7 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
             headers = {"Accept": "application/vnd.github.raw+json"}
             params = {"ref": revision}
 
-            client = await github.get_client()
+            client = await github.get_client(repo)
             response = await client.request(
                 "GET", endpoint, headers=headers, params=params
             )
@@ -158,7 +158,7 @@ async def get_blob_oids(repo_path):
         after = None
         while True:
             data, errors = await github.graphql(
-                _BLOB_OIDS_QUERY, owner=owner, name=name, after=after
+                repo_path, _BLOB_OIDS_QUERY, owner=owner, name=name, after=after
             )
             if not _only_missing_files(errors):
                 raise RuntimeError(
@@ -204,7 +204,7 @@ async def get_blobs(repo_path, blob_oids):
         "}\n"
     )
 
-    data, errors = await github.graphql(query, owner=owner, name=name)
+    data, errors = await github.graphql(repo_path, query, owner=owner, name=name)
     if errors:
         raise RuntimeError(f"Got errors fetching blobs from {repo_path}: {errors}")
 
