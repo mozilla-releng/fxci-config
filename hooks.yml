@@ -192,7 +192,7 @@ project-releng/taskcluster-yml-redeploy:
   owner: release+hooks@mozilla.com
   email_on_error: true
   scopes:
-    - auth:github-repo-token:actions/mozilla-releng/fxci-config:actions:write
+    - auth:github-repo-token:action/mozilla-releng/fxci-config:actions:write
     - queue:create-task:low:infra/build-decision
     - queue:scheduler-id:releng-level-3
   template_file: hook-templates/project-releng/taskcluster-yml-redeploy.yml
