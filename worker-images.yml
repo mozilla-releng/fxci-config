@@ -233,10 +233,10 @@ gw-win2022-gpu:
     resource_group: rg-packer-worker-images
     deployment_id: fuzzing
     sbom: false
-    east-us: imageset-ajdnmqrgviixcxbrlwlm-eastus
-    east-us-2: imageset-kqjastlpfcktfmbknacc-eastus2
-    south-central-us: imageset-wklenlbxaoeghdemjdyk-southcentralus
-    west-us-2: imageset-cnnahgrkshgsftrapiac-westus2
+    east-us: imageset-3c29369557ac47ad9dcc-eastus
+    east-us-2: imageset-74cc0e4f91024f028ca2-eastus2
+    south-central-us: imageset-a3b0f0b45052482c9ff5-southcentralus
+    west-us-2: imageset-3cf3c0aa90674a208d56-westus2
 
 gw-win2022:
   azure2:
