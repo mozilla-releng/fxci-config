@@ -15,7 +15,7 @@ workerType: build-decision
 schedulerId: releng-level-3
 retries: 3
 scopes:
-  - auth:github-repo-token:actions/mozilla-releng/fxci-config:actions:write
+  - auth:github-repo-token:action/mozilla-releng/fxci-config:actions:write
 payload:
   features:
     # The auth service mints the dispatch token, and is reached through
@@ -46,4 +46,4 @@ payload:
       --deploy-repo mozilla-releng/fxci-config
       --deploy-workflow deploy.yml
       --deploy-ref main
-      --github-app actions
+      --github-app action

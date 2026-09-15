@@ -19,7 +19,7 @@ DEPLOY_ARGS = [
     "--deploy-ref",
     "main",
     "--github-app",
-    "actions",
+    "action",
 ]
 
 here = Path(__file__).parent
@@ -65,14 +65,14 @@ def test_deploy_token(monkeypatch):
 
     with patch.object(redeploy.taskcluster, "Auth") as auth:
         auth.return_value.githubRepoToken.return_value = {"token": "s3cret"}
-        token = redeploy.deploy_token("actions", "mozilla-releng/fxci-config")
+        token = redeploy.deploy_token("action", "mozilla-releng/fxci-config")
 
     assert token == "s3cret"
 
     auth.assert_called_once_with({"rootUrl": "http://taskcluster"})
     # The token may only dispatch workflows, and only in the deploy repository.
     auth.return_value.githubRepoToken.assert_called_once_with(
-        "actions",
+        "action",
         "mozilla-releng",
         {"repositories": ["fxci-config"], "permissions": {"actions": "write"}},
     )
@@ -138,7 +138,7 @@ def test_main_managed_repo_dispatches(monkeypatch):
     ):
         redeploy.main(DEPLOY_ARGS)
 
-    deploy_token.assert_called_once_with("actions", "mozilla-releng/fxci-config")
+    deploy_token.assert_called_once_with("action", "mozilla-releng/fxci-config")
     dispatch.assert_called_once_with(
         "s3cret", "mozilla-releng/fxci-config", "deploy.yml", "main"
     )
