@@ -306,3 +306,57 @@ async def test_a_github_failure_aborts_the_whole_run(projects, monkeypatch):
 
     with pytest.raises(RuntimeError, match="GraphQL query failed"):
         await in_tree_actions.hash_taskcluster_ymls()
+
+
+# ---------------------------------------------------------------------------
+# invalidates_hooks
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_invalidates_hooks(projects):
+    """A configured branch of a configured repo, and the near misses"""
+    projects(example=GIT_PROJECT)
+
+    assert await in_tree_actions.invalidates_hooks("mozilla/example", "main")
+    assert await in_tree_actions.invalidates_hooks("mozilla/example", "release/1")
+    # projects.yml spells one repository `Firefox-AI/firefox-prototypes`, so
+    # the push and the config can disagree on case.
+    assert await in_tree_actions.invalidates_hooks("Mozilla/Example", "main")
+
+    assert not await in_tree_actions.invalidates_hooks("octocat/hello-world", "main")
+    # The repo is configured, but no hook comes from this branch, so a deploy
+    # triggered by it would change nothing.
+    assert not await in_tree_actions.invalidates_hooks("mozilla/example", "some-topic")
+
+
+@pytest.mark.asyncio
+async def test_invalidates_hooks_ignores_trailing_slash(projects):
+    projects(example={**GIT_PROJECT, "repo": "https://github.com/mozilla/example/"})
+    assert await in_tree_actions.invalidates_hooks("mozilla/example", "main")
+
+
+@pytest.mark.asyncio
+async def test_invalidates_hooks_ignores_projects_we_do_not_hash(projects):
+    """A private repo is configured, but its `.taskcluster.yml` is never fetched."""
+    projects(
+        example={
+            **GIT_PROJECT,
+            "features": {"taskgraph-actions": True, "github-private-repo": True},
+        }
+    )
+    assert not await in_tree_actions.invalidates_hooks("mozilla/example", "main")
+
+
+@pytest.mark.asyncio
+async def test_invalidates_hooks_ignores_hg_projects(projects):
+    """The pulse message only ever describes a github push."""
+    projects(example={**HG_PROJECT, "repo": "https://hg.mozilla.org/mozilla/example"})
+    assert not await in_tree_actions.invalidates_hooks("mozilla/example", "default")
+
+
+@pytest.mark.asyncio
+async def test_invalidates_hooks_default_branch_is_always_configured(projects):
+    projects(example={**GIT_PROJECT, "branches": [{"name": "*", "level": 1}]})
+    assert await in_tree_actions.invalidates_hooks("mozilla/example", "main")
+    assert not await in_tree_actions.invalidates_hooks("mozilla/example", "some-topic")
