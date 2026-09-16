@@ -361,10 +361,6 @@ project/releng/generic-worker/datacenter-gecko-3-b-osx:
   description: Datacenter level 3 MacOS dedicated developer and automation worker.
   scopes:
     - assume:worker-type:releng-hardware/gecko-3-b-osx*
-project/releng/generic-worker/datacenter-gecko-3-t-osx:
-  description: Datacenter level 3 MacOS dedicated developer and automation worker.
-  scopes:
-    - assume:worker-type:releng-hardware/gecko-3-t-osx*
 project/releng/generic-worker/datacenter-applicationservices-b-1-osx:
   description: Datacenter level 1 MacOS dedicated workers for the application-services trust domain.
   scopes:
@@ -401,16 +397,12 @@ project/releng/generic-worker/datacenter-gecko-1-b-osx-arm64-vms:
   description: Datacenter level 1 macOS ARM64 VM-based builder workers.
   scopes:
     - assume:worker-type:releng-hardware/gecko-1-b-osx-arm64-vms
-    - queue:worker-id:mdc1/mac*
+    - queue:worker-id:mdc1/mac-*
 project/releng/generic-worker/datacenter-gecko-3-b-osx-arm64-vms:
   description: Datacenter level 3 macOS ARM64 VM-based builder workers.
   scopes:
     - assume:worker-type:releng-hardware/gecko-3-b-osx-arm64-vms
-    - queue:worker-id:mdc1/mac*
-project/releng/generic-worker/datacenter-mozilla-1-b-osx:
-  description: Datacenter tester MacOS dedicated workers for the mozilla trust domain.
-  scopes:
-    - assume:worker-type:releng-hardware/mozilla-1-b-osx*
+    - queue:worker-id:mdc1/mac-*
 project/releng/generic-worker/datacenter-gecko-t-linux:
   description: Datacenter Linux64 dedicated developer and automation worker.
   scopes:
@@ -482,26 +474,11 @@ project/releng/generic-worker/datacenter-mozillavpn-3-b-osx:
   description: Datacenter level 3 MacOS build machines for Mozilla VPN
   scopes:
     - assume:worker-type:releng-hardware/mozillavpn-b-3-osx*
-project/releng/generic-worker/datacenter-gecko-t-osx:
-  description: Datacenter MacOS dedicated developer and automation worker.
-  scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
-    - queue:worker-id:mdc1/mac*
-    - queue:worker-id:mdc1/t-yosemite*
-    - queue:worker-id:mdc1/t-mojave*
-    - queue:worker-id:mdc2/mac*
-    - queue:worker-id:mdc2/t-yosemite*
-    - queue:worker-id:mdc2/t-mojave*
 project/releng/generic-worker/datacenter-gecko-t-osx-1015-r8:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
-    - queue:worker-id:mdc1/mac*
-    - queue:worker-id:mdc1/t-yosemite*
-    - queue:worker-id:mdc1/t-mojave*
-    - queue:worker-id:mdc2/mac*
-    - queue:worker-id:mdc2/t-yosemite*
-    - queue:worker-id:mdc2/t-mojave*
+    - assume:worker-type:releng-hardware/gecko-t-osx-1015-r8
+    - queue:worker-id:mdc1/macmini-r8-*
 project/releng/generic-worker/datacenter-gecko-t-osx-staging:
   description: Datacenter MacOS dedicated developer and automation staging worker.
   scopes:
@@ -509,57 +486,47 @@ project/releng/generic-worker/datacenter-gecko-t-osx-staging:
     - assume:worker-type:releng-hardware/gecko-t-osx-1014-*
     - assume:worker-type:releng-hardware/gecko-t-osx-1015-*
     - assume:worker-type:releng-hardware/gecko-t-osx-1400-*
-    - queue:worker-id:mdc1/mac*
-    - queue:worker-id:mdc1/t-yosemite*
-    - queue:worker-id:mdc1/t-mojave*
-    - queue:worker-id:mdc2/mac*
-    - queue:worker-id:mdc2/t-yosemite*
-    - queue:worker-id:mdc2/t-mojave*
+    - queue:worker-id:mdc1/macmini-r8-*
 project/releng/generic-worker/datacenter-gecko-t-osx-1400-r8-staging:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
-    - queue:worker-id:mdc1/mac*
-    - queue:worker-id:mdc1/t-yosemite*
-    - queue:worker-id:mdc1/t-mojave*
-    - queue:worker-id:mdc2/mac*
-    - queue:worker-id:mdc2/t-yosemite*
-    - queue:worker-id:mdc2/t-mojave*
+    - assume:worker-type:releng-hardware/gecko-t-osx-1400-r8-staging
+    - queue:worker-id:mdc1/macmini-r8-*
 project/releng/generic-worker/datacenter-gecko-t-osx-1400-r8:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
-    - queue:worker-id:mdc1/mac*
+    - assume:worker-type:releng-hardware/gecko-t-osx-1400-r8
+    - queue:worker-id:mdc1/macmini-r8-*
 project/releng/generic-worker/datacenter-gecko-t-osx-1500-m4-staging:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
-    - queue:worker-id:mdc1/mac*
+    - assume:worker-type:releng-hardware/gecko-t-osx-1500-m4-staging
+    - queue:worker-id:mdc1/macmini-m4-*
 project/releng/generic-worker/datacenter-gecko-t-osx-1500-m4:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
-    - queue:worker-id:mdc1/mac*
+    - assume:worker-type:releng-hardware/gecko-t-osx-1500-m4
+    - queue:worker-id:mdc1/macmini-m4-*
 project/releng/generic-worker/datacenter-gecko-t-osx-1500-m4-ipv6:
   description: Datacenter MacOS M4 workers for IPv6 testing on dual stack network.
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-osx-1500-m4-ipv6
-    - queue:worker-id:mdc1/mac*
+    - queue:worker-id:mdc1/macmini-m4-*
 project/releng/generic-worker/datacenter-gecko-t-osx-1500-m-vms:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
-    - queue:worker-id:mdc1/mac*
+    - assume:worker-type:releng-hardware/gecko-t-osx-1500-m-vms
+    - queue:worker-id:mdc1/mac-*
 project/releng/generic-worker/datacenter-gecko-t-osx-2600-m4-staging:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
-    - queue:worker-id:mdc1/mac*
+    - assume:worker-type:releng-hardware/gecko-t-osx-2600-m4-staging
+    - queue:worker-id:mdc1/macmini-m4-*
 project/releng/generic-worker/datacenter-gecko-t-osx-2600-m4:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx*
-    - queue:worker-id:mdc1/mac*
+    - assume:worker-type:releng-hardware/gecko-t-osx-2600-m4
+    - queue:worker-id:mdc1/macmini-m4-*
 project/releng/generic-worker/win11-64-24h2-hw-perf-sheriff:
   description: Tracking metric variability with performance sheriffing. Tracking in RELOPS-1288.
   scopes:
