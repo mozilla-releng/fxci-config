@@ -100,19 +100,17 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         ):
             continue
 
-        if (
-            "*" in non_branch_jobs
-            and project.repo_type == "git"
-            and (
-                project.default_branch.level != 1
-                or (pr_policy and not grantee.include_pull_requests)
-            )
-        ):
-            # Github mixes pull-requests and other tasks under the same prefix,
-            # so a `*` job role would also apply to pull-requests. We need to
-            # explicitly split based on the job when pull-requests must be
-            # treated differently: either because they should be level-1, or
-            # because the grantee excludes them.
+        if "*" in non_branch_jobs and project.repo_type == "git":
+            # Github mixes pull-requests and other tasks under the same role
+            # prefix, so a bare `*` job role also applies to pull-requests via
+            # Taskcluster's wildcard role matching (eg. `assume:repo:.../pull-request`
+            # resolves against a `repo:.../*` role). Always split `*` into the
+            # individual jobs so pull-request roles are only ever created -- and
+            # scoped -- when the project explicitly opts in via a
+            # `github-pull-request` policy below. Otherwise a repo that enables
+            # pull-requests in its own `.taskcluster.yml` but declares no
+            # `github-pull-request` feature here would silently grant its full
+            # branch-push scope set to (even untrusted) pull requests.
             non_branch_jobs.remove("*")
             non_branch_jobs.update(
                 {
