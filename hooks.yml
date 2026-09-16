@@ -124,10 +124,10 @@ project-relman/code-review-{mode}:
     - queue:cancel-task:relman/*
   template_file: hook-templates/project-relman/code-review-{mode}.yml
   bindings:
-    - exchange: exchange/taskcluster-queue/v1/task-completed
-      routing_key_pattern: route.project.relman.codereview.v1.try_ending
     - exchange: exchange/taskcluster-queue/v1/task-group-resolved
       routing_key_pattern: '#.gecko-level-3.#'
+    - exchange: exchange/taskcluster-queue/v1/task-group-resolved
+      routing_key_pattern: '#.gecko-level-1.#'
   trigger_schema:
     type: object
     additionalProperties: true
