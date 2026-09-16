@@ -233,10 +233,10 @@ gw-win2022-gpu:
     resource_group: rg-packer-worker-images
     deployment_id: fuzzing
     sbom: false
-    east-us: imageset-3c29369557ac47ad9dcc-eastus
-    east-us-2: imageset-74cc0e4f91024f028ca2-eastus2
-    south-central-us: imageset-a3b0f0b45052482c9ff5-southcentralus
-    west-us-2: imageset-3cf3c0aa90674a208d56-westus2
+    east-us: imageset-12643384b7844fef889d-eastus
+    east-us-2: imageset-987c8207a48741ec93f4-eastus2
+    south-central-us: imageset-c6e728e8bfb349c29515-southcentralus
+    west-us-2: imageset-d61528eeded64c948f9e-westus2
 
 gw-win2022:
   azure2:
@@ -244,5 +244,5 @@ gw-win2022:
     resource_group: rg-packer-worker-images
     deployment_id: fuzzing
     sbom: false
-    central-us: imageset-vjyypxaraoyqmuewlwjn-centralus
-    east-us: imageset-lhtxjttusjeblyqqytss-eastus
+    central-us: imageset-ae2249752bf34390a775-centralus
+    east-us: imageset-3b2bd906bd764c1a9726-eastus
