@@ -679,6 +679,8 @@ firefox-prototypes:
   features:
     gecko-roles: true
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
     pr-actions: true
     taskgraph-actions: true
     treeherder-reporting: true
@@ -746,6 +748,8 @@ staging-firefox:
     gecko-roles: true
     git-push: true
     github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
     pr-actions: true
     taskgraph-actions: true
     taskgraph-cron: true
