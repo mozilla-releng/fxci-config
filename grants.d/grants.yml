@@ -971,8 +971,6 @@
     - project:
         alias:
           - comm-central
-          - try
-          - try-comm-central
           - mozilla-central
 
 - grant:
