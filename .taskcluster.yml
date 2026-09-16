@@ -249,6 +249,11 @@ tasks:
                                   - bash
                                   - -cx
                                   - $let:
+                                        # PR comments must use Taskgraph's PR cache namespace.
+                                        decisionTasksFor:
+                                            $if: 'tasks_for == "github-issue-comment"'
+                                            then: github-pull-request
+                                            else: '${tasks_for}'
                                         extraArgs:
                                             # Can't use $switch statement here, see https://github.com/json-e/json-e/issues/541
                                             $if: 'tasks_for == "cron"'
@@ -273,7 +278,7 @@ tasks:
                                             --owner='${ownerEmail}'
                                             --level='${level}'
                                             --repository-type=git
-                                            --tasks-for='${tasks_for}'
+                                            --tasks-for='${decisionTasksFor}'
                                             --base-repository='${baseRepoUrl}'
                                             --base-ref='${base_ref}'
                                             --base-rev='${base_sha}'
