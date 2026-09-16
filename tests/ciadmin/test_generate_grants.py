@@ -576,8 +576,9 @@ class TestAddScopesForGithubPullRequest:
 
 
 class TestAddScopesForLevel1PullRequest:
-    """Level-1 repos don't need the `*` job split for level reasons, but still
-    have to honour include_pull_requests."""
+    """Level-1 git repos must still split the `*` job so pull-requests never
+    inherit the bare `repo:<..>:*` role. Pull-request roles are only ever
+    created for repos that declare a `github-pull-request` policy."""
 
     projects = [
         Project(
@@ -621,13 +622,14 @@ class TestAddScopesForLevel1PullRequest:
         pprint(add_scope.added)
         # The `*` job role would also cover pull-requests, so it must be split
         # into the individual non pull-request jobs. Repos without
-        # pull-requests enabled keep the `*` role.
+        # pull-requests enabled never emit a bare `*` role either, so that
+        # pull-requests can't inherit it.
         assert add_scope.added == set(
             [
                 ("repo:github.com/mozilla/level1:branch:main", "sc"),
                 ("repo:github.com/mozilla/level1:release:*", "sc"),
                 ("repo:github.com/mozilla/level1-no-prs:branch:main", "sc"),
-                ("repo:github.com/mozilla/level1-no-prs:*", "sc"),
+                ("repo:github.com/mozilla/level1-no-prs:release:*", "sc"),
             ]
         )
 
@@ -638,12 +640,17 @@ class TestAddScopesForLevel1PullRequest:
         )
         # Dump expected for copy/paste.
         pprint(add_scope.added)
+        # `level1` declares a `public_restricted` policy, so it gets split
+        # pull-request roles. `level1-no-prs` declares no policy, so it gets no
+        # pull-request role *and* no bare `*` role that one could inherit.
         assert add_scope.added == set(
             [
                 ("repo:github.com/mozilla/level1:branch:main", "sc"),
-                ("repo:github.com/mozilla/level1:*", "sc"),
+                ("repo:github.com/mozilla/level1:pull-request", "sc"),
+                ("repo:github.com/mozilla/level1:pull-request-untrusted", "sc"),
+                ("repo:github.com/mozilla/level1:release:*", "sc"),
                 ("repo:github.com/mozilla/level1-no-prs:branch:main", "sc"),
-                ("repo:github.com/mozilla/level1-no-prs:*", "sc"),
+                ("repo:github.com/mozilla/level1-no-prs:release:*", "sc"),
             ]
         )
 
