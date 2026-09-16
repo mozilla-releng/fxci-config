@@ -36,24 +36,32 @@ payload:
         then:
           PHABRICATOR_BUILD_TARGET:
             $eval: payload.build_target_phid
+          ANALYSIS_MODE:
+            $eval: payload.analysis_mode
       - $if: firedBy == 'pulseMessage'
         else: {}
         then:
-          $if: '"runId" in payload && "status" in payload'
-          then:
-            # Triggered by code-review task in try ending
-            # so we can analyze a try patch
-            TRY_RUN_ID:
-              $eval: str(payload.runId)
-            TRY_TASK_GROUP_ID:
-              $eval: payload.status.taskGroupId
-            TRY_TASK_ID:
-              $eval: payload.status.taskId
+          $switch:
+            '"runId" in payload && "status" in payload':
+              # Triggered by code-review task in try ending
+              # so we can analyze a try patch
+              TRY_TASK_GROUP_ID:
+                $eval: payload.status.taskGroupId
+              TRY_TASK_ID:
+                $eval: payload.status.taskId
 
-          else:
-            # Triggered by end of build on autoland & MC
-            GENERIC_TASK_GROUP_ID:
-              $eval: payload.taskGroupId
+            'payload.schedulerId == "gecko-level-1"':
+              # Triggered by try task groups completing; used
+              # to fire off publication tasks for build-test mode
+              # reviewbot try pushes, where we don't have a task
+              # like `code-review` to key on like we do for linting.
+              TRY_TASK_GROUP_ID:
+                $eval: payload.taskGroupId
+
+            $default:
+              # Triggered by end of build on autoland, MC
+              GENERIC_TASK_GROUP_ID:
+                $eval: payload.taskGroupId
   features:
     taskclusterProxy: true
   image:
