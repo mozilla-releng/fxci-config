@@ -289,6 +289,60 @@ async def check_no_pull_request_index_writes(generated):
 
 
 @pytest.mark.asyncio
+async def check_pull_request_roles_require_feature(generated):
+    """Ensures no scopes can reach pull requests for a git project that hasn't
+    opted into them via the `github-pull-request` feature.
+
+    taskcluster-github assigns a pull-request task `assume:repo:<..>:pull-request`
+    based on the repo's own `.taskcluster.yml`, regardless of what fxci-config
+    believes. So a project without the feature must have neither a
+    `:pull-request` / `:pull-request-untrusted` role, nor a bare `:*` role that
+    wildcard-matches one -- either would silently grant the project's branch-push
+    scopes to (even untrusted) pull requests. See bug 2070519.
+    """
+    roles = {role.roleId: role for role in generated.filter("Role=.*")}
+    projects = await Project.fetch_all()
+
+    offending = defaultdict(set)
+    for project in projects:
+        # Only GitHub repos have pull requests.
+        if project.repo_type != "git":
+            continue
+        if project.feature("github-pull-request"):
+            continue
+
+        prefix = project.role_prefix
+        if prefix.endswith("*"):
+            # A wildcard prefix (eg. `repo:github.com/org/*`) is emitted as a
+            # single role that covers every job -- pull-requests included -- so
+            # that one role is the only thing that could leak. Appending a
+            # `:pull-request` suffix here would name a role that never exists.
+            forbidden = (prefix,)
+        else:
+            # A non-wildcard repo must have neither a bare `:*` role (which
+            # wildcard-matches `assume:repo:<..>:pull-request`) nor an explicit
+            # pull-request role.
+            forbidden = (
+                f"{prefix}:*",
+                f"{prefix}:pull-request",
+                f"{prefix}:pull-request-untrusted",
+            )
+        for roleId in forbidden:
+            role = roles.get(roleId)
+            if role and role.scopes:
+                offending[project.alias].add(roleId)
+
+    if offending:
+        print(
+            "These projects lack a `github-pull-request` feature but have roles "
+            "that would grant scopes to pull requests:"
+        )
+        for alias, roleIds in sorted(offending.items()):
+            print(f"{alias}: {', '.join(sorted(roleIds))}")
+    assert not offending
+
+
+@pytest.mark.asyncio
 async def check_inaccessible_pools(generated):
     """
     Checks for pools that no roles (other than root) are able to create tasks in.
