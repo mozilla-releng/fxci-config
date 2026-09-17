@@ -20,6 +20,7 @@
   action_perms:
     - generic
     - backfill
+    - change-priority
     - merge-automation
     - purge-caches
     - release-promotion
