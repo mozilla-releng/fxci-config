@@ -539,6 +539,16 @@
         feature: [gecko-roles, gecko-actions]
         level: [1, 2, 3]
 
+- grant:
+    # Allow the change-priority action to change priorities
+    - queue:change-task-group-priority:{trust_domain}-level-{level}
+    - queue:change-task-group-priority:{trust_domain}-level-{level}
+  to:
+    - projects:
+        job: [action:change-priority]
+        feature: [gecko-roles, gecko-actions]
+        level: [1, 2, 3]
+
 ##
 # project-specific scopes (for esr's to hang onto their old scopes)
 
@@ -1702,6 +1712,8 @@
         - mobile_eng_ops
 
 - grant:
+    - hooks:trigger-hook:project-gecko/in-tree-action-1-change-priority/*
+    - hooks:trigger-hook:project-gecko/in-tree-action-3-change-priority/*
     # Allow people with level-3 access to access interactive tasks
     - queue:get-artifact:private/interactive/*
     - queue:get-artifact:private/docker-worker/*
