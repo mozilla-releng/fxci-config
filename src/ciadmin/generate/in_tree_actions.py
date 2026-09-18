@@ -17,6 +17,7 @@ from tcadmin.util.matchlist import MatchList
 from tcadmin.util.scopes import normalizeScopes
 from tcadmin.util.sessions import aiohttp_session
 
+from ciadmin.util import github
 from ciadmin.util.matching import glob_match
 
 from . import tcyml
@@ -44,9 +45,10 @@ def should_hash(project):
         # list matching the glob. it's probably not worth doing though.
         if "*" in project.repo:
             return False
-        # At this time, we don't support fetching tcymls from private
-        # repos, so we can't generate action hooks for them.
-        if project.feature("github-private-repo"):
+        # A private repo is invisible without a token, so a run that cannot
+        # get one generates nothing for it and shows its hooks as deletions.
+        private = project.feature("github-private-repo")
+        if private and not github.can_read_private_repos():
             return False
         return True
     else:
