@@ -97,8 +97,18 @@ async def _get_fallback_client():
     return _fallback_client
 
 
+def can_read_private_repos():
+    """Whether this run can ask the auth service for a repository token.
+
+    Without Taskcluster credentials there is no token, and github answers for
+    a private repository as though it did not exist. A pull request from a
+    fork is the usual case, since github withholds every secret from those.
+    """
+    return "credentials" in optionsFromEnvironment()
+
+
 async def _build_client(repo_path):
-    if "credentials" not in optionsFromEnvironment():
+    if not can_read_private_repos():
         _warn_once(
             "No Taskcluster credentials in the environment; private "
             "repositories will not be readable."
