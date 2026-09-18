@@ -28,7 +28,7 @@ async def close_github_client(resources):
     flight. Modifiers run after every generator has returned, which is the
     first point where closing is safe.
     """
-    await github.close_client()
+    await github.close_clients()
     return resources
 
 
