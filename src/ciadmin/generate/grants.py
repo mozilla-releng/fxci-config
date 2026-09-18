@@ -30,31 +30,6 @@ managed = MatchList(
                 "Role=hook-id:.*",  # managed by hooks / in_tree_actions
                 "Role=mozilla-group:active_scm_level_[123]",  # managed by scm_group_roles
                 "Role=project:fuzzing/.*",  # managed externally
-                # These roles exist externally, it's not clear if they're
-                # actually used and need to be excluded or if we should just
-                # allow tc-admin to delete them.
-                "Role=gecko-t/win11-64-24h2-alpha",
-                "Role=team_taskcluster",
-                "Role=worker-pool:gecko-1/b-win2012-beta",
-                "Role=worker-pool:gecko-1/win2012-azure",
-                r"Role=worker-pool:gecko-1/win2012-azure-\*",
-                "Role=worker-pool:gecko-t/azure-windows-7",
-                "Role=worker-pool:gecko-t/t-win10-64-beta",
-                "Role=worker-pool:gecko-t/t-win10-64-gpu-b",
-                "Role=worker-pool:gecko-t/t-win7-32-beta",
-                "Role=worker-pool:gecko-t/t-win7-32-gpu-b",
-                "Role=worker-pool:gecko-t/win10-64-2004",
-                "Role=worker-pool:gecko-t/win10-64-azure",
-                r"Role=worker-pool:gecko-t/win10-64-azure-\*",
-                "Role=worker-pool:gecko-t/win10-64-azure-gpu",
-                "Role=worker-pool:gecko-t/win10-64-gpu-azure",
-                "Role=worker-pool:gecko-t/win11-64-2009",
-                r"Role=worker-pool:gecko-t/win11-64-2009\*",
-                "Role=worker-pool:gecko-t/win7-32-azure",
-                "Role=worker-pool:gecko-t/win7-32-gpu-azure",
-                "Role=worker-pool:gecko-t/windows10-64-2004",
-                r"Role=worker-pool:gecko-t/windows10-64-2004-\*",
-                "Role=worker-pool:relops-3/decision",
             ],
         ),
         r"Role=hook-id:project\-fuzzing/\*$",
