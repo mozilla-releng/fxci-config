@@ -21,7 +21,7 @@ PINNED_REV = "ff8505d177b9"
 @with_aiohttp_session
 async def test_get_tcyml():
     res = await tcyml.get("https://hg.mozilla.org/mozilla-central", revision=PINNED_REV)
-    await github.close_client()
+    await github.close_clients()
     assert hashlib.sha512(res).hexdigest()[:10] == "684648599a"
 
 

@@ -20,7 +20,7 @@ async def _get_pull_request_policy(project):
             default_branch=project.default_branch.name,
         )
     )
-    await github.close_client()
+    await github.close_clients()
     return config.get("policy", {}).get("pullRequests")
 
 
