@@ -39,10 +39,10 @@ async def check_pull_request_policies_for_git_repos():
     projects = [p for p in await Project.fetch_all() if not p.repo.endswith("*")]
 
     def filter_project(p):
-        # TODO: find a better flag to filter out private repos
+        if p.feature("github-private-repo") and not github.can_read_private_repos():
+            return False
         return (
             p.repo_type == "git"
-            and "private" not in p.repo
             and p.feature("github-pull-request")
             and p.alias not in skip
         )

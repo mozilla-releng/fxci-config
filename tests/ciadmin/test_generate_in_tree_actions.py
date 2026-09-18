@@ -338,13 +338,35 @@ async def test_invalidates_hooks_ignores_trailing_slash(projects):
 
 @pytest.mark.asyncio
 async def test_invalidates_hooks_ignores_projects_we_do_not_hash(projects):
-    """A private repo is configured, but its `.taskcluster.yml` is never fetched."""
-    projects(
-        example={
-            **GIT_PROJECT,
-            "features": {"taskgraph-actions": True, "github-private-repo": True},
-        }
-    )
+    """A globbed repo names no single repository to fetch a tcyml from."""
+    projects(example={**GIT_PROJECT, "repo": "https://github.com/mozilla/*"})
+    assert not await in_tree_actions.invalidates_hooks("mozilla/example", "main")
+
+
+PRIVATE_PROJECT = {
+    **GIT_PROJECT,
+    "features": {"taskgraph-actions": True, "github-private-repo": True},
+}
+
+
+@pytest.mark.asyncio
+async def test_invalidates_hooks_covers_private_repos(projects, monkeypatch):
+    """With credentials the auth service mints a token, so the tcyml is hashed."""
+    monkeypatch.setenv("TASKCLUSTER_CLIENT_ID", "static/test")
+    monkeypatch.setenv("TASKCLUSTER_ACCESS_TOKEN", "quiet")
+    projects(example=PRIVATE_PROJECT)
+    assert await in_tree_actions.invalidates_hooks("mozilla/example", "main")
+
+
+@pytest.mark.asyncio
+async def test_invalidates_hooks_skips_private_repos_without_credentials(
+    projects, monkeypatch
+):
+    """A pull request from a fork gets no credentials, so the repo is invisible."""
+    monkeypatch.delenv("TASKCLUSTER_CLIENT_ID", raising=False)
+    monkeypatch.delenv("TASKCLUSTER_ACCESS_TOKEN", raising=False)
+    monkeypatch.delenv("TASKCLUSTER_CERTIFICATE", raising=False)
+    projects(example=PRIVATE_PROJECT)
     assert not await in_tree_actions.invalidates_hooks("mozilla/example", "main")
 
 
