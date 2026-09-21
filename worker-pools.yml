@@ -2124,7 +2124,7 @@ pools:
             workerType: win2022-azure
             cachesDir: C:\caches
             downloadsDir: C:\downloads
-            tasksDir: C:\tasks
+            tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: windows
@@ -2313,7 +2313,7 @@ pools:
           config:
             cachesDir: C:\caches
             downloadsDir: C:\downloads
-            tasksDir: C:\tasks
+            tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
         sourceBranch: windows
@@ -2366,7 +2366,7 @@ pools:
           config:
             cachesDir: C:\caches
             downloadsDir: C:\downloads
-            tasksDir: C:\tasks
+            tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
         sourceBranch: windows
@@ -2512,7 +2512,7 @@ pools:
                 default: D:\downloads
             tasksDir:
               by-suffix:
-                alpha: C:\tasks
+                alpha: C:\Users
                 default: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
@@ -2611,7 +2611,7 @@ pools:
                 default: D:\downloads
             tasksDir:
               by-suffix:
-                .*alpha: C:\tasks
+                .*alpha: C:\Users
                 default: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
@@ -2759,7 +2759,7 @@ pools:
                 default: D:\downloads
             tasksDir:
               by-suffix:
-                .*alpha: C:\tasks
+                .*alpha: C:\Users
                 default: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
@@ -3077,7 +3077,7 @@ pools:
                 default: D:\downloads
             tasksDir:
               by-suffix:
-                .*alpha: C:\tasks
+                .*alpha: C:\Users
                 default: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
@@ -3298,11 +3298,7 @@ pools:
                 default: D:\downloads
             tasksDir:
               by-suffix:
-                source-alpha:
-                  by-pool-group:
-                    gecko-t: C:\Users
-                    default: C:\tasks
-                .*alpha: C:\tasks
+                .*alpha: C:\Users
                 default: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
@@ -3420,7 +3416,7 @@ pools:
             provisionerId: gecko-t
             cachesDir: C:\caches
             downloadsDir: C:\downloads
-            tasksDir: C:\tasks
+            tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -3501,7 +3497,7 @@ pools:
                 default: D:\downloads
             tasksDir:
               by-suffix:
-                .*alpha: C:\tasks
+                .*alpha: C:\Users
                 default: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
