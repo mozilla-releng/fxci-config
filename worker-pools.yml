@@ -2455,7 +2455,17 @@ pools:
       armDeployment:
         by-level:
           1:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+            by-suffix:
+              alpha:
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
+                parameters:
+                  diffDiskOption: Local
+                  diffDiskPlacement: NvmeDisk
+                  osDiskCaching: ReadOnly
+                  enableFullCaching: true
+                  osDiskStorageAccountType: StandardSSD_LRS
+              default:
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
           3:
             templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
       worker-purpose:
@@ -2474,9 +2484,18 @@ pools:
                 3: false
             workerType: b-win2025-{suffix}
             provisionerId: '{pool-group}'
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
+            cachesDir:
+              by-suffix:
+                alpha: C:\caches
+                default: D:\caches
+            downloadsDir:
+              by-suffix:
+                alpha: C:\downloads
+                default: D:\downloads
+            tasksDir:
+              by-suffix:
+                alpha: C:\tasks
+                default: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2535,7 +2554,7 @@ pools:
       worker-purpose: '{pool-group}'
       locations:
         by-suffix:
-          alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
+          alpha: [central-india, east-us-2]
           source-alpha: [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
           (webgpu|gpu)(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
           default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
@@ -2554,9 +2573,18 @@ pools:
           config:
             workerType: 'win10-64-2009-{suffix}'
             provisionerId: gecko-t
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
+            cachesDir:
+              by-suffix:
+                alpha: C:\caches
+                default: D:\caches
+            downloadsDir:
+              by-suffix:
+                alpha: C:\downloads
+                default: D:\downloads
+            tasksDir:
+              by-suffix:
+                alpha: C:\tasks
+                default: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: windows
@@ -2569,7 +2597,19 @@ pools:
               ssd-gpu: Standard_NV12ads_A10_v5
               gpu-alpha: Standard_NV12ads_A10_v5
               gpu: Standard_NV12ads_A10_v5
+              alpha: Standard_D8alds_v6
               default: Standard_F8s_v2
+          armDeployment:
+            by-vmSize:
+              Standard_D8alds_v6:
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
+                parameters:
+                  diffDiskOption: Local
+                  diffDiskPlacement: NvmeDisk
+                  osDiskCaching: ReadOnly
+                  enableFullCaching: true
+                  osDiskStorageAccountType: StandardSSD_LRS
+              default: {}
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2590,6 +2630,7 @@ pools:
                   webgpu: Standard_NV12ads_A10_v5
                   gpu-alpha: Standard_NV12ads_A10_v5
                   gpu: Standard_NV12ads_A10_v5
+                  alpha: Standard_D8alds_v6
                   default: Standard_F8s_v2
             diagnosticsProfile:
               bootDiagnostics:
@@ -2598,6 +2639,10 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-vmSize:
+            Standard_D8alds_v6:
+              by-location:
+                central-india: 1
+                default: 0.5
             Standard_F8s_v2:
               by-location:
                 west-us-3: 1
@@ -3163,11 +3208,21 @@ pools:
       armDeployment:
         by-suffix:
           alpha:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
-            parameters:
-              diffDiskOption: Local
-              diffDiskPlacement: NvmeDisk
-              osDiskCaching: ReadOnly
+            by-pool-group:
+              gecko-t:
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
+                parameters:
+                  diffDiskOption: Local
+                  diffDiskPlacement: NvmeDisk
+                  osDiskCaching: ReadOnly
+                  enableFullCaching: true
+                  osDiskStorageAccountType: StandardSSD_LRS
+              default:
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+                parameters:
+                  diffDiskOption: Local
+                  diffDiskPlacement: NvmeDisk
+                  osDiskCaching: ReadOnly
           default:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       worker-config:
@@ -3180,9 +3235,27 @@ pools:
                 privileged: 1
                 privileged-alpha: 1
                 default: 0
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
+            cachesDir:
+              by-pool-group:
+                gecko-t:
+                  by-suffix:
+                    alpha: C:\caches
+                    default: D:\caches
+                default: D:\caches
+            downloadsDir:
+              by-pool-group:
+                gecko-t:
+                  by-suffix:
+                    alpha: C:\downloads
+                    default: D:\downloads
+                default: D:\downloads
+            tasksDir:
+              by-pool-group:
+                gecko-t:
+                  by-suffix:
+                    alpha: C:\tasks
+                    default: D:\
+                default: D:\
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -3200,11 +3273,15 @@ pools:
           armDeployment:
             by-vmSize:
               Standard_F8alds_v7:
-                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
-                parameters:
-                  diffDiskOption: Local
-                  diffDiskPlacement: NvmeDisk
-                  osDiskCaching: ReadOnly
+                by-pool-id:
+                  gecko-t/win11-64-25h2-alpha:
+                    templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
+                  default:
+                    templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+                    parameters:
+                      diffDiskOption: Local
+                      diffDiskPlacement: NvmeDisk
+                      osDiskCaching: ReadOnly
               default: {}
           launchConfig:
             osProfile:
