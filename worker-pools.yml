@@ -3298,6 +3298,10 @@ pools:
                 default: D:\downloads
             tasksDir:
               by-suffix:
+                source-alpha:
+                  by-pool-group:
+                    gecko-t: C:\Users
+                    default: C:\tasks
                 .*alpha: C:\tasks
                 default: D:\
       tags:
