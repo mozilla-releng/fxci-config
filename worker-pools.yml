@@ -2457,7 +2457,7 @@ pools:
           1:
             by-suffix:
               alpha:
-                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
                 parameters:
                   diffDiskOption: Local
                   diffDiskPlacement: NvmeDisk
@@ -2602,7 +2602,7 @@ pools:
           armDeployment:
             by-vmSize:
               Standard_D8alds_v6:
-                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
                 parameters:
                   diffDiskOption: Local
                   diffDiskPlacement: NvmeDisk
@@ -3210,7 +3210,7 @@ pools:
           alpha:
             by-pool-group:
               gecko-t:
-                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
                 parameters:
                   diffDiskOption: Local
                   diffDiskPlacement: NvmeDisk
@@ -3273,11 +3273,15 @@ pools:
           armDeployment:
             by-vmSize:
               Standard_F8alds_v7:
-                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
-                parameters:
-                  diffDiskOption: Local
-                  diffDiskPlacement: NvmeDisk
-                  osDiskCaching: ReadOnly
+                by-pool-id:
+                  gecko-t/win11-64-25h2-alpha:
+                    templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
+                  default:
+                    templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+                    parameters:
+                      diffDiskOption: Local
+                      diffDiskPlacement: NvmeDisk
+                      osDiskCaching: ReadOnly
               default: {}
           launchConfig:
             osProfile:
