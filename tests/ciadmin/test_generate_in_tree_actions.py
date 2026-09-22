@@ -59,8 +59,8 @@ def fake_git(monkeypatch):
     def mocker(oids_by_branch, blobs):
         calls = {"oids": [], "blobs": []}
 
-        async def get_blob_oids(repo_path):
-            calls["oids"].append(repo_path)
+        async def get_blob_oids(repo_path, missing_ok=False):
+            calls["oids"].append((repo_path, missing_ok))
             return oids_by_branch
 
         async def get_blobs(repo_path, oids):
@@ -299,7 +299,7 @@ async def test_a_github_failure_aborts_the_whole_run(projects, monkeypatch):
     """Half a picture of the hooks would delete the ones we failed to see."""
     projects(example=GIT_PROJECT)
 
-    async def get_blob_oids(repo_path):
+    async def get_blob_oids(repo_path, missing_ok=False):
         raise RuntimeError("GraphQL query failed")
 
     monkeypatch.setattr(tcyml, "get_blob_oids", get_blob_oids)
@@ -350,24 +350,10 @@ PRIVATE_PROJECT = {
 
 
 @pytest.mark.asyncio
-async def test_invalidates_hooks_covers_private_repos(projects, monkeypatch):
-    """With credentials the auth service mints a token, so the tcyml is hashed."""
-    monkeypatch.setenv("TASKCLUSTER_CLIENT_ID", "static/test")
-    monkeypatch.setenv("TASKCLUSTER_ACCESS_TOKEN", "quiet")
+async def test_invalidates_hooks_covers_private_repos(projects):
+    """A private repo is hashed like any other, so a push to it matters."""
     projects(example=PRIVATE_PROJECT)
     assert await in_tree_actions.invalidates_hooks("mozilla/example", "main")
-
-
-@pytest.mark.asyncio
-async def test_invalidates_hooks_skips_private_repos_without_credentials(
-    projects, monkeypatch
-):
-    """A pull request from a fork gets no credentials, so the repo is invisible."""
-    monkeypatch.delenv("TASKCLUSTER_CLIENT_ID", raising=False)
-    monkeypatch.delenv("TASKCLUSTER_ACCESS_TOKEN", raising=False)
-    monkeypatch.delenv("TASKCLUSTER_CERTIFICATE", raising=False)
-    projects(example=PRIVATE_PROJECT)
-    assert not await in_tree_actions.invalidates_hooks("mozilla/example", "main")
 
 
 @pytest.mark.asyncio

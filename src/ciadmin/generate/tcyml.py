@@ -3,6 +3,7 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import hashlib
+import sys
 from asyncio import Lock
 
 import aiohttp
@@ -136,13 +137,26 @@ def _only_missing_files(errors):
     )
 
 
-# TODO: support private repositories. this will most likely require querying
-# GitHub as an app.
-async def get_blob_oids(repo_path):
+def _repository_not_found(errors):
+    """Whether github answered that the repository itself is not there.
+
+    A repository the token cannot read is reported exactly like one that does
+    not exist, so this cannot tell an unreadable private repo from a typo.
+    """
+    return any(
+        error.get("type") == "NOT_FOUND" and error.get("path") == ["repository"]
+        for error in errors
+    )
+
+
+async def get_blob_oids(repo_path, missing_ok=False):
     """
     Map each branch of the github repository at `repo_path` to the git blob oid
     of its `.taskcluster.yml`, or to None where the branch doesn't have one.
-    Only supported for public GitHub repositories.
+
+    With `missing_ok`, a repository github will not show us maps to no branches
+    instead of raising. That is how an unreadable private repository arrives,
+    and the caller decides whether that is acceptable for its project.
 
     The oid is git's own hash of the file, so branches sharing a
     `.taskcluster.yml` share an oid, and the file itself only has to be
@@ -160,6 +174,15 @@ async def get_blob_oids(repo_path):
             data, errors = await github.graphql(
                 repo_path, _BLOB_OIDS_QUERY, owner=owner, name=name, after=after
             )
+            if missing_ok and _repository_not_found(errors):
+                print(
+                    f"Cannot read {repo_path}. Its action hooks are missing "
+                    "from this run.",
+                    file=sys.stderr,
+                )
+                _blob_oid_cache[repo_path] = {}
+                return {}
+
             if not _only_missing_files(errors):
                 raise RuntimeError(
                     f"Got errors listing the branches of {repo_path}: {errors}"

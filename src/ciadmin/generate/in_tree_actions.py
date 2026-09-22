@@ -17,7 +17,6 @@ from tcadmin.util.matchlist import MatchList
 from tcadmin.util.scopes import normalizeScopes
 from tcadmin.util.sessions import aiohttp_session
 
-from ciadmin.util import github
 from ciadmin.util.matching import glob_match
 
 from . import tcyml
@@ -44,11 +43,6 @@ def should_hash(project):
         # support in tree actions if we looked up the full repository
         # list matching the glob. it's probably not worth doing though.
         if "*" in project.repo:
-            return False
-        # A private repo is invisible without a token, so a run that cannot
-        # get one generates nothing for it and shows its hooks as deletions.
-        private = project.feature("github-private-repo")
-        if private and not github.can_read_private_repos():
             return False
         return True
     else:
@@ -168,11 +162,16 @@ async def _hash_project_ymls(project, hashes):
         )
 
     configured = configured_branches(project)
+    # A private repo answers as though it were not there when the auth service
+    # would not mint a token for it, which is a run that generates no hooks
+    # rather than a broken configuration.
+    private = project.feature("github-private-repo")
+    all_oids = await tcyml.get_blob_oids(project.repo_path, missing_ok=private)
     # A branch with no `.taskcluster.yml` has no oid, and needs no fetching --
     # the same case the git path used to handle as a 404.
     oids = {
         branch: oid
-        for branch, oid in (await tcyml.get_blob_oids(project.repo_path)).items()
+        for branch, oid in all_oids.items()
         if oid and glob_match(configured, branch)
     }
 
