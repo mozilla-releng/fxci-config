@@ -517,11 +517,6 @@ project/releng/generic-worker/datacenter-gecko-t-osx-1500-m-vms:
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-osx-1500-m-vms
     - queue:worker-id:mdc1/mac-*
-project/releng/generic-worker/datacenter-gecko-t-osx-1500-m-vms-rotation:
-  description: Transient client for rotating the gecko-t-osx-1500-m-vms worker credential (bug 2071005); delete once the pool is back on the canonical client.
-  scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx-1500-m-vms
-    - queue:worker-id:mdc1/mac-*
 project/releng/generic-worker/datacenter-gecko-t-osx-2600-m4-staging:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
