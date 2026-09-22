@@ -316,60 +316,20 @@ project/releng/fxci-config/fetch-firefoxci-artifacts:
 project/releng/fxci-config/generate:
   description: Used to run `tc-admin {generate|diff}` in mozilla-releng/fxci-config.
   scopes:
-    # One entry per git repository in projects.yml, because the auth service
-    # takes no wildcard between an owner and a repository. A repository added
-    # without its entry here still reads through GITHUB_TOKEN, unless it is
-    # private, in which case its hooks go missing from the diff.
-    - auth:github-repo-token:read/afranchuk/process-top-crashes:contents:read
-    - auth:github-repo-token:read/firefox-ai/firefox-prototypes:contents:read
-    - auth:github-repo-token:read/json-e/json-e:contents:read
-    - auth:github-repo-token:read/mozilla-conduit/reviewer-selector:contents:read
-    - auth:github-repo-token:read/mozilla-extensions/xpi-manifest:contents:read
-    - auth:github-repo-token:read/mozilla-firefox/firefox:contents:read
-    - auth:github-repo-token:read/mozilla-mobile/firefox-ios:contents:read
-    - auth:github-repo-token:read/mozilla-mobile/mozilla-vpn-client:contents:read
-    - auth:github-repo-token:read/mozilla-mobile/reference-browser:contents:read
-    - auth:github-repo-token:read/mozilla-mobile/staging-firefox-ios:contents:read
-    - auth:github-repo-token:read/mozilla-platform-ops/worker-images:contents:read
-    - auth:github-repo-token:read/mozilla-releng/adhoc-signing:contents:read
-    - auth:github-repo-token:read/mozilla-releng/balrog:contents:read
-    - auth:github-repo-token:read/mozilla-releng/build-mar:contents:read
-    - auth:github-repo-token:read/mozilla-releng/firefox-ci-playground-private:contents:read
-    - auth:github-repo-token:read/mozilla-releng/firefox-ci-playground:contents:read
-    - auth:github-repo-token:read/mozilla-releng/fxci-config:contents:read
-    - auth:github-repo-token:read/mozilla-releng/k8s-autoscale:contents:read
-    - auth:github-repo-token:read/mozilla-releng/mozilla-taskgraph:contents:read
-    - auth:github-repo-token:read/mozilla-releng/mozilla-version:contents:read
-    - auth:github-repo-token:read/mozilla-releng/product-details:contents:read
-    - auth:github-repo-token:read/mozilla-releng/redo:contents:read
-    - auth:github-repo-token:read/mozilla-releng/reps:contents:read
-    - auth:github-repo-token:read/mozilla-releng/scriptworker-scripts:contents:read
-    - auth:github-repo-token:read/mozilla-releng/scriptworker:contents:read
-    - auth:github-repo-token:read/mozilla-releng/shipit:contents:read
-    - auth:github-repo-token:read/mozilla-releng/simple-github:contents:read
-    - auth:github-repo-token:read/mozilla-releng/staging-adhoc-signing:contents:read
-    - auth:github-repo-token:read/mozilla-releng/staging-application-services:contents:read
-    - auth:github-repo-token:read/mozilla-releng/staging-firefox-translations-training:contents:read
-    - auth:github-repo-token:read/mozilla-releng/staging-firefox:contents:read
-    - auth:github-repo-token:read/mozilla-releng/staging-mozilla-vpn-client:contents:read
-    - auth:github-repo-token:read/mozilla-releng/staging-reference-browser:contents:read
-    - auth:github-repo-token:read/mozilla-releng/staging-xpi-manifest:contents:read
-    - auth:github-repo-token:read/mozilla-releng/staging-xpi-private:contents:read
-    - auth:github-repo-token:read/mozilla-releng/tooltool:contents:read
-    - auth:github-repo-token:read/mozilla-releng/winsign:contents:read
-    - auth:github-repo-token:read/mozilla/application-services:contents:read
-    - auth:github-repo-token:read/mozilla/code-coverage:contents:read
-    - auth:github-repo-token:read/mozilla/code-review:contents:read
-    - auth:github-repo-token:read/mozilla/crash-ping-ingest:contents:read
-    - auth:github-repo-token:read/mozilla/enterprise-firefox-try:contents:read
-    - auth:github-repo-token:read/mozilla/enterprise-firefox:contents:read
-    - auth:github-repo-token:read/mozilla/firefox-dev:contents:read
-    - auth:github-repo-token:read/mozilla/fx-desktop-qa-automation:contents:read
-    - auth:github-repo-token:read/mozilla/glean:contents:read
-    - auth:github-repo-token:read/mozilla/translations:contents:read
-    - auth:github-repo-token:read/taskcluster/staging-releases:contents:read
-    - auth:github-repo-token:read/taskcluster/taskcluster:contents:read
-    - auth:github-repo-token:read/taskcluster/taskgraph:contents:read
+    # One entry per owner in projects.yml. A repository name sits before the
+    # permission, so an owner-wide entry cannot pin `contents:read`. The app
+    # `read` has no write permission of its own to hand out.
+    - auth:github-repo-token:read/afranchuk/*
+    - auth:github-repo-token:read/firefox-ai/*
+    - auth:github-repo-token:read/json-e/*
+    - auth:github-repo-token:read/mozilla-conduit/*
+    - auth:github-repo-token:read/mozilla-extensions/*
+    - auth:github-repo-token:read/mozilla-firefox/*
+    - auth:github-repo-token:read/mozilla-mobile/*
+    - auth:github-repo-token:read/mozilla-platform-ops/*
+    - auth:github-repo-token:read/mozilla-releng/*
+    - auth:github-repo-token:read/mozilla/*
+    - auth:github-repo-token:read/taskcluster/*
     - auth:list-clients
     - hooks:list-hooks:*
 project/releng/generic-worker/azure-gecko-t-win10-64:
