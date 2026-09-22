@@ -2122,6 +2122,7 @@ pools:
         genericWorker:
           config:
             workerType: win2022-azure
+            headlessTasks: false
             cachesDir: C:\caches
             downloadsDir: C:\downloads
             tasksDir: C:\Users
