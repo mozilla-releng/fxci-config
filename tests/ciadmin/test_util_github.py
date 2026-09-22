@@ -137,16 +137,30 @@ def reset_clients():
 
 
 @pytest.fixture
-def taskcluster_credentials(monkeypatch):
-    monkeypatch.setenv("TASKCLUSTER_CLIENT_ID", "static/test")
-    monkeypatch.setenv("TASKCLUSTER_ACCESS_TOKEN", "quiet")
+def projects(mock_ciconfig_file):
+    """Stand in for projects.yml, which is where a token's repo list comes from."""
+
+    def mocker(**projects):
+        mock_ciconfig_file("projects.yml", projects)
+
+    return mocker
+
+
+def git_project(repo, **kwargs):
+    return {
+        "repo": repo,
+        "repo_type": "git",
+        "trust_domain": "foo",
+        "branches": [{"name": "main", "level": 1}],
+        "features": {"taskgraph-actions": True},
+        **kwargs,
+    }
 
 
 @pytest.fixture
-def no_taskcluster_credentials(monkeypatch):
-    monkeypatch.delenv("TASKCLUSTER_CLIENT_ID", raising=False)
-    monkeypatch.delenv("TASKCLUSTER_ACCESS_TOKEN", raising=False)
-    monkeypatch.delenv("TASKCLUSTER_CERTIFICATE", raising=False)
+def taskcluster_credentials(monkeypatch):
+    monkeypatch.setenv("TASKCLUSTER_CLIENT_ID", "static/test")
+    monkeypatch.setenv("TASKCLUSTER_ACCESS_TOKEN", "quiet")
 
 
 def token_response(token="s3cret", lifetime=timedelta(hours=1)):
@@ -162,12 +176,21 @@ def patch_auth(*responses, error=None):
 
 
 @pytest.mark.asyncio
-async def test_the_token_is_scoped_to_one_repository(taskcluster_credentials):
-    """The request names the app, the owner, the repo and the permission.
+async def test_one_token_covers_the_owners_repositories(
+    taskcluster_credentials, projects
+):
+    """The app, the owner and the permission all end up in the scope required.
 
-    All four end up in the scope the auth service demands, so a change to any
-    of them changes what has to be granted in `clients.yml`.
+    The repository list comes from projects.yml, so one call answers for every
+    repository an owner has rather than one call each.
     """
+    projects(
+        private=git_project("https://github.com/mozilla-releng/staging-xpi-private"),
+        config=git_project("https://github.com/mozilla-releng/fxci-config"),
+        elsewhere=git_project("https://github.com/mozilla/example"),
+        globbed=git_project("https://github.com/mozilla-releng/*"),
+    )
+
     with patch_auth(token_response()) as auth:
         client = await github.get_client("mozilla-releng/staging-xpi-private")
 
@@ -176,7 +199,7 @@ async def test_the_token_is_scoped_to_one_repository(taskcluster_credentials):
         "read",
         "mozilla-releng",
         {
-            "repositories": ["staging-xpi-private"],
+            "repositories": ["fxci-config", "staging-xpi-private"],
             "permissions": {"contents": "read"},
         },
     )
@@ -185,7 +208,7 @@ async def test_the_token_is_scoped_to_one_repository(taskcluster_credentials):
 @pytest.mark.asyncio
 async def test_a_live_token_is_reused(taskcluster_credentials):
     with patch_auth(token_response("first"), token_response("second")) as auth:
-        auth_source = github.RepoTokenAuth("mozilla/example")
+        auth_source = github.OwnerTokenAuth("mozilla", ["example"])
 
         assert await auth_source.get_token() == "first"
         assert await auth_source.get_token() == "first"
@@ -199,38 +222,52 @@ async def test_a_token_near_expiry_is_replaced(taskcluster_credentials):
     nearly_gone = token_response("first", github.REFRESH_MARGIN / 2)
 
     with patch_auth(nearly_gone, token_response("second")):
-        auth_source = github.RepoTokenAuth("mozilla/example")
+        auth_source = github.OwnerTokenAuth("mozilla", ["example"])
 
         assert await auth_source.get_token() == "first"
         assert await auth_source.get_token() == "second"
 
 
 @pytest.mark.asyncio
-async def test_each_repository_gets_its_own_client(taskcluster_credentials):
-    with patch_auth(token_response("one"), token_response("two")) as auth:
+async def test_one_client_per_owner(taskcluster_credentials, projects):
+    """Two repositories of one owner share a client, and so share a token."""
+    projects(
+        one=git_project("https://github.com/mozilla/one"),
+        two=git_project("https://github.com/mozilla/two"),
+        other=git_project("https://github.com/taskcluster/three"),
+    )
+
+    with patch_auth(token_response("mozilla"), token_response("taskcluster")) as auth:
         one = await github.get_client("mozilla/one")
         two = await github.get_client("mozilla/two")
-        again = await github.get_client("mozilla/one")
+        other = await github.get_client("taskcluster/three")
 
-    assert one is again
-    assert one is not two
+    assert one is two
+    assert one is not other
     assert auth.return_value.githubRepoToken.await_count == 2
 
 
 @pytest.mark.asyncio
-async def test_without_credentials_every_repo_shares_the_fallback(
-    no_taskcluster_credentials, capsys
+async def test_every_owner_that_falls_back_shares_one_client(
+    taskcluster_credentials, projects, capsys
 ):
-    """A pull request from a fork gets no Taskcluster credentials at all."""
-    with patch("ciadmin.util.github.client_from_env") as client_from_env:
-        one = await github.get_client("mozilla/one")
-        two = await github.get_client("mozilla/two")
+    """A pull request from a fork reaches no owner's token, and still runs."""
+    projects(
+        one=git_project("https://github.com/mozilla/one"),
+        two=git_project("https://github.com/taskcluster/two"),
+    )
+    refusal = TaskclusterFailure("no scopes here")
+
+    with patch_auth(error=refusal):
+        with patch("ciadmin.util.github.client_from_env") as client_from_env:
+            one = await github.get_client("mozilla/one")
+            two = await github.get_client("taskcluster/two")
 
     assert one is two
     client_from_env.assert_called_once_with("mozilla-releng", ["fxci-config"])
 
-    # Said once, not once per repository.
-    assert capsys.readouterr().err.count("No Taskcluster credentials") == 1
+    # One line per owner, not one per repository.
+    assert capsys.readouterr().err.count("falling back") == 2
 
 
 @pytest.mark.asyncio
@@ -254,10 +291,15 @@ async def test_a_refused_token_falls_back_and_says_so(taskcluster_credentials, c
 
 
 @pytest.mark.asyncio
-async def test_close_clients_closes_each_one_once(taskcluster_credentials):
+async def test_close_clients_closes_each_one_once(taskcluster_credentials, projects):
+    projects(
+        one=git_project("https://github.com/mozilla/one"),
+        other=git_project("https://github.com/taskcluster/two"),
+    )
+
     with patch_auth(token_response("one"), token_response("two")):
         one = await github.get_client("mozilla/one")
-        two = await github.get_client("mozilla/two")
+        two = await github.get_client("taskcluster/two")
 
     one.close = AsyncMock()
     two.close = AsyncMock()
