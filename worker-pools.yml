@@ -2123,6 +2123,7 @@ pools:
           config:
             workerType: win2022-azure
             headlessTasks: false
+            disableReboots: false
             cachesDir: C:\caches
             downloadsDir: C:\downloads
             tasksDir: C:\Users
