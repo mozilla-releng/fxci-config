@@ -13,6 +13,8 @@ from taskcluster import optionsFromEnvironment
 from taskcluster.exceptions import TaskclusterFailure
 from tcadmin.util.sessions import aiohttp_session
 
+from ciadmin.generate.ciconfig.projects import Project
+
 # The read-only GitHub app the auth service mints tokens for. It is installed
 # on the repositories fxci-config manages, which is what makes the private
 # ones readable at all.
@@ -30,24 +32,26 @@ _client_locks = {}
 
 # Every fallback client would be built from the same environment, so one
 # answers for all of them. A token client cannot be shared that way, since its
-# token is minted for a single repository.
+# token names the repositories of a single owner.
 _fallback_client: AsyncClient | None = None
 _fallback_lock = asyncio.Lock()
 
 _warned = set()
 
 
-class RepoTokenAuth(Auth):
-    """Credentials for one repository, minted by Taskcluster's auth service.
+class OwnerTokenAuth(Auth):
+    """Credentials for one owner's repositories, from Taskcluster's auth service.
 
-    The token covers `repo_path` alone, and github expires it after an hour
-    with no way to extend it. `simple_github` asks for the token on every
+    A single token covers every repository named in `repositories`, so an owner
+    costs one call rather than one per repository. Github expires it after an
+    hour with no way to extend it. `simple_github` asks for the token on every
     request and rebuilds its session whenever the value changes, so replacing
     an expired one here needs nothing from the caller.
     """
 
-    def __init__(self, repo_path):
-        self._owner, self._name = repo_path.split("/")
+    def __init__(self, owner, repositories):
+        self._owner = owner
+        self._repositories = repositories
         self._token = None
         self._expires = datetime.min.replace(tzinfo=UTC)
         self._lock = asyncio.Lock()
@@ -61,7 +65,10 @@ class RepoTokenAuth(Auth):
                 response = await auth.githubRepoToken(
                     GITHUB_APP,
                     self._owner,
-                    {"repositories": [self._name], "permissions": PERMISSIONS},
+                    {
+                        "repositories": self._repositories,
+                        "permissions": PERMISSIONS,
+                    },
                 )
                 self._token = response["token"]
                 self._expires = datetime.fromisoformat(response["expires"])
@@ -97,33 +104,35 @@ async def _get_fallback_client():
     return _fallback_client
 
 
-def can_read_private_repos():
-    """Whether this run can ask the auth service for a repository token.
+async def _owner_repositories(owner):
+    """Every github repository `owner` has in projects.yml.
 
-    Without Taskcluster credentials there is no token, and github answers for
-    a private repository as though it did not exist. A pull request from a
-    fork is the usual case, since github withholds every secret from those.
+    A token names the repositories it covers, and a repository left out of the
+    list is one the token cannot read. Globbed entries name no repository, so
+    they are dropped.
     """
-    return "credentials" in optionsFromEnvironment()
+    projects = await Project.fetch_all()
+    return sorted(
+        {
+            project.repo_path.split("/", 1)[1].lower()
+            for project in projects
+            if project.repo_type == "git"
+            and "*" not in project.repo
+            and project.repo_path.split("/", 1)[0].lower() == owner
+        }
+    )
 
 
-async def _build_client(repo_path):
-    if not can_read_private_repos():
-        _warn_once(
-            "No Taskcluster credentials in the environment; private "
-            "repositories will not be readable."
-        )
-        return await _get_fallback_client()
-
-    auth = RepoTokenAuth(repo_path)
+async def _build_client(owner):
+    auth = OwnerTokenAuth(owner, await _owner_repositories(owner))
     try:
         # Fetched here rather than on first use, so that a refusal picks the
         # fallback instead of failing whichever request happens to be first.
         await auth.get_token()
     except TaskclusterFailure as e:
         _warn_once(
-            f"Could not get a github token for {repo_path} from the auth "
-            f"service, falling back to the environment: {e}"
+            f"Could not get a github token for {owner} from the auth service, "
+            f"falling back to the environment: {e}"
         )
         return await _get_fallback_client()
 
@@ -133,23 +142,25 @@ async def _build_client(repo_path):
 async def get_client(repo_path):
     """Get a GitHub client that can reach the repository at `repo_path`.
 
-    `repo_path` is `owner/name`. Each repository gets its own client, because
-    the token behind it is minted for that repository alone.
+    `repo_path` is `owner/name`. One client serves each owner, since a single
+    token covers every repository that owner has in projects.yml.
     """
-    async with _client_locks.setdefault(repo_path, asyncio.Lock()):
-        if repo_path not in _clients:
-            _clients[repo_path] = await _build_client(repo_path)
+    owner = repo_path.split("/", 1)[0].lower()
 
-    return _clients[repo_path]
+    async with _client_locks.setdefault(owner, asyncio.Lock()):
+        if owner not in _clients:
+            _clients[owner] = await _build_client(owner)
+
+    return _clients[owner]
 
 
 async def close_clients():
     """Cleanup every client this module has handed out."""
     global _fallback_client
 
-    for repo_path in list(_clients):
-        async with _client_locks[repo_path]:
-            client = _clients.pop(repo_path)
+    for owner in list(_clients):
+        async with _client_locks[owner]:
+            client = _clients.pop(owner)
             if client is not _fallback_client:
                 await client.close()
 
