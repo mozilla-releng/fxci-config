@@ -316,6 +316,13 @@ project/releng/fxci-config/fetch-firefoxci-artifacts:
 project/releng/fxci-config/generate:
   description: Used to run `tc-admin {generate|diff}` in mozilla-releng/fxci-config.
   scopes:
+    - auth:list-clients
+    - hooks:list-hooks:*
+project/releng/fxci-config/generate-trusted:
+  description: Used to run `tc-admin {generate|diff}` in mozilla-releng/fxci-config
+    where the source is trusted. Reads private repositories, so it must not be
+    reachable from a pull request by anyone outside the repository.
+  scopes:
     # One entry per owner in projects.yml. A repository name sits before the
     # permission, so an owner-wide entry cannot pin `contents:read`. The app
     # `read` has no write permission of its own to hand out.
