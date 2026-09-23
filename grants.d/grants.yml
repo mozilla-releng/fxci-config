@@ -538,6 +538,16 @@
         feature: [gecko-roles, gecko-actions]
         level: [1, 2, 3]
 
+- grant:
+    # Allow the change-priority action to change priorities
+    - queue:change-task-group-priority:{trust_domain}-level-{level}
+    - queue:change-task-group-priority:{trust_domain}-level-{level}
+  to:
+    - projects:
+        job: [action:change-priority]
+        feature: [gecko-roles, gecko-actions]
+        level: [1, 2, 3]
+
 ##
 # project-specific scopes (for esr's to hang onto their old scopes)
 
@@ -1643,6 +1653,10 @@
     - queue:change-task-priority-in-queue:releng-hardware/win11-64-25h2-hw/mdc1/*
     - queue:change-task-priority-in-queue:releng-hardware/win11-64-25h2-hw-ref/mdc1/*
     - queue:change-task-priority-in-queue:mobile-*
+    - hooks:trigger-hook:project-gecko/in-tree-action-1-change-priority/*
+    - hooks:trigger-hook:project-gecko/in-tree-action-3-change-priority/*
+    - hooks:trigger-hook:project-mobile/in-tree-action-1-change-priority/*
+    - hooks:trigger-hook:project-mobile/in-tree-action-3-change-priority/*
   to:
     - groups:
         - perf_sheriff
