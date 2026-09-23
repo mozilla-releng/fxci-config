@@ -2222,9 +2222,21 @@ pools:
       armDeployment:
         by-chain-of-trust:
           trusted:
-            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: ResourceDisk
+              osDiskCaching: ReadOnly
+              enableFullCaching: true
+              osDiskStorageAccountType: StandardSSD_LRS
           default:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: ResourceDisk
+              osDiskCaching: ReadOnly
+              enableFullCaching: true
+              osDiskStorageAccountType: StandardSSD_LRS
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
@@ -2239,9 +2251,9 @@ pools:
               by-chain-of-trust:
                 trusted: false
                 default: true
-            cachesDir: D:\caches
-            downloadsDir: D:\downloads
-            tasksDir: D:\
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
         sourceBranch: windows
@@ -2485,9 +2497,21 @@ pools:
                   enableFullCaching: true
                   osDiskStorageAccountType: StandardSSD_LRS
               default:
-                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
+                parameters:
+                  diffDiskOption: Local
+                  diffDiskPlacement: NvmeDisk
+                  osDiskCaching: ReadOnly
+                  enableFullCaching: true
+                  osDiskStorageAccountType: StandardSSD_LRS
           3:
-            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
+            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: NvmeDisk
+              osDiskCaching: ReadOnly
+              enableFullCaching: true
+              osDiskStorageAccountType: StandardSSD_LRS
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
@@ -2504,18 +2528,9 @@ pools:
                 3: false
             workerType: b-win2025-{suffix}
             provisionerId: '{pool-group}'
-            cachesDir:
-              by-suffix:
-                alpha: C:\caches
-                default: D:\caches
-            downloadsDir:
-              by-suffix:
-                alpha: C:\downloads
-                default: D:\downloads
-            tasksDir:
-              by-suffix:
-                alpha: C:\Users
-                default: D:\
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2577,7 +2592,7 @@ pools:
           alpha: [central-india, east-us-2]
           source-alpha: [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
           (webgpu|gpu)(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
-          default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, north-europe, south-india]
+          default: [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us, north-europe]
       maxCapacity:
         by-pool-group:
           enterprise-t: 200
@@ -2597,24 +2612,21 @@ pools:
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
           default:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: ResourceDisk
+              osDiskCaching: ReadOnly
+              enableFullCaching: true
+              osDiskStorageAccountType: StandardSSD_LRS
       worker-config:
         genericWorker:
           config:
             workerType: 'win10-64-2009-{suffix}'
             provisionerId: gecko-t
-            cachesDir:
-              by-suffix:
-                .*alpha: C:\caches
-                default: D:\caches
-            downloadsDir:
-              by-suffix:
-                .*alpha: C:\downloads
-                default: D:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\Users
-                default: D:\
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: windows
@@ -2625,10 +2637,8 @@ pools:
         - vmSize:
             by-suffix:
               ssd-gpu: Standard_NV12ads_A10_v5
-              (webgpu|gpu)-alpha: Standard_NV12ads_A10_v5
-              gpu: Standard_NV12ads_A10_v5
-              (source-)?alpha: Standard_D8alds_v6
-              default: Standard_F8s_v2
+              (webgpu|gpu)(-alpha)?: Standard_NV12ads_A10_v5
+              default: Standard_D8alds_v6
           armDeployment:
             by-vmSize:
               Standard_D8alds_v6:
@@ -2655,8 +2665,7 @@ pools:
                   webgpu: Standard_NV12ads_A10_v5
                   gpu-alpha: Standard_NV12ads_A10_v5
                   gpu: Standard_NV12ads_A10_v5
-                  (source-)?alpha: Standard_D8alds_v6
-                  default: Standard_F8s_v2
+                  default: Standard_D8alds_v6
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2668,20 +2677,6 @@ pools:
               by-location:
                 central-india: 1
                 default: 0.5
-            Standard_F8s_v2:
-              by-location:
-                west-us-3: 1
-                north-central-us: 0.95
-                central-india: 0.95
-                west-us: 0.8
-                south-india: 0.8
-                central-us: 0.5
-                east-us: 0.5
-                north-europe: 0.4
-                canada-central: 0.3
-                west-us-2: 0.3
-                east-us-2: 0.1
-                default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
                 west-us-3: 1
@@ -2751,18 +2746,9 @@ pools:
                 3: false
             workerType: win11-a64-25h2-builder-{suffix}
             provisionerId: '{pool-group}'
-            cachesDir:
-              by-suffix:
-                .*alpha: C:\caches
-                default: D:\caches
-            downloadsDir:
-              by-suffix:
-                .*alpha: C:\downloads
-                default: D:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\Users
-                default: D:\
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2782,9 +2768,21 @@ pools:
                   enableFullCaching: true
                   osDiskStorageAccountType: StandardSSD_LRS
               default:
-                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
+                parameters:
+                  diffDiskOption: Local
+                  diffDiskPlacement: ResourceDisk
+                  osDiskCaching: ReadOnly
+                  enableFullCaching: true
+                  osDiskStorageAccountType: StandardSSD_LRS
           3:
-            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+            templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: ResourceDisk
+              osDiskCaching: ReadOnly
+              enableFullCaching: true
+              osDiskStorageAccountType: StandardSSD_LRS
       vmSizes:
         - vmSize: Standard_D16pds_v5
           launchConfig:
@@ -3058,7 +3056,13 @@ pools:
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
           default:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: ResourceDisk
+              osDiskCaching: ReadOnly
+              enableFullCaching: true
+              osDiskStorageAccountType: StandardSSD_LRS
       worker-config:
         genericWorker:
           config:
@@ -3069,18 +3073,9 @@ pools:
                 privileged: 1
                 privileged-alpha: 1
                 default: 0
-            cachesDir:
-              by-suffix:
-                .*alpha: C:\caches
-                default: D:\caches
-            downloadsDir:
-              by-suffix:
-                .*alpha: C:\downloads
-                default: D:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\Users
-                default: D:\
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: windows
@@ -3098,7 +3093,7 @@ pools:
               gpu-alpha: Standard_NV12s_v3
               ssd-gpu: Standard_NV12s_v3
               gpu: Standard_NV12s_v3
-              default: Standard_F8s_v2
+              default: Standard_D8ads_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -3123,7 +3118,7 @@ pools:
                   gpu-alpha: Standard_NV12s_v3
                   ssd-gpu: Standard_NV12s_v3
                   gpu: Standard_NV12s_v3
-                  default: Standard_F8s_v2
+                  default: Standard_D8ads_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -3279,7 +3274,13 @@ pools:
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
           default:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: ResourceDisk
+              osDiskCaching: ReadOnly
+              enableFullCaching: true
+              osDiskStorageAccountType: StandardSSD_LRS
       worker-config:
         genericWorker:
           config:
@@ -3290,18 +3291,9 @@ pools:
                 privileged: 1
                 privileged-alpha: 1
                 default: 0
-            cachesDir:
-              by-suffix:
-                .*alpha: C:\caches
-                default: D:\caches
-            downloadsDir:
-              by-suffix:
-                .*alpha: C:\downloads
-                default: D:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\Users
-                default: D:\
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -3318,16 +3310,8 @@ pools:
           armDeployment:
             by-vmSize:
               Standard_F8alds_v7:
-                by-pool-id:
-                  .*/win11-64-25h2-.*alpha:
-                    parameters:
-                      diffDiskPlacement: NvmeDisk
-                  default:
-                    templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.0
-                    parameters:
-                      diffDiskOption: Local
-                      diffDiskPlacement: NvmeDisk
-                      osDiskCaching: ReadOnly
+                parameters:
+                  diffDiskPlacement: NvmeDisk
               default: {}
           launchConfig:
             osProfile:
@@ -3489,18 +3473,9 @@ pools:
           config:
             workerType: 'win11-a64-25h2-{suffix}'
             provisionerId: '{pool-group}'
-            cachesDir:
-              by-suffix:
-                .*alpha: C:\caches
-                default: D:\caches
-            downloadsDir:
-              by-suffix:
-                .*alpha: C:\downloads
-                default: D:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\Users
-                default: D:\
+            cachesDir: C:\caches
+            downloadsDir: C:\downloads
+            tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -3518,7 +3493,13 @@ pools:
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
           default:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: ResourceDisk
+              osDiskCaching: ReadOnly
+              enableFullCaching: true
+              osDiskStorageAccountType: StandardSSD_LRS
       vmSizes:
         - vmSize: Standard_D8pds_v5
           launchConfig:
