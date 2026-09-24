@@ -517,15 +517,15 @@ project/releng/generic-worker/datacenter-gecko-t-osx-1500-m-vms:
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-osx-1500-m-vms
     - queue:worker-id:mdc1/mac-*
-project/releng/generic-worker/datacenter-gecko-t-osx-2600-m4-staging:
+project/releng/generic-worker/datacenter-gecko-t-osx-2700-m4-staging:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx-2600-m4-staging
+    - assume:worker-type:releng-hardware/gecko-t-osx-2700-m4-staging
     - queue:worker-id:mdc1/macmini-m4-*
-project/releng/generic-worker/datacenter-gecko-t-osx-2600-m4:
+project/releng/generic-worker/datacenter-gecko-t-osx-2700-m4:
   description: Datacenter MacOS dedicated developer and automation worker.
   scopes:
-    - assume:worker-type:releng-hardware/gecko-t-osx-2600-m4
+    - assume:worker-type:releng-hardware/gecko-t-osx-2700-m4
     - queue:worker-id:mdc1/macmini-m4-*
 project/releng/generic-worker/win11-64-24h2-hw-perf-sheriff:
   description: Tracking metric variability with performance sheriffing. Tracking in RELOPS-1288.
