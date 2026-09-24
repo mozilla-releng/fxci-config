@@ -366,6 +366,75 @@ def test_generate_pool_variants_resolves_scaling_ratio(environment):
     }
 
 
+def test_generate_pool_variants_resolves_os_disk_placement(environment):
+    pool = WorkerPool(
+        pool_id="{pool-group}/test-{suffix}",
+        description="",
+        owner="user@example.com",
+        provider_id="azure",
+        email_on_error=False,
+        attributes={"suffix": ""},
+        variants=[
+            {"pool-group": "gecko-1"},
+            {"pool-group": "gecko-1", "suffix": "alpha"},
+        ],
+        config={
+            "vmSizes": [
+                {
+                    "vmSize": {
+                        "by-suffix": {
+                            ".*alpha": "Standard_D16pds_v6",
+                            "default": "Standard_D16pds_v5",
+                        }
+                    },
+                    "launchConfig": {
+                        "hardwareProfile": {
+                            "vmSize": {
+                                "by-suffix": {
+                                    ".*alpha": "Standard_D16pds_v6",
+                                    "default": "Standard_D16pds_v5",
+                                }
+                            }
+                        },
+                        "storageProfile": {
+                            "osDisk": {
+                                "diffDiskSettings": {
+                                    "placement": {
+                                        "by-suffix": {
+                                            ".*alpha": "NvmeDisk",
+                                            "default": "ResourceDisk",
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                    },
+                }
+            ]
+        },
+    )
+
+    variants = {
+        variant.pool_id: variant.config["vmSizes"][0]
+        for variant in generate_pool_variants([pool], environment.name)
+    }
+
+    assert variants["gecko-1/test"]["vmSize"] == "Standard_D16pds_v5"
+    assert (
+        variants["gecko-1/test"]["launchConfig"]["storageProfile"]["osDisk"][
+            "diffDiskSettings"
+        ]["placement"]
+        == "ResourceDisk"
+    )
+    assert variants["gecko-1/test-alpha"]["vmSize"] == "Standard_D16pds_v6"
+    assert (
+        variants["gecko-1/test-alpha"]["launchConfig"]["storageProfile"]["osDisk"][
+            "diffDiskSettings"
+        ]["placement"]
+        == "NvmeDisk"
+    )
+
+
 def test_generate_pool_variants_resolves_machine_type(environment):
     pool = WorkerPool(
         pool_id="{pool-group}/bot",

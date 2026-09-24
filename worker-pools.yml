@@ -2114,7 +2114,7 @@ pools:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
         parameters:
           diffDiskOption: Local
-          diffDiskPlacement: ResourceDisk
+          diffDiskPlacement: NvmeDisk
           osDiskCaching: ReadOnly
           enableFullCaching: true
           osDiskStorageAccountType: StandardSSD_LRS
@@ -2134,7 +2134,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_D96ads_v5
+        - vmSize: Standard_D96ads_v7
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2147,13 +2147,17 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
+                  placement: NvmeDisk
             hardwareProfile:
-              vmSize: Standard_D96ads_v5
+              vmSize: Standard_D96ads_v7
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
       worker-manager-config:
         capacityPerInstance: 1
+        initialWeight:
+          by-location:
+            central-india: 1
   - pool_id: '{pool-group}/b-win2022-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2318,7 +2322,7 @@ pools:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
         parameters:
           diffDiskOption: Local
-          diffDiskPlacement: ResourceDisk
+          diffDiskPlacement: NvmeDisk
           osDiskCaching: ReadOnly
           enableFullCaching: true
           osDiskStorageAccountType: StandardSSD_LRS
@@ -2335,7 +2339,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_D32ads_v5
+        - vmSize: Standard_D32ads_v7
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2348,13 +2352,19 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
+                  placement: NvmeDisk
             hardwareProfile:
-              vmSize: Standard_D32ads_v5
+              vmSize: Standard_D32ads_v7
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
       worker-manager-config:
         capacityPerInstance: 1
+        initialWeight:
+          by-location:
+            central-india: 1
+            central-us: 0.9
+            north-central-us: 0.8
   - pool_id: mozillavpn-1/b-win2022-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2371,7 +2381,7 @@ pools:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
         parameters:
           diffDiskOption: Local
-          diffDiskPlacement: ResourceDisk
+          diffDiskPlacement: NvmeDisk
           osDiskCaching: ReadOnly
           enableFullCaching: true
           osDiskStorageAccountType: StandardSSD_LRS
@@ -2388,7 +2398,7 @@ pools:
         sourceOrganisation: mozilla-platform-ops
       spot: true
       vmSizes:
-        - vmSize: Standard_D32ads_v5
+        - vmSize: Standard_D32ads_v7
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2401,13 +2411,19 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
+                  placement: NvmeDisk
             hardwareProfile:
-              vmSize: Standard_D32ads_v5
+              vmSize: Standard_D32ads_v7
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
       worker-manager-config:
         capacityPerInstance: 1
+        initialWeight:
+          by-location:
+            central-india: 1
+            central-us: 0.9
+            north-central-us: 0.8
   # Windows Server 2025
   - pool_id: '{pool-group}/b-win2025-{suffix}'
     description: ''
@@ -2763,7 +2779,7 @@ pools:
                 templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
                 parameters:
                   diffDiskOption: Local
-                  diffDiskPlacement: ResourceDisk
+                  diffDiskPlacement: NvmeDisk
                   osDiskCaching: ReadOnly
                   enableFullCaching: true
                   osDiskStorageAccountType: StandardSSD_LRS
@@ -2784,7 +2800,10 @@ pools:
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
       vmSizes:
-        - vmSize: Standard_D16pds_v5
+        - vmSize:
+            by-suffix:
+              .*alpha: Standard_D16pds_v6
+              default: Standard_D16pds_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2797,8 +2816,15 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
+                  placement:
+                    by-suffix:
+                      .*alpha: NvmeDisk
+                      default: ResourceDisk
             hardwareProfile:
-              vmSize: Standard_D16pds_v5
+              vmSize:
+                by-suffix:
+                  .*alpha: Standard_D16pds_v6
+                  default: Standard_D16pds_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2807,6 +2833,13 @@ pools:
         initialWeight:
           by-vmSize:
             Standard_D16pds_v5:
+              by-location:
+                central-india: 1
+                east-us-2: 0.9
+                north-central-us: 0.9
+                central-us: 0.8
+                default: 0.5
+            Standard_D16pds_v6:
               by-location:
                 central-india: 1
                 east-us-2: 0.9
@@ -3462,7 +3495,10 @@ pools:
       image: win11a6425h2tester{suffix}
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
-      locations: [central-india, east-us-2, north-central-us, central-us, uk-south]
+      locations:
+        by-suffix:
+          .*alpha: [central-india, east-us-2, north-central-us, uk-south, central-us]
+          default: [central-india, east-us-2, north-central-us, central-us, uk-south]
       maxCapacity:
         by-pool-group:
           gecko-t: 500
@@ -3488,7 +3524,7 @@ pools:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
             parameters:
               diffDiskOption: Local
-              diffDiskPlacement: ResourceDisk
+              diffDiskPlacement: NvmeDisk
               osDiskCaching: ReadOnly
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
@@ -3501,7 +3537,10 @@ pools:
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
       vmSizes:
-        - vmSize: Standard_D8pds_v5
+        - vmSize:
+            by-suffix:
+              .*alpha: Standard_D8pds_v6
+              default: Standard_D8pds_v5
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -3514,8 +3553,15 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
+                  placement:
+                    by-suffix:
+                      .*alpha: NvmeDisk
+                      default: ResourceDisk
             hardwareProfile:
-              vmSize: Standard_D8pds_v5
+              vmSize:
+                by-suffix:
+                  .*alpha: Standard_D8pds_v6
+                  default: Standard_D8pds_v5
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -3530,6 +3576,14 @@ pools:
                 east-us-2: 0.8
                 north-central-us: 0.7
                 central-us: 0.6
+                default: 0.5
+            Standard_D8pds_v6:
+              by-location:
+                central-india: 1
+                east-us-2: 0.9
+                north-central-us: 0.9
+                uk-south: 0.8
+                central-us: 0.7
                 default: 0.5
             default: 1
   - pool_id: '{pool-group}/t-linux-{suffix}'
