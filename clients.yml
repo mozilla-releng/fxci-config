@@ -1230,46 +1230,16 @@ project/releng/scriptworker/v2/signing/prod/firefoxci-xpi-t:
     - queue:claim-work:scriptworker-k8s/xpi-t-signing
     - queue:get-artifact:xpi/*
     - queue:worker-id:xpi-t-signing/xpi-t-signing-*
-project/releng/scriptworker/v2/tree/dev/firefoxci-comm-1:
-  description: ''
-  scopes:
-    - queue:claim-work:scriptworker-k8s/comm-1-tree-dev
-    - queue:worker-id:comm-1-tree-dev/comm-1-tree-dev-*
-project/releng/scriptworker/v2/tree/dev/firefoxci-gecko-1:
-  description: ''
-  scopes:
-    - queue:claim-work:scriptworker-k8s/gecko-1-tree-dev
-    - queue:worker-id:gecko-1-tree-dev/gecko-1-tree-dev-*
 project/releng/scriptworker/v2/tree/dev/firefoxci-mobile-1:
   description: ''
   scopes:
     - queue:claim-work:scriptworker-k8s/mobile-1-tree-dev
     - queue:worker-id:mobile-1-tree-dev/mobile-1-tree-dev-*
-project/releng/scriptworker/v2/tree/prod/firefoxci-comm-1:
-  description: ''
-  scopes:
-    - queue:claim-work:scriptworker-k8s/comm-1-tree
-    - queue:worker-id:comm-1-tree/comm-1-tree-*
-project/releng/scriptworker/v2/tree/prod/firefoxci-comm-3:
-  description: ''
-  scopes:
-    - queue:claim-work:scriptworker-k8s/comm-3-tree
-    - queue:worker-id:comm-3-tree/comm-3-tree-*
-project/releng/scriptworker/v2/tree/prod/firefoxci-gecko-1:
-  description: ''
-  scopes:
-    - queue:claim-work:scriptworker-k8s/gecko-1-tree
-    - queue:worker-id:gecko-1-tree/gecko-1-tree-*
 project/releng/scriptworker/v2/tree/prod/firefoxci-mobile-1:
   description: ''
   scopes:
     - queue:claim-work:scriptworker-k8s/mobile-1-tree
     - queue:worker-id:mobile-1-tree/mobile-1-tree-*
-project/releng/scriptworker/v2/tree/prod/firefoxci-gecko-3:
-  description: ''
-  scopes:
-    - queue:claim-work:scriptworker-k8s/gecko-3-tree
-    - queue:worker-id:gecko-3-tree/gecko-3-tree-*
 project/releng/scriptworker/v2/tree/prod/firefoxci-mobile-3:
   description: ''
   scopes:
