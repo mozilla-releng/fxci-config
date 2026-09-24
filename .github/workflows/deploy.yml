@@ -6,13 +6,6 @@ on:  # yamllint disable-line rule:truthy
   pull_request:
     branches: ["main"]
   workflow_dispatch: {}
-  workflow_call:
-    inputs:
-      trigger_reason:
-        description: "Human-readable note describing what triggered this deploy."
-        type: string
-        required: false
-        default: ""
 
 permissions:
   contents: read
@@ -149,7 +142,7 @@ jobs:
           exit "${exit_code}"
 
   apply:
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     needs: [generate, check]
     environment: apply-${{matrix.environment}}
@@ -189,7 +182,7 @@ jobs:
         run: uv run tc-admin apply --environment ${{matrix.environment}} --generated "$FXCI_CONFIG_CACHE"
 
   notify:
-    if: always() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
+    if: always() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     needs: [check, apply]
     steps:
@@ -197,8 +190,7 @@ jobs:
         if: always()
         env:
           # All dynamic values arrive as env vars, never interpolated into the
-          # script body -- so nothing (notably TRIGGER_REASON) can inject shell.
-          TRIGGER_REASON: ${{ inputs.trigger_reason }}
+          # script body, so none of them can inject shell.
           REPO: ${{ github.repository }}
           SHA: ${{ github.sha }}
           RUN_ID: ${{ github.run_id }}
@@ -225,14 +217,13 @@ jobs:
           LINK_TEXT="<https://github.com/${REPO}/actions/runs/${RUN_ID}|View Workflow>"
 
           # Build the payload with jq so every value is JSON-escaped; the status
-          # lines (and optional reason) are joined with newlines inside jq.
+          # lines are joined with newlines inside jq.
           SLACK_MESSAGE=$(jq -n \
             --arg resolved "$RESOLVED_TEXT" \
             --arg check "$CHECK_LINE" \
             --arg apply "$APPLY_LINE" \
-            --arg reason "$TRIGGER_REASON" \
             --arg link "$LINK_TEXT" \
-            '($check + "\n" + $apply + (if $reason != "" then "\n" + $reason else "" end)) as $status
+            '($check + "\n" + $apply) as $status
              | {blocks: [
                  {type: "section", text: {type: "mrkdwn", text: $resolved}},
                  {type: "divider"},
