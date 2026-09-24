@@ -61,7 +61,7 @@ relsre-gw-fxci-gcp-2404-amd64-gui-alpha:
 ubuntu-2404-wayland:
   ## Bug 1902716
   ## 2404 ubuntu image with wayland
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2026-09-09
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2026-09-23
 
 relsre-gw-fxci-gcp-2404-amd64-alpha:
   ## alpha pool that relsre can use to rebuild and test 2404 ubuntu images
@@ -74,8 +74,8 @@ ubuntu-2404-headless-alpha:
 
 ubuntu-2404-headless:
   ## Headless Image for Ubuntu 24.04
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2026-09-09
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-amd64-headless-googlecompute-2026-09-09
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2026-09-23
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-amd64-headless-googlecompute-2026-09-23
 
 ubuntu-2404-headless-alpha-tc:
   ## alpha pool that tc can use to rebuild and test 2404 headless ubuntu images
@@ -87,8 +87,8 @@ ubuntu-2404-arm64-headless-alpha:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-arm64-headless-googlecompute-alpha
 ubuntu-2404-arm64-headless:
   ## Headless Image for Ubuntu 24.04 arm64
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2026-09-09
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-arm64-headless-googlecompute-2026-09-09
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2026-09-23
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-arm64-headless-googlecompute-2026-09-23
 
 # Windows Server 2022
 ronin_b1_windows2022_64_2009_alpha:
@@ -99,15 +99,15 @@ ronin_b1_windows2022_64_2009_alpha:
     name: win2022_64_2009_alpha
 ronin_b1_windows2022_64_2009:
   azure2:
-    version: 1.3.9
+    version: 1.3.10
     resource_group: rg-packer-worker-images
-    deployment_id: f5e3f54
+    deployment_id: 084c19f
     name: win2022_64_2009
 ronin_b3_windows2022_64_2009:
   azure_trusted:
-    version: 1.3.9
+    version: 1.3.10
     resource_group: rg-packer-worker-images
-    deployment_id: f5e3f54
+    deployment_id: 084c19f
     name: trusted_win2022_64_2009
 # Windows Server 2025
 ronin_b1_windows2025_64_24h2_alpha:
@@ -118,22 +118,22 @@ ronin_b1_windows2025_64_24h2_alpha:
     name: win2025_64_24h2_alpha
 ronin_b1_windows2025_64_24h2:
   azure2:
-    version: 1.0.2
+    version: 1.0.3
     resource_group: rg-packer-worker-images
-    deployment_id: f5e3f54
+    deployment_id: 084c19f
     name: win2025_64_24h2
 ronin_b3_windows2025_64_24h2:
   azure_trusted:
-    version: 1.0.2
+    version: 1.0.3
     resource_group: rg-packer-worker-images
-    deployment_id: f5e3f54
+    deployment_id: 084c19f
     name: trusted_win2025_64_24h2
 # Windows 10
 ronin_t_windows10_64_2009_prod:
   azure2:
-    version: 1.4.0
+    version: 1.4.1
     resource_group: rg-packer-worker-images
-    deployment_id: f5e3f54
+    deployment_id: 084c19f
     name: win10_64_2009
 ronin_t_windows10_64_2009_alpha:
   azure2:
@@ -144,9 +144,9 @@ ronin_t_windows10_64_2009_alpha:
 # Windows 11
 win11a6425h2builder:
   azure2:
-    version: 1.0.9
+    version: 1.0.10
     resource_group: rg-packer-worker-images
-    deployment_id: f5e3f54
+    deployment_id: 084c19f
     name: win11_a64_25h2_builder
 win11a6425h2builderalpha:
   azure2:
@@ -156,15 +156,15 @@ win11a6425h2builderalpha:
     name: win11_a64_25h2_builder_alpha
 trusted_win11_a64_25h2_builder:
   azure_trusted:
-    version: 1.0.9
+    version: 1.0.10
     resource_group: rg-packer-worker-images
-    deployment_id: f5e3f54
+    deployment_id: 084c19f
     name: trusted_win11_a64_25h2_builder
 win11a6425h2tester:
   azure2:
-    version: 1.0.9
+    version: 1.0.10
     resource_group: rg-packer-worker-images
-    deployment_id: f5e3f54
+    deployment_id: 084c19f
     name: win11_a64_25h2_tester
 win11a6425h2testeralpha:
   azure2:
@@ -174,9 +174,9 @@ win11a6425h2testeralpha:
     name: win11_a64_25h2_tester_alpha
 ronin_t_windows11_64_24h2:
   azure2:
-    version: 1.3.9
+    version: 1.3.10
     resource_group: rg-packer-worker-images
-    deployment_id: f5e3f54
+    deployment_id: 084c19f
     name: win11_64_24h2
 ronin_t_windows11_64_24h2_alpha:
   azure2:
@@ -186,9 +186,9 @@ ronin_t_windows11_64_24h2_alpha:
     name: win11_64_24h2_alpha
 win116425h2:
   azure2:
-    version: 1.0.10
+    version: 1.0.11
     resource_group: rg-packer-worker-images
-    deployment_id: f5e3f54
+    deployment_id: 084c19f
     name: win11_64_25h2
 win116425h2alpha:
   azure2:
