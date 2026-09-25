@@ -2098,62 +2098,6 @@ pools:
             - *persistent-disk-60gb
           machine_type: g1-small
   # Windows Server 2022
-  - pool_id: gecko-1/b-win2022-alpha
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin_b1_windows2022_64_2009_alpha
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/windows-builder
-      worker-purpose: gecko-1
-      locations: [north-central-us]
-      maxCapacity: 10
-      armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
-        parameters:
-          diffDiskOption: Local
-          diffDiskPlacement: NvmeDisk
-          osDiskCaching: ReadOnly
-          enableFullCaching: true
-          osDiskStorageAccountType: StandardSSD_LRS
-      worker-config:
-        genericWorker:
-          config:
-            workerType: win2022-azure
-            headlessTasks: false
-            disableReboots: false
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\Users
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_D96ads_v7
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_D96ads_v7
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      worker-manager-config:
-        capacityPerInstance: 1
   - pool_id: '{pool-group}/b-win2022-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2162,6 +2106,8 @@ pools:
       suffix: ''
     variants:
       - pool-group: gecko-1
+      - pool-group: gecko-1
+        suffix: alpha
       - pool-group: gecko-1
         suffix: xxlarge
       - pool-group: gecko-1
@@ -2190,9 +2136,13 @@ pools:
       - pool-group: mozilla-3
         chain-of-trust: trusted
       - pool-group: mozillavpn-1
+      - pool-group: mozillavpn-1
+        suffix: alpha
       - pool-group: mozillavpn-3
         chain-of-trust: trusted
       - pool-group: nss-1
+      - pool-group: nss-1
+        suffix: alpha
       - pool-group: nss-3
         chain-of-trust: trusted
       - pool-group: enterprise-1
@@ -2206,37 +2156,50 @@ pools:
       image:
         by-chain-of-trust:
           trusted: ronin_b3_windows2022_64_2009
-          default: ronin_b1_windows2022_64_2009
-      image_resource_group: rg-packer-through-cib
+          default:
+            by-suffix:
+              alpha: ronin_b1_windows2022_64_2009_alpha
+              default: ronin_b1_windows2022_64_2009
       implementation:
         by-suffix:
-          .*headless.*: generic-worker/windows-builder
+          (alpha|.*headless.*): generic-worker/windows-builder
           default: generic-worker/windows
-      locations: [north-central-us, west-us-3, south-central-us]
+      locations:
+        by-suffix:
+          alpha:
+            by-pool-group:
+              gecko-1: [north-central-us]
+              default: [central-us, north-central-us]
+          default: [north-central-us, west-us-3, south-central-us]
       maxCapacity:
-        by-pool-group:
-          gecko-.*: 500
-          comm-3: 50
-          relops-.*: 12
-          default: 25
+        by-suffix:
+          alpha:
+            by-pool-group:
+              gecko-1: 10
+              default: 25
+          default:
+            by-pool-group:
+              gecko-.*: 500
+              comm-3: 50
+              default: 25
       armDeployment:
         by-chain-of-trust:
           trusted:
             templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-            parameters:
+            parameters: &windows-nvme-parameters
               diffDiskOption: Local
               diffDiskPlacement: NvmeDisk
               osDiskCaching: ReadOnly
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
           default:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-            parameters:
-              diffDiskOption: Local
-              diffDiskPlacement: NvmeDisk
-              osDiskCaching: ReadOnly
-              enableFullCaching: true
-              osDiskStorageAccountType: StandardSSD_LRS
+            by-suffix:
+              alpha:
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
+                parameters: *windows-nvme-parameters
+              default:
+                templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
+                parameters: *windows-nvme-parameters
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
@@ -2248,14 +2211,32 @@ pools:
             # enableInteractive defaults to true in generic-worker; keep it
             # disabled on trusted (level 3) pools.
             enableInteractive:
-              by-chain-of-trust:
-                trusted: false
-                default: true
+              by-suffix:
+                alpha: null
+                default:
+                  by-chain-of-trust:
+                    trusted: false
+                    default: true
+            workerType:
+              by-suffix:
+                alpha:
+                  by-pool-group:
+                    gecko-1: win2022-azure
+                    default: null
+                default: null
+            headlessTasks: &win2022-gecko-alpha-false
+              by-suffix:
+                alpha:
+                  by-pool-group:
+                    gecko-1: false
+                    default: null
+                default: null
+            disableReboots: *win2022-gecko-alpha-false
             cachesDir: C:\caches
             downloadsDir: C:\downloads
             tasksDir: C:\Users
       tags:
-        sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
+        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
@@ -2264,156 +2245,19 @@ pools:
         - vmSize:
             by-suffix:
               .*xxlarge.*: Standard_D96ads_v7
-              default: Standard_D32ads_v7
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize:
-                by-suffix:
-                  .*xxlarge.*: Standard_D96ads_v7
+              alpha:
+                by-pool-group:
+                  gecko-1: Standard_D96ads_v7
                   default: Standard_D32ads_v7
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      worker-manager-config:
-        capacityPerInstance: 1
-        initialWeight:
-          by-vmSize:
-            Standard_D32ads_v7:
-              by-location:
-                north-central-us: 1
-                west-us-3: 1
-                south-central-us: 0.9
-            Standard_D96ads_v7:
-              by-location:
-                north-central-us: 1
-                west-us-3: 1
-                south-central-us: 0.9
-            default: 1
-  - pool_id: nss-1/b-win2022-alpha
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin_b1_windows2022_64_2009_alpha
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/windows-builder
-      worker-purpose: nss-1
-      locations: [central-us, north-central-us]
-      maxCapacity: 25
-      armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
-        parameters:
-          diffDiskOption: Local
-          diffDiskPlacement: NvmeDisk
-          osDiskCaching: ReadOnly
-          enableFullCaching: true
-          osDiskStorageAccountType: StandardSSD_LRS
-      worker-config:
-        genericWorker:
-          config:
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\Users
-      tags:
-        sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_D32ads_v7
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_D32ads_v7
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
+              default: Standard_D32ads_v7
       worker-manager-config:
         capacityPerInstance: 1
         initialWeight:
           by-location:
             central-us: 1
             north-central-us: 0.9
-  - pool_id: mozillavpn-1/b-win2022-alpha
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    config:
-      image: ronin_b1_windows2022_64_2009_alpha
-      image_resource_group: rg-packer-through-cib
-      implementation: generic-worker/windows-builder
-      worker-purpose: vpn-1
-      locations: [central-us, north-central-us]
-      maxCapacity: 25
-      armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
-        parameters:
-          diffDiskOption: Local
-          diffDiskPlacement: NvmeDisk
-          osDiskCaching: ReadOnly
-          enableFullCaching: true
-          osDiskStorageAccountType: StandardSSD_LRS
-      worker-config:
-        genericWorker:
-          config:
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\Users
-      tags:
-        sourceScript: provisioners/windows/azure/2022-azure-bootstrap.ps1
-        sourceBranch: windows
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize: Standard_D32ads_v7
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_D32ads_v7
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      worker-manager-config:
-        capacityPerInstance: 1
-        initialWeight:
-          by-location:
-            central-us: 1
-            north-central-us: 0.9
+            west-us-3: 0.9
+            south-central-us: 0.8
   # Windows Server 2025
   - pool_id: '{pool-group}/b-win2025-{suffix}'
     description: ''
@@ -2728,7 +2572,6 @@ pools:
         by-pool-group:
           '.*-3': trusted_win11_a64_25h2_builder
           default: win11a6425h2builder{suffix}
-      image_resource_group: rg-packer-worker-images
       implementation: '{implementation}'
       worker-purpose:
         by-pool-group:
@@ -2767,59 +2610,24 @@ pools:
             by-suffix:
               .*alpha:
                 templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
-                parameters:
-                  diffDiskOption: Local
-                  diffDiskPlacement: NvmeDisk
-                  osDiskCaching: ReadOnly
-                  enableFullCaching: true
-                  osDiskStorageAccountType: StandardSSD_LRS
+                parameters: *windows-nvme-parameters
               default:
                 templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-                parameters:
-                  diffDiskOption: Local
-                  diffDiskPlacement: NvmeDisk
-                  osDiskCaching: ReadOnly
-                  enableFullCaching: true
-                  osDiskStorageAccountType: StandardSSD_LRS
+                parameters: *windows-nvme-parameters
           3:
             templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-            parameters:
-              diffDiskOption: Local
-              diffDiskPlacement: NvmeDisk
-              osDiskCaching: ReadOnly
-              enableFullCaching: true
-              osDiskStorageAccountType: StandardSSD_LRS
+            parameters: *windows-nvme-parameters
       vmSizes:
         - vmSize: Standard_D16pds_v6
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_D16pds_v6
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
       worker-manager-config:
         capacityPerInstance: 1
         initialWeight:
-          by-vmSize:
-            Standard_D16pds_v6:
-              by-location:
-                central-india: 1
-                east-us-2: 0.9
-                north-central-us: 0.9
-                central-us: 0.8
-                default: 0.5
-            default: 1
+          by-location:
+            central-india: 1
+            east-us-2: 0.9
+            north-central-us: 0.9
+            central-us: 0.8
+            default: 0.5
   - pool_id: '{pool-group}/win11-64-2009-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -3492,52 +3300,22 @@ pools:
         by-suffix:
           .*alpha:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
-            parameters:
-              diffDiskOption: Local
-              diffDiskPlacement: NvmeDisk
-              osDiskCaching: ReadOnly
-              enableFullCaching: true
-              osDiskStorageAccountType: StandardSSD_LRS
+            parameters: *windows-nvme-parameters
           default:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-            parameters:
-              diffDiskOption: Local
-              diffDiskPlacement: NvmeDisk
-              osDiskCaching: ReadOnly
-              enableFullCaching: true
-              osDiskStorageAccountType: StandardSSD_LRS
+            parameters: *windows-nvme-parameters
       vmSizes:
         - vmSize: Standard_D8pds_v6
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize: Standard_D8pds_v6
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
       worker-manager-config:
         capacityPerInstance: 1
         initialWeight:
-          by-vmSize:
-            Standard_D8pds_v6:
-              by-location:
-                central-india: 1
-                east-us-2: 0.9
-                north-central-us: 0.9
-                uk-south: 0.8
-                central-us: 0.7
-                default: 0.5
-            default: 1
+          by-location:
+            central-india: 1
+            east-us-2: 0.9
+            north-central-us: 0.9
+            uk-south: 0.8
+            central-us: 0.7
+            default: 0.5
   - pool_id: '{pool-group}/t-linux-{suffix}'
     description: Worker for test tasks.
     owner: release+tc-workers@mozilla.com
