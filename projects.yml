@@ -1557,7 +1557,7 @@ fx-desktop-qa-automation:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     taskgraph-actions: true
     taskgraph-cron: true
     trust-domain-scopes: true
