@@ -2164,19 +2164,10 @@ pools:
         by-suffix:
           (alpha|.*headless.*): generic-worker/windows-builder
           default: generic-worker/windows
-      locations:
-        by-suffix:
-          alpha:
-            by-pool-group:
-              gecko-1: [north-central-us]
-              default: [central-us, north-central-us]
-          default: [north-central-us, west-us-3, south-central-us]
+      locations: [north-central-us, west-us-3, south-central-us]
       maxCapacity:
         by-suffix:
-          alpha:
-            by-pool-group:
-              gecko-1: 10
-              default: 25
+          alpha: 25
           default:
             by-pool-group:
               gecko-.*: 500
