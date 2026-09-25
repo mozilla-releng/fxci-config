@@ -7,7 +7,7 @@ expires:
   $fromNow: 1 month
 extra: {}
 metadata:
-  name: Reviewer assignment
+  name: Reviewer assignment (staging)
   description: Assign reviewers for PRs in the mozilla-firefox staging repos (infra-testing)
   owner: conduit-team@mozilla.com
   source: 'https://github.com/mozilla-conduit/reviewer-selector'
@@ -35,7 +35,12 @@ payload:
     taskclusterProxy: true
   image:
     type: indexed-image
+    # We use main by default to test the bleeding-edge changes.
     namespace: mozilla.v2.reviewer-selector.branch.main.latest.docker-image.reviewer-selector
+    # This can be changed to
+    #namespace: mozilla.v2.reviewer-selector.branch.staging.latest.docker-image.reviewer-selector
+    # instead, to test changes in staging repos prior to merging.
+    # This will survive until the next deployment of fxci-config.
     path: public/image.tar.zst
   maxRunTime: 600
 priority: lowest
