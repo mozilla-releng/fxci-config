@@ -2108,7 +2108,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows-builder
       worker-purpose: gecko-1
-      locations: [central-india]
+      locations: [north-central-us]
       maxCapacity: 10
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
@@ -2212,7 +2212,7 @@ pools:
         by-suffix:
           .*headless.*: generic-worker/windows-builder
           default: generic-worker/windows
-      locations: [central-india, north-central-us, south-central-us, west-us-3]
+      locations: [north-central-us, west-us-3, south-central-us]
       maxCapacity:
         by-pool-group:
           gecko-.*: 500
@@ -2225,7 +2225,7 @@ pools:
             templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
             parameters:
               diffDiskOption: Local
-              diffDiskPlacement: ResourceDisk
+              diffDiskPlacement: NvmeDisk
               osDiskCaching: ReadOnly
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
@@ -2233,7 +2233,7 @@ pools:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
             parameters:
               diffDiskOption: Local
-              diffDiskPlacement: ResourceDisk
+              diffDiskPlacement: NvmeDisk
               osDiskCaching: ReadOnly
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
@@ -2263,8 +2263,8 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
-              .*xxlarge.*: Standard_D96ads_v5
-              default: Standard_D32ads_v5
+              .*xxlarge.*: Standard_D96ads_v7
+              default: Standard_D32ads_v7
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2280,8 +2280,8 @@ pools:
             hardwareProfile:
               vmSize:
                 by-suffix:
-                  .*xxlarge.*: Standard_D96ads_v5
-                  default: Standard_D32ads_v5
+                  .*xxlarge.*: Standard_D96ads_v7
+                  default: Standard_D32ads_v7
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2289,18 +2289,16 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-vmSize:
-            Standard_D32ads_v5:
+            Standard_D32ads_v7:
               by-location:
-                central-india: 1
-                north-central-us: 0.9
-                west-us-3: 0.9
-                south-central-us: 0.8
-            Standard_D96ads_v5:
+                north-central-us: 1
+                west-us-3: 1
+                south-central-us: 0.9
+            Standard_D96ads_v7:
               by-location:
-                central-india: 1
-                north-central-us: 0.9
-                west-us-3: 0.9
-                south-central-us: 0.8
+                north-central-us: 1
+                west-us-3: 1
+                south-central-us: 0.9
             default: 1
   - pool_id: nss-1/b-win2022-alpha
     description: ''
@@ -2312,7 +2310,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows-builder
       worker-purpose: nss-1
-      locations: [central-india, central-us, north-central-us]
+      locations: [central-us, north-central-us]
       maxCapacity: 25
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
@@ -2357,9 +2355,8 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-location:
-            central-india: 1
-            central-us: 0.9
-            north-central-us: 0.8
+            central-us: 1
+            north-central-us: 0.9
   - pool_id: mozillavpn-1/b-win2022-alpha
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2370,7 +2367,7 @@ pools:
       image_resource_group: rg-packer-through-cib
       implementation: generic-worker/windows-builder
       worker-purpose: vpn-1
-      locations: [central-india, central-us, north-central-us]
+      locations: [central-us, north-central-us]
       maxCapacity: 25
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
@@ -2415,9 +2412,8 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-location:
-            central-india: 1
-            central-us: 0.9
-            north-central-us: 0.8
+            central-us: 1
+            north-central-us: 0.9
   # Windows Server 2025
   - pool_id: '{pool-group}/b-win2025-{suffix}'
     description: ''
@@ -2781,7 +2777,7 @@ pools:
                 templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
                 parameters:
                   diffDiskOption: Local
-                  diffDiskPlacement: ResourceDisk
+                  diffDiskPlacement: NvmeDisk
                   osDiskCaching: ReadOnly
                   enableFullCaching: true
                   osDiskStorageAccountType: StandardSSD_LRS
@@ -2789,15 +2785,12 @@ pools:
             templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
             parameters:
               diffDiskOption: Local
-              diffDiskPlacement: ResourceDisk
+              diffDiskPlacement: NvmeDisk
               osDiskCaching: ReadOnly
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
       vmSizes:
-        - vmSize:
-            by-suffix:
-              .*alpha: Standard_D16pds_v6
-              default: Standard_D16pds_v5
+        - vmSize: Standard_D16pds_v6
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -2811,10 +2804,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize:
-                by-suffix:
-                  .*alpha: Standard_D16pds_v6
-                  default: Standard_D16pds_v5
+              vmSize: Standard_D16pds_v6
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -2822,13 +2812,6 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-vmSize:
-            Standard_D16pds_v5:
-              by-location:
-                central-india: 1
-                east-us-2: 0.9
-                north-central-us: 0.9
-                central-us: 0.8
-                default: 0.5
             Standard_D16pds_v6:
               by-location:
                 central-india: 1
@@ -3485,10 +3468,7 @@ pools:
       image: win11a6425h2tester{suffix}
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
-      locations:
-        by-suffix:
-          .*alpha: [central-india, east-us-2, north-central-us, uk-south, central-us]
-          default: [central-india, east-us-2, north-central-us, central-us, uk-south]
+      locations: [central-india, east-us-2, north-central-us, uk-south, central-us]
       maxCapacity:
         by-pool-group:
           gecko-t: 500
@@ -3522,15 +3502,12 @@ pools:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
             parameters:
               diffDiskOption: Local
-              diffDiskPlacement: ResourceDisk
+              diffDiskPlacement: NvmeDisk
               osDiskCaching: ReadOnly
               enableFullCaching: true
               osDiskStorageAccountType: StandardSSD_LRS
       vmSizes:
-        - vmSize:
-            by-suffix:
-              .*alpha: Standard_D8pds_v6
-              default: Standard_D8pds_v5
+        - vmSize: Standard_D8pds_v6
           launchConfig:
             osProfile:
               windowsConfiguration:
@@ -3544,10 +3521,7 @@ pools:
                 diffDiskSettings:
                   option: Local
             hardwareProfile:
-              vmSize:
-                by-suffix:
-                  .*alpha: Standard_D8pds_v6
-                  default: Standard_D8pds_v5
+              vmSize: Standard_D8pds_v6
             diagnosticsProfile:
               bootDiagnostics:
                 enabled: false
@@ -3555,14 +3529,6 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-vmSize:
-            Standard_D8pds_v5:
-              by-location:
-                central-india: 1
-                uk-south: 0.9
-                east-us-2: 0.8
-                north-central-us: 0.7
-                central-us: 0.6
-                default: 0.5
             Standard_D8pds_v6:
               by-location:
                 central-india: 1
