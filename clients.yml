@@ -357,18 +357,43 @@ project/releng/generic-worker/datacenter-gecko-1-b-osx:
   description: Datacenter level 1 MacOS dedicated developer and automation worker.
   scopes:
     - assume:worker-type:releng-hardware/gecko-1-b-osx*
+project/releng/generic-worker/datacenter-gecko-1-b-osx-1500-staging:
+  description: Datacenter level 1 macOS 15 staging builder worker.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-1-b-osx-1500-staging
+    - queue:worker-id:mdc1/macmini-r8-*
+project/releng/generic-worker/datacenter-gecko-1-b-osx-1500:
+  description: Datacenter level 1 macOS 15 builder worker.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-1-b-osx-1500
+    - queue:worker-id:mdc1/macmini-r8-*
 project/releng/generic-worker/datacenter-gecko-3-b-osx:
   description: Datacenter level 3 MacOS dedicated developer and automation worker.
   scopes:
     - assume:worker-type:releng-hardware/gecko-3-b-osx*
+project/releng/generic-worker/datacenter-gecko-3-b-osx-1500:
+  description: Datacenter level 3 macOS 15 builder worker.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-3-b-osx-1500
+    - queue:worker-id:mdc1/macmini-r8-*
 project/releng/generic-worker/datacenter-applicationservices-b-1-osx:
   description: Datacenter level 1 MacOS dedicated workers for the application-services trust domain.
   scopes:
     - assume:worker-type:releng-hardware/applicationservices-b-1-osx*
+project/releng/generic-worker/datacenter-applicationservices-b-1-osx1500:
+  description: Datacenter level 1 macOS 15 builder workers for the application-services trust domain.
+  scopes:
+    - assume:worker-type:releng-hardware/applicationservices-b-1-osx1500
+    - queue:worker-id:mdc1/macmini-r8-*
 project/releng/generic-worker/datacenter-applicationservices-b-3-osx:
   description: Datacenter level 3 MacOS dedicated workers for the application-services trust domain.
   scopes:
     - assume:worker-type:releng-hardware/applicationservices-b-3-osx*
+project/releng/generic-worker/datacenter-applicationservices-b-3-osx1500:
+  description: Datacenter level 3 macOS 15 builder workers for the application-services trust domain.
+  scopes:
+    - assume:worker-type:releng-hardware/applicationservices-b-3-osx1500
+    - queue:worker-id:mdc1/macmini-r8-*
 project/releng/generic-worker/datacenter-enterprise-1-b-osx-arm64:
   description: Datacenter level 1 MacOS dedicated developer and automation worker.
   scopes:
@@ -381,10 +406,20 @@ project/releng/generic-worker/datacenter-nss-1-b-osx:
   description: Datacenter level 1 MacOS dedicated workers for the nss trust domain.
   scopes:
     - assume:worker-type:releng-hardware/nss-1-b-osx*
+project/releng/generic-worker/datacenter-nss-1-b-osx-1500:
+  description: Datacenter level 1 macOS 15 builder workers for the nss trust domain.
+  scopes:
+    - assume:worker-type:releng-hardware/nss-1-b-osx-1500
+    - queue:worker-id:mdc1/macmini-r8-*
 project/releng/generic-worker/datacenter-nss-3-b-osx:
   description: Datacenter level 3 MacOS dedicated workers for the nss trust domain.
   scopes:
     - assume:worker-type:releng-hardware/nss-3-b-osx*
+project/releng/generic-worker/datacenter-nss-3-b-osx-1500:
+  description: Datacenter level 3 macOS 15 builder workers for the nss trust domain.
+  scopes:
+    - assume:worker-type:releng-hardware/nss-3-b-osx-1500
+    - queue:worker-id:mdc1/macmini-r8-*
 project/releng/generic-worker/datacenter-gecko-1-b-osx-arm64:
   description: Datacenter level 1 MacOS dedicated developer and automation worker.
   scopes:
