@@ -69,10 +69,6 @@ def should_hash(project):
         # list matching the glob. it's probably not worth doing though.
         if "*" in project.repo:
             return False
-        # At this time, we don't support fetching tcymls from private
-        # repos, so we can't generate action hooks for them.
-        if project.feature("github-private-repo"):
-            return False
         return True
     else:
         return False
@@ -191,11 +187,16 @@ async def _hash_project_ymls(project, hashes):
         )
 
     configured = configured_branches(project)
+    # A private repo answers as though it were not there when the auth service
+    # would not mint a token for it, which is a run that generates no hooks
+    # rather than a broken configuration.
+    private = project.feature("github-private-repo")
+    all_oids = await tcyml.get_blob_oids(project.repo_path, missing_ok=private)
     # A branch with no `.taskcluster.yml` has no oid, and needs no fetching --
     # the same case the git path used to handle as a 404.
     oids = {
         branch: oid
-        for branch, oid in (await tcyml.get_blob_oids(project.repo_path)).items()
+        for branch, oid in all_oids.items()
         if oid and glob_match(configured, branch)
     }
 

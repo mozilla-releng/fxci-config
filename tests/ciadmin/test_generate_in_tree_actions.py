@@ -59,8 +59,8 @@ def fake_git(monkeypatch):
     def mocker(oids_by_branch, blobs):
         calls = {"oids": [], "blobs": []}
 
-        async def get_blob_oids(repo_path):
-            calls["oids"].append(repo_path)
+        async def get_blob_oids(repo_path, missing_ok=False):
+            calls["oids"].append((repo_path, missing_ok))
             return oids_by_branch
 
         async def get_blobs(repo_path, oids):
@@ -299,7 +299,7 @@ async def test_a_github_failure_aborts_the_whole_run(projects, monkeypatch):
     """Half a picture of the hooks would delete the ones we failed to see."""
     projects(example=GIT_PROJECT)
 
-    async def get_blob_oids(repo_path):
+    async def get_blob_oids(repo_path, missing_ok=False):
         raise RuntimeError("GraphQL query failed")
 
     monkeypatch.setattr(tcyml, "get_blob_oids", get_blob_oids)
@@ -338,14 +338,22 @@ async def test_invalidates_hooks_ignores_trailing_slash(projects):
 
 @pytest.mark.asyncio
 async def test_invalidates_hooks_ignores_projects_we_do_not_hash(projects):
-    """A private repo is configured, but its `.taskcluster.yml` is never fetched."""
-    projects(
-        example={
-            **GIT_PROJECT,
-            "features": {"taskgraph-actions": True, "github-private-repo": True},
-        }
-    )
+    """A globbed repo names no single repository to fetch a tcyml from."""
+    projects(example={**GIT_PROJECT, "repo": "https://github.com/mozilla/*"})
     assert not await in_tree_actions.invalidates_hooks("mozilla/example", "main")
+
+
+PRIVATE_PROJECT = {
+    **GIT_PROJECT,
+    "features": {"taskgraph-actions": True, "github-private-repo": True},
+}
+
+
+@pytest.mark.asyncio
+async def test_invalidates_hooks_covers_private_repos(projects):
+    """A private repo is hashed like any other, so a push to it matters."""
+    projects(example=PRIVATE_PROJECT)
+    assert await in_tree_actions.invalidates_hooks("mozilla/example", "main")
 
 
 @pytest.mark.asyncio
