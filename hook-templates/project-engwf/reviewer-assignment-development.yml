@@ -7,7 +7,7 @@ expires:
   $fromNow: 1 month
 extra: {}
 metadata:
-  name: Reviewer assignment
+  name: Reviewer assignment (development)
   description: Assign reviewers for PRs in the mozilla-conduit dev repos (ff-test)
   owner: conduit-team@mozilla.com
   source: 'https://github.com/mozilla-conduit/reviewer-selector'
@@ -35,7 +35,7 @@ payload:
     taskclusterProxy: true
   image:
     type: indexed-image
-    namespace: mozilla.v2.reviewer-selector.branch.main.latest.docker-image.reviewer-selector
+    namespace: mozilla.v2.reviewer-selector.branch.develop.latest.docker-image.reviewer-selector
     path: public/image.tar.zst
   maxRunTime: 600
 priority: lowest
