@@ -2218,13 +2218,6 @@ pools:
                   by-chain-of-trust:
                     trusted: false
                     default: true
-            workerType:
-              by-suffix:
-                alpha:
-                  by-pool-group:
-                    gecko-1: win2022-azure
-                    default: null
-                default: null
             disableReboots:
               by-suffix:
                 alpha: false
@@ -2242,10 +2235,6 @@ pools:
         - vmSize:
             by-suffix:
               .*xxlarge.*: Standard_D96ads_v7
-              alpha:
-                by-pool-group:
-                  gecko-1: Standard_D96ads_v7
-                  default: Standard_D32ads_v7
               default: Standard_D32ads_v7
       worker-manager-config:
         capacityPerInstance: 1
