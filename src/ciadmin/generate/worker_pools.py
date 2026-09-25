@@ -808,7 +808,6 @@ def generate_pool_variants(worker_pools, environment):
             "scalingRatio",
             "security",
             "tags.sourceBranch",
-            "vmSizes.launchConfig.storageProfile.osDisk.diffDiskSettings.placement",
             "vmSizes.launchConfig.hardwareProfile.vmSize",
             "worker-purpose",
         ):

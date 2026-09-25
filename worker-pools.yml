@@ -2147,7 +2147,6 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
-                  placement: NvmeDisk
             hardwareProfile:
               vmSize: Standard_D96ads_v7
             diagnosticsProfile:
@@ -2155,9 +2154,6 @@ pools:
                 enabled: false
       worker-manager-config:
         capacityPerInstance: 1
-        initialWeight:
-          by-location:
-            central-india: 1
   - pool_id: '{pool-group}/b-win2022-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2352,7 +2348,6 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
-                  placement: NvmeDisk
             hardwareProfile:
               vmSize: Standard_D32ads_v7
             diagnosticsProfile:
@@ -2411,7 +2406,6 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
-                  placement: NvmeDisk
             hardwareProfile:
               vmSize: Standard_D32ads_v7
             diagnosticsProfile:
@@ -2816,10 +2810,6 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
-                  placement:
-                    by-suffix:
-                      .*alpha: NvmeDisk
-                      default: ResourceDisk
             hardwareProfile:
               vmSize:
                 by-suffix:
@@ -3553,10 +3543,6 @@ pools:
                 createOption: FromImage
                 diffDiskSettings:
                   option: Local
-                  placement:
-                    by-suffix:
-                      .*alpha: NvmeDisk
-                      default: ResourceDisk
             hardwareProfile:
               vmSize:
                 by-suffix:
