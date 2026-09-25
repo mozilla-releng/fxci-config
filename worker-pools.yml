@@ -95,7 +95,7 @@ worker-defaults:
             livelogExecutable: C:\generic-worker\livelog.exe
             ed25519SigningKeyLocation: C:\generic-worker\ed25519-private.key
             enableRunTaskAsCurrentUser: false
-            headlessTasks: true
+            headlessTasks: false
             idleTimeoutSecs: 150
             numberOfTasksToRun: 0
             runAfterUserCreation: C:\generic-worker\task-user-init.cmd
@@ -2224,20 +2224,16 @@ pools:
                     gecko-1: win2022-azure
                     default: null
                 default: null
-            headlessTasks: &win2022-gecko-alpha-false
+            disableReboots:
               by-suffix:
-                alpha:
-                  by-pool-group:
-                    gecko-1: false
-                    default: null
+                alpha: false
                 default: null
-            disableReboots: *win2022-gecko-alpha-false
             cachesDir: C:\caches
             downloadsDir: C:\downloads
             tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
+        sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2479,7 +2475,7 @@ pools:
             tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
+        sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
@@ -2892,7 +2888,7 @@ pools:
             tasksDir: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: windows
+        sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
       spot: true
