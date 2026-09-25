@@ -2162,7 +2162,7 @@ pools:
               default: ronin_b1_windows2022_64_2009
       implementation:
         by-suffix:
-          (alpha|.*headless.*): generic-worker/windows-builder
+          .*headless.*: generic-worker/windows-builder
           default: generic-worker/windows
       locations: [north-central-us, west-us-3, south-central-us]
       maxCapacity:
@@ -2218,10 +2218,6 @@ pools:
                   by-chain-of-trust:
                     trusted: false
                     default: true
-            disableReboots:
-              by-suffix:
-                alpha: false
-                default: null
             cachesDir: C:\caches
             downloadsDir: C:\downloads
             tasksDir: C:\Users
