@@ -2186,7 +2186,7 @@ pools:
         by-chain-of-trust:
           trusted:
             templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-            parameters: &windows-nvme-parameters
+            parameters:
               diffDiskOption: Local
               diffDiskPlacement: NvmeDisk
               osDiskCaching: ReadOnly
@@ -2196,10 +2196,20 @@ pools:
             by-suffix:
               alpha:
                 templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
-                parameters: *windows-nvme-parameters
+                parameters:
+                  diffDiskOption: Local
+                  diffDiskPlacement: NvmeDisk
+                  osDiskCaching: ReadOnly
+                  enableFullCaching: true
+                  osDiskStorageAccountType: StandardSSD_LRS
               default:
                 templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-                parameters: *windows-nvme-parameters
+                parameters:
+                  diffDiskOption: Local
+                  diffDiskPlacement: NvmeDisk
+                  osDiskCaching: ReadOnly
+                  enableFullCaching: true
+                  osDiskStorageAccountType: StandardSSD_LRS
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
@@ -2606,13 +2616,28 @@ pools:
             by-suffix:
               .*alpha:
                 templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
-                parameters: *windows-nvme-parameters
+                parameters:
+                  diffDiskOption: Local
+                  diffDiskPlacement: NvmeDisk
+                  osDiskCaching: ReadOnly
+                  enableFullCaching: true
+                  osDiskStorageAccountType: StandardSSD_LRS
               default:
                 templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-                parameters: *windows-nvme-parameters
+                parameters:
+                  diffDiskOption: Local
+                  diffDiskPlacement: NvmeDisk
+                  osDiskCaching: ReadOnly
+                  enableFullCaching: true
+                  osDiskStorageAccountType: StandardSSD_LRS
           3:
             templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-            parameters: *windows-nvme-parameters
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: NvmeDisk
+              osDiskCaching: ReadOnly
+              enableFullCaching: true
+              osDiskStorageAccountType: StandardSSD_LRS
       vmSizes:
         - vmSize: Standard_D16pds_v6
       worker-manager-config:
@@ -3296,10 +3321,20 @@ pools:
         by-suffix:
           .*alpha:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
-            parameters: *windows-nvme-parameters
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: NvmeDisk
+              osDiskCaching: ReadOnly
+              enableFullCaching: true
+              osDiskStorageAccountType: StandardSSD_LRS
           default:
             templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-            parameters: *windows-nvme-parameters
+            parameters:
+              diffDiskOption: Local
+              diffDiskPlacement: NvmeDisk
+              osDiskCaching: ReadOnly
+              enableFullCaching: true
+              osDiskStorageAccountType: StandardSSD_LRS
       vmSizes:
         - vmSize: Standard_D8pds_v6
       worker-manager-config:
