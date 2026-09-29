@@ -2237,7 +2237,6 @@ pools:
         initialWeight:
           by-location:
             central-us: 1
-            north-central-us: 0.9
             west-us-3: 0.9
             south-central-us: 0.8
   # Windows Server 2025
