@@ -154,6 +154,16 @@ async def get_client(repo_path):
     return _clients[owner]
 
 
+async def has_repo_token(repo_path):
+    """Whether the client for `repo_path` carries a token from the auth service.
+
+    False means the fallback client answers for this owner, and that client
+    cannot read a private repository.
+    """
+    client = await get_client(repo_path)
+    return client is not _fallback_client
+
+
 async def close_clients():
     """Cleanup every client this module has handed out."""
     global _fallback_client

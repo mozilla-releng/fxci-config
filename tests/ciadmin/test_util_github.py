@@ -291,6 +291,21 @@ async def test_a_refused_token_falls_back_and_says_so(taskcluster_credentials, c
 
 
 @pytest.mark.asyncio
+async def test_has_repo_token_tells_a_token_from_the_fallback(
+    taskcluster_credentials, projects
+):
+    projects(
+        one=git_project("https://github.com/mozilla/one"),
+        two=git_project("https://github.com/taskcluster/two"),
+    )
+
+    with patch_auth(token_response(), TaskclusterFailure("no scopes here")):
+        with patch("ciadmin.util.github.client_from_env"):
+            assert await github.has_repo_token("mozilla/one")
+            assert not await github.has_repo_token("taskcluster/two")
+
+
+@pytest.mark.asyncio
 async def test_close_clients_closes_each_one_once(taskcluster_credentials, projects):
     projects(
         one=git_project("https://github.com/mozilla/one"),
