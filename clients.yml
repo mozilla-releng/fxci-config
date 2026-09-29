@@ -318,6 +318,15 @@ project/releng/fxci-config/generate:
   scopes:
     - auth:list-clients
     - hooks:list-hooks:*
+project/releng/fxci-config/generate-trusted:
+  description: Used to run `tc-admin generate` in mozilla-releng/fxci-config on
+    pushes and on pull requests from trusted sources. Reads private
+    repositories, so it must not be reachable from a pull request by anyone
+    outside the repository.
+  scopes:
+    # The `read` app only has read permissions to hand out, so `*` cannot
+    # grant a write token, and a repository added later needs no new entry.
+    - auth:github-repo-token:read/*
 project/releng/generic-worker/azure-gecko-t-win10-64:
   description: Windows 10 64bit experimental production worker.
   scopes:
