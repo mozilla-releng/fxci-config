@@ -2164,7 +2164,7 @@ pools:
         by-suffix:
           .*headless.*: generic-worker/windows-builder
           default: generic-worker/windows
-      locations: [north-central-us, west-us-3, south-central-us]
+      locations: [west-us-3, south-central-us]
       maxCapacity:
         by-suffix:
           alpha: 25
