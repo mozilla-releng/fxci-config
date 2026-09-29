@@ -34,6 +34,11 @@ GIT_PROJECT = {
     "features": {"taskgraph-actions": True},
 }
 
+PRIVATE_PROJECT = {
+    **GIT_PROJECT,
+    "features": {"taskgraph-actions": True, "github-private-repo": True},
+}
+
 HG_PROJECT = {
     "repo": "https://hg.mozilla.org/example",
     "repo_type": "hg",
@@ -308,6 +313,41 @@ async def test_a_github_failure_aborts_the_whole_run(projects, monkeypatch):
         await in_tree_actions.hash_taskcluster_ymls()
 
 
+@pytest.mark.asyncio
+async def test_a_private_repo_without_a_token_is_skipped(
+    projects, fake_git, monkeypatch, capsys
+):
+    """The fallback client cannot read it, so github is not asked at all."""
+    projects(example=PRIVATE_PROJECT)
+    calls = fake_git({"main": git_oid(MAIN)}, {git_oid(MAIN): MAIN})
+
+    async def has_repo_token(repo_path):
+        return False
+
+    monkeypatch.setattr(in_tree_actions.github, "has_repo_token", has_repo_token)
+
+    assert await in_tree_actions.hash_taskcluster_ymls() == {"example": {}}
+    assert calls["oids"] == []
+    assert "No github token" in capsys.readouterr().err
+
+
+@pytest.mark.asyncio
+async def test_a_private_repo_with_a_token_is_fetched(projects, fake_git, monkeypatch):
+    """With a token the repo is read, and github decides whether it is visible."""
+    projects(example=PRIVATE_PROJECT)
+    calls = fake_git({"main": git_oid(MAIN)}, {git_oid(MAIN): MAIN})
+
+    async def has_repo_token(repo_path):
+        return True
+
+    monkeypatch.setattr(in_tree_actions.github, "has_repo_token", has_repo_token)
+
+    hashes = await in_tree_actions.hash_taskcluster_ymls()
+
+    assert "main" in hashes["example"]
+    assert calls["oids"] == [("mozilla/example", True)]
+
+
 # ---------------------------------------------------------------------------
 # invalidates_hooks
 # ---------------------------------------------------------------------------
@@ -341,12 +381,6 @@ async def test_invalidates_hooks_ignores_projects_we_do_not_hash(projects):
     """A globbed repo names no single repository to fetch a tcyml from."""
     projects(example={**GIT_PROJECT, "repo": "https://github.com/mozilla/*"})
     assert not await in_tree_actions.invalidates_hooks("mozilla/example", "main")
-
-
-PRIVATE_PROJECT = {
-    **GIT_PROJECT,
-    "features": {"taskgraph-actions": True, "github-private-repo": True},
-}
 
 
 @pytest.mark.asyncio

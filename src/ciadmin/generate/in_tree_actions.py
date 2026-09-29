@@ -5,6 +5,7 @@
 import asyncio
 import datetime
 import hashlib
+import sys
 import textwrap
 
 import aiohttp
@@ -17,6 +18,7 @@ from tcadmin.util.matchlist import Match, MatchList
 from tcadmin.util.scopes import normalizeScopes
 from tcadmin.util.sessions import aiohttp_session
 
+from ciadmin.util import github
 from ciadmin.util.matching import glob_match
 
 from . import tcyml
@@ -187,10 +189,18 @@ async def _hash_project_ymls(project, hashes):
         )
 
     configured = configured_branches(project)
-    # A private repo answers as though it were not there when the auth service
-    # would not mint a token for it, which is a run that generates no hooks
-    # rather than a broken configuration.
     private = project.feature("github-private-repo")
+    if private and not await github.has_repo_token(project.repo_path):
+        # The fallback client cannot read it, so asking github would only
+        # turn a missing token into a generic not-found error.
+        print(
+            f"No github token for the private repository {project.repo_path}. "
+            "Its action hooks are missing from this run.",
+            file=sys.stderr,
+        )
+        return
+    # A private repo the token cannot see answers as though it were not there,
+    # which is a run that generates no hooks rather than a broken configuration.
     all_oids = await tcyml.get_blob_oids(project.repo_path, missing_ok=private)
     # A branch with no `.taskcluster.yml` has no oid, and needs no fetching --
     # the same case the git path used to handle as a 404.
