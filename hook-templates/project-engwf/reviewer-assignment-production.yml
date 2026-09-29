@@ -14,6 +14,7 @@ metadata:
 payload:
   capabilities: {}
   env:
+    SENTRY_ENVIRONMENT: production
     TC_SECRET_ID: project/engwf/reviewer-assignment/runtime-production
     DIFF_URL:
       $eval: payload.body.pull_request.diff_url
