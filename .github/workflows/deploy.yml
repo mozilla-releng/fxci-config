@@ -56,8 +56,8 @@ jobs:
           # The client is only used to request github tokens from the auth
           # service. Empty values, which is what a pull request from a fork
           # gets, mean the run reads public repositories only.
-          TASKCLUSTER_CLIENT_ID: ${{ env.TRUSTED_SOURCE == 'true' && vars.TASKCLUSTER_TRUSTED_CLIENT_ID || '' }}
-          TASKCLUSTER_ACCESS_TOKEN: ${{ env.TRUSTED_SOURCE == 'true' && secrets.TASKCLUSTER_TRUSTED_ACCESS_TOKEN || '' }}
+          TASKCLUSTER_CLIENT_ID: ${{ env.TRUSTED_SOURCE == 'true' && vars.TRUSTED_TASKCLUSTER_CLIENT_ID || '' }}
+          TASKCLUSTER_ACCESS_TOKEN: ${{ env.TRUSTED_SOURCE == 'true' && secrets.TRUSTED_TASKCLUSTER_ACCESS_TOKEN || '' }}
         run: uv run tc-admin generate --environment ${{matrix.environment}} --json > "$FXCI_CONFIG_CACHE"
       - name: Upload config cache
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
