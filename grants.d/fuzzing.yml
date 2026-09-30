@@ -129,7 +129,7 @@
     - assume:project-admin:fuzzing
   to:
     - roles:
-        - github-team:MozillaSecurity/tc-admin
+        - mozilla-group:fuzzing_team
 
 # Worker pool roles for fuzzing pools (matches community-tc behavior)
 - grant:
