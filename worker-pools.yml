@@ -3889,15 +3889,9 @@ pools:
       locations: [central-us, east-us]
       maxCapacity: 10
       armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-        parameters:
-          diffDiskOption: Local
-          diffDiskPlacement: NvmeDisk
-          osDiskCaching: ReadOnly
-          enableFullCaching: true
-          osDiskStorageAccountType: StandardSSD_LRS
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
       vmSizes:
-        - vmSize: Standard_F16alds_v7
+        - vmSize: Standard_F16s_v2
       worker-manager-config:
         capacityPerInstance: 1
       worker-config:
