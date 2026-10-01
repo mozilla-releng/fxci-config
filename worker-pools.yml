@@ -3551,39 +3551,6 @@ pools:
       worker-manager-config:
         capacityPerInstance: 1
 
-  - pool_id: proj-fuzzing/bugmon-pernosco
-    description: Fuzzing bugmon pernosco pool (docker-worker, metal)
-    owner: jkratzer@mozilla.com
-    email_on_error: false
-    provider_id: aws
-    config:
-      minCapacity: 0
-      maxCapacity: 10
-      regions: [us-east-1, us-west-1, us-west-2]
-      image: fuzzing-docker-worker-legacy
-      security: untrusted
-      instance_types:
-        - instanceType: m5d.metal
-      worker-config:
-        dockerConfig:
-          allowPrivileged: true
-          allowDisableSeccomp: true
-
-  - pool_id: proj-fuzzing/bugmon-pernosco-staging
-    description: Fuzzing bugmon pernosco staging pool
-    owner: taskcluster-notifications+workers@mozilla.com
-    email_on_error: true
-    provider_id: aws
-    config:
-      minCapacity: 0
-      maxCapacity: 5
-      implementation: generic-worker/worker-runner-linux-multi
-      regions: [us-east-1]
-      image: gw-ubuntu-24-04-staging
-      security: untrusted
-      instance_types:
-        - instanceType: m5d.metal
-
   - pool_id: proj-fuzzing/bugmon-processor-windows
     description: Fuzzing bugmon processor Windows GPU pool
     owner: jkratzer@mozilla.com
