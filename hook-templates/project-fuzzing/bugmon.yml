@@ -6,7 +6,7 @@ payload:
   image:
     type: indexed-image
     path: public/bugmon.tar.zst
-    namespace: project.fuzzing.orion.bugmon.master
+    namespace: project.fuzzing.orion.bugmon.main
   features:
     taskclusterProxy: true
   maxRunTime: 14400

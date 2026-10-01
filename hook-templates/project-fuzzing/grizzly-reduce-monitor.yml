@@ -6,7 +6,7 @@ payload:
   image:
     type: indexed-image
     path: public/grizzly-reduce-monitor.tar.zst
-    namespace: project.fuzzing.orion.grizzly-reduce-monitor.master
+    namespace: project.fuzzing.orion.grizzly-reduce-monitor.main
   features:
     taskclusterProxy: true
   maxRunTime: 3600

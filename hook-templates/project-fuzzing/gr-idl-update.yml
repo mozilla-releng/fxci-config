@@ -6,7 +6,7 @@ payload:
   image:
     path: public/gr-idl-update.tar.zst
     type: indexed-image
-    namespace: project.fuzzing.orion.gr-idl-update.master
+    namespace: project.fuzzing.orion.gr-idl-update.main
   features:
     taskclusterProxy: true
   artifacts:

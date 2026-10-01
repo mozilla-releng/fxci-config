@@ -5,7 +5,7 @@ workerType: ci
 payload:
   image:
     type: indexed-image
-    namespace: project.fuzzing.orion.coverage-revision.master
+    namespace: project.fuzzing.orion.coverage-revision.main
     path: public/coverage-revision.tar.zst
   maxRunTime: 900
   onExitStatus:
