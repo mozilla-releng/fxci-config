@@ -515,40 +515,6 @@ project-fuzzing/fuzzing-tc-config-community-update:
         default: main
     additionalProperties: true
 
-project-fuzzing/{name}:
-  variants:
-    - name: gr-css
-      grammar: gr.css
-      cron: '0 8 * * 6'
-      extra_scopes:
-        - docker-worker:capability:device:hostSharedMemory
-        - docker-worker:capability:device:loopbackAudio
-        - secrets:get:project/fuzzing/deploy-gr-css
-        - secrets:get:project/fuzzing/deploy-gr-css-generator
-        - secrets:get:project/fuzzing/deploy-gr-css-reports
-        - secrets:get:project/fuzzing/deploy-octo-private
-    - name: gr-idl-update
-      grammar: gr.idl
-      cron: '0 8 * * 1'
-      extra_scopes:
-        - secrets:get:project/fuzzing/deploy-gridl
-  name: '{name}'
-  description: Hook for updating {grammar} grammar
-  owner: jkratzer@mozilla.com
-  email_on_error: true
-  schedule:
-    - '{cron}'
-  scopes:
-    - docker-worker:capability:privileged
-    - queue:create-task:highest:proj-fuzzing/ci
-    - queue:get-artifact:project/fuzzing/{name}/*
-    - queue:route:notify.email.jkratzer@mozilla.com.on-failed
-    - queue:scheduler-id:fuzzing
-    - secrets:get:project/fuzzing/ci-git-token
-    - secrets:get:project/fuzzing/deploy-npm
-  template_file: hook-templates/project-fuzzing/{name}.yml
-  trigger_schema: {}
-
 project-fuzzing/grizzly-reduce-monitor:
   name: grizzly-reduce-monitor
   description: Hook for triggering Grizzly reduce monitor tasks
