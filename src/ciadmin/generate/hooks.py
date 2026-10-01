@@ -31,8 +31,6 @@ _FUZZING_HOOKS = [
     "coverage-revision",
     "js-tests-distiller",
     "fuzzing-tc-config-community-update",
-    "gr-css",
-    "gr-idl-update",
     "grizzly-reduce-monitor",
     "grizzly-reduce-reset-error",
     "nss-corpus-update",
