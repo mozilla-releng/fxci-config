@@ -21,7 +21,7 @@ payload:
     # The auth service mints the dispatch token, and is reached through
     # the proxy.
     taskclusterProxy: true
-  image: mozillareleases/taskgraph:run-task-v24.1.1@sha256:9b9a1a3ca42025bb8d7eba19e1b8759f04504097265074df25bbc997bd802543
+  image: mozillareleases/taskgraph:run-task-v24.3.0@sha256:1efe26cb74bd09fa0f2a051b4559ab7cde4270d92f4e7c7dce7242468a21e6af
   maxRunTime: 900
   env:
     ORGANIZATION: {$eval: payload.organization}
