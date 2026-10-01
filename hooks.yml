@@ -471,14 +471,14 @@ project-fuzzing/{hook}:
   template_file: hook-templates/project-fuzzing/{hook}.yml
   trigger_schema: {}
 
-project-fuzzing/fuzzing-tc-config-community-update:
-  name: fuzzing-tc-config-community-update
-  description: Run Fuzzing pool rebuild when Community-TC config changes
+project-fuzzing/fuzzing-tc-config-update:
+  name: fuzzing-tc-config-update
+  description: Run Fuzzing pool rebuild when Firefox-CI-TC config changes
   owner: truber@mozilla.com
   email_on_error: true
   bindings:
     - exchange: exchange/taskcluster-github/v1/push
-      routing_key_pattern: primary.taskcluster.community-tc-config
+      routing_key_pattern: primary.mozilla-releng.fxci-config
   scopes:
     - assume:hook-id:project-fuzzing/linux-pool*
     - assume:hook-id:project-fuzzing/macos-pool*
@@ -506,7 +506,7 @@ project-fuzzing/fuzzing-tc-config-community-update:
     - worker-manager:provider:aws
     - worker-manager:provider:azure2
     - worker-manager:provider:fxci-level1-gcp
-  template_file: hook-templates/project-fuzzing/fuzzing-tc-config-community-update.yml
+  template_file: hook-templates/project-fuzzing/fuzzing-tc-config-update.yml
   trigger_schema:
     type: object
     properties:
