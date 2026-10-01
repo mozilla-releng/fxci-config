@@ -601,6 +601,30 @@ autoland:
       - android-l10n-import
       - l10n-bumper
       - perftest-on-autoland
+comm-autoland:
+  repo: https://hg.mozilla.org/integration/comm-autoland
+  lando_repo: thunderbird-desktop-autoland
+  repo_type: hg
+  access: scm_level_3
+  branches:
+    - name: "*"
+    - name: default
+      cron: true
+  trust_domain: comm
+  parent_repo: https://hg.mozilla.org/integration/autoland
+  features:
+    gecko-actions: true
+    gecko-roles: true
+    hg-push: true
+    is-trunk: true
+    taskgraph-cron: true
+    treeherder-reporting: true
+    trust-domain-scopes: true
+    lando: true
+  cron:
+    targets:
+      - l10n-bumper
+      - tb-rust-vendor-check
 holly:
   repo: https://hg.mozilla.org/projects/holly
   repo_type: hg
