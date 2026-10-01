@@ -2218,12 +2218,34 @@ pools:
                   by-chain-of-trust:
                     trusted: false
                     default: true
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\tasks
-                default: C:\Users
+            <<: &windows-alpha-storage
+              cachesDir:
+                by-suffix:
+                  .*alpha:
+                    by-vmSize:
+                      # The ephemeral OS uses the only local NVMe disk on these sizes.
+                      Standard_D8alds_v6: C:\caches
+                      Standard_D8pds_v6: C:\caches
+                      default: D:\caches
+                  default: C:\caches
+              downloadsDir:
+                by-suffix:
+                  .*alpha:
+                    by-vmSize:
+                      # The ephemeral OS uses the only local NVMe disk on these sizes.
+                      Standard_D8alds_v6: C:\downloads
+                      Standard_D8pds_v6: C:\downloads
+                      default: D:\downloads
+                  default: C:\downloads
+              tasksDir:
+                by-suffix:
+                  .*alpha:
+                    by-vmSize:
+                      # The ephemeral OS uses the only local NVMe disk on these sizes.
+                      Standard_D8alds_v6: C:\tasks
+                      Standard_D8pds_v6: C:\tasks
+                      default: D:\tasks
+                  default: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2362,12 +2384,7 @@ pools:
                 3: false
             workerType: b-win2025-{suffix}
             provisionerId: '{pool-group}'
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\tasks
-                default: C:\Users
+            <<: *windows-alpha-storage
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2461,12 +2478,7 @@ pools:
           config:
             workerType: 'win10-64-2009-{suffix}'
             provisionerId: gecko-t
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\tasks
-                default: C:\Users
+            <<: *windows-alpha-storage
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2585,12 +2597,7 @@ pools:
                 3: false
             workerType: win11-a64-25h2-builder-{suffix}
             provisionerId: '{pool-group}'
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\tasks
-                default: C:\Users
+            <<: *windows-alpha-storage
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2895,12 +2902,7 @@ pools:
                 privileged: 1
                 privileged-alpha: 1
                 default: 0
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\tasks
-                default: C:\Users
+            <<: *windows-alpha-storage
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -3116,12 +3118,7 @@ pools:
                 privileged: 1
                 privileged-alpha: 1
                 default: 0
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\tasks
-                default: C:\Users
+            <<: *windows-alpha-storage
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -3301,12 +3298,7 @@ pools:
           config:
             workerType: 'win11-a64-25h2-{suffix}'
             provisionerId: '{pool-group}'
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir:
-              by-suffix:
-                .*alpha: C:\tasks
-                default: C:\Users
+            <<: *windows-alpha-storage
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
