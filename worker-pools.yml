@@ -3457,6 +3457,7 @@ pools:
         by-kind:
           grizzly-reduce-worker-android:
             - <<: *n2-standard-4-60gb-lssd
+              machine_type: c4-standard-4
               advancedMachineFeatures:
                 enableNestedVirtualization: true
           default:
