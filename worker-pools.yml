@@ -3446,6 +3446,13 @@ pools:
       implementation: generic-worker/worker-runner-linux-multi
       regions: *default-gcp-regions
       image: gw-ubuntu-24-04
+      worker-config:
+        genericWorker:
+          config:
+            numberOfTasksToRun:
+              by-kind:
+                bugmon-processor: 1
+                default: 0
       instance_types:
         by-kind:
           grizzly-reduce-worker-android:
