@@ -26,8 +26,6 @@ managed = MatchList(
     [
         Match("WorkerPool=.*", excludes=["WorkerPool=proj-fuzzing/.*"]),
         "WorkerPool=proj-fuzzing/bugmon-monitor$",
-        "WorkerPool=proj-fuzzing/bugmon-pernosco$",
-        "WorkerPool=proj-fuzzing/bugmon-pernosco-staging$",
         "WorkerPool=proj-fuzzing/bugmon-processor$",
         "WorkerPool=proj-fuzzing/bugmon-processor-windows$",
         "WorkerPool=proj-fuzzing/ci$",
