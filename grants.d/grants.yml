@@ -132,7 +132,7 @@
     - queue:create-task:very-low:proj-<..>/*
     - queue:get-artifact:project/<..>/*
     - queue:quarantine-worker:proj-<..>/*
-    - queue:rerun-task:<..>/*
+    - queue:rerun-task-in-project:<..>
     - queue:route:index.project.<..>.*
     - secrets:get:project/<..>/*
     - secrets:get:worker-pool:proj-<..>/*
