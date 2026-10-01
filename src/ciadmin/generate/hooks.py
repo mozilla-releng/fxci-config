@@ -30,7 +30,7 @@ _FUZZING_HOOKS = [
     "bugmon",
     "coverage-revision",
     "js-tests-distiller",
-    "fuzzing-tc-config-community-update",
+    "fuzzing-tc-config-update",
     "grizzly-reduce-monitor",
     "grizzly-reduce-reset-error",
     "nss-corpus-update",
