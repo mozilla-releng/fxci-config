@@ -6,7 +6,7 @@ payload:
   image:
     type: indexed-image
     path: public/gr-css-reports.tar.zst
-    namespace: project.fuzzing.orion.gr-css-reports.master
+    namespace: project.fuzzing.orion.gr-css-reports.main
   features:
     taskclusterProxy: true
   maxRunTime: 10800

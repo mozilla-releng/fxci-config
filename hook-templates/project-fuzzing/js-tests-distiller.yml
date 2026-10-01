@@ -7,7 +7,7 @@ payload:
     taskclusterProxy: true
   image:
     type: indexed-image
-    namespace: project.fuzzing.orion.js-tests-distiller.master
+    namespace: project.fuzzing.orion.js-tests-distiller.main
     path: public/js-tests-distiller.tar.zst
   maxRunTime: 10800
   artifacts:

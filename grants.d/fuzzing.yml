@@ -58,7 +58,7 @@
     - worker-manager:provider:fxci-level1-gcp
   to:
     - roles:
-        - repo:github.com/MozillaSecurity/fuzzing-tc-config:branch:master
+        - repo:github.com/MozillaSecurity/fuzzing-tc-config:branch:main
 
 - grant:
     - secrets:get:project/fuzzing/ansible-vault-key
