@@ -197,16 +197,12 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
             ):
                 continue
 
-            # This is explicitly fetched before we override level for pull
-            # requests due to us granting them `highest` priority in the past.
-            # Ideally we'd stop doing this, but it requires all GitHub repositories
-            # to start using a different priority for their PR tasks before
-            # we can do so.
-            priority = LEVEL_PRIORITIES[level]
             # In order to avoid granting pull-requests graphs
-            # access to the level-3 workers, we overwrite their value here
+            # access to the level-3 workers or priorities, we overwrite their
+            # level here, before deriving the priority from it.
             if job.startswith("pull-request") or job.startswith("pr-action"):
                 level = 1
+            priority = LEVEL_PRIORITIES[level]
 
             for scope in grant.scopes:
                 add_scope(roleId, format_scope(project, scope, level, priority))
