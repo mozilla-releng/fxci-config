@@ -980,6 +980,13 @@
     - project:
         alias: mozilla-central
 
+- grant:
+    # Bug 2076886: Allow autoland to trigger tb-rust-vendor-check on comm-autoland
+    - hooks:trigger-hook:project-releng/cron-task-integration-comm-autoland/tb-rust-vendor-check
+  to:
+    - project:
+        alias: autoland
+
 ##
 # Non-gecko tree projects
 
@@ -1707,6 +1714,7 @@
     - hooks:trigger-hook:project-releng/cron-task-comm-central/nightly-*
     # Bug 1876393: Allow triggering tb-rust-update-check on comm-central
     - hooks:trigger-hook:project-releng/cron-task-comm-central/tb-rust-vendor-check
+    - hooks:trigger-hook:project-releng/cron-task-integration-comm-autoland/tb-rust-vendor-check
   to:
     - groups:
         - thunderbird-sheriff
@@ -2507,7 +2515,7 @@
         alias: [autoland, mozilla-beta, mozilla-release]
         job: cron:l10n-bumper
     - project:
-        alias: [comm-central, comm-beta, comm-release, comm-esr140, comm-esr153]
+        alias: [comm-autoland, comm-central, comm-beta, comm-release, comm-esr140, comm-esr153]
         job: cron:l10n-bumper
 
 - grant:
@@ -2561,7 +2569,7 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [comm-central, comm-beta, comm-esr140, comm-esr153]
+        alias: [comm-autoland, comm-central, comm-beta, comm-esr140, comm-esr153]
         job: action:merge-automation
 
 # granting scopes for cross-repo updates is also straightforward, but it looks
@@ -2592,6 +2600,14 @@
         job: action:merge-automation
 
 - grant:
+    - project:releng:lando:repo:thunderbird-desktop-main
+  to:
+    - project:
+        alias: comm-autoland
+        job: action:merge-automation
+
+- grant:
+    - project:releng:lando:repo:thunderbird-desktop-autoland
     - project:releng:lando:repo:thunderbird-desktop-beta
   to:
     - project:
