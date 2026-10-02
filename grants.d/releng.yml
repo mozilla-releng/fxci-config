@@ -178,3 +178,12 @@
     - project:
         alias: worker-images
         job: [cron:run-hw-integration-tests]
+
+- grant:
+    - queue:create-task:low:gecko-1/b-win2022-alpha
+    - queue:create-task:low:gecko-1/b-win2025-alpha
+    - queue:create-task:low:gecko-1/win11-a64-25h2-builder-alpha
+  to:
+    - project:
+        alias: worker-images
+        job: [cron:run-integration-tests]
