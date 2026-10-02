@@ -2218,19 +2218,18 @@ pools:
                   by-chain-of-trust:
                     trusted: false
                     default: true
-            <<: &windows-alpha-storage
-              cachesDir:
-                by-suffix:
-                  .*alpha: D:\caches
-                  default: C:\caches
-              downloadsDir:
-                by-suffix:
-                  .*alpha: D:\downloads
-                  default: C:\downloads
-              tasksDir:
-                by-suffix:
-                  .*alpha: D:\tasks
-                  default: C:\Users
+            cachesDir:
+              by-suffix:
+                .*alpha: D:\caches
+                default: C:\caches
+            downloadsDir:
+              by-suffix:
+                .*alpha: D:\downloads
+                default: C:\downloads
+            tasksDir:
+              by-suffix:
+                .*alpha: D:\tasks
+                default: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2369,7 +2368,18 @@ pools:
                 3: false
             workerType: b-win2025-{suffix}
             provisionerId: '{pool-group}'
-            <<: *windows-alpha-storage
+            cachesDir:
+              by-suffix:
+                .*alpha: D:\caches
+                default: C:\caches
+            downloadsDir:
+              by-suffix:
+                .*alpha: D:\downloads
+                default: C:\downloads
+            tasksDir:
+              by-suffix:
+                .*alpha: D:\tasks
+                default: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2463,7 +2473,18 @@ pools:
           config:
             workerType: 'win10-64-2009-{suffix}'
             provisionerId: gecko-t
-            <<: *windows-alpha-storage
+            cachesDir:
+              by-suffix:
+                .*alpha: D:\caches
+                default: C:\caches
+            downloadsDir:
+              by-suffix:
+                .*alpha: D:\downloads
+                default: C:\downloads
+            tasksDir:
+              by-suffix:
+                .*alpha: D:\tasks
+                default: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2584,7 +2605,18 @@ pools:
                 3: false
             workerType: win11-a64-25h2-builder-{suffix}
             provisionerId: '{pool-group}'
-            <<: *windows-alpha-storage
+            cachesDir:
+              by-suffix:
+                .*alpha: D:\caches
+                default: C:\caches
+            downloadsDir:
+              by-suffix:
+                .*alpha: D:\downloads
+                default: C:\downloads
+            tasksDir:
+              by-suffix:
+                .*alpha: D:\tasks
+                default: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2889,7 +2921,18 @@ pools:
                 privileged: 1
                 privileged-alpha: 1
                 default: 0
-            <<: *windows-alpha-storage
+            cachesDir:
+              by-suffix:
+                .*alpha: D:\caches
+                default: C:\caches
+            downloadsDir:
+              by-suffix:
+                .*alpha: D:\downloads
+                default: C:\downloads
+            tasksDir:
+              by-suffix:
+                .*alpha: D:\tasks
+                default: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -3105,7 +3148,18 @@ pools:
                 privileged: 1
                 privileged-alpha: 1
                 default: 0
-            <<: *windows-alpha-storage
+            cachesDir:
+              by-suffix:
+                .*alpha: D:\caches
+                default: C:\caches
+            downloadsDir:
+              by-suffix:
+                .*alpha: D:\downloads
+                default: C:\downloads
+            tasksDir:
+              by-suffix:
+                .*alpha: D:\tasks
+                default: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -3288,7 +3342,18 @@ pools:
           config:
             workerType: 'win11-a64-25h2-{suffix}'
             provisionerId: '{pool-group}'
-            <<: *windows-alpha-storage
+            cachesDir:
+              by-suffix:
+                .*alpha: D:\caches
+                default: C:\caches
+            downloadsDir:
+              by-suffix:
+                .*alpha: D:\downloads
+                default: C:\downloads
+            tasksDir:
+              by-suffix:
+                .*alpha: D:\tasks
+                default: C:\Users
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
