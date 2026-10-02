@@ -2520,10 +2520,7 @@ pools:
               vmSize:
                 by-suffix:
                   ssd-gpu: Standard_NV12ads_A10_v5
-                  webgpu-alpha: Standard_NV12ads_A10_v5
-                  webgpu: Standard_NV12ads_A10_v5
-                  gpu-alpha: Standard_NV12ads_A10_v5
-                  gpu: Standard_NV12ads_A10_v5
+                  (webgpu|gpu)(-alpha)?: Standard_NV12ads_A10_v5
                   (source-)?alpha: Standard_F8alds_v7
                   default: Standard_D8alds_v6
             diagnosticsProfile:
