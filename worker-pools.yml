@@ -2587,7 +2587,7 @@ pools:
           default: null
       locations:
         by-suffix:
-          alpha: [east-us-2, north-central-us, central-us]
+          alpha: [east-us-2, west-us-2, west-us-3]
           default: [central-india, east-us-2, north-central-us, central-us]
       maxCapacity:
         by-pool-group:
