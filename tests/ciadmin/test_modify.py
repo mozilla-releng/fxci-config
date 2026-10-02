@@ -13,7 +13,7 @@ from ciadmin.util import github
 @pytest.mark.asyncio
 async def test_close_github_client_closes_and_passes_resources_through(monkeypatch):
     closed = AsyncMock()
-    monkeypatch.setattr(github, "close_client", closed)
+    monkeypatch.setattr(github, "close_clients", closed)
     resources = object()
 
     assert await modify.close_github_client(resources) is resources

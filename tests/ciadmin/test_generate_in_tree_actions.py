@@ -34,6 +34,11 @@ GIT_PROJECT = {
     "features": {"taskgraph-actions": True},
 }
 
+PRIVATE_PROJECT = {
+    **GIT_PROJECT,
+    "features": {"taskgraph-actions": True, "github-private-repo": True},
+}
+
 HG_PROJECT = {
     "repo": "https://hg.mozilla.org/example",
     "repo_type": "hg",
@@ -59,8 +64,8 @@ def fake_git(monkeypatch):
     def mocker(oids_by_branch, blobs):
         calls = {"oids": [], "blobs": []}
 
-        async def get_blob_oids(repo_path):
-            calls["oids"].append(repo_path)
+        async def get_blob_oids(repo_path, missing_ok=False):
+            calls["oids"].append((repo_path, missing_ok))
             return oids_by_branch
 
         async def get_blobs(repo_path, oids):
@@ -299,13 +304,48 @@ async def test_a_github_failure_aborts_the_whole_run(projects, monkeypatch):
     """Half a picture of the hooks would delete the ones we failed to see."""
     projects(example=GIT_PROJECT)
 
-    async def get_blob_oids(repo_path):
+    async def get_blob_oids(repo_path, missing_ok=False):
         raise RuntimeError("GraphQL query failed")
 
     monkeypatch.setattr(tcyml, "get_blob_oids", get_blob_oids)
 
     with pytest.raises(RuntimeError, match="GraphQL query failed"):
         await in_tree_actions.hash_taskcluster_ymls()
+
+
+@pytest.mark.asyncio
+async def test_a_private_repo_without_a_token_is_skipped(
+    projects, fake_git, monkeypatch, capsys
+):
+    """The fallback client cannot read it, so github is not asked at all."""
+    projects(example=PRIVATE_PROJECT)
+    calls = fake_git({"main": git_oid(MAIN)}, {git_oid(MAIN): MAIN})
+
+    async def has_repo_token(repo_path):
+        return False
+
+    monkeypatch.setattr(in_tree_actions.github, "has_repo_token", has_repo_token)
+
+    assert await in_tree_actions.hash_taskcluster_ymls() == {"example": {}}
+    assert calls["oids"] == []
+    assert "No github token" in capsys.readouterr().err
+
+
+@pytest.mark.asyncio
+async def test_a_private_repo_with_a_token_is_fetched(projects, fake_git, monkeypatch):
+    """With a token the repo is read, and github decides whether it is visible."""
+    projects(example=PRIVATE_PROJECT)
+    calls = fake_git({"main": git_oid(MAIN)}, {git_oid(MAIN): MAIN})
+
+    async def has_repo_token(repo_path):
+        return True
+
+    monkeypatch.setattr(in_tree_actions.github, "has_repo_token", has_repo_token)
+
+    hashes = await in_tree_actions.hash_taskcluster_ymls()
+
+    assert "main" in hashes["example"]
+    assert calls["oids"] == [("mozilla/example", True)]
 
 
 # ---------------------------------------------------------------------------
@@ -338,14 +378,16 @@ async def test_invalidates_hooks_ignores_trailing_slash(projects):
 
 @pytest.mark.asyncio
 async def test_invalidates_hooks_ignores_projects_we_do_not_hash(projects):
-    """A private repo is configured, but its `.taskcluster.yml` is never fetched."""
-    projects(
-        example={
-            **GIT_PROJECT,
-            "features": {"taskgraph-actions": True, "github-private-repo": True},
-        }
-    )
+    """A globbed repo names no single repository to fetch a tcyml from."""
+    projects(example={**GIT_PROJECT, "repo": "https://github.com/mozilla/*"})
     assert not await in_tree_actions.invalidates_hooks("mozilla/example", "main")
+
+
+@pytest.mark.asyncio
+async def test_invalidates_hooks_covers_private_repos(projects):
+    """A private repo is hashed like any other, so a push to it matters."""
+    projects(example=PRIVATE_PROJECT)
+    assert await in_tree_actions.invalidates_hooks("mozilla/example", "main")
 
 
 @pytest.mark.asyncio
