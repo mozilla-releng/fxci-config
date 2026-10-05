@@ -2505,7 +2505,7 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [autoland, mozilla-beta, mozilla-release]
+        alias: [autoland, mozilla-beta, mozilla-release, mozilla-esr153]
         job: cron:l10n-bumper
     - project:
         alias: [comm-central, comm-beta, comm-release, comm-esr140, comm-esr153]
