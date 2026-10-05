@@ -280,12 +280,19 @@ project-xpi/decision-{version}:
 project-engwf/reviewer-assignment-{mode}:
   variants:
     - mode: production
+      env: production
       routing_key_prefix: primary.mozilla-firefox.firefox
       priority: highest
     - mode: staging
+      env: staging
       routing_key_prefix: primary.mozilla-firefox.infra-testing
-      priority: lowest
+      priority: low
+    - mode: staging-lando
+      env: staging
+      routing_key_prefix: primary.mozilla-conduit.lando
+      priority: low
     - mode: development
+      env: development
       routing_key_prefix: primary.mozilla-conduit.ff-test
       priority: lowest
   name: Reviewer assignment hook ({mode})
@@ -293,12 +300,12 @@ project-engwf/reviewer-assignment-{mode}:
   owner: conduit-team@mozilla.com
   email_on_error: true
   scopes:
-    - index:insert-task:project.engwf.{mode}.reviewer-assignment.*
+    - index:insert-task:project.engwf.{env}.reviewer-assignment.*
     - queue:create-task:{priority}:reviewer-assignment/bot
-    - queue:route:index.project.engwf.{mode}.reviewer-assignment.*
+    - queue:route:index.project.engwf.{env}.reviewer-assignment.*
     - queue:scheduler-id:engwf
-    - secrets:get:project/engwf/reviewer-assignment/runtime-{mode}
-  template_file: hook-templates/project-engwf/reviewer-assignment-{mode}.yml
+    - secrets:get:project/engwf/reviewer-assignment/runtime-{env}
+  template_file: hook-templates/project-engwf/reviewer-assignment-{env}.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '{routing_key_prefix}.opened'
