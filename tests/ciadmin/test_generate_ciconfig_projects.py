@@ -659,6 +659,40 @@ def test_project_valid_cron_branch_levels(branches):
     )
 
 
+@pytest.mark.parametrize(
+    "project_data,expected_level",
+    (
+        (
+            # hg: every branch takes the access group's level
+            {
+                "alias": "prj",
+                "branches": [{"name": "*"}, {"name": "default"}],
+                "repo": "https://hg.mozilla.org/prj",
+                "repo_type": "hg",
+                "access": "scm_level_2",
+            },
+            2,
+        ),
+        (
+            # git: the highest branch wins, whatever the order
+            {
+                "alias": "prj",
+                "branches": [
+                    {"name": "main", "level": 1},
+                    {"name": "production", "level": 3},
+                    {"name": "*", "level": 1},
+                ],
+                "repo": "https://github.com/some-owner/prj",
+                "repo_type": "git",
+            },
+            3,
+        ),
+    ),
+)
+def test_project_level(project_data, expected_level):
+    assert Project(**project_data).level == expected_level
+
+
 def test_project_repo_path_property():
     "Test the repo_path property"
     prj = Project(

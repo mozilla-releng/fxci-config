@@ -229,6 +229,19 @@ class Project:
         "The list of enabled features"
         return [f for f, val in self.features.items() if val["enabled"]]
 
+    @property
+    def level(self):
+        """The highest level among this project's branches.
+
+        Roles that belong to the project rather than to a branch (`action:*`,
+        `cron:*`, `release:*`) are minted at this level, and no hook is made
+        for a branch below it, so a lower branch cannot reach them.
+        """
+        # an hg project may list no branches; its level is its access group's
+        return max(
+            (b.level for b in self.branches), default=_level_from_access(self.access)
+        )
+
     def get_branch(self, name: str):
         """Get the branch object given a name."""
         for branch in self.branches:
