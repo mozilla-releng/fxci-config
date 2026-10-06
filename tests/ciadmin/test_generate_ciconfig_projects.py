@@ -622,6 +622,17 @@ def test_project_level_failing_validators(project_data, error_type):
             },
             ValueError,
         ),
+        (
+            # enables actions but names no branch a hook could be made for
+            {
+                "alias": "prj",
+                "branches": [{"name": "*", "level": 1}],
+                "repo": "https://github.com/mozilla-releng/prj",
+                "repo_type": "git",
+                "features": {"taskgraph-actions": True},
+            },
+            ValueError,
+        ),
     ),
 )
 def test_project_level_failing_post_init_checks(project_data, error_type):
@@ -657,6 +668,34 @@ def test_project_valid_cron_branch_levels(branches):
         repo_type="git",
         features={"taskgraph-cron": True},
     )
+
+
+@pytest.mark.parametrize(
+    "project_data",
+    (
+        # a try repo never gets action hooks, so `*` alone is fine there
+        {
+            "alias": "try",
+            "branches": [{"name": "*"}],
+            "repo": "https://hg.mozilla.org/try",
+            "repo_type": "hg",
+            "access": "scm_level_1",
+            "is_try": True,
+            "features": {"gecko-actions": True},
+        },
+        # no actions, so no branch is needed for them
+        {
+            "alias": "prj",
+            "branches": [{"name": "*", "level": 1}],
+            "repo": "https://github.com/mozilla-releng/prj",
+            "repo_type": "git",
+            "features": {"github-pull-request": {"policy": "public"}},
+        },
+    ),
+)
+def test_project_star_only_branches_without_actions(project_data):
+    "None of these should raise"
+    Project(**project_data)
 
 
 def test_project_repo_path_property():
