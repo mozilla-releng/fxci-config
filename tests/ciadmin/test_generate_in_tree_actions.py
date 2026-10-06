@@ -84,17 +84,19 @@ def fake_git(monkeypatch):
     (
         pytest.param(
             [{"name": "main", "level": 3}, {"name": "release/*", "level": 2}],
-            ["main", "release/*", "main"],
-            id="default-branch-appended-even-when-already-listed",
+            ["main", "release/*"],
+            id="named-branches-and-substring-globs",
         ),
         # A bare `*` would pull in every branch in the repo.
-        pytest.param([{"name": "*", "level": 1}], ["main"], id="bare-star-dropped"),
+        pytest.param(
+            [{"name": "*", "level": 1}, {"name": "main", "level": 1}],
+            ["main"],
+            id="bare-star-dropped",
+        ),
     ),
 )
 def test_configured_branches(branches, expected):
-    project = Project(
-        alias="example", **{**GIT_PROJECT, "branches": branches}, default_branch="main"
-    )
+    project = Project(alias="example", **{**GIT_PROJECT, "branches": branches})
     assert in_tree_actions.configured_branches(project) == expected
 
 
@@ -356,7 +358,12 @@ async def test_invalidates_hooks_ignores_hg_projects(projects):
 
 
 @pytest.mark.asyncio
-async def test_invalidates_hooks_default_branch_is_always_configured(projects):
-    projects(example={**GIT_PROJECT, "branches": [{"name": "*", "level": 1}]})
+async def test_invalidates_hooks_ignores_a_bare_star(projects):
+    projects(
+        example={
+            **GIT_PROJECT,
+            "branches": [{"name": "*", "level": 1}, {"name": "main", "level": 1}],
+        }
+    )
     assert await in_tree_actions.invalidates_hooks("mozilla/example", "main")
     assert not await in_tree_actions.invalidates_hooks("mozilla/example", "some-topic")
