@@ -2181,8 +2181,8 @@ pools:
               diffDiskOption: Local
               diffDiskPlacement: NvmeDisk
               osDiskCaching: ReadOnly
-              enableFullCaching: true
-              osDiskStorageAccountType: StandardSSD_LRS
+              enableFullCaching: false
+              osDiskStorageAccountType: Standard_LRS
           default:
             by-suffix:
               alpha:
@@ -2199,8 +2199,8 @@ pools:
                   diffDiskOption: Local
                   diffDiskPlacement: NvmeDisk
                   osDiskCaching: ReadOnly
-                  enableFullCaching: true
-                  osDiskStorageAccountType: StandardSSD_LRS
+                  enableFullCaching: false
+                  osDiskStorageAccountType: Standard_LRS
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
@@ -2221,15 +2221,15 @@ pools:
             cachesDir:
               by-suffix:
                 .*alpha: D:\caches
-                default: C:\caches
+                default: D:\caches
             downloadsDir:
               by-suffix:
                 .*alpha: D:\downloads
-                default: C:\downloads
+                default: D:\downloads
             tasksDir:
               by-suffix:
                 .*alpha: D:\tasks
-                default: C:\Users
+                default: D:\tasks
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2342,16 +2342,16 @@ pools:
                   diffDiskOption: Local
                   diffDiskPlacement: NvmeDisk
                   osDiskCaching: ReadOnly
-                  enableFullCaching: true
-                  osDiskStorageAccountType: StandardSSD_LRS
+                  enableFullCaching: false
+                  osDiskStorageAccountType: Standard_LRS
           3:
             templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
             parameters:
               diffDiskOption: Local
               diffDiskPlacement: NvmeDisk
               osDiskCaching: ReadOnly
-              enableFullCaching: true
-              osDiskStorageAccountType: StandardSSD_LRS
+              enableFullCaching: false
+              osDiskStorageAccountType: Standard_LRS
       worker-purpose:
         by-pool-group:
           mozillavpn-1: vpn-1
@@ -2371,15 +2371,15 @@ pools:
             cachesDir:
               by-suffix:
                 .*alpha: D:\caches
-                default: C:\caches
+                default: D:\caches
             downloadsDir:
               by-suffix:
                 .*alpha: D:\downloads
-                default: C:\downloads
+                default: D:\downloads
             tasksDir:
               by-suffix:
                 .*alpha: D:\tasks
-                default: C:\Users
+                default: D:\tasks
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2599,15 +2599,15 @@ pools:
             cachesDir:
               by-suffix:
                 .*alpha: D:\caches
-                default: C:\caches
+                default: D:\caches
             downloadsDir:
               by-suffix:
                 .*alpha: D:\downloads
-                default: C:\downloads
+                default: D:\downloads
             tasksDir:
               by-suffix:
                 .*alpha: D:\tasks
-                default: C:\Users
+                default: D:\tasks
       tags:
         sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
         sourceBranch: master
@@ -2632,16 +2632,16 @@ pools:
                   diffDiskOption: Local
                   diffDiskPlacement: NvmeDisk
                   osDiskCaching: ReadOnly
-                  enableFullCaching: true
-                  osDiskStorageAccountType: StandardSSD_LRS
+                  enableFullCaching: false
+                  osDiskStorageAccountType: Standard_LRS
           3:
             templateSpecId: /subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
             parameters:
               diffDiskOption: Local
               diffDiskPlacement: NvmeDisk
               osDiskCaching: ReadOnly
-              enableFullCaching: true
-              osDiskStorageAccountType: StandardSSD_LRS
+              enableFullCaching: false
+              osDiskStorageAccountType: Standard_LRS
       vmSizes:
         - vmSize: Standard_D16pds_v6
       worker-manager-config:
