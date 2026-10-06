@@ -541,8 +541,8 @@
 
 - grant:
     # Allow the change-priority action to change priorities
-    - queue:change-task-group-priority:{trust_domain}-level-{level}
-    - queue:change-task-group-priority:{trust_domain}-level-{level}
+    - queue:change-task-group-priority:{trust_domain}-level-{level}/*
+    - queue:change-task-group-priority:{trust_domain}-level-{level}/*
   to:
     - projects:
         job: [action:change-priority]
