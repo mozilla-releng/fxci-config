@@ -2334,7 +2334,6 @@ pools:
       locations: [east-us-2]
       maxCapacity:
         by-suffix:
-          gpu: 25
           .*alpha:
             by-pool-group:
               gecko-.*: 10

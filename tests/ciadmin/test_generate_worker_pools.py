@@ -722,7 +722,7 @@ def test_windows2025_builder_pool(pool_id, vm_size):
         deepcopy(pools["worker-defaults"]),
     )
     assert config["minCapacity"] == 0
-    assert config["maxCapacity"] == (10 if alpha else 25 if gpu else 500)
+    assert config["maxCapacity"] == (10 if alpha else 500)
     launch = config["launchConfigs"][0]
     assert launch["location"] == "eastus2"
     arm = launch["armDeployment"]
