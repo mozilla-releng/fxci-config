@@ -675,6 +675,8 @@ firefox-dev:
   repo_type: git
   trust_domain: gecko
   branches:
+    - name: main
+      level: 1
     - name: "*"
       level: 1
   features:
@@ -743,6 +745,8 @@ enterprise-firefox-try:
   default_branch: enterprise-main
   trust_domain: enterprise
   branches:
+    - name: enterprise-main
+      level: 1
     - name: "*"
       level: 1
   features:
@@ -1419,6 +1423,8 @@ staging-adhoc-signing:
   repo: https://github.com/mozilla-releng/staging-adhoc-signing
   repo_type: git
   branches:
+    - name: main
+      level: 1
     - name: "*"
       level: 1
   default_branch: main
