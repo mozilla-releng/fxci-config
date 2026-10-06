@@ -3,8 +3,11 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 from argparse import Namespace
+from copy import deepcopy
+from pathlib import Path
 
 import pytest
+import yaml
 from tcadmin.resources import Resources
 from tcadmin.resources.worker_pool import WorkerPool as TCWorkerPool
 
@@ -14,6 +17,7 @@ from ciadmin.generate.ciconfig.worker_pools import WorkerPool
 from ciadmin.generate.worker_pools import (
     _arm_deployment_resource_group,
     generate_pool_variants,
+    get_azure_provider_config,
     is_invalid_gcp_instance_type,
     make_worker_pool,
 )
@@ -665,3 +669,83 @@ def test_variant_overrides_owner_and_email():
     a, b = generate_pool_variants([wp], "cluster")
     assert (a.owner, a.email_on_error) == ("default@example.com", True)
     assert (b.owner, b.email_on_error) == ("other@example.com", False)
+
+
+@pytest.mark.parametrize(
+    "pool_id,vm_size",
+    [
+        ("gecko-1/b-win2025-gpu", "Standard_NV12ads_A10_v5"),
+        ("gecko-2/b-win2025-gpu", "Standard_NV12ads_A10_v5"),
+        ("gecko-3/b-win2025-gpu", "Standard_NV12ads_A10_v5"),
+        ("gecko-1/b-win2025-gpu-alpha", "Standard_NV12ads_A10_v5"),
+        ("gecko-3/b-win2025-gpu-alpha", "Standard_NV12ads_A10_v5"),
+        ("gecko-1/b-win2025-large", "Standard_D96ads_v7"),
+        ("gecko-3/b-win2025-large", "Standard_D96ads_v7"),
+        ("gecko-1/b-win2025-large-alpha", "Standard_D96ads_v7"),
+        ("gecko-1/b-win2025-xxlarge", "Standard_D96ads_v7"),
+        ("gecko-3/b-win2025-xxlarge", "Standard_D96ads_v7"),
+    ],
+)
+def test_windows2025_builder_pool(pool_id, vm_size):
+    root = Path(__file__).resolve().parents[2]
+    pools = yaml.safe_load((root / "worker-pools.yml").read_text())
+    images = yaml.safe_load((root / "worker-images.yml").read_text())
+    environments = yaml.safe_load((root / "environments.yml").read_text())
+    environment = Environment(name="firefoxci", **environments["firefoxci"])
+    windows = next(
+        pool
+        for pool in pools["pools"]
+        if pool["pool_id"] == "{pool-group}/b-win2025-{suffix}"
+    )
+    variants = {
+        pool.pool_id: pool
+        for pool in generate_pool_variants([WorkerPool(**windows)], "firefoxci")
+    }
+    pool = variants[pool_id]
+    trusted = pool_id.startswith("gecko-3/")
+    alpha = pool_id.endswith("-alpha")
+    gpu = "-gpu" in pool_id
+    provider = "azure_trusted" if trusted else "azure2"
+    image = (
+        f"ronin_b{3 if trusted else 1}_windows2025_64_24h2_alpha"
+        if alpha
+        else f"ronin_b{3 if trusted else 1}_windows2025_64_24h2"
+    )
+    assert pool.provider_id == provider
+    assert pool.config["image"] == image
+    config = get_azure_provider_config(
+        environment,
+        pool.provider_id,
+        pool_id,
+        deepcopy(pool.config),
+        WorkerImages([WorkerImage(image, clouds=images[image])]),
+        deepcopy(pools["worker-defaults"]),
+    )
+    assert config["minCapacity"] == 0
+    assert config["maxCapacity"] == (10 if alpha else 25 if gpu else 500)
+    launch = config["launchConfigs"][0]
+    assert launch["location"] == "eastus2"
+    arm = launch["armDeployment"]
+    template = (
+        "taskcluster-arm-template-alpha"
+        if alpha and not trusted
+        else "taskcluster-arm-template"
+    )
+    assert f"/templateSpecs/{template}/" in arm["templateLink"]["id"]
+    subscription = environment.azure_config[
+        "trusted_subscription" if trusted else "untrusted_subscription"
+    ]
+    assert arm["templateLink"]["id"].startswith(f"/subscriptions/{subscription}/")
+    params = {key: value["value"] for key, value in arm["parameters"].items()}
+    assert params["vmSize"] == vm_size
+    assert params["diffDiskPlacement"] == ("CacheDisk" if gpu else "NvmeDisk")
+    assert params["diffDiskOption"] == "Local"
+    assert params["enableFullCaching"] is False
+    assert params["priority"] == "Spot"
+    gw = launch["workerConfig"]["genericWorker"]["config"]
+    assert gw["provisionerId"] == pool_id.split("/")[0]
+    assert gw["workerType"] == pool_id.split("/")[1]
+    assert gw["enableInteractive"] is not trusted
+    assert gw["tasksDir"] == "D:\\tasks"
+    assert gw["cachesDir"] == "D:\\caches"
+    assert gw["downloadsDir"] == "D:\\downloads"
