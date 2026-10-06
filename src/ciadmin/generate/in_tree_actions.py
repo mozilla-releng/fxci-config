@@ -414,12 +414,10 @@ async def update_resources(resources):
     projects_by_level_and_trust_domain = {}
     for project in projects:
         for branch in project.branches:
-            # There's only a single action role for all branches, so if a
-            # branch has a lower level than the default branch's level, the
-            # action role would contain scopes for both levels and privilege
-            # escalation would be possible. To avoid this, actions on lower
-            # level branches are not supported.
-            if branch.level < (project.default_branch.level or 0):
+            # There's only a single action role for all branches, minted at
+            # the project's level. A hook for a lower level branch could
+            # assume it, so actions on such branches are not supported.
+            if branch.level < project.level:
                 continue
             projects_by_level_and_trust_domain.setdefault(
                 (project.trust_domain, branch.level), []

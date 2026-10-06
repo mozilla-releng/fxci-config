@@ -182,22 +182,14 @@ class Project:
                     "branch with `cron: true`"
                 )
 
-            # Reject cron branches below the project's `default_branch.level`.
-            if self.default_branch.level is None:
-                raise ValueError(
-                    f"Project {self.alias} runs cron but its default branch "
-                    f"{self.default_branch.name!r} is not matched by any entry in "
-                    "`branches`, so it has no level"
-                )
-
+            # A cron hook's role points at the repo-wide `cron:*` role, which is
+            # minted at the project's level, so a lower branch may not run cron.
             for branch in self.branches:
-                if not branch.cron:
-                    continue
-
-                if branch.level < self.default_branch.level:
+                if branch.cron and branch.level < self.level:
                     raise ValueError(
-                        f"Project {self.alias} must not have cron branch '{branch.name}' "
-                        f"with lower level than default branch '{self.default_branch.name}'."
+                        f"Project {self.alias} must not run cron on branch "
+                        f"'{branch.name}' at level {branch.level}, below the "
+                        f"project's level {self.level}."
                     )
 
     @staticmethod

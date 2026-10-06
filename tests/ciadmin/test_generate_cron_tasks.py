@@ -355,25 +355,26 @@ async def test_each_branch_gets_its_own_hooks(cron_template):
 
 
 @pytest.mark.asyncio
-async def test_each_branch_gets_its_own_level(cron_template):
+async def test_cron_hooks_run_at_the_project_level(cron_template):
     """
-    A cron task runs at the level of the branch it runs on.
-
-    Only branches at or above the default branch's level may run cron; see
-    `test_cron_branches_may_not_be_below_the_default_branch` below.
+    Every cron branch sits at the project's level, the highest among its
+    branches, so every cron hook runs there. A lower branch may exist as long
+    as it does not run cron; see
+    `test_cron_branches_may_not_be_below_the_project_level` below.
     """
     project = github_project(
         branches=[
-            {"name": "main", "level": 1, "cron": True},
+            {"name": "main", "level": 3, "cron": True},
             {"name": "production", "level": 3, "cron": True},
+            {"name": "*", "level": 1},
         ],
     )
     resources = await cron_tasks.make_hooks(project, ENVIRONMENT)
     hooks, _ = by_id(resources)
 
-    for hook_id, level in ((BASE_HOOK_ID, "1"), (f"{BASE_HOOK_ID}-production", "3")):
-        assert value_of(hooks[hook_id], "--level") == level
-        assert hooks[hook_id].task["schedulerId"] == f"releng-level-{level}"
+    for hook_id in (BASE_HOOK_ID, f"{BASE_HOOK_ID}-production"):
+        assert value_of(hooks[hook_id], "--level") == "3"
+        assert hooks[hook_id].task["schedulerId"] == "releng-level-3"
 
 
 @pytest.mark.asyncio
@@ -381,11 +382,11 @@ async def test_cron_branch_hooks_share_role(cron_template):
     """
     Cron hooks are per-branch, but the scopes they grant are not: each branch's
     role points at the same repo-wide `cron:*` role, whose scopes are generated
-    at the project's `default_branch.level`.
+    at the project's level.
     """
     project = github_project(
         branches=[
-            {"name": "main", "level": 1, "cron": True},
+            {"name": "main", "level": 3, "cron": True},
             {"name": "production", "level": 3, "cron": True},
         ],
     )
@@ -396,8 +397,8 @@ async def test_cron_branch_hooks_share_role(cron_template):
     assert scope in roles[f"{BASE_ROLE_ID}-production"].scopes
 
 
-def test_cron_branches_may_not_be_below_the_default_branch(cron_template):
-    with pytest.raises(ValueError):
+def test_cron_branches_may_not_be_below_the_project_level(cron_template):
+    with pytest.raises(ValueError, match="below the project's level"):
         github_project(
             branches=[
                 {"name": "main", "level": 3, "cron": True},

@@ -185,9 +185,9 @@ def add_scopes_for_projects(grant, grantee, add_scope, projects):
         # regardless of the iteration order of the sets above
         for job in sorted(non_branch_jobs):
             roleId = format_role_id(project, job, pr_policy)
-            level = project.default_branch.level
+            level = project.level
 
-            # If the grantee has a level, use default_branch.level to filter out
+            # If the grantee has a level, use the project's level to filter out
             # actions and cron. Pull requests are hardcoded to L1 and were already
             # filtered out above.
             if (

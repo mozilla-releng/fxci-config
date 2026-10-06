@@ -583,8 +583,8 @@ def test_project_level_failing_validators(project_data, error_type):
             ValueError,
         ),
         (
-            # cron branch below the default branch's level: its hook would hold
-            # the repo's level-3 `cron:*` scopes
+            # cron branch below the project's level: its hook would hold the
+            # repo's level-3 `cron:*` scopes
             {
                 "alias": "prj",
                 "branches": [
@@ -612,10 +612,13 @@ def test_project_level_failing_validators(project_data, error_type):
             ValueError,
         ),
         (
-            # default branch not matched by any `branches` entry
+            # the cron branch is not at the project's level either
             {
                 "alias": "prj",
-                "branches": [{"name": "production", "level": 3, "cron": True}],
+                "branches": [
+                    {"name": "main", "level": 1, "cron": True},
+                    {"name": "production", "level": 3, "cron": True},
+                ],
                 "repo": "https://github.com/mozilla-releng/prj",
                 "repo_type": "git",
                 "features": {"taskgraph-cron": True},
@@ -635,16 +638,17 @@ def test_project_level_failing_post_init_checks(project_data, error_type):
     (
         # the common case: cron runs on the default branch only
         [{"name": "main", "level": 3, "cron": True}],
-        # several branches, all at the default branch's level
+        # several branches, all at the project's level
         [
             {"name": "main", "level": 3, "cron": True},
             {"name": "beta", "level": 3, "cron": True},
         ],
-        # a cron branch *above* the default branch's level is allowed: the
-        # `cron:*` role it points at is under-privileged, not over-privileged
+        # cron on a branch that is not the repository's default branch
+        [{"name": "production", "level": 3, "cron": True}],
+        # a lower branch is fine as long as it does not run cron
         [
-            {"name": "main", "level": 1, "cron": True},
-            {"name": "production", "level": 3, "cron": True},
+            {"name": "main", "level": 3, "cron": True},
+            {"name": "*", "level": 1},
         ],
     ),
 )
