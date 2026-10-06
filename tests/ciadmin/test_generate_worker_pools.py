@@ -742,6 +742,12 @@ def test_windows2025_builder_pool(pool_id, vm_size):
     assert params["diffDiskOption"] == "Local"
     assert params["enableFullCaching"] is False
     assert params["priority"] == "Spot"
+    image_config = images[image][provider]
+    assert params["imageId"].endswith(
+        f"/galleries/{image_config['name']}/images/{image_config['name']}"
+        f"/versions/{image_config['version']}"
+    )
+    assert launch["tags"]["deploymentId"] == image_config["deployment_id"]
     gw = launch["workerConfig"]["genericWorker"]["config"]
     assert gw["provisionerId"] == pool_id.split("/")[0]
     assert gw["workerType"] == pool_id.split("/")[1]
