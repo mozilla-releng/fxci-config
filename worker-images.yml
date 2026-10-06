@@ -128,6 +128,30 @@ ronin_b3_windows2025_64_24h2:
     resource_group: rg-packer-worker-images
     deployment_id: 29172b6
     name: trusted_win2025_64_24h2
+ronin_b1_windows2025_64_24h2_core_alpha:
+  azure2:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: 29172b6
+    name: win2025_64_24h2_core_alpha
+ronin_b3_windows2025_64_24h2_core_alpha:
+  azure_trusted:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: 29172b6
+    name: trusted_win2025_64_24h2_core
+ronin_b1_windows2025_64_24h2_core:
+  azure2:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: 29172b6
+    name: win2025_64_24h2_core
+ronin_b3_windows2025_64_24h2_core:
+  azure_trusted:
+    version: 1.0.0
+    resource_group: rg-packer-worker-images
+    deployment_id: 29172b6
+    name: trusted_win2025_64_24h2_core
 # Windows 10
 ronin_t_windows10_64_2009_prod:
   azure2:

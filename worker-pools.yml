@@ -2299,6 +2299,18 @@ pools:
       - pool-group: enterprise-1
       - pool-group: enterprise-3
         level: 3
+      - pool-group: gecko-1
+        suffix: core
+      - pool-group: gecko-1
+        suffix: core-alpha
+      - pool-group: gecko-2
+        suffix: core
+      - pool-group: gecko-3
+        level: 3
+        suffix: core
+      - pool-group: gecko-3
+        level: 3
+        suffix: core-alpha
     provider_id:
       by-level:
         1: azure2
@@ -2306,6 +2318,8 @@ pools:
     config:
       image:
         by-suffix:
+          core: ronin_b{level}_windows2025_64_24h2_core
+          core-alpha: ronin_b{level}_windows2025_64_24h2_core_alpha
           alpha: ronin_b1_windows2025_64_24h2_alpha
           default: ronin_b{level}_windows2025_64_24h2
       implementation:
@@ -2315,7 +2329,7 @@ pools:
       locations: [east-us-2]
       maxCapacity:
         by-suffix:
-          alpha:
+          .*alpha:
             by-pool-group:
               gecko-.*: 10
               default: 25
@@ -2328,7 +2342,7 @@ pools:
         by-level:
           1:
             by-suffix:
-              alpha:
+              .*alpha:
                 templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
                 parameters:
                   diffDiskOption: Local
