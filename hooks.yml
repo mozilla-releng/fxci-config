@@ -126,6 +126,8 @@ project-relman/code-review-{mode}:
   bindings:
     - exchange: exchange/taskcluster-queue/v1/task-completed
       routing_key_pattern: route.project.relman.codereview.v1.try_ending
+    - exchange: exchange/taskcluster-queue/v1/task-completed
+      routing_key_pattern: route.project.relman.codereview-build-test.v1.try_ending
     - exchange: exchange/taskcluster-queue/v1/task-group-resolved
       routing_key_pattern: '#.gecko-level-3.#'
   trigger_schema:
@@ -138,22 +140,32 @@ project-relman/code-review-{mode}:
         type: string
         description: Phabricator Build target's PHID triggering the hook
 
+      # Used in Phabricator token payloads
+      analysis_mode:
+        type: string
+        description: The type of code analysis to do; must be a valid AnalysisMode in code-review-bot
+
       # Trigger hook from pulse for analyzing results
-      runId:
-        type: integer
-        description: Taskcluster Task Run ID triggering the hook (should be a Try Task run)
       status:
         type: object
         required:
-          - taskId
           - taskGroupId
         properties:
-          taskId:
-            type: string
-            description: Taskcluster Task ID triggering the hook (should be a Try Task)
           taskGroupId:
             type: string
             description: Taskcluster Task Group ID triggering the hook (should be a Try Task Group)
+      task:
+        type: object
+        required:
+          - tags
+        properties:
+          tags:
+            type: object
+            required:
+              - label
+            properties:
+              label:
+                type: string
 
 lint/pre-commit-{version}:
   variants:
