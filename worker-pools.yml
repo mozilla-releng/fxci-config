@@ -2261,6 +2261,14 @@ pools:
       - pool-group: gecko-1
         suffix: alpha
       - pool-group: gecko-1
+        suffix: gpu
+      - pool-group: gecko-1
+        suffix: gpu-alpha
+      - pool-group: gecko-1
+        suffix: large
+      - pool-group: gecko-1
+        suffix: large-alpha
+      - pool-group: gecko-1
         suffix: xxlarge
       - pool-group: gecko-1
         suffix: headless
@@ -2268,9 +2276,20 @@ pools:
         suffix: updatebot
       - pool-group: gecko-2
       - pool-group: gecko-2
+        suffix: gpu
+      - pool-group: gecko-2
         suffix: updatebot
       - pool-group: gecko-3
         level: 3
+      - pool-group: gecko-3
+        level: 3
+        suffix: gpu
+      - pool-group: gecko-3
+        level: 3
+        suffix: gpu-alpha
+      - pool-group: gecko-3
+        level: 3
+        suffix: large
       - pool-group: gecko-3
         level: 3
         suffix: xxlarge
@@ -2312,7 +2331,7 @@ pools:
       image:
         by-suffix:
           core-alpha: ronin_b{level}_windows2025_64_24h2_core_alpha
-          alpha: ronin_b1_windows2025_64_24h2_alpha
+          .*alpha: ronin_b{level}_windows2025_64_24h2_alpha
           default: ronin_b{level}_windows2025_64_24h2
       implementation:
         by-suffix:
@@ -2395,13 +2414,15 @@ pools:
       vmSizes:
         - vmSize:
             by-suffix:
-              .*xxlarge.*: Standard_D96ads_v7
+              .*large.*: Standard_D96ads_v7
+              gpu(-alpha)?: Standard_NV12ads_A10_v5
               default: Standard_D32ads_v7
           armDeployment:
-            parameters:
-              diffDiskOption: Local
-              diffDiskPlacement: NvmeDisk
-              osDiskCaching: ReadOnly
+            by-vmSize:
+              Standard_NV12ads_A10_v5:
+                parameters:
+                  diffDiskPlacement: CacheDisk
+              default: {}
       worker-manager-config:
         capacityPerInstance: 1
         initialWeight: 1
