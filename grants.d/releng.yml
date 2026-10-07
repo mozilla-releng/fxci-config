@@ -182,6 +182,7 @@
 - grant:
     - queue:create-task:low:gecko-1/b-win2022-alpha
     - queue:create-task:low:gecko-1/b-win2025-alpha
+    - queue:create-task:low:gecko-1/b-win2025-core-alpha
     - queue:create-task:low:gecko-1/win11-a64-25h2-builder-alpha
   to:
     - project:
