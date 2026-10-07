@@ -2318,6 +2318,11 @@ pools:
       - pool-group: enterprise-1
       - pool-group: enterprise-3
         level: 3
+      - pool-group: gecko-1
+        suffix: core-alpha
+      - pool-group: gecko-3
+        level: 3
+        suffix: core-alpha
     provider_id:
       by-level:
         1: azure2
@@ -2325,6 +2330,7 @@ pools:
     config:
       image:
         by-suffix:
+          core-alpha: ronin_b{level}_windows2025_64_24h2_core_alpha
           .*alpha: ronin_b{level}_windows2025_64_24h2_alpha
           default: ronin_b{level}_windows2025_64_24h2
       implementation:
