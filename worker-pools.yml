@@ -2300,14 +2300,7 @@ pools:
       - pool-group: enterprise-3
         level: 3
       - pool-group: gecko-1
-        suffix: core
-      - pool-group: gecko-1
         suffix: core-alpha
-      - pool-group: gecko-2
-        suffix: core
-      - pool-group: gecko-3
-        level: 3
-        suffix: core
       - pool-group: gecko-3
         level: 3
         suffix: core-alpha
@@ -2318,7 +2311,6 @@ pools:
     config:
       image:
         by-suffix:
-          core: ronin_b{level}_windows2025_64_24h2_core
           core-alpha: ronin_b{level}_windows2025_64_24h2_core_alpha
           alpha: ronin_b1_windows2025_64_24h2_alpha
           default: ronin_b{level}_windows2025_64_24h2
