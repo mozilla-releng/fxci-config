@@ -2493,8 +2493,8 @@ pools:
               diffDiskOption: Local
               diffDiskPlacement: ResourceDisk
               osDiskCaching: ReadOnly
-              enableFullCaching: true
-              osDiskStorageAccountType: StandardSSD_LRS
+              enableFullCaching: false
+              osDiskStorageAccountType: Standard_LRS
       worker-config:
         genericWorker:
           config:
@@ -2926,8 +2926,8 @@ pools:
               diffDiskOption: Local
               diffDiskPlacement: ResourceDisk
               osDiskCaching: ReadOnly
-              enableFullCaching: true
-              osDiskStorageAccountType: StandardSSD_LRS
+              enableFullCaching: false
+              osDiskStorageAccountType: Standard_LRS
       worker-config:
         genericWorker:
           config:
@@ -3143,8 +3143,8 @@ pools:
               diffDiskOption: Local
               diffDiskPlacement: ResourceDisk
               osDiskCaching: ReadOnly
-              enableFullCaching: true
-              osDiskStorageAccountType: StandardSSD_LRS
+              enableFullCaching: false
+              osDiskStorageAccountType: Standard_LRS
       worker-config:
         genericWorker:
           config:
@@ -3363,8 +3363,8 @@ pools:
               diffDiskOption: Local
               diffDiskPlacement: NvmeDisk
               osDiskCaching: ReadOnly
-              enableFullCaching: true
-              osDiskStorageAccountType: StandardSSD_LRS
+              enableFullCaching: false
+              osDiskStorageAccountType: Standard_LRS
       vmSizes:
         - vmSize:
             by-suffix:
