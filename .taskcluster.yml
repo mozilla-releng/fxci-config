@@ -226,6 +226,9 @@ tasks:
                                     FXCI_HEAD_REV: '${head_sha}'
                                     FXCI_REPOSITORY_TYPE: git
                                     REPOSITORIES: {$json: {fxci: "Firefox-CI Config"}}
+                                    # Temporary: test taskgraph PR 1070. See taskcluster/requirements.in
+                                    FXCI_PIP_REQUIREMENTS: taskcluster/requirements.txt
+                                    PIP_DISABLE_REQUIRE_HASHES: '1'
                                   - $if: 'tasks_for == "action"'
                                     then:
                                         ACTION_TASK_GROUP_ID: '${action.taskGroupId}'  # taskGroupId of the target task

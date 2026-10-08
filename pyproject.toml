@@ -40,12 +40,16 @@ dev = [
     "pytest-taskgraph>=0.1.0",
     "responses>=0.25.3",
     # Keep this synced with the version in `.taskcluster.yml`.
-    "taskcluster-taskgraph==24.3.0",
+    "taskcluster-taskgraph",
 ]
 
 [project.scripts]
 ci-admin = "ciadmin.boot:boot"
 fxci = "fxci.cli:main"
+
+[tool.uv.sources]
+# Temporary: https://github.com/taskcluster/taskgraph/pull/1070
+taskcluster-taskgraph = { git = "https://github.com/taskcluster/taskgraph", rev = "refs/pull/1070/head" }
 
 [tool.uv.workspace]
 members = ["build-decision"]
