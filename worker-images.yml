@@ -229,10 +229,10 @@ ronin_t_windows11_64_2009:
 
 # Images migrated from community-tc (shared across projects).
 gw-ubuntu-24-04:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-b2c48cb4712741fc84e0
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-dc8b8fa453dc44228536
 
 gw-ubuntu-24-04-arm64:
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-a09ac7ef8ab247baad28
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-0f74b8027af7419c91af
 
 fuzzing-docker-worker-legacy:
   aws:
@@ -251,10 +251,10 @@ gw-win2022-gpu:
     resource_group: rg-packer-worker-images
     deployment_id: fuzzing
     sbom: false
-    east-us: imageset-15324b02de2f45dbb542-eastus
-    east-us-2: imageset-63fd57eb5b554031a8c7-eastus2
-    south-central-us: imageset-a4725f43c2814232b890-southcentralus
-    west-us-2: imageset-a6794c729e134be3a1c3-westus2
+    east-us: imageset-994bb150daa347dfb43f-eastus
+    east-us-2: imageset-34ff7b723db94f55bd40-eastus2
+    south-central-us: imageset-789b596b99df43eda282-southcentralus
+    west-us-2: imageset-abf07d543c6144a78848-westus2
 
 gw-win2022:
   azure2:
@@ -262,5 +262,5 @@ gw-win2022:
     resource_group: rg-packer-worker-images
     deployment_id: fuzzing
     sbom: false
-    central-us: imageset-1ffeb4aa61fa4361a1e8-centralus
-    east-us: imageset-3f450fa747af4e6fb417-eastus
+    central-us: imageset-16804d13b8024e46ab0c-centralus
+    east-us: imageset-f4e676838caa4c5fbd62-eastus
