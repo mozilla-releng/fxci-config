@@ -13,6 +13,7 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    environment: diff-${{matrix.environment}}
     strategy:
       matrix:
         environment: ["staging", "firefoxci"]
@@ -20,6 +21,12 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       FXCI_CONFIG_CACHE: ${{github.workspace}}/cache.${{matrix.environment}}.json
       UV_LOCKED: "1"
+      # Runs that may use the `generate-trusted` client, which reads private
+      # repositories. Any other run gets no Taskcluster credentials.
+      TRUSTED_SOURCE: >-
+        ${{ github.event_name != 'pull_request'
+        || github.event.pull_request.head.repo.full_name == github.repository
+        || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Set up Python
@@ -42,6 +49,9 @@ jobs:
             echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> "$GITHUB_ENV"
           fi
       - name: Generate config
+        env:
+          TASKCLUSTER_CLIENT_ID: ${{ env.TRUSTED_SOURCE == 'true' && vars.TRUSTED_TASKCLUSTER_CLIENT_ID || '' }}
+          TASKCLUSTER_ACCESS_TOKEN: ${{ env.TRUSTED_SOURCE == 'true' && secrets.TRUSTED_TASKCLUSTER_ACCESS_TOKEN || '' }}
         run: uv run tc-admin generate --environment ${{matrix.environment}} --json > "$FXCI_CONFIG_CACHE"
       - name: Upload config cache
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
