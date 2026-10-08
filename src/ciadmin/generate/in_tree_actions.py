@@ -80,17 +80,10 @@ def should_hash(project):
 
 def configured_branches(project):
     """The branch names, possibly globbed, that `project` generates actions for."""
-    # If "*" is a configured branch we explicitly ignore it; otherwise
-    # we could end up fetching 100s or 1000s of tcymls and generating
-    # hooks for them. Substring globs may still exist, and are
-    # supported.
-    names = [b.name for b in project.branches if b.name != "*"]
-    # The default branch is considered to be _always_ configured, even if
-    # not explicitly named in `branches`. This is primarily to ensure that
-    # cases where `*` is the only branch explicitly listed, that we still
-    # generate actions for the default branch.
-    names.append(project.default_branch.name)
-    return names
+    # A bare "*" is ignored; honouring it could mean fetching 100s or 1000s
+    # of tcymls and generating hooks for them. Substring globs such as
+    # `release/*` are still supported.
+    return [b.name for b in project.branches if b.name != "*"]
 
 
 async def invalidates_hooks(repo_path, branch):

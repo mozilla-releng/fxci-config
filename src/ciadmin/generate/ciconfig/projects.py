@@ -174,6 +174,16 @@ class Project:
             else:
                 raise ValueError(f"Feature {name} must be a dict or boolean")
 
+        # action hooks are generated for the branches named here, never for a
+        # bare `*`, so a project with only `*` would silently get none
+        if self.feature("taskgraph-actions") or self.feature("gecko-actions"):
+            if not self.is_try and all(b.name == "*" for b in self.branches):
+                raise ValueError(
+                    f"Project {self.alias} enables actions but names no branch "
+                    "other than '*'. Add the branches that should have action "
+                    "hooks to `branches`."
+                )
+
         # checked last, because it relies on the features above being converted
         if self.feature("taskgraph-cron"):
             if not any(b.cron for b in self.branches):
