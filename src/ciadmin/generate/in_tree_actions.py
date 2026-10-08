@@ -414,9 +414,10 @@ async def update_resources(resources):
     projects_by_level_and_trust_domain = {}
     for project in projects:
         for branch in project.branches:
-            # There's only a single action role for all branches, minted at
-            # the project's level. A hook for a lower level branch could
-            # assume it, so actions on such branches are not supported.
+            # Every branch of a project shares its `repo:...:action:<perm>`
+            # role, which grants.py mints at the project's level. A lower
+            # level branch would put that role behind a lower level action
+            # hook, so actions on such branches are not supported.
             if branch.level < project.level:
                 continue
             projects_by_level_and_trust_domain.setdefault(
