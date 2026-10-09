@@ -316,8 +316,14 @@ def test_project_feature():
             "taskcluster-pull": True,
             "taskgraph-cron": False,
             "some-data": {"foo": "bar"},
+            "sw-one": True,
+            "off-two": False,
         },
     )
+    assert prj.feature("sw-*")
+    assert prj.feature("task*")
+    assert not prj.feature("off-*")
+    assert not prj.feature("nope-*")
     assert prj.feature("taskcluster-pull")
     assert prj.feature("some-data")
     assert prj.feature("some-data", key="foo") == "bar"
