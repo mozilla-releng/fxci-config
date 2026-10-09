@@ -666,6 +666,7 @@ firefox:
       policy: collaborators
     pr-actions: true
     scriptworker: true
+    scriptworker-signing: true
     taskgraph-actions: true
     taskgraph-cron: false
     treeherder-reporting: true
