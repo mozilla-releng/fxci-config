@@ -35,9 +35,6 @@
 #   - `mobile-roles` -- this repository should have https://github.com/mozilla-mobile roles assigned (for users, actions, cron, etc.)
 #   - `xpi-roles` -- this repository should have xpi roles assigned (for users, actions, cron, etc.)
 #   - `adhoc-roles` -- this repository should have adhoc roles assigned (for users, actions, cron, etc.)
-#   - `beetmover-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
-#   - `beetmover-maven-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
-#   - `beetmover-maven-nightly-phase` -- this https://github.com/mozilla-mobile repository should have beetmover nightly production related scopes associated
 #   - `mobile-firebase-testing` -- this https://github.com/mozilla-mobile repository has end-to-end testing involving devices hosted at Google's Firebase
 #   - `mobile-testrail` -- this https://github.com/mozilla-mobile repository uses testrail
 #   - `mobile-bump-github` -- this https://github.com/mozilla-mobile repository gets bumped.
@@ -1043,8 +1040,6 @@ application-services:
       level: 3
   trust_domain: app-services
   features:
-    # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
-    # across projects.
     github-taskgraph: true
     github-pull-request:
       policy: public
@@ -1089,8 +1084,6 @@ glean:
   trust_domain: glean
   trust_project: glean
   features:
-    # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
-    # across projects.
     github-taskgraph: true
     github-pull-request:
       policy: public
