@@ -48,7 +48,7 @@ payload:
               TRY_TASK_GROUP_ID:
                 $eval: payload.status.taskGroupId
               ANALYSIS_MODE: Lint
-            '"task" in payload && "tags" in payload["task"] && "label" in payload["task"]["tags"] && payload["task"]["tags"]["label"] == "code-review-build-test"':
+            '"task" in payload && "tags" in payload["task"] && "label" in payload["task"]["tags"] && payload["task"]["tags"]["label"] == "code-review-build-test-issues"':
               # Triggered by code-review-build-test task in try ending
               # so we can analyze a try patch
               TRY_TASK_GROUP_ID:
