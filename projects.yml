@@ -52,7 +52,6 @@
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - 'scriptworker' -- this repository uses at least one scriptworker instance
 #   - `scriptworker-<type>` -- this GitHub repository uses the `<type>` scriptworker (e.g. `scriptworker-beetmover`)
-#   - 'shipit' -- this repository interacts with a shipit instance
 #   - 'taskgraph-cron' -- tasks defined in `.cron.yml` can run for this project (non-gecko/comm taskgraph repos only)
 #   - 'taskgraph-actions' -- this repository defines in-tree actions and should have corresponding hooks defined
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to its trust domain
@@ -110,7 +109,7 @@ mozilla-release:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -136,7 +135,7 @@ comm-release:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
 mozilla-esr115:
   repo: https://hg.mozilla.org/releases/mozilla-esr115
   lando_repo: firefox-esr115
@@ -153,7 +152,7 @@ mozilla-esr115:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -176,7 +175,7 @@ mozilla-esr140:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -200,7 +199,7 @@ mozilla-esr153:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -227,7 +226,7 @@ comm-esr140:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
   cron:
     targets:
       - l10n-bumper
@@ -250,7 +249,7 @@ comm-esr153:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
   cron:
     targets:
       - l10n-bumper
@@ -327,7 +326,7 @@ mozilla-beta:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -357,7 +356,7 @@ comm-beta:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
   cron:
     targets:
       - l10n-bumper
@@ -378,7 +377,7 @@ mozilla-central:
     is-trunk: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -506,7 +505,7 @@ try:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -528,7 +527,7 @@ try-comm-central:
     taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
 larch:
   repo: https://hg.mozilla.org/projects/larch
   repo_type: hg
@@ -993,7 +992,7 @@ firefox-ios:
     merge-automation: true
     mobile-roles: true
     mobile-testrail: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -1026,7 +1025,7 @@ staging-firefox-ios:
     merge-automation: true
     mobile-roles: true
     mobile-testrail: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -1054,7 +1053,7 @@ application-services:
     github-pull-request:
       policy: public
     scriptworker: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1077,7 +1076,7 @@ staging-application-services:
     github-pull-request:
       policy: public
     scriptworker: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
     trust-domain-scopes: true
@@ -1326,7 +1325,7 @@ mozilla-vpn-client:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-actions: true
     # Enable this after .taskcluster.yml and .cron.yml exist in the repo
     # taskgraph-cron: true
@@ -1348,7 +1347,7 @@ staging-mozilla-vpn-client:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-actions: true
     # Enable this after .taskcluster.yml and .cron.yml exist in the repo
     # taskgraph-cron: true
@@ -1371,7 +1370,7 @@ xpi-manifest:
     github-pull-request:
       policy: collaborators
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
@@ -1393,7 +1392,7 @@ staging-xpi-manifest:
     github-pull-request:
       policy: collaborators
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
