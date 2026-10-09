@@ -1048,7 +1048,7 @@ application-services:
     taskgraph-cron: true
     taskgraph-actions: true
     trust-domain-scopes: true
-    beetmover: true
+    scriptworker-beetmover: true
   cron:
     targets: [nightly]
 
@@ -1071,7 +1071,7 @@ staging-application-services:
     taskgraph-cron: true
     taskgraph-actions: true
     trust-domain-scopes: true
-    beetmover: true
+    scriptworker-beetmover: true
   cron:
     targets: [nightly]
 
@@ -1090,7 +1090,7 @@ glean:
     scriptworker: true
     taskgraph-actions: true
     trust-domain-scopes: true
-    beetmover: true
+    scriptworker-beetmover: true
 
 # mozilla-releng Github repositories
 k8s-autoscale:
@@ -1320,7 +1320,7 @@ mozilla-vpn-client:
     # taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    beetmover: true
+    scriptworker-beetmover: true
     beetmover-get-artifact-scope: true
 
 staging-mozilla-vpn-client:
@@ -1342,7 +1342,7 @@ staging-mozilla-vpn-client:
     # taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    beetmover: true
+    scriptworker-beetmover: true
     beetmover-get-artifact-scope: true
 
 # Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
@@ -1363,7 +1363,7 @@ xpi-manifest:
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
-    beetmover: true
+    scriptworker-beetmover: true
     beetmover-get-artifact-scope: true
     lando: true
 
@@ -1385,7 +1385,7 @@ staging-xpi-manifest:
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
-    beetmover: true
+    scriptworker-beetmover: true
     beetmover-get-artifact-scope: true
     lando: true
 
@@ -1524,7 +1524,7 @@ translations:
     trust-domain-scopes: true
     treeherder-reporting: true
     pr-actions: true
-    beetmover: true
+    scriptworker-beetmover: true
     scriptworker: true
   cron:
     notify_emails: []
@@ -1552,7 +1552,7 @@ staging-firefox-translations-training:
     trust-domain-scopes: true
     treeherder-reporting: true
     pr-actions: true
-    beetmover: true
+    scriptworker-beetmover: true
   cron:
     notify_emails: []
     targets:

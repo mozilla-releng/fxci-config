@@ -157,7 +157,7 @@
   for:
       - project:
             level: 1
-            feature: [beetmover]
+            feature: [scriptworker-beetmover]
 
 - client:
       project/releng/scriptworker/v2/beetmover/prod/firefoxci-{trust_domain}-3:
@@ -168,7 +168,7 @@
   for:
       - project:
             level: 3
-            feature: [beetmover]
+            feature: [scriptworker-beetmover]
 
 - client:
       project/releng/scriptworker/v2/beetmover/prod/firefoxci-{trust_domain}-1:
@@ -178,7 +178,7 @@
               - queue:worker-id:{trust_domain}-1-beetmover/{trust_domain}-1-beetmover-*
   for:
       - project:
-            feature: [beetmover]
+            feature: [scriptworker-beetmover]
 
 # Clients for beetmoverscript workers
 - client:
