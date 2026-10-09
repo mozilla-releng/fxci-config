@@ -30,7 +30,7 @@
 # * access
 # * level (as derived from access or directly specified)
 # * alias
-# * feature (projects with the given feature or for `!feature`, projects without)
+# * feature (projects with the given feature or for `!feature`, projects without; a trailing `*` matches any feature with that prefix, e.g. `scriptworker-*`)
 # * is_try (true/false)
 # * trust_domain
 # * job
@@ -1298,80 +1298,10 @@
         feature: mobile-public-code-coverage
 
 - grant:
-    - project:{trust_domain}:{trust_project}:releng:beetmover:action:push-to-maven
-  to:
-    - project:
-        feature: beetmover-maven-phase
-        job: [pull-request:*, action:release-promotion]
-    - project:
-        feature: beetmover-maven-nightly-phase
-        job: [cron:nightly]
-
-- grant:
-    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:maven-production
-  to:
-    - project:
-        feature: beetmover-maven-phase
-        level: 3
-        job: [action:release-promotion]
-
-- grant:
-    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:maven-staging
-    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:maven-nightly-staging
-  to:
-    - project:
-        feature: beetmover-maven-phase
-        level: 1
-        job: [action:release-promotion, cron:nightly]
-    - project:
-        feature: beetmover-maven-phase
-        job: [pull-request:*]
-
-- grant:
-    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:maven-nightly-production
-  to:
-    - project:
-        feature: beetmover-maven-nightly-phase
-        level: 3
-        job: [cron:nightly]
-
-- grant:
-    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:dep
-    - project:{trust_domain}:{trust_project}:releng:beetmover:action:direct-push-to-bucket
-  to:
-    - project:
-        feature: beetmover-phase
-        job: [pull-request:*]
-    - project:
-        feature: beetmover-phase
-        level: 1
-        job: [action:release-promotion, cron:nightly]
-
-- grant:
-    - project:{trust_domain}:{trust_project}:releng:beetmover:action:direct-push-to-bucket
-    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:nightly
-    - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
-  to:
-    - project:
-        feature: beetmover-phase
-        level: 3
-        job: [cron:nightly]
-
-- grant:
-    - project:{trust_domain}:{trust_project}:releng:beetmover:action:direct-push-to-bucket
-    - project:{trust_domain}:{trust_project}:releng:beetmover:bucket:release
-    - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
-  to:
-    - project:
-        feature: beetmover-phase
-        level: 3
-        job: [action:release-promotion]
-
-- grant:
     - project:{trust_domain}:{alias}:treescript:action:*
   to:
     - project:
-        feature: treescript-phase
+        feature: scriptworker-tree
         job:
           - action:release-promotion
           - action:merge-automation
@@ -1411,36 +1341,38 @@
     - project:mobile:{trust_project}:releng:signing:cert:release-signing
   to:
     - project:
-        feature: mobile-sign-phase
+        feature: scriptworker-signing
         level: 3
         job: [cron:nightly, action:release-promotion]
+        trust_domain: [mobile]
 
 - grant:
     - queue:route:index.mobile.v2.{trust_project}.nightly.*
   to:
     - project:
-        feature: mobile-sign-phase
+        feature: scriptworker-signing
         level: 3
         job: [cron:nightly]
+        trust_domain: [mobile]
 
 - grant:
-    - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}
+    - project:{trust_domain}:{trust_project}:releng:googleplay:product:{trust_project}
   to:
     - project:
-        feature: mobile-pushapk-phase
+        feature: scriptworker-pushapk
         level: 3
         job:
           - cron:nightly
           - action:release-promotion
 
 - grant:
-    - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}:dep
+    - project:{trust_domain}:{trust_project}:releng:googleplay:product:{trust_project}:dep
   to:
     - project:
-        feature: mobile-pushapk-phase
+        feature: scriptworker-pushapk
         job: [pull-request:*]
     - project:
-        feature: mobile-pushapk-phase
+        feature: scriptworker-pushapk
         level: 1
         job:
           - cron:*
@@ -1450,17 +1382,17 @@
     - project:{trust_domain}:releng:ship-it:action:mark-as-shipped
   to:
     - project:
-        feature: shipit
+        feature: scriptworker-shipit
         job: [pull-request:*]
     - project:
-        feature: [shipit, taskgraph-actions]
+        feature: [scriptworker-shipit, taskgraph-actions]
         job: [action:release-promotion]
 
 - grant:
     - project:{trust_domain}:releng:ship-it:action:mark-as-merged
   to:
     - project:
-        feature: [shipit, merge-automation]
+        feature: [scriptworker-shipit, merge-automation]
         job: [action:merge-automation]
         trust_domain: [mobile]
 
@@ -1468,7 +1400,7 @@
     - project:releng:ship-it:action:mark-as-merged
   to:
     - project:
-        feature: [shipit, merge-automation]
+        feature: [scriptworker-shipit, merge-automation]
         job: [action:merge-automation]
         trust_domain: [gecko]
 
@@ -1477,11 +1409,11 @@
   to:
     - project:
         level: 3
-        feature: [shipit, taskgraph-actions]
+        feature: [scriptworker-shipit, taskgraph-actions]
         job: [action:release-promotion]
     - project:
         level: 3
-        feature: [shipit, taskgraph-actions, merge-automation]
+        feature: [scriptworker-shipit, taskgraph-actions, merge-automation]
         job: [action:merge-automation]
         trust_domain: [mobile]
 
@@ -1490,7 +1422,7 @@
   to:
     - project:
         level: 3
-        feature: [shipit, merge-automation]
+        feature: [scriptworker-shipit, merge-automation]
         job: [action:merge-automation]
         trust_domain: [gecko]
 
@@ -1502,15 +1434,15 @@
         # available for all mobile projects, we can get rid of this `level=1`
         # section which addresses the RelEngers forks
         level: 1
-        feature: shipit
+        feature: scriptworker-shipit
         job: [pull-request:*]
     - project:
         level: 1
-        feature: [shipit, taskgraph-actions]
+        feature: [scriptworker-shipit, taskgraph-actions]
         job: [action:release-promotion]
     - project:
         level: 1
-        feature: [shipit, taskgraph-actions, merge-automation]
+        feature: [scriptworker-shipit, taskgraph-actions, merge-automation]
         job: [action:merge-automation]
         trust_domain: [mobile]
 
@@ -1519,7 +1451,7 @@
   to:
     - project:
         level: 1
-        feature: [shipit, merge-automation]
+        feature: [scriptworker-shipit, merge-automation]
         job: [action:merge-automation]
         trust_domain: [gecko]
 
@@ -1528,7 +1460,7 @@
   to:
     - project:
         level: 3
-        feature: [shipit, taskgraph-actions]
+        feature: [scriptworker-shipit, taskgraph-actions]
         job: [pull-request:*]
 
 - grant:
@@ -1547,7 +1479,9 @@
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   to:
     - project:
-        feature: scriptworker
+        feature: scriptworker-*
+        repo_type: [git]
+        job: [action:*, branch:*, cron:*, pr-action:*, pull-request:trusted, release:*]
 
 - grant:
     - in-tree:hook-action:project-{trust_domain}/in-tree-action-{level}-*

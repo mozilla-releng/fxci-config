@@ -37,7 +37,7 @@
   for:
       - project:
             level: 1
-            feature: [shipit]
+            feature: [scriptworker-shipit]
 
 - client:
       # It certainly looks weird that we have `-1` scriptworker clients in this
@@ -66,7 +66,7 @@
   for:
       - project:
             level: 3
-            feature: [shipit]
+            feature: [scriptworker-shipit]
 
 - client:
       project/releng/shipit/staging:
@@ -76,7 +76,7 @@
   for:
       - project:
             level: 1
-            feature: [shipit, merge-automation]
+            feature: [scriptworker-shipit, merge-automation]
 
 - client:
       project/releng/shipit/production:
@@ -86,7 +86,7 @@
   for:
       - project:
             level: 3
-            feature: [shipit, merge-automation]
+            feature: [scriptworker-shipit, merge-automation]
 
 # Amendments to the shipitscript clients for those that need to be able to
 # rebuild product details.
@@ -98,7 +98,7 @@
   for:
       - project:
             level: 1
-            feature: [shipit, shipit-product-details]
+            feature: [scriptworker-shipit, shipit-product-details]
 
 - client:
       # It certainly looks weird that we have `-1` scriptworker clients in this
@@ -116,7 +116,7 @@
   for:
       - project:
             level: 3
-            feature: [shipit, shipit-product-details]
+            feature: [scriptworker-shipit, shipit-product-details]
 
 # Clients for bitrisescript workers
 - client:
@@ -128,7 +128,7 @@
   for:
       - project:
             level: 1
-            feature: [bitrise]
+            feature: [scriptworker-bitrise]
 
 - client:
       project/releng/scriptworker/v2/bitrise/prod/firefoxci-{trust_domain}-1:
@@ -144,7 +144,7 @@
   for:
       - project:
             level: 3
-            feature: [bitrise]
+            feature: [scriptworker-bitrise]
 
 
 # Clients for beetmoverscript workers
@@ -157,7 +157,7 @@
   for:
       - project:
             level: 1
-            feature: [beetmover]
+            feature: [scriptworker-beetmover]
 
 - client:
       project/releng/scriptworker/v2/beetmover/prod/firefoxci-{trust_domain}-3:
@@ -168,7 +168,7 @@
   for:
       - project:
             level: 3
-            feature: [beetmover]
+            feature: [scriptworker-beetmover]
 
 - client:
       project/releng/scriptworker/v2/beetmover/prod/firefoxci-{trust_domain}-1:
@@ -178,7 +178,7 @@
               - queue:worker-id:{trust_domain}-1-beetmover/{trust_domain}-1-beetmover-*
   for:
       - project:
-            feature: [beetmover]
+            feature: [scriptworker-beetmover]
 
 # Clients for beetmoverscript workers
 - client:

@@ -35,16 +35,10 @@
 #   - `mobile-roles` -- this repository should have https://github.com/mozilla-mobile roles assigned (for users, actions, cron, etc.)
 #   - `xpi-roles` -- this repository should have xpi roles assigned (for users, actions, cron, etc.)
 #   - `adhoc-roles` -- this repository should have adhoc roles assigned (for users, actions, cron, etc.)
-#   - `beetmover-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
-#   - `beetmover-maven-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
-#   - `beetmover-maven-nightly-phase` -- this https://github.com/mozilla-mobile repository should have beetmover nightly production related scopes associated
-#   - `bitrise` -- this repository should have bitrisescript related scopes associated
 #   - `mobile-firebase-testing` -- this https://github.com/mozilla-mobile repository has end-to-end testing involving devices hosted at Google's Firebase
 #   - `mobile-testrail` -- this https://github.com/mozilla-mobile repository uses testrail
 #   - `mobile-bump-github` -- this https://github.com/mozilla-mobile repository gets bumped.
 #   - `mobile-public-code-coverage` -- this https://github.com/mozilla-mobile repository has code coverage enabled on PRs
-#   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
-#   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
 #   - `github-private-repo` -- this github repository is private and requires secrets to clone
 #   - `github-publication` -- this github repository automates publication to github releases
 #   - `github-pull-request` -- this github repository uses github pull requests; Value should include a 'policy' matching the repo's `pullRequestPolicy`
@@ -52,12 +46,10 @@
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - 'scriptworker' -- this repository uses at least one scriptworker instance
 #   - `scriptworker-<type>` -- this GitHub repository uses the `<type>` scriptworker (e.g. `scriptworker-beetmover`)
-#   - 'shipit' -- this repository interacts with a shipit instance
 #   - 'taskgraph-cron' -- tasks defined in `.cron.yml` can run for this project (non-gecko/comm taskgraph repos only)
 #   - 'taskgraph-actions' -- this repository defines in-tree actions and should have corresponding hooks defined
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to its trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
-#   - `treescript-phase` -- this repository should have treescript related scopes associated
 #   - `merge-automation` -- this repository should have merge-automation related scopes associated
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
 #   - `pre-commit` -- this repository runs the lint/pre-commit hook
@@ -110,7 +102,7 @@ mozilla-release:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -136,7 +128,7 @@ comm-release:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
 mozilla-esr115:
   repo: https://hg.mozilla.org/releases/mozilla-esr115
   lando_repo: firefox-esr115
@@ -153,7 +145,7 @@ mozilla-esr115:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -176,7 +168,7 @@ mozilla-esr140:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -200,7 +192,7 @@ mozilla-esr153:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -227,7 +219,7 @@ comm-esr140:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
   cron:
     targets:
       - l10n-bumper
@@ -250,7 +242,7 @@ comm-esr153:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
   cron:
     targets:
       - l10n-bumper
@@ -327,7 +319,7 @@ mozilla-beta:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -357,7 +349,7 @@ comm-beta:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
   cron:
     targets:
       - l10n-bumper
@@ -378,7 +370,7 @@ mozilla-central:
     is-trunk: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -506,7 +498,7 @@ try:
     hg-push: true
     lando: true
     merge-automation: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -528,7 +520,7 @@ try-comm-central:
     taskgraph-cron: false
     treeherder-reporting: true
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
 larch:
   repo: https://hg.mozilla.org/projects/larch
   repo_type: hg
@@ -665,7 +657,6 @@ firefox:
     github-pull-request:
       policy: collaborators
     pr-actions: true
-    scriptworker: true
     scriptworker-signing: true
     taskgraph-actions: true
     taskgraph-cron: false
@@ -733,7 +724,7 @@ enterprise-firefox:
     github-pull-request:
       policy: collaborators
     pr-actions: true
-    scriptworker: true
+    scriptworker-signing: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -754,7 +745,7 @@ enterprise-firefox-try:
     github-pull-request:
       policy: collaborators
     pr-actions: true
-    scriptworker: true
+    scriptworker-signing: true
     taskgraph-actions: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -927,9 +918,8 @@ reference-browser:
     mobile-roles: true
     mobile-bump-github: true
     mobile-firebase-testing: true
-    mobile-sign-phase: true
-    mobile-pushapk-phase: true
-    scriptworker: true
+    scriptworker-signing: true
+    scriptworker-pushapk: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -959,9 +949,8 @@ staging-reference-browser:
     mobile-roles: true
     mobile-bump-github: true
     mobile-firebase-testing: true
-    mobile-sign-phase: true
-    mobile-pushapk-phase: true
-    scriptworker: true
+    scriptworker-signing: true
+    scriptworker-pushapk: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -985,7 +974,7 @@ firefox-ios:
     - name: release/*
       level: 3
   features:
-    bitrise: true
+    scriptworker-bitrise: true
     github-taskgraph: true
     github-publication: true
     github-pull-request:
@@ -993,11 +982,11 @@ firefox-ios:
     merge-automation: true
     mobile-roles: true
     mobile-testrail: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
-    treescript-phase: true
+    scriptworker-tree: true
     trust-domain-scopes: true
   cron:
     targets:
@@ -1018,7 +1007,7 @@ staging-firefox-ios:
     - name: release/*
       level: 1
   features:
-    bitrise: true
+    scriptworker-bitrise: true
     github-publication: true
     github-taskgraph: true
     github-pull-request:
@@ -1026,11 +1015,11 @@ staging-firefox-ios:
     merge-automation: true
     mobile-roles: true
     mobile-testrail: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
-    treescript-phase: true
+    scriptworker-tree: true
     trust-domain-scopes: true
   cron:
     targets:
@@ -1048,17 +1037,14 @@ application-services:
       level: 3
   trust_domain: app-services
   features:
-    # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
-    # across projects.
     github-taskgraph: true
     github-pull-request:
       policy: public
-    scriptworker: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
     trust-domain-scopes: true
-    beetmover: true
+    scriptworker-beetmover: true
   cron:
     targets: [nightly]
 
@@ -1076,12 +1062,11 @@ staging-application-services:
     github-taskgraph: true
     github-pull-request:
       policy: public
-    scriptworker: true
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
     trust-domain-scopes: true
-    beetmover: true
+    scriptworker-beetmover: true
   cron:
     targets: [nightly]
 
@@ -1094,15 +1079,12 @@ glean:
   trust_domain: glean
   trust_project: glean
   features:
-    # TODO Bug 1601687 - Enable `beetmover-maven-phase` once scriptworker scopes are predictible
-    # across projects.
     github-taskgraph: true
     github-pull-request:
       policy: public
-    scriptworker: true
     taskgraph-actions: true
     trust-domain-scopes: true
-    beetmover: true
+    scriptworker-beetmover: true
 
 # mozilla-releng Github repositories
 k8s-autoscale:
@@ -1326,13 +1308,13 @@ mozilla-vpn-client:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-actions: true
     # Enable this after .taskcluster.yml and .cron.yml exist in the repo
     # taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    beetmover: true
+    scriptworker-beetmover: true
     beetmover-get-artifact-scope: true
 
 staging-mozilla-vpn-client:
@@ -1348,13 +1330,13 @@ staging-mozilla-vpn-client:
     github-taskgraph: true
     github-pull-request:
       policy: public_restricted
-    shipit: true
+    scriptworker-shipit: true
     taskgraph-actions: true
     # Enable this after .taskcluster.yml and .cron.yml exist in the repo
     # taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-    beetmover: true
+    scriptworker-beetmover: true
     beetmover-get-artifact-scope: true
 
 # Bug 1520281: Add user repositories for experimenting with taskgraph and mobile
@@ -1371,11 +1353,11 @@ xpi-manifest:
     github-pull-request:
       policy: collaborators
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
-    beetmover: true
+    scriptworker-beetmover: true
     beetmover-get-artifact-scope: true
     lando: true
 
@@ -1393,11 +1375,11 @@ staging-xpi-manifest:
     github-pull-request:
       policy: collaborators
     trust-domain-scopes: true
-    shipit: true
+    scriptworker-shipit: true
     xpi-roles: true
     taskgraph-actions: true
     taskgraph-cron: true
-    beetmover: true
+    scriptworker-beetmover: true
     beetmover-get-artifact-scope: true
     lando: true
 
@@ -1536,8 +1518,7 @@ translations:
     trust-domain-scopes: true
     treeherder-reporting: true
     pr-actions: true
-    beetmover: true
-    scriptworker: true
+    scriptworker-beetmover: true
   cron:
     notify_emails: []
     targets:
@@ -1564,7 +1545,7 @@ staging-firefox-translations-training:
     trust-domain-scopes: true
     treeherder-reporting: true
     pr-actions: true
-    beetmover: true
+    scriptworker-beetmover: true
   cron:
     notify_emails: []
     targets:

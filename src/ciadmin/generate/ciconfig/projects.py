@@ -221,7 +221,14 @@ class Project:
     # easier access for Python uses.
 
     def feature(self, feature, key="enabled"):
-        "Return True if this feature is enabled"
+        """Return True if this feature is enabled
+
+        A trailing `*` matches any feature with that prefix.
+        """
+        if feature.endswith("*"):
+            return any(
+                val[key] for f, val in self.features.items() if glob_match([feature], f)
+            )
         return feature in self.features and self.features[feature][key]
 
     @property
