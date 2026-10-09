@@ -658,7 +658,6 @@ firefox:
     github-pull-request:
       policy: collaborators
     pr-actions: true
-    scriptworker: true
     scriptworker-signing: true
     taskgraph-actions: true
     taskgraph-cron: false
@@ -729,7 +728,7 @@ enterprise-firefox:
     github-pull-request:
       policy: collaborators
     pr-actions: true
-    scriptworker: true
+    scriptworker-signing: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -750,7 +749,7 @@ enterprise-firefox-try:
     github-pull-request:
       policy: collaborators
     pr-actions: true
-    scriptworker: true
+    scriptworker-signing: true
     taskgraph-actions: true
     treeherder-reporting: true
     trust-domain-scopes: true
@@ -925,7 +924,6 @@ reference-browser:
     mobile-firebase-testing: true
     scriptworker-signing: true
     scriptworker-pushapk: true
-    scriptworker: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -957,7 +955,6 @@ staging-reference-browser:
     mobile-firebase-testing: true
     scriptworker-signing: true
     scriptworker-pushapk: true
-    scriptworker: true
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
@@ -1047,7 +1044,6 @@ application-services:
     github-taskgraph: true
     github-pull-request:
       policy: public
-    scriptworker: true
     scriptworker-shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
@@ -1070,7 +1066,6 @@ staging-application-services:
     github-taskgraph: true
     github-pull-request:
       policy: public
-    scriptworker: true
     scriptworker-shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
@@ -1091,7 +1086,6 @@ glean:
     github-taskgraph: true
     github-pull-request:
       policy: public
-    scriptworker: true
     taskgraph-actions: true
     trust-domain-scopes: true
     scriptworker-beetmover: true
@@ -1529,7 +1523,6 @@ translations:
     treeherder-reporting: true
     pr-actions: true
     scriptworker-beetmover: true
-    scriptworker: true
   cron:
     notify_emails: []
     targets:
