@@ -38,7 +38,6 @@
 #   - `beetmover-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `beetmover-maven-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `beetmover-maven-nightly-phase` -- this https://github.com/mozilla-mobile repository should have beetmover nightly production related scopes associated
-#   - `bitrise` -- this repository should have bitrisescript related scopes associated
 #   - `mobile-firebase-testing` -- this https://github.com/mozilla-mobile repository has end-to-end testing involving devices hosted at Google's Firebase
 #   - `mobile-testrail` -- this https://github.com/mozilla-mobile repository uses testrail
 #   - `mobile-bump-github` -- this https://github.com/mozilla-mobile repository gets bumped.
@@ -983,7 +982,7 @@ firefox-ios:
     - name: release/*
       level: 3
   features:
-    bitrise: true
+    scriptworker-bitrise: true
     github-taskgraph: true
     github-publication: true
     github-pull-request:
@@ -1016,7 +1015,7 @@ staging-firefox-ios:
     - name: release/*
       level: 1
   features:
-    bitrise: true
+    scriptworker-bitrise: true
     github-publication: true
     github-taskgraph: true
     github-pull-request:
