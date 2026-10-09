@@ -2,6 +2,8 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 
+import re
+
 from tcadmin.resources import Client
 from tcadmin.util.matchlist import Match, MatchList
 
@@ -23,6 +25,36 @@ managed = MatchList(
     ]
 )
 
+# Matches scriptworker client ids, e.g.
+# `project/releng/scriptworker/v2/beetmover/prod/firefoxci-gecko-3`.
+SCRIPTWORKER_CLIENT_RE = re.compile(
+    r"^project/releng/scriptworker/v2/(?P<type>[^/]+)/[^/]+/firefoxci-(?P<trust_domain>.+)-(?P<level>\d+|t)$"
+)
+
+
+def add_scriptworker_client_scopes(scopes, client_id, projects):
+    """
+    Add scopes for scriptworker clients based on project features.
+    """
+    match = SCRIPTWORKER_CLIENT_RE.match(client_id)
+    if not match:
+        return
+
+    # `t` (test) clients are equivalent to level 1
+    level = 1 if match["level"] == "t" else int(match["level"])
+    feature = f"scriptworker-{match['type']}"
+    for project in projects:
+        if (
+            not project.feature(feature)
+            or project.trust_domain != match["trust_domain"]
+        ):
+            continue
+
+        if project.repo.startswith("https://github.com/") and any(
+            b.level and b.level >= level for b in project.branches
+        ):
+            scopes.append(f"auth:github-repo-token:read/{project.repo_path}:*")
+
 
 async def update_resources(resources):
     """
@@ -37,11 +69,13 @@ async def update_resources(resources):
         if client.environments and environment.name not in client.environments:
             # skip grant for this environment
             continue
+        scopes = list(client.scopes)
+        add_scriptworker_client_scopes(scopes, client.client_id, projects)
         resources.add(
             Client(
                 clientId=client.client_id,
                 description=client.description,
-                scopes=client.scopes,
+                scopes=scopes,
             )
         )
 
@@ -50,15 +84,16 @@ async def update_resources(resources):
             # skip grant for this environment
             continue
 
-        clients = []
-
         for project in projects:
             if project_match(client.grantee, project):
                 subs = {"trust_domain": project.trust_domain}
+                client_id = client.client_id.format(**subs)
+                scopes = [s.format(**subs) for s in client.scopes]
+                add_scriptworker_client_scopes(scopes, client_id, [project])
                 resources.add(
                     Client(
-                        clientId=client.client_id.format(**subs),
+                        clientId=client_id,
                         description=client.description.format(**subs),
-                        scopes=[s.format(**subs) for s in client.scopes],
+                        scopes=scopes,
                     )
                 )
