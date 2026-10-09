@@ -47,12 +47,13 @@ def add_scriptworker_client_scopes(scopes, client_id, projects):
         if (
             not project.feature(feature)
             or project.trust_domain != match["trust_domain"]
+            # This check ensures that if a project only has L1 branches, an L3
+            # scriptworker client doesn't get scopes for it (not needed).
+            or all(not b.level or b.level < level for b in project.branches)
         ):
             continue
 
-        if project.repo.startswith("https://github.com/") and any(
-            b.level and b.level >= level for b in project.branches
-        ):
+        if project.repo.startswith("https://github.com/"):
             scopes.append(f"auth:github-repo-token:read/{project.repo_path}:*")
 
 
