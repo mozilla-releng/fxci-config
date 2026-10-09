@@ -51,6 +51,7 @@
 #   - `github-taskgraph` -- this github repository has started using taskgraph
 #   - `gecko-actions` -- this repository should have gecko-related action hooks defined
 #   - 'scriptworker' -- this repository uses at least one scriptworker instance
+#   - `scriptworker-<type>` -- this GitHub repository uses the `<type>` scriptworker (e.g. `scriptworker-beetmover`)
 #   - 'shipit' -- this repository interacts with a shipit instance
 #   - 'taskgraph-cron' -- tasks defined in `.cron.yml` can run for this project (non-gecko/comm taskgraph repos only)
 #   - 'taskgraph-actions' -- this repository defines in-tree actions and should have corresponding hooks defined
