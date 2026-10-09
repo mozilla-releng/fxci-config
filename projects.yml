@@ -43,7 +43,6 @@
 #   - `mobile-bump-github` -- this https://github.com/mozilla-mobile repository gets bumped.
 #   - `mobile-public-code-coverage` -- this https://github.com/mozilla-mobile repository has code coverage enabled on PRs
 #   - `mobile-sign-phase` -- this https://github.com/mozilla-mobile repository should have sign related scopes associated
-#   - `mobile-pushapk-phase` -- this https://github.com/mozilla-mobile repository should have pushapk related scopes associated
 #   - `github-private-repo` -- this github repository is private and requires secrets to clone
 #   - `github-publication` -- this github repository automates publication to github releases
 #   - `github-pull-request` -- this github repository uses github pull requests; Value should include a 'policy' matching the repo's `pullRequestPolicy`
@@ -925,7 +924,7 @@ reference-browser:
     mobile-bump-github: true
     mobile-firebase-testing: true
     mobile-sign-phase: true
-    mobile-pushapk-phase: true
+    scriptworker-pushapk: true
     scriptworker: true
     taskgraph-actions: true
     taskgraph-cron: true
@@ -957,7 +956,7 @@ staging-reference-browser:
     mobile-bump-github: true
     mobile-firebase-testing: true
     mobile-sign-phase: true
-    mobile-pushapk-phase: true
+    scriptworker-pushapk: true
     scriptworker: true
     taskgraph-actions: true
     taskgraph-cron: true

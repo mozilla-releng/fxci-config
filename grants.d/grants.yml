@@ -1424,23 +1424,23 @@
         job: [cron:nightly]
 
 - grant:
-    - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}
+    - project:{trust_domain}:{trust_project}:releng:googleplay:product:{trust_project}
   to:
     - project:
-        feature: mobile-pushapk-phase
+        feature: scriptworker-pushapk
         level: 3
         job:
           - cron:nightly
           - action:release-promotion
 
 - grant:
-    - project:mobile:{trust_project}:releng:googleplay:product:{trust_project}:dep
+    - project:{trust_domain}:{trust_project}:releng:googleplay:product:{trust_project}:dep
   to:
     - project:
-        feature: mobile-pushapk-phase
+        feature: scriptworker-pushapk
         job: [pull-request:*]
     - project:
-        feature: mobile-pushapk-phase
+        feature: scriptworker-pushapk
         level: 1
         job:
           - cron:*
