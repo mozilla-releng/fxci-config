@@ -30,7 +30,7 @@
 # * access
 # * level (as derived from access or directly specified)
 # * alias
-# * feature (projects with the given feature or for `!feature`, projects without)
+# * feature (projects with the given feature or for `!feature`, projects without; a trailing `*` matches any feature with that prefix, e.g. `scriptworker-*`)
 # * is_try (true/false)
 # * trust_domain
 # * job
@@ -1479,7 +1479,9 @@
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   to:
     - project:
-        feature: scriptworker
+        feature: scriptworker-*
+        repo_type: [git]
+        job: [action:*, branch:*, cron:*, pr-action:*, pull-request:trusted, release:*]
 
 - grant:
     - in-tree:hook-action:project-{trust_domain}/in-tree-action-{level}-*
