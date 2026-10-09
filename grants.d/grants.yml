@@ -1411,17 +1411,19 @@
     - project:mobile:{trust_project}:releng:signing:cert:release-signing
   to:
     - project:
-        feature: mobile-sign-phase
+        feature: scriptworker-signing
         level: 3
         job: [cron:nightly, action:release-promotion]
+        trust_domain: [mobile]
 
 - grant:
     - queue:route:index.mobile.v2.{trust_project}.nightly.*
   to:
     - project:
-        feature: mobile-sign-phase
+        feature: scriptworker-signing
         level: 3
         job: [cron:nightly]
+        trust_domain: [mobile]
 
 - grant:
     - project:{trust_domain}:{trust_project}:releng:googleplay:product:{trust_project}
