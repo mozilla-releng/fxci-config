@@ -56,7 +56,6 @@
 #   - 'taskgraph-actions' -- this repository defines in-tree actions and should have corresponding hooks defined
 #   - `trust-domain-scopes` -- this repository should have generic scopes associated to its trust domain
 #   - `treeherder-reporting` -- this repository reports results to treeherder
-#   - `treescript-phase` -- this repository should have treescript related scopes associated
 #   - `merge-automation` -- this repository should have merge-automation related scopes associated
 #   - `autophone` -- this repository is allowed to use the Android farm called "Autophone"
 #   - `pre-commit` -- this repository runs the lint/pre-commit hook
@@ -996,7 +995,7 @@ firefox-ios:
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
-    treescript-phase: true
+    scriptworker-tree: true
     trust-domain-scopes: true
   cron:
     targets:
@@ -1029,7 +1028,7 @@ staging-firefox-ios:
     taskgraph-actions: true
     taskgraph-cron: true
     treeherder-reporting: true
-    treescript-phase: true
+    scriptworker-tree: true
     trust-domain-scopes: true
   cron:
     targets:

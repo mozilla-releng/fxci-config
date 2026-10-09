@@ -1371,7 +1371,7 @@
     - project:{trust_domain}:{alias}:treescript:action:*
   to:
     - project:
-        feature: treescript-phase
+        feature: scriptworker-tree
         job:
           - action:release-promotion
           - action:merge-automation
