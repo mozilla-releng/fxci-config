@@ -37,7 +37,7 @@
   for:
       - project:
             level: 1
-            feature: [shipit]
+            feature: [scriptworker-shipit]
 
 - client:
       # It certainly looks weird that we have `-1` scriptworker clients in this
@@ -66,7 +66,7 @@
   for:
       - project:
             level: 3
-            feature: [shipit]
+            feature: [scriptworker-shipit]
 
 - client:
       project/releng/shipit/staging:
@@ -76,7 +76,7 @@
   for:
       - project:
             level: 1
-            feature: [shipit, merge-automation]
+            feature: [scriptworker-shipit, merge-automation]
 
 - client:
       project/releng/shipit/production:
@@ -86,7 +86,7 @@
   for:
       - project:
             level: 3
-            feature: [shipit, merge-automation]
+            feature: [scriptworker-shipit, merge-automation]
 
 # Amendments to the shipitscript clients for those that need to be able to
 # rebuild product details.
@@ -98,7 +98,7 @@
   for:
       - project:
             level: 1
-            feature: [shipit, shipit-product-details]
+            feature: [scriptworker-shipit, shipit-product-details]
 
 - client:
       # It certainly looks weird that we have `-1` scriptworker clients in this
@@ -116,7 +116,7 @@
   for:
       - project:
             level: 3
-            feature: [shipit, shipit-product-details]
+            feature: [scriptworker-shipit, shipit-product-details]
 
 # Clients for bitrisescript workers
 - client:
