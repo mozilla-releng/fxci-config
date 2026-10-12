@@ -1,4 +1,5 @@
-# Taskcluster project grants (github.com/taskcluster/*, json-e/json-e)
+# Taskcluster project grants (github.com/taskcluster/*, json-e/json-e, and
+# projects with the `taskcluster-roles` feature)
 
 # Any repo in the taskcluster GitHub org may use the shared CI pools and
 # notify the team's Matrix room.
@@ -10,14 +11,15 @@
     - project:
         alias: taskcluster-org
 
-# taskcluster/taskcluster: the decision task and the PR graph (also granted
-# org-wide above; repeated so the project doesn't depend on the wildcard).
+# taskcluster/taskcluster and its mirrors: the decision task and the PR graph
+# (also granted org-wide above; repeated so the project doesn't depend on the
+# wildcard).
 - grant:
     - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
     - queue:create-task:highest:built-in/succeed
   to:
     - project:
-        alias: taskcluster
+        feature: taskcluster-roles
         job: [pull-request:*, branch:*, tag:*]
 
 # Trusted code (collaborator PRs, pushes, tags, cron) may use every CI pool
@@ -36,7 +38,7 @@
     - secrets:get:project/taskcluster/testing/generic-worker/ci-creds
   to:
     - project:
-        alias: taskcluster
+        feature: taskcluster-roles
         job: [pull-request:trusted, branch:*, tag:*, cron:*]
     - project:
         alias: taskcluster-staging-releases
@@ -48,7 +50,7 @@
     - secrets:get:project/taskcluster/testing/taskcluster-*
   to:
     - project:
-        alias: taskcluster
+        feature: taskcluster-roles
         job: [pull-request:trusted, branch:*, tag:*]
 
 # Releases and staging releases build on the release pool.
