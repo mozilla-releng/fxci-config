@@ -35,6 +35,7 @@
 #   - `mobile-roles` -- this repository should have https://github.com/mozilla-mobile roles assigned (for users, actions, cron, etc.)
 #   - `xpi-roles` -- this repository should have xpi roles assigned (for users, actions, cron, etc.)
 #   - `adhoc-roles` -- this repository should have adhoc roles assigned (for users, actions, cron, etc.)
+#   - `taskcluster-roles` -- this repository runs the taskcluster/taskcluster CI graph and should have its proj-taskcluster roles assigned
 #   - `beetmover-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `beetmover-maven-phase` -- this https://github.com/mozilla-mobile repository should have beetmover related scopes associated
 #   - `beetmover-maven-nightly-phase` -- this https://github.com/mozilla-mobile repository should have beetmover nightly production related scopes associated
@@ -1725,6 +1726,7 @@ taskcluster:
   features:
     github-pull-request:
       policy: public_restricted
+    taskcluster-roles: true
     taskgraph-cron: true
     trust-domain-scopes: true
   cron:
@@ -1732,6 +1734,25 @@ taskcluster:
       # Refreshes worker-manager's Azure attested-document test fixture; a
       # target hook lets the team force a run when the fixture's cert expires.
       - azure-attested-document
+
+# Private mirror of taskcluster/taskcluster for staging embargoed security
+# fixes. Level 1 everywhere; same PR and branch CI as the real project via
+# `taskcluster-roles`, while release grants stay bound to the `taskcluster`
+# alias. Its own trust_project keeps its clone key (under
+# project/taskcluster/taskcluster-private/level-1/) readable only by this repo.
+taskcluster-private:
+  repo: https://github.com/taskcluster/taskcluster-private
+  repo_type: git
+  trust_domain: taskcluster
+  trust_project: taskcluster-private
+  branches:
+    - name: "*"
+      level: 1
+  features:
+    github-pull-request:
+      policy: public_restricted
+    taskcluster-roles: true
+    trust-domain-scopes: true
 
 taskcluster-staging-releases:
   repo: https://github.com/taskcluster/staging-releases
