@@ -962,6 +962,7 @@
 - grant:
     # Bug 1530376: Add scopes for Code Review bot in CI
     - queue:route:project.relman.codereview.*
+    - queue:route:project.relman.codereview-build-test.*
   to:
     - project:
         alias: try
