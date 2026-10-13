@@ -143,6 +143,17 @@
     - roles:
         - mozillians-group:enterprise-developers
 
+# Bug 2080754: temporarily grant L3 relpro scope to select enterprise devs
+# until shipit is setup
+- grant:
+    - hooks:trigger-hook:project-enterprise/in-tree-action-3-release-promotion/*
+  to:
+    - roles:
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|alissy
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|jmendez
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|jneuberger
+        - login-identity:mozilla-auth0/ad|Mozilla-LDAP|joporter
+
 - grant:
     - queue:get-artifact:project/enterprise/*
   to:
