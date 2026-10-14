@@ -674,7 +674,7 @@ firefox:
     trust-domain-scopes: true
 
 firefox-dev:
-  repo: https://github.com/mozilla/firefox-dev
+  repo: https://github.com/mozilla-firefox/firefox-dev
   repo_type: git
   trust_domain: gecko
   branches:
