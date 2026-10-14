@@ -1367,6 +1367,7 @@ project/taskcluster/testing/client-libraries:
 project/taskcluster/audit-reports:
   description: Used for auditing worker versions across pools.
   scopes:
+    - auth:list-clients
     - queue:create-task:low:*
     - queue:scheduler-id:smoketest
     - queue:seal-task-group:smoketest/*
