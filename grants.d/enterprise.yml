@@ -153,6 +153,7 @@
 # until shipit is setup
 - grant:
     - hooks:trigger-hook:project-enterprise/in-tree-action-3-release-promotion/*
+    - hooks:trigger-hook:project-releng/cron-task-mozilla-enterprise-firefox/nightly-enterprise
   to:
     - roles:
         - login-identity:mozilla-auth0/ad|Mozilla-LDAP|alissy
