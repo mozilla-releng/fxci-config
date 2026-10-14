@@ -788,7 +788,6 @@ staging-firefox:
   repo: https://github.com/mozilla-releng/staging-firefox
   repo_type: git
   trust_domain: gecko
-  trust_project: staging
   branches:
     - name: "*"
       level: 1
