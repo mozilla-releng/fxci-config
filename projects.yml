@@ -728,6 +728,9 @@ enterprise-firefox:
       level: 3
     - name: "*"
       level: 1
+  cron:
+    targets:
+      - nightly-enterprise
   features:
     gecko-roles: true
     github-taskgraph: true
