@@ -181,10 +181,6 @@ mozilla-esr140:
     taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-  cron:
-    targets:
-      - periodic-update
-      - pinning-update
 mozilla-esr153:
   repo: https://hg.mozilla.org/releases/mozilla-esr153
   lando_repo: firefox-esr153
@@ -208,7 +204,6 @@ mozilla-esr153:
   cron:
     targets:
       - periodic-update
-      - pinning-update
 comm-esr140:
   repo: https://hg.mozilla.org/releases/comm-esr140
   lando_repo: thunderbird-desktop-esr140
