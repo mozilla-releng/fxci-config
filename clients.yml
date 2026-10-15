@@ -1365,7 +1365,8 @@ project/taskcluster/testing/client-libraries:
     - "object:upload:taskcluster:taskcluster/test/*"
     - "object:download:taskcluster/test/*"
 project/taskcluster/audit-reports:
-  description: Used for auditing worker versions across pools.
+  description: |
+    Used by mozilla-history automation to snapshot Taskcluster clients, roles, hooks, and worker pools, and audit worker versions across pools.
   scopes:
     - auth:list-clients
     - queue:create-task:low:*
