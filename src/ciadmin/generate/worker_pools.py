@@ -471,13 +471,13 @@ def get_azure_provider_config(
                     f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
                     f"Microsoft.Compute/galleries/{ImageId}/images/{ImageId}/versions/{version}"
                 )
+                tags["deploymentId"] = DeploymentId
             else:
                 ImageId = image.get(provider_id, location)
                 imageReference_id = (
                     f"{subscription_id}/resourceGroups/{image_rgroup}/providers/"
-                    f"Microsoft.Compute/images/{ImageId}-{DeploymentId}"
+                    f"Microsoft.Compute/images/{ImageId}"
                 )
-            tags["deploymentId"] = DeploymentId
 
             attrs = {
                 "location": location,

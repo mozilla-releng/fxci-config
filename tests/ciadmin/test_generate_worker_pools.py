@@ -192,15 +192,15 @@ def assert_azure_basic(pool):
         "priority": "spot",
         "storageProfile": {
             "imageReference": {
-                "id": "/subscriptions/subscription_id/resourceGroups/rgroup_id/providers/Microsoft.Compute/images/ue1_id-d_id"  # noqa: E501
+                "id": "/subscriptions/subscription_id/resourceGroups/rgroup_id/providers/Microsoft.Compute/images/ue1_id"  # noqa: E501
             }
         },
         "subnetId": "/subscriptions/subscription_id/resourceGroups/rg-us-east1-test/providers/Microsoft.Network/virtualNetworks/vn-us-east1-test/subnets/sn-us-east1-test",  # noqa: E501
-        "tags": {"deploymentId": "d_id"},
+        "tags": {},
         "workerConfig": {"genericWorker": {"config": {}}},
         "workerManager": {
             "capacityPerInstance": 1,
-            "launchConfigId": "lc-1e93272fb618ed461059",
+            "launchConfigId": "lc-bf9bfb120caebf028147",
         },
     }
 
