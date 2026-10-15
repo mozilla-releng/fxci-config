@@ -10,18 +10,27 @@ on:  # yamllint disable-line rule:truthy
 permissions:
   contents: read
 
-env:
-  # Runs that may use the `generate-trusted` client, which reads private
-  # repositories. Any other run gets no Taskcluster credentials.
-  TRUSTED_SOURCE: >-
-    ${{ github.event_name != 'pull_request'
-    || github.event.pull_request.head.repo.full_name == github.repository
-    || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association) }}
-
 jobs:
+  trust:
+    # Only a run from a trusted source may use the `generate-trusted` client,
+    # which reads private repositories. Any other run gets no credentials and
+    # no environment. `environment` cannot read `env`, hence a job output.
+    runs-on: ubuntu-latest
+    outputs:
+      trusted: ${{ steps.source.outputs.trusted }}
+    steps:
+      - id: source
+        env:
+          TRUSTED: >-
+            ${{ github.event_name != 'pull_request'
+            || github.event.pull_request.head.repo.full_name == github.repository
+            || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association) }}
+        run: echo "trusted=$TRUSTED" >> "$GITHUB_OUTPUT"
+
   generate:
     runs-on: ubuntu-latest
-    environment: diff-${{matrix.environment}}
+    needs: trust
+    environment: ${{ needs.trust.outputs.trusted == 'true' && format('diff-{0}', matrix.environment) || '' }}
     strategy:
       matrix:
         environment: ["staging", "firefoxci"]
@@ -41,9 +50,7 @@ jobs:
         # Hardcoded (not sourced from vars) because GitHub withholds
         # environment-scoped vars/secrets from pull_request runs triggered
         # from forks; the root URL isn't sensitive, so it doesn't need to
-        # live behind that gate. No TASKCLUSTER_CLIENT_ID/ACCESS_TOKEN here:
-        # `generate` never calls `current.resources()`, so it never
-        # authenticates against Taskcluster.
+        # live behind that gate.
         run: |
           if [ "${{ matrix.environment }}" == "staging" ]; then
             echo "TASKCLUSTER_ROOT_URL=https://stage.taskcluster.nonprod.webservices.mozgcp.net" >> "$GITHUB_ENV"
@@ -52,8 +59,8 @@ jobs:
           fi
       - name: Generate config
         env:
-          TASKCLUSTER_CLIENT_ID: ${{ env.TRUSTED_SOURCE == 'true' && vars.TRUSTED_TASKCLUSTER_CLIENT_ID || '' }}
-          TASKCLUSTER_ACCESS_TOKEN: ${{ env.TRUSTED_SOURCE == 'true' && secrets.TRUSTED_TASKCLUSTER_ACCESS_TOKEN || '' }}
+          TASKCLUSTER_CLIENT_ID: ${{ needs.trust.outputs.trusted == 'true' && vars.TRUSTED_TASKCLUSTER_CLIENT_ID || '' }}
+          TASKCLUSTER_ACCESS_TOKEN: ${{ needs.trust.outputs.trusted == 'true' && secrets.TRUSTED_TASKCLUSTER_ACCESS_TOKEN || '' }}
         run: uv run tc-admin generate --environment ${{matrix.environment}} --json > "$FXCI_CONFIG_CACHE"
       - name: Upload config cache
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -64,8 +71,8 @@ jobs:
 
   check:
     runs-on: ubuntu-latest
-    needs: generate
-    environment: diff-${{matrix.environment}}
+    needs: [generate, trust]
+    environment: ${{ needs.trust.outputs.trusted == 'true' && format('diff-{0}', matrix.environment) || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -97,8 +104,8 @@ jobs:
           path: ${{github.workspace}}
       - name: Run checks
         env:
-          TASKCLUSTER_CLIENT_ID: ${{ env.TRUSTED_SOURCE == 'true' && vars.TRUSTED_TASKCLUSTER_CLIENT_ID || '' }}
-          TASKCLUSTER_ACCESS_TOKEN: ${{ env.TRUSTED_SOURCE == 'true' && secrets.TRUSTED_TASKCLUSTER_ACCESS_TOKEN || '' }}
+          TASKCLUSTER_CLIENT_ID: ${{ needs.trust.outputs.trusted == 'true' && vars.TRUSTED_TASKCLUSTER_CLIENT_ID || '' }}
+          TASKCLUSTER_ACCESS_TOKEN: ${{ needs.trust.outputs.trusted == 'true' && secrets.TRUSTED_TASKCLUSTER_ACCESS_TOKEN || '' }}
         run: uv run tc-admin check --environment ${{matrix.environment}} --generated "$FXCI_CONFIG_CACHE"
 
   diff:
