@@ -3948,7 +3948,7 @@ pools:
       maxCapacity:
         by-name:
           ci: 10
-          release: 1
+          release: 15
           gw-ubuntu-24-04: 50
           gw-ubuntu-24-04-gui: 20
       implementation: generic-worker/linux-tceng
