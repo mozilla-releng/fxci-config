@@ -16,12 +16,10 @@ from google.cloud.compute import (
     ZonesClient,
 )
 from google.oauth2 import service_account
-from tcadmin.resources import Resources
 
 from ciadmin.generate.ciconfig.environment import Environment
-from ciadmin.generate.ciconfig.worker_images import WorkerImage
 from ciadmin.generate.ciconfig.worker_pools import WorkerPool as WorkerPoolConfig
-from ciadmin.generate.worker_pools import generate_pool_variants, make_worker_pool
+from ciadmin.generate.worker_pools import generate_pool_variants
 
 WORKER_POOL_ID_RE = re.compile(
     r"^[a-zA-Z0-9-_]{1,38}\/[a-z]([-a-z0-9]{0,36}[a-z0-9])?$"
@@ -49,15 +47,11 @@ async def check_worker_pool_ids():
 
 
 @pytest.mark.asyncio
-async def check_worker_pool_tags():
+async def check_worker_pool_tags(generate_resources):
     invalid_pools = set()
 
-    environment = await Environment.current()
-    resources = Resources()
-    worker_pools = await WorkerPoolConfig.fetch_all()
-    worker_images = await WorkerImage.fetch_all()
-    for pool in generate_pool_variants(worker_pools, environment):
-        pool = await make_worker_pool(environment, resources, pool, worker_images, {})
+    resources = await generate_resources("worker_pools")
+    for pool in resources.filter("WorkerPool=.*"):
         for lc in pool.config.get("launchConfigs", []):
             tags = lc.get("tags", {})
 
@@ -297,40 +291,32 @@ class GCPApiHandler:
 
 
 @pytest.mark.asyncio
-async def check_worker_pool_gcp_instances_by_region():
+async def check_worker_pool_gcp_instances_by_region(generate_resources):
     gcp_token = os.getenv("GCP_CHECK_TOKEN", None)
     if not gcp_token:
         return pytest.skip("GCP_CHECK_TOKEN not set")
 
     gcp_api = GCPApiHandler(gcp_token)
 
-    environment = await Environment.current()
-    resources = Resources()
-    worker_pools = await WorkerPoolConfig.fetch_all()
-    worker_images = await WorkerImage.fetch_all()
-
     invalid_zones = []
     invalid_machine_types = []
     gcp_zones = gcp_api.list_zones()
 
-    # Generate the pools
-    for pool in generate_pool_variants(worker_pools, environment):
-        if "gcp" not in pool.provider_id:
+    resources = await generate_resources("worker_pools")
+    for pool in resources.filter("WorkerPool=.*"):
+        if "gcp" not in pool.providerId:
             continue
-        generated = await make_worker_pool(
-            environment, resources, pool, worker_images, {}
-        )
         # Collect zones to query GCP
-        for machine in generated.config["launchConfigs"]:
+        for machine in pool.config["launchConfigs"]:
             machine_type = machine["machineType"].split("/")[-1]
             if "custom" in machine_type:
                 continue  # Skip custom machine types
             if machine["zone"] not in gcp_zones:
-                invalid_zones.append((pool.pool_id, machine_type, machine["zone"]))
+                invalid_zones.append((pool.workerPoolId, machine_type, machine["zone"]))
             zone_machine_types = gcp_api.list_machine_types(machine["zone"])
             if machine_type not in zone_machine_types:
                 invalid_machine_types.append(
-                    (pool.pool_id, machine_type, machine["zone"])
+                    (pool.workerPoolId, machine_type, machine["zone"])
                 )
 
     message = "\n".join(
