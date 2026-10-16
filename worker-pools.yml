@@ -3924,8 +3924,8 @@ pools:
 
   # proj-taskcluster: Taskcluster's own CI (github.com/taskcluster/*), migrated
   # from community-tc. Linux pools run on GCP, Windows pools on Azure. Only the
-  # pools used by the CI graph are defined here; community's manually-operated
-  # staging/GPU/arm64 pools are not (yet) migrated.
+  # pools used by the CI graph are defined here, plus staging image pools;
+  # community's manually-operated GPU/arm64 pools are not (yet) migrated.
   - pool_id: 'proj-taskcluster/{name}'
     description: '{description}'
     owner: taskcluster-notifications+workers@mozilla.com
@@ -3978,6 +3978,60 @@ pools:
                 release: false
                 default: null  # implementation default (true)
 
+  # For trying out new staging images (worker-images'
+  # generic-worker-ubuntu-24-04-staging config) on real workers before they are
+  # promoted. Not used by the CI graph; tasks are submitted by hand by
+  # team_taskcluster (see grants.d/taskcluster.yml).
+  - pool_id: proj-taskcluster/gw-ubuntu-staging-google
+    description: Taskcluster generic-worker Ubuntu 24.04 staging image pool
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 1
+      implementation: generic-worker/linux-tceng
+      regions: *default-gcp-regions
+      image: gw-ubuntu-24-04-staging
+      instance_types:
+        - disks:
+            - *persistent-disk-60gb
+          machine_type: n2-standard-4
+      worker-config:
+        genericWorker:
+          config:
+            headlessTasks: true
+            # While iterating on new images, it is useful for workers not to
+            # die immediately...
+            idleTimeoutSecs: 3600
+            # ...and if a worker crashes, we typically want to know why
+            # (worker manager will eventually kill it anyway).
+            shutdownMachineOnInternalError: false
+
+  # As above, for worker-images' generic-worker-ubuntu-24-04-arm64-staging
+  # config.
+  - pool_id: proj-taskcluster/gw-ubuntu-arm64-staging-google
+    description: Taskcluster generic-worker Ubuntu 24.04 arm64 staging image pool
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 1
+      implementation: generic-worker/linux-tceng
+      regions: [us-central1]
+      image: gw-ubuntu-24-04-arm64-staging
+      instance_types:
+        - disks:
+            - *persistent-disk-60gb
+          machine_type: t2a-standard-4
+      worker-config:
+        genericWorker:
+          config:
+            headlessTasks: true
+            idleTimeoutSecs: 3600
+            shutdownMachineOnInternalError: false
+
   - pool_id: 'proj-taskcluster/{name}'
     description: '{description}'
     owner: taskcluster-notifications+workers@mozilla.com
@@ -4009,6 +4063,67 @@ pools:
                 .*-gui: false
                 default: true
             idleTimeoutSecs: 300
+
+  # For trying out new Windows staging images (worker-images'
+  # generic-worker-win2022-staging and generic-worker-win2022-gpu-staging
+  # configs) on real workers before they are promoted. Not used by the CI
+  # graph; tasks are submitted by hand.
+  - pool_id: proj-taskcluster/gw-windows-2022-staging
+    description: Taskcluster generic-worker Windows 2022 staging image pool
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: gw-win2022-staging
+      implementation: generic-worker/windows-fuzzing
+      worker-purpose: proj-taskcluster
+      locations: [central-us, east-us]
+      maxCapacity: 1
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+      vmSizes:
+        - vmSize: Standard_F16s_v2
+      worker-manager-config:
+        capacityPerInstance: 1
+      worker-config:
+        genericWorker:
+          config:
+            headlessTasks: true
+            # While iterating on new images, it is useful for workers not to
+            # die immediately...
+            idleTimeoutSecs: 3600
+            # ...and if a worker crashes, we typically want to know why
+            # (worker manager will eventually kill it anyway).
+            shutdownMachineOnInternalError: false
+
+  - pool_id: proj-taskcluster/gw-windows-2022-gpu-staging
+    description: Taskcluster generic-worker Windows 2022 GPU staging image pool
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: gw-win2022-gpu-staging
+      implementation: generic-worker/windows-fuzzing
+      worker-purpose: proj-taskcluster
+      locations: [east-us]
+      maxCapacity: 1
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+      vmSizes:
+        - vmSize: Standard_NV12ads_A10_v5
+      worker-manager-config:
+        capacityPerInstance: 1
+      worker-config:
+        genericWorker:
+          config:
+            # GUI, for testing on the GPU pool as Release SRE do
+            # (https://github.com/taskcluster/taskcluster/issues/7303).
+            headlessTasks: false
+            idleTimeoutSecs: 3600
+            shutdownMachineOnInternalError: false
+            # For testing runAfterUserCreation (calc.exe exits 0)
+            # (https://github.com/taskcluster/taskcluster/issues/7303).
+            runAfterUserCreation: C:\Windows\System32\calc.exe
 
   # Static Mac minis, registered with worker-manager's static provider (or run
   # with the project/taskcluster/generic-worker/ci-macos client credentials).
