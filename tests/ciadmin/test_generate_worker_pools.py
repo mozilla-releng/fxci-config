@@ -690,3 +690,62 @@ def test_variant_overrides_owner_and_email():
     a, b = generate_pool_variants([wp], "cluster")
     assert (a.owner, a.email_on_error) == ("default@example.com", True)
     assert (b.owner, b.email_on_error) == ("other@example.com", False)
+
+
+@pytest.mark.parametrize("provider", ("aws", "google", "azure"))
+@pytest.mark.asyncio
+async def test_make_worker_pool_worker_type_metadata(
+    mocker, environment, make_pool, make_images, provider
+):
+    m = mocker.patch("tcadmin.appconfig.AppConfig.current")
+    m.return_value = Namespace(description_prefix="PREFIX - ")
+
+    pool = make_pool(
+        provider,
+        {
+            "worker-config": {
+                "genericWorker": {
+                    "config": {"workerTypeMetadata": {"machine-setup": {"a": 1}}}
+                }
+            }
+        },
+    )
+    image = make_images({"azure": {"version": "NA"}})["image-1"]
+    images = WorkerImages(
+        [
+            WorkerImage(
+                "image-1",
+                clouds=image.clouds,
+                worker_type_metadata={"machine-setup": {"script": "https://s"}},
+            )
+        ]
+    )
+    result = await make_worker_pool(environment, Resources(), pool, images, {})
+
+    for launch_config in result.config["launchConfigs"]:
+        assert launch_config["workerConfig"]["genericWorker"]["config"][
+            "workerTypeMetadata"
+        ] == {"machine-setup": {"a": 1, "script": "https://s"}}
+
+
+@pytest.mark.asyncio
+async def test_make_worker_pool_worker_type_metadata_docker_worker(
+    mocker, environment, make_pool, make_images
+):
+    m = mocker.patch("tcadmin.appconfig.AppConfig.current")
+    m.return_value = Namespace(description_prefix="PREFIX - ")
+
+    images = WorkerImages(
+        [
+            WorkerImage(
+                "image-1",
+                clouds=make_images()["image-1"].clouds,
+                worker_type_metadata={"machine-setup": {"script": "https://s"}},
+            )
+        ]
+    )
+    result = await make_worker_pool(
+        environment, Resources(), make_pool("aws"), images, {}
+    )
+
+    assert result.config["launchConfigs"][0]["workerConfig"] == {"capacity": 1}
