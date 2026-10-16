@@ -4,6 +4,7 @@
 
 from argparse import Namespace
 
+import attr
 import pytest
 from tcadmin.resources import Resources
 from tcadmin.resources.worker_pool import WorkerPool as TCWorkerPool
@@ -491,6 +492,30 @@ async def test_make_worker_pool(
     # Assertion callbacks correspond to `id` of parametrized test.
     param_id = request.node.callspec.id
     globals()[f"assert_{param_id}"](result)
+
+
+@pytest.mark.asyncio
+async def test_make_worker_pool_azure_sbom(mocker, environment, make_pool, make_images):
+    m = mocker.patch("tcadmin.appconfig.AppConfig.current")
+    m.return_value = Namespace(description_prefix="PREFIX - ")
+
+    environment = attr.evolve(
+        environment,
+        azure_config={
+            **environment.azure_config,
+            "sbom_url_tmpl": "https://sbom.example.com/{name}-{version}.md",
+        },
+    )
+    result = await make_worker_pool(
+        environment, Resources(), make_pool("azure"), make_images(), {}
+    )
+
+    for launch_config in result.config["launchConfigs"]:
+        gw_config = launch_config["workerConfig"]["genericWorker"]["config"]
+        assert gw_config["workerTypeMetadata"] == {
+            "sbom": "https://sbom.example.com/name-id-ver_id.md"
+        }
+        assert "workerTypeMetaData" not in gw_config
 
 
 @pytest.mark.parametrize(

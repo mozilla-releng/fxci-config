@@ -441,7 +441,7 @@ def get_azure_provider_config(
         metadata["sbom"] = azure_config["sbom_url_tmpl"].format(**context)
 
     if metadata:
-        gw_config.setdefault("workerTypeMetaData", {}).update(metadata)
+        gw_config.setdefault("workerTypeMetadata", {}).update(metadata)
 
     tags = config.get("tags", {})
 
