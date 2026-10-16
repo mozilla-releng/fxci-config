@@ -565,7 +565,9 @@ pools:
         by-pool-group:
           gecko-.*:
             by-suffix:
-              updatebot: 5
+              # The leading hyphen is intentional: keys must match the
+              # variant's whole suffix, which is '-updatebot'.
+              '-updatebot': 5
               default: 1000
           comm-.*: 300
           app-services-1: 50
