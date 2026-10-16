@@ -3815,9 +3815,6 @@ pools:
           config: {}
       vmSizes:
         - vmSize: Standard_F16s_v2
-          launchConfig:
-            hardwareProfile:
-              vmSize: Standard_F16s_v2
       worker-manager-config:
         capacityPerInstance: 1
 
@@ -3855,12 +3852,6 @@ pools:
             by-kind:
               gpu: Standard_NV12ads_A10_v5
               ngpu: Standard_F16s_v2
-          launchConfig:
-            hardwareProfile:
-              vmSize:
-                by-kind:
-                  gpu: Standard_NV12ads_A10_v5
-                  ngpu: Standard_F16s_v2
       worker-manager-config:
         capacityPerInstance: 1
 
@@ -3916,9 +3907,6 @@ pools:
             numberOfTasksToRun: 1
       vmSizes:
         - vmSize: Standard_NV12ads_A10_v5
-          launchConfig:
-            hardwareProfile:
-              vmSize: Standard_NV12ads_A10_v5
       worker-manager-config:
         capacityPerInstance: 1
 
