@@ -251,6 +251,10 @@ fuzzing-docker-worker-legacy:
 gw-ubuntu-24-04-staging:
   aws:
     us-east-1: ami-02619e55246806e8d
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-staging-iuujjhskyujdtccoemka
+
+gw-ubuntu-24-04-arm64-staging:
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-ed626229ee5844439d7c
 
 gw-win2022-gpu:
   azure2:
@@ -269,3 +273,18 @@ gw-win2022:
     sbom: false
     central-us: imageset-059fc28bd9074bb8ab3c-centralus-fuzzing
     east-us: imageset-0d17e90b4e8444bd8548-eastus-fuzzing
+
+gw-win2022-staging:
+  azure2:
+    version: NA
+    resource_group: rg-packer-worker-images
+    sbom: false
+    central-us: imageset-950d7db4ed40425296dc-centralus
+    east-us: imageset-f7c1c08eb4a142a196f2-eastus
+
+gw-win2022-gpu-staging:
+  azure2:
+    version: NA
+    resource_group: rg-packer-worker-images
+    sbom: false
+    east-us: imageset-62a1bbf5df0045a4b979-eastus
