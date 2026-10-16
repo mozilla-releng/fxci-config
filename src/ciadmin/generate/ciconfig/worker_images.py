@@ -15,6 +15,8 @@ class WorkerImage:
     image_name = attr.ib(type=str)
     alias_for = attr.ib(type=str, default=None)
     clouds = attr.ib(type=dict, default={})
+    # Merged into the workerTypeMetadata of generic-worker pools using the image
+    worker_type_metadata = attr.ib(type=dict, default={})
 
     @staticmethod
     async def fetch_all():
@@ -28,7 +30,12 @@ class WorkerImage:
             if isinstance(info, str):
                 return WorkerImage(image_name=image_name, alias_for=info)
             else:
-                return WorkerImage(image_name=image_name, clouds=info)
+                clouds = dict(info)
+                return WorkerImage(
+                    image_name=image_name,
+                    worker_type_metadata=clouds.pop("worker-type-metadata", {}),
+                    clouds=clouds,
+                )
 
         return WorkerImages(
             [mk(image_name, info) for image_name, info in worker_images.items()]

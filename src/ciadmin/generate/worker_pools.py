@@ -265,6 +265,16 @@ def _resolve_defaults(defaults, provider_id, implementation):
     return defaults
 
 
+def _add_worker_type_metadata(worker_config, metadata):
+    """Merge `metadata` into the generic-worker workerTypeMetadata of
+    `worker_config` (in place), if it is a generic-worker config."""
+    gw_config = worker_config.get("genericWorker", {}).get("config")
+    if metadata and gw_config is not None:
+        gw_config["workerTypeMetadata"] = merge(
+            gw_config.get("workerTypeMetadata", {}), metadata
+        )
+
+
 def get_aws_provider_config(
     environment, provider_id, pool_id, config, worker_images, defaults
 ):
@@ -284,6 +294,7 @@ def get_aws_provider_config(
     worker_config = merge(
         defaults.get("worker-config", {}), config.get("worker-config", {})
     )
+    _add_worker_type_metadata(worker_config, image.worker_type_metadata)
     worker_manager_config = merge(
         defaults.get("worker-manager-config", {}),
         config.get("worker-manager-config", {}),
@@ -432,7 +443,7 @@ def get_azure_provider_config(
     _set_wst_defaults(gw_config, azure_config)
 
     # Populate some generic-worker metadata.
-    metadata = {}
+    metadata = merge(image.worker_type_metadata)
     has_sbom = image.get(provider_id, "sbom") in (None, True)  # defaults None to True
     if has_sbom and "sbom_url_tmpl" in azure_config:
         context = image.clouds[provider_id].copy()
@@ -445,8 +456,7 @@ def get_azure_provider_config(
 
         metadata["sbom"] = azure_config["sbom_url_tmpl"].format(**context)
 
-    if metadata:
-        gw_config.setdefault("workerTypeMetadata", {}).update(metadata)
+    _add_worker_type_metadata(worker_config, metadata)
 
     tags = config.get("tags", {})
 
@@ -610,6 +620,7 @@ def get_google_provider_config(
     worker_config = merge(
         defaults.get("worker-config", {}), config.get("worker-config", {})
     )
+    _add_worker_type_metadata(worker_config, image.worker_type_metadata)
     worker_manager_config = merge(
         defaults.get("worker-manager-config", {}),
         config.get("worker-manager-config", {}),
