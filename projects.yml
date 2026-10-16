@@ -1599,6 +1599,9 @@ fx-desktop-qa-automation:
     - name: main
       level: 3
       cron: true
+    - name: nightly
+      level: 3
+  default_branch: nightly
   features:
     github-taskgraph: true
     github-pull-request:

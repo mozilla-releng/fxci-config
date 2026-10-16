@@ -970,7 +970,7 @@
         alias: firefox
         job: [pull-request:trusted]
     - project:
-        alias: staging-firefox
+        alias: [firefox-crb, staging-firefox]
         job: [branch:*, pull-request:trusted]
     # Bug 1800472: Allow try-comm-central to trigger code review bot
     - project:
