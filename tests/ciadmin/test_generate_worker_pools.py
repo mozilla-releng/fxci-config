@@ -4,6 +4,7 @@
 
 from argparse import Namespace
 
+import attr
 import pytest
 from tcadmin.resources import Resources
 from tcadmin.resources.worker_pool import WorkerPool as TCWorkerPool
@@ -493,6 +494,30 @@ async def test_make_worker_pool(
     globals()[f"assert_{param_id}"](result)
 
 
+@pytest.mark.asyncio
+async def test_make_worker_pool_azure_sbom(mocker, environment, make_pool, make_images):
+    m = mocker.patch("tcadmin.appconfig.AppConfig.current")
+    m.return_value = Namespace(description_prefix="PREFIX - ")
+
+    environment = attr.evolve(
+        environment,
+        azure_config={
+            **environment.azure_config,
+            "sbom_url_tmpl": "https://sbom.example.com/{name}-{version}.md",
+        },
+    )
+    result = await make_worker_pool(
+        environment, Resources(), make_pool("azure"), make_images(), {}
+    )
+
+    for launch_config in result.config["launchConfigs"]:
+        gw_config = launch_config["workerConfig"]["genericWorker"]["config"]
+        assert gw_config["workerTypeMetadata"] == {
+            "sbom": "https://sbom.example.com/name-id-ver_id.md"
+        }
+        assert "workerTypeMetaData" not in gw_config
+
+
 @pytest.mark.parametrize(
     "invalid_instances,zone,machine_type,expected",
     [
@@ -665,3 +690,62 @@ def test_variant_overrides_owner_and_email():
     a, b = generate_pool_variants([wp], "cluster")
     assert (a.owner, a.email_on_error) == ("default@example.com", True)
     assert (b.owner, b.email_on_error) == ("other@example.com", False)
+
+
+@pytest.mark.parametrize("provider", ("aws", "google", "azure"))
+@pytest.mark.asyncio
+async def test_make_worker_pool_worker_type_metadata(
+    mocker, environment, make_pool, make_images, provider
+):
+    m = mocker.patch("tcadmin.appconfig.AppConfig.current")
+    m.return_value = Namespace(description_prefix="PREFIX - ")
+
+    pool = make_pool(
+        provider,
+        {
+            "worker-config": {
+                "genericWorker": {
+                    "config": {"workerTypeMetadata": {"machine-setup": {"a": 1}}}
+                }
+            }
+        },
+    )
+    image = make_images({"azure": {"version": "NA"}})["image-1"]
+    images = WorkerImages(
+        [
+            WorkerImage(
+                "image-1",
+                clouds=image.clouds,
+                worker_type_metadata={"machine-setup": {"script": "https://s"}},
+            )
+        ]
+    )
+    result = await make_worker_pool(environment, Resources(), pool, images, {})
+
+    for launch_config in result.config["launchConfigs"]:
+        assert launch_config["workerConfig"]["genericWorker"]["config"][
+            "workerTypeMetadata"
+        ] == {"machine-setup": {"a": 1, "script": "https://s"}}
+
+
+@pytest.mark.asyncio
+async def test_make_worker_pool_worker_type_metadata_docker_worker(
+    mocker, environment, make_pool, make_images
+):
+    m = mocker.patch("tcadmin.appconfig.AppConfig.current")
+    m.return_value = Namespace(description_prefix="PREFIX - ")
+
+    images = WorkerImages(
+        [
+            WorkerImage(
+                "image-1",
+                clouds=make_images()["image-1"].clouds,
+                worker_type_metadata={"machine-setup": {"script": "https://s"}},
+            )
+        ]
+    )
+    result = await make_worker_pool(
+        environment, Resources(), make_pool("aws"), images, {}
+    )
+
+    assert result.config["launchConfigs"][0]["workerConfig"] == {"capacity": 1}

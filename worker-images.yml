@@ -6,6 +6,15 @@
 # provider and then by cloud-provider-specific details.
 #
 # Aliases can be defined by a simple string; this is useful for "current" images
+#
+# An image can also have a `worker-type-metadata` section (alongside the cloud
+# providers), which is merged into the generic-worker `workerTypeMetadata` of
+# the worker pools that use it, e.g. a link to the script the image was built
+# with:
+#
+#   worker-type-metadata:
+#     machine-setup:
+#       script: https://raw.githubusercontent.com/...
 
 # monopacker-docker-worker-* images are built with monopacker.
 

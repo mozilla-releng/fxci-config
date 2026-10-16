@@ -26,6 +26,25 @@ async def test_fetch_entry(mock_ciconfig_file):
 
 
 @pytest.mark.asyncio
+async def test_fetch_entry_with_worker_type_metadata(mock_ciconfig_file):
+    metadata = {"machine-setup": {"script": "https://example.com/bootstrap.sh"}}
+    mock_ciconfig_file(
+        "worker-images.yml",
+        {
+            "lazy-worker": {
+                "ec2": {"aa-polar-1": "ami-123"},
+                "worker-type-metadata": metadata,
+            }
+        },
+    )
+    assert (await WorkerImage.fetch_all())["lazy-worker"] == WorkerImage(
+        image_name="lazy-worker",
+        clouds={"ec2": {"aa-polar-1": "ami-123"}},
+        worker_type_metadata=metadata,
+    )
+
+
+@pytest.mark.asyncio
 async def test_fetch_alias_entry(mock_ciconfig_file):
     mock_ciconfig_file(
         "worker-images.yml",
