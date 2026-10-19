@@ -1776,6 +1776,7 @@ taskcluster-private:
     - name: "*"
       level: 1
   features:
+    github-private-repo: true
     github-pull-request:
       policy: public_restricted
     taskcluster-roles: true
