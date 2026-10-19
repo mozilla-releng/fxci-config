@@ -1334,6 +1334,11 @@ project/relman/code-review/backend-testing:
   description: See [bug 1593749](https://bugzilla.mozilla.org/show_bug.cgi?id=1593749#c12)
   scopes:
     - assume:project:relman:code-review/runtime/testing
+project/relops/hangar:
+  description: Hangar, the RelOps fleet dashboard (mozilla-platform-ops/hangar). Reads
+    pending tasks on the hardware pools to show which repos are queued.
+  scopes:
+    - queue:pending-list:releng-hardware/*
 project/relops/worker-images/run-integration-tests:
   description: Client used to trigger the worker-images os-integration hooks from Github Actions (Bug 1981245, RELOPS-2503)
   scopes:
