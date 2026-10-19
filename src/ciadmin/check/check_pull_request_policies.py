@@ -24,9 +24,9 @@ async def _get_pull_request_policy(project):
             default_branch=project.default_branch.name,
         )
     except aiohttp.ClientResponseError as e:
-        # A private repo the auth service would not mint a token for answers
-        # exactly like one that is not there. Its policy goes unchecked rather
-        # than failing a run that was never going to see the file.
+        # To a run without a token, a private repo answers exactly like one
+        # that is not there. Its policy goes unchecked rather than failing a
+        # run that was never going to see the file.
         if e.status == 404 and project.feature("github-private-repo"):
             return UNREADABLE
         raise
