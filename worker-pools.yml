@@ -567,7 +567,7 @@ pools:
             by-suffix:
               # The leading hyphen is intentional: keys must match the
               # variant's whole suffix, which is '-updatebot'.
-              '-updatebot': 5
+              '-updatebot': 1
               default: 1000
           comm-.*: 300
           app-services-1: 50
