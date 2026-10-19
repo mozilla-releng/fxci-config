@@ -53,6 +53,14 @@
         feature: taskcluster-roles
         job: [pull-request:trusted, branch:*, tag:*]
 
+# The team may create tasks in any of the project's pools, e.g. by hand in the
+# staging image pools, which aren't used by any CI graph.
+- grant:
+    - queue:create-task:highest:proj-taskcluster/*
+  to:
+    - groups:
+        - team_taskcluster
+
 # Releases and staging releases build on the release pool.
 - grant:
     - queue:create-task:highest:proj-taskcluster/release
