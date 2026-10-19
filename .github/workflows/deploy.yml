@@ -110,15 +110,15 @@ jobs:
 
   diff:
     runs-on: ubuntu-latest
-    environment: diff-${{matrix.environment}}
-    needs: generate
+    needs: [generate, trust]
+    environment: ${{ needs.trust.outputs.trusted == 'true' && format('diff-{0}', matrix.environment) || '' }}
     strategy:
       fail-fast: false
       matrix:
         environment: ["staging", "firefoxci"]
     env:
-      # Github doesn't set these on PR events from a fork, but that's ok as we
-      # skip generating resources that require scopes with PRs anyway.
+      # Untrusted runs have no environment, so these are empty there. That's
+      # ok as we skip diffing resources that require scopes with PRs anyway.
       TASKCLUSTER_CLIENT_ID: ${{vars.TASKCLUSTER_CLIENT_ID}}
       TASKCLUSTER_ACCESS_TOKEN: ${{secrets.TASKCLUSTER_ACCESS_TOKEN}}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
