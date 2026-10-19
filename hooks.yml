@@ -320,7 +320,11 @@ project-engwf/reviewer-assignment-{mode}:
   template_file: hook-templates/project-engwf/reviewer-assignment-{env}.yml
   bindings:
     - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '{routing_key_prefix}.edited'
+    - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '{routing_key_prefix}.opened'
+    - exchange: exchange/taskcluster-github/v1/pull-request
+      routing_key_pattern: '{routing_key_prefix}.ready_for_review'
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '{routing_key_prefix}.reopened'
     - exchange: exchange/taskcluster-github/v1/pull-request
