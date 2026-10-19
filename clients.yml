@@ -1338,6 +1338,7 @@ project/relops/hangar:
   description: Hangar, the RelOps fleet dashboard (mozilla-platform-ops/hangar). Reads
     pending tasks on the hardware pools to show which repos are queued.
   scopes:
+    - queue:pending-list:proj-autophone/*
     - queue:pending-list:releng-hardware/*
 project/relops/worker-images/run-integration-tests:
   description: Client used to trigger the worker-images os-integration hooks from Github Actions (Bug 1981245, RELOPS-2503)
