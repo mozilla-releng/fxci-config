@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  ci-admin:
+    build: .
+    volumes:
+      - .:/home/fxci-config
+    working_dir: /home/fxci-config
