@@ -680,6 +680,28 @@ firefox-dev:
     treeherder-reporting: true
     trust-domain-scopes: true
 
+firefox-dev-secure:
+  repo: https://github.com/mozilla-firefox/firefox-dev-secure
+  repo_type: git
+  trust_domain: gecko
+  branches:
+    - name: main
+      level: 1
+    - name: "*"
+      level: 1
+  features:
+    gecko-roles: true
+    git-push: true
+    github-taskgraph: true
+    github-pull-request:
+      policy: collaborators
+    github-private-repo: true
+    pr-actions: true
+    taskgraph-actions: true
+    taskgraph-cron: false
+    treeherder-reporting: true
+    trust-domain-scopes: true
+
 firefox-crb:
   repo: https://github.com/mozilla-firefox/firefox-crb
   repo_type: git
