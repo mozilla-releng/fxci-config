@@ -41,17 +41,19 @@ async def check_default_branches_for_git_repos():
     `projects.yml` match the ones from git metadata
     """
 
-    projects = [p for p in await Project.fetch_all() if not p.repo.endswith("*")]
+    # Private repos can't be queried anonymously.
+    projects = [
+        p
+        for p in await Project.fetch_all()
+        if p.repo_type == "git"
+        and not p.repo.endswith("*")
+        and not p.feature("github-private-repo")
+    ]
 
-    # TODO: find a better flag to filter out private repos
     branches_in_projects = {
-        project.alias: project.default_branch.name
-        for project in projects
-        if project.repo_type == "git" and "private" not in project.repo
+        project.alias: project.default_branch.name for project in projects
     }
     branches_on_github = {
-        project.alias: await _get_git_default_branch(project)
-        for project in projects
-        if project.repo_type == "git" and "private" not in project.repo
+        project.alias: await _get_git_default_branch(project) for project in projects
     }
     assert branches_in_projects == branches_on_github
