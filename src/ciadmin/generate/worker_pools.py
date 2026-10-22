@@ -591,7 +591,13 @@ def get_google_provider_config(
     image = worker_images[config["image"]]
     instance_types = config["instance_types"]
     implementation = config.pop("implementation", "docker-worker")
+    extended_preemption_notice = config.pop("extended-preemption-notice", False)
     google_config = environment.google_config
+
+    if not isinstance(extended_preemption_notice, bool):
+        raise ValueError(
+            f"`extended-preemption-notice` must be true or false in worker {pool_id}.",
+        )
 
     # Merge defaults with pool config.
     defaults = _resolve_defaults(defaults, provider_id, implementation)
@@ -723,6 +729,17 @@ def get_google_provider_config(
                 }
                 scheduling_choice = launch_config.get("scheduling", "spot")
                 launch_config["scheduling"] = scheduling_options[scheduling_choice]
+                if extended_preemption_notice:
+                    if scheduling_choice != "spot":
+                        raise ValueError(
+                            "`extended-preemption-notice` requires spot scheduling, "
+                            f"but an instance type uses `{scheduling_choice}` "
+                            f"in worker {pool_id}.",
+                        )
+                    # https://docs.cloud.google.com/compute/docs/instances/create-use-spot#handle-preemption
+                    launch_config["scheduling"]["preemptionNoticeDuration"] = {
+                        "seconds": 120
+                    }
 
                 _populate_launch_config_id(launch_config, pool_id)
                 launch_configs.append(launch_config)
