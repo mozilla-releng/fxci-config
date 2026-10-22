@@ -173,7 +173,6 @@
     - queue:create-task:low:releng-hardware/win11-64-24h2-hw-ref-alpha
     - queue:create-task:low:releng-hardware/win11-64-24h2-hw-relops1213
     - queue:create-task:low:releng-hardware/win11-64-24h2-hw-perf-debug
-    - queue:create-task:low:releng-hardware/win11-64-24h2-hw-perf-sheriff
   to:
     - project:
         alias: worker-images
