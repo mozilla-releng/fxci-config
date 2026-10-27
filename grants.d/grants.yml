@@ -574,7 +574,7 @@
         job: [action:release-promotion]
         trust_domain: gecko
         level: [3]
-        alias: [mozilla-esr115, mozilla-esr140, mozilla-esr153, mozilla-release, mozilla-beta]
+        alias: [mozilla-esr115, mozilla-esr153, mozilla-release, mozilla-beta]
 
 - grant:
     - project:releng:googleplay:product:fenix
@@ -737,7 +737,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr153, comm-esr140]
+        alias: [comm-esr153]
 
 - grant:
     - project:comm:thunderbird:releng:balrog:server:release
@@ -770,7 +770,7 @@
   to:
     - project:
         level: [3]
-        alias: [comm-esr153, comm-esr140, comm-release, comm-beta]
+        alias: [comm-esr153, comm-release, comm-beta]
 
 - grant:
     - project:comm:thunderbird:releng:beetmover:bucket:release
@@ -783,7 +783,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr153, comm-esr140, comm-release, comm-beta]
+        alias: [comm-esr153, comm-release, comm-beta]
 
 - grant:
     - project:comm:thunderbird:releng:microsoftstore:esr
@@ -792,7 +792,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr153, comm-esr140]
+        alias: [comm-esr153]
 
 - grant:
     - project:comm:thunderbird:releng:microsoftstore:release
@@ -821,7 +821,7 @@
         job: [action:release-promotion]
         trust_domain: comm
         level: [3]
-        alias: [comm-esr153, comm-esr140]
+        alias: [comm-esr153]
 
 - grant:
     - project:comm:thunderbird:releng:flathub:stable
@@ -2461,7 +2461,7 @@
         alias: [autoland, mozilla-beta, mozilla-release, mozilla-esr153]
         job: cron:l10n-bumper
     - project:
-        alias: [comm-autoland, comm-central, comm-beta, comm-release, comm-esr140, comm-esr153]
+        alias: [comm-autoland, comm-central, comm-beta, comm-release, comm-esr153]
         job: cron:l10n-bumper
 
 - grant:
@@ -2469,10 +2469,10 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140, mozilla-esr153]
+        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr153]
         job: action:release-promotion
     - project:
-        alias: [comm-beta, comm-release, comm-esr140, comm-esr153]
+        alias: [comm-beta, comm-release, comm-esr153]
         job: action:release-promotion
 
 - grant:
@@ -2482,12 +2482,12 @@
     - project:
         # mozilla-central is not needed here because those version bumps are
         # done through a `merge_day` task
-        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr140, mozilla-esr153]
+        alias: [mozilla-beta, mozilla-release, mozilla-esr115, mozilla-esr153]
         job: action:release-promotion
     - project:
         # comm-central is not needed here because those version bumps are
         # done through a `merge_day` task
-        alias: [comm-beta, comm-release, comm-esr140, comm-esr153]
+        alias: [comm-beta, comm-release, comm-esr153]
         job: action:release-promotion
 
 
@@ -2504,7 +2504,7 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr140, mozilla-esr153]
+        alias: [mozilla-central, mozilla-beta, mozilla-esr115, mozilla-esr153]
         job: action:merge-automation
     - project:
         alias: [comm-beta, comm-release, comm-esr153]
@@ -2515,7 +2515,7 @@
     - project:releng:lando:repo:{lando_repo}
   to:
     - project:
-        alias: [comm-autoland, comm-central, comm-beta, comm-esr140, comm-esr153]
+        alias: [comm-autoland, comm-central, comm-beta, comm-esr153]
         job: action:merge-automation
 
 # granting scopes for cross-repo updates is also straightforward, but it looks
