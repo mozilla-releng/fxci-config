@@ -329,6 +329,10 @@ meta:
     disks:
       - *persistent-disk-75gb
     machine_type: c3d-highcpu-16
+  - &c3d-highcpu-30
+    disks:
+      - *persistent-disk-75gb
+    machine_type: c3d-highcpu-30
   - &c4d-standard-4
     disks:
       - *persistent-disk-75gb
@@ -3154,6 +3158,12 @@ pools:
       - pool-group: enterprise-t
         suffix: 'docker-16c32gb-amd'
         instance_types: [*c3d-highcpu-16]
+      - pool-group: gecko-t
+        suffix: 'docker-large-amd'
+        instance_types: [*c3d-standard-30-lssd]
+      - pool-group: gecko-t
+        suffix: 'docker-noscratch-large-amd'
+        instance_types: [*c3d-highcpu-30]
       # GW / Intel / wayland
       - pool-group: gecko-t
         suffix: '2404-wayland'
@@ -3191,6 +3201,7 @@ pools:
           gecko-t:
             by-suffix:
               .*2404-wayland.*: 100
+              docker(-noscratch)?-large-amd: 200
               default: 2500
           enterprise-t:
             by-suffix:
@@ -3201,6 +3212,7 @@ pools:
       regions:
         by-suffix:
           docker-noscratch.*: [us-central1, us-west1, us-east1]
+          docker-large-amd: [us-central1, us-east1]
           default: *default-gcp-regions
       image:
         by-implementation:
