@@ -573,10 +573,6 @@ project/releng/generic-worker/datacenter-gecko-t-osx-2700-m4:
   scopes:
     - assume:worker-type:releng-hardware/gecko-t-osx-2700-m4
     - queue:worker-id:mdc1/macmini-m4-*
-project/releng/generic-worker/win11-64-24h2-hw-perf-sheriff:
-  description: Tracking metric variability with performance sheriffing. Tracking in RELOPS-1288.
-  scopes:
-    - assume:worker-type:releng-hardware/win11-64-24h2-hw-perf-sheriff
 project/releng/generic-worker/win11-64-25h2-hw:
   description: Datacenter Windows 11 main production worker. 25H2 references the os build.
   scopes:
