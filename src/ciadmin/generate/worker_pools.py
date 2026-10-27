@@ -239,6 +239,15 @@ def _build_arm_template_launch_config(
     return launch_config
 
 
+def _set_wst_defaults(gw_config, provider_config):
+    for key, wst_key in (
+        ("wstServerURL", "wst_server_url"),
+        ("wstAudience", "wst_audience"),
+    ):
+        if provider_config.get(wst_key):
+            gw_config.setdefault(key, provider_config[wst_key])
+
+
 def _resolve_defaults(defaults, provider_id, implementation):
     keys = (
         "lifecycle",
@@ -355,11 +364,10 @@ def get_aws_provider_config(
                         worker_config,
                         instance_type.get("worker-config", {}),
                     )
-                    if aws_config.get("wst_server_url") and instance_worker_config.get(
-                        "genericWorker", {}
-                    ).get("config"):
-                        instance_worker_config["genericWorker"]["config"].setdefault(
-                            "wstServerURL", aws_config["wst_server_url"]
+                    if instance_worker_config.get("genericWorker", {}).get("config"):
+                        _set_wst_defaults(
+                            instance_worker_config["genericWorker"]["config"],
+                            aws_config,
                         )
                 image_id = image.get(provider_id, region)
                 launch_config = {
@@ -423,8 +431,7 @@ def get_azure_provider_config(
     )
 
     gw_config = worker_config["genericWorker"]["config"]
-    if azure_config.get("wst_server_url"):
-        gw_config.setdefault("wstServerURL", azure_config["wst_server_url"])
+    _set_wst_defaults(gw_config, azure_config)
 
     # Populate some generic-worker metadata.
     metadata = {}
@@ -696,12 +703,15 @@ def get_google_provider_config(
                         },
                     )
                 else:
-                    if google_config.get("wst_server_url") and launch_config[
-                        "workerConfig"
-                    ].get("genericWorker", {}).get("config"):
-                        launch_config["workerConfig"]["genericWorker"][
-                            "config"
-                        ].setdefault("wstServerURL", google_config["wst_server_url"])
+                    if (
+                        launch_config["workerConfig"]
+                        .get("genericWorker", {})
+                        .get("config")
+                    ):
+                        _set_wst_defaults(
+                            launch_config["workerConfig"]["genericWorker"]["config"],
+                            google_config,
+                        )
                 launch_config["machineType"] = (
                     f"zones/{zone}/machineTypes/{launch_config.pop('machine_type')}"
                 )
