@@ -13,6 +13,7 @@ from taskcluster import optionsFromEnvironment
 from taskcluster.exceptions import TaskclusterFailure
 from tcadmin.util.sessions import aiohttp_session
 
+from ciadmin.generate.ciconfig.environment import Environment
 from ciadmin.generate.ciconfig.projects import Project
 
 # The read-only GitHub app the auth service mints tokens for. It is installed
@@ -124,6 +125,10 @@ async def _owner_repositories(owner):
 
 
 async def _build_client(owner):
+    environment = await Environment.current()
+    if not environment.github_repo_tokens:
+        return await _get_fallback_client()
+
     auth = OwnerTokenAuth(owner, await _owner_repositories(owner))
     try:
         # Fetched here rather than on first use, so that a refusal picks the

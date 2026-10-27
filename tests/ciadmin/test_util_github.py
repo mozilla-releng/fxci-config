@@ -136,6 +136,28 @@ def reset_clients():
     github._fallback_client = None
 
 
+def environment_config(**kwargs):
+    return {
+        "root_url": "https://tc.example.com",
+        "modify_resources": [],
+        "worker_manager": {},
+        **kwargs,
+    }
+
+
+@pytest.fixture(autouse=True)
+def environment(mock_ciconfig_file, set_environment):
+    mock_ciconfig_file(
+        "environments.yml",
+        {
+            "with_tokens": environment_config(),
+            "without_tokens": environment_config(github_repo_tokens=False),
+        },
+    )
+    with set_environment("with_tokens"):
+        yield
+
+
 @pytest.fixture
 def projects(mock_ciconfig_file):
     """Stand in for projects.yml, which is where a token's repo list comes from."""
@@ -324,3 +346,24 @@ async def test_close_clients_closes_each_one_once(taskcluster_credentials, proje
     one.close.assert_awaited_once()
     two.close.assert_awaited_once()
     assert github._clients == {}
+
+
+@pytest.mark.asyncio
+async def test_an_environment_without_repo_tokens_uses_the_fallback(
+    taskcluster_credentials, projects, set_environment
+):
+    projects(
+        one=git_project("https://github.com/mozilla/one"),
+        two=git_project("https://github.com/taskcluster/two"),
+    )
+
+    with set_environment("without_tokens"):
+        with patch_auth(token_response()) as auth:
+            with patch("ciadmin.util.github.client_from_env") as client_from_env:
+                one = await github.get_client("mozilla/one")
+                two = await github.get_client("taskcluster/two")
+                assert not await github.has_repo_token("mozilla/one")
+
+    assert one is two
+    assert one is client_from_env.return_value.return_value
+    auth.return_value.githubRepoToken.assert_not_called()

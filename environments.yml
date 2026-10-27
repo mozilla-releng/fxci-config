@@ -13,6 +13,12 @@
 # make to the generated resources.  Such modifications are defined in ci-admin,
 # and exist to help configure minor differences between environments, such as
 # to prevent a staging environment from carrying a full production workload.
+#
+# `github_repo_tokens` (default true) controls whether ci-admin asks the
+# Taskcluster auth service for GitHub tokens to read repositories. Set it to
+# false where the `read` GitHub app is not installed, and ci-admin will use
+# only the GitHub credentials from its environment. Private repositories are
+# skipped in that case.
 
 firefoxci:
   root_url: https://firefox-ci-tc.services.mozilla.com
@@ -184,6 +190,7 @@ firefoxci:
 
 staging:
   root_url: https://stage.taskcluster.nonprod.webservices.mozgcp.net
+  github_repo_tokens: false
   modify_resources:
     # we do not want hooks to trigger on a schedule in staging, as that adds
     # lots of load (e.g., building nightlies).  They can be triggered
