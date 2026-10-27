@@ -79,8 +79,8 @@ class OwnerTokenAuth(Auth):
 def _warn_once(message):
     """Print `message` to stderr, but only the first time it is seen.
 
-    The same sentence would otherwise repeat for every owner, and forty
-    copies of it hide everything around them.
+    A failure to mint a token repeats for every repository, and the same
+    sentence forty times hides everything around it.
     """
     if message not in _warned:
         _warned.add(message)
@@ -123,33 +123,18 @@ async def _owner_repositories(owner):
     )
 
 
-def _has_taskcluster_credentials():
-    return "credentials" in optionsFromEnvironment()
-
-
 async def _build_client(owner):
-    if not _has_taskcluster_credentials():
-        # A run without credentials, such as a pull request from a fork, has no
-        # way to a token and still has to work for the public repositories.
-        _warn_once(
-            "No Taskcluster credentials in the environment, so github is read "
-            "with the fallback token and private repositories are skipped."
-        )
-        return await _get_fallback_client()
-
     auth = OwnerTokenAuth(owner, await _owner_repositories(owner))
     try:
-        # Fetched here rather than on first use, so that a refusal names the
-        # owner instead of failing whichever request happens to be first.
+        # Fetched here rather than on first use, so that a refusal picks the
+        # fallback instead of failing whichever request happens to be first.
         await auth.get_token()
     except TaskclusterFailure as e:
-        # A run with credentials was promised a token. A fallback here would
-        # hide a missing app installation, and failing gets it fixed.
-        print(
-            f"Could not get a github token for {owner} from the auth service: {e}",
-            file=sys.stderr,
+        _warn_once(
+            f"Could not get a github token for {owner} from the auth service, "
+            f"falling back to the environment: {e}"
         )
-        raise e
+        return await _get_fallback_client()
 
     return AsyncClient(auth=auth)
 
