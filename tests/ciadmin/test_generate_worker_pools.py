@@ -180,6 +180,11 @@ def assert_google_basic(pool):
     }
 
 
+def assert_google_extended_preemption_notice(pool):
+    scheduling = pool.config["launchConfigs"][0]["scheduling"]
+    assert scheduling["preemptionNoticeDuration"] == {"seconds": 120}
+
+
 def assert_azure_basic(pool):
     assert_common(pool)
 
@@ -409,6 +414,12 @@ def test_generate_pool_variants_resolves_machine_type(environment):
     (
         pytest.param("aws", None, None, id="aws_basic"),
         pytest.param("google", None, None, id="google_basic"),
+        pytest.param(
+            "google",
+            {"extended-preemption-notice": True},
+            None,
+            id="google_extended_preemption_notice",
+        ),
         pytest.param(
             "google",
             {
@@ -665,3 +676,23 @@ def test_variant_overrides_owner_and_email():
     a, b = generate_pool_variants([wp], "cluster")
     assert (a.owner, a.email_on_error) == ("default@example.com", True)
     assert (b.owner, b.email_on_error) == ("other@example.com", False)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("scheduling", ["standard", "preemptible"])
+async def test_google_extended_preemption_notice_requires_spot(
+    environment, make_pool, make_images, scheduling
+):
+    pool = make_pool("google", {"extended-preemption-notice": True})
+    pool.config["instance_types"][0]["scheduling"] = scheduling
+    with pytest.raises(ValueError, match="requires spot scheduling"):
+        await make_worker_pool(environment, Resources(), pool, make_images(), {})
+
+
+@pytest.mark.asyncio
+async def test_google_extended_preemption_notice_requires_boolean(
+    environment, make_pool, make_images
+):
+    pool = make_pool("google", {"extended-preemption-notice": 120})
+    with pytest.raises(ValueError, match="must be true or false"):
+        await make_worker_pool(environment, Resources(), pool, make_images(), {})
