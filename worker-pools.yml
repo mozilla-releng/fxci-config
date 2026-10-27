@@ -3158,7 +3158,6 @@ pools:
       - pool-group: enterprise-t
         suffix: 'docker-16c32gb-amd'
         instance_types: [*c3d-highcpu-16]
-      # D2G / AMD / large (CPU-bound source-test tasks like eslint)
       - pool-group: gecko-t
         suffix: 'docker-large-amd'
         instance_types: [*c3d-standard-30-lssd]
@@ -3213,7 +3212,6 @@ pools:
       regions:
         by-suffix:
           docker-noscratch.*: [us-central1, us-west1, us-east1]
-          # C3D local SSD is not offered in us-west1; match b-linux-docker-large-amd.
           docker-large-amd: [us-central1, us-east1]
           default: *default-gcp-regions
       image:
