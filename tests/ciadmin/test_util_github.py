@@ -163,12 +163,6 @@ def taskcluster_credentials(monkeypatch):
     monkeypatch.setenv("TASKCLUSTER_ACCESS_TOKEN", "quiet")
 
 
-@pytest.fixture
-def no_taskcluster_credentials(monkeypatch):
-    monkeypatch.delenv("TASKCLUSTER_CLIENT_ID", raising=False)
-    monkeypatch.delenv("TASKCLUSTER_ACCESS_TOKEN", raising=False)
-
-
 def token_response(token="s3cret", lifetime=timedelta(hours=1)):
     expires = datetime.now(UTC) + lifetime
     return {"token": token, "expires": expires.isoformat()}
@@ -254,16 +248,17 @@ async def test_one_client_per_owner(taskcluster_credentials, projects):
 
 
 @pytest.mark.asyncio
-async def test_without_credentials_every_owner_shares_the_fallback(
-    no_taskcluster_credentials, projects, capsys
+async def test_every_owner_that_falls_back_shares_one_client(
+    taskcluster_credentials, projects, capsys
 ):
-    """A pull request from a fork has no credentials, and still runs."""
+    """A pull request from a fork reaches no owner's token, and still runs."""
     projects(
         one=git_project("https://github.com/mozilla/one"),
         two=git_project("https://github.com/taskcluster/two"),
     )
+    refusal = TaskclusterFailure("no scopes here")
 
-    with patch_auth(token_response()) as auth:
+    with patch_auth(error=refusal):
         with patch("ciadmin.util.github.client_from_env") as client_from_env:
             one = await github.get_client("mozilla/one")
             two = await github.get_client("taskcluster/two")
@@ -271,16 +266,13 @@ async def test_without_credentials_every_owner_shares_the_fallback(
     assert one is two
     client_from_env.assert_called_once_with("mozilla-releng", ["fxci-config"])
 
-    # The auth service is never asked, and the run says why once, not per owner.
-    auth.return_value.githubRepoToken.assert_not_awaited()
-    assert capsys.readouterr().err.count("No Taskcluster credentials") == 1
+    # One line per owner, not one per repository.
+    assert capsys.readouterr().err.count("falling back") == 2
 
 
 @pytest.mark.asyncio
-async def test_a_refused_token_fails_the_run_and_names_the_owner(
-    taskcluster_credentials, capsys
-):
-    """With credentials there is no fallback: a refusal is something to fix."""
+async def test_a_refused_token_falls_back_and_says_so(taskcluster_credentials, capsys):
+    """The message carries the scope the auth service asked for."""
     refusal = TaskclusterFailure(
         "Client ID static/test does not have sufficient scopes and is missing "
         "the following scopes:\n\nauth:github-repo-token:read/mozilla-releng/"
@@ -289,30 +281,28 @@ async def test_a_refused_token_fails_the_run_and_names_the_owner(
 
     with patch_auth(error=refusal):
         with patch("ciadmin.util.github.client_from_env") as client_from_env:
-            with pytest.raises(TaskclusterFailure):
-                await github.get_client("mozilla-releng/staging-xpi-private")
+            client = await github.get_client("mozilla-releng/staging-xpi-private")
 
-    client_from_env.assert_not_called()
+    assert client is client_from_env.return_value.return_value
 
     err = capsys.readouterr().err
-    assert "github token for mozilla-releng" in err
     assert "auth:github-repo-token:read/mozilla-releng" in err
+    assert "falling back" in err
 
 
 @pytest.mark.asyncio
-async def test_has_repo_token_tells_a_token_from_the_fallback(monkeypatch, projects):
-    projects(one=git_project("https://github.com/mozilla/one"))
+async def test_has_repo_token_tells_a_token_from_the_fallback(
+    taskcluster_credentials, projects
+):
+    projects(
+        one=git_project("https://github.com/mozilla/one"),
+        two=git_project("https://github.com/taskcluster/two"),
+    )
 
-    monkeypatch.setenv("TASKCLUSTER_CLIENT_ID", "static/test")
-    monkeypatch.setenv("TASKCLUSTER_ACCESS_TOKEN", "quiet")
-    with patch_auth(token_response()):
-        assert await github.has_repo_token("mozilla/one")
-
-    github._clients.clear()
-    monkeypatch.delenv("TASKCLUSTER_CLIENT_ID")
-    monkeypatch.delenv("TASKCLUSTER_ACCESS_TOKEN")
-    with patch("ciadmin.util.github.client_from_env"):
-        assert not await github.has_repo_token("mozilla/one")
+    with patch_auth(token_response(), TaskclusterFailure("no scopes here")):
+        with patch("ciadmin.util.github.client_from_env"):
+            assert await github.has_repo_token("mozilla/one")
+            assert not await github.has_repo_token("taskcluster/two")
 
 
 @pytest.mark.asyncio
