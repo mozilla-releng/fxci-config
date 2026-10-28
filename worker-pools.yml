@@ -3171,7 +3171,7 @@ pools:
         suffix: 'docker-noscratch-large-amd'
         instance_types: [*c3d-highcpu-30]
       - pool-group: gecko-t
-        suffix: 'docker-noscratch-large-nosmt-amd'
+        suffix: 'docker-noscratch-nosmt-amd'
         instance_types: [*c3d-highcpu-30-nosmt]
       # GW / Intel / wayland
       - pool-group: gecko-t
@@ -3210,7 +3210,8 @@ pools:
           gecko-t:
             by-suffix:
               .*2404-wayland.*: 100
-              docker(-noscratch)?-large(-nosmt)?-amd: 200
+              docker(-noscratch)?-large-amd: 200
+              docker-noscratch-nosmt-amd: 200
               default: 2500
           enterprise-t:
             by-suffix:
