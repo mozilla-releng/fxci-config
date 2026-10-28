@@ -103,13 +103,15 @@ async def check_d2g_disables_native_payloads(generate_resources):
     `disableNativePayloads` defaults to false in generic-worker, so it must be
     set explicitly to true.
     """
-    # The taskcluster team's own CI pools intentionally run both native and
-    # d2g-translated payloads to exercise generic-worker itself.
+    # The taskcluster team's own CI and staging image pools intentionally run
+    # both native and d2g-translated payloads to exercise generic-worker itself.
     ignore = (
         "proj-taskcluster/ci",
         "proj-taskcluster/release",
         "proj-taskcluster/gw-ubuntu-24-04",
         "proj-taskcluster/gw-ubuntu-24-04-gui",
+        "proj-taskcluster/gw-ubuntu-staging-google",
+        "proj-taskcluster/gw-ubuntu-arm64-staging-google",
     )
     invalid_pools = set()
 

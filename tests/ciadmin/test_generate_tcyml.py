@@ -21,7 +21,7 @@ PINNED_REV = "ff8505d177b9"
 @with_aiohttp_session
 async def test_get_tcyml():
     res = await tcyml.get("https://hg.mozilla.org/mozilla-central", revision=PINNED_REV)
-    await github.close_client()
+    await github.close_clients()
     assert hashlib.sha512(res).hexdigest()[:10] == "684648599a"
 
 
@@ -76,7 +76,7 @@ def fake_graphql(*responses):
     """Answer successive `github.graphql` calls with `(data, errors)` pairs."""
     calls = []
 
-    async def graphql(query, **variables):
+    async def graphql(repo_path, query, **variables):
         calls.append((query, variables))
         return responses[len(calls) - 1]
 
@@ -292,7 +292,7 @@ async def test_the_generated_blobs_query_is_valid_graphql(monkeypatch):
     """
     sent = []
 
-    async def capture(query, **variables):
+    async def capture(repo_path, query, **variables):
         sent.append(query)
         return {"repository": {}}, [{"message": "stop here"}]
 

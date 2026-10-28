@@ -174,6 +174,16 @@ class Project:
             else:
                 raise ValueError(f"Feature {name} must be a dict or boolean")
 
+        # action hooks are generated for the branches named here, never for a
+        # bare `*`, so a project with only `*` would silently get none
+        if self.feature("taskgraph-actions") or self.feature("gecko-actions"):
+            if not self.is_try and all(b.name == "*" for b in self.branches):
+                raise ValueError(
+                    f"Project {self.alias} enables actions but names no branch "
+                    "other than '*'. Add the branches that should have action "
+                    "hooks to `branches`."
+                )
+
         # checked last, because it relies on the features above being converted
         if self.feature("taskgraph-cron"):
             if not any(b.cron for b in self.branches):
@@ -213,7 +223,14 @@ class Project:
     # easier access for Python uses.
 
     def feature(self, feature, key="enabled"):
-        "Return True if this feature is enabled"
+        """Return True if this feature is enabled
+
+        A trailing `*` matches any feature with that prefix.
+        """
+        if feature.endswith("*"):
+            return any(
+                val[key] for f, val in self.features.items() if glob_match([feature], f)
+            )
         return feature in self.features and self.features[feature][key]
 
     @property

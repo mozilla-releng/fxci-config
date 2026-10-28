@@ -132,6 +132,16 @@
         alias: enterprise-firefox
         job: [branch:enterprise-release]
 
+- grant:
+    - project:{trust_domain}:releng:signing:cert:release-signing
+    - queue:route:tc-treeherder.v2.enterprise-beta.*
+    - queue:route:tc-treeherder.v2.enterprise-release.*
+  to:
+    - project:
+        alias: enterprise-firefox
+        level: 3
+        job: [action:release-promotion]
+
 # Bug 2013033: project maintenance scopes for enterprise-developers
 # Bug 2066147: release-promotion scopes
 - grant:

@@ -5,6 +5,7 @@
 import asyncio
 import datetime
 import hashlib
+import sys
 import textwrap
 
 import aiohttp
@@ -17,6 +18,7 @@ from tcadmin.util.matchlist import Match, MatchList
 from tcadmin.util.scopes import normalizeScopes
 from tcadmin.util.sessions import aiohttp_session
 
+from ciadmin.util import github
 from ciadmin.util.matching import glob_match
 
 from . import tcyml
@@ -69,10 +71,6 @@ def should_hash(project):
         # list matching the glob. it's probably not worth doing though.
         if "*" in project.repo:
             return False
-        # At this time, we don't support fetching tcymls from private
-        # repos, so we can't generate action hooks for them.
-        if project.feature("github-private-repo"):
-            return False
         return True
     else:
         return False
@@ -80,17 +78,10 @@ def should_hash(project):
 
 def configured_branches(project):
     """The branch names, possibly globbed, that `project` generates actions for."""
-    # If "*" is a configured branch we explicitly ignore it; otherwise
-    # we could end up fetching 100s or 1000s of tcymls and generating
-    # hooks for them. Substring globs may still exist, and are
-    # supported.
-    names = [b.name for b in project.branches if b.name != "*"]
-    # The default branch is considered to be _always_ configured, even if
-    # not explicitly named in `branches`. This is primarily to ensure that
-    # cases where `*` is the only branch explicitly listed, that we still
-    # generate actions for the default branch.
-    names.append(project.default_branch.name)
-    return names
+    # A bare "*" is ignored; honouring it could mean fetching 100s or 1000s
+    # of tcymls and generating hooks for them. Substring globs such as
+    # `release/*` are still supported.
+    return [b.name for b in project.branches if b.name != "*"]
 
 
 async def invalidates_hooks(repo_path, branch):
@@ -191,11 +182,24 @@ async def _hash_project_ymls(project, hashes):
         )
 
     configured = configured_branches(project)
+    private = project.feature("github-private-repo")
+    if private and not await github.has_repo_token(project.repo_path):
+        # The fallback client cannot read it, so asking github would only
+        # turn a missing token into a generic not-found error.
+        print(
+            f"No github token for the private repository {project.repo_path}. "
+            "Its action hooks are missing from this run.",
+            file=sys.stderr,
+        )
+        return
+    # A private repo the token cannot see answers as though it were not there,
+    # which is a run that generates no hooks rather than a broken configuration.
+    all_oids = await tcyml.get_blob_oids(project.repo_path, missing_ok=private)
     # A branch with no `.taskcluster.yml` has no oid, and needs no fetching --
     # the same case the git path used to handle as a 404.
     oids = {
         branch: oid
-        for branch, oid in (await tcyml.get_blob_oids(project.repo_path)).items()
+        for branch, oid in all_oids.items()
         if oid and glob_match(configured, branch)
     }
 

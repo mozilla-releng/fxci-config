@@ -36,6 +36,7 @@ firefoxci:
         implementation: google
   aws_config:
     wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
+    wst_audience: firefoxcitc
     availability-zones:
       by-region:
         us-east-1:
@@ -106,6 +107,7 @@ firefoxci:
         families: [m5dn]
   azure_config:
     wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
+    wst_audience: firefoxcitc
     untrusted_subscription: 108d46d5-fe9b-4850-9a7d-8c914aa6c1f0
     trusted_subscription: a30e97ab-734a-4f3b-a0e4-c51c0bff0701
     location:
@@ -129,6 +131,7 @@ firefoxci:
     #       for specific worker pool or VM size, set `armDeployment: False`
   google_config:
     wst_server_url: https://firefoxci-websocktunnel.services.mozilla.com/
+    wst_audience: firefoxcitc
     zones:
       by-region:
         us-central1: [us-central1-a, us-central1-b, us-central1-c, us-central1-f]
@@ -213,6 +216,7 @@ staging:
         implementation: google
   aws_config:
     wst_server_url: https://wstunnel.stage.taskcluster.nonprod.webservices.mozgcp.net/
+    wst_audience: cloudopsstage
     availability-zones:
       by-region:
         us-east-1:
@@ -276,6 +280,7 @@ staging:
     invalid-instances: []
   azure_config:
     wst_server_url: https://wstunnel.stage.taskcluster.nonprod.webservices.mozgcp.net/
+    wst_audience: cloudopsstage
     untrusted_subscription: 108d46d5-fe9b-4850-9a7d-8c914aa6c1f0
     # Staging should not touch the trusted subscription
     trusted_subscription: 0000000-000-0000-0000-000000000000
@@ -294,6 +299,7 @@ staging:
     #     customParam: customValue
   google_config:
     wst_server_url: https://wstunnel.stage.taskcluster.nonprod.webservices.mozgcp.net/
+    wst_audience: cloudopsstage
     zones:
       by-region:
         us-central1: [us-central1-a, us-central1-b, us-central1-c, us-central1-f]

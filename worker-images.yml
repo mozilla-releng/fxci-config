@@ -61,7 +61,7 @@ relsre-gw-fxci-gcp-2404-amd64-gui-alpha:
 ubuntu-2404-wayland:
   ## Bug 1902716
   ## 2404 ubuntu image with wayland
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2026-09-30
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2026-10-27
 
 relsre-gw-fxci-gcp-2404-amd64-alpha:
   ## alpha pool that relsre can use to rebuild and test 2404 ubuntu images
@@ -74,8 +74,8 @@ ubuntu-2404-headless-alpha:
 
 ubuntu-2404-headless:
   ## Headless Image for Ubuntu 24.04
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2026-09-30
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-amd64-headless-googlecompute-2026-09-30
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2026-10-27
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-amd64-headless-googlecompute-2026-10-27
 
 ubuntu-2404-headless-alpha-tc:
   ## alpha pool that tc can use to rebuild and test 2404 headless ubuntu images
@@ -87,8 +87,8 @@ ubuntu-2404-arm64-headless-alpha:
   fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-arm64-headless-googlecompute-alpha
 ubuntu-2404-arm64-headless:
   ## Headless Image for Ubuntu 24.04 arm64
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2026-09-30
-  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-arm64-headless-googlecompute-2026-09-30
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2026-10-27
+  fxci-level3-gcp: projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-arm64-headless-googlecompute-2026-10-27
 
 # Windows Server 2022
 ronin_b1_windows2022_64_2009_alpha:
@@ -99,15 +99,15 @@ ronin_b1_windows2022_64_2009_alpha:
     name: win2022_64_2009_alpha
 ronin_b1_windows2022_64_2009:
   azure2:
-    version: 1.3.12
+    version: 1.3.14
     resource_group: rg-packer-worker-images
-    deployment_id: 29172b6
+    deployment_id: 78fbc06
     name: win2022_64_2009
 ronin_b3_windows2022_64_2009:
   azure_trusted:
-    version: 1.3.12
+    version: 1.3.14
     resource_group: rg-packer-worker-images
-    deployment_id: 29172b6
+    deployment_id: 78fbc06
     name: trusted_win2022_64_2009
 # Windows Server 2025
 ronin_b1_windows2025_64_24h2_alpha:
@@ -149,9 +149,9 @@ ronin_b3_windows2025_64_24h2_core_alpha:
 # Windows 10
 ronin_t_windows10_64_2009_prod:
   azure2:
-    version: 1.4.3
+    version: 1.4.5
     resource_group: rg-packer-worker-images
-    deployment_id: 29172b6
+    deployment_id: 78fbc06
     name: win10_64_2009
 ronin_t_windows10_64_2009_alpha:
   azure2:
@@ -162,9 +162,9 @@ ronin_t_windows10_64_2009_alpha:
 # Windows 11
 win11a6425h2builder:
   azure2:
-    version: 1.0.12
+    version: 1.0.14
     resource_group: rg-packer-worker-images
-    deployment_id: 29172b6
+    deployment_id: 78fbc06
     name: win11_a64_25h2_builder
 win11a6425h2builderalpha:
   azure2:
@@ -174,15 +174,15 @@ win11a6425h2builderalpha:
     name: win11_a64_25h2_builder_alpha
 trusted_win11_a64_25h2_builder:
   azure_trusted:
-    version: 1.0.12
+    version: 1.0.14
     resource_group: rg-packer-worker-images
-    deployment_id: 29172b6
+    deployment_id: 78fbc06
     name: trusted_win11_a64_25h2_builder
 win11a6425h2tester:
   azure2:
-    version: 1.0.12
+    version: 1.0.14
     resource_group: rg-packer-worker-images
-    deployment_id: 29172b6
+    deployment_id: 78fbc06
     name: win11_a64_25h2_tester
 win11a6425h2testeralpha:
   azure2:
@@ -190,23 +190,11 @@ win11a6425h2testeralpha:
     resource_group: rg-packer-worker-images
     deployment_id: alpha
     name: win11_a64_25h2_tester_alpha
-ronin_t_windows11_64_24h2:
-  azure2:
-    version: 1.3.12
-    resource_group: rg-packer-worker-images
-    deployment_id: 29172b6
-    name: win11_64_24h2
-ronin_t_windows11_64_24h2_alpha:
-  azure2:
-    version: 1.0.0
-    resource_group: rg-packer-worker-images
-    deployment_id: alpha
-    name: win11_64_24h2_alpha
 win116425h2:
   azure2:
-    version: 1.0.13
+    version: 1.0.15
     resource_group: rg-packer-worker-images
-    deployment_id: 29172b6
+    deployment_id: 78fbc06
     name: win11_64_25h2
 # Rejected image retained only for the dedicated Bug 2078361 pool.
 win116425h2_bug2078361:
@@ -249,8 +237,18 @@ fuzzing-docker-worker-legacy:
     us-west-2: ami-0b5dd0bbb670ec80e
 
 gw-ubuntu-24-04-staging:
+  worker-type-metadata:
+    machine-setup:
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/b304fcb90c6fc767a2da298aed378c281ba2aa8b/scripts/linux/tceng/generic-worker-ubuntu-24-04-staging.sh
   aws:
     us-east-1: ami-02619e55246806e8d
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-staging-4c1f7784852840058344
+
+gw-ubuntu-24-04-arm64-staging:
+  worker-type-metadata:
+    machine-setup:
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/b304fcb90c6fc767a2da298aed378c281ba2aa8b/scripts/linux/tceng/generic-worker-ubuntu-24-04-staging.sh
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-staging-a761a11d0fc34e43a432
 
 gw-win2022-gpu:
   azure2:
@@ -269,3 +267,24 @@ gw-win2022:
     sbom: false
     central-us: imageset-059fc28bd9074bb8ab3c-centralus-fuzzing
     east-us: imageset-0d17e90b4e8444bd8548-eastus-fuzzing
+
+gw-win2022-staging:
+  worker-type-metadata:
+    machine-setup:
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/b304fcb90c6fc767a2da298aed378c281ba2aa8b/scripts/windows/tceng/generic-worker-win2022-staging.ps1
+  azure2:
+    version: NA
+    resource_group: rg-packer-worker-images
+    sbom: false
+    central-us: imageset-cc6b9caa8a1349f1959b-centralus
+    east-us: imageset-a146f88d8b09433487f6-eastus
+
+gw-win2022-gpu-staging:
+  worker-type-metadata:
+    machine-setup:
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/b304fcb90c6fc767a2da298aed378c281ba2aa8b/scripts/windows/tceng/generic-worker-win2022-staging.ps1
+  azure2:
+    version: NA
+    resource_group: rg-packer-worker-images
+    sbom: false
+    east-us: imageset-0edd661c032f4d818b6a-eastus

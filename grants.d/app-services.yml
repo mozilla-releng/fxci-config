@@ -32,9 +32,6 @@
 
 - grant:
     - project:mozilla:{trust_domain}:releng:signing:cert:release-signing
-    # TODO In bug 1632147 we will reorganize scriptworker scopes to re-use the
-    # `beetmover-maven-phase` once we have a new `trust_project` for this and
-    # `glean` project
     - project:mozilla:{trust_domain}:releng:beetmover:bucket:release
     - project:mozilla:{trust_domain}:releng:beetmover:bucket:maven-production
   to:

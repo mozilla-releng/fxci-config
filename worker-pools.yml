@@ -73,7 +73,6 @@ worker-defaults:
             taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
             taskclusterProxyPort: 80
             tasksDir: Z:\
-            wstAudience: firefoxcitc
       generic-worker/windows-fuzzing:
         genericWorker:
           config:
@@ -83,7 +82,6 @@ worker-defaults:
             shutdownMachineOnIdle: true
             shutdownMachineOnInternalError: true
             taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
-            wstAudience: firefoxcitc
       generic-worker/windows-builder:
         genericWorker:
           config:
@@ -105,7 +103,6 @@ worker-defaults:
             taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
             taskclusterProxyPort: 80
             tasksDir: Z:\
-            wstAudience: firefoxcitc
       generic-worker/worker-runner-windows:
         genericWorker:
           config:
@@ -125,7 +122,6 @@ worker-defaults:
             taskclusterProxyExecutable: C:\generic-worker\taskcluster-proxy.exe
             taskclusterProxyPort: 80
             tasksDir: Z:\
-            wstAudience: firefoxcitc
       generic-worker/worker-runner-linux:  # solely for the t-linux-vm-2204-wayland pool with g-w simple
         genericWorker:
           config:
@@ -146,7 +142,6 @@ worker-defaults:
             taskclusterProxyExecutable: /home/ubuntu/generic_worker/taskcluster-proxy
             taskclusterProxyPort: 8081
             tasksDir: /home/ubuntu/tasks
-            wstAudience: firefoxcitc
       generic-worker/worker-runner-linux-multi:  # for images built with monopacker 22.04 community configuration
         genericWorker:
           config: &worker-runner-linux-multi-config
@@ -161,7 +156,6 @@ worker-defaults:
             shutdownMachineOnInternalError: true
             taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
             taskclusterProxyPort: 80
-            wstAudience: firefoxcitc
       generic-worker/worker-runner-linux-multi-trusted:
         genericWorker:
           config:
@@ -190,7 +184,6 @@ worker-defaults:
             shutdownMachineOnIdle: true
             shutdownMachineOnInternalError: true
             taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
-            wstAudience: firefoxcitc
       # generic-worker configs for images built from worker-images
       generic-worker/linux:
         genericWorker:
@@ -215,7 +208,6 @@ worker-defaults:
             shutdownMachineOnInternalError: true
             taskclusterProxyExecutable: /usr/local/bin/taskcluster-proxy
             taskclusterProxyPort: 80
-            wstAudience: firefoxcitc
       generic-worker/linux-headless:
         genericWorker:
           config:
@@ -329,6 +321,16 @@ meta:
     disks:
       - *persistent-disk-75gb
     machine_type: c3d-highcpu-16
+  - &c3d-highcpu-30
+    disks:
+      - *persistent-disk-75gb
+    machine_type: c3d-highcpu-30
+  - &c3d-highcpu-30-nosmt
+    disks:
+      - *persistent-disk-75gb
+    machine_type: c3d-highcpu-30
+    advancedMachineFeatures:
+      threadsPerCore: 1
   - &c4d-standard-4
     disks:
       - *persistent-disk-75gb
@@ -450,8 +452,6 @@ pools:
     email_on_error: true
     attributes:
       chain-of-trust: ''
-      # Used to populate scratch disks
-      scratch-disk-definition: *scratch-disk
     variants:
       # Base 16-core (gecko, comm, app-services)
       - pool-group: gecko-1
@@ -565,7 +565,9 @@ pools:
         by-pool-group:
           gecko-.*:
             by-suffix:
-              updatebot: 5
+              # The leading hyphen is intentional: keys must match the
+              # variant's whole suffix, which is '-updatebot'.
+              '-updatebot': 1
               default: 1000
           comm-.*: 300
           app-services-1: 50
@@ -2235,7 +2237,6 @@ pools:
         sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot: true
       vmSizes:
         - vmSize:
             by-suffix:
@@ -2245,7 +2246,6 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-location:
-            central-us: 1
             west-us-3: 0.9
             south-central-us: 0.8
   # Windows Server 2025
@@ -2460,7 +2460,6 @@ pools:
         by-suffix:
           .*alpha: ronin_t_windows10_64_2009_alpha
           default: ronin_t_windows10_64_2009_prod
-      image_resource_group: rg-packer-through-cib
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
       locations:
@@ -2508,11 +2507,9 @@ pools:
         sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot: true
       vmSizes:
         - vmSize:
             by-suffix:
-              ssd-gpu: Standard_NV12ads_A10_v5
               (webgpu|gpu)(-alpha)?: Standard_NV12ads_A10_v5
               (source-)?alpha: Standard_F8alds_v7
               default: Standard_D8alds_v6
@@ -2522,36 +2519,11 @@ pools:
                 parameters:
                   diffDiskPlacement: NvmeDisk
               default: {}
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize:
-                by-suffix:
-                  ssd-gpu: Standard_NV12ads_A10_v5
-                  (webgpu|gpu)(-alpha)?: Standard_NV12ads_A10_v5
-                  (source-)?alpha: Standard_F8alds_v7
-                  default: Standard_D8alds_v6
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
       worker-manager-config:
         capacityPerInstance: 1
         initialWeight:
           by-vmSize:
-            Standard_D8alds_v6:
-              by-location:
-                central-india: 1
-                default: 0.5
+            Standard_D8alds_v6: 0.5
             Standard_NV12ads_A10_v5:
               by-location:
                 west-us-3: 1
@@ -2640,7 +2612,6 @@ pools:
         sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot: true
       armDeployment:
         by-level:
           1:
@@ -2713,7 +2684,6 @@ pools:
         by-suffix:
           .*alpha: ronin_t_windows11_64_2009_alpha
           default: ronin_t_windows11_64_2009
-      image_resource_group: rg-packer-through-cib
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
       locations:
@@ -2726,9 +2696,7 @@ pools:
             by-suffix:
               (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
               webgpu(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
-              gpu(-alpha)?: [east-us, east-us-2, west-us, west-us-2]
               (ssd|source): [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
-              ssd-gpu: [east-us, east-us-2]
               default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, south-india]
       maxCapacity:
         by-pool-group:
@@ -2740,7 +2708,6 @@ pools:
             by-suffix:
               '': 1200
               alpha: 500
-              gpu: 600
               default: 100
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -2757,40 +2724,12 @@ pools:
         sourceBranch: cloud_windows
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot: true
       vmSizes:
         - vmSize:
             by-suffix:
               webgpu-alpha: Standard_NV12ads_A10_v5
               webgpu: Standard_NV12ads_A10_v5
-              gpu-alpha: Standard_NV12s_v3
-              ssd-gpu: Standard_NV12s_v3
-              gpu: Standard_NV12s_v3
               default: Standard_F8s_v2
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize:
-                by-suffix:
-                  webgpu-alpha: Standard_NV12ads_A10_v5
-                  webgpu: Standard_NV12ads_A10_v5
-                  gpu-alpha: Standard_NV12s_v3
-                  ssd-gpu: Standard_NV12s_v3
-                  gpu: Standard_NV12s_v3
-                  default: Standard_F8s_v2
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
       worker-manager-config:
         capacityPerInstance: 1
         initialWeight:
@@ -2814,206 +2753,6 @@ pools:
                 west-us-2: 1
                 west-us-3: 1
                 east-us-2: 0.8
-                default: 0.5
-            default: 1
-  - pool_id: '{pool-group}/win11-64-24h2-{suffix}'
-    description: ''
-    owner: relops-azure-provisioning@mozilla.com
-    email_on_error: true
-    provider_id: azure2
-    attributes:
-      suffix: ''
-      implementation: generic-worker/windows
-    variants:
-      - pool-group: gecko-t
-      - pool-group: gecko-t
-        suffix: privileged
-      - pool-group: gecko-t
-        suffix: unprivileged
-      - pool-group: gecko-t
-        suffix: privileged-alpha
-        implementation: generic-worker/windows
-      - pool-group: gecko-t
-        suffix: unprivileged-alpha
-        implementation: generic-worker/windows
-      - pool-group: gecko-t
-        suffix: alpha
-        implementation: generic-worker/windows
-      - pool-group: gecko-t
-        suffix: large
-      - pool-group: enterprise-t
-        suffix: large
-      - pool-group: gecko-t
-        suffix: large-alpha
-        implementation: generic-worker/windows
-      - pool-group: gecko-t
-        suffix: gpu
-      - pool-group: gecko-t
-        suffix: gpu-alpha
-      - pool-group: gecko-t
-        suffix: webgpu
-      - pool-group: gecko-t
-        suffix: webgpu-alpha
-        implementation: generic-worker/windows
-      - pool-group: gecko-t
-        suffix: source
-      - pool-group: gecko-t
-        suffix: source-alpha
-        implementation: generic-worker/windows
-      - pool-group: enterprise-t
-      - pool-group: enterprise-t
-        suffix: source
-      - pool-group: enterprise-t
-        suffix: alpha
-      - pool-group: enterprise-t
-        suffix: source-alpha
-        implementation: generic-worker/windows
-      - pool-group: gecko-t
-        suffix: ssd
-      - pool-group: comm-t
-      - pool-group: comm-t
-        suffix: ssd
-      - pool-group: taskgraph-t
-    config:
-      image:
-        by-suffix:
-          .*alpha: ronin_t_windows11_64_24h2_alpha
-          default: ronin_t_windows11_64_24h2
-      image_resource_group: rg-packer-through-cib
-      implementation: '{implementation}'
-      worker-purpose: '{pool-group}'
-      locations:
-        by-pool-group:
-          comm-t:
-            by-suffix:
-              ssd: [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
-              default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, south-india]
-          default:
-            by-suffix:
-              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
-              webgpu(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
-              gpu(-alpha)?: [east-us, east-us-2, west-us, west-us-2]
-              (ssd|source): [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
-              ssd-gpu: [east-us, east-us-2]
-              default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, south-india]
-      maxCapacity:
-        by-pool-group:
-          comm-t:
-            by-suffix:
-              '': 600
-              default: 50
-          gecko-t:
-            by-suffix:
-              '': 1200
-              alpha: 500
-              gpu: 600
-              default: 100
-          enterprise-t: 200
-          default: 5
-      armDeployment:
-        by-suffix:
-          .*alpha:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
-            parameters:
-              diffDiskOption: Local
-              diffDiskPlacement: ResourceDisk
-              osDiskCaching: ReadOnly
-              enableFullCaching: false
-              osDiskStorageAccountType: Standard_LRS
-          default:
-            templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1
-            parameters:
-              diffDiskOption: Local
-              diffDiskPlacement: ResourceDisk
-              osDiskCaching: ReadOnly
-              enableFullCaching: false
-              osDiskStorageAccountType: Standard_LRS
-      worker-config:
-        genericWorker:
-          config:
-            workerType: 'win11-64-24h2-{suffix}'
-            provisionerId: gecko-t
-            numberOfTasksToRun:
-              by-suffix:
-                privileged: 1
-                privileged-alpha: 1
-                default: 0
-            cachesDir: C:\caches
-            downloadsDir: C:\downloads
-            tasksDir: C:\Users
-      tags:
-        sourceScript: provisioners/windows/azure/azure-bootstrap.ps1
-        sourceBranch: master
-        sourceRepository: ronin_puppet
-        sourceOrganisation: mozilla-platform-ops
-      spot: true
-      vmSizes:
-        - vmSize:
-            by-suffix:
-              source-alpha: Standard_E8ads_v5
-              .*large.*: Standard_E8ads_v5
-              (privileged-|unprivileged-)?alpha: Standard_D8ads_v5
-              webgpu-alpha: Standard_NV12ads_A10_v5
-              webgpu: Standard_NV12ads_A10_v5
-              gpu-alpha: Standard_NV12s_v3
-              ssd-gpu: Standard_NV12s_v3
-              gpu: Standard_NV12s_v3
-              default: Standard_D8ads_v5
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              diskControllerType: SCSI
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize:
-                by-suffix:
-                  source-alpha: Standard_E8ads_v5
-                  .*large.*: Standard_E8ads_v5
-                  (privileged-|unprivileged-)?alpha: Standard_D8ads_v5
-                  webgpu-alpha: Standard_NV12ads_A10_v5
-                  webgpu: Standard_NV12ads_A10_v5
-                  gpu-alpha: Standard_NV12s_v3
-                  ssd-gpu: Standard_NV12s_v3
-                  gpu: Standard_NV12s_v3
-                  default: Standard_D8ads_v5
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
-      worker-manager-config:
-        capacityPerInstance: 1
-        initialWeight:
-          by-vmSize:
-            Standard_F8s_v2:
-              by-location:
-                west-us-3: 1
-                north-central-us: 0.95
-                central-india: 0.95
-                west-us: 0.8
-                south-india: 0.8
-                central-us: 0.5
-                east-us: 0.5
-                canada-central: 0.3
-                west-us-2: 0.3
-                east-us-2: 0.1
-                default: 0.2
-            Standard_NV12ads_A10_v5:
-              by-location:
-                west-us-3: 1
-                east-us: 1
-                west-us-2: 0.8
-                east-us-2: 0.8
-                default: 0.5
-            Standard_E8ads_v6:
-              by-location:
-                central-india: 1
                 default: 0.5
             default: 1
   - pool_id: '{pool-group}/win11-64-25h2-{suffix}'
@@ -3087,7 +2826,6 @@ pools:
         by-suffix:
           .*alpha: win116425h2alpha
           default: win116425h2
-      image_resource_group: rg-packer-worker-images
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
       locations:
@@ -3163,7 +2901,6 @@ pools:
         sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot: true
       vmSizes:
         - vmSize:
             by-suffix:
@@ -3177,29 +2914,6 @@ pools:
                 parameters:
                   diffDiskPlacement: NvmeDisk
               default: {}
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              diskControllerType: SCSI
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-            hardwareProfile:
-              vmSize:
-                by-suffix:
-                  .*large.*: Standard_E8ads_v5
-                  alpha: Standard_F8alds_v7
-                  .*gpu.*: Standard_NV12ads_A10_v5
-                  default: Standard_F8alds_v7
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
       worker-manager-config:
         capacityPerInstance: 1
         initialWeight:
@@ -3214,28 +2928,11 @@ pools:
                 uk-south: 0.85
                 west-us: 0.8
                 default: 0.1
-            Standard_D8ads_v5:
-              by-location:
-                west-us-3: 1
-                north-central-us: 0.95
-                central-india: 0.95
-                west-us: 0.8
-                south-india: 0.8
-                central-us: 0.5
-                east-us: 0.5
-                canada-central: 0.3
-                west-us-2: 0.3
-                east-us-2: 0.1
-                default: 0.2
             Standard_NV12ads_A10_v5:
               by-location:
                 west-us-3: 1
                 east-us: 1
                 west-us-2: 1
-                default: 0.5
-            Standard_E8ads_v6:
-              by-location:
-                central-india: 1
                 default: 0.5
             default: 1
   # Keep the rejected image isolated for Bug 2078361 sandbox testing.
@@ -3272,7 +2969,6 @@ pools:
         sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot: true
       vmSizes:
         - vmSize: Standard_F8alds_v7
       worker-manager-config:
@@ -3285,7 +2981,6 @@ pools:
     provider_id: azure2
     config:
       image: win116425h2alpha
-      image_resource_group: rg-packer-worker-images
       implementation: generic-worker/windows
       locations: [uk-south, east-us-2]
       maxCapacity: 250
@@ -3311,27 +3006,8 @@ pools:
         sourceCommit: c1b0efebc418108fb4ed9ceb3d104c2bba0c4ef0
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot: true
       vmSizes:
         - vmSize: Standard_F8alds_v7
-          launchConfig:
-            osProfile:
-              windowsConfiguration:
-                timeZone: UTC
-                enableAutomaticUpdates: false
-            storageProfile:
-              osDisk:
-                osType: Windows
-                caching: ReadOnly
-                createOption: FromImage
-                diffDiskSettings:
-                  option: Local
-                  placement: NvmeDisk
-            hardwareProfile:
-              vmSize: Standard_F8alds_v7
-            diagnosticsProfile:
-              bootDiagnostics:
-                enabled: false
       worker-manager-config:
         capacityPerInstance: 1
         initialWeight: 1
@@ -3386,7 +3062,6 @@ pools:
         sourceBranch: master
         sourceRepository: ronin_puppet
         sourceOrganisation: mozilla-platform-ops
-      spot: true
       armDeployment:
         by-suffix:
           .*alpha:
@@ -3481,6 +3156,15 @@ pools:
       - pool-group: enterprise-t
         suffix: 'docker-16c32gb-amd'
         instance_types: [*c3d-highcpu-16]
+      - pool-group: gecko-t
+        suffix: 'docker-large-amd'
+        instance_types: [*c3d-standard-30-lssd]
+      - pool-group: gecko-t
+        suffix: 'docker-noscratch-large-amd'
+        instance_types: [*c3d-highcpu-30]
+      - pool-group: gecko-t
+        suffix: 'docker-noscratch-nosmt-amd'
+        instance_types: [*c3d-highcpu-30-nosmt]
       # GW / Intel / wayland
       - pool-group: gecko-t
         suffix: '2404-wayland'
@@ -3518,6 +3202,8 @@ pools:
           gecko-t:
             by-suffix:
               .*2404-wayland.*: 100
+              docker(-noscratch)?-large-amd: 200
+              docker-noscratch-nosmt-amd: 200
               default: 2500
           enterprise-t:
             by-suffix:
@@ -3528,6 +3214,7 @@ pools:
       regions:
         by-suffix:
           docker-noscratch.*: [us-central1, us-west1, us-east1]
+          docker-large-amd: [us-central1, us-east1]
           default: *default-gcp-regions
       image:
         by-implementation:
@@ -3815,9 +3502,6 @@ pools:
           config: {}
       vmSizes:
         - vmSize: Standard_F16s_v2
-          launchConfig:
-            hardwareProfile:
-              vmSize: Standard_F16s_v2
       worker-manager-config:
         capacityPerInstance: 1
 
@@ -3855,12 +3539,6 @@ pools:
             by-kind:
               gpu: Standard_NV12ads_A10_v5
               ngpu: Standard_F16s_v2
-          launchConfig:
-            hardwareProfile:
-              vmSize:
-                by-kind:
-                  gpu: Standard_NV12ads_A10_v5
-                  ngpu: Standard_F16s_v2
       worker-manager-config:
         capacityPerInstance: 1
 
@@ -3916,16 +3594,13 @@ pools:
             numberOfTasksToRun: 1
       vmSizes:
         - vmSize: Standard_NV12ads_A10_v5
-          launchConfig:
-            hardwareProfile:
-              vmSize: Standard_NV12ads_A10_v5
       worker-manager-config:
         capacityPerInstance: 1
 
   # proj-taskcluster: Taskcluster's own CI (github.com/taskcluster/*), migrated
   # from community-tc. Linux pools run on GCP, Windows pools on Azure. Only the
-  # pools used by the CI graph are defined here; community's manually-operated
-  # staging/GPU/arm64 pools are not (yet) migrated.
+  # pools used by the CI graph are defined here, plus staging image pools;
+  # community's manually-operated GPU/arm64 pools are not (yet) migrated.
   - pool_id: 'proj-taskcluster/{name}'
     description: '{description}'
     owner: taskcluster-notifications+workers@mozilla.com
@@ -3946,7 +3621,7 @@ pools:
       maxCapacity:
         by-name:
           ci: 10
-          release: 1
+          release: 15
           gw-ubuntu-24-04: 50
           gw-ubuntu-24-04-gui: 20
       implementation: generic-worker/linux-tceng
@@ -3977,6 +3652,60 @@ pools:
               by-name:
                 release: false
                 default: null  # implementation default (true)
+
+  # For trying out new staging images (worker-images'
+  # generic-worker-ubuntu-24-04-staging config) on real workers before they are
+  # promoted. Not used by the CI graph; tasks are submitted by hand by
+  # team_taskcluster (see grants.d/taskcluster.yml).
+  - pool_id: proj-taskcluster/gw-ubuntu-staging-google
+    description: Taskcluster generic-worker Ubuntu 24.04 staging image pool
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 1
+      implementation: generic-worker/linux-tceng
+      regions: *default-gcp-regions
+      image: gw-ubuntu-24-04-staging
+      instance_types:
+        - disks:
+            - *persistent-disk-60gb
+          machine_type: n2-standard-4
+      worker-config:
+        genericWorker:
+          config:
+            headlessTasks: true
+            # While iterating on new images, it is useful for workers not to
+            # die immediately...
+            idleTimeoutSecs: 3600
+            # ...and if a worker crashes, we typically want to know why
+            # (worker manager will eventually kill it anyway).
+            shutdownMachineOnInternalError: false
+
+  # As above, for worker-images' generic-worker-ubuntu-24-04-arm64-staging
+  # config.
+  - pool_id: proj-taskcluster/gw-ubuntu-arm64-staging-google
+    description: Taskcluster generic-worker Ubuntu 24.04 arm64 staging image pool
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity: 1
+      implementation: generic-worker/linux-tceng
+      regions: [us-central1]
+      image: gw-ubuntu-24-04-arm64-staging
+      instance_types:
+        - disks:
+            - *persistent-disk-60gb
+          machine_type: t2a-standard-4
+      worker-config:
+        genericWorker:
+          config:
+            headlessTasks: true
+            idleTimeoutSecs: 3600
+            shutdownMachineOnInternalError: false
 
   - pool_id: 'proj-taskcluster/{name}'
     description: '{description}'
@@ -4009,6 +3738,67 @@ pools:
                 .*-gui: false
                 default: true
             idleTimeoutSecs: 300
+
+  # For trying out new Windows staging images (worker-images'
+  # generic-worker-win2022-staging and generic-worker-win2022-gpu-staging
+  # configs) on real workers before they are promoted. Not used by the CI
+  # graph; tasks are submitted by hand.
+  - pool_id: proj-taskcluster/gw-windows-2022-staging
+    description: Taskcluster generic-worker Windows 2022 staging image pool
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: gw-win2022-staging
+      implementation: generic-worker/windows-fuzzing
+      worker-purpose: proj-taskcluster
+      locations: [central-us, east-us]
+      maxCapacity: 1
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+      vmSizes:
+        - vmSize: Standard_F16s_v2
+      worker-manager-config:
+        capacityPerInstance: 1
+      worker-config:
+        genericWorker:
+          config:
+            headlessTasks: true
+            # While iterating on new images, it is useful for workers not to
+            # die immediately...
+            idleTimeoutSecs: 3600
+            # ...and if a worker crashes, we typically want to know why
+            # (worker manager will eventually kill it anyway).
+            shutdownMachineOnInternalError: false
+
+  - pool_id: proj-taskcluster/gw-windows-2022-gpu-staging
+    description: Taskcluster generic-worker Windows 2022 GPU staging image pool
+    owner: taskcluster-notifications+workers@mozilla.com
+    email_on_error: true
+    provider_id: azure2
+    config:
+      image: gw-win2022-gpu-staging
+      implementation: generic-worker/windows-fuzzing
+      worker-purpose: proj-taskcluster
+      locations: [east-us]
+      maxCapacity: 1
+      armDeployment:
+        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
+      vmSizes:
+        - vmSize: Standard_NV12ads_A10_v5
+      worker-manager-config:
+        capacityPerInstance: 1
+      worker-config:
+        genericWorker:
+          config:
+            # GUI, for testing on the GPU pool as Release SRE do
+            # (https://github.com/taskcluster/taskcluster/issues/7303).
+            headlessTasks: false
+            idleTimeoutSecs: 3600
+            shutdownMachineOnInternalError: false
+            # For testing runAfterUserCreation (calc.exe exits 0)
+            # (https://github.com/taskcluster/taskcluster/issues/7303).
+            runAfterUserCreation: C:\Windows\System32\calc.exe
 
   # Static Mac minis, registered with worker-manager's static provider (or run
   # with the project/taskcluster/generic-worker/ci-macos client credentials).
