@@ -81,7 +81,6 @@ def sample_projects():
                     "level": 3,
                 },
             ],
-            default_branch="main",
             repo="https://github.com/mozilla/example2",
             repo_type="git",
             trust_domain="foo",
