@@ -54,10 +54,7 @@ payload:
               TRY_TASK_GROUP_ID:
                 $eval: payload.status.taskGroupId
               ANALYSIS_MODE: BuildTest
-            $default:
-              # Triggered by end of build on autoland & MC
-              GENERIC_TASK_GROUP_ID:
-                $eval: payload.taskGroupId
+            $default: {}
   features:
     taskclusterProxy: true
   image:

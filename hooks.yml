@@ -100,8 +100,10 @@ project-relman/code-review-{mode}:
   variants:
     - mode: production
       priority: highest
+      pool: bot
     - mode: testing
       priority: lowest
+      pool: bot-testing
   name: Code review hook ({mode})
   description: Automatically create code review publication tasks
   owner: release-mgmt-analysis@mozilla.com
@@ -111,7 +113,7 @@ project-relman/code-review-{mode}:
     - hooks:trigger-hook:project-releng/services-{mode}-*
     - index:insert-task:project.relman.{mode}.code-review.*
     - notify:email:*
-    - queue:create-task:{priority}:code-review/bot
+    - queue:create-task:{priority}:code-review/{pool}
     - queue:route:index.project.releng.services.project.{mode}.static_analysis_bot.*
     - queue:route:index.project.relman.{mode}.code-review.*
     - queue:route:notify.email.*
@@ -128,8 +130,6 @@ project-relman/code-review-{mode}:
       routing_key_pattern: route.project.relman.codereview.v1.try_ending
     - exchange: exchange/taskcluster-queue/v1/task-completed
       routing_key_pattern: route.project.relman.codereview-build-test.v1.try_ending
-    - exchange: exchange/taskcluster-queue/v1/task-group-resolved
-      routing_key_pattern: '#.gecko-level-3.#'
   trigger_schema:
     type: object
     additionalProperties: true
@@ -166,6 +166,42 @@ project-relman/code-review-{mode}:
             properties:
               label:
                 type: string
+
+project-relman/code-review-ingestion-{mode}:
+  variants:
+    - mode: production
+      priority: highest
+      pool: ingestion
+    - mode: testing
+      priority: lowest
+      pool: ingestion-testing
+  name: Code review ingestion hook ({mode})
+  description: Automatically create code review ingestion tasks
+  owner: release-mgmt-analysis@mozilla.com
+  email_on_error: true
+  scopes:
+    - assume:project:taskcluster:mozilla-github-repository
+    - hooks:trigger-hook:project-releng/services-{mode}-*
+    - index:insert-task:project.relman.{mode}.code-review.*
+    - notify:email:*
+    - queue:create-task:{priority}:code-review/{pool}
+    - queue:route:index.project.releng.services.project.{mode}.static_analysis_bot.*
+    - queue:route:index.project.relman.{mode}.code-review.*
+    - queue:route:notify.email.*
+    - queue:scheduler-id:relman
+    - secrets:get:project/relman/code-review/runtime-{mode}
+    - docker-worker:cache:code-review-{mode}-checkout
+  template_file: hook-templates/project-relman/code-review-ingestion-{mode}.yml
+  bindings:
+    - exchange: exchange/taskcluster-queue/v1/task-group-resolved
+      routing_key_pattern: '#.gecko-level-3.#'
+  trigger_schema:
+    type: object
+    additionalProperties: true
+    properties:
+      taskGroupId:
+        type: string
+        description: Taskcluster Task Group ID to ingest (should be a gecko-level-3 Task Group)
 
 lint/pre-commit-{version}:
   variants:
