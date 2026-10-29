@@ -605,7 +605,6 @@ project/releng/generic-worker/win11-64-24h2-hw-perf-debug:
   description: Temp Datacenter Windows 11 experimental worker for RELOPS-2176.
   scopes:
     - assume:worker-type:releng-hardware/win11-64-24h2-hw-perf-debug
-    - worker-manager:should-worker-terminate:releng-hardware/win11-64-24h2-hw-perf-debug/mdc1/*
 project/releng/generic-worker/win11-64-24h2-hw-ref:
   description: Datacenter Windows 11 main production worker. 24H2 references the os build.
   scopes:
