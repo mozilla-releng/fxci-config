@@ -18,9 +18,16 @@ PINNED_REV = "ff8505d177b9"
 
 
 @pytest.mark.asyncio
+async def test_get_tcyml_git_needs_a_ref():
+    """A git project has no single branch to fall back on."""
+    with pytest.raises(Exception, match="branch or revision is required"):
+        await tcyml.get("https://github.com/mozilla-releng/example", repo_type="git")
+
+
+@pytest.mark.asyncio
 @with_aiohttp_session
 async def test_get_tcyml():
-    res = await tcyml.get("https://hg.mozilla.org/mozilla-central", revision=PINNED_REV)
+    res = await tcyml.get("https://hg.mozilla.org/mozilla-central", ref=PINNED_REV)
     await github.close_clients()
     assert hashlib.sha512(res).hexdigest()[:10] == "684648599a"
 
