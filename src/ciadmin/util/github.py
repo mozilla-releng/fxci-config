@@ -3,6 +3,7 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import asyncio
+import os
 import sys
 from datetime import UTC, datetime, timedelta
 
@@ -80,8 +81,8 @@ class OwnerTokenAuth(Auth):
 def _warn_once(message):
     """Print `message` to stderr, but only the first time it is seen.
 
-    A failure to mint a token repeats for every repository, and the same
-    sentence forty times hides everything around it.
+    The same sentence would otherwise repeat for every owner, and forty
+    copies of it hide everything around them.
     """
     if message not in _warned:
         _warned.add(message)
@@ -91,9 +92,9 @@ def _warn_once(message):
 async def _get_fallback_client():
     """The shared client built from `GITHUB_TOKEN` or the app in the environment.
 
-    It cannot read a private repository. It is what keeps runs without
-    Taskcluster credentials, such as a pull request from a fork, working for
-    the public ones.
+    It cannot read a private repository. It serves every repository outside the
+    GitHub Enterprise, and every repository on a run without Taskcluster
+    credentials, such as a pull request from a fork.
     """
     global _fallback_client
 
@@ -124,22 +125,76 @@ async def _owner_repositories(owner):
     )
 
 
+async def _owner_in_enterprise(owner):
+    """Whether `owner`'s repositories sit inside Mozilla's GitHub Enterprise.
+
+    projects.yml says so per repository, but the app is installed per owner, so
+    every repository of one owner must have the same value.
+    """
+    projects = await Project.fetch_all()
+    answers = {
+        project.github_enterprise
+        for project in projects
+        if project.repo_type == "git"
+        and project.repo_path.split("/", 1)[0].lower() == owner
+    }
+    if len(answers) > 1:
+        raise Exception(
+            f"All projects of github owner {owner} must have the same "
+            "github_enterprise value"
+        )
+    return answers.pop() if answers else True
+
+
+def _environment_has_github_credentials():
+    # The same lookup `simple_github.client_from_env` makes.
+    return "GITHUB_TOKEN" in os.environ or (
+        "GITHUB_APP_ID" in os.environ and "GITHUB_APP_PRIVKEY" in os.environ
+    )
+
+
+def _has_taskcluster_credentials():
+    return "credentials" in optionsFromEnvironment()
+
+
 async def _build_client(owner):
     environment = await Environment.current()
     if not environment.github_repo_tokens:
         return await _get_fallback_client()
 
-    auth = OwnerTokenAuth(owner, await _owner_repositories(owner))
-    try:
-        # Fetched here rather than on first use, so that a refusal picks the
-        # fallback instead of failing whichever request happens to be first.
-        await auth.get_token()
-    except TaskclusterFailure as e:
+    trusted = _has_taskcluster_credentials()
+
+    if not await _owner_in_enterprise(owner):
+        # The read-only app cannot be installed outside the Enterprise, so the
+        # auth service has nothing to give and the environment token is the
+        # only way in. A trusted run is expected to carry one.
+        if trusted and not _environment_has_github_credentials():
+            raise Exception(
+                f"GITHUB_TOKEN is required to read {owner} repositories, "
+                "which are outside the GitHub Enterprise"
+            )
+        return await _get_fallback_client()
+
+    if not trusted:
+        # A run without credentials, such as a pull request from a fork, has no
+        # way to a token and still has to work for the public repositories.
         _warn_once(
-            f"Could not get a github token for {owner} from the auth service, "
-            f"falling back to the environment: {e}"
+            "No Taskcluster credentials in the environment, so github is read "
+            "with the fallback token and private repositories are skipped."
         )
         return await _get_fallback_client()
+
+    auth = OwnerTokenAuth(owner, await _owner_repositories(owner))
+    try:
+        # Fetched here rather than on first use, so that a refusal names the
+        # owner instead of failing whichever request happens to be first.
+        await auth.get_token()
+    except TaskclusterFailure as e:
+        print(
+            f"Could not get a github token for {owner} from the auth service: {e}",
+            file=sys.stderr,
+        )
+        raise e
 
     return AsyncClient(auth=auth)
 
