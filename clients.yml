@@ -633,7 +633,9 @@ project/releng/quarantine-worker:
   description: Self-quarantine access for hardware workers after generic-worker fails
     with code 69.
   scopes:
+    - queue:quarantine-worker:releng-hardware/applicationservices-*
     - queue:quarantine-worker:releng-hardware/gecko-*
+    - queue:quarantine-worker:releng-hardware/nss-*
 project/releng/scriptworker/v2/addon/dev/firefoxci-gecko-1:
   description: ''
   scopes:
