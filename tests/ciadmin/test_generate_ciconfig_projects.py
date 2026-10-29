@@ -50,6 +50,7 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                 "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
+                "github_enterprise": True,
                 "lando_repo": "ash",
                 "parent_repo": None,
                 "repo": "https://hg.mozilla.org/projects/ash",
@@ -88,6 +89,7 @@ def _filter_out_parsed_url(attr, *args, **kwargs):
                 "cron": {"targets": []},
                 "features": {},
                 "is_try": False,
+                "github_enterprise": True,
                 "lando_repo": None,
                 "parent_repo": None,
                 "repo": "https://github.com/mozilla-mobile/fenix/",
@@ -170,6 +172,7 @@ async def test_fetch_defaults(
                     "taskgraph-cron": {"enabled": False},
                 },
                 "is_try": True,
+                "github_enterprise": True,
                 "lando_repo": None,
                 "parent_repo": "https://hg.mozilla.org/mozilla-unified",
                 "repo": "https://hg.mozilla.org/projects/ash",
@@ -230,6 +233,7 @@ async def test_fetch_defaults(
                     "taskgraph-cron": {"enabled": False},
                 },
                 "is_try": False,
+                "github_enterprise": True,
                 "lando_repo": None,
                 "parent_repo": "https://github.com/mozilla-releng/",
                 "repo": "https://github.com/mozilla-releng/beetmoverscript/",
@@ -273,6 +277,7 @@ async def test_fetch_defaults(
                     "taskgraph-cron": {"enabled": True},
                 },
                 "is_try": False,
+                "github_enterprise": True,
                 "lando_repo": None,
                 "parent_repo": None,
                 "repo": "https://github.com/mozilla-releng/cron-project",
@@ -753,3 +758,22 @@ def test_project_repo_path_property():
         trust_domain="gecko",
     )
     assert prj.repo_path == "a/b"
+
+
+def test_project_github_enterprise_defaults_to_true():
+    "Only a repository outside Mozilla's GitHub Enterprise has to say so"
+    inside = Project(
+        alias="prj",
+        branches=[{"name": "main", "level": 1}],
+        repo="https://github.com/mozilla-releng/prj",
+        repo_type="git",
+    )
+    outside = Project(
+        alias="json-e",
+        branches=[{"name": "main", "level": 1}],
+        repo="https://github.com/json-e/json-e",
+        repo_type="git",
+        github_enterprise=False,
+    )
+    assert inside.github_enterprise
+    assert not outside.github_enterprise

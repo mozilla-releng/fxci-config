@@ -25,6 +25,9 @@
 # - 'is_try' -- if present and true, this is a "try" repo, meaning that users typically push new heads
 #               and expect customized task graphs; other repos follow a more typical model of each new
 #               push adding more commits to the previous head.
+# - `github_enterprise` -- if false, this github repository is outside Mozilla's GitHub Enterprise, so the
+#               read-only app cannot be installed on it and ci-admin reads it with the `GITHUB_TOKEN` from
+#               the environment instead of a token from the auth service. Defaults to true.
 # - `features` -- features that should be enabled for this project, as an object with boolean
 #                 values, defaulting to false
 #   - 'is-trunk' -- Branches containing 'landed' code destined for nightly builds. These branches have a shared index
@@ -1730,6 +1733,7 @@ taskcluster-staging-releases:
 json-e:
   repo: https://github.com/json-e/json-e
   repo_type: git
+  github_enterprise: false
   trust_domain: taskcluster
   branches:
     - name: main
