@@ -755,8 +755,10 @@ enterprise-firefox:
       cron: true
     - name: enterprise-release
       level: 3
+      cron: true
     - name: enterprise-beta
       level: 3
+      cron: true
     - name: "*"
       level: 1
   cron:
