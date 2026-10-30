@@ -147,9 +147,9 @@ jobs:
       - name: Generate diff
         run: |
           only_args=()
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            # skip diffing clients for pull requests; we require scopes for
-            # that, and we don't want to give scopes to pull requests.
+          if [ "${{ needs.trust.outputs.trusted }}" != "true" ]; then
+            # skip diffing clients on untrusted runs; listing them needs
+            # scopes, and an untrusted run has no credentials.
             only_args=(--only cron_tasks,git_pushes,grants,hg_pushes,hooks,in_tree_actions,scm_group_roles,worker_pools)
           fi
 
