@@ -3302,7 +3302,6 @@ pools:
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     variants:
-      - pool-group: code-review
       - pool-group: code-coverage
       - pool-group: reviewer-assignment
     provider_id: fxci-level1-gcp
@@ -3312,7 +3311,6 @@ pools:
       image: ubuntu-2404-headless
       minCapacity:
         by-pool-group:
-          code-review: 1
           code-coverage: 0
           reviewer-assignment: 1
       maxCapacity: 20
@@ -3333,6 +3331,37 @@ pools:
             by-pool-group:
               code-coverage: c2-standard-8
               default: c2-standard-4
+  - pool_id: 'code-review/{kind}'
+    description: Worker for the code-review bot ({kind}).
+    owner: release+tc-workers@mozilla.com
+    email_on_error: true
+    variants:
+      - kind: bot
+      - kind: bot-testing
+      - kind: ingestion
+      - kind: ingestion-testing
+    provider_id: fxci-level1-gcp
+    config:
+      regions: *default-gcp-regions
+      implementation: generic-worker/linux-d2g
+      image: ubuntu-2404-headless
+      minCapacity:
+        by-kind:
+          # `bot` runs production analysis and publication tasks, which
+          # are the only task types that need to run as quickly as possible
+          bot: 1
+          default: 0
+      maxCapacity: 20
+      worker-config:
+        genericWorker:
+          config:
+            idleTimeoutSecs: 900
+      instance_types:
+        - minCpuPlatform: Intel Cascadelake
+          disks:
+            - *persistent-disk-75gb
+            - *scratch-disk
+          machine_type: c2-standard-4
   - pool_id: '{pool-group}/linux-docker'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
