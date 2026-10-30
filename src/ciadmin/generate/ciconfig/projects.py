@@ -95,6 +95,7 @@ class Project:
     trust_project = attr.ib(type=str, default=None)
     parent_repo = attr.ib(type=str, default=None)
     is_try = attr.ib(type=bool, default=False)
+    github_enterprise = attr.ib(type=bool, default=True)
     features = attr.ib(type=dict, factory=lambda: {})
     cron = attr.ib(type=dict, factory=lambda: {})
 
