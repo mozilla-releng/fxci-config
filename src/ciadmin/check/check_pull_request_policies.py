@@ -7,7 +7,7 @@ import pytest
 import yaml
 from tcadmin.util.sessions import with_aiohttp_session
 
-from ciadmin.generate import tcyml
+from ciadmin.generate import branches, tcyml
 from ciadmin.generate.ciconfig.projects import Project
 from ciadmin.util import github
 
@@ -17,12 +17,11 @@ UNREADABLE = object()
 
 async def _get_pull_request_policy(project):
     try:
-        raw = await tcyml.get(
-            project.repo,
-            repo_type=project.repo_type,
-            revision=None,
-            default_branch=project.default_branch.name,
-        )
+        # taskcluster-github reads the policy from the repository's default
+        # branch, so that is the branch to compare against, whatever
+        # projects.yml lists.
+        ref = await branches.get_default_branch(project.repo_path)
+        raw = await tcyml.get(project.repo, repo_type=project.repo_type, ref=ref)
     except aiohttp.ClientResponseError as e:
         # A private repo the auth service would not mint a token for answers
         # exactly like one that is not there. Its policy goes unchecked rather

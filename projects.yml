@@ -747,7 +747,6 @@ firefox-prototypes:
 enterprise-firefox:
   repo: https://github.com/mozilla/enterprise-firefox
   repo_type: git
-  default_branch: enterprise-main
   trust_domain: enterprise
   branches:
     - name: enterprise-main
@@ -777,7 +776,6 @@ enterprise-firefox:
 enterprise-firefox-try:
   repo: https://github.com/mozilla/enterprise-firefox-try
   repo_type: git
-  default_branch: enterprise-main
   trust_domain: enterprise
   branches:
     - name: enterprise-main
@@ -921,7 +919,6 @@ redo:
   branches:
     - name: main
       level: 1
-  default_branch: main
   features:
     github-taskgraph: true
     github-pull-request:
@@ -954,7 +951,6 @@ reference-browser:
     - name: master
       level: 3
       cron: true
-  default_branch: master
   features:
     autophone: true
     github-taskgraph: true
@@ -985,7 +981,6 @@ staging-reference-browser:
     - name: master
       level: 1
       cron: true
-  default_branch: master
   features:
     autophone: true
     github-taskgraph: true
@@ -1142,7 +1137,6 @@ k8s-autoscale:
       level: 3
     - name: dev
       level: 3
-  default_branch: main
   trust_domain: releng
   trust_project: k8s-autoscale
   features:
@@ -1202,7 +1196,6 @@ tooltool:
       level: 3
     - name: dev
       level: 3
-  default_branch: master
   trust_domain: releng
   trust_project: tooltool
   features:
@@ -1272,7 +1265,6 @@ build-mar:
   branches:
     - name: master
       level: 1
-  default_branch: master
   trust_domain: releng
   trust_project: build-mar
   features:
@@ -1434,7 +1426,6 @@ staging-xpi-private:
   branches:
     - name: "*"
       level: 1
-  default_branch: master
   trust_domain: xpi
   features:
     github-private-repo: true
@@ -1452,7 +1443,6 @@ staging-adhoc-signing:
       level: 1
     - name: "*"
       level: 1
-  default_branch: main
   trust_domain: adhoc
   features:
     trust-domain-scopes: true
@@ -1492,7 +1482,6 @@ code-review:
       level: 3
     - name: testing
       level: 3
-  default_branch: master
   trust_domain: code-analysis
   features:
     trust-domain-scopes: true
@@ -1511,7 +1500,6 @@ scriptworker-scripts:
       level: 3
     - name: dev*
       level: 3
-  default_branch: master
   trust_domain: scriptworker
   features:
     trust-domain-scopes: true
@@ -1535,7 +1523,6 @@ code-coverage:
       level: 3
     - name: testing
       level: 3
-  default_branch: master
   trust_domain: code-analysis
   features:
     trust-domain-scopes: true
@@ -1610,7 +1597,6 @@ fx-desktop-qa-automation:
       cron: true
     - name: nightly
       level: 3
-  default_branch: nightly
   features:
     github-taskgraph: true
     github-pull-request:

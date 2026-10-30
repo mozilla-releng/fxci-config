@@ -306,7 +306,7 @@ def test_cron_branches_are_required():
 
 @pytest.mark.asyncio
 async def test_default_branch_comes_from_github(cron_template, monkeypatch):
-    """The unsuffixed hookId follows GitHub, not projects.yml."""
+    """The unsuffixed hookId follows GitHub's default branch."""
 
     async def default_is_trunk(repo_path):
         return "trunk"
@@ -314,8 +314,6 @@ async def test_default_branch_comes_from_github(cron_template, monkeypatch):
     monkeypatch.setattr(branches, "get_default_branch", default_is_trunk)
 
     project = github_project(
-        # projects.yml disagrees with github on purpose here
-        default_branch="main",
         branches=[
             {"name": "trunk", "level": 3, "cron": True},
             {"name": "main", "level": 3, "cron": True},

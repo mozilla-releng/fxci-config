@@ -3,7 +3,6 @@
 # obtain one at http://mozilla.org/MPL/2.0/.
 
 import re
-from functools import cached_property
 
 import attr
 from mozilla_repo_urls import parse
@@ -82,13 +81,6 @@ class Project:
     )
     branches = attr.ib(
         type=list, default=[], converter=lambda b: [Branch(**d) for d in b]
-    )
-    _default_branch = attr.ib(
-        type=str,
-        default=attr.Factory(
-            lambda self: "main" if self.repo_type == "git" else "default",
-            takes_self=True,
-        ),
     )
     lando_repo = attr.ib(type=str, default=None)
     trust_domain = attr.ib(type=str, default=None)
@@ -256,16 +248,3 @@ class Project:
         for branch in self.branches:
             if glob_match([branch.name], name):
                 return branch
-
-    @cached_property
-    def default_branch(self):
-        matched = self.get_branch(self._default_branch)
-        if matched is None:
-            return Branch(
-                name=self._default_branch, level=_level_from_access(self.access)
-            )
-        if matched.name == self._default_branch:
-            return matched
-        # `matched` came from a glob (eg. a `"*"` entry), so its `name` isn't
-        # the default branch's actual name
-        return attr.evolve(matched, name=self._default_branch)

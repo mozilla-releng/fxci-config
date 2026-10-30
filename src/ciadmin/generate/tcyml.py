@@ -41,19 +41,20 @@ query($owner: String!, $name: String!, $after: String) {
 """
 
 
-async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
+async def get(repo_path, repo_type="hg", ref=None):
     """
-    Get `.taskcluster.yml` from 'default' (or the given revision) at the named
+    Get `.taskcluster.yml` at `ref`, a branch name or revision, from the named
     repo_path.  Note that this does not parse the yml (so that it can be hashed
     in its original form).
 
-    If the file is not found, this returns None.
+    An hg repository has one branch and `ref` defaults to it. A git project has
+    no single branch, so the caller names one.
     """
     if repo_type == "hg":
-        if revision is None:
-            revision = default_branch or "default"
-        url = f"{repo_path}/raw-file/{revision}/.taskcluster.yml"
-        cache_key = (url, revision)
+        if ref is None:
+            ref = "default"
+        url = f"{repo_path}/raw-file/{ref}/.taskcluster.yml"
+        cache_key = (url, ref)
 
         async with _lock.setdefault(cache_key, Lock()):
             if cache_key in _cache:
@@ -79,8 +80,10 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
             _cache[cache_key] = result
 
     elif repo_type == "git":
-        if revision is None:
-            revision = default_branch or "master"
+        if ref is None:
+            raise Exception(
+                f"A branch or revision is required to read .taskcluster.yml from {repo_path}"
+            )
         if repo_path.startswith("https://github.com/"):
             if repo_path.endswith("/"):
                 repo_path = repo_path[:-1]
@@ -96,14 +99,14 @@ async def get(repo_path, repo_type="hg", revision=None, default_branch=None):
                 f"Don't know how to determine file URL for non-github repo: {repo_path}"
             )
 
-        cache_key = (endpoint, revision)
+        cache_key = (endpoint, ref)
 
         async with _lock.setdefault(cache_key, Lock()):
             if cache_key in _cache:
                 return _cache[cache_key]
 
             headers = {"Accept": "application/vnd.github.raw+json"}
-            params = {"ref": revision}
+            params = {"ref": ref}
 
             client = await github.get_client(repo)
             response = await client.request(
