@@ -163,3 +163,11 @@
   to:
     - roles:
         - repo:github.com/taskcluster/taskcluster:rerun
+
+# Refresh the Azure attested document early (hooks.yml), e.g. when the
+# fixture's certificate expires.
+- grant:
+    - hooks:trigger-hook:project-taskcluster/azure-attested-document
+  to:
+    - groups:
+        - team_taskcluster
