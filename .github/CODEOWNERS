@@ -3,5 +3,5 @@
 * @mozilla-releng/releng
 
 clients.yml @mozilla-releng/relops @mozilla-releng/releng
-worker-images.yml @mozilla-releng/relops
+worker-images.yml @mozilla-releng/relops @mozilla-releng/tceng
 worker-pools.yml @mozilla-releng/relops @mozilla-releng/releng
