@@ -411,6 +411,24 @@ project-engwf/reviewer-assignment-{mode}:
       repository:
         type: string
 
+project-taskcluster/azure-attested-document:
+  name: Azure attested document
+  description: >-
+    Fetch an Azure IMDS attested document and instance metadata, and index them
+    for refreshing worker-manager's azure_signature_good.json test fixture.
+    Trigger manually to refresh early, e.g. when the fixture's certificate
+    expires. See https://github.com/taskcluster/taskcluster/issues/8533
+  owner: taskcluster-notifications@mozilla.com
+  email_on_error: true
+  schedule:
+    - "0 0 3 * * 1"  # Mondays 03:00 UTC
+  scopes:
+    - queue:create-task:lowest:proj-taskcluster/gw-windows-2022-gui
+    - queue:scheduler-id:taskcluster-level-3
+    - queue:route:index.project.taskcluster.azure.attested-document.latest
+    - queue:route:notify.email.taskcluster-notifications@mozilla.com.on-failed
+  template_file: hook-templates/project-taskcluster/azure-attested-document.yml
+
 
 # Fuzzing hooks (migrated from community-tc)
 project-fuzzing/bugmon{suffix}:
