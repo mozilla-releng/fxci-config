@@ -43,7 +43,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
-          python-version: '3.14'
+          python-version: '3.15'
       - name: Install uv
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - name: Load environment config
@@ -63,7 +63,7 @@ jobs:
           TASKCLUSTER_ACCESS_TOKEN: ${{ needs.trust.outputs.trusted == 'true' && secrets.TRUSTED_TASKCLUSTER_ACCESS_TOKEN || '' }}
         run: uv run tc-admin generate --environment ${{matrix.environment}} --json > "$FXCI_CONFIG_CACHE"
       - name: Upload config cache
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: fxci-config-cache-${{matrix.environment}}
           path: ${{ env.FXCI_CONFIG_CACHE }}
@@ -87,7 +87,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
-          python-version: '3.14'
+          python-version: '3.15'
       - name: Install uv
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - name: Set root url
@@ -98,7 +98,7 @@ jobs:
             echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> "$GITHUB_ENV"
           fi
       - name: Download config cache
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: fxci-config-cache-${{matrix.environment}}
           path: ${{github.workspace}}
@@ -129,7 +129,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
-          python-version: '3.14'
+          python-version: '3.15'
       - name: Install uv
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - name: Set root url
@@ -140,7 +140,7 @@ jobs:
             echo "TASKCLUSTER_ROOT_URL=https://firefox-ci-tc.services.mozilla.com" >> "$GITHUB_ENV"
           fi
       - name: Download config cache
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: fxci-config-cache-${{matrix.environment}}
           path: ${{github.workspace}}
@@ -192,11 +192,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
-          python-version: '3.14'
+          python-version: '3.15'
       - name: Install uv
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - name: Download config cache
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: fxci-config-cache-${{matrix.environment}}
           path: ${{github.workspace}}
