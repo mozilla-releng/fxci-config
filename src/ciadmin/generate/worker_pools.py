@@ -824,6 +824,7 @@ def generate_pool_variants(worker_pools, environment):
         # Second pass: evaluate everything else with vmSize now available
         for key in (
             "armDeployment",
+            "extended-preemption-notice",
             "image",
             "implementation",
             "instance_types",
