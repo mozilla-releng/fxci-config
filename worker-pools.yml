@@ -3216,7 +3216,6 @@ pools:
           docker-noscratch.*: [us-central1, us-west1, us-east1]
           docker-large-amd: [us-central1, us-east1]
           default: *default-gcp-regions
-      # Bug 2013686: first pool with the 120 s preemption notice.
       extended-preemption-notice:
         by-pool-group:
           gecko-t:
