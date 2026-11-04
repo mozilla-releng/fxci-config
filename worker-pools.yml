@@ -2438,6 +2438,8 @@ pools:
       - pool-group: enterprise-t
       - pool-group: gecko-t
         suffix: gpu
+      - pool-group: enterprise-t
+        suffix: gpu
       - pool-group: gecko-t
         suffix: source
       - pool-group: gecko-t
