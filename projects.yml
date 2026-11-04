@@ -458,23 +458,13 @@ cypress:
   branches:
     - name: "*"
     - name: default
-      cron: true
   trust_domain: gecko
   features:
     gecko-actions: true
     gecko-roles: true
     hg-push: true
-    taskgraph-cron: true
     treeherder-reporting: true
     trust-domain-scopes: true
-  cron:
-    targets:
-      - nightly-desktop
-      - nightly-desktop-linux
-      - nightly-desktop-osx
-      - nightly-desktop-win32
-      - nightly-desktop-win64
-      - nightly-desktop-win64-aarch64
 try:
   repo: https://hg.mozilla.org/try
   # This is used as a substitution in grants; the try repo is allowed to
