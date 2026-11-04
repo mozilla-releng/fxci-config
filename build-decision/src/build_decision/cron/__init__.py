@@ -4,6 +4,7 @@
 
 
 import logging
+import re
 import traceback
 from pathlib import Path
 
@@ -44,16 +45,26 @@ def load_jobs(repository, revision):
     return {j["name"]: j for j in jobs}
 
 
-def should_run(job, *, time, project):
+def _branch_matches(branch, patterns):
+    """Return True if `branch` fully matches any of the regexes in `patterns`."""
+    if branch is None:
+        return False
+    return any(re.fullmatch(pattern, branch) for pattern in patterns)
+
+
+def should_run(job, *, time, project, branch=None):
     if "run-on-projects" in job:
         if project not in job["run-on-projects"]:
+            return False
+    if "run-on-branches" in job:
+        if not _branch_matches(branch, job["run-on-branches"]):
             return False
     # Resolve when key here, so we don't require it before we know that we
     # actually want to run on this branch.
     when = evaluate_keyed_by(
         job.get("when", []),
         "Cron job " + job["name"],
-        {"project": project},
+        {"project": project, "branch": branch},
     )
     if not any(match_utc(time=time, sched=sched) for sched in when):
         return False
@@ -108,7 +119,7 @@ def run(*, repository, branch, force_run, dry_run):
 
     failed_jobs = []
     for job_name, job in sorted(jobs.items()):
-        if should_run(job, time=time, project=repository.project):
+        if should_run(job, time=time, project=repository.project, branch=branch):
             logger.info(f'running cron job "{job_name}"')
             try:
                 run_job(
