@@ -35,6 +35,12 @@ properties:
                           properties:
                               by-project:
                                   additionalProperties: {$ref: "#/definitions/when"}
+                        - type: object
+                          required: ['by-branch']
+                          additionalProperties: false
+                          properties:
+                              by-branch:
+                                  additionalProperties: {$ref: "#/definitions/when"}
                         - $ref: "#/definitions/when"
 definitions:
     when:
