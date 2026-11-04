@@ -3216,6 +3216,13 @@ pools:
           docker-noscratch.*: [us-central1, us-west1, us-east1]
           docker-large-amd: [us-central1, us-east1]
           default: *default-gcp-regions
+      extended-preemption-notice:
+        by-pool-group:
+          gecko-t:
+            by-suffix:
+              docker-noscratch(-amd)?: true
+              default: false
+          default: false
       image:
         by-implementation:
           generic-worker/linux-(d2g|headless): ubuntu-2404-headless
@@ -3255,6 +3262,7 @@ pools:
           gecko-t: 1600
           enterprise-t: 100
       regions: *default-gcp-regions
+      extended-preemption-notice: true
       image: ubuntu-2404-headless
       implementation: generic-worker/linux-d2g
       worker-config:
@@ -3291,6 +3299,7 @@ pools:
       implementation: generic-worker/linux-d2g
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
+      extended-preemption-notice: true
       image: ubuntu-2404-arm64-headless
       instance_types:
         - minCpuPlatform: Ampere Altra
