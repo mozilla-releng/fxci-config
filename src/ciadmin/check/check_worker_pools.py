@@ -240,10 +240,10 @@ async def check_gcp_ssds():
                     if disk["type"].lower() == "scratch"
                 ]
             )
-            min_disks = min_scratch_disks(instance["machine_type"])
-
             if not num_disks:
                 continue
+            min_disks = min_scratch_disks(instance["machine_type"])
+
             if num_disks < min_disks:
                 errors.append(
                     f"{pool.pool_id}: defines {num_disks}, but requires at least "
