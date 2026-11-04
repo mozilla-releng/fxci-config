@@ -1547,11 +1547,9 @@ pools:
             d2gConfig:
               allowKVM: true
       instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
+        - disks:
             - *persistent-disk-75gb
-            - <<: *scratch-disk
-          machine_type: n2-standard-8
+          machine_type: c3-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true
   - pool_id: 'gecko-t/t-linux-2204-wayland-root-exp'  # Bug 1874877
