@@ -85,6 +85,198 @@ def test_should_run(mocker, job, match_utc_bool, project, expected):
 
 
 @pytest.mark.parametrize(
+    "branch, expected_scheds",
+    (
+        pytest.param("main", [{"hour": 4, "minute": 0}], id="exact"),
+        pytest.param("release-v1", [{"hour": 5, "minute": 0}], id="regex"),
+        pytest.param(
+            "enterprise-main",
+            [{"hour": 6, "minute": 0}],
+            id="enterprise-main-exact-beats-regex",
+        ),
+        pytest.param(
+            "enterprise-release",
+            [{"hour": 7, "minute": 0}],
+            id="enterprise-release-regex",
+        ),
+        pytest.param(
+            "enterprise-beta", [{"hour": 7, "minute": 0}], id="enterprise-beta-regex"
+        ),
+        pytest.param("beta", [], id="default"),
+        pytest.param(None, [], id="no-branch"),
+    ),
+)
+def test_should_run_by_branch(mocker, branch, expected_scheds):
+    """``when`` resolves against the branch: exact, then regex, then default."""
+    job = {
+        "name": "by-branch-job",
+        "when": {
+            "by-branch": {
+                "main": [{"hour": 4, "minute": 0}],
+                # anchored at the start: does not match "enterprise-release"
+                "release.*": [{"hour": 5, "minute": 0}],
+                # exact match wins over the "enterprise-.*" regex below
+                "enterprise-main": [{"hour": 6, "minute": 0}],
+                "enterprise-.*": [{"hour": 7, "minute": 0}],
+                "default": [],
+            }
+        },
+    }
+    seen = []
+
+    def fake_match_utc(*, time, sched):
+        seen.append(sched)
+        return True
+
+    mocker.patch.object(cron, "match_utc", new=fake_match_utc)
+    assert cron.should_run(
+        job, time="fake_time", project="enterprise-firefox", branch=branch
+    ) == bool(expected_scheds)
+    assert seen == expected_scheds
+
+
+def test_should_run_by_project_ignores_branch(mocker):
+    """A by-project ``when`` is unaffected by the branch being passed."""
+    match_utc = mocker.patch.object(cron, "match_utc", return_value=True)
+    job = {
+        "name": "by-project-job",
+        "when": {
+            "by-project": {
+                "enterprise-firefox": [{"hour": 6, "minute": 0}],
+                "default": [],
+            }
+        },
+    }
+    assert cron.should_run(
+        job, time="fake_time", project="enterprise-firefox", branch="enterprise-beta"
+    )
+    match_utc.assert_called_once_with(time="fake_time", sched={"hour": 6, "minute": 0})
+
+
+def test_should_run_by_branch_ambiguous_regex():
+    """A branch matched by several regexes (and no exact key) is an error."""
+    job = {
+        "name": "job",
+        "when": {
+            "by-branch": {
+                "enterprise-.*": [{"hour": 4, "minute": 0}],
+                ".*-release": [{"hour": 5, "minute": 0}],
+                "default": [],
+            }
+        },
+    }
+    with pytest.raises(Exception, match="Multiple matching values for branch"):
+        cron.should_run(
+            job,
+            time="fake_time",
+            project="enterprise-firefox",
+            branch="enterprise-release",
+        )
+
+
+def test_should_run_by_branch_no_match_no_default():
+    """An unmatched branch without a 'default' entry is an error."""
+    job = {
+        "name": "job",
+        "when": {"by-branch": {"main": [{"hour": 4, "minute": 0}]}},
+    }
+    with pytest.raises(Exception, match="No branch matching 'beta'"):
+        cron.should_run(job, time="fake_time", project="project1", branch="beta")
+
+
+def test_should_run_by_branch_respects_run_on_projects(mocker):
+    """run-on-projects is checked before by-branch is resolved."""
+    match_utc = mocker.patch.object(cron, "match_utc", return_value=True)
+    job = {
+        "name": "job",
+        "run-on-projects": ["enterprise-firefox"],
+        "when": {
+            "by-branch": {
+                "enterprise-main": [{"hour": 4, "minute": 0}],
+                "default": [],
+            }
+        },
+    }
+    assert not cron.should_run(
+        job, time="fake_time", project="other", branch="enterprise-main"
+    )
+    assert match_utc.call_count == 0
+
+
+@pytest.mark.parametrize(
+    "when",
+    (
+        pytest.param([{"hour": 4, "minute": 0}], id="plain"),
+        pytest.param(
+            {"by-project": {"p": [{"hour": 4, "minute": 0}], "default": []}},
+            id="by-project",
+        ),
+        pytest.param(
+            {"by-branch": {"main": [{"hour": 4, "minute": 0}], "default": []}},
+            id="by-branch",
+        ),
+    ),
+)
+def test_schema_accepts_when(when):
+    cron._cron_yml_schema.validate(
+        {
+            "jobs": [
+                {
+                    "name": "job",
+                    "job": {
+                        "type": "decision-task",
+                        "treeherder-symbol": "x",
+                        "target-tasks-method": "x",
+                    },
+                    "when": when,
+                }
+            ]
+        }
+    )
+
+
+@pytest.mark.parametrize(
+    "when",
+    (
+        pytest.param({"by-tree": {"main": []}}, id="unknown-keyed-by"),
+        pytest.param(
+            {"by-branch": {"main": [{"hour": 4, "minute": 7}]}}, id="bad-minute"
+        ),
+        pytest.param(
+            {"by-branch": {"main": []}, "by-project": {"p": []}},
+            id="both-keys-at-same-level",
+        ),
+        pytest.param(
+            {
+                "by-project": {
+                    "p": {"by-branch": {"main": [], "default": []}},
+                    "default": [],
+                }
+            },
+            id="nested-not-supported",
+        ),
+    ),
+)
+def test_schema_rejects_when(when):
+    with pytest.raises(Exception):
+        cron._cron_yml_schema.validate(
+            {
+                "jobs": [
+                    {
+                        "name": "job",
+                        "job": {
+                            "type": "decision-task",
+                            "treeherder-symbol": "x",
+                            "target-tasks-method": "x",
+                        },
+                        "when": when,
+                    }
+                ]
+            }
+        )
+
+
+@pytest.mark.parametrize(
     "job_type, raises",
     (("decision-task", False), ("trigger-action", False), ("unknown", Exception)),
 )
@@ -172,6 +364,8 @@ def test_run(mocker, force_run, jobs):
             raise job["exception"]("raising")
 
     def fake_should_run(job, **kwargs):
+        assert kwargs["branch"] == "branch"
+        assert kwargs["project"] == fake_repo.project
         return job.get("should_run", False)
 
     mocker.patch.object(cron, "load_jobs", return_value=jobs)

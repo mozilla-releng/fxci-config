@@ -30,3 +30,29 @@ jobs:
           treeherder-symbol: screenshots-D
           target-tasks-method: screenshots
       when: [{weekday: 'Monday', hour: 10, minute: 0}]
+    - name: pinning-update
+      job:
+          type: decision-task
+          treeherder-symbol: pin
+          target-tasks-method: pinning_update
+      when:
+          by-branch:
+              main:
+                  - {weekday: 'Friday', hour: 17, minute: 0}
+              release.*:
+                  - {weekday: 'Monday', hour: 17, minute: 0}
+              enterprise-main:
+                  - {weekday: 'Tuesday', hour: 17, minute: 0}
+              enterprise-.*:
+                  - {weekday: 'Wednesday', hour: 17, minute: 0}
+              default: []
+    - name: searchfox-index
+      job:
+          type: decision-task
+          treeherder-symbol: Searchfox
+          target-tasks-method: searchfox_index
+      when:
+          by-project:
+              mozilla-central:
+                  - {hour: 7, minute: 0}
+              default: []
