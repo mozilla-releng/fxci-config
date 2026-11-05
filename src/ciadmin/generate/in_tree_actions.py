@@ -58,6 +58,10 @@ managed = MatchList(
 )
 
 
+def supports_actions(project):
+    return project.feature("gecko-actions") or project.feature("taskgraph-actions")
+
+
 def should_hash(project):
     if project.feature("gecko-actions"):
         if not project.feature("hg-push") and not project.feature("taskgraph-cron"):
@@ -151,15 +155,8 @@ async def _hash_project_ymls(project, hashes):
 
     def record(branch, parsed):
         """Add a `parse_and_hash` result to `hashes`, unless it came back None."""
-        if parsed is None:
-            return
-        content, tcyml_hash = parsed
-        hashes[branch] = {
-            "parsed": content,
-            "hash": tcyml_hash,
-            "level": project.get_branch(branch).level,
-            "alias": project.alias,
-        }
+        if parsed is not None:
+            hashes[branch] = hashed_tcyml(project, branch, parsed)
 
     if project.repo_type == "hg":
         # An hg project has the one branch, so there is nothing to index.
@@ -209,6 +206,17 @@ async def _hash_project_ymls(project, hashes):
     by_oid = {oid: parse_and_hash(tcy) for oid, tcy in blobs.items()}
     for branch, oid in oids.items():
         record(branch, by_oid[oid])
+
+
+def hashed_tcyml(project, branch, parsed):
+    """The `hash_taskcluster_ymls` entry for a `parse_and_hash` result."""
+    content, tcyml_hash = parsed
+    return {
+        "parsed": content,
+        "hash": tcyml_hash,
+        "level": project.get_branch(branch).level,
+        "alias": project.alias,
+    }
 
 
 def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
@@ -397,18 +405,40 @@ def make_hook(action, tcyml_content, tcyml_hash, projects, pr=False):
     )
 
 
+def make_hooks(actions, projects, hashed_tcymls):
+    """
+    Yield the action hooks for every `.taskcluster.yml` in `hashed_tcymls`, as
+    returned by `hash_taskcluster_ymls`.
+    """
+    by_alias = {p.alias: p for p in projects}
+    for action in actions:
+        # gather the hashes at the action's level or higher
+        hooks_to_make = {}  # {hash: content}, for uniqueness
+        for alias, branches in hashed_tcymls.items():
+            if by_alias[alias].trust_domain != action.trust_domain:
+                continue
+            for entry in branches.values():
+                if entry["level"] >= action.level:
+                    hooks_to_make[entry["hash"]] = entry["parsed"]
+
+        pr_actions = action.level == 1 and any(
+            p.feature("pr-actions")
+            for p in projects
+            if p.trust_domain == action.trust_domain
+        )
+        for hash, content in hooks_to_make.items():
+            yield make_hook(action, content, hash, hashed_tcymls)
+            if pr_actions:
+                yield make_hook(action, content, hash, hashed_tcymls, True)
+
+
 async def update_resources(resources):
     """
     Manage the hooks and accompanying hook-id:.. roles for in-tree actions.
     """
     hashed_tcymls = await hash_taskcluster_ymls()
     actions = await Action.fetch_all()
-    projects = await Project.fetch_all()
-    projects = [
-        p
-        for p in projects
-        if p.feature("gecko-actions") or p.feature("taskgraph-actions")
-    ]
+    projects = [p for p in await Project.fetch_all() if supports_actions(p)]
 
     # Manage the in-tree-action hooks/roles across *all* trust domains (not just
     # the ones currently in actions.yml) so hooks left behind by a removed trust
@@ -428,42 +458,14 @@ async def update_resources(resources):
                 (project.trust_domain, branch.level), []
             ).append(project)
 
-    # generate the hooks themselves and corresponding hook-id roles
+    # generate the hooks themselves
     added_hooks = set()
+    for hook in make_hooks(actions, projects, hashed_tcymls):
+        resources.add(hook)
+        added_hooks.add(hook.id)
+
+    # and the corresponding hook-id roles
     for action in actions:
-        # gather the hashes at the action's level or higher
-        hooks_to_make = {}  # {hash: content}, for uniqueness
-        for project in projects:
-            if not should_hash(project):
-                continue
-
-            # Only the branches that exist and have a parseable tcyml are in
-            # here, which is everything this loop used to filter down to.
-            for branch_name in hashed_tcymls.get(project.alias, {}):
-                if project.get_branch(branch_name).level < action.level:
-                    continue
-                if project.trust_domain != action.trust_domain:
-                    continue
-
-                content, hash = (
-                    hashed_tcymls[project.alias][branch_name]["parsed"],
-                    hashed_tcymls[project.alias][branch_name]["hash"],
-                )
-                hooks_to_make[hash] = content
-
-        for hash, content in hooks_to_make.items():
-            hook = make_hook(action, content, hash, hashed_tcymls)
-            resources.add(hook)
-            added_hooks.add(hook.id)
-            if action.level == 1 and any(
-                p.feature("pr-actions")
-                for p in projects
-                if p.trust_domain == action.trust_domain
-            ):
-                hook = make_hook(action, content, hash, hashed_tcymls, True)
-                resources.add(hook)
-                added_hooks.add(hook.id)
-
         # use a single, star-suffixed role for all hashed versions of a hook
         role = Role(
             roleId=f"hook-id:project-{action.trust_domain}/in-tree-action-{action.level}-{action.action_perm}/*",

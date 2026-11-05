@@ -9,6 +9,7 @@ import aiohttp
 import pytest
 
 from ciadmin.generate import in_tree_actions, tcyml
+from ciadmin.generate.ciconfig.actions import Action
 from ciadmin.generate.ciconfig.projects import Project
 
 MAIN = b"tasks:\n  - task: main\n"
@@ -409,3 +410,65 @@ async def test_invalidates_hooks_ignores_a_bare_star(projects):
     )
     assert await in_tree_actions.invalidates_hooks("mozilla/example", "main")
     assert not await in_tree_actions.invalidates_hooks("mozilla/example", "some-topic")
+
+
+# ---------------------------------------------------------------------------
+# make_hooks
+# ---------------------------------------------------------------------------
+
+
+def entry(content, level):
+    return {"parsed": {"tasks": [content]}, "hash": tcyml_hash(content), "level": level}
+
+
+@pytest.mark.parametrize(
+    "features,expected",
+    (
+        pytest.param(
+            {},
+            [
+                f"in-tree-action-1-generic/{tcyml_hash(MAIN)}",
+                f"in-tree-action-1-generic/{tcyml_hash(RELEASE)}",
+                f"in-tree-action-3-generic/{tcyml_hash(MAIN)}",
+            ],
+            id="no-pr-actions",
+        ),
+        pytest.param(
+            {"pr-actions": True},
+            [
+                f"in-tree-action-1-generic/{tcyml_hash(MAIN)}",
+                f"in-tree-action-1-generic/{tcyml_hash(RELEASE)}",
+                f"in-tree-action-3-generic/{tcyml_hash(MAIN)}",
+                f"in-tree-pr-action-1-generic/{tcyml_hash(MAIN)}",
+                f"in-tree-pr-action-1-generic/{tcyml_hash(RELEASE)}",
+            ],
+            id="pr-actions",
+        ),
+    ),
+)
+def test_make_hooks(set_environment, features, expected):
+    """One hook per distinct hash at or below each branch's level, per action
+    in the project's trust domain."""
+    example = Project(
+        alias="example",
+        **{
+            **GIT_PROJECT,
+            "features": {**GIT_PROJECT["features"], **features},
+        },
+    )
+    actions = [
+        Action(trust_domain="foo", level=1, action_perm="generic"),
+        Action(trust_domain="foo", level=3, action_perm="generic"),
+        Action(trust_domain="bar", level=1, action_perm="generic"),
+    ]
+    hashed_tcymls = {
+        "example": {
+            "main": entry(MAIN, 3),
+            "release/2": entry(MAIN, 2),
+            "release/1": entry(RELEASE, 2),
+        }
+    }
+
+    with set_environment("firefoxci"):
+        hooks = in_tree_actions.make_hooks(actions, [example], hashed_tcymls)
+        assert sorted(h.hookId for h in hooks) == expected
