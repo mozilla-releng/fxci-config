@@ -698,7 +698,7 @@
         job: [cron:scriptworker-canary]
         trust_domain: gecko
         level: [3]
-        alias: [mozilla-central, autoland]
+        alias: [mozilla-beta, mozilla-central, autoland]
 
 - grant:
     # Allow the scriptworker-canary action to access the trybld-scriptworker key.
@@ -708,7 +708,7 @@
         job: [action:scriptworker-canary]
         trust_domain: gecko
         level: [3]
-        alias: [mozilla-central, autoland]
+        alias: [mozilla-beta, mozilla-central, autoland]
 
 - grant:
     # Allow the backfill-all-browsertime cron hook to trigger the backfill action.
