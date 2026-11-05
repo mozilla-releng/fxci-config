@@ -19,11 +19,20 @@
 # false where the `read` GitHub app is not installed, and ci-admin will use
 # only the GitHub credentials from its environment. Private repositories are
 # skipped in that case.
+#
+# `require_github_tokens` makes a run with Taskcluster credentials fail when the
+# auth service refuses a GitHub token for a repository owner, instead of falling
+# back to the token in the environment. It defaults to false. Where
+# `github_repo_tokens` is false the auth service is never asked, so this switch
+# has no effect.
 
 firefoxci:
   root_url: https://firefox-ci-tc.services.mozilla.com
   # no modifications in production, please!
   modify_resources: []
+  # Flip to true once the fxci-read-only app is installed on every repository
+  # in projects.yml (bug 2086188).
+  require_github_tokens: false
   worker_manager:
     providers:
       aws:
@@ -205,6 +214,9 @@ staging:
     # Remove minimum capacity of all worker-types, since staging clusters
     # do not have enough load to justify always-on workers.
     - remove_worker_min_capacity
+  # Flip to true once the tc-staging-read-only app is installed on every
+  # repository in projects.yml (bug 2086188).
+  require_github_tokens: false
   worker_manager:
     providers:
       aws:
