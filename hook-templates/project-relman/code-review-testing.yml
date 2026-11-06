@@ -54,10 +54,7 @@ payload:
               TRY_TASK_GROUP_ID:
                 $eval: payload.status.taskGroupId
               ANALYSIS_MODE: BuildTest
-            $default:
-              # Triggered by end of build on autoland & MC
-              GENERIC_TASK_GROUP_ID:
-                $eval: payload.taskGroupId
+            $default: {}
   features:
     taskclusterProxy: true
   image:
@@ -81,4 +78,4 @@ scopes:
   - 'queue:cancel-task-group:gecko-level-1/*'
   - 'queue:cancel-task:relman/*'
 tags: {}
-workerType: bot
+workerType: bot-testing
