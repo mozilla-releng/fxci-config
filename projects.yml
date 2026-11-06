@@ -153,26 +153,6 @@ mozilla-esr115:
   cron:
     targets:
       - periodic-update
-mozilla-esr140:
-  repo: https://hg.mozilla.org/releases/mozilla-esr140
-  lando_repo: firefox-esr140
-  repo_type: hg
-  access: scm_level_3
-  branches:
-    - name: "*"
-    - name: default
-      cron: true
-  trust_domain: gecko
-  features:
-    gecko-actions: true
-    gecko-roles: true
-    hg-push: true
-    lando: true
-    merge-automation: true
-    scriptworker-shipit: true
-    taskgraph-cron: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
 mozilla-esr153:
   repo: https://hg.mozilla.org/releases/mozilla-esr153
   lando_repo: firefox-esr153
@@ -196,29 +176,6 @@ mozilla-esr153:
   cron:
     targets:
       - periodic-update
-comm-esr140:
-  repo: https://hg.mozilla.org/releases/comm-esr140
-  lando_repo: thunderbird-desktop-esr140
-  repo_type: hg
-  access: scm_level_3
-  branches:
-    - name: "*"
-    - name: default
-      cron: true
-  trust_domain: comm
-  parent_repo: https://hg.mozilla.org/releases/mozilla-esr140
-  features:
-    gecko-actions: true
-    gecko-roles: true
-    hg-push: true
-    lando: true
-    taskgraph-cron: true
-    treeherder-reporting: true
-    trust-domain-scopes: true
-    scriptworker-shipit: true
-  cron:
-    targets:
-      - l10n-bumper
 comm-esr153:
   repo: https://hg.mozilla.org/releases/comm-esr153
   lando_repo: thunderbird-desktop-esr153
