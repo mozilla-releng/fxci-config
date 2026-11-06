@@ -2432,6 +2432,8 @@ pools:
       - pool-group: enterprise-t
       - pool-group: gecko-t
         suffix: gpu
+      - pool-group: enterprise-t
+        suffix: gpu
       - pool-group: gecko-t
         suffix: source
       - pool-group: gecko-t
@@ -3263,11 +3265,9 @@ pools:
             d2gConfig:
               allowKVM: true
       instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
+        - disks:
             - *persistent-disk-75gb
-            - <<: *scratch-disk
-          machine_type: n2-standard-8
+          machine_type: c3-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true
   - pool_id: '{pool-group}/t-linux-arm64-docker'

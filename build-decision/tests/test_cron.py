@@ -1,3 +1,6 @@
+import datetime
+
+import jsonschema
 import pytest
 import requests.exceptions
 import yaml
@@ -6,6 +9,15 @@ import build_decision.cron as cron
 from build_decision.repository import NoPushesError
 
 from . import TEST_DATA_DIR
+
+_JOB = {
+    "name": "j",
+    "job": {
+        "type": "decision-task",
+        "treeherder-symbol": "J",
+        "target-tasks-method": "j",
+    },
+}
 
 
 def test_load_jobs(mocker):
@@ -82,6 +94,113 @@ def test_should_run(mocker, job, match_utc_bool, project, expected):
     """Test the various branches in cron.should_run."""
     mocker.patch.object(cron, "match_utc", return_value=match_utc_bool)
     assert cron.should_run(job, time="fake_time", project=project) == expected
+
+
+@pytest.mark.parametrize(
+    "job, branch, expected",
+    (
+        # no run-on-branches: any branch
+        ({"name": "n", "when": [{"hour": 4}]}, "anything", True),
+        # exact match
+        ({"name": "n", "run-on-branches": ["main"], "when": [{}]}, "main", True),
+        ({"name": "n", "run-on-branches": ["main"], "when": [{}]}, "beta", False),
+        # regexes must match the whole name
+        ({"name": "n", "run-on-branches": ["esr.*"], "when": [{}]}, "esr140", True),
+        ({"name": "n", "run-on-branches": ["esr"], "when": [{}]}, "esr140", False),
+        ({"name": "n", "run-on-branches": ["main"], "when": [{}]}, "not-main", False),
+        # no branch known: run-on-branches never matches
+        ({"name": "n", "run-on-branches": ["main"], "when": [{}]}, None, False),
+    ),
+)
+def test_should_run_branches(job, branch, expected):
+    time = datetime.datetime(2026, 11, 4, 4, 0)
+    assert cron.should_run(job, time=time, project="proj", branch=branch) == expected
+
+
+@pytest.mark.parametrize(
+    "branch, hour, expected",
+    (
+        ("main", 4, True),
+        ("main", 10, False),
+        ("release-1.0", 10, True),
+        ("release-1.0", 4, False),
+        ("other", 4, False),
+        (None, 4, False),
+    ),
+)
+def test_should_run_when_by_branch(branch, hour, expected):
+    job = {
+        "name": "n",
+        "when": {
+            "by-branch": {
+                "main": [{"hour": 4, "minute": 0}],
+                "release-.*": [{"hour": 10, "minute": 0}],
+                "default": [],
+            }
+        },
+    }
+    time = datetime.datetime(2026, 11, 4, hour, 0)
+    assert cron.should_run(job, time=time, project="proj", branch=branch) == expected
+
+
+def test_should_run_when_nested_project_branch():
+    job = {
+        "name": "n",
+        "when": {
+            "by-project": {
+                "proj": {"by-branch": {"main": [{"hour": 4}], "default": []}},
+                "default": [],
+            }
+        },
+    }
+    time = datetime.datetime(2026, 11, 4, 4, 0)
+    assert cron.should_run(job, time=time, project="proj", branch="main")
+    assert not cron.should_run(job, time=time, project="proj", branch="beta")
+    assert not cron.should_run(job, time=time, project="other", branch="main")
+
+
+@pytest.mark.parametrize(
+    "cron_yml, valid",
+    (
+        ({"jobs": [{**_JOB, "run-on-branches": ["main", "esr.*"]}]}, True),
+        ({"jobs": [{**_JOB, "when": {"by-branch": {"main": [{"hour": 1}]}}}]}, True),
+        (
+            {
+                "jobs": [
+                    {
+                        **_JOB,
+                        "when": {
+                            "by-branch": {
+                                "main": {"by-project": {"p": [{"hour": 1}]}},
+                                "default": [],
+                            }
+                        },
+                    }
+                ]
+            },
+            True,
+        ),
+        ({"jobs": [{**_JOB, "run-on-branches": "main"}]}, False),
+        ({"jobs": [{**_JOB, "when": {"by-branch": {"main": [{"hr": 1}]}}}]}, False),
+        ({"jobs": [{**_JOB, "when": {"by-colour": {"red": []}}}]}, False),
+    ),
+)
+def test_schema_branches(mocker, cron_yml, valid):
+    fake_repo = mocker.MagicMock()
+    fake_repo.get_file.return_value = cron_yml
+    if valid:
+        cron.load_jobs(fake_repo, "rev")
+    else:
+        with pytest.raises(jsonschema.ValidationError):
+            cron.load_jobs(fake_repo, "rev")
+
+
+def test_run_passes_branch_to_should_run(mocker):
+    fake_repo = mocker.MagicMock()
+    mocker.patch.object(cron, "load_jobs", return_value={"j": {"name": "j"}})
+    should_run = mocker.patch.object(cron, "should_run", return_value=False)
+    cron.run(repository=fake_repo, branch="esr140", force_run=None, dry_run=True)
+    assert should_run.call_args.kwargs["branch"] == "esr140"
 
 
 @pytest.mark.parametrize(
