@@ -26,27 +26,7 @@ payload:
     FUZZING_GIT_REPOSITORY: git@github.com:MozillaSecurity/fuzzing-tc-config.git
     FUZZING_GIT_REVISION: main
 scopes:
-  - assume:hook-id:project-fuzzing/linux-pool*
-  - assume:hook-id:project-fuzzing/macos-pool*
-  - assume:hook-id:project-fuzzing/windows-pool*
-  - auth:create-role:hook-id:project-fuzzing/*
-  - auth:delete-role:hook-id:project-fuzzing/*
-  - auth:update-role:hook-id:project-fuzzing/*
-  - docker-worker:capability:device:hostSharedMemory
-  - docker-worker:capability:device:kvm
-  - docker-worker:capability:device:loopbackAudio
-  - docker-worker:capability:privileged
-  - generic-worker:os-group:proj-fuzzing/*
-  - generic-worker:run-as-administrator:proj-fuzzing/*
-  - hooks:modify-hook:project-fuzzing/*
-  - hooks:trigger-hook:project-fuzzing/*
-  - queue:cancel-task:fuzzing/*
-  - queue:create-task:highest:proj-fuzzing/*
-  - secrets:get:project/fuzzing/*
-  - worker-manager:manage-worker-pool:proj-fuzzing/*
-  - worker-manager:provider:aws
-  - worker-manager:provider:azure2
-  - worker-manager:provider:fxci-level1-gcp
+  - assume:hook-id:project-fuzzing/fuzzing-tc-config-update
 metadata:
   name: Fuzzing Taskcluster apply changes
   description: Apply potential modifications on the taskcluster instance
