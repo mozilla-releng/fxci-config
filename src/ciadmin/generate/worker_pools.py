@@ -265,14 +265,19 @@ def _resolve_defaults(defaults, provider_id, implementation):
     return defaults
 
 
-def _add_worker_type_metadata(worker_config, metadata):
-    """Merge `metadata` into the generic-worker workerTypeMetadata of
-    `worker_config` (in place), if it is a generic-worker config."""
-    gw_config = worker_config.get("genericWorker", {}).get("config")
-    if metadata and gw_config is not None:
-        gw_config["workerTypeMetadata"] = merge(
-            gw_config.get("workerTypeMetadata", {}), metadata
+def _merge_worker_config(defaults, metadata, config):
+    """Merge worker-config from `defaults` and `config`, with `metadata` layered
+    between them as workerTypeMetadata if it is a generic-worker config."""
+    worker_config = merge(
+        defaults.get("worker-config", {}), config.get("worker-config", {})
+    )
+    if metadata and "config" in worker_config.get("genericWorker", {}):
+        worker_config = merge(
+            defaults.get("worker-config", {}),
+            {"genericWorker": {"config": {"workerTypeMetadata": metadata}}},
+            config.get("worker-config", {}),
         )
+    return worker_config
 
 
 def get_aws_provider_config(
@@ -291,10 +296,7 @@ def get_aws_provider_config(
     # Merge defaults with pool config.
     defaults = _resolve_defaults(defaults, provider_id, implementation)
     lifecycle = merge(defaults.get("lifecycle", {}), config.pop("lifecycle", {}))
-    worker_config = merge(
-        defaults.get("worker-config", {}), config.get("worker-config", {})
-    )
-    _add_worker_type_metadata(worker_config, image.worker_type_metadata)
+    worker_config = _merge_worker_config(defaults, image.worker_type_metadata, config)
     worker_manager_config = merge(
         defaults.get("worker-manager-config", {}),
         config.get("worker-manager-config", {}),
@@ -431,16 +433,6 @@ def get_azure_provider_config(
     # Merge defaults with pool config.
     defaults = _resolve_defaults(defaults, provider_id, implementation)
     lifecycle = merge(defaults.get("lifecycle", {}), config.pop("lifecycle", {}))
-    worker_config = merge(
-        defaults.get("worker-config", {}), config.get("worker-config", {})
-    )
-    worker_manager_config = merge(
-        defaults.get("worker-manager-config", {}),
-        config.get("worker-manager-config", {}),
-    )
-
-    gw_config = worker_config["genericWorker"]["config"]
-    _set_wst_defaults(gw_config, azure_config)
 
     # Populate some generic-worker metadata.
     metadata = merge(image.worker_type_metadata)
@@ -456,7 +448,14 @@ def get_azure_provider_config(
 
         metadata["sbom"] = azure_config["sbom_url_tmpl"].format(**context)
 
-    _add_worker_type_metadata(worker_config, metadata)
+    worker_config = _merge_worker_config(defaults, metadata, config)
+    worker_manager_config = merge(
+        defaults.get("worker-manager-config", {}),
+        config.get("worker-manager-config", {}),
+    )
+
+    gw_config = worker_config["genericWorker"]["config"]
+    _set_wst_defaults(gw_config, azure_config)
 
     tags = config.get("tags", {})
 
@@ -617,10 +616,7 @@ def get_google_provider_config(
     # Merge defaults with pool config.
     defaults = _resolve_defaults(defaults, provider_id, implementation)
     lifecycle = merge(defaults.get("lifecycle", {}), config.pop("lifecycle", {}))
-    worker_config = merge(
-        defaults.get("worker-config", {}), config.get("worker-config", {})
-    )
-    _add_worker_type_metadata(worker_config, image.worker_type_metadata)
+    worker_config = _merge_worker_config(defaults, image.worker_type_metadata, config)
     worker_manager_config = merge(
         defaults.get("worker-manager-config", {}),
         config.get("worker-manager-config", {}),

@@ -736,7 +736,11 @@ async def test_make_worker_pool_worker_type_metadata(
         {
             "worker-config": {
                 "genericWorker": {
-                    "config": {"workerTypeMetadata": {"machine-setup": {"a": 1}}}
+                    "config": {
+                        "workerTypeMetadata": {
+                            "machine-setup": {"a": 1, "script": "https://pool"}
+                        }
+                    }
                 }
             }
         },
@@ -747,7 +751,9 @@ async def test_make_worker_pool_worker_type_metadata(
             WorkerImage(
                 "image-1",
                 clouds=image.clouds,
-                worker_type_metadata={"machine-setup": {"script": "https://s"}},
+                worker_type_metadata={
+                    "machine-setup": {"b": 2, "script": "https://image"}
+                },
             )
         ]
     )
@@ -756,7 +762,7 @@ async def test_make_worker_pool_worker_type_metadata(
     for launch_config in result.config["launchConfigs"]:
         assert launch_config["workerConfig"]["genericWorker"]["config"][
             "workerTypeMetadata"
-        ] == {"machine-setup": {"a": 1, "script": "https://s"}}
+        ] == {"machine-setup": {"a": 1, "b": 2, "script": "https://pool"}}
 
 
 @pytest.mark.asyncio
