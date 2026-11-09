@@ -480,32 +480,7 @@ project-fuzzing/fuzzing-tc-config-update:
     - exchange: exchange/taskcluster-github/v1/push
       routing_key_pattern: primary.mozilla-releng.fxci-config
   scopes:
-    - assume:hook-id:project-fuzzing/linux-pool*
-    - assume:hook-id:project-fuzzing/macos-pool*
-    - assume:hook-id:project-fuzzing/windows-pool*
-    - auth:create-role:hook-id:project-fuzzing/*
-    - auth:delete-role:hook-id:project-fuzzing/*
-    - auth:update-role:hook-id:project-fuzzing/*
-    - docker-worker:capability:device:hostSharedMemory
-    - docker-worker:capability:device:kvm
-    - docker-worker:capability:device:loopbackAudio
-    - docker-worker:capability:privileged
-    - generic-worker:capability:device:hostSharedMemory
-    - generic-worker:capability:device:loopbackAudio
-    - generic-worker:capability:privileged
-    - generic-worker:os-group:proj-fuzzing/*
-    - generic-worker:run-as-administrator:proj-fuzzing/*
-    - hooks:modify-hook:project-fuzzing/*
-    - hooks:trigger-hook:project-fuzzing/*
-    - queue:cancel-task:fuzzing/*
-    - queue:create-task:highest:proj-fuzzing/*
-    - queue:route:notify.*
-    - queue:scheduler-id:fuzzing
-    - secrets:get:project/fuzzing/*
-    - worker-manager:manage-worker-pool:proj-fuzzing/*
-    - worker-manager:provider:aws
-    - worker-manager:provider:azure2
-    - worker-manager:provider:fxci-level1-gcp
+    - assume:project:fuzzing:fuzzing-tc-config-apply
   template_file: hook-templates/project-fuzzing/fuzzing-tc-config-update.yml
   trigger_schema:
     type: object

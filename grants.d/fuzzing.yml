@@ -30,6 +30,8 @@
     - roles:
         - repo:github.com/MozillaSecurity/fuzzing-tc-config:*
 
+# Scopes for running fuzzing-decision's tc-admin apply of fuzzing-tc-config,
+# shared by fuzzing-tc-config's main branch and the fuzzing-tc-config-update hook.
 - grant:
     - assume:hook-id:project-fuzzing/linux-pool*
     - assume:hook-id:project-fuzzing/macos-pool*
@@ -57,6 +59,12 @@
     - worker-manager:provider:aws
     - worker-manager:provider:azure2
     - worker-manager:provider:fxci-level1-gcp
+  to:
+    - roles:
+        - project:fuzzing:fuzzing-tc-config-apply
+
+- grant:
+    - assume:project:fuzzing:fuzzing-tc-config-apply
   to:
     - roles:
         - repo:github.com/MozillaSecurity/fuzzing-tc-config:branch:main
