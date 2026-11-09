@@ -235,13 +235,6 @@ gw-ubuntu-24-04-arm64:
       script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/dc2d7f65ead4effd2c551217fbe821e0f2483dbe/scripts/linux/tceng/generic-worker-ubuntu-24-04.sh
   fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-b67d1e31c2f74afe8f05
 
-fuzzing-docker-worker-legacy:
-  aws:
-    us-east-1: ami-0a6e926238859761c
-    us-east-2: ami-00f6c9d7fec4fa42b
-    us-west-1: ami-03e4f8db63254ce7e
-    us-west-2: ami-0b5dd0bbb670ec80e
-
 gw-ubuntu-24-04-staging:
   worker-type-metadata:
     machine-setup:
