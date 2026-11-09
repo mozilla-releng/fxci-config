@@ -304,6 +304,19 @@ project/enterprise/enterprise-console-backend/dev/artifact-access:
     enterprise artifacts.
   scopes:
     - queue:get-artifact:project/enterprise/*
+project/fuzzing/ci-worker-orion-gha:
+  description: Ephemeral generic-worker started inside MozillaSecurity/orion GitHub
+    Actions jobs, to import published Orion images as Taskcluster artifacts.
+  scopes:
+    - assume:worker-type:proj-fuzzing/orion-gha-publish
+    - queue:worker-id:proj-fuzzing/gh-orion-publish-*
+project/fuzzing/gh-orion-publisher:
+  description: Used by MozillaSecurity/orion GitHub Actions to create Orion image
+    import tasks and index them under project.fuzzing.orion.
+  scopes:
+    - queue:create-task:highest:proj-fuzzing/orion-gha-publish
+    - queue:route:index.project.fuzzing.orion.*
+    - queue:scheduler-id:fuzzing
 project/releng/fxci-config/apply:
   description: Used to run `tc-admin apply` in mozilla-releng/fxci-config.
   scopes:
