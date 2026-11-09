@@ -51,7 +51,11 @@
     - hooks:modify-hook:project-fuzzing/*
     - hooks:trigger-hook:project-fuzzing/*
     - queue:create-task:highest:proj-fuzzing/*
-    - queue:route:notify.*
+    - queue:route:notify.email.decoder@mozilla.com.on-failed
+    - queue:route:notify.email.jkratzer@mozilla.com.on-failed
+    - queue:route:notify.email.mdauer@mozilla.com.on-failed
+    - queue:route:notify.email.truber@mozilla.com.on-failed
+    - queue:route:notify.email.twsmith@mozilla.com.on-failed
     - queue:scheduler-id:fuzzing
     - queue:cancel-task:fuzzing/*
     - secrets:get:project/fuzzing/*
