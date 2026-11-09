@@ -3456,8 +3456,13 @@ pools:
       instance_types:
         by-kind:
           grizzly-reduce-worker-android:
-            - <<: *n2-standard-4-60gb-lssd
-              machine_type: c4-standard-4
+            - machine_type: c4-standard-4
+              disks:
+                - <<: *persistent-disk-60gb
+                  interface: NVME
+                  initializeParams:
+                    sourceImage: <image>
+                    diskType: diskTypes/hyperdisk-balanced
               advancedMachineFeatures:
                 enableNestedVirtualization: true
           default:
