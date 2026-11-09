@@ -99,6 +99,7 @@
     - generic-worker:allow-rdp:proj-fuzzing/*
     - queue:cancel-task:fuzzing/*
     - queue:cancel-task-group:fuzzing/*
+    - queue:rerun-task:fuzzing/*
     - queue:seal-task-group:fuzzing/*
     # Self-serve administration of the fuzzing team's MozillaSecurity repo roles
     # (they run their own tc-admin from e.g. fuzzing-tc-config).
