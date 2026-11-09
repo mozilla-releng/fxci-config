@@ -49,6 +49,7 @@
     - hooks:modify-hook:project-fuzzing/*
     - hooks:trigger-hook:project-fuzzing/*
     - queue:create-task:highest:proj-fuzzing/*
+    - queue:route:notify.*
     - queue:scheduler-id:fuzzing
     - queue:cancel-task:fuzzing/*
     - secrets:get:project/fuzzing/*
