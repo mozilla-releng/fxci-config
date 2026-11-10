@@ -326,6 +326,8 @@ mozilla-beta:
       - daily-releases
       - periodic-update
       - pinning-update
+      - target: scriptworker-canary
+        allow-input: true
 comm-beta:
   repo: https://hg.mozilla.org/releases/comm-beta
   lando_repo: thunderbird-desktop-beta
