@@ -3304,12 +3304,16 @@ pools:
           disks:
             - *persistent-disk-75gb
           machine_type: t2a-standard-4
-  - pool_id: '{pool-group}/bot'
+  - pool_id: '{pool-group}/bot-{suffix}'
     description: Worker for the {pool-group} bot.
     owner: release+tc-workers@mozilla.com
     email_on_error: true
+    attributes:
+      suffix: ''
     variants:
       - pool-group: code-review
+      - pool-group: code-review
+        suffix: alpha
       - pool-group: code-coverage
       - pool-group: reviewer-assignment
     provider_id: fxci-level1-gcp
@@ -3318,11 +3322,17 @@ pools:
       implementation: generic-worker/linux-d2g
       image: ubuntu-2404-headless
       minCapacity:
-        by-pool-group:
-          code-review: 1
-          code-coverage: 0
-          reviewer-assignment: 1
-      maxCapacity: 20
+        by-suffix:
+          .*alpha: 0
+          default:
+            by-pool-group:
+              code-review: 1
+              code-coverage: 0
+              reviewer-assignment: 1
+      maxCapacity:
+        by-suffix:
+          .*alpha: 10
+          default: 20
       worker-config:
         genericWorker:
           config:
@@ -3332,35 +3342,17 @@ pools:
                 reviewer-assignment: 300  # 5 minutes
                 default: 900  # 15 minutes
       instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75gb
-            - *scratch-disk
-          machine_type:
-            by-pool-group:
-              code-coverage: c2-standard-8
-              default: c2-standard-4
-  - pool_id: 'code-review/bot-alpha'
-    description: Alpha pool for testing the code-review bot.
-    owner: release+tc-workers@mozilla.com
-    email_on_error: true
-    provider_id: fxci-level1-gcp
-    config:
-      regions: *default-gcp-regions
-      implementation: generic-worker/linux-d2g
-      image: ubuntu-2404-headless
-      minCapacity: 0
-      maxCapacity: 10
-      worker-config:
-        genericWorker:
-          config:
-            idleTimeoutSecs: 900
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75gb
-            - *scratch-disk
-          machine_type: c3d-standard-4
+        by-suffix:
+          .*alpha: [*c3d-standard-4]
+          default:
+            - minCpuPlatform: Intel Cascadelake
+              disks:
+                - *persistent-disk-75gb
+                - *scratch-disk
+              machine_type:
+                by-pool-group:
+                  code-coverage: c2-standard-8
+                  default: c2-standard-4
   - pool_id: '{pool-group}/linux-docker'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
