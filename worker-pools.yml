@@ -243,6 +243,7 @@ worker-defaults:
 
 meta:
   - &default-gcp-regions [us-central1, us-west1]
+  - &default-azure-regions [west-us-2, west-us-3, north-central-us]
   - &persistent-disk
     autoDelete: true
     boot: true
@@ -2158,7 +2159,7 @@ pools:
         by-suffix:
           .*headless.*: generic-worker/windows-builder
           default: generic-worker/windows
-      locations: [west-us-3, south-central-us]
+      locations: *default-azure-regions
       maxCapacity:
         by-suffix:
           alpha: 25
@@ -2238,8 +2239,9 @@ pools:
         capacityPerInstance: 1
         initialWeight:
           by-location:
+            west-us-2: 0.9
             west-us-3: 0.9
-            south-central-us: 0.8
+            north-central-us: 0.9
   # Windows Server 2025
   - pool_id: '{pool-group}/b-win2025-{suffix}'
     description: ''
@@ -2329,7 +2331,7 @@ pools:
         by-suffix:
           .*headless.*: generic-worker/windows-builder
           default: generic-worker/windows
-      locations: [east-us-2]
+      locations: *default-azure-regions
       maxCapacity:
         by-suffix:
           .*alpha:
@@ -2456,12 +2458,7 @@ pools:
           default: ronin_t_windows10_64_2009_prod
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
-      locations:
-        by-suffix:
-          alpha: [east-us-2, central-us, north-central-us, west-us-2, west-us-3]
-          source-alpha: [west-us-3, east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
-          (webgpu|gpu)(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
-          default: [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us, north-europe]
+      locations: *default-azure-regions
       maxCapacity:
         by-pool-group:
           enterprise-t: 200
@@ -2569,10 +2566,7 @@ pools:
           mozillavpn-1: vpn-1
           mozillavpn-3: vpn-3
           default: null
-      locations:
-        by-suffix:
-          alpha: [east-us-2, west-us-2, west-us-3]
-          default: [central-india, east-us-2, north-central-us, central-us]
+      locations: *default-azure-regions
       maxCapacity:
         by-pool-group:
           nss-.*: 25
@@ -2680,18 +2674,7 @@ pools:
           default: ronin_t_windows11_64_2009
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
-      locations:
-        by-pool-group:
-          comm-t:
-            by-suffix:
-              ssd: [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
-              default: [canada-central, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, south-india]
-          default:
-            by-suffix:
-              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
-              webgpu(-alpha)?: [west-us-3, east-us, east-us-2, west-us, west-us-2]
-              (ssd|source): [east-us, east-us-2, west-us, west-us-2, north-central-us, central-us]
-              default: [canada-central, central-india, east-us, east-us-2, west-us, west-us-2, west-us-3, north-central-us, central-us, south-india]
+      locations: *default-azure-regions
       maxCapacity:
         by-pool-group:
           comm-t:
@@ -2822,20 +2805,7 @@ pools:
           default: win116425h2
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
-      locations:
-        by-pool-group:
-          comm-t:
-            by-suffix:
-              ssd: [central-us, east-us-2, west-us-2, west-us-3, east-us, uk-south, west-us]
-              default: [central-us, east-us-2, west-us-2, west-us-3, east-us, uk-south, west-us]
-          default:
-            by-suffix:
-              alpha: [uk-south, east-us-2]
-              (source-)?alpha: [west-us-3, east-us, east-us-2, west-us-2, west-us]
-              (webgpu|gpu)(-alpha)?: [west-us-3, east-us, west-us, west-us-2]
-              (ssd|source): [central-us, east-us-2, west-us-2, west-us-3, east-us, uk-south, west-us]
-              ssd-gpu: [east-us, east-us-2]
-              default: [central-us, east-us-2, west-us-2, west-us-3, east-us, uk-south, west-us]
+      locations: *default-azure-regions
       maxCapacity:
         by-pool-group:
           comm-t:
@@ -2939,7 +2909,7 @@ pools:
       image: win116425h2_bug2078361
       implementation: generic-worker/windows
       worker-purpose: gecko-t
-      locations: [east-us-2]
+      locations: *default-azure-regions
       minCapacity: 0
       maxCapacity: 2
       armDeployment:
@@ -2976,7 +2946,7 @@ pools:
     config:
       image: win116425h2alpha
       implementation: generic-worker/windows
-      locations: [uk-south, east-us-2]
+      locations: *default-azure-regions
       maxCapacity: 250
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0
@@ -3034,10 +3004,7 @@ pools:
       image: win11a6425h2tester{suffix}
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
-      locations:
-        by-suffix:
-          alpha: [east-us-2, north-central-us, central-us]
-          default: [central-india, east-us-2, north-central-us, uk-south, central-us]
+      locations: *default-azure-regions
       maxCapacity:
         by-pool-group:
           gecko-t: 500
@@ -3507,7 +3474,7 @@ pools:
       image: gw-win2022
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
-      locations: [central-us, east-us]
+      locations: *default-azure-regions
       maxCapacity: 10
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3538,10 +3505,7 @@ pools:
           ngpu: gw-win2022
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
-      locations:
-        by-kind:
-          gpu: [east-us, east-us-2, south-central-us, west-us-2]
-          ngpu: [central-us, east-us]
+      locations: *default-azure-regions
       maxCapacity: 10
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3565,7 +3529,7 @@ pools:
       image: gw-win2022-gpu
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
-      locations: [east-us, east-us-2, south-central-us, west-us-2]
+      locations: *default-azure-regions
       maxCapacity: 20
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3702,7 +3666,7 @@ pools:
       image: gw-win2022
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-taskcluster
-      locations: [central-us, east-us]
+      locations: *default-azure-regions
       maxCapacity: 10
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3733,7 +3697,7 @@ pools:
       image: gw-win2022-staging
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-taskcluster
-      locations: [central-us, east-us]
+      locations: *default-azure-regions
       maxCapacity: 1
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3761,7 +3725,7 @@ pools:
       image: gw-win2022-gpu-staging
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-taskcluster
-      locations: [east-us]
+      locations: *default-azure-regions
       maxCapacity: 1
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
