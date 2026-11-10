@@ -55,6 +55,20 @@ def test_merge():
     assert third == {"c": 300, "d": 400}
 
 
+def test_merge_nested_inputs_unchanged():
+    first = {"a": {"x": 1}}
+    second = {"b": {"y": 2}}
+    third = {"b": {"z": 3}}
+    result = merge(first, second, third)
+    assert result == {"a": {"x": 1}, "b": {"y": 2, "z": 3}}
+
+    # nested dicts from later arguments are copied, not shared
+    assert second == {"b": {"y": 2}}
+    assert third == {"b": {"z": 3}}
+    result["b"]["y"] = 20
+    assert second == {"b": {"y": 2}}
+
+
 @pytest.mark.parametrize(
     "args,expected",
     (

@@ -48,7 +48,7 @@ def merge(*objects):
     """
     if len(objects) == 1:
         return copy.deepcopy(objects[0])
-    return merge_to(objects[-1], merge(*objects[:-1]))
+    return merge_to(copy.deepcopy(objects[-1]), merge(*objects[:-1]))
 
 
 def deep_get(dict_: dict[str, Any], field: str, default: Any | None = None) -> Any:
