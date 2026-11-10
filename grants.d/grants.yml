@@ -1971,12 +1971,11 @@
         - mozillians-group:code-coverage-developers
 
 # Bug 1597646 - Grant access to secrets to code-review developers
-# Bug 1608262 - Grant task creation rights with the code-review/bot worker types to code-review developers.
+# Bug 1608262 - Grant task creation rights with the code-review/bot* worker pools to code-review developers.
 - grant:
     - secrets:get:project/relman/code-review/*
     - secrets:set:project/relman/code-review/*
-    - queue:create-task:lowest:code-review/bot
-    - queue:create-task:lowest:code-review/bot-alpha
+    - queue:create-task:lowest:code-review/bot*
   to:
     - group:
         - code-review-developers
