@@ -1213,7 +1213,7 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=5.3" },
     { name = "simple-github", specifier = ">=3.2.1" },
     { name = "taskcluster" },
-    { name = "tc-admin", specifier = ">=6.0.0" },
+    { name = "tc-admin", specifier = ">=6.0.1" },
 ]
 
 [package.metadata.requires-dev]
@@ -2900,7 +2900,7 @@ wheels = [
 
 [[package]]
 name = "tc-admin"
-version = "6.0.0"
+version = "6.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -2913,9 +2913,9 @@ dependencies = [
     { name = "sortedcontainers" },
     { name = "taskcluster" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1d/76/abd7ae735c83dc54ed22ad5ead6c71d57813362be46cfb294090801dc7ba/tc_admin-6.0.0.tar.gz", hash = "sha256:c30da1392f28ae79b238aae23afc6d53d73959bf0ce72521f3406b696a792a94", size = 35149, upload-time = "2026-09-17T15:50:41.491Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a1/58/e7a19af789b9630df55e85adafb3e93ae6c7420559e26a490e16c15e7dd3/tc_admin-6.0.1.tar.gz", hash = "sha256:f90f0a5b94a5ad1fe74846618226a5b2f5d6d02066ac910fd5c7fc987e802478", size = 35463, upload-time = "2026-11-10T17:00:09.505Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d8/5f/59b522515b144672849e3734eb2d9dd610d93e97a8b2932e2e7d482616e3/tc_admin-6.0.0-py3-none-any.whl", hash = "sha256:49d517cf06634ae1a007627078a886305284ca0783d56c4c3fca0347091ac90f", size = 48629, upload-time = "2026-09-17T15:50:40.413Z" },
+    { url = "https://files.pythonhosted.org/packages/33/8a/b4138353953b8a81065bbd4c606e5b59c0b5773b8d5c327f045ebb35f55d/tc_admin-6.0.1-py3-none-any.whl", hash = "sha256:fcd021f9113eaa2c1a07072bae27d3a1f424a39400d401dad928249417b730fa", size = 48756, upload-time = "2026-11-10T17:00:08.267Z" },
 ]
 
 [[package]]

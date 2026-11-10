@@ -323,7 +323,10 @@ def assert_scaling_ratio(pool):
 
 
 def assert_guest_accelerators(pool):
-    assert pool.config["launchConfigs"][1]["guestAccelerators"][0] == {
+    (launch_config,) = [
+        lc for lc in pool.config["launchConfigs"] if "guestAccelerators" in lc
+    ]
+    assert launch_config["guestAccelerators"][0] == {
         "acceleratorCount": 4,
         "acceleratorType": "zones/us-east1a/acceleratorTypes/nvidia-tesla-v100",
     }
