@@ -330,86 +330,74 @@ project-engwf/reviewer-assignment-{mode}:
     - exchange: exchange/taskcluster-github/v1/pull-request
       routing_key_pattern: '{routing_key_prefix}.synchronize'
   trigger_schema:
-    type: object
-    # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
-    required:
-      - body
-      - organization
-      - repository
-    additionalProperties: true
-    properties:
+    oneOf:
+      - "#/$defs/GitHubPR"
+      - "#/$defs/PhabricatorWebHook"
 
-      body:
+    "$defs":
+      GitHubPR:
         type: object
-        # https://docs.github.com/en/webhooks/webhook-events-and-payloads#pull_request
-        description: |
-          The raw body of github event (for version 1)
+        # https://github.com/taskcluster/taskcluster/blob/main/services/github/schemas/v1/github-pull-request-message.yml
         required:
-          - action
-          - number
-          - pull_request
+          - body
+          - organization
           - repository
         additionalProperties: true
         properties:
-
-          number:
-            type: integer
-
-          pull_request:
+          body:
             type: object
-            description: Pull request metadata
+            # https://docs.github.com/en/webhooks/webhook-events-and-payloads#pull_request
+            description: |
+              The raw body of github event (for version 1)
             required:
-              - base
-              - diff_url
-              - head
-              - html_url
+              - number
+              - pull_request
             additionalProperties: true
             properties:
-
-              base:
+              number:
+                type: integer
+              pull_request:
                 type: object
+                description: Pull request metadata
                 required:
-                  - ref
+                  - head
+                  - html_url
                 additionalProperties: true
                 properties:
-
-                  ref:
+                  head:
+                    type: object
+                    required:
+                      - sha
+                    additionalProperties: true
+                    properties:
+                      sha:
+                        type: string
+                  html_url:
                     type: string
-                    description: Target branch to merge this PR in
-
-              diff_url:
-                # Note: while binary data is not present in that diff, the paths of the binary files are.
-                type: string
-
-              head:
-                type: object
-                required:
-                  - sha
-                additionalProperties: true
-                properties:
-
-                  sha:
-                    type: string
-
-              html_url:
-                type: string
-
-
+          organization:
+            type: string
           repository:
-            type: object
-            required:
-              - html_url
-            additionalProperties: true
-            properties:
+            type: string
 
-              html_url:
-                type: string
-
-      organization:
-        type: string
-
-      repository:
-        type: string
+      PhabricatorWebHook:
+        # Bespoke HTTP request from a Harbormaster build plan.
+        # HTTP Body: `{"callsign": "${repository.callsign}", "diff_id": "${buildable.diff_id}", "revision_id": "${buildable.revision_id}", "revision_phid": "${target.phid}"}`
+        type: object
+        required:
+          - callsign
+          - diff_id
+          - revision_id
+          - revision_phid
+        additionalProperties: true
+        properties:
+          callsign:
+            type: string
+          diff_id:
+            type: integer
+          revision_id:
+            type: integer
+          revision_phid:
+            type: integer
 
 
 # Fuzzing hooks (migrated from community-tc)

@@ -16,21 +16,18 @@ payload:
   env:
     SENTRY_ENVIRONMENT: development
     TC_SECRET_ID: project/engwf/reviewer-assignment/runtime-development
-    DIFF_URL:
-      $eval: payload.body.pull_request.diff_url
     PR_URL:
-      $eval: payload.body.pull_request.html_url
-    ORG_NAME:
-      # e.g., mozilla-firefox
-      $eval: payload.organization
-    REPO_NAME:
-      # e.g., firefox
-      $eval: payload.repository
-    TARGET_BRANCH_NAME:
-      # e.g., autoland
-      $eval: payload.body.pull_request.base.ref
-    REPO_URL:
-      $eval: payload.body.repository.html_url
+      $if: 'defined("payload.body")'
+      then:
+        $eval: payload.body.pull_request.html_url
+      else:
+        ""
+    PHABRICATOR_REVISION_PHID:
+      $if: 'defined("payload.revision_phid")'
+      then:
+        $eval: payload.revision_phid
+      else:
+        ""
 
   features:
     taskclusterProxy: true
@@ -44,9 +41,21 @@ provisionerId: reviewer-assignment
 retries: 3
 routes:
   - index.project.engwf.development.reviewer-assignment.latest
-  - index.project.engwf.development.reviewer-assignment.${payload.organization}.${payload.repository}.latest
-  - index.project.engwf.development.reviewer-assignment.${payload.organization}.${payload.repository}.pull-request.${payload.body.number}
-  - index.project.engwf.development.reviewer-assignment.${payload.organization}.${payload.repository}.revision.${payload.body.pull_request.head.sha}
+  - $if: 'defined("payload.organization")'
+    then:
+      $eval: 'index.project.engwf.development.reviewer-assignment.${payload.organization}.${payload.repository}.latest'
+    else:
+      $eval: 'index.project.engwf.development.reviewer-assignment.phabricator.${payload.callsign}.latest'
+  - $if: 'defined("payload.organization")'
+    then:
+      $eval: 'index.project.engwf.development.reviewer-assignment.${payload.organization}.${payload.repository}.pull-request.${payload.body.number}'
+    else:
+      $eval: 'index.project.engwf.development.reviewer-assignment.phabricator.${payload.callsign}.revision.D${payload.revision_id}'
+  - $if: 'defined("payload.organization")'
+    then:
+      $eval: 'index.project.engwf.development.reviewer-assignment.${payload.organization}.${payload.repository}.commit.${payload.body.pull_request.head.sha}'
+    else:
+      $eval: 'index.project.engwf.development.reviewer-assignment.phabricator.${payload.callsign}.diff.${payload.diff_id}'
 schedulerId: engwf
 scopes:
   - 'secrets:get:project/engwf/reviewer-assignment/runtime-development'
