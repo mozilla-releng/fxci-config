@@ -889,6 +889,9 @@
     - secrets:get:project/engwf/*
     - secrets:set:project/engwf/*
 
+    # Bug 2078101: allow to modify and reset triggerTokens
+    - hooks:get-trigger-token:project-engwf/*
+
     # Bug 2063962: reviewer-assignment-development support mozilla-conduit/ff-test
     - assume:hook-id:project-engwf/reviewer-assignment-development
     - hooks:modify-hook:project-engwf/reviewer-assignment-development
