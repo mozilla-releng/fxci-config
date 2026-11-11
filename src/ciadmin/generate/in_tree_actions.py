@@ -502,7 +502,7 @@ async def update_resources(resources):
     # download all existing hooks and check the last time they were used
     hooks = Hooks(optionsFromEnvironment(), session=aiohttp_session())
     interesting = MatchList(
-        f"Hook=project-{trust_domain}/in-tree-action-*"
+        f"Hook=project-{trust_domain}/in-tree-action-.*"
         for trust_domain in trust_domains
     )
     for trust_domain in trust_domains:
