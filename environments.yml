@@ -30,9 +30,7 @@ firefoxci:
   root_url: https://firefox-ci-tc.services.mozilla.com
   # no modifications in production, please!
   modify_resources: []
-  # Flip to true once the fxci-read-only app is installed on every repository
-  # in projects.yml (bug 2086188).
-  require_github_tokens: false
+  require_github_tokens: true
   worker_manager:
     providers:
       aws:
