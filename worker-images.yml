@@ -235,70 +235,70 @@ ronin_t_windows11_64_2009:
 gw-ubuntu-24-04:
   worker-type-metadata:
     machine-setup:
-      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/dc2d7f65ead4effd2c551217fbe821e0f2483dbe/scripts/linux/tceng/generic-worker-ubuntu-24-04.sh
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-ecb0a94df2544c8b8850
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/cbc9e96584a0c3fd38ecd1a1881fef2c9ad96a94/scripts/linux/tceng/generic-worker-ubuntu-24-04.sh
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-50c610c348724dbd96f7
 
 gw-ubuntu-24-04-arm64:
   worker-type-metadata:
     machine-setup:
-      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/dc2d7f65ead4effd2c551217fbe821e0f2483dbe/scripts/linux/tceng/generic-worker-ubuntu-24-04.sh
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-b67d1e31c2f74afe8f05
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/cbc9e96584a0c3fd38ecd1a1881fef2c9ad96a94/scripts/linux/tceng/generic-worker-ubuntu-24-04.sh
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-49a725c10365472e99df
 
 gw-ubuntu-24-04-staging:
   worker-type-metadata:
     machine-setup:
-      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/00bece4bc2c077482af0fb2a90638313f0911bcf/scripts/linux/tceng/generic-worker-ubuntu-24-04-staging.sh
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/cbc9e96584a0c3fd38ecd1a1881fef2c9ad96a94/scripts/linux/tceng/generic-worker-ubuntu-24-04-staging.sh
   aws:
     us-east-1: ami-02619e55246806e8d
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-staging-4f5957cb559e44eeae24
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-staging-bb286b0fa4904febbbeb
 
 gw-ubuntu-24-04-arm64-staging:
   worker-type-metadata:
     machine-setup:
-      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/00bece4bc2c077482af0fb2a90638313f0911bcf/scripts/linux/tceng/generic-worker-ubuntu-24-04-staging.sh
-  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-staging-8fac3185b2724ceab04e
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/cbc9e96584a0c3fd38ecd1a1881fef2c9ad96a94/scripts/linux/tceng/generic-worker-ubuntu-24-04-staging.sh
+  fxci-level1-gcp: projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-staging-de2e8d6f2a4948a980ec
 
 gw-win2022-gpu:
   worker-type-metadata:
     machine-setup:
-      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/dc2d7f65ead4effd2c551217fbe821e0f2483dbe/scripts/windows/tceng/generic-worker-win2022.ps1
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/cbc9e96584a0c3fd38ecd1a1881fef2c9ad96a94/scripts/windows/tceng/generic-worker-win2022.ps1
   azure2:
     version: NA
     resource_group: rg-packer-worker-images
     sbom: false
-    east-us: imageset-e527499a6157485180e5-eastus
-    east-us-2: imageset-de7aca42ca524fdb987b-eastus2
-    south-central-us: imageset-60a4a9ee709540588598-southcentralus
-    west-us-2: imageset-f3aec9cf6d454561b86a-westus2
+    east-us: imageset-839e68d33f5c4d6e8229-eastus
+    east-us-2: imageset-e30cd01e7f5e49c69cb4-eastus2
+    south-central-us: imageset-44b969f24e41465b9806-southcentralus
+    west-us-2: imageset-e21572c27fb149b5bb6b-westus2
 
 gw-win2022:
   worker-type-metadata:
     machine-setup:
-      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/dc2d7f65ead4effd2c551217fbe821e0f2483dbe/scripts/windows/tceng/generic-worker-win2022.ps1
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/cbc9e96584a0c3fd38ecd1a1881fef2c9ad96a94/scripts/windows/tceng/generic-worker-win2022.ps1
   azure2:
     version: NA
     resource_group: rg-packer-worker-images
     sbom: false
-    central-us: imageset-29c320a9fd6344c48b1a-centralus
-    east-us: imageset-0448f25d57ed44df88fe-eastus
+    central-us: imageset-cd40776a2c9f4e45ab96-centralus
+    east-us: imageset-95080526bbcc4a1a86a4-eastus
 
 gw-win2022-staging:
   worker-type-metadata:
     machine-setup:
-      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/00bece4bc2c077482af0fb2a90638313f0911bcf/scripts/windows/tceng/generic-worker-win2022-staging.ps1
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/cbc9e96584a0c3fd38ecd1a1881fef2c9ad96a94/scripts/windows/tceng/generic-worker-win2022-staging.ps1
   azure2:
     version: NA
     resource_group: rg-packer-worker-images
     sbom: false
-    central-us: imageset-deebf785fdf34bbb8e7b-centralus
-    east-us: imageset-4ff2dc3dc9ec409fa10f-eastus
+    central-us: imageset-9b6bb2a1d93c4f43a5fe-centralus
+    east-us: imageset-a083af94fc4240c9b537-eastus
 
 gw-win2022-gpu-staging:
   worker-type-metadata:
     machine-setup:
-      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/00bece4bc2c077482af0fb2a90638313f0911bcf/scripts/windows/tceng/generic-worker-win2022-staging.ps1
+      script: https://raw.githubusercontent.com/mozilla-platform-ops/worker-images/cbc9e96584a0c3fd38ecd1a1881fef2c9ad96a94/scripts/windows/tceng/generic-worker-win2022-staging.ps1
   azure2:
     version: NA
     resource_group: rg-packer-worker-images
     sbom: false
-    east-us: imageset-b1f9fca9f9014b67bc77-eastus
+    east-us: imageset-e57e128965924f42b89b-eastus
