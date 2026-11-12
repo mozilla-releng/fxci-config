@@ -1482,6 +1482,13 @@
         feature: github-taskgraph
 
 - grant:
+    # Allow tasks to mint read-only GitHub tokens for their own repository.
+    - auth:github-repo-token:read/{repo_path}:*
+  to:
+    - project:
+        feature: github-taskgraph
+
+- grant:
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-{level}-*
     - queue:create-task:highest:scriptworker-k8s/{trust_domain}-t-*
   to:
