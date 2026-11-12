@@ -789,6 +789,7 @@ project/releng/scriptworker/v2/cloudops-canary:
   description: Allows cloudops' jenkins to trigger scriptworker canary tasks
   scopes:
     - hooks:trigger-hook:project-releng/cron-task-mozilla-central/scriptworker-canary
+    - hooks:trigger-hook:project-releng/cron-task-releases-mozilla-beta/scriptworker-canary
 project/releng/scriptworker/v2/github/dev/firefoxci-mobile-1:
   description: ''
   scopes:
