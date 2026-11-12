@@ -289,11 +289,6 @@ meta:
     disks:
       - *persistent-disk-75gb
     machine_type: c3d-standard-4
-  - &c3d-standard-4-lssd
-    disks:
-      - *persistent-disk-75gb
-      - *scratch-disk
-    machine_type: c3d-standard-4-lssd
   - &c3d-standard-8
     disks:
       - *persistent-disk-75gb
@@ -3343,11 +3338,11 @@ pools:
     email_on_error: true
     variants:
       - kind: bot
-        instance_types: [*c3d-standard-4-lssd]
+        instance_types: [*c3d-standard-4]
       - kind: bot-testing
         instance_types: [*c3d-standard-4]
       - kind: ingestion
-        instance_types: [*c3d-standard-4-lssd]
+        instance_types: [*c3d-standard-4]
       - kind: ingestion-testing
         instance_types: [*c3d-standard-4]
     provider_id: fxci-level1-gcp
