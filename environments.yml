@@ -200,7 +200,6 @@ firefoxci:
 
 staging:
   root_url: https://stage.taskcluster.nonprod.webservices.mozgcp.net
-  github_repo_tokens: false
   modify_resources:
     # we do not want hooks to trigger on a schedule in staging, as that adds
     # lots of load (e.g., building nightlies).  They can be triggered
