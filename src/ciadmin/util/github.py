@@ -159,9 +159,6 @@ def _has_taskcluster_credentials():
 
 async def _build_client(owner):
     environment = await Environment.current()
-    if not environment.github_repo_tokens:
-        return await _get_fallback_client()
-
     trusted = _has_taskcluster_credentials()
 
     if not await _owner_in_enterprise(owner):

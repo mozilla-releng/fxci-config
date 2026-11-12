@@ -151,7 +151,6 @@ def environment(mock_ciconfig_file, set_environment):
         "environments.yml",
         {
             "with_tokens": environment_config(),
-            "without_tokens": environment_config(github_repo_tokens=False),
             "requiring_tokens": environment_config(require_github_tokens=True),
         },
     )
@@ -452,24 +451,3 @@ async def test_close_clients_closes_each_one_once(taskcluster_credentials, proje
     one.close.assert_awaited_once()
     two.close.assert_awaited_once()
     assert github._clients == {}
-
-
-@pytest.mark.asyncio
-async def test_an_environment_without_repo_tokens_uses_the_fallback(
-    taskcluster_credentials, projects, set_environment
-):
-    projects(
-        one=git_project("https://github.com/mozilla/one"),
-        two=git_project("https://github.com/taskcluster/two"),
-    )
-
-    with set_environment("without_tokens"):
-        with patch_auth(token_response()) as auth:
-            with patch("ciadmin.util.github.client_from_env") as client_from_env:
-                one = await github.get_client("mozilla/one")
-                two = await github.get_client("taskcluster/two")
-                assert not await github.has_repo_token("mozilla/one")
-
-    assert one is two
-    assert one is client_from_env.return_value.return_value
-    auth.return_value.githubRepoToken.assert_not_called()

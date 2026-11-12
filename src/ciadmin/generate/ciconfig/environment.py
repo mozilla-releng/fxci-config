@@ -26,7 +26,6 @@ class Environment:
     azure_config = attr.ib(type=dict, factory=lambda: {})
     google_config = attr.ib(type=dict, factory=lambda: {})
     cron = attr.ib(type=dict, factory=lambda: {})
-    github_repo_tokens = attr.ib(type=bool, default=True)
 
     # Fail on a refused GitHub token instead of falling back. See environments.yml.
     require_github_tokens = attr.ib(type=bool, default=False)
