@@ -28,6 +28,7 @@ _SIBLING_HOOKS = [
 # matches, there are several fuzzing hooks that *do* get managed here.
 _FUZZING_HOOKS = [
     "bugmon",
+    "bugmon-confirm",
     "coverage-revision",
     "js-tests-distiller",
     "fuzzing-tc-config-update",
