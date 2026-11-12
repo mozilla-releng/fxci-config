@@ -212,9 +212,7 @@ staging:
     # Remove minimum capacity of all worker-types, since staging clusters
     # do not have enough load to justify always-on workers.
     - remove_worker_min_capacity
-  # Flip to true once the tc-staging-read-only app is installed on every
-  # repository in projects.yml (bug 2086188).
-  require_github_tokens: false
+  require_github_tokens: true
   worker_manager:
     providers:
       aws:
