@@ -13,6 +13,7 @@ classifiers = [
 ]
 dependencies = [
     "tc-admin>=7.0.0",
+    "regex",
     "taskcluster",
     "attrs",
     "mozilla-repo-urls",

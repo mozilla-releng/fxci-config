@@ -9,22 +9,11 @@
   to:
     - roles:
         - hook-id:project-fuzzing/*
-        - repo:github.com/MozillaSecurity/*
 
+# fuzzing-tc-config CI (tc-admin diff/apply) runs on proj-fuzzing/ci-decision,
+# which fuzzing-decision creates, and reads fuzzing-decision's config secret.
 - grant:
-    - queue:create-task:highest:proj-fuzzing/ci
-    - queue:create-task:highest:proj-fuzzing/ci-*
-    - queue:create-task:highest:proj-fuzzing/decision
-    - queue:route:checks
-    - secrets:get:project/fuzzing/deploy-*
-    - secrets:get:project/fuzzing/codecov-*
-    - secrets:get:project/fuzzing/pypi-*
-    - secrets:get:project/fuzzing/ci-*
-  to:
-    - roles:
-        - repo:github.com/MozillaSecurity/*
-
-- grant:
+    - queue:create-task:highest:proj-fuzzing/ci-decision
     - secrets:get:project/fuzzing/decision
   to:
     - roles:

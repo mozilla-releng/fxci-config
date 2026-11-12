@@ -6,10 +6,12 @@ from collections import defaultdict
 from urllib.parse import urlparse
 
 import pytest
+import regex
 from taskcluster.utils import scopeMatch
 
 from ciadmin.generate.ciconfig.grants import Grant
 from ciadmin.generate.ciconfig.projects import Project
+from ciadmin.generate.worker_pools import managed
 from ciadmin.util.matching import ProjectGrantee
 
 RUN_AS_ADMINISTRATOR_PREFIX = "generic-worker:run-as-administrator:"
@@ -132,15 +134,29 @@ async def check_grant_pools(generate_resources):
             if provider in ignore_providers:
                 continue
 
+            # The scope must be able to refer to some pool: one we generate, or
+            # one we don't manage (such as those fuzzing-decision creates in
+            # proj-fuzzing). We can't know which unmanaged pools exist, so
+            # mistakes in scopes that can refer to them aren't caught here.
+            resource = f"WorkerPool={target_pool.removesuffix('*')}"
             if target_pool.endswith("*"):
-                target_pool = target_pool[:-1]
-
-                matches = {p for p in pools if p.startswith(target_pool)}
-                if not matches:
-                    invalid_scopes.add(scope)
+                prefix = target_pool.removesuffix("*")
+                generated = any(pool.startswith(prefix) for pool in pools)
+                # Could some pool ID starting with this prefix be unmanaged:
+                # carved out by an exclude, or matched by no include?
+                unmanaged = any(
+                    regex.fullmatch(exclude, resource, partial=True)
+                    for entry in managed
+                    for exclude in entry.excludes
+                ) or not any(
+                    regex.fullmatch(entry.include, resource, partial=True)
+                    for entry in managed
+                )
             else:
-                if target_pool not in pools:
-                    invalid_scopes.add(scope)
+                generated = target_pool in pools
+                unmanaged = not managed.matches(resource)
+            if not (generated or unmanaged):
+                invalid_scopes.add(scope)
 
     if invalid_scopes:
         print(
