@@ -289,6 +289,11 @@ meta:
     disks:
       - *persistent-disk-75gb
     machine_type: c3d-standard-4
+  - &c3d-standard-4-lssd
+    disks:
+      - *persistent-disk-75gb
+      - *scratch-disk
+    machine_type: c3d-standard-4-lssd
   - &c3d-standard-8
     disks:
       - *persistent-disk-75gb
@@ -3338,9 +3343,13 @@ pools:
     email_on_error: true
     variants:
       - kind: bot
+        instance_types: [*c3d-standard-4-lssd]
       - kind: bot-testing
+        instance_types: [*c3d-standard-4]
       - kind: ingestion
+        instance_types: [*c3d-standard-4-lssd]
       - kind: ingestion-testing
+        instance_types: [*c3d-standard-4]
     provider_id: fxci-level1-gcp
     config:
       regions: *default-gcp-regions
@@ -3357,12 +3366,6 @@ pools:
         genericWorker:
           config:
             idleTimeoutSecs: 900
-      instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
-            - *persistent-disk-75gb
-            - *scratch-disk
-          machine_type: c2-standard-4
   - pool_id: '{pool-group}/linux-docker'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
