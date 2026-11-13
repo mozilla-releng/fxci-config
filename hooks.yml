@@ -605,21 +605,3 @@ project-fuzzing/nss-corpus-update:
     - secrets:get:project/fuzzing/ossfuzz-gutils
   template_file: hook-templates/project-fuzzing/nss-corpus-update.yml
   trigger_schema: {}
-
-project-fuzzing/orion-cron:
-  name: orion-cron
-  description: Periodically check if any Orion services need to be rebuilt
-  owner: truber@mozilla.com
-  email_on_error: true
-  schedule:
-    - 0 0 * * 0
-  scopes:
-    - docker-worker:capability:privileged
-    - index:insert-task:project.fuzzing.orion.*
-    - queue:create-task:highest:proj-fuzzing/ci
-    - queue:create-task:highest:proj-fuzzing/ci-*
-    - queue:create-task:highest:proj-fuzzing/decision
-    - queue:route:index.project.fuzzing.orion.*
-    - secrets:get:project/fuzzing/docker-hub
-  template_file: hook-templates/project-fuzzing/orion-cron.yml
-  trigger_schema: {}

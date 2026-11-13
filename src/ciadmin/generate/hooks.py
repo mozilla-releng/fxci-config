@@ -35,7 +35,6 @@ _FUZZING_HOOKS = [
     "grizzly-reduce-monitor",
     "grizzly-reduce-reset-error",
     "nss-corpus-update",
-    "orion-cron",
 ]
 
 managed = MatchList(
