@@ -310,6 +310,17 @@ project/fuzzing/ci-worker-orion-gha:
   scopes:
     - assume:worker-type:proj-fuzzing/orion-gha-publish
     - queue:worker-id:proj-fuzzing/gh-orion-publish-*
+project/fuzzing/clauditor-win64-task-creator:
+  description: Used by clauditor automation to create tasks on the
+    proj-fuzzing/ci-clauditor-workers Windows pool.
+  scopes:
+    - generic-worker:os-group:proj-fuzzing/ci-clauditor-workers/Administrators
+    - generic-worker:run-as-administrator:proj-fuzzing/ci-clauditor-workers
+    - queue:create-task:highest:proj-fuzzing/ci-clauditor-workers
+    - queue:get-artifact:project/fuzzing/*
+    - queue:scheduler-id:fuzzing
+    - secrets:get:project/fuzzing/clauditor-win64-gpg
+    - secrets:get:project/fuzzing/google-cloud-storage-clauditor
 project/fuzzing/gh-orion-publisher:
   description: Used by MozillaSecurity/orion GitHub Actions to create Orion image
     import tasks and index them under project.fuzzing.orion.
@@ -317,6 +328,17 @@ project/fuzzing/gh-orion-publisher:
     - queue:create-task:highest:proj-fuzzing/orion-gha-publish
     - queue:route:index.project.fuzzing.orion.*
     - queue:scheduler-id:fuzzing
+project/fuzzing/gha-clauditor-build:
+  description: Used by clauditor GitHub Actions to create Windows build tasks on
+    the proj-fuzzing/ci-clauditor-builder pool and index the builds.
+  scopes:
+    - generic-worker:os-group:proj-fuzzing/ci-clauditor-builder/Administrators
+    - generic-worker:run-as-administrator:proj-fuzzing/ci-clauditor-builder
+    - index:insert-task:project.fuzzing.win64-clauditor
+    - index:insert-task:project.fuzzing.win64-clauditor-claude-agent-sdk
+    - queue:create-task:highest:proj-fuzzing/ci-clauditor-builder
+    - queue:scheduler-id:fuzzing
+    - secrets:get:project/fuzzing/deploy-clauditor
 project/releng/fxci-config/apply:
   description: Used to run `tc-admin apply` in mozilla-releng/fxci-config.
   scopes:
