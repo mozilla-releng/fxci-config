@@ -562,8 +562,6 @@ project-fuzzing/grizzly-reduce-reset-error:
     - exchange: exchange/taskcluster-queue/v1/task-exception
       routing_key_pattern: primary.#.grizzly-reduce-worker-android.fuzzing.#
     - exchange: exchange/taskcluster-queue/v1/task-exception
-      routing_key_pattern: primary.#.grizzly-reduce-worker-macos.fuzzing.#
-    - exchange: exchange/taskcluster-queue/v1/task-exception
       routing_key_pattern: primary.#.grizzly-reduce-worker-windows-ngpu.fuzzing.#
     - exchange: exchange/taskcluster-queue/v1/task-exception
       routing_key_pattern: primary.#.grizzly-reduce-worker-windows.fuzzing.#
@@ -571,8 +569,6 @@ project-fuzzing/grizzly-reduce-reset-error:
       routing_key_pattern: primary.#.grizzly-reduce-worker.fuzzing.#
     - exchange: exchange/taskcluster-queue/v1/task-failed
       routing_key_pattern: primary.#.grizzly-reduce-worker-android.fuzzing.#
-    - exchange: exchange/taskcluster-queue/v1/task-failed
-      routing_key_pattern: primary.#.grizzly-reduce-worker-macos.fuzzing.#
     - exchange: exchange/taskcluster-queue/v1/task-failed
       routing_key_pattern: primary.#.grizzly-reduce-worker-windows-ngpu.fuzzing.#
     - exchange: exchange/taskcluster-queue/v1/task-failed
