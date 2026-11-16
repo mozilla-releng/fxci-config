@@ -3224,8 +3224,6 @@ pools:
       worker-config:
         genericWorker:
           config:
-            # Noscratch workers share the 75 GB boot disk with ~19 GB of preloaded
-            # caches; at 40 GiB, GC prunes the Docker image after every task.
             requiredDiskSpaceMegabytes:
               by-suffix:
                 docker-noscratch.*: 20480  # 20 GiB
@@ -3274,7 +3272,7 @@ pools:
           config:
             d2gConfig:
               allowKVM: true
-            requiredDiskSpaceMegabytes: 20480  # 20 GiB, see t-linux-{suffix}
+            requiredDiskSpaceMegabytes: 20480
       instance_types:
         - disks:
             - *persistent-disk-75gb
