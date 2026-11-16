@@ -3221,6 +3221,14 @@ pools:
         by-implementation:
           generic-worker/linux-(d2g|headless): ubuntu-2404-headless
           generic-worker/linux: ubuntu-2404-wayland
+      worker-config:
+        genericWorker:
+          config:
+            requiredDiskSpaceMegabytes:
+              by-suffix:
+                docker-noscratch.*: 20480  # 20 GiB
+                docker-16c32gb-amd: 20480  # 20 GiB
+                default: null
   - pool_id: '{pool-group}/t-linux-docker{suffix}-amd-alpha'
     description: Worker for test tasks. Used by RelSRE to qualify images.
     owner: release+tc-workers@mozilla.com
@@ -3264,6 +3272,7 @@ pools:
           config:
             d2gConfig:
               allowKVM: true
+            requiredDiskSpaceMegabytes: 20480
       instance_types:
         - disks:
             - *persistent-disk-75gb
