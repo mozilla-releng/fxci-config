@@ -904,6 +904,8 @@
     - index:insert-task:project.engwf.production.reviewer-assignment.*
     - queue:route:index.project.engwf.production.reviewer-assignment.*
 
+    - queue:cancel-task:engwf/*
+
   to:
     - roles:
         - mozillians-group:engworkflow
