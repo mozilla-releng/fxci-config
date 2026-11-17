@@ -1587,7 +1587,10 @@ pools:
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
-            - *persistent-disk-60gb
+            - <<: *persistent-disk-60gb
+              initializeParams:
+                sourceImage: <image>
+                diskType: diskTypes/pd-balanced
           machine_type: c2-standard-8
   - pool_id: '{pool-group}/b-linux-v100-gpu-d2g'
     description: Worker for machine learning and other high GPU tasks
