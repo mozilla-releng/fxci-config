@@ -3282,6 +3282,45 @@ pools:
           machine_type: c3-standard-8
           advancedMachineFeatures:
             enableNestedVirtualization: true
+  # AMD twin of t-linux-docker-kvm. N4D is the only AMD family with nested
+  # virtualization, and it only supports Hyperdisk.
+  - pool_id: '{pool-group}/t-linux-docker-kvm-amd'
+    description: Worker for gecko-based automation.
+    owner: release+tc-workers@mozilla.com
+    variants:
+      - pool-group: gecko-t
+      - pool-group: enterprise-t
+    email_on_error: true
+    provider_id: fxci-level1-gcp
+    config:
+      minCapacity: 0
+      maxCapacity:
+        by-pool-group:
+          gecko-t: 1600
+          enterprise-t: 100
+      # N4D is cheaper than C3 on spot in us-west1 and us-east1, but not in us-central1.
+      regions: [us-west1, us-east1]
+      extended-preemption-notice: true
+      image: ubuntu-2404-headless
+      implementation: generic-worker/linux-d2g
+      worker-config:
+        genericWorker:
+          config:
+            d2gConfig:
+              allowKVM: true
+            requiredDiskSpaceMegabytes: 20480
+      instance_types:
+        - disks:
+            - <<: *persistent-disk-75gb
+              interface: NVME
+              initializeParams:
+                sourceImage: <image>
+                diskType: diskTypes/hyperdisk-balanced
+                provisionedIops: 3000
+                provisionedThroughput: 140
+          machine_type: n4d-standard-8
+          advancedMachineFeatures:
+            enableNestedVirtualization: true
   - pool_id: '{pool-group}/t-linux-arm64-docker'
     description: Worker for gecko-based automation.
     owner: release+tc-workers@mozilla.com
