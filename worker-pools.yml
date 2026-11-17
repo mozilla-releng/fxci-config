@@ -3323,7 +3323,7 @@ pools:
       instance_types:
         - disks:
             - <<: *persistent-disk
-              diskSizeGb: 30
+              diskSizeGb: 60
           machine_type: n4a-standard-1
   - pool_id: '{pool-group}/bot'
     description: Worker for the {pool-group} bot.
