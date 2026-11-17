@@ -413,7 +413,7 @@ project-engwf/reviewer-assignment-{mode}:
 
       - type: object
         # Bespoke HTTP request from a Harbormaster build plan.
-        # HTTP Body: `{"callsign": "${repository.callsign}", "diff_id": ${buildable.diff}, "revision_id": ${buildable.revision}, "revision_phid": "${target.phid}"}`
+        # HTTP Body: `{"callsign": "${repository.callsign}", "diff_id": ${buildable.diff}, "revision_id": ${buildable.revision}, "revision_phid": "${buildable.container.phid}"}`
         required:
           - callsign
           - diff_id

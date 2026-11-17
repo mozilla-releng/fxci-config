@@ -2329,7 +2329,10 @@ pools:
         by-suffix:
           .*headless.*: generic-worker/windows-builder
           default: generic-worker/windows
-      locations: [east-us-2]
+      locations:
+        by-suffix:
+          (.*alpha|gpu): [east-us-2]
+          default: [east-us-2, north-central-us, west-us-3]
       maxCapacity:
         by-suffix:
           .*alpha:
@@ -3346,6 +3349,24 @@ pools:
           disks:
             - *persistent-disk-75gb
           machine_type: t2a-standard-4
+  - pool_id: '{pool-group}/t-linux-arm64-light-docker'
+    description: Lightweight arm64 worker for polling and status tasks.
+    owner: release+tc-workers@mozilla.com
+    provider_id: fxci-level1-gcp
+    variants:
+      - pool-group: enterprise-t
+    email_on_error: true
+    config:
+      minCapacity: 0
+      maxCapacity: 100
+      implementation: generic-worker/linux-d2g
+      regions: [us-central1]
+      image: ubuntu-2404-arm64-headless
+      instance_types:
+        - disks:
+            - <<: *persistent-disk
+              diskSizeGb: 60
+          machine_type: n4a-standard-1
   - pool_id: '{pool-group}/bot'
     description: Worker for the {pool-group} bot.
     owner: release+tc-workers@mozilla.com
