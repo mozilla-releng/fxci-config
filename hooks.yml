@@ -502,11 +502,10 @@ project-fuzzing/fuzzing-tc-config-update:
   template_file: hook-templates/project-fuzzing/fuzzing-tc-config-update.yml
   trigger_schema:
     type: object
+    required: [branch]
     properties:
       branch:
-        type: string
-        default: main
-    additionalProperties: true
+        const: main
 
 project-fuzzing/grizzly-reduce-monitor:
   name: grizzly-reduce-monitor
