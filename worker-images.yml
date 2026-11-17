@@ -151,7 +151,7 @@ ronin_b1_windows2025_64_24h2_core_alpha:
     name: win2025_64_24h2_core_alpha
 ronin_b1_windows2025_64_24h2_core:
   azure2:
-    version: 1.0.0
+    version: 2026.11.17
     resource_group: rg-packer-worker-images
     deployment_id: 0a82cf0
     name: win2025_64_24h2_core
@@ -163,7 +163,7 @@ ronin_b3_windows2025_64_24h2_core_alpha:
     name: trusted_win2025_64_24h2_core
 ronin_b3_windows2025_64_24h2_core:
   azure_trusted:
-    version: 1.0.0
+    version: 2026.11.17
     resource_group: rg-packer-worker-images
     deployment_id: 0a82cf0
     name: trusted_win2025_64_24h2_core
