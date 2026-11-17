@@ -905,6 +905,7 @@
     - queue:route:index.project.engwf.production.reviewer-assignment.*
 
     - queue:cancel-task:engwf/*
+    - queue:rerun-task:engwf/*
 
   to:
     - roles:
