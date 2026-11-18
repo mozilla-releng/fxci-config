@@ -12,7 +12,7 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
-    "tc-admin>=7.0.0",
+    "tc-admin>=7.0.1",
     "regex",
     "taskcluster",
     "attrs",
