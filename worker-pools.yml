@@ -243,7 +243,8 @@ worker-defaults:
 
 meta:
   - &default-gcp-regions [us-central1, us-west1]
-  - &default-azure-regions [west-us-2, west-us-3, north-central-us]
+  - &default-azure-regions [west-us-3, east-us-2, north-central-us]
+  - &gpu-azure-regions [east-us, central-us, south-central-us]
   - &persistent-disk
     autoDelete: true
     boot: true
@@ -2237,11 +2238,7 @@ pools:
               default: Standard_D32ads_v7
       worker-manager-config:
         capacityPerInstance: 1
-        initialWeight:
-          by-location:
-            west-us-2: 0.9
-            west-us-3: 0.9
-            north-central-us: 0.9
+        initialWeight: 1
   # Windows Server 2025
   - pool_id: '{pool-group}/b-win2025-{suffix}'
     description: ''
@@ -2331,7 +2328,10 @@ pools:
         by-suffix:
           .*headless.*: generic-worker/windows-builder
           default: generic-worker/windows
-      locations: *default-azure-regions
+      locations:
+        by-suffix:
+          gpu(-alpha)?: *gpu-azure-regions
+          default: *default-azure-regions
       maxCapacity:
         by-suffix:
           .*alpha:
@@ -2458,7 +2458,10 @@ pools:
           default: ronin_t_windows10_64_2009_prod
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
-      locations: *default-azure-regions
+      locations:
+        by-suffix:
+          (webgpu|gpu)(-alpha)?: *gpu-azure-regions
+          default: *default-azure-regions
       maxCapacity:
         by-pool-group:
           enterprise-t: 200
@@ -2512,17 +2515,7 @@ pools:
               default: {}
       worker-manager-config:
         capacityPerInstance: 1
-        initialWeight:
-          by-vmSize:
-            Standard_D8alds_v6: 0.5
-            Standard_NV12ads_A10_v5:
-              by-location:
-                west-us-3: 1
-                east-us: 1
-                west-us-2: 0.8
-                east-us-2: 0.8
-                default: 0.5
-            default: 1
+        initialWeight: 1
   # Windows 11
   - pool_id: '{pool-group}/win11-a64-25h2-builder-{suffix}'
     description: ''
@@ -2632,13 +2625,7 @@ pools:
         - vmSize: Standard_D16pds_v6
       worker-manager-config:
         capacityPerInstance: 1
-        initialWeight:
-          by-location:
-            central-india: 1
-            east-us-2: 0.9
-            north-central-us: 0.9
-            central-us: 0.8
-            default: 0.5
+        initialWeight: 1
   - pool_id: '{pool-group}/win11-64-2009-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2674,7 +2661,10 @@ pools:
           default: ronin_t_windows11_64_2009
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
-      locations: *default-azure-regions
+      locations:
+        by-suffix:
+          webgpu(-alpha)?: *gpu-azure-regions
+          default: *default-azure-regions
       maxCapacity:
         by-pool-group:
           comm-t:
@@ -2709,29 +2699,7 @@ pools:
               default: Standard_F8s_v2
       worker-manager-config:
         capacityPerInstance: 1
-        initialWeight:
-          by-vmSize:
-            Standard_F8s_v2:
-              by-location:
-                central-india: 1
-                west-us-3: 1
-                north-central-us: 1
-                south-india: 0.9
-                west-us: 0.8
-                central-us: 0.5
-                east-us: 0.5
-                canada-central: 0.3
-                west-us-2: 0.3
-                east-us-2: 0.1
-                default: 0.2
-            Standard_NV12ads_A10_v5:
-              by-location:
-                east-us: 1
-                west-us-2: 1
-                west-us-3: 1
-                east-us-2: 0.8
-                default: 0.5
-            default: 1
+        initialWeight: 1
   - pool_id: '{pool-group}/win11-64-25h2-{suffix}'
     description: ''
     owner: relops-azure-provisioning@mozilla.com
@@ -2805,7 +2773,10 @@ pools:
           default: win116425h2
       implementation: '{implementation}'
       worker-purpose: '{pool-group}'
-      locations: *default-azure-regions
+      locations:
+        by-suffix:
+          .*gpu.*: *gpu-azure-regions
+          default: *default-azure-regions
       maxCapacity:
         by-pool-group:
           comm-t:
@@ -2880,25 +2851,7 @@ pools:
               default: {}
       worker-manager-config:
         capacityPerInstance: 1
-        initialWeight:
-          by-vmSize:
-            Standard_F8alds_v7:
-              by-location:
-                central-us: 1
-                east-us-2: 1
-                west-us-2: 1
-                west-us-3: 1
-                east-us: 0.95
-                uk-south: 0.85
-                west-us: 0.8
-                default: 0.1
-            Standard_NV12ads_A10_v5:
-              by-location:
-                west-us-3: 1
-                east-us: 1
-                west-us-2: 1
-                default: 0.5
-            default: 1
+        initialWeight: 1
   # Keep the rejected image isolated for Bug 2078361 sandbox testing.
   - pool_id: 'gecko-t/win11-64-25h2-bug2078361'
     description: 'Temporary sandbox reproduction pool for https://bugzilla.mozilla.org/show_bug.cgi?id=2078361. Use explicit try worker overrides only.'
@@ -3048,14 +3001,7 @@ pools:
               default: Standard_D8pds_v6
       worker-manager-config:
         capacityPerInstance: 1
-        initialWeight:
-          by-location:
-            central-india: 1
-            east-us-2: 0.9
-            north-central-us: 0.9
-            uk-south: 0.8
-            central-us: 0.7
-            default: 0.5
+        initialWeight: 1
   - pool_id: '{pool-group}/t-linux-{suffix}'
     description: Worker for test tasks.
     owner: release+tc-workers@mozilla.com
@@ -3474,7 +3420,7 @@ pools:
       image: gw-win2022
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
-      locations: *default-azure-regions
+      locations: [central-us, east-us]
       maxCapacity: 10
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3505,7 +3451,10 @@ pools:
           ngpu: gw-win2022
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
-      locations: *default-azure-regions
+      locations:
+        by-kind:
+          gpu: [east-us, east-us-2, south-central-us, west-us-2]
+          ngpu: [central-us, east-us]
       maxCapacity: 10
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3529,7 +3478,7 @@ pools:
       image: gw-win2022-gpu
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-fuzzing
-      locations: *default-azure-regions
+      locations: [east-us, east-us-2, south-central-us, west-us-2]
       maxCapacity: 20
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3666,7 +3615,7 @@ pools:
       image: gw-win2022
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-taskcluster
-      locations: *default-azure-regions
+      locations: [central-us, east-us]
       maxCapacity: 10
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3697,7 +3646,7 @@ pools:
       image: gw-win2022-staging
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-taskcluster
-      locations: *default-azure-regions
+      locations: [central-us, east-us]
       maxCapacity: 1
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
@@ -3725,7 +3674,7 @@ pools:
       image: gw-win2022-gpu-staging
       implementation: generic-worker/windows-fuzzing
       worker-purpose: proj-taskcluster
-      locations: *default-azure-regions
+      locations: [east-us]
       maxCapacity: 1
       armDeployment:
         templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
