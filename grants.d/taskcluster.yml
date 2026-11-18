@@ -63,12 +63,9 @@
 
 # Releases and staging releases build on the release pool. Each publish task
 # requests only the one secret it reads.
-# TODO: remove project/taskcluster/release and project/taskcluster/staging-release
-# once a release has succeeded on the per-task secrets.
 - grant:
     - queue:create-task:highest:proj-taskcluster/release
     - generic-worker:run-task-as-current-user:proj-taskcluster/release
-    - secrets:get:project/taskcluster/release
     - secrets:get:project/taskcluster/release/crates-io
     - secrets:get:project/taskcluster/release/docker-hub
     - secrets:get:project/taskcluster/release/github
@@ -81,7 +78,6 @@
 - grant:
     - queue:create-task:highest:proj-taskcluster/release
     - generic-worker:run-task-as-current-user:proj-taskcluster/release
-    - secrets:get:project/taskcluster/staging-release
     - secrets:get:project/taskcluster/staging-release/github
   to:
     - project:
