@@ -1,7 +1,7 @@
 ---
 provisionerId: proj-fuzzing
 schedulerId: fuzzing
-workerType: decision
+workerType: ci-decision
 payload:
   image:
     type: indexed-image
