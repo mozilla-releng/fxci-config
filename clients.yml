@@ -316,6 +316,7 @@ project/fuzzing/gh-orion-publisher:
   scopes:
     - queue:create-task:highest:proj-fuzzing/orion-gha-publish
     - queue:route:index.project.fuzzing.orion.*
+    - index:insert-task:project.fuzzing.orion.*
     - queue:scheduler-id:fuzzing
 project/releng/fxci-config/apply:
   description: Used to run `tc-admin apply` in mozilla-releng/fxci-config.
