@@ -457,6 +457,11 @@ project/releng/generic-worker/datacenter-gecko-1-b-osx-arm64-vms:
   scopes:
     - assume:worker-type:releng-hardware/gecko-1-b-osx-arm64-vms
     - queue:worker-id:mdc1/mac-*
+project/releng/generic-worker/datacenter-gecko-1-b-osx-arm64-studio:
+  description: Level 1 macOS ARM64 VM-based builder workers on a Mac Studio (M2 Ultra), capacity experiment.
+  scopes:
+    - assume:worker-type:releng-hardware/gecko-1-b-osx-arm64-studio
+    - queue:worker-id:mdc1/mac-*
 project/releng/generic-worker/datacenter-gecko-3-b-osx-arm64-vms:
   description: Datacenter level 3 macOS ARM64 VM-based builder workers.
   scopes:
