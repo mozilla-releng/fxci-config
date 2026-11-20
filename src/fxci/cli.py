@@ -169,6 +169,46 @@ async def invalidates_hooks(options):
     print("true" if answer else "false")
 
 
+@app.command(
+    "create-action-hooks",
+    help="Create the in-tree action hooks for a single decision task.",
+    description="Fetches the `.taskcluster.yml` the given decision task was "
+    "created from and creates the action hooks for it directly, without "
+    "changing any config. The `.taskcluster.yml` is baked into the hooks as-is, "
+    "so review it first. Hooks that aren't fired are deleted by the next "
+    "`tc-admin apply`, so trigger the action soon after. Requires Taskcluster "
+    "credentials that can create the hooks.",
+)
+@app.argument("task-id", help="The taskId of the decision task.")
+@app.argument(
+    "--filter",
+    help="Only create hooks whose `<hookGroupId>/<hookId>` matches this regular "
+    "expression, e.g. `-generic/`.",
+)
+@app.argument(
+    "--dry-run",
+    action="store_true",
+    help="Print the hooks that would be created instead of creating them.",
+)
+@ciconfig_arguments(app, use_environment=False)
+@run_async
+async def create_action_hooks(options):
+    from ciadmin.boot import appconfig  # noqa: PLC0415
+
+    from .action_hooks import create_action_hooks  # noqa: PLC0415
+
+    # Match the description prefix tc-admin gives the hooks it manages, or the
+    # next apply would rewrite every hook made here.
+    AppConfig.current().description_prefix = appconfig.description_prefix
+
+    os.chdir(str(pathlib.Path(__file__).parent.parent.parent))
+    await create_action_hooks(
+        task_id=options["task-id"],
+        filter=options["filter"],
+        dry_run=options["dry_run"],
+    )
+
+
 @app.command("list-workers")
 @app.argument("worker-pool")
 @app.argument(
