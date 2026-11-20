@@ -522,7 +522,7 @@ project-fuzzing/grizzly-reduce-monitor:
     - generic-worker:os-group:proj-fuzzing/grizzly-reduce-worker-windows/Administrators
     - generic-worker:run-as-administrator:proj-fuzzing/grizzly-reduce-worker-windows
     - generic-worker:run-as-administrator:proj-fuzzing/grizzly-reduce-worker-windows-ngpu
-    - queue:create-task:highest:proj-fuzzing/decision
+    - queue:create-task:highest:proj-fuzzing/ci-decision
     - queue:create-task:highest:proj-fuzzing/grizzly-reduce-worker*
     - queue:route:notify.email.truber@mozilla.com.on-failed
     - queue:route:notify.email.twsmith@mozilla.com.on-failed
@@ -561,7 +561,7 @@ project-fuzzing/grizzly-reduce-reset-error:
     - exchange: exchange/taskcluster-queue/v1/task-failed
       routing_key_pattern: primary.#.grizzly-reduce-worker.fuzzing.#
   scopes:
-    - queue:create-task:highest:proj-fuzzing/decision
+    - queue:create-task:highest:proj-fuzzing/ci-decision
     - queue:route:notify.email.truber@mozilla.com.on-failed
     - queue:route:notify.email.twsmith@mozilla.com.on-failed
     - secrets:get:project/fuzzing/fuzzmanagerconf

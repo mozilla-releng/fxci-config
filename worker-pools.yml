@@ -3531,8 +3531,6 @@ pools:
         desc: Fuzzing bugmon processor pool
         owner: jkratzer@mozilla.com
         email_on_error: false
-      - kind: decision
-        desc: Fuzzing decision pool
       - kind: grizzly-reduce-worker
         desc: Fuzzing grizzly reduce worker pool
       - kind: grizzly-reduce-worker-android
@@ -3546,7 +3544,6 @@ pools:
         by-kind:
           bugmon-monitor: 5
           bugmon-processor: 20
-          decision: 5
           grizzly-reduce-worker: 20
           grizzly-reduce-worker-android: 10
           nss-corpus-update-worker: 5
