@@ -65,6 +65,12 @@
     - docker-worker:cache:xpi-level-1-*
     - project:xpi:releng:signing:cert:dep-signing
     - queue:create-task:low:scriptworker-k8s/xpi-t-*
+    # Allows the Taskcluster GitHub service to trigger the shared Decision hook
+    # on behalf of this repo. Note that `github:trigger-hook` is not the same
+    # as `hooks:trigger-hook`. The latter would grant the role the ability to
+    # synthesize a fake Decision task. The former simply tells the Github
+    # service that it is allowed to trigger the hook on the role's behalf.
+    - github:trigger-hook:project-xpi/decision-*
   to:
     - project:
         feature: xpi-roles
