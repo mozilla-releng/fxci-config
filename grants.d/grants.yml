@@ -510,8 +510,6 @@
 
 # tooltool downloads
 - grant:
-    - docker-worker:relengapi-proxy:tooltool.download.internal
-    - docker-worker:relengapi-proxy:tooltool.download.public
     - project:releng:services/tooltool/api/download/internal
     - project:releng:services/tooltool/api/download/public
     # This cache contains cached downloads from tooltool.  Since tooltool is
