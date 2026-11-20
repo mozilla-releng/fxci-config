@@ -1031,7 +1031,7 @@ application-services:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     scriptworker-shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
@@ -1053,7 +1053,7 @@ staging-application-services:
   features:
     github-taskgraph: true
     github-pull-request:
-      policy: public
+      policy: public_restricted
     scriptworker-shipit: true
     taskgraph-cron: true
     taskgraph-actions: true
