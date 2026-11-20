@@ -1081,6 +1081,9 @@ pools:
       - pool-group: scriptworker-1
       - pool-group: scriptworker-3
         chain-of-trust: trusted
+      - pool-group: taskcluster-1
+      - pool-group: taskcluster-3
+        chain-of-trust: trusted
       - pool-group: xpi-1
       - pool-group: xpi-3
         chain-of-trust: trusted
@@ -1185,6 +1188,9 @@ pools:
         chain-of-trust: trusted
       - pool-group: scriptworker-1
       - pool-group: scriptworker-3
+        chain-of-trust: trusted
+      - pool-group: taskcluster-1
+      - pool-group: taskcluster-3
         chain-of-trust: trusted
       - pool-group: translations-1
       - pool-group: enterprise-1
