@@ -3410,7 +3410,7 @@ pools:
             - *scratch-disk
           machine_type:
             by-pool-group:
-              code-coverage: c2-standard-8
+              code-coverage: c2d-highmem-4
               default: c2-standard-4
   - pool_id: 'code-review/{kind}'
     description: Worker for the code-review bot ({kind}).
