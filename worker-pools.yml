@@ -3404,8 +3404,7 @@ pools:
                 reviewer-assignment: 300  # 5 minutes
                 default: 900  # 15 minutes
       instance_types:
-        - minCpuPlatform: Intel Cascadelake
-          disks:
+        - disks:
             - *persistent-disk-75gb
             - *scratch-disk
           machine_type:
