@@ -11,9 +11,7 @@
     - project:
         alias: taskcluster-org
 
-# taskcluster/taskcluster and its mirrors: the decision task and the PR graph
-# (also granted org-wide above; repeated so the project doesn't depend on the
-# wildcard).
+# taskcluster/taskcluster and its mirrors: the shared CI pool and workerless tasks.
 - grant:
     - queue:create-task:highest:proj-taskcluster/gw-ubuntu-24-04
     - queue:create-task:highest:built-in/succeed
@@ -21,6 +19,16 @@
     - project:
         feature: taskcluster-roles
         job: [pull-request:*, branch:*, tag:*]
+
+# The level-1 mirror uses the same decision and image task priorities as the
+# main repo. Its generic trust-domain grants allow only low priority.
+- grant:
+    - queue:create-task:highest:taskcluster-1/decision
+    - queue:create-task:highest:taskcluster-1/images
+  to:
+    - project:
+        alias: taskcluster-private
+        job: [pull-request:*, branch:*]
 
 # Trusted code (collaborator PRs, pushes, tags) may use every CI pool and run
 # the worker integration tests, which need credentials.
@@ -87,6 +95,7 @@
 # Releases are tag pushes, which fxci's generic grants (keyed on branches, pull
 # requests and GitHub releases) don't cover; mirror them for tags.
 - grant:
+    - queue:create-task:highest:{trust_domain}-{level}/*
     - queue:route:checks
     - queue:scheduler-id:{trust_domain}-level-{level}
     - queue:cancel-task:{trust_domain}-level-{level}/*
