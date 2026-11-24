@@ -3416,10 +3416,21 @@ pools:
     owner: release+tc-workers@mozilla.com
     email_on_error: true
     variants:
+      # The bot's checkout cache holds a Mercurial store and checkout plus a
+      # Git clone, about 25 GB; on 75 GB the worker's 40 GiB free-disk floor
+      # dropped the cache after most Git tasks, so every task cloned again.
       - kind: bot
-        instance_types: [*c3d-standard-4]
+        instance_types:
+          - disks:
+              - <<: *persistent-disk
+                diskSizeGb: 130
+            machine_type: c3d-standard-4
       - kind: bot-testing
-        instance_types: [*c3d-standard-4]
+        instance_types:
+          - disks:
+              - <<: *persistent-disk
+                diskSizeGb: 130
+            machine_type: c3d-standard-4
       - kind: ingestion
         instance_types: [*c3d-standard-4]
       - kind: ingestion-testing
