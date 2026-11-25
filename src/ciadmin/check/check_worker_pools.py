@@ -334,3 +334,106 @@ async def check_worker_pool_gcp_instances_by_region(generate_resources):
     assert not invalid_machine_types, (
         f"Invalid GCP worker machine types found: \n{message}"
     )
+
+
+# gecko-{1,3,t} pools with no enterprise-* pool. Remove an entry when its
+# enterprise pool is added.
+GECKO_ONLY_POOL_PATTERNS = (
+    r"-alpha$",
+    r"relsre",
+)
+GECKO_ONLY_POOLS = {
+    # Not referenced by the worker aliases in enterprise-firefox
+    # taskcluster/config.yml.
+    "gecko-1/b-linux-2204-kvm-gcp",
+    "gecko-1/b-linux-gcp-aarch64",
+    "gecko-1/b-win2022-headless",
+    "gecko-1/b-win2022-updatebot",
+    "gecko-1/b-win2025-core",
+    "gecko-1/b-win2025-headless",
+    "gecko-1/b-win2025-large",
+    "gecko-1/b-win2025-updatebot",
+    "gecko-3/b-linux-2204-kvm-gcp",
+    "gecko-3/b-linux-gcp-aarch64",
+    "gecko-3/b-win2022-headless",
+    "gecko-3/b-win2022-updatebot",
+    "gecko-3/b-win2025-core",
+    "gecko-3/b-win2025-headless",
+    "gecko-3/b-win2025-large",
+    "gecko-3/b-win2025-updatebot",
+    "gecko-t/t-linux-2204-wayland-root-exp",
+    "gecko-t/t-linux-2404-wayland",
+    "gecko-t/t-linux-docker-large-amd",
+    "gecko-t/t-linux-docker-noscratch-large-amd",
+    "gecko-t/t-linux-docker-noscratch-nosmt-amd",
+    "gecko-t/t-linux-vm-2204-wayland",
+    "gecko-t/t-linux-vm-2204-wayland-snap",
+    "gecko-t/t-linux-xlarge-2404-wayland",
+    "gecko-t/win10-64-2009-webgpu",
+    "gecko-t/win11-64-2009",
+    "gecko-t/win11-64-2009-source",
+    "gecko-t/win11-64-2009-ssd",
+    "gecko-t/win11-64-2009-webgpu",
+    "gecko-t/win11-64-25h2-amd",
+    "gecko-t/win11-64-25h2-bug2078361",
+    "gecko-t/win11-64-25h2-ssd",
+    "gecko-t/win11-64-25h2-ssd-gpu",
+    "gecko-t/win11-64-25h2-unprivileged",
+    # Referenced by enterprise-firefox worker aliases, but no enterprise
+    # task waits on them now. Add these enterprise pools before enterprise
+    # schedules tasks on them.
+    "gecko-1/b-linux-docker-updatebot-amd",
+    "gecko-1/b-linux-large",
+    "gecko-1/b-linux-medium",
+    "gecko-1/b-linux-xlarge",
+    "gecko-1/b-win2022-xxlarge",
+    "gecko-1/b-win2025-xxlarge",
+    "gecko-3/b-linux-docker-updatebot-amd",
+    "gecko-3/b-linux-large",
+    "gecko-3/b-linux-medium",
+    "gecko-3/b-linux-xlarge",
+    "gecko-3/b-win2022-xxlarge",
+    "gecko-3/b-win2025-xxlarge",
+    "gecko-t/t-linux-arm64-docker",
+    "gecko-t/t-linux-docker-noscratch",
+    "gecko-t/win10-64-2009-source",
+    "gecko-t/win11-a64-25h2",
+}
+
+
+@pytest.mark.asyncio
+async def check_gecko_pools_have_enterprise_pools():
+    """Gecko merges into enterprise, so each gecko-{1,3,t} pool needs an
+    enterprise-* pool with the same worker type. If not, enterprise tasks
+    wait forever (for example #1427 and #1428)."""
+    environment = await Environment.current()
+    worker_pools = await WorkerPoolConfig.fetch_all()
+    pool_ids = {p.pool_id for p in generate_pool_variants(worker_pools, environment)}
+
+    missing = []
+    for pool_id in sorted(pool_ids):
+        if not re.match(r"gecko-[13t]/", pool_id) or pool_id in GECKO_ONLY_POOLS:
+            continue
+        if any(re.search(p, pool_id) for p in GECKO_ONLY_POOL_PATTERNS):
+            continue
+        enterprise_pool_id = "enterprise-" + pool_id.removeprefix("gecko-")
+        if enterprise_pool_id not in pool_ids:
+            missing.append(f"{pool_id} -> {enterprise_pool_id}")
+
+    stale = sorted(
+        pool_id
+        for pool_id in GECKO_ONLY_POOLS
+        if "enterprise-" + pool_id.removeprefix("gecko-") in pool_ids
+        or pool_id not in pool_ids
+    )
+
+    if missing:
+        print(
+            "These gecko pools have no matching enterprise pool. Add the "
+            "enterprise-* pool-group, or add the pool to GECKO_ONLY_POOLS:\n"
+            + "\n".join(missing)
+        )
+    if stale:
+        print("Remove these stale GECKO_ONLY_POOLS entries:\n" + "\n".join(stale))
+
+    assert not missing and not stale
