@@ -704,9 +704,10 @@ enterprise-firefox:
     - name: enterprise-main
       level: 3
       cron: true
-    - name: enterprise-release
-      level: 3
     - name: enterprise-beta
+      level: 3
+      cron: true
+    - name: enterprise-release
       level: 3
     - name: "*"
       level: 1
