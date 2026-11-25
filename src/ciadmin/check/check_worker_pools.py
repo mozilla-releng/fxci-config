@@ -9,6 +9,7 @@ from functools import lru_cache
 from textwrap import dedent
 
 import pytest
+import yaml
 from google.cloud.compute import (
     ListMachineTypesRequest,
     ListZonesRequest,
@@ -16,10 +17,14 @@ from google.cloud.compute import (
     ZonesClient,
 )
 from google.oauth2 import service_account
+from tcadmin.util.sessions import with_aiohttp_session
 
+from ciadmin.generate import branches
 from ciadmin.generate.ciconfig.environment import Environment
+from ciadmin.generate.ciconfig.projects import Project
 from ciadmin.generate.ciconfig.worker_pools import WorkerPool as WorkerPoolConfig
 from ciadmin.generate.worker_pools import generate_pool_variants
+from ciadmin.util import github
 
 WORKER_POOL_ID_RE = re.compile(
     r"^[a-zA-Z0-9-_]{1,38}\/[a-z]([-a-z0-9]{0,36}[a-z0-9])?$"
@@ -334,3 +339,73 @@ async def check_worker_pool_gcp_instances_by_region(generate_resources):
     assert not invalid_machine_types, (
         f"Invalid GCP worker machine types found: \n{message}"
     )
+
+
+def _alias_worker_types(aliases, provisioner):
+    """Yield (alias regex, worker-type template) for aliases on `provisioner`."""
+    for alias, config in aliases.items():
+        worker_type = config["worker-type"]
+        if config["provisioner"] == provisioner and isinstance(worker_type, str):
+            yield alias, worker_type
+
+
+def _alias_matches(alias, template, worker_type):
+    prefix, _, suffix = template.partition("{alias}")
+    if "{alias}" not in template:
+        return template == worker_type
+    return (
+        worker_type.startswith(prefix)
+        and worker_type.endswith(suffix)
+        and re.fullmatch(
+            alias, worker_type[len(prefix) : len(worker_type) - len(suffix)]
+        )
+        is not None
+    )
+
+
+@pytest.mark.asyncio
+@with_aiohttp_session
+async def check_gecko_pools_have_enterprise_pools():
+    """Enterprise merges from gecko. Each gecko pool that the enterprise
+    in-tree worker aliases can select needs an enterprise pool, or enterprise
+    tasks wait forever (for example #1427 and #1428)."""
+    environment = await Environment.current()
+    worker_pools = await WorkerPoolConfig.fetch_all()
+    pool_ids = {p.pool_id for p in generate_pool_variants(worker_pools, environment)}
+
+    aliases = {}
+    for project in await Project.fetch_all():
+        if project.trust_domain != "enterprise":
+            continue
+        client = await github.get_client(project.repo_path)
+        response = await client.request(
+            "GET",
+            f"/repos/{project.repo_path}/contents/taskcluster/config.yml",
+            headers={"Accept": "application/vnd.github.raw+json"},
+            params={"ref": await branches.get_default_branch(project.repo_path)},
+        )
+        response.raise_for_status()
+        aliases.update(yaml.safe_load(await response.read())["workers"]["aliases"])
+    assert aliases, "Found no enterprise worker aliases"
+
+    missing = []
+    for pool_id in sorted(pool_ids):
+        match = re.fullmatch(r"gecko-([13t])/(.+)", pool_id)
+        if not match:
+            continue
+        level, worker_type = match.groups()
+        provisioner = "{trust-domain}-" + ("t" if level == "t" else "{level}")
+        enterprise_pool_id = f"enterprise-{level}/{worker_type}"
+        if enterprise_pool_id not in pool_ids and any(
+            _alias_matches(alias, template, worker_type)
+            for alias, template in _alias_worker_types(aliases, provisioner)
+        ):
+            missing.append(enterprise_pool_id)
+
+    if missing:
+        print(
+            "Enterprise worker aliases select these pools, but they do not "
+            "exist. Add the enterprise-* pool-group:\n" + "\n".join(missing)
+        )
+
+    assert not missing

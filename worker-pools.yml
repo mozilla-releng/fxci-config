@@ -555,6 +555,13 @@ pools:
         chain-of-trust: trusted
         suffix: '-xlarge'
         instance_types: [*c3d-standard-60-lssd]
+      - pool-group: enterprise-1
+        suffix: '-updatebot'
+        instance_types: [*c3d-standard-16-lssd]
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
+        suffix: '-updatebot'
+        instance_types: [*c3d-standard-16-lssd]
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -731,6 +738,9 @@ pools:
         chain-of-trust: trusted
       - pool-group: mozillavpn-1
       - pool-group: mozillavpn-3
+        chain-of-trust: trusted
+      - pool-group: enterprise-1
+      - pool-group: enterprise-3
         chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
@@ -984,6 +994,9 @@ pools:
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
+      - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
@@ -1019,6 +1032,9 @@ pools:
       - pool-group: comm-1
       - pool-group: comm-2
       - pool-group: comm-3
+        chain-of-trust: trusted
+      - pool-group: enterprise-1
+      - pool-group: enterprise-3
         chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
@@ -2154,6 +2170,11 @@ pools:
       - pool-group: enterprise-1
       - pool-group: enterprise-3
         chain-of-trust: trusted
+      - pool-group: enterprise-1
+        suffix: xxlarge
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
+        suffix: xxlarge
     provider_id:
       by-chain-of-trust:
         trusted: azure_trusted
@@ -2339,6 +2360,11 @@ pools:
       - pool-group: gecko-3
         level: 3
         suffix: core-alpha
+      - pool-group: enterprise-1
+        suffix: xxlarge
+      - pool-group: enterprise-3
+        level: 3
+        suffix: xxlarge
     provider_id:
       by-level:
         1: azure2
@@ -2477,6 +2503,8 @@ pools:
         suffix: webgpu
       - pool-group: gecko-t
         suffix: webgpu-alpha
+      - pool-group: enterprise-t
+        suffix: source
     config:
       image:
         by-suffix:
@@ -3058,6 +3086,7 @@ pools:
       - pool-group: nss-t
         suffix: alpha
         implementation: generic-worker/windows
+      - pool-group: enterprise-t
     config:
       image: win11a6425h2tester{suffix}
       implementation: '{implementation}'
@@ -3216,6 +3245,9 @@ pools:
         suffix: 'gw-noscratch-amd'
         implementation: generic-worker/linux-headless
         instance_types: [*c3d-standard-4]
+      - pool-group: enterprise-t
+        suffix: 'docker-noscratch'
+        instance_types: [*c2-standard-4]
     email_on_error: true
     config:
       minCapacity: 0
@@ -3355,6 +3387,7 @@ pools:
       - pool-group: comm-t
       - pool-group: mozilla-t
       - pool-group: nss-t
+      - pool-group: enterprise-t
     email_on_error: true
     config:
       minCapacity: 0
@@ -3364,6 +3397,7 @@ pools:
           comm-t: 100
           mozilla-t: 100
           nss-t: 100
+          enterprise-t: 100
       implementation: generic-worker/linux-d2g
       # the "t2a" machine series is only available in the "a", "b", and "f" zones of the "us-central1" region.
       regions: [us-central1]
