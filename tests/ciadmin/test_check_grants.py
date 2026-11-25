@@ -11,6 +11,7 @@ from ciadmin.check import check_grants
 from ciadmin.check.check_grants import (
     check_grant_pools,
     check_run_as_administrator_pools_run_one_task,
+    check_sudo_os_group_pools_run_one_task,
 )
 
 
@@ -100,6 +101,60 @@ async def test_rejects_persistent_or_unconfigured_administrator_pool(
 
     with pytest.raises(AssertionError):
         await check_run_as_administrator_pools_run_one_task(generate_resources)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("scope", "number_of_tasks", "worker_pool_id"),
+    [
+        # sudo granted on a pool that runs one task
+        ("generic-worker:os-group:gecko-t/t-linux-snap/snap_sudo", 1, None),
+        # unprivileged os-group on a persistent pool
+        ("generic-worker:os-group:gecko-t/t-linux-snap/video", 0, None),
+        # sudo granted on a different pool
+        ("generic-worker:os-group:gecko-t/t-linux-other/snap_sudo", 0, None),
+        # proj-fuzzing pools are ignored
+        ("generic-worker:os-group:proj-fuzzing/*", 0, "proj-fuzzing/ci-linux"),
+        # explicitly excepted
+        (
+            "generic-worker:os-group:proj-taskcluster/gw-ubuntu-24-04-gui/docker",
+            0,
+            "proj-taskcluster/gw-ubuntu-24-04-gui",
+        ),
+    ],
+)
+async def test_sudo_os_group_accepts(scope, number_of_tasks, worker_pool_id):
+    resources = resources_for(
+        scope, number_of_tasks, worker_pool_id or "gecko-t/t-linux-snap"
+    )
+
+    async def generate_resources(*modules):
+        return resources
+
+    await check_sudo_os_group_pools_run_one_task(generate_resources)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "scope",
+    [
+        "generic-worker:os-group:gecko-t/t-linux-snap/admin",
+        "generic-worker:os-group:gecko-t/t-linux-snap/docker",
+        "generic-worker:os-group:gecko-t/t-linux-snap/snap_sudo",
+        "generic-worker:os-group:gecko-t/t-linux-snap/sudo",
+        "generic-worker:os-group:gecko-t/t-linux-*",
+        "generic-worker:os-group:gecko-t/*",
+    ],
+)
+@pytest.mark.parametrize("number_of_tasks", [0, 2])
+async def test_sudo_os_group_rejects_persistent_pool(scope, number_of_tasks):
+    resources = resources_for(scope, number_of_tasks, "gecko-t/t-linux-snap")
+
+    async def generate_resources(*modules):
+        return resources
+
+    with pytest.raises(AssertionError):
+        await check_sudo_os_group_pools_run_one_task(generate_resources)
 
 
 class _Grant:
