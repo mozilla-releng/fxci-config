@@ -15,6 +15,15 @@ from ciadmin.generate.worker_pools import managed
 from ciadmin.util.matching import ProjectGrantee
 
 RUN_AS_ADMINISTRATOR_PREFIX = "generic-worker:run-as-administrator:"
+OS_GROUP_PREFIX = "generic-worker:os-group:"
+# Linux os-groups that give tasks root(-equivalent) access, and so can make
+# persistent changes. Ubuntu grants sudo to both `sudo` and the legacy `admin`.
+SUDO_OS_GROUPS = ("admin", "docker", "snap_sudo", "sudo")
+# (pool, os-group) pairs allowed despite running more than one task.
+SUDO_OS_GROUP_EXCEPTIONS = {
+    # Pre-existing; only trusted generic-worker CI tasks are granted this.
+    ("proj-taskcluster/gw-ubuntu-24-04-gui", "docker"),
+}
 
 
 def _is_windows_worker_pool(worker_pool_id):
@@ -210,6 +219,36 @@ async def check_run_as_administrator_pools_run_one_task(generate_resources):
         )
         for scope, pools in sorted(ineligible_pools.items()):
             print(f"{scope}: {', '.join(sorted(pools))}")
+    assert not ineligible_pools
+
+
+@pytest.mark.asyncio
+async def check_sudo_os_group_pools_run_one_task(generate_resources):
+    """Ensure tasks granted sudo cannot persist changes for subsequent tasks."""
+    generated = await generate_resources("grants", "worker_pools")
+    os_group_scopes = [
+        scope
+        for role in generated.filter("Role=.*")
+        for scope in role.scopes
+        if scope.startswith(OS_GROUP_PREFIX)
+    ]
+
+    ineligible_pools = defaultdict(set)
+    for pool in generated.filter("WorkerPool=.*"):
+        # proj-fuzzing grants itself every os-group on its own pools.
+        if pool.workerPoolId.startswith("proj-fuzzing/"):
+            continue
+        for group in SUDO_OS_GROUPS:
+            if (pool.workerPoolId, group) in SUDO_OS_GROUP_EXCEPTIONS:
+                continue
+            scope = f"{OS_GROUP_PREFIX}{pool.workerPoolId}/{group}"
+            if scopeMatch(os_group_scopes, [[scope]]) and not _runs_one_task(pool):
+                ineligible_pools[group].add(pool.workerPoolId)
+
+    if ineligible_pools:
+        print("Pools granting sudo os-groups must be configured to run one task:")
+        for group, pools in sorted(ineligible_pools.items()):
+            print(f"{group}: {', '.join(sorted(pools))}")
     assert not ineligible_pools
 
 

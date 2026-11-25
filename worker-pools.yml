@@ -1373,6 +1373,11 @@ pools:
         genericWorker:
           config:
             enableInteractive: true  # ok for l1, but not ok for l3?
+            # Snap tasks can make persistent changes via sudo.
+            numberOfTasksToRun:
+              by-suffix:
+                '-snap': 1
+                default: 0
       minCapacity: 0
       maxCapacity: 100
       implementation: generic-worker/worker-runner-linux-multi
@@ -1454,6 +1459,11 @@ pools:
       implementation: generic-worker/linux
       regions: *default-gcp-regions
       image: relsre-gw-fxci-gcp-2404-amd64-gui-alpha
+      worker-config:
+        genericWorker:
+          config:
+            # Snap tasks can make persistent changes via sudo.
+            numberOfTasksToRun: 1
       instance_types:
         - minCpuPlatform: Intel Cascadelake
           disks:
@@ -3252,6 +3262,11 @@ pools:
       worker-config:
         genericWorker:
           config:
+            # Snap tasks can make persistent changes via sudo.
+            numberOfTasksToRun:
+              by-suffix:
+                .*-snap: 1
+                default: null
             requiredDiskSpaceMegabytes:
               by-suffix:
                 docker-noscratch.*: 20480  # 20 GiB
