@@ -920,6 +920,9 @@
     - project:
         alias: firefox
         job: [pull-request:trusted]
+    - project:
+        alias: firefox-dev
+        job: [action:*, branch:*, pr-action:*, pull-request:trusted]
 
 - grant:
     # Bug 1618285 (Updatebot)
