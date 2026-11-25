@@ -1270,6 +1270,9 @@ pools:
       - pool-group: gecko-2
       - pool-group: gecko-3
         chain-of-trust: trusted
+      - pool-group: enterprise-1
+      - pool-group: enterprise-3
+        chain-of-trust: trusted
     provider_id:
       by-chain-of-trust:
         trusted: fxci-level3-gcp
