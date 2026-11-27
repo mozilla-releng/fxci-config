@@ -25,17 +25,17 @@ from .ciconfig.worker_pools import WorkerPool as ConfigWorkerPool
 managed = MatchList(
     [
         Match("WorkerPool=.*", excludes=["WorkerPool=proj-fuzzing/.*"]),
-        "WorkerPool=proj-fuzzing/bugmon-monitor$",
-        "WorkerPool=proj-fuzzing/bugmon-processor$",
-        "WorkerPool=proj-fuzzing/bugmon-processor-windows$",
-        "WorkerPool=proj-fuzzing/ci$",
-        "WorkerPool=proj-fuzzing/ci-arm64$",
-        "WorkerPool=proj-fuzzing/decision$",
-        "WorkerPool=proj-fuzzing/grizzly-reduce-worker$",
-        "WorkerPool=proj-fuzzing/grizzly-reduce-worker-android$",
-        "WorkerPool=proj-fuzzing/grizzly-reduce-worker-windows$",
-        "WorkerPool=proj-fuzzing/grizzly-reduce-worker-windows-ngpu$",
-        "WorkerPool=proj-fuzzing/nss-corpus-update-worker$",
+        "WorkerPool=proj-fuzzing/bugmon-monitor",
+        "WorkerPool=proj-fuzzing/bugmon-processor",
+        "WorkerPool=proj-fuzzing/bugmon-processor-windows",
+        "WorkerPool=proj-fuzzing/ci",
+        "WorkerPool=proj-fuzzing/ci-arm64",
+        "WorkerPool=proj-fuzzing/decision",
+        "WorkerPool=proj-fuzzing/grizzly-reduce-worker",
+        "WorkerPool=proj-fuzzing/grizzly-reduce-worker-android",
+        "WorkerPool=proj-fuzzing/grizzly-reduce-worker-windows",
+        "WorkerPool=proj-fuzzing/grizzly-reduce-worker-windows-ngpu",
+        "WorkerPool=proj-fuzzing/nss-corpus-update-worker",
     ]
 )
 
