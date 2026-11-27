@@ -32,7 +32,7 @@ managed = MatchList(
                 "Role=project:fuzzing/.*",  # managed externally
             ],
         ),
-        r"Role=hook-id:project\-fuzzing/\*$",
+        r"Role=hook-id:project\-fuzzing/\*",
     ]
 )
 
