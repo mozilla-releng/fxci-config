@@ -30,7 +30,6 @@ managed = MatchList(
         "WorkerPool=proj-fuzzing/bugmon-processor-windows$",
         "WorkerPool=proj-fuzzing/ci$",
         "WorkerPool=proj-fuzzing/ci-arm64$",
-        "WorkerPool=proj-fuzzing/ci-windows$",
         "WorkerPool=proj-fuzzing/decision$",
         "WorkerPool=proj-fuzzing/grizzly-reduce-worker$",
         "WorkerPool=proj-fuzzing/grizzly-reduce-worker-android$",
