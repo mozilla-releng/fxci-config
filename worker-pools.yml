@@ -3649,27 +3649,6 @@ pools:
             - *persistent-disk-60gb
           machine_type: t2a-standard-4
 
-  - pool_id: proj-fuzzing/ci-windows
-    description: Fuzzing CI Windows pool
-    owner: fuzzing+taskcluster@mozilla.com
-    email_on_error: false
-    provider_id: azure2
-    config:
-      image: gw-win2022
-      implementation: generic-worker/windows-fuzzing
-      worker-purpose: proj-fuzzing
-      locations: [central-us, east-us]
-      maxCapacity: 10
-      armDeployment:
-        templateSpecId: /subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0
-      worker-config:
-        genericWorker:
-          config: {}
-      vmSizes:
-        - vmSize: Standard_F16s_v2
-      worker-manager-config:
-        capacityPerInstance: 1
-
   - pool_id: proj-fuzzing/grizzly-reduce-worker-windows{suffix}
     description: '{desc}'
     owner: truber@mozilla.com
